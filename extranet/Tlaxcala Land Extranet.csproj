@@ -1,0 +1,546 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{844F4FA8-B973-4C32-ADA0-884C815D2E55}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EmpiriaWeb.Government.LandRegistration</RootNamespace>
+    <AssemblyName>Tlaxcala.Empiria.Land.Extranet</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <WebGreaseLibPath>..\..\..\..\empiria.solutions\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\empiria.solutions\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Empiria.Data">
+      <HintPath>E:\empiria.assemblies\Empiria.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Empiria.Documents">
+      <HintPath>E:\empiria.assemblies\Empiria.Documents.dll</HintPath>
+    </Reference>
+    <Reference Include="Empiria.Foundation">
+      <HintPath>E:\empiria.assemblies\Empiria.Foundation.dll</HintPath>
+    </Reference>
+    <Reference Include="Empiria.Geography">
+      <HintPath>E:\empiria.assemblies\Empiria.Geography.dll</HintPath>
+    </Reference>
+    <Reference Include="Empiria.Kernel">
+      <HintPath>E:\empiria.assemblies\Empiria.Kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Empiria.Land.Registration">
+      <HintPath>..\..\..\..\empiria.assemblies\Empiria.Land.Registration.dll</HintPath>
+    </Reference>
+    <Reference Include="Empiria.Land.UI">
+      <HintPath>..\..\..\..\empiria.assemblies\Empiria.Land.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Empiria.Land.WebServices">
+      <HintPath>..\..\..\..\empiria.assemblies\Empiria.Land.WebServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Empiria.Messaging">
+      <HintPath>E:\empiria.assemblies\Empiria.Messaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Empiria.Presentation">
+      <HintPath>E:\empiria.assemblies\Empiria.Presentation.dll</HintPath>
+    </Reference>
+    <Reference Include="Empiria.Presentation.Web">
+      <HintPath>E:\empiria.assemblies\Empiria.Presentation.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\..\..\empiria.solutions\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\..\..\empiria.solutions\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\empiria.solutions\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\empiria.solutions\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\empiria.solutions\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\empiria.solutions\packages\Microsoft.AspNet.WebApi.Core.5.0.0\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\empiria.solutions\packages\Microsoft.AspNet.WebApi.WebHost.5.0.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\empiria.solutions\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\empiria.solutions\packages\Microsoft.AspNet.Web.Optimization.1.1.2\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\..\..\..\empiria.solutions\packages\Microsoft.AspNet.Providers.Core.2.0.0\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\empiria.solutions\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\empiria.solutions\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\empiria.solutions\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\empiria.solutions\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>E:\empiria.solutions\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\empiria.solutions\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ajax\land.registration.system.data.aspx.cs">
+      <DependentUpon>land.registration.system.data.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ajax\land.registration.system.data.aspx.designer.cs">
+      <DependentUpon>land.registration.system.data.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="default.old.aspx.cs">
+      <DependentUpon>default.old.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default.old.aspx.designer.cs">
+      <DependentUpon>default.old.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="directory.image.viewer.aspx.cs">
+      <DependentUpon>directory.image.viewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="directory.image.viewer.aspx.designer.cs">
+      <DependentUpon>directory.image.viewer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Empiria.Extranet.AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ajax\land.registration.system.data.aspx" />
+    <Content Include="Content\home.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\themes\base\images\animated-overlay.gif" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.menu.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.spinner.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\jquery.ui.tooltip.css" />
+    <Content Include="Content\themes\base\minified\images\animated-overlay.gif" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.menu.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.spinner.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
+    <Content Include="default.aspx" />
+    <Content Include="default.old.aspx" />
+    <Content Include="directory.image.viewer.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="images\app\html5-badge-h-css3-semantics.png" />
+    <Content Include="images\app\html5-badge-v-css3-semantics.png" />
+    <Content Include="images\customer\content_effect.png" />
+    <Content Include="images\customer\content_effect_slide.png" />
+    <Content Include="images\customer\header.png" />
+    <Content Include="images\customer\logo%2520a%2520dimensiontlax.png" />
+    <Content Include="images\customer\logo.desarrollo.png" />
+    <Content Include="images\customer\old.background.png" />
+    <Content Include="images\customer\customer.full.logo.png" />
+    <Content Include="images\customer\customer.logo.png" />
+    <Content Include="images\customer\favicon.ico" />
+    <Content Include="images\customer\grid.header.background.png" />
+    <Content Include="images\customer\pleca-roja.png" />
+    <Content Include="images\customer\section_division_bar.jpg" />
+    <Content Include="images\customer\separator.jpg" />
+    <Content Include="images\customer\top_nav.jpg" />
+    <Content Include="images\customer\transaction.key.png" />
+    <Content Include="kendo\Default\editor.png" />
+    <Content Include="kendo\Default\imagebrowser.png" />
+    <Content Include="kendo\Default\loading-image.gif" />
+    <Content Include="kendo\Default\loading.gif" />
+    <Content Include="kendo\Default\slider-h.gif" />
+    <Content Include="kendo\Default\slider-v.gif" />
+    <Content Include="kendo\Default\sprite.png" />
+    <Content Include="kendo\images\android-sprite.png" />
+    <Content Include="kendo\images\iconmasks.svg" />
+    <Content Include="kendo\images\icons.png" />
+    <Content Include="kendo\images\ios-sprite.png" />
+    <Content Include="kendo\kendo.common.min.css" />
+    <Content Include="kendo\kendo.default.min.css" />
+    <Content Include="kendo\textures\glass.png" />
+    <Content Include="kendo\textures\highlight.png" />
+    <Content Include="Scripts\empiria.jquery.js" />
+    <Content Include="Scripts\empiria.ajax.js" />
+    <Content Include="Scripts\empiria.calendar.js" />
+    <Content Include="Scripts\empiria.clock.js" />
+    <Content Include="Scripts\empiria.general.js" />
+    <Content Include="Scripts\empiria.master.page.js" />
+    <Content Include="Scripts\empiria.pngfix.js" />
+    <Content Include="Scripts\empiria.secondary.master.page.js" />
+    <Content Include="Scripts\empiria.validation.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\kendo.web.min.js" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="themes\default\app.icons\analysis.gif" />
+    <Content Include="themes\default\app.icons\documents.gif" />
+    <Content Include="themes\default\app.icons\documents.png" />
+    <Content Include="themes\default\app.icons\info_room.gif" />
+    <Content Include="themes\default\app.icons\learning.gif" />
+    <Content Include="themes\default\app.icons\library.gif" />
+    <Content Include="themes\default\app.icons\research.gif" />
+    <Content Include="themes\default\bullets\1green_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\actions_bullet.gif" />
+    <Content Include="themes\default\bullets\action_bullet.gif" />
+    <Content Include="themes\default\bullets\agenda_sm.gif" />
+    <Content Include="themes\default\bullets\alert.gif" />
+    <Content Include="themes\default\bullets\bell.gif" />
+    <Content Include="themes\default\bullets\blue_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\book.gif" />
+    <Content Include="themes\default\bullets\brown.bullet.gif" />
+    <Content Include="themes\default\bullets\calendar8_sm.gif" />
+    <Content Include="themes\default\bullets\clip.gif" />
+    <Content Include="themes\default\bullets\collapse.gif" />
+    <Content Include="themes\default\bullets\collapse.left_toolbar.gif" />
+    <Content Include="themes\default\bullets\collapse_blue.gif" />
+    <Content Include="themes\default\bullets\collapse_item.gif" />
+    <Content Include="themes\default\bullets\collapse_menu.gif" />
+    <Content Include="themes\default\bullets\edit.gif" />
+    <Content Include="themes\default\bullets\edit_sm.gif" />
+    <Content Include="themes\default\bullets\envelopesm.gif" />
+    <Content Include="themes\default\bullets\excel.gif" />
+    <Content Include="themes\default\bullets\expand.gif" />
+    <Content Include="themes\default\bullets\expand.left_toolbar.gif" />
+    <Content Include="themes\default\bullets\expand_blue.gif" />
+    <Content Include="themes\default\bullets\expand_item.gif" />
+    <Content Include="themes\default\bullets\expand_menu.gif" />
+    <Content Include="themes\default\bullets\expand_sitem.gif" />
+    <Content Include="themes\default\bullets\expand_white.gif" />
+    <Content Include="themes\default\bullets\expand_window.gif" />
+    <Content Include="themes\default\bullets\grayed.collapse.gif" />
+    <Content Include="themes\default\bullets\grayed.collapse.left_toolbar.gif" />
+    <Content Include="themes\default\bullets\grayed.expand.gif" />
+    <Content Include="themes\default\bullets\grayed.expand.left_toolbar.gif" />
+    <Content Include="themes\default\bullets\grayed.new_window.gif" />
+    <Content Include="themes\default\bullets\gray_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\green.circle.gif" />
+    <Content Include="themes\default\bullets\green.down.arrow.gif" />
+    <Content Include="themes\default\bullets\green_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\green_sq_bullet.png" />
+    <Content Include="themes\default\bullets\inboxsm.gif" />
+    <Content Include="themes\default\bullets\mail_sm.gif" />
+    <Content Include="themes\default\bullets\main_bullet - copia.gif" />
+    <Content Include="themes\default\bullets\menu_separator.gif" />
+    <Content Include="themes\default\bullets\ms_office.gif" />
+    <Content Include="themes\default\bullets\new_window.gif" />
+    <Content Include="themes\default\bullets\pending.gif" />
+    <Content Include="themes\default\bullets\pixel.gif" />
+    <Content Include="themes\default\bullets\red.up.arrow.gif" />
+    <Content Include="themes\default\bullets\redarrowsmall-index.gif" />
+    <Content Include="themes\default\bullets\red_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\right_arrow.gif" />
+    <Content Include="themes\default\bullets\scribble_doc_sm.gif" />
+    <Content Include="themes\default\bullets\search_sm.gif" />
+    <Content Include="themes\default\bullets\todo.ok.gif" />
+    <Content Include="themes\default\bullets\todosm.gif" />
+    <Content Include="themes\default\bullets\tree.leaf.gif" />
+    <Content Include="themes\default\bullets\tree.parent.gif" />
+    <Content Include="themes\default\bullets\white_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\yellow_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\z.green.circle.gif" />
+    <Content Include="themes\default\buttons\cancel.png" />
+    <Content Include="themes\default\buttons\close.gif" />
+    <Content Include="themes\default\buttons\close.jpg" />
+    <Content Include="themes\default\buttons\close.window.gif" />
+    <Content Include="themes\default\buttons\document.sm.gif" />
+    <Content Include="themes\default\buttons\edit.gif" />
+    <Content Include="themes\default\buttons\ellipsis.gif" />
+    <Content Include="themes\default\buttons\excel.gif" />
+    <Content Include="themes\default\buttons\first.gif" />
+    <Content Include="themes\default\buttons\g22o.button.png" />
+    <Content Include="themes\default\buttons\go.brown.gif" />
+    <Content Include="themes\default\buttons\go.button.png" />
+    <Content Include="themes\default\buttons\go.gif" />
+    <Content Include="themes\default\buttons\godd.button.png" />
+    <Content Include="themes\default\buttons\graph.gif" />
+    <Content Include="themes\default\buttons\grayed.close_window.gif" />
+    <Content Include="themes\default\buttons\last.gif" />
+    <Content Include="themes\default\buttons\leaf.gif" />
+    <Content Include="themes\default\buttons\meter.gif" />
+    <Content Include="themes\default\buttons\meter_begin.gif" />
+    <Content Include="themes\default\buttons\meter_end.gif" />
+    <Content Include="themes\default\buttons\meter_thumb.gif" />
+    <Content Include="themes\default\buttons\minus.gif" />
+    <Content Include="themes\default\buttons\next.gif" />
+    <Content Include="themes\default\buttons\plus.gif" />
+    <Content Include="themes\default\buttons\previous.gif" />
+    <Content Include="themes\default\buttons\return.gif" />
+    <Content Include="themes\default\buttons\search.button.gif" />
+    <Content Include="themes\default\buttons\search.gif" />
+    <Content Include="themes\default\buttons\select_page.gif" />
+    <Content Include="themes\default\buttons\trash.gif" />
+    <Content Include="themes\default\css\dashboard.css" />
+    <Content Include="themes\default\css\dashboard.item.css" />
+    <Content Include="themes\default\css\editor.css" />
+    <Content Include="themes\default\css\exception.css" />
+    <Content Include="themes\default\css\explorer.css" />
+    <Content Include="themes\default\css\logon.css" />
+    <Content Include="themes\default\css\master.page.css" />
+    <Content Include="themes\default\css\report.css" />
+    <Content Include="themes\default\css\secondary.master.page.css" />
+    <Content Include="themes\default\css\statusbar.css" />
+    <Content Include="themes\default\css\to.printer.css" />
+    <Content Include="themes\default\css\toolbar.css" />
+    <Content Include="themes\default\css\viewer.master.page.css" />
+    <Content Include="themes\default\customer\background.png" />
+    <Content Include="themes\default\customer\customer.full.logo.png" />
+    <Content Include="themes\default\customer\customer.logo.png" />
+    <Content Include="themes\default\customer\dashboard.background.gif" />
+    <Content Include="themes\default\customer\pleca-roja.png" />
+    <Content Include="themes\default\customer\section_division_bar.jpg" />
+    <Content Include="themes\default\customer\separator.jpg" />
+    <Content Include="themes\default\images\barcode.png" />
+    <Content Include="themes\default\images\men.nophoto.jpg" />
+    <Content Include="themes\default\images\woman.nophoto.jpg" />
+    <Content Include="themes\default\navbar.icons\back.gif" />
+    <Content Include="themes\default\navbar.icons\binder.gif" />
+    <Content Include="themes\default\navbar.icons\contacts.gif" />
+    <Content Include="themes\default\navbar.icons\documents.gif" />
+    <Content Include="themes\default\navbar.icons\ellipsis.gif" />
+    <Content Include="themes\default\navbar.icons\folder.gif" />
+    <Content Include="themes\default\navbar.icons\forward.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.back.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.contacts.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.documents.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.folder.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.forward.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.home.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.map.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.products.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.search.gif" />
+    <Content Include="themes\default\navbar.icons\help.gif" />
+    <Content Include="themes\default\navbar.icons\history.gif" />
+    <Content Include="themes\default\navbar.icons\home.gif" />
+    <Content Include="themes\default\navbar.icons\map.gif" />
+    <Content Include="themes\default\navbar.icons\products.gif" />
+    <Content Include="themes\default\navbar.icons\progress_bar.gif" />
+    <Content Include="themes\default\navbar.icons\search.gif" />
+    <Content Include="themes\default\textures\alert.background.png" />
+    <Content Include="themes\default\textures\gauge.jpg" />
+    <Content Include="themes\default\textures\header.background.png" />
+    <Content Include="themes\default\textures\main_background.gif" />
+    <Content Include="themes\default\textures\main_background.old.gif" />
+    <Content Include="themes\default\textures\pixel.gif" />
+    <Content Include="themes\default\textures\textbox.gif" />
+    <Content Include="themes\default\view.icons.small\home.gif" />
+    <Content Include="themes\default\view.icons.small\search.gif" />
+    <Content Include="themes\default\view.icons\design.png" />
+    <Content Include="themes\default\view.icons\document.png" />
+    <Content Include="themes\default\view.icons\documents.png" />
+    <Content Include="themes\default\view.icons\folder.png" />
+    <Content Include="themes\default\view.icons\note.png" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\HomeLayout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Properties\" />
+    <Folder Include="themes\default\screen.shoots\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>1988</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:8585/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

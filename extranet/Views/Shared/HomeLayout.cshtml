@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="iso-8859-1" />
+	<title>@ViewBag.Title</title>
+	<link href="~/images/customer/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<meta name="viewport" content="width=device-width" />
+	@Styles.Render("~/Content/css")
+	@RenderSection("css", required: false)
+	@Scripts.Render("~/bundles/modernizr")
+	@RenderSection("styles", required: false)
+	@RenderSection("headerScripts", required: false)
+</head>
+<body>
+	@RenderBody()
+	@Scripts.Render("~/bundles/jquery")
+	@RenderSection("bodyScripts", required: false)
+</body>
+</html>

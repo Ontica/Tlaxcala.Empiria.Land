@@ -1,0 +1,179 @@
+﻿body {
+  font-size: .85em;
+  font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+  color: #232323;
+  background-color: #fff;
+}
+
+header, footer, nav, section {
+	display: block;
+}
+
+img {
+	border:none;
+}
+
+.k-button {
+	margin-top: 0.5em;
+	padding: 0.4em 1.2em 0.4em 1.2em;
+}
+.bubble {
+	background-color: #fff0a0;
+	border-radius: 5px;
+	box-shadow: inset 0 1px 1px hsla(0,0%,100%,.5), 3px 3px 0 hsla(0,0%,0%,.1);
+	color: #333;
+	display: inline-block;
+	font-size: 1.1em;
+	padding: 20px 25px;
+	position: relative;
+	text-shadow: 0 1px 1px hsla(0,0%,100%,.5);
+	min-width: 100px;
+	max-width: 320px;
+	min-height: 20px;
+	cursor: pointer;
+}
+
+.bubble .bubblealert {
+	background-color: #B50431;
+}
+
+
+.bubble:after, .bubble:before {
+	border-bottom: 25px solid transparent;
+	border-right: 15px solid #fff0a0;
+	bottom: -25px;
+	content: '';
+	position: absolute;
+	left: 25px;
+}
+
+.bubble:before {
+	border-right: 15px solid hsla(0,0%,0%,.1);
+	bottom: -28px;
+	left: 22px;
+}
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+fieldset.efx-fieldset {
+  border: none;
+  padding: 0 0.2em 0 0.2em;
+  margin: 0 0 1em 0;
+	white-space:nowrap;
+}
+
+legend {
+	font-size: 1.2em;
+  font-weight: bold;
+}
+
+textarea {
+	min-height: 75px;
+}
+
+fieldset.efx-fieldset label {
+  margin: 0.5em 0.5em 0em 0.5em;
+	line-height: 3em;
+	white-space: nowrap;
+}
+
+fieldset.efx-fieldset input, select {
+	color: #363636;
+	margin: 0.8em 1em 0.5em 0;
+	background-color: #fafafa;
+	min-height: 1.8em;
+	font-size: 1.1em;
+	border: solid 1px #efefef;
+	font-family: "Segoe UI" , Verdana, Helvetica, Sans-Serif;
+	border-radius: 4px;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #f00;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #f00;
+    background-color: #fee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #f00;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+		background-color: #fff;
+}
+
+select:focus {
+	outline: none;
+}
+
+.efx-object-title {
+	font-family: Century, Serif;
+	font-weight: normal;
+	color: #004600;
+	width: 380px;
+	font-size: 1.5em;
+	float: right;
+	text-align: right;
+	padding-right: 12pt;
+	margin: 5px;
+	display: inline-block;
+}
+
+table {
+	border-collapse:collapse;
+}
+tr > td {
+	vertical-align: top;
+}
+
+table.efx-attributes-table tr {
+
+}
+
+table.efx-attributes-table tr:first-child > td {
+	border-top: 3px solid #064D2C;
+	padding-top: 8px;
+}
+
+table.efx-attributes-table tr:last-child > td {
+	border-bottom: 1px dotted #aeaeae;
+	padding-bottom: 8px;
+}
+
+table.efx-attributes-table tr.efx-row-separator > td {
+	border-bottom: 1px dotted #dedede;
+	padding-bottom: 12px;
+}
+
+table.efx-attributes-table td {
+	padding: 3px 2px;
+	text-align: left;
+}
+
+table.efx-attributes-table td:first-child {
+	color: #064D2C;
+	padding-right: 8px;
+	white-space: nowrap;
+}
+
+table.efx-attributes-table td:last-child {
+	text-align:left;
+	width:80%;
+}

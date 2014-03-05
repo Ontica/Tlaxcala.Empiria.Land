@@ -1,0 +1,25 @@
+﻿#divBottomToolbar
+{
+	background-color: #f2e5c4;
+	color: #486988;
+	font-family: Tahoma, Verdana, Sans-Serif;
+	border-top: #dadada 1px solid;
+	height: 26px;
+	padding: 4px 2px 0px 4px;
+	float: none;
+	margin: 0px;
+}
+#imgHideLeftToolbar {
+	top: 2px;
+	text-align: right;
+	position: relative;
+}
+table.statusBarItem {
+  background-color: #ffffda;
+  padding: 0px 2px 0px 2px;
+  width: 100%;
+  color: #486988;
+  margin-top: -10px;
+  font-family: Tahoma, Verdana;
+  vertical-align: top;
+}

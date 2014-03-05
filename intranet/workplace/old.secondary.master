@@ -1,0 +1,135 @@
+<%@ Master Language="C#" EnableViewState="false" CodeFile="old.secondary.master.cs" Inherits="Empiria.Web.UI.Workplace.OLDSecondaryMasterPage" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
+<head runat="server">
+  <title></title>
+  <meta http-equiv="Expires" content="-1" />
+  <meta http-equiv="Pragma" content="no-cache" />  
+	<link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
+	<link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
+	<script type="text/javascript" src="../scripts/empiria.general.js"></script>
+	<script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
+	<script type="text/javascript" src="../scripts/empiria.validation.js"></script>
+	<script type="text/javascript" src="../scripts/empiria.calendar.js"></script>
+	<script type="text/javascript">
+	/* <![CDATA[ */	
+
+		function doPageCommand(commandName, commandArguments) {
+			switch (commandName) {
+			  case 'createPageCmd':
+			    alert("Con este botón será posible invocar directamente al editor correspondiente.");
+			    gbSended = false;
+					return true;
+			  case 'refreshViewCmd':
+			    window.location.reload(false);
+			    //gbSended = true;
+					return true;
+				case 'acceptChangesCmd':
+				  if (!gbIsDirty) {
+				    return doPageCommand('cancelEditionCmd');
+				  }
+					gbSended = doValidation();
+					gsWaitScreenMessage = "Guardando los cambios solicitados";
+					return true;
+				case 'applyChangesCmd':
+				  gbSended = doValidation();
+					gsWaitScreenMessage = "Guardando los cambios solicitados";
+					return true;
+				case 'cancelEditionCmd':
+				  gbSended = false;
+          //window.opener.execScript("doCommand('refreshViewCmd')");
+          self.close();
+					return true;
+				case 'printObjectCmd':
+				  gbSended = false;
+					return true;
+				case 'deleteObjectCmd':
+					gbSended = doDeleteValidation();
+					gsWaitScreenMessage = "Eliminado el elemtno solicitado";
+					return true;
+				case 'suspendObjectCmd':
+					gbSended = doSuspendValidation();
+					gsWaitScreenMessage = "Suspendiendo del sistema el elemento solicitado";
+					return true;					
+				case 'changeBehaviorCmd':
+				  doChangeBehavior();
+				  gbSended = false;
+					return true;
+				case 'appendParameterCmd':
+				  doAppendParameterCommand();
+          gbSended = false; 
+					return true;
+				default:
+					return false;
+			}
+		}
+
+		function doValidation() {
+		  <%=OnValidationScript()%>
+		  return true;
+		}
+
+		function doDeleteValidation() {
+		  <%=OnDeleteScript()%>
+		}
+
+    function doSuspendValidation() {
+      <%=OnSuspendScript()%>
+    }
+
+	  function doChangeBehavior() {
+		  <%=OnChangeBehaviorScript()%>
+		}
+		
+		function window_onload() {
+		  <%=OnBeginLoadScript()%>
+      setWorkplace();
+      <%=OnEndLoadScript()%>
+      doChangeBehavior();
+		}
+
+		addEvent(window, 'load', window_onload);
+
+	/* ]]> */
+	</script>	
+</head>
+<body>
+  <form id="frmEditor" runat="server">    
+    <div id="divCanvas">
+		  <div id="divHeader">
+		    <span class="appTitle"><%=Page.ViewModel.Title%></span>
+		    <span class="rightItem">
+		      <!--
+		      <a href="../workflow/create.message.aspx" ><img class="separatorButton" src="../themes/default/navbar.icons/outlook2.gif" alt="" height="24" /></a>
+		      <a href="javascript:doCommand('showDocuments');"><img class="separatorButton" src="../themes/default/navbar.icons/folder5.gif" alt="" height="24" /></a>
+		      <a href="javascript:doCommand('showContextualHelp');"><img class="separatorButton" src="../themes/default/navbar.icons/help.gif" alt="" height="24" /></a>
+		      <%=MasterPageContent.GetNavigationButtonsContent()%>
+		      !-->
+		    </span>
+			</div>
+			<div id="divBody">
+				<div id="divContent">
+				  <asp:contentplaceholder id="contentPlaceHolder" runat="server" EnableViewState="False">
+				  </asp:contentplaceholder>
+				</div>
+		    <div id="divRightMenu" style="display:none;">
+		      <asp:contentplaceholder id="rightMenuPlaceHolder" runat="server" EnableViewState="False">
+		      </asp:contentplaceholder>
+		    </div>
+				<div id="divWait">
+				  <%=MasterPageContent.GetWaitScreenContent()%>
+				</div>		    				
+	    </div> <!-- end divBody !-->  
+			<div id="divBottomToolbar">
+			  <asp:contentplaceholder id="bottomToolbarPlaceHolder" runat="server" EnableViewState="False">
+			  </asp:contentplaceholder>
+			</div> <!-- end divBottomToolbar !-->
+	  </div> <!-- end divCanvas !-->
+  </form>
+<iframe id="ifraCalendar" style="z-index: 99; LEFT: 0px; visibility: hidden; position: absolute; TOP: 0px" 
+        hspace="0px" vspace="0" marginheight="0"  marginwidth="0" frameborder="0" scrolling="no" 
+        src="../user.controls/calendar.aspx" width="100%">
+</iframe>
+</body>
+</html>

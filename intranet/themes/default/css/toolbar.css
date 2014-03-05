@@ -1,0 +1,105 @@
+﻿div.toolbox {
+	clear: both;
+	margin: 0px 0px 16px 0px;
+	padding: 4px;
+	border-right: #a9a9a9 1px solid;
+	border-top: #a9a9a9 1px solid;
+	border-left: #a9a9a9 1px solid;
+	border-bottom: #a9a9a9 1px solid;	
+}
+.toolboxTitle {
+	background-color: Transparent;
+	font-size: 11pt;
+	color: #082c5a;
+	font-family: Tahoma, Arial, Sans-serif;
+	margin-left: 6pt;
+	margin-bottom: 6pt;
+}
+ul.toolboxOptions {
+	list-style-type: none;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 4px 0px;
+}
+ul.toolboxOptions li {
+	background-image: url(../bullets/right_arrow.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 2px;
+	padding-left: 14px;
+	margin: 6px 0px 8px 4px;
+}
+ul.toolboxOptions li.separator {
+	border-bottom: #d4d4d4 1px dashed;
+	margin: 5px 20px 5px 0px;
+	padding: 0px 0px 5px 14px;
+}
+
+div.toolboxRow {
+	padding: 2px 0px 2px 0px;
+}
+div.toolboxTwoColumnsRow {
+	width: 166px;
+}
+span.toolboxRowLeftColumn {
+	float: left;
+	width: 83px;
+}
+span.toolboxRowRightColumn {
+	float: right;
+	width: 83px;
+	text-align: right;
+}
+div.toolboxRow input {
+	margin-right: 4px;
+	vertical-align: middle;
+}
+input.toolboxTextBox {
+  background: #f9f9f9 url(../themes/default/textures/textbox.gif) repeat-x;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  color: #1e3766;
+  font: 8pt Verdana, Tahoma, Serif;
+  margin: 2px 0px 2px 0px;
+  padding: 4px 2px 2px 2px;
+  height: 14px;
+  width: 158px;
+}
+select.toolboxControl {
+  background: #f9f9f9 url(../themes/default/textures/textbox.gif) repeat-x;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  color: #1e3766;
+  font: 8pt Tahoma, Verdana, Tahoma, Serif;
+}
+input.toolboxButton {
+	background-color: inherit;
+	color: #4a4a4a;
+	cursor: pointer;
+	font: 8pt Tahoma, Sans-Serif;
+	height: 20px;
+	width: 68px;
+	padding: 0px 0px 2px 0px;
+}
+ul.toolboxItemList {
+	list-style-type: none;
+	margin: 0px 0px 0px	2px;
+	padding-left: 0px;
+}
+ul.toolboxItemList li {
+	background-image: none;
+	background-repeat: no-repeat;
+	background-position: 5px 5px;
+	padding-left: 16px;
+	margin: 5px 0px 9px -8px;
+}
+ul.toolboxItemList li.separator {
+  background-image : none;
+	background-repeat: no-repeat;
+	background-position: 5px 5px;
+	border-bottom: #d4d4d4 1px dashed;
+	margin: 5px 20px 5px -8px;
+	padding: 0px 0px 5px 16px;
+}

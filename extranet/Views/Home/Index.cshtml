@@ -1,0 +1,558 @@
+﻿@{
+    ViewBag.Title = "Registro Público de la Propiedad del Estado de Tlaxcala";
+    Layout = "~/Views/Shared/HomeLayout.cshtml";
+}
+@section css {
+  <link href="~/kendo/kendo.common.min.css" rel="stylesheet" />
+  <link href="~/kendo/kendo.default.min.css" rel="stylesheet" />
+  <link href="~/Content/home.css" rel="stylesheet" />
+}
+<section id="mainItem">
+  <header>
+    <img src='@Url.Content("~/images/customer/customer.full.logo.png")' alt="" style='height:56px;margin-left:16px;margin-top:18px' />
+    <h1>
+      Registro Público de la Propiedad del Estado de Tlaxcala
+    </h1>
+  </header>
+  <div id="divContent">
+    <h2>¿Qué desea hacer?</h2>
+    <select id="cboOption" style="width:336px" class="e-control" title="Lista con las opciones de consulta disponibles en este sitio">
+      <option value="execTransactionSearch">Consultar el estado de un trámite</option>
+      <option value="execViewRecordingBook">Consultar un libro registral</option>
+      <option value="execPropertySearch">Consultar la situación de un predio</option>
+      <option value="execVerifyCertificate">Verificar la autenticidad de un certificado</option>
+      <option value="execVerifyRecording">Verificar la autenticidad de una inscripción</option>
+      <option value="execLoginAgencies">Servicios para notarías y grandes usuarios</option>
+    </select>
+    <fieldset class="efx-fieldset">
+      <legend></legend>
+      <div id="transactionNumberRow">
+        <label for="txtTransactionKey">Número de trámite:</label>
+        <input id="txtTransactionKey" name="txtTransactionKey" type="text" placeholder="Número de trámite" 
+               title="El número de trámite se encuentra en la esquina superior derecha de la boleta de recepción."
+               style='width:198px;' maxlength="14" />
+        <a id='viewHelperLink' href='#' tabindex='-1'>¿Dónde se encuentra?</a>
+      </div>
+      <div id="partyNameRow" style="display:none">
+        <label for="txtPartyName">Nombre:</label>
+        <input id="txtPartyName" name="txtPartyName" type="text" placeholder="Nombre del propietario" 
+               title="Nombre de la persona, empresa u organización propietaria del predio que se desea consultar."
+               style='width:262px;' maxlength="64" />
+      </div>
+      <div id="propertyRow" style="display:none">
+        <label for="txtPropertyCode">Folio electrónico:</label>
+        <input id="txtPropertyCode" name="txtPropertyCode" type="text" placeholder="Folio electrónico del predio" 
+               title="Folio electrónico del predio cuyo estado desea consultar."
+               style='width:214px;' maxlength="19" />
+      </div>
+      <div id="certificateRow" style="display:none">
+        <label for="txtCertificateNumber">Certificado:</label>
+        <input id="txtCertificateNumber" name="txtCertificateNumber" type="text" placeholder="Número electrónico del certificado" 
+               title="Número o folio electrónico del certificado cuya autenticidad se desea verificar."
+               style='width:248px;' maxlength="23" />
+      </div>
+      <div id="recordingRow" style="display:none">
+        <label for="txtRecordingNumber">Inscripción:</label>
+        <input id="txtRecordingNumber" name="txtRecordingNumber" type="text" placeholder="Número electrónico de la inscripción" 
+               title="Número electrónico de la inscripción cuya autenticidad se desea verificar."
+               style='width:248px;' maxlength="20" />
+      </div>
+      <div id="fingerprintRow" style="display:none">
+        <label for="txtFingerprint">Huella dactilar:</label>
+        <input id="txtFingerprint" name="txtFingerprint" type="password" placeholder="Capture su huella dactilar" 
+               title="Huella dactilar del usuario que desea ingresar."
+               style='width:228px;' maxlength="1024" />
+        <button class="k-button" style="width:94px;" onclick="$('#txtFingerprint').val('')">Limpiar</button>
+      </div>
+      <div id="recordingBookInfoRow" style="display:none">
+        <label for="cboRecorderOffice">Distrito:</label>
+        <select id="cboRecorderOffice" class="e-control" style="margin-left:10px;width:342px" onchange="doOperation('lookupRecordingBook', this)">
+          <option value="0">( Distrito Judicial )</option>
+          <option value="101">Hidalgo</option>
+          <option value="102">Cuauhtémoc</option>
+          <option value="103">Juárez</option>
+          <option value="104">Lardizábal y Uribe</option>
+          <option value="105">Morelos</option>
+          <option value="106">Ocampo</option>
+          <option value="107">Xicohténcatl</option>
+          <option value="108">Zaragoza</option>
+        </select> 
+        <br />
+        <label for="cboRecordingActType">Sección:</label>
+        <select id="cboRecordingActType" class="e-control" style="margin-left:8px;width:342px" 
+                onchange="doOperation('lookupRecordingBook', this)">
+          <option value="0">( Sección a la que pertenece el libro )</option>
+          <option value="1051">Primera: Traslativos de dominio</option>
+          <option value="1050">Primera: Procede</option>
+          <option value="1052">Segunda: Hipotecas y embargos</option>
+          <option value="1053">Tercera: Arrendamientos</option>
+          <option value="1054">Cuarta: Sentencias</option>
+          <option value="1055">Quinta</option>
+          <option value="0"></option>
+          <option value="1058">Anotaciones marginales</option>
+          <option value="1056">Capitulaciones matrimoniales</option>
+        </select>
+        <br />
+        <label for="cboRecordingBook">Volumen:</label>
+        <select id="cboRecordingBook" class="e-control" style="width:342px" >
+          <option value="">( Primero seleccionar el Distrito y la Sección )</option>
+        </select>
+      </div>
+    </fieldset>
+    <button id="executeButton" class="k-button" style="height:34px;width:134px;left:200px;position:relative">Consultar trámite</button>
+  </div>
+  <footer>
+    <img class="gov-logo" src='@Url.Content("~/images/customer/logo.desarrollo.png")' style="width:20%" alt='' />
+    <span><a id="governmentSite" href="http://tlaxcala.gob.mx/" title="Sitio Internet del Gobierno del Estado de Tlaxcala" target="_blank">tlaxcala.gob.mx</a></span>
+    <div id="divSponsor">
+      Secretaría de Gobierno<br />
+      Dirección de Notarías y Registro Público
+    </div>
+    <div id="divCopyright">
+      <span class="leftItem">
+        <a href="@Empiria.ProductInformation.CopyrightUrl" target="_blank">@Empiria.ProductInformation.Name</a>
+      </span>
+      <span class="rightItem">
+        <a href="@Empiria.ProductInformation.CopyrightUrl" target="_blank">@Empiria.ProductInformation.Copyright</a>
+      </span>
+    </div>
+  </footer>
+  <img class="pleca" src='@Url.Content("~/images/customer/pleca-roja.png")' alt="" />
+</section>
+<div id="divHtml5Compliance">
+  <a href="http://www.w3.org/html/logo/" target="_blank">
+    <img src="http://www.w3.org/html/logo/badge/html5-badge-v-css3-semantics.png" style="width:28px;" alt="Empiria 2014: HTML5 Powered with CSS3 / Styling, and Semantics" 
+         title="Empiria 2014: HTML5 Powered with CSS3 / Styling, and Semantics" />
+  </a>
+</div>
+<div id="helperWindow" style="background-color:white;text-align:right;display:none">
+  <div>
+    <img src='@Url.Content("~/images/customer/transaction.key.png")' title="Localización del número de trámite en la boleta de recepción" />
+    <br />
+    <button id="closeHelperWindowButton" class="k-button" style="position:relative">Cerrar</button>
+  </div>
+</div>
+<div id="alertWindow" style="text-align:center;display:none;background-color:papayawhip">
+  <div>
+    <span id="alertWindowMessage" style="display:block;text-align:left"></span>
+    <br />
+    <button id="alertWindowCloseButton" class="k-button" style="display:block;float:right">Aceptar</button>
+  </div>
+</div>
+<span id="bubbleWindow" class="bubble" style="display:none"></span>
+<div id="resultsWindow" style="background-color:white;display:none"></div>
+@section bodyScripts {	
+  <script type="text/javascript" src="~/Scripts/kendo.web.min.js"></script>	
+  <script type="text/javascript" src="~/Scripts/empiria.jquery.js"></script>
+  <script type="text/javascript" src="~/Scripts/empiria.ajax.js"></script>
+    
+  <script type="text/x-kendo-template" id="lrsTransactionStatusTemplate">
+    <div style='margin: 4px 12px'>
+      <span class='efx-object-title'>#= Key #</span>
+      <br />
+      <table class='efx-attributes-table' style="width:98%">
+        <tr><td>Oficialía:</td><td>#= RecorderOffice #</td></tr>
+        <tr><td>Trámite:</td><td>#= Type #</td></tr>
+        <tr class='efx-row-separator'><td>Tipo:</td><td>#= DocumentType #</td></tr>
+        <tr><td>Solicitado por:</td><td>#= RequestedBy #</td></tr>
+        <tr><td>Recibido el:</td><td>#= PresentationTime #</td></tr>
+        <tr class='efx-row-separator'><td>Derechos:</td><td>#= ReceiptTotal #</td></tr>
+        <tr><td>Estado del trámite:</td><td><b>#= StatusName #</b></td></tr>
+        <tr><td>Fecha de entrega:</td><td>#= DeliveryEstimatedDate #</td></tr>
+      </table>
+      <button class='k-button efx-close-action' efx_action_object='resultsWindow' style='position:relative;left:276px;top:1.0em;width:100px'>Cerrar</button>
+    </div>
+  </script>
+
+  <script type="text/javascript">
+
+    function doOperation(operation) {
+      switch (operation) {
+        case 'execTransactionSearch':
+          execTransactionSearch();
+          return;
+        case 'execViewRecordingBook':
+          execViewRecordingBook();
+          return;
+        case 'execPropertySearch':
+          execPropertySearch();
+          return;
+        case 'execVerifyCertificate':
+          execVerifyCertificate();
+          return;
+        case 'execVerifyRecording':
+          execVerifyRecording();
+          return;
+        case 'execLoginAgencies':
+          execLoginAgencies();
+          return;
+        case 'lookupRecordingBook':
+          lookupRecordingBook();
+          return;
+        default:
+          showAlert("La operación solicitada (" + operation + ") aún no está definida en la aplicación.");
+          return;
+      }
+    }
+
+    function execTransactionSearch() {
+      var hint = "\n<small>El número de trámite consta de catorce letras y dígitos, con un guión " +
+                 "en la penúltima posición. (Ej: <b>TL61AE99KH87-0</b>)</small>";
+
+      if ($("#txtTransactionKey").val().length == 0) {
+        $("#txtTransactionKey").showBubble("<b>Necesito el número de trámite.</b>" + 
+                                           "\n<small>El número de trámite está impreso en la <u>boleta de recepción</u>, " + 
+                                           "arriba del código de barras.</small>");
+        return false;
+      }
+      if ($("#txtTransactionKey").val().length != 14) {
+        $("#txtTransactionKey").showBubble("<b>El número de trámite está incompleto.</b>" + hint);
+        return false;
+      }
+
+      if (!validateLRSTransactionKey($("#txtTransactionKey").val())) {
+        $("#txtTransactionKey").showBubble("<b>El número de trámite tiene un formato que no reconozco.</b>" + hint);
+        return false;
+      }
+      var url = "@Url.Content("~/Home/GetLRSTransaction?transactionNumber=")" + $("#txtTransactionKey").val();
+      $.ajax({
+        url: url, cache: false, success: onretriveLRSTransaction, contentType: "application/json; charset=utf-8", type: 'POST', dataType: "json"
+      });
+    }
+
+    function onretriveLRSTransaction(data) {
+      try {
+        if (data == null) {
+          $("#txtTransactionKey").showBubble("<b>El trámite con número " + $("#txtTransactionKey").val() + " no está registrado.</b>" +
+                                             "\n<small>El número de trámite consta de catorce letras y dígitos, con un guión en la penúltima posición. (Ej: <b>TL61AE99KH87-0</b>)</small>");
+          return false;
+        }
+        var template = kendo.template($("#lrsTransactionStatusTemplate").html());
+
+        $("#resultsWindow").css('height', '');
+        $("#resultsWindow").html(template(data));
+
+        $('.efx-close-action').bind("click",
+              function () {
+                var value = $(this).attr('efx_action_object');
+                $('#' + value).data("kendoWindow").close();
+              }
+         );
+
+        var win = $("#resultsWindow").data("kendoWindow");
+        win.center();
+        win.open();
+
+        $("#resultsWindow").css('height', $("#resultsWindow").height() + 28 + 'px');
+      } catch (err) {
+        txt = "There was an error on this page.\n\n";
+        txt += "Error description: " + err.message + "\n\n";
+        txt += "Click OK to continue.\n\n";
+        alert(txt);
+      }
+    }
+
+    function execViewRecordingBook() {
+      var hint = '';
+      if ($("#cboRecorderOffice").val().length == 0 || $("#cboRecorderOffice").val() == '0') {
+        $("#cboRecorderOffice").showBubble("<b>Necesito conocer el Distrito Judicial.</b>" +
+                 "\n<small>El Distrito Judicial es aquel donde se ubica físicamente el predio cuyo registro se está buscando.</small>");
+        return false;
+      }
+      if ($("#cboRecordingActType").val().length == 0 || $("#cboRecordingActType").val() == '0') {
+        $("#cboRecordingActType").showBubble("<b>Necesito conocer la sección a la que pertenece el libro.</b>" +
+               "\n<small>Los libros registrales se clasifican en secciones. Las inscripciones relativas a " + 
+               "compras-ventas y donaciones están en la sección primera, las hipotecas en la sección segunda.</small>");
+        return false;
+      }
+      if ($("#cboRecordingBook").val().length == 0 && $("#cboRecordingBook option").size() == 1) {
+        $("#cboRecordingBook").showBubble("<b>No hay libros registrados en el Distrito y sección seleccionados.</b>" +
+            "\n<small>Es posible que el libro que se está buscando aún no haya sido digitalizado.</small>");
+        return false;
+      }
+      if ($("#cboRecordingBook").val().length == 0 && $("#cboRecordingBook option").size() > 1) {
+        $("#cboRecordingBook").showBubble("<b>No se ha seleccionado un libro o volumen de la lista.</b>" +
+            "\n<small>Una vez seleccionado el libro basta con hacer clic en el botón 'Consultar libro'</small>");
+        return false;
+      }
+
+      var options = "status=yes,scrollbars=yes,fullscreen=no,location=no,menubar=no,resizable=yes,height=880px,width=1200px";
+
+      window.open("@Url.Content("~")" + "/directory.image.viewer.aspx?id=" + $("#cboRecordingBook").val(), "_blank", options);
+
+    }
+
+    function lookupRecordingBook() {
+      var url = "./ajax/land.registration.system.data.aspx";
+      url += "?commandName=getRecordingBooksStringArrayCmd";
+      url += "&recorderOfficeId=" + $("#cboRecorderOffice").val();
+      url += "&recordingActTypeCategoryId=" + $("#cboRecordingActType").val();
+      url += "&digitalized=true"
+      invokeAjaxComboItemsLoader(url, document.getElementById("cboRecordingBook"));
+    }
+
+    function execPropertySearch() {
+      var hint = "<br /><small>El folio del predio debe constar de <u>cuatro bloques</u> de letras y dígitos separados por guiones. " + 
+                 "En documentos inscritos recientemente, está impreso al final de la escritura.\nEjemplo: <b>TL3T-9N2H-K7W2-P4HA</b></small>";
+
+      if ($("#txtPropertyCode").val().length == 0) {
+        $("#txtPropertyCode").showBubble("<b>Requiero se proporcione el folio electrónico del predio.</b>" + hint);
+        return false;
+      }
+      if ($("#txtPropertyCode").val().length != 19) {
+        $("#txtPropertyCode").showBubble("<b>El folio electrónico del predio está incompleto.</b>" + hint);
+        return false;
+      }
+
+      if (!validateLRSPropertyNumber($("#txtPropertyCode").val())) {
+        $("#txtPropertyCode").showBubble("<b>El folio electrónico del predio tiene un formato que no reconozco.</b>" + hint);
+        return false;
+      }
+
+      $("#txtPropertyCode").showBubble("<b>No encontré ningún predio con el folio electrónico " + $("#txtPropertyCode").val() + ".</b>" + hint);
+    }
+
+    function execVerifyCertificate() {
+      var hint = "<br /><small>El número de certificado está formado por <u>cuatro bloques</u> de cinco caracteres " + 
+                 "separados por guiones, y está impreso en el certificado. Ejemplo: <b>CT954-2HK7W-2P4W8-UA4BF</b></small>";
+
+      if ($("#txtCertificateNumber").val().length == 0) {
+        $("#txtCertificateNumber").showBubble("<b>Requiero el número del certificado que se desea autentificar.</b>" + hint);
+        return false;
+      }
+      if ($("#txtCertificateNumber").val().length != 23) {
+        $("#txtCertificateNumber").showBubble("<b>El número de certificado está incompleto.</b>" + hint);
+        return false;
+      }
+      if (!validateLRSCertificateNumber($("#txtCertificateNumber").val())) {
+        $("#txtCertificateNumber").showBubble("<b>El número de certificado tiene un formato que no reconozco.</b>" + hint);
+        return false;
+      }
+
+      $("#txtCertificateNumber").showBubble("<b>No tengo registrado ningún certificado con el número " + $("#txtCertificateNumber").val() + ".</b>" + hint);
+    }
+
+    function execVerifyRecording() {
+      var hint = "<br /><small>El número de inscripción está formado por <u>tres bloques</u> de seis caracteres, " + 
+                 "y se encuentra impreso al final de la escritura. Ejemplo: <b>RP92ET-H62HK7-W2P4J3</b></small>";
+
+      if ($("#txtRecordingNumber").val().length == 0) {
+        $("#txtRecordingNumber").showBubble("<b>Necesito el número de inscripción que se desea autentificar.</b>" + hint);
+        return false;
+      }
+      if ($("#txtRecordingNumber").val().length != 20) {
+        $("#txtRecordingNumber").showBubble("<b>El número de inscripción está incompleto.</b>" + hint);
+        return false;
+      }
+
+      if (!validateLRSRecordingNumber($("#txtRecordingNumber").val())) {
+        $("#txtRecordingNumber").showBubble("<b>El número de inscripción tiene un formato que no reconozco.</b>" + hint);
+        return false;
+      }
+
+      $("#txtRecordingNumber").showBubble("<b>No existe ninguna inscripción con el número " + $("#txtRecordingNumber").val() + ".</b>" + hint);
+    }
+
+    function execLoginAgencies() {
+      if ($("#txtFingerprint").val().length == 0) {
+        $("#txtFingerprint").showBubble("<b>Para ingresar, necesito se capture una huella dactilar autorizada.</b>" +
+                                        "\n<small>El registro de huellas autorizadas se efectúa en cualquiera de las oficinas del Registro Público del Estado.</small>");
+        return false;
+      }
+      if ($("#txtFingerprint").val().length < 100) {
+        $("#txtFingerprint").showBubble("<b>La huella dactilar tiene un formato que no reconozco.</b>" +
+                                        "\n<small>La información proporcionada no corresponde a la de una huella digital leída con un lector biométrico.</small>");
+        return false;
+      }
+      $("#txtFingerprint").showBubble("<b>No tengo permitido su ingreso al sistema.</b>" +
+                                      "\n<small>Su huella no ha sido registrada. El registro de huellas autorizadas se efectúa directamente en la oficina del Registro Público de la Propiedad del Estado.</small>");
+    }
+
+    function validateLRSTransactionKey(value) {
+      var regEx = /TL\d{2}\w{2}\d{2}\w{2}\d{2}-\d/g;
+
+      return regEx.test(value);
+    }
+
+    function validateLRSPropertyNumber(value) {
+      var regEx = /TL\w{2}-\w{4}-\w{4}-\w{4}/g;
+
+      return regEx.test(value);
+    }
+
+    function validateLRSCertificateNumber(value) {
+      var regEx = /CT\w{3}-\w{5}-\w{5}-\w{5}/g;
+
+      return regEx.test(value);
+    }
+
+    function validateLRSRecordingNumber(value) {
+      var regEx = /RP\w{4}-\w{6}-\w{6}/g;
+
+      return regEx.test(value);
+    }
+
+    function onchangeUI(element) {
+      if ($('#cboOption').id == element.id) {
+        switch ($('#cboOption').val()) {
+          case 'execTransactionSearch':
+            $('#transactionNumberRow').show();
+            $('#partyNameRow').hide();
+            $('#propertyRow').hide();
+            $('#certificateRow').hide();
+            $('#recordingRow').hide();
+            $('#fingerprintRow').hide();
+            $('#recordingBookInfoRow').hide();
+            $('#executeButton').html('Consultar trámite');
+            return;
+          case 'execViewRecordingBook':
+            $('#transactionNumberRow').hide();
+            $('#partyNameRow').hide();
+            $('#propertyRow').hide();
+            $('#certificateRow').hide();
+            $('#recordingRow').hide();
+            $('#fingerprintRow').hide();
+            $('#recordingBookInfoRow').show();
+            $('#executeButton').html('Consultar libro');
+            return;
+          case 'execPropertySearch':
+            $('#transactionNumberRow').hide();
+            $('#partyNameRow').hide();
+            $('#propertyRow').show();
+            $('#certificateRow').hide();
+            $('#recordingRow').hide();
+            $('#fingerprintRow').hide();
+            $('#recordingBookInfoRow').hide();
+            $('#executeButton').html('Consultar predio');
+            return;
+          case 'execVerifyCertificate':
+            $('#transactionNumberRow').hide();
+            $('#partyNameRow').hide();
+            $('#propertyRow').hide();
+            $('#certificateRow').show();
+            $('#recordingRow').hide();
+            $('#fingerprintRow').hide();
+            $('#recordingBookInfoRow').hide();
+            $('#executeButton').html('Verificar certificado');
+            return;
+          case 'execVerifyRecording':
+            $('#transactionNumberRow').hide();
+            $('#partyNameRow').hide();
+            $('#propertyRow').hide();
+            $('#certificateRow').hide();
+            $('#recordingRow').show();
+            $('#fingerprintRow').hide();
+            $('#recordingBookInfoRow').hide();
+            $('#executeButton').html('Verificar inscripción');
+            return;
+          case 'execLoginAgencies':
+            $('#transactionNumberRow').hide();
+            $('#partyNameRow').hide();
+            $('#propertyRow').hide();
+            $('#certificateRow').hide();
+            $('#recordingRow').hide();
+            $('#fingerprintRow').show();
+            $('#recordingBookInfoRow').hide();
+            $('#executeButton').html('Ingresar al sistema');
+          default:
+        } // switch
+        return;
+      }
+    }
+
+    function e_onpage_ready() {
+
+      $('#divHtml5Compliance').css('opacity', '0.2');
+
+      $('#txtTransactionKey').maskEdit('alphaNumericCodeFilter');
+      $('#txtPropertyCode').maskEdit('alphaNumericCodeFilter');
+      $('#txtCertificateNumber').maskEdit('alphaNumericCodeFilter');
+      $('#txtRecordingNumber').maskEdit('alphaNumericCodeFilter');
+
+      $('#divHtml5Compliance').hover(function (e) { $('#divHtml5Compliance').animate({ opacity: 1 }, 'slow') },
+                                      function (e) { $('#divHtml5Compliance').animate({ opacity: 0.2 }, 'slow') });
+
+
+      $('#executeButton').click(function () {
+        doOperation($('#cboOption').val());
+      });
+
+      $('#cboOption').change(function () {
+        onchangeUI($(this));
+        $("#bubbleWindow").fadeOut(1200);
+      });
+
+      $('#helperWindow').kendoWindow({
+        actions: ["Close"],
+        draggable: true,
+        modal: true,
+        visible: false,
+        resizable: false,
+        title: "Localización del número de trámite"
+      });
+
+      $("#viewHelperLink").click(function () {
+        var win = $("#helperWindow").data("kendoWindow");
+        win.center();
+        win.open();
+      });
+
+      $('#closeHelperWindowButton').click(function () {
+        $("#helperWindow").data("kendoWindow").close();
+      });
+
+      $('#alertWindow').kendoWindow({
+        actions: ["Close"],
+        draggable: true,
+        modal: true,
+        visible: false,
+        resizable: false,
+        minWidth: '240px',
+        maxWidth: '420px',
+        minHeight: '90px',
+        title: "Ocurrió un problema"
+      });
+
+      $('#alertWindowCloseButton').click(function () {
+        $("#alertWindow").data("kendoWindow").close();
+      });
+
+      $('#resultsWindow').kendoWindow({
+        actions: ["Close"],
+        draggable: true,
+        modal: true,
+        visible: false,
+        resizable: false,
+        minWidth: '240px',
+        maxWidth: '420px',
+        minHeight: '240px',
+        maxHeight: '500px',
+        title: "Estado del trámite"
+      });
+
+      $('body').ajaxSend(function () {
+        $('body').css('cursor', 'wait');
+      });
+
+      $('body').ajaxComplete(function () {
+        $('body').css('cursor', 'auto');
+      });
+
+
+      //var _oldJQhide = $.fn.hide;
+      //$.fn.hide = function (speed, callback) {
+      //	$(this).trigger('hide');
+      //	return _oldJQhide.apply(this, arguments);
+      //}
+
+      //$('#helperWindow').hide('slow', function () { alert('Bye bye... '); });
+
+
+    }
+
+    $(document).ready(function () {
+      e_onpage_ready();
+    });
+
+  </script>
+}

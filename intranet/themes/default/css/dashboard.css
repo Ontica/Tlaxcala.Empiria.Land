@@ -1,0 +1,119 @@
+﻿div.dashboard {
+
+}
+div.dashboard a, div.dashboard a:link, div.dashboard a:visited, div.dashboard a:active {
+	background-color: inherit;
+	color: #143d5c;
+}
+div.dashboard a:hover {
+	text-decoration: underline;
+}
+div.dashboardTitle {
+	background-color: #1d4e8d;
+	color: #ffffcc;
+	font-size: 10pt;
+	font-family: Tahoma, Verdana, Arial, Sans-Serif;
+	height: 20px;
+	width: 100%;
+	margin-bottom: 12px;
+	padding: 8px 10px 4px 12px;
+}
+.dashboardItem {
+	margin: 0px 0px 12px 0px;
+	padding: 0px;
+}
+div.dashboardRow {
+	clear: both;
+	padding: 0px 0px 8px 0px;
+	margin: 0px;
+}
+div.dashboardLeftItem {
+	float: left;
+	width: 45%;
+	left: 0px;
+	margin-bottom: 12px;
+}
+div.dashboardRightItem {
+	float: left;
+	left: 45%;
+	margin-bottom: 12px;
+}
+div.dashboardItemImage {
+	float: left;
+}
+img.dashboardImage {
+  cursor: default;
+	height: 64px;
+	width: 64px;  
+}
+div.dashboardItemContents {
+	float: left;
+	margin-left: 2px;
+}
+span.dashboardItemTitle {
+	background-color: inherit;
+	color: #95653a;
+	border-bottom: #a2a2a2 1px dotted;
+	padding-bottom: 2px;
+	margin-bottom: 4px;
+	font-weight: bold;
+	font-family: Arial, Sans-Serif;
+	display: block;
+}
+ul.dashboardItemList {
+	list-style-type: none;
+	margin: 0px 0px 0px 6px;
+	padding: 0px 0px 0px 0px;
+}
+ul.dashboardItemList li {
+	background-image: url(/empiria/themes/default/bullets/action_bullet.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 4px;
+	padding-left: 10px;	
+	margin: 2px 0px 8px 0px;
+}
+.tabStrip {
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	white-space: nowrap;
+	border-bottom: #dd965e 4pt solid;
+	border-collapse: collapse;
+	width: 100%;
+	font-weight: bold;
+	font-family: Arial;
+	margin-left: 0px;
+}
+td.tabOn {
+	background-color: #dd965e;
+	margin-right: 4px;
+	text-align:center;	
+	border-right: white 1pt solid;
+	white-space: nowrap;
+	color: #ffffff;
+	height: 20px;
+	cursor: pointer;
+}
+td.tabOff {
+	background-color: #b2b2b2;
+	border-right: white 1pt solid;
+	text-align:center;
+	white-space: nowrap;
+	color: white;
+	cursor: pointer;
+	height: 20px;	
+}
+td.tabHover {
+	background-color: #f7e9c5;
+	text-align:center;
+	border-right: white 1pt solid;
+	white-space: nowrap;
+	color: #d27936;
+	cursor: pointer;
+}
+td.tabDisabled {
+	background-color: #e6e6e6;
+	border-right: white 1pt solid;
+	text-align:center;
+	white-space: nowrap;
+	color: #c8c8c8;
+}

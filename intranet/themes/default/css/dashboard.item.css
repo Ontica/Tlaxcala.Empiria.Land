@@ -1,0 +1,135 @@
+﻿html, body {
+	background: #ffffff;
+	color: #7a7a7a;
+	font-family: Arial, Sans-serif;
+	font-size: 8pt;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	height: 100%;
+}
+a, a:link, a:visited, a:active {
+  background-color: inherit;
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+	background-color: inherit;
+	color: inherit;
+	text-decoration: none;
+}
+img {
+	cursor: pointer;
+	border: 0px;
+	margin-right: 4px;
+	vertical-align: middle;
+}
+img.decoratorImage {
+	cursor: auto;
+}
+img.comboExecuteImage {
+	margin-left: -6px;
+}
+span.dashboardItemTitle {
+	background-color: inherit;
+	color: #95653a;
+	border-bottom: #a2a2a2 1px dotted;
+	padding-bottom: 2px;
+	margin-bottom: 4px;
+	font-weight: bold;
+	font-family: Arial, Sans-Serif;
+	display: block;
+}
+div.dashboardWorkarea {
+  background-color: #FFFFFF;
+  border-left: #f8f8f8 1px solid;
+  width: 100%;
+}
+ul.dashboardItemList {
+	list-style-type: none;
+	margin: 0px 0px 0px 6px;
+	padding: 0px 0px 0px 0px;
+}
+ul.dashboardItemList li {
+	background-image: url(/empiria/themes/default/bullets/action_bullet.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 4px;
+	padding-left: 10px;	
+	margin: 2px 0px 8px 0px;
+}
+input.toolboxTextBox {
+  background: #f9f9f9 url(../themes/default/textures/textbox.gif) repeat-x;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  color: #2a302a;
+  font: 8pt Verdana, Tahoma, Serif;
+  margin: 2px 0px 2px 0px;
+  padding: 4px 2px 2px 2px;
+  height: 14px;
+  width: 158px;
+}
+select.toolboxControl {
+  background: #f9f9f9 url(../themes/default/textures/textbox.gif) repeat-x;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  color: #2a302a;
+  font: 8pt Tahoma, Verdana, Tahoma, Serif;
+}
+input.toolboxButton {
+	background-color: inherit;
+	color: #4a4a4a;
+	cursor: pointer;
+	font: 8pt Tahoma, Sans-Serif;
+	height: 20px;
+	width: 68px;
+	padding: 0px 0px 2px 0px;
+}
+.tabStrip {
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	white-space: nowrap;
+	border-bottom: #3F4B3F 3pt solid;
+	border-collapse: collapse;
+	width: 100%;
+	font-weight: bold;
+	font-family: Arial;
+	margin-left: -6px;
+}
+td.tabOn
+{
+  background-color: #3F4B3F;
+  margin-right: 4px;
+  text-align: center;
+  border-right: #F0F0F0 1pt solid;
+  white-space: nowrap;
+  color: #ffffff;
+  height: 26px;
+  cursor: pointer;
+}
+td.tabOff {
+  background-color: #a9a9a9;
+  border-right: #F0F0F0 1pt solid;
+  text-align: center;
+  white-space: nowrap;
+  color: #ffffff;
+  cursor: pointer;
+  height: 26px;
+}
+td.tabHover {
+  background-color: #B1BAB1;
+  text-align: center;
+  border-right: #F0F0F0 1pt solid;
+  white-space: nowrap;
+  color: #2a302a;
+  cursor: pointer;
+}
+td.tabDisabled {
+	background-color: #e6e6e6;
+	border-right: #F0F0F0 1pt solid;
+	text-align:center;
+	white-space: nowrap;
+	color: #c8c8c8;
+}

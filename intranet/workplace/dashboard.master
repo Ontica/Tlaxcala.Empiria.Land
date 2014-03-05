@@ -1,0 +1,97 @@
+<%@ Master Language="C#" EnableViewState="true" ViewStateMode="Disabled" AutoEventWireup="false" CodeFile="dashboard.master.cs" Inherits="Empiria.Web.UI.Workplace.DashboardMasterPage" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
+<head runat="server">
+  <title>Dashboard Item</title>
+  <meta http-equiv="Expires" content="-1" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />  
+  <link href="../themes/default/css/dashboard.item.css" type="text/css" rel="stylesheet" />
+  <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />  
+  <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
+	<script type="text/javascript" src="../scripts/empiria.general.js"></script>
+	<script type="text/javascript" src="../scripts/empiria.validation.js"></script>
+	<script type="text/javascript" src="../scripts/empiria.calendar.js"></script>
+	<script type="text/javascript">
+	/* <![CDATA[ */
+	
+	function doPageCommand(commandName, commandArguments) {
+		switch (commandName) {
+			default:
+				return false;
+		}
+	}
+	
+	var gLastSelectedRowClassName = "";
+	var gLastSelectedRowCell = null;
+	
+	function onGridRowSelectionCmd(gridCell, queryString) {
+	  if (gLastSelectedRowCell == gridCell) {
+	    return;
+	  }
+	  if (gLastSelectedRowCell != null && gLastSelectedRowCell != gridCell) {
+      gLastSelectedRowCell.parentElement.className = gLastSelectedRowClassName;
+      gLastSelectedRowCell.innerHTML = "&nbsp;";  
+	  }
+    gLastSelectedRowClassName = gridCell.parentElement.className;
+    gLastSelectedRowCell = gridCell;
+	  gridCell.parentElement.className = 'selectedItem';
+	  gridCell.innerHTML = "»";
+	  window.parent.execScript("doCommand('onSelectedObjectChangeCmd', '" + queryString + "')");
+	}
+	
+	function window_onload() {
+    <%=OnBeginLoadScript()%>
+    if (existsElement('divObjectExplorer')) {
+      addEvent(getElement('divObjectExplorer'), 'scroll', window_onscroll);
+    }
+    window_onresize();
+    <%=OnEndLoadScript()%>
+	}
+  
+  function searchFilter(oEvent) { 
+    var keyCode = getKeyCode(oEvent);
+    if (arguments.length == 2 && arguments[1] == true) {
+      convertToUpperCaseKeyCode(oEvent, keyCode);
+    }
+
+    if (isLetterKeyCode(keyCode)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function window_onresize() {
+    if (existsElement("divObjectExplorer")) {
+      if (windowHeightChanged()) {
+        markWindowHeightFixed();
+        resizeMultiViewDashboard();
+      } else {
+        fixDataTableItems(getElement('divObjectExplorer'));
+      }
+    }
+  }
+
+  function window_onscroll() {
+    fixDataTableItems(getElement('divObjectExplorer'));
+  }
+
+	addEvent(window, 'load', window_onload);
+  addEvent(window, 'resize', window_onresize);
+
+
+	/* ]]> */
+	</script>
+</head>
+<body style="">
+	<form id="frmDashboardItem" onclick="hideCalendar('ifraCalendar');" runat="server">
+	  <asp:contentplaceholder id="dashboardItemPlaceHolder" runat="server" EnableViewState="true" ViewStateMode="Disabled">
+		</asp:contentplaceholder>
+  </form>
+  <iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top:0px" 
+        hspace="0px" vspace="0" marginheight="0"  marginwidth="0" frameborder="0" scrolling="no"
+        src="../user.controls/calendar.aspx" width="100%">
+  </iframe>
+</body>
+</html>

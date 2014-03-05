@@ -1,0 +1,75 @@
+<%@ Master Language="C#" EnableViewState="false" CodeFile="viewer.master.cs" Inherits=" Empiria.Web.UI.Workplace.ViewerMasterPage" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
+<head runat="server">
+  <title>Visor de objetos</title>
+  <meta http-equiv="Expires" content="-1" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <link href="../themes/default/css/viewer.master.page.css" type="text/css" rel="stylesheet" />
+  <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
+	<script type="text/javascript" src="../scripts/empiria.general.js"></script>
+	<script type="text/javascript" src="../scripts/empiria.validation.js"></script>
+	<script type="text/javascript" src="../scripts/empiria.calendar.js"></script>
+	<script type="text/javascript">
+	/* <![CDATA[ */
+	
+	function doPageCommand(commandName, commandArguments) {
+		switch (commandName) {
+			default:
+				return false;
+		}
+	}
+	
+	var gLastSelectedRowClassName = "";
+	var gLastSelectedRowCell = null;
+	
+	function onGridRowSelectionCmd(gridCell, queryString) {
+	  if (gLastSelectedRowCell == gridCell) {
+	    return;
+	  }
+	  if (gLastSelectedRowCell != null && gLastSelectedRowCell != gridCell) {
+      gLastSelectedRowCell.parentElement.className = gLastSelectedRowClassName;
+      gLastSelectedRowCell.innerHTML = "&nbsp;";  
+	  }
+    gLastSelectedRowClassName = gridCell.parentElement.className;
+    gLastSelectedRowCell = gridCell;
+	  gridCell.parentElement.className = 'selectedItem';
+	  gridCell.innerHTML = "»";
+	  window.parent.execScript("doCommand('onSelectedObjectChangeCmd', '" + queryString + "')");
+	}
+	
+	function window_onload() {
+    <%=OnBeginLoadScript()%>
+    <%=OnEndLoadScript()%>
+	}
+  
+  function searchFilter(oEvent) { 
+    var keyCode = getKeyCode(oEvent);
+    if (arguments.length == 2 && arguments[1] == true) {
+      convertToUpperCaseKeyCode(oEvent, keyCode);
+    }
+    if (isLetterKeyCode(keyCode)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+	addEvent(window, 'load', window_onload);
+ 
+	/* ]]> */
+	</script>
+</head>
+<body>  
+	<form id="frmDashboardItem" runat="server" onclick="hideCalendar('ifraCalendar');">
+	  <asp:contentplaceholder id="dashboardItemPlaceHolder" runat="server" EnableViewState="False">
+		</asp:contentplaceholder>
+  </form>
+  <iframe id="ifraCalendar" style="z-index: 99; LEFT: 0px; visibility: hidden; position: absolute; TOP: 0px" 
+          hspace="0px" vspace="0" marginheight="0"  marginwidth="0" frameborder="0" scrolling="no"
+          src="../user.controls/calendar.aspx" width="100%">
+  </iframe>
+</body>
+</html>

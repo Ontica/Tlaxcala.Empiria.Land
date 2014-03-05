@@ -1,0 +1,246 @@
+﻿html, body {
+	background-position: #FFFFD7;
+	background: #FEF7CB;
+	color: #264b71;
+	font-family: Arial, Sans-serif;
+	font-size: 8pt;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	overflow: hidden;
+	height: 100%;
+	border: none;
+}
+a, a:link, a:visited, a:active {
+  background-color: inherit;
+  color: #264b71;
+  text-decoration: none;
+}
+a:hover {
+	background-color: inherit;
+	color: #ffe4b5;
+	text-decoration: none;
+}
+img {
+	cursor: pointer;
+	border: 0px;
+	margin-right: 4px;
+	vertical-align: middle;
+}
+img.decoratorImage {
+	cursor: auto;
+}
+#divHeader {
+  background: #3a5577;
+  color: #eee8aa;
+  height: 24px;
+  overflow: hidden;
+  font-family: Tahoma, Verdana, Serif;
+  font-size: 10pt;
+  font-weight: bold;
+	padding: 6px 4pt 0pt 4pt;
+}
+#divContent {
+	background-color: #fbfbfb;
+	color: #3c3c3c;
+	font-family: Tahoma, Verdana, Serif;
+	font-size: 8pt;	
+  margin: 2px 2px 2px 2px;
+  padding: 12px 12px 0px 12px;
+  position: absolute;
+  float: left;  
+  overflow: auto;
+}
+tr.detailsSuperHeader {
+	 background: #3a5577;
+	 color: #eeeeee;
+	 height: 26px;
+}
+tr.detailsSuperFooter
+{
+	background: #d2b48c;
+	color: #eeeeee;
+	height: 8px;
+}
+span.appTitle {
+  background: transparent;
+  color: #eed7aa;
+  float: left;
+  text-align: left;
+  padding-top: 8px;
+}
+div.contentTitle {
+	background-color: inherit;
+  color: #784f25;		
+	font-size: 14pt;
+	font-weight: normal;
+	font-family: Arial, Sans-Serif;
+	padding: 8px 0px 2px 0px;
+	border-bottom: #d2b48c 1px solid;	
+}
+div.contentHint {
+	background-color: inherit;
+	color: #afafaf;
+	font-size: 8pt;	
+	font-family: Arial, Sans-Serif;
+	padding: 2px 0px 16px 2px;
+}
+div.leftItem, span.leftItem {
+	float: left;
+	text-align: left;
+}
+div.rightItem, span.rightItem {
+	float: right;
+	text-align: right;
+}
+span.rightItem img {
+ padding-top: 6px; 
+}
+.actionButton {
+	height: 24px;
+	font-family: Tahoma, Verdana;
+	font-size: 8pt;
+}
+.actionsSeparator tr {
+  padding-bottom: 4px;  padding-top: 12px;
+  background-color: #e4e4e4;
+  border-top: #1b5b9e 1px solid;
+}
+.actionsSeparator {
+  border-top: #6a6a6a 1px solid;
+  background-color: #e4e4e4;
+}
+input.textBox {
+  background-color: #f0f0f0;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  color: #264b71;
+  font: 8pt Arial, Helvetica;
+  font-weight: bold;
+	height: 15px;  
+  margin: 2px 8px 2px 0px;
+  padding: 4px 2px 2px 2px;
+	vertical-align: middle;
+	width: 99%;
+}
+input.fileTextBox {
+  background-color: #f0f0f0;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  color: #264b71;
+  font: 8pt Arial, Helvetica;
+  font-weight: bold;
+	height: 22px;  
+  margin: 2px 8px 2px 0px;
+  padding: 4px 2px 2px 2px;
+	vertical-align: middle;
+	width: 99%;
+}
+input.numericalTextBox
+{
+  background-color: #f0f0f0;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  color: #264b71;
+  font: 8pt Arial, Helvetica;
+  font-weight: bold;
+  height: 15px;
+  margin: 2px 8px 2px 0px;
+  text-align: right;
+  padding: 4px 2px 2px 2px;
+  vertical-align: middle;
+  width: 99%;
+
+}
+select.selectBox {
+  background-color: #f0f0f0;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  color: #264b71;
+  font: 8pt Arial, Helvetica;
+  font-weight: bold;
+	vertical-align: middle;
+  margin: 2px 8px 2px 0px;
+  padding: 4px 2px 2px 2px;
+	width: 100%;
+}
+input.button {
+	background-color: inherit;
+	color: #4a4a4a;
+	cursor: pointer;
+	font: 8pt Tahoma, Sans-Serif;
+	height: 23px;
+	width: 66px;
+	padding: 1px 2px 1px 2px;
+}
+input.checkBox {
+	border: none;
+	padding: 1px 2px 1px 0px;
+  margin: 2px 0px 2px -4px;
+}
+.textArea {
+  background-color:  #f0f0f0;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+	color: #264b71;
+  font: 8pt Arial, Helvetica;
+  font-weight: bold;  
+  margin: 2px 8px 2px 0px;
+  padding: 4px 2px 2px 2px;
+  width: 99%;
+}
+table.details {
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+	font-family: Tahoma, Verdana;
+  background-color: transparent;
+  width: 100%;
+  line-height: 14pt;
+  border-collapse: collapse;
+  border-left: #dadada 1px solid;
+  border-right: #dadada 1px solid;
+  border-bottom: #dadada 1px solid;    
+}
+table.details .detailsHeader td {
+	background-color: #4682b4;
+	color: #ffffff;
+	border: none;
+	margin: 0px;
+	padding: 2px 4px 2px 8px;
+	font-family: Tahoma, Verdana;
+	height: 24px;
+}
+table.details .detailsOddItem td
+{
+  background-color: #fff8dc;
+  border-bottom: #efefef 1px solid;
+  margin: 2px 2px 2px 2px;
+  padding: 4px 4px 4px 8px;
+  vertical-align: top;
+  border-left: gainsboro 1px solid;
+  border-bottom: gainsboro 1px solid;
+  font: 8pt Arial, Helvetica;
+}
+table.details .detailsItem td {
+  background-color: #f7e5b7;
+  border-bottom: #dfdfdf 1px solid;
+  margin: 2px 2px 2px 2px;
+  padding: 4px 4px 4px 8px;
+  vertical-align: top;
+  border-left: gainsboro 1px solid;
+  font: 8pt Arial, Helvetica;
+}
+table.gridNavigationBar {
+	border-top: #bdbdbd 1px solid;
+	background-color: #4682b4;
+	color: #000064;
+}
