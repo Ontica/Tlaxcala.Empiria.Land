@@ -40,10 +40,7 @@ namespace EmpiriaWeb.Government.LandRegistration.Controllers {
     public JsonResult GetLRSTransaction(string transactionNumber) {
       CreateGuestSessionIfUnauthenticated();
       var o = LRSTransaction.ParseWithNumber(transactionNumber);
-      Empiria.Messaging.Publisher.Publish("Result OK for call with # " + transactionNumber);
-
       if (o == null) {
-        Empiria.Messaging.Publisher.Publish("return null");
         return null;
       }
       var result = new {

@@ -112,7 +112,7 @@
       &nbsp; &nbsp; RFC:
       <input id='txtTaxIDNumber' type="text" class="textBox" style="width: 110px;margin-right:0px;" maxlength="16" runat='server' />
       &nbsp; &nbsp; &nbsp; &nbsp;IFE:
-      <input id='txtIFENumber' type="text" class="textBox" style="width: 154px;margin-right:0px;" maxlength="20" runat='server' />
+      <input id='txtIFENumber' type="text" class="textBox" style="width: 154px;margin-right:0px;" maxlength="29" runat='server' />
     </td>
   </tr>
 </table>

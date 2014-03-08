@@ -102,8 +102,8 @@ namespace Empiria.Web.UI.LRS {
           AppendRecordingAct();
           SetRefreshPageScript();
           return;
-        case "deleteBookRecording":
-          DeleteBookRecording();
+        case "deleteRecordingAct":
+          DeleteRecordingAct();
           SetRefreshPageScript();
           return;
         case "redirectMe":
@@ -114,12 +114,20 @@ namespace Empiria.Web.UI.LRS {
       }
     }
 
-    private void DeleteBookRecording() {
-      int recordingId = int.Parse(GetCommandParameter("id", true));
+    private void DeleteRecordingAct() {
+      int id = GetCommandParameter<int>("id");
 
-      Recording recording = Recording.Parse(recordingId);
-      recording.Cancel();
-      SetMessageBox("Se canceló la " + recording.FullNumber);
+      var recordingAct = RecordingAct.Parse(id);
+      var recording = recordingAct.Recording;
+      recording.DeleteRecordingAct(recordingAct);
+
+      string msg = "Se canceló el acto jurídico " + recordingAct.RecordingActType.DisplayName;
+      if (recording.Status != RecordingStatus.Deleted) {
+        SetMessageBox(msg);
+      } else {
+        msg += ", así como la partida correspondiente.";
+        SetMessageBox(msg);
+      }
     }
 
     private void AppendRecordingAct() {
@@ -152,7 +160,6 @@ namespace Empiria.Web.UI.LRS {
       );
       return task;
     }
-
 
     private ObjectList<Recording> GetRecordings() {
       if (recordings == null) {
@@ -246,9 +253,7 @@ namespace Empiria.Web.UI.LRS {
     }
 
     protected string RecordingActsGrid() {
-      ObjectList<Recording> recordings = this.GetRecordings();
-
-      return LRSGridControls.GetRecordingActsGrid(recordings);
+      return LRSGridControls.GetRecordingActsGrid(this.GetRecordings());
     }
 
     private void SetMessageBox(string msg) {

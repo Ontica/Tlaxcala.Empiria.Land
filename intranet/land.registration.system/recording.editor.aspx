@@ -6,17 +6,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
-<title></title>
-<meta http-equiv="Expires" content="-1" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-<link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
-<link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
-<script type="text/javascript" src="../scripts/empiria.general.js"></script>
-<script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
-<script type="text/javascript" src="../scripts/empiria.validation.js"></script>
-<script type="text/javascript" src="../scripts/empiria.calendar.js"></script>	
+  <title></title>
+  <meta http-equiv="Expires" content="-1" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+  <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
+  <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
+  <script type="text/javascript" src="../scripts/empiria.general.js"></script>
+  <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
+  <script type="text/javascript" src="../scripts/empiria.validation.js"></script>
+  <script type="text/javascript" src="../scripts/empiria.calendar.js"></script>	
 </head>
 <body style="background-color:#fafafa; top:0px; margin:0px; margin-top:-14px; margin-left:-6px;">
 <form name="aspnetForm" method="post" id="aspnetForm" runat="server">
@@ -115,7 +115,7 @@
                   <td>Partida</td>
                   <td>Acto jurídico</td>
                   <td>Estado acto</td>
-                  <td>Predio</td>
+                  <td>Predio / Recurso</td>
                   <td>Estado predio</td>
                   <td>¿Qué desea hacer?</td>
                 </tr>
@@ -224,6 +224,7 @@
       </table>
     </td>
   </tr>
+  <% %>
   <tr>
   <td class="subTitle">Registro del documento en libros</td>
   </tr>
@@ -264,7 +265,10 @@
       return;
     }
     switch (command) {
+      case 'deleteRecordingAct':
+        return deleteRecordingAct(arguments[1]);
       case 'deleteBookRecording':
+        alert(arguments[1]);
         return deleteBookRecording(arguments[1]);
       case 'saveDocument':
         return saveDocument();
@@ -297,6 +301,17 @@
     }
   }
 
+  function deleteRecordingAct(recordingActId) {
+    <% if (!IsReadyForEdition()) { %>
+      alert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, o no cuenta con los permisos necesarios para efectuar esta operación.");
+      return false;
+    <% } %>
+    if (confirm("¿Elimino el acto jurídico seleccionado?")) {
+      sendPageCommand('deleteRecordingAct', 'id=' + recordingActId);
+      return true;
+    }
+  }
+
   function deleteBookRecording(recordingId) {
     <% if (!IsReadyForEdition()) { %>
       alert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, o no cuenta con los permisos necesarios para efectuar esta operación.");
@@ -311,16 +326,12 @@
   function protectRecordingEditor(disabledFlag) {
     <%=oRecordingDocumentEditor.ClientID%>_disabledControl(disabledFlag);
     disableControls(getElement("divDocumentData"), disabledFlag);
-    getElement("divRecordingCreation").style.display = disabledFlag ? 'none' : 'inline';
-    //disableControls(getElement("divRecordingCreation"), disabledFlag);
   }
 
   function editProperty(bookId, recordingId, propertyId) {
     var url = "../land.registration.system/recording.book.analyzer.aspx?bookId=" +
             bookId + "&id=" + recordingId + "&gotoPropertyId=" + propertyId;
 
-//    var url = "../land.registration.system/property.editor.aspx?propertyId=" + propertyId +
-//              "&recordingActId=-1&recordingId=" + recordingId;
     createNewWindow(url);
   }
 

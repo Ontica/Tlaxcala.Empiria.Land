@@ -2,7 +2,7 @@
 *																																																						 *
 *	 Solution  : Empiria® Land                                    System   : Empiria® Land Web API             *
 *  Assembly  : Empiria.Land.WebAPI.dll                          Pattern  : Assembly Attributes File			     *
-*	 Date      : 28/Mar/2014                                      Version  : 1.5  License: CC BY-NC-SA 4.0     *
+*	 Date      : 28/Mar/2014                                      Version  : 1.1  License: CC BY-NC-SA 4.0     *
 *																																																						 *
 *  Summary   : Empiria® Land Web API															                                           *
 *																																																						 *
@@ -14,9 +14,9 @@ using System.Runtime.InteropServices;
 * Assembly configuration attributes.																																	       *
 *************************************************************************************************************/
 [assembly: AssemblyTitle("Empiria.Land.WebAPI.dll")]
-[assembly: AssemblyDescription("Empiria® Land 2014 Web API")]
-[assembly: AssemblyVersion("1.0.0625")]
-[assembly: AssemblyFileVersion("1.0.0625")]
+[assembly: AssemblyDescription("Empiria Land 2014 Web API")]
+[assembly: AssemblyVersion("1.1.0328")]
+[assembly: AssemblyFileVersion("1.1.0328")]
 [assembly: AssemblyCompany("La Vía Óntica, S.C.")]
 [assembly: AssemblyProduct("Empiria® Land 2014")]
 [assembly: AssemblyCopyright("© La Vía Óntica SC / Ontica LLC. All rights reserved.")]

@@ -2,7 +2,7 @@
 *																																																						 *
 *	 Solution  : Empiria® Land                                    System   : Land Registration System          *
 *  Assembly  : Tlaxcala.Empiria.Land.Intranet.dll               Pattern  : Assembly Attributes File			     *
-*	 Date      : 28/Mar/2014                                      Version  : 1.5  License: CC BY-NC-SA 4.0     *
+*	 Date      : 28/Mar/2014                                      Version  : 1.1  License: CC BY-NC-SA 4.0     *
 *																																																						 *
 *  Summary   : Empiria® Land 2014 Tlaxcala Edition: Web Intranet App															           *
 *																																																						 *
@@ -14,9 +14,9 @@ using System.Runtime.InteropServices;
 * Assembly configuration attributes.																																	       *
 *************************************************************************************************************/
 [assembly: AssemblyTitle("Tlaxcala.Empiria.Land.Intranet.dll")]
-[assembly: AssemblyDescription("Empiria® Land 2014 Tlaxcala Edition: Web Intranet App")]
-[assembly: AssemblyVersion("1.0.0625")]
-[assembly: AssemblyFileVersion("1.0.0625")]
+[assembly: AssemblyDescription("Empiria Land 2014 Tlaxcala Edition: Web Intranet App")]
+[assembly: AssemblyVersion("1.1.0328")]
+[assembly: AssemblyFileVersion("1.1.0328")]
 [assembly: AssemblyCompany("La Vía Óntica, S.C.")]
 [assembly: AssemblyProduct("Empiria® Land 2014")]
 [assembly: AssemblyCopyright("© La Vía Óntica SC + Ontica LLC. All rights reserved.")]

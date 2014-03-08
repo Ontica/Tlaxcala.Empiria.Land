@@ -71,9 +71,7 @@ namespace Empiria.Web.UI.Ajax {
         case "getRecordingTypesStringArrayCmd":
           return GetRecordingTypesStringArrayCommandHandler();
         case "getRecordingsViewerPageCmd":
-          return GetRecordingsViewerPageCommandHandler();
-        //case "getTransactionFileCmd":
-        //  return GetTransactionFileCommandHandler();            
+          return GetRecordingsViewerPageCommandHandler();        
         case "getWitnessInPositionStringArrayCmd":
           return GetWitnessInPositionStringArrayCommandHandler();
         case "searchRecordingActPartiesCmd":
@@ -207,7 +205,8 @@ namespace Empiria.Web.UI.Ajax {
       return HtmlSelectContent.GetComboAjaxHtml(recordings, 0, "Id", "Number",
                                                 recordings.Count == 0 ? "(Libro vacío)" : "(Seleccionar)",
                                                 recordingBook.IsAvailableForManualEditing &&
-                                                recordingActType.RecordingRule.AppliesTo == RecordingRuleApplication.Property
+                                                recordingActType.RecordingRule.AppliesTo == RecordingRuleApplication.Property ||
+                                                recordingActType.RecordingRule.AppliesTo == RecordingRuleApplication.Structure
                                                             ? "Crear nueva" : String.Empty,
                                                 String.Empty);
     }

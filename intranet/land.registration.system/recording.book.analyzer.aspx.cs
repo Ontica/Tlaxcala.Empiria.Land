@@ -333,7 +333,6 @@ namespace Empiria.Web.UI.LRS {
         if (recording.RecordingActs.Count != 0) {
           cboStatus.Items.Add(new ListItem("Incompleta", ((char) RecordingStatus.Incomplete).ToString()));
         }
-
       }
     }
 
