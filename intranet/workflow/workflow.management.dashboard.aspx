@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" EnableViewState="true"  EnableSessionState="true" MasterPageFile="~/workplace/dashboard.master" AutoEventWireup="true" Inherits="Empiria.Web.UI.Workflow.WorkflowManagementDashboard" Codebehind="workflow.management.dashboard.aspx.cs" %>
+﻿<%@ Page Language="C#" EnableViewState="true"  EnableSessionState="true" MasterPageFile="~/workplace/dashboard.master" AutoEventWireup="true" Inherits="Empiria.Web.UI.Workflow.WorkflowManagementDashboard" CodeFile="workflow.management.dashboard.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <asp:Content ID="dashboardItem" ContentPlaceHolderID="dashboardItemPlaceHolder" runat="Server" EnableViewState="true">
 <table id="tblDashboardMenu" class="tabStrip" style='display:<%=base.ShowTabStripMenu ? "inline" : "none"%>'>

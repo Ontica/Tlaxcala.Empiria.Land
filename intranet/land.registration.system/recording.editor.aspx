@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Web.UI.LRS.RecordingEditor" Codebehind="recording.editor.aspx.cs" %>
+﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Web.UI.LRS.RecordingEditor" CodeFile="recording.editor.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="RecordingActAttributesEditorControl" src="../land.registration.system.controls/recording.act.attributes.editor.control.ascx" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyEditorControl" src="../land.registration.system.controls/recording.party.editor.control.ascx" %>
@@ -225,30 +225,6 @@
     </td>
   </tr>
   <% %>
-  <tr>
-  <td class="subTitle">Registro del documento en libros</td>
-  </tr>
-  <tr>
-    <td>
-      <div style="overflow:auto;width:640px;">
-        <table class="details" style="width:100%">
-          <tr class="detailsHeader">
-            <td style='white-space:nowrap;'>&nbsp;</td>
-            <td>Número</td>
-            <td>Fecha</td>
-            <td>Distrito</td>
-            <td>Sección</td>
-            <td>Volumen</td>
-            <td>Partida</td>
-            <td>Registró</td>
-            <td>&nbsp;</td>
-          </tr>
-          <%=GetDocumentRecordings()%>
-        </table>
-       </div>
-      </td>
-    </tr>
-
 </table>
 </div>
 </form>

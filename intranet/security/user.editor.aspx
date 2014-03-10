@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#"  EnableViewState="false" MasterPageFile="~/workplace/old.secondary.master" AutoEventWireup="true" Inherits="Empiria.Web.UI.Security.UserEditor" Codebehind="user.editor.aspx.cs" %>
+﻿<%@ Page Language="C#"  EnableViewState="false" MasterPageFile="~/workplace/old.secondary.master" AutoEventWireup="true" Inherits="Empiria.Web.UI.Security.UserEditor" CodeFile="user.editor.aspx.cs" %>
 <asp:Content ID="content" ContentPlaceHolderID="contentPlaceHolder" Runat="Server">
 <table class="editionTable">
   <tr><td class="subTitle">Información de la persona</td></tr>

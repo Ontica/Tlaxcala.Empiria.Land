@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Web.UI.LRS.RecordingPartyViewerControl" Codebehind="recording.party.viewer.control.ascx.cs" %>
+﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Web.UI.LRS.RecordingPartyViewerControl" CodeFile="recording.party.viewer.control.ascx.cs" %>
 <tr>
   <td class="subTitle">Propietarios anteriores del predio <%=Property.UniqueCode%></td>
 </tr>

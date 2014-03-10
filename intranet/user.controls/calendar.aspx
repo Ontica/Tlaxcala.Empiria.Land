@@ -1,4 +1,4 @@
-﻿<%@ Page language="c#" AutoEventWireup="false" Inherits="Empiria.Web.UI.CalendarControl" Codebehind="calendar.aspx.cs" %>
+﻿<%@ Page language="c#" AutoEventWireup="false" Inherits="Empiria.Web.UI.CalendarControl" CodeFile="calendar.aspx.cs" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	<head>

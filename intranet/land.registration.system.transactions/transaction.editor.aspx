@@ -1,4 +1,4 @@
-﻿<%@ Page language="c#" Inherits="Empiria.Web.UI.LRS.LRSTransactionEditor" EnableViewState="true" EnableSessionState="true" Codebehind="transaction.editor.aspx.cs" %>
+﻿<%@ Page language="c#" Inherits="Empiria.Web.UI.LRS.LRSTransactionEditor" EnableViewState="true" EnableSessionState="true" CodeFile="transaction.editor.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingActSelectorControl" src="../land.registration.system.controls/recording.act.selector.control.ascx" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

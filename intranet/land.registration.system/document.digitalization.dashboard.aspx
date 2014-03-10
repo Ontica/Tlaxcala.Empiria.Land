@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" EnableViewState="true"  EnableSessionState="true" MasterPageFile="~/workplace/dashboard.master" AutoEventWireup="true" Inherits="Empiria.Web.UI.LRS.DocumentDigitalizationDashboard" Codebehind="document.digitalization.dashboard.aspx.cs" %>
+﻿<%@ Page Language="C#" EnableViewState="true"  EnableSessionState="true" MasterPageFile="~/workplace/dashboard.master" AutoEventWireup="true" Inherits="Empiria.Web.UI.LRS.DocumentDigitalizationDashboard" CodeFile="document.digitalization.dashboard.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Import Namespace="Empiria.Presentation" %>
 <%@ Import Namespace="Empiria.Land.UI" %>

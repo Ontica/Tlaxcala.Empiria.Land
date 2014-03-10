@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="false" EnableViewState="true" Inherits="Empiria.Web.UI.LRS.RecordingDocumentFullEditorControl" Codebehind="recording.document.full.editor.control.ascx.cs" %>
+﻿<%@ Control Language="C#" AutoEventWireup="false" EnableViewState="true" Inherits="Empiria.Web.UI.LRS.RecordingDocumentFullEditorControl" CodeFile="recording.document.full.editor.control.ascx.cs" %>
 <table id="oNotaryRecording" class="editionTable" style="display:none;" runat="server">
     <tr>
     <td>Ciudad:</td>
