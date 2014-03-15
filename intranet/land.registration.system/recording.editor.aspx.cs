@@ -228,30 +228,6 @@ namespace Empiria.Web.UI.LRS {
       }
     }
 
-    //protected string GetDocumentRecordings() {
-    //  const string row = "<tr class='{CLASS}' valign='top'>" +
-    //                     "<td style='white-space:nowrap;'><img src='../themes/default/buttons/document.sm.gif' alt='' title='Imprime el sello específico para esta partida' onclick='return doOperation(\"viewRecordingSeal\", {ID})' /> Sello partida</td>" +
-    //                     "<td style='white-space:nowrap;'>Número</td><td>{DATE}</td><td style='white-space:nowrap;'>{DISTRICT}</td><td style='white-space:nowrap;'>{SECTION}</td>" +
-    //                     "<td><a href='javascript:doOperation(\"viewRecordingBookIndex\", {ID})'>{VOLUME}</a></td><td>{NUMBER}</td><td style='width:50%'>{REGISTER}</td>" +
-    //                     "<td align='center'><img src='../themes/default/buttons/trash.gif' alt='' onclick='return doOperation(\"deleteBookRecording\", {ID})' /></td></tr>";
-
-    //  ObjectList<Recording> recordings = GetRecordings();
-
-    //  string html = String.Empty;
-    //  for (int i = 0; i < recordings.Count; i++) {
-    //    string temp = row.Replace("{CLASS}", ((i % 2) == 0) ? "detailsItem" : "detailsOddItem");
-    //    temp = temp.Replace("{ID}", recordings[i].Id.ToString());
-    //    temp = temp.Replace("{DATE}", recordings[i].AuthorizedTime.ToString("dd/MMM/yyyy HH:mm"));
-    //    temp = temp.Replace("{DISTRICT}", recordings[i].RecordingBook.RecorderOffice.Alias);
-    //    temp = temp.Replace("{SECTION}", recordings[i].RecordingBook.RecordingSectionType.Name);
-    //    temp = temp.Replace("{VOLUME}", recordings[i].RecordingBook.Name);
-    //    temp = temp.Replace("{NUMBER}", recordings[i].Number);
-    //    temp = temp.Replace("{REGISTER}", recordings[i].CapturedBy.Alias);
-    //    html += temp;
-    //  }
-    //  return html;
-    //}
-
     protected string RecordingActsGrid() {
       return LRSGridControls.GetRecordingActsGrid(this.GetRecordings());
     }

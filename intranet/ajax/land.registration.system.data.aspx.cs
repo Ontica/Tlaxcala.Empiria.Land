@@ -166,7 +166,9 @@ namespace Empiria.Web.UI.Ajax {
       string html = String.Empty;
 
       if (recording.RecordingActs.Count == 0) {
-        html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "Sin predios asociados");
+        html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "Sin predios asociados"); 
+      } else if (recording.RecordingActs.Count == 1 && 
+                 recording.RecordingActs[0].RecordingActType == RecordingActType.Empty) {
         if (recordingActType.RecordingRule.AppliesTo == RecordingRuleApplication.Property) {
           html += "|" + HtmlSelectContent.GetComboAjaxHtmlItem("0", "Crear predio en la partida " + recording.Number);
         }
@@ -175,15 +177,15 @@ namespace Empiria.Web.UI.Ajax {
       }
       for (int i = 0; i < recording.RecordingActs.Count; i++) {
         RecordingAct recordingAct = recording.RecordingActs[i];
-        for (int j = 0; j < recordingAct.PropertiesEvents.Count; j++) {
-          if (html.Contains(recordingAct.PropertiesEvents[j].Property.UniqueCode)) {
+        foreach (PropertyEvent propertyEvent in recordingAct.PropertiesEvents) {
+          if (html.Contains(propertyEvent.Property.UniqueCode)) {
             continue;
           }
           if (html.Length != 0) {
             html += "|";
           }
-          var property = recordingAct.PropertiesEvents[j].Property;
-          html += HtmlSelectContent.GetComboAjaxHtmlItem(property.Id.ToString(), property.UniqueCode);
+          html += HtmlSelectContent.GetComboAjaxHtmlItem(propertyEvent.Property.Id.ToString(), 
+                                                         propertyEvent.Property.UniqueCode);
         }
       }
       return html;
@@ -718,8 +720,8 @@ namespace Empiria.Web.UI.Ajax {
     }
 
     private string ValidateAnnotationSemanticsCommandHandler() {
-      int annotationBookId = int.Parse(GetCommandParameter("annotationBookId", true));
-      int annotationTypeId = int.Parse(GetCommandParameter("annotationTypeId", true));
+      int annotationBookId = base.GetCommandParameter<int>("annotationBookId");
+      int annotationTypeId = base.GetCommandParameter<int>("annotationTypeId");
       int number = int.Parse(GetCommandParameter("number", false));
       bool bisSuffixNumber = bool.Parse(GetCommandParameter("bisSuffixNumber", true));
       int imageStartIndex = int.Parse(GetCommandParameter("imageStartIndex", true));
