@@ -90,7 +90,7 @@ namespace Empiria.Web.UI.FSM {
 
       string html = String.Empty;
 
-      ObjectList<LRSTransactionAct> list = transaction.RecordingActs;
+      FixedList<LRSTransactionAct> list = transaction.RecordingActs;
       for (int i = 0; i < list.Count; i++) {
         LRSTransactionAct recordingAct = list[i];
         string temp = template.Replace("{NUMBER}", (i + 1).ToString("00"));

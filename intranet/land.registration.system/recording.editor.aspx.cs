@@ -27,7 +27,7 @@ namespace Empiria.Web.UI.LRS {
 
     protected LRSDocumentEditorControl oRecordingDocumentEditor = null;
     protected LRSTransaction transaction = null;
-    private ObjectList<Recording> recordings = null;
+    private FixedList<RecordingAct> recordingActs = null;
     protected string OnLoadScript = String.Empty;
 
     #endregion Fields
@@ -71,7 +71,7 @@ namespace Empiria.Web.UI.LRS {
       LRSHtmlSelectControls.LoadDomainRecordingSections(this.cboPrecedentRecordingSection,
                                                         ComboControlUseMode.ObjectCreation);
 
-      //ObjectList<RecordingBook> recordingBookList = recordingBook.RecorderOffice.GetTraslativeRecordingBooks();
+      //FixedList<RecordingBook> recordingBookList = recordingBook.RecorderOffice.GetTraslativeRecordingBooks();
 
       //if (recordingBookList.Count != 0) {
       //  HtmlSelectContent.LoadCombo(this.cboAnotherRecordingBook, recordingBookList, "Id", "FullName",
@@ -122,7 +122,7 @@ namespace Empiria.Web.UI.LRS {
       recording.DeleteRecordingAct(recordingAct);
 
       string msg = "Se canceló el acto jurídico " + recordingAct.RecordingActType.DisplayName;
-      if (recording.Status != RecordingStatus.Deleted) {
+      if (recording.Status != RecordableObjectStatus.Deleted) {
         SetMessageBox(msg);
       } else {
         msg += ", así como la partida correspondiente.";
@@ -132,14 +132,16 @@ namespace Empiria.Web.UI.LRS {
 
     private void AppendRecordingAct() {
       Assertion.Require(transaction != null && !transaction.IsEmptyInstance,
-                        "Transaction can not be null or an empty instance.");
+                        "Transaction cannot be null or an empty instance.");
       Assertion.Require(transaction.Document != null && !transaction.Document.IsEmptyInstance,
-                        "Document can not be an empty instance.");
+                        "Document cannot be an empty instance.");
 
       RecordingTask task = ParseRecordingTaskParameters();
       task.AssertValid();
-      task.DoRecording();
-      recordings = transaction.Document.GetRecordings(transaction);
+
+      RecorderExpert.Execute(task);
+
+      recordingActs = RecordingAct.GetList(transaction);
     }
 
     private RecordingTask ParseRecordingTaskParameters() {
@@ -153,7 +155,7 @@ namespace Empiria.Web.UI.LRS {
          recorderOfficeId: GetCommandParameter<int>("recorderOfficeId", -1),
          precedentRecordingBookId: GetCommandParameter<int>("precedentRecordingBookId", -1),
          precedentRecordingId: GetCommandParameter<int>("precedentRecordingId", -1),
-         precedentPropertyId: GetCommandParameter<int>("precedentPropertyId", -1),
+         targetResourceId: GetCommandParameter<int>("precedentPropertyId", -1),
          targetRecordingActId: GetCommandParameter<int>("targetRecordingActId", -1),
          quickAddRecordingNumber: GetCommandParameter<int>("quickAddRecordingNumber", -1),
          quickAddBisRecordingSuffixTag: GetCommandParameter<string>("quickAddBisRecordingSuffixTag", String.Empty)
@@ -161,11 +163,11 @@ namespace Empiria.Web.UI.LRS {
       return task;
     }
 
-    private ObjectList<Recording> GetRecordings() {
-      if (recordings == null) {
-        recordings = transaction.Document.GetRecordings(transaction);
+    private FixedList<RecordingAct> GetRecordingActs() {
+      if (recordingActs == null) {
+        recordingActs = RecordingAct.GetList(transaction);
       }
-      return recordings;
+      return recordingActs;
     }
 
     protected bool IsReadyForEdition() {
@@ -185,7 +187,7 @@ namespace Empiria.Web.UI.LRS {
       if (transaction.IsEmptyInstance || transaction.Document.IsEmptyInstance) {
         return false;
       }
-      if (GetRecordings().Count == 0) {
+      if (this.GetRecordingActs().Count == 0) {
         return false;
       }
       if (User.CanExecute("LRSTransaction.Register") || !User.CanExecute("LRSTransaction.DocumentSigner")) {
@@ -229,7 +231,7 @@ namespace Empiria.Web.UI.LRS {
     }
 
     protected string RecordingActsGrid() {
-      return LRSGridControls.GetRecordingActsGrid(this.GetRecordings());
+      return LRSGridControls.GetRecordingActsGrid(this.GetRecordingActs());
     }
 
     private void SetMessageBox(string msg) {

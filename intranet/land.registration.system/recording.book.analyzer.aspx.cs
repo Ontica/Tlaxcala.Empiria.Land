@@ -65,7 +65,7 @@ namespace Empiria.Web.UI.LRS {
       cboRecordingBookSelector.Items.Clear();
       cboRecordingBookSelector.Items.Add(new ListItem("Libro Raíz", recording.Id.ToString()));
 
-      ObjectList<PropertyEvent> annotations = recording.GetPropertiesAnnotationsList();
+      FixedList<TractIndexItem> annotations = recording.GetPropertiesAnnotationsList();
       for (int i = 0; i < annotations.Count; i++) {
         cboRecordingBookSelector.Items.Add(new ListItem(Char.ConvertFromUtf32(65 + i),
                                            annotations[i].RecordingAct.Recording.Id.ToString()));
@@ -101,20 +101,20 @@ namespace Empiria.Web.UI.LRS {
     private void DoCommand() {
       switch (base.CommandName) {
         case "saveRecording":
-          switch ((RecordingStatus) Convert.ToChar(cboStatus.Value)) {
-            case RecordingStatus.NoLegible:
+          switch ((RecordableObjectStatus) Convert.ToChar(cboStatus.Value)) {
+            case RecordableObjectStatus.NoLegible:
               RegisterAsNoLegibleRecording(false);
               RefreshPage();
               return;
-            case RecordingStatus.Obsolete:
+            case RecordableObjectStatus.Obsolete:
               RegisterAsObsoleteRecording(false);
               RefreshPage();
               return;
-            case RecordingStatus.Pending:
+            case RecordableObjectStatus.Pending:
               RegisterAsPendingRecording(false);
               RefreshPage();
               return;
-            case RecordingStatus.Incomplete:
+            case RecordableObjectStatus.Incomplete:
               RegisterAsIncompleteRecording(false);
               RefreshPage();
               return;
@@ -293,15 +293,9 @@ namespace Empiria.Web.UI.LRS {
       if (recording.RecordingActs.Count != 0) {
         cboProperty.Items.Add(new ListItem("( Seleccionar )", ""));
       }
-      for (int i = 0; i < recording.RecordingActs.Count; i++) {
-        RecordingAct recordingAct = recording.RecordingActs[i];
-        for (int j = 0; j < recordingAct.PropertiesEvents.Count; j++) {
-          ListItem item = new ListItem(recordingAct.PropertiesEvents[j].Property.UniqueCode,
-                                       recordingAct.PropertiesEvents[j].Property.Id.ToString());
-          if (!cboProperty.Items.Contains(item)) {
-            cboProperty.Items.Add(item);
-          }
-        }
+      foreach (Property property in recording.GetProperties()) {
+        var item = new ListItem(property.UniqueCode, property.Id.ToString());
+        cboProperty.Items.Add(item);
       }
       cboProperty.Items.Add(new ListItem("Crear un nuevo folio", "0"));
       cboProperty.Items.Add(new ListItem("Seleccionar un predio", "-1"));
@@ -316,22 +310,22 @@ namespace Empiria.Web.UI.LRS {
 
     private void LoadStatusCombo() {
       cboStatus.Items.Clear();
-      if (recording.Status == RecordingStatus.Closed) {
-        cboStatus.Items.Add(new ListItem("Cerrada", ((char) RecordingStatus.Closed).ToString()));
+      if (recording.Status == RecordableObjectStatus.Closed) {
+        cboStatus.Items.Add(new ListItem("Cerrada", ((char) RecordableObjectStatus.Closed).ToString()));
         return;
       }
-      if (recording.Status == RecordingStatus.Registered) {
-        cboStatus.Items.Add(new ListItem("Registrada", ((char) RecordingStatus.Registered).ToString()));
+      if (recording.Status == RecordableObjectStatus.Registered) {
+        cboStatus.Items.Add(new ListItem("Registrada", ((char) RecordableObjectStatus.Registered).ToString()));
         return;
       }
       if (recording.IsNew) {
         cboStatus.Items.Add(new ListItem(String.Empty, String.Empty));
       } else {
-        cboStatus.Items.Add(new ListItem("No vigente", ((char) RecordingStatus.Obsolete).ToString()));
-        cboStatus.Items.Add(new ListItem("No legible", ((char) RecordingStatus.NoLegible).ToString()));
-        cboStatus.Items.Add(new ListItem("Pendiente", ((char) RecordingStatus.Pending).ToString()));
+        cboStatus.Items.Add(new ListItem("No vigente", ((char) RecordableObjectStatus.Obsolete).ToString()));
+        cboStatus.Items.Add(new ListItem("No legible", ((char) RecordableObjectStatus.NoLegible).ToString()));
+        cboStatus.Items.Add(new ListItem("Pendiente", ((char) RecordableObjectStatus.Pending).ToString()));
         if (recording.RecordingActs.Count != 0) {
-          cboStatus.Items.Add(new ListItem("Incompleta", ((char) RecordingStatus.Incomplete).ToString()));
+          cboStatus.Items.Add(new ListItem("Incompleta", ((char) RecordableObjectStatus.Incomplete).ToString()));
         }
       }
     }
@@ -370,7 +364,7 @@ namespace Empiria.Web.UI.LRS {
       if (recording.RecordingActs.Count > 0) {
         return;
       }
-      recording.Status = RecordingStatus.Deleted;
+      recording.Status = RecordableObjectStatus.Deleted;
       recording.Save();
 
       this.recordingBook.Refresh();
@@ -414,7 +408,7 @@ namespace Empiria.Web.UI.LRS {
       RecordingAct annotation = RecordingAct.Parse(annotationId);
       Property property = Property.Parse(propertyId);
 
-      annotation.AppendPropertyEvent(property);
+      annotation.AttachProperty(property);
     }
 
     private void AppendPropertyToRecordingAct() {
@@ -422,7 +416,7 @@ namespace Empiria.Web.UI.LRS {
 
       RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
 
-      recordingAct.AppendPropertyEvent(new Property());
+      recordingAct.AttachProperty(new Property());
     }
 
     private void UpwardRecordingAct() {
@@ -447,7 +441,7 @@ namespace Empiria.Web.UI.LRS {
       }
       recording.RecordingBook = this.recordingBook;
       recording.SetNumber(int.Parse(txtRecordingNumber.Value), cboBisRecordingNumber.Value);
-      recording.Status = RecordingStatus.NoLegible;
+      recording.Status = RecordableObjectStatus.NoLegible;
       SetRecordingImageIndex();
       recording.Notes = txtObservations.Value;
       if (txtPresentationDate.Value.Length != 0 && txtPresentationTime.Value.Length != 0) {
@@ -487,7 +481,7 @@ namespace Empiria.Web.UI.LRS {
       }
       recording.RecordingBook = this.recordingBook;
       recording.SetNumber(int.Parse(txtRecordingNumber.Value), cboBisRecordingNumber.Value);
-      recording.Status = RecordingStatus.Obsolete;
+      recording.Status = RecordableObjectStatus.Obsolete;
       SetRecordingImageIndex();
       recording.Notes = txtObservations.Value;
       if (txtPresentationDate.Value.Length != 0 && txtPresentationTime.Value.Length != 0) {
@@ -513,7 +507,7 @@ namespace Empiria.Web.UI.LRS {
       }
       recording.RecordingBook = this.recordingBook;
       recording.SetNumber(int.Parse(txtRecordingNumber.Value), cboBisRecordingNumber.Value);
-      recording.Status = RecordingStatus.Pending;
+      recording.Status = RecordableObjectStatus.Pending;
       SetRecordingImageIndex();
       recording.PresentationTime = EmpiriaString.ToDateTime(txtPresentationDate.Value + " " + txtPresentationTime.Value);
       recording.AuthorizedTime = EmpiriaString.ToDate(txtAuthorizationDate.Value);
@@ -530,7 +524,7 @@ namespace Empiria.Web.UI.LRS {
     private void RegisterAsIncompleteRecording(bool appendRecordingAct) {
       recording.RecordingBook = this.recordingBook;
       recording.SetNumber(int.Parse(txtRecordingNumber.Value), cboBisRecordingNumber.Value);
-      recording.Status = RecordingStatus.Incomplete;
+      recording.Status = RecordableObjectStatus.Incomplete;
       SetRecordingImageIndex();
       recording.PresentationTime = EmpiriaString.ToDateTime(txtPresentationDate.Value + " " + txtPresentationTime.Value);
       recording.AuthorizedTime = EmpiriaString.ToDate(txtAuthorizationDate.Value);
@@ -564,7 +558,7 @@ namespace Empiria.Web.UI.LRS {
       Recording annotation = new Recording();
       annotation.RecordingBook = RecordingBook.Parse(int.Parse(Request.Form["cboAnnotationBook"]));
       annotation.SetNumber(int.Parse(txtAnnotationNumber.Value), cboBisAnnotationNumber.Value);
-      annotation.Status = RecordingStatus.Incomplete;
+      annotation.Status = RecordableObjectStatus.Incomplete;
       SetAnnotationImageIndex(annotation);
       annotation.BaseRecordingId = -2;
       annotation.PresentationTime = EmpiriaString.ToDateTime(txtAnnotationPresentationDate.Value + " " + txtAnnotationPresentationTime.Value);
@@ -586,7 +580,7 @@ namespace Empiria.Web.UI.LRS {
       Recording annotation = new Recording();
       annotation.RecordingBook = RecordingBook.Parse(int.Parse(Request.Form["cboAnnotationBook"]));
       annotation.SetNumber(int.Parse(txtAnnotationNumber.Value), cboBisAnnotationNumber.Value);
-      annotation.Status = RecordingStatus.NoLegible;
+      annotation.Status = RecordableObjectStatus.NoLegible;
       SetAnnotationImageIndex(annotation);
       if (txtAnnotationPresentationTime.Value.Length != 0) {
         annotation.PresentationTime = EmpiriaString.ToDateTime(txtAnnotationPresentationDate.Value + " " + txtAnnotationPresentationTime.Value);

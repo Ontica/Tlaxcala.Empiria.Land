@@ -132,7 +132,7 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void LoadCombos() {
-      ObjectList<Contact> list = TransactionData.GetContactsWithOutboxDocuments();
+      FixedList<Contact> list = TransactionData.GetContactsWithOutboxDocuments();
       HtmlSelectContent.LoadCombo(this.cboFrom, list, "Id", "Alias",
                                   "( ¿Quién le está entregando? )", String.Empty, String.Empty);
       DataView view = TransactionData.GetContactsWithActiveTransactions();

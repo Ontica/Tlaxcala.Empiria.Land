@@ -99,12 +99,12 @@ namespace Empiria.Web.UI.LRS {
     private void SaveRecordingAct() {
       oRecordingActAttributes.FillRecordingAct();
       recordingAct.Notes = txtObservations.Value;
-      recordingAct.Status = (RecordingActStatus) Convert.ToChar(cboStatus.Value);
+      recordingAct.Status = (RecordableObjectStatus) Convert.ToChar(cboStatus.Value);
       recordingAct.Save();
     }
 
     private void SaveRecordingActAsComplete() {
-      recordingAct.Status = RecordingActStatus.Registered;
+      recordingAct.Status = RecordableObjectStatus.Registered;
       recordingAct.Save();
     }
 
@@ -134,8 +134,7 @@ namespace Empiria.Web.UI.LRS {
     private void FillPropertiesCombo() {
       this.oAntecedentParties.Visible = false;
       cboProperty.Items.Clear();
-      for (int i = 0; i < recordingAct.PropertiesEvents.Count; i++) {
-        Property property = recordingAct.PropertiesEvents[i].Property;
+      foreach(Property property in recordingAct.GetProperties()) {       
         if (!property.IsFirstRecordingAct(recordingAct)) {
           this.oAntecedentParties.Visible = true;
         }

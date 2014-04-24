@@ -124,7 +124,7 @@ namespace Empiria.Web.UI.FSM {
     }
 
     protected string GetRecordingActs() {
-      //ObjectList<RecordingAct> list = transaction.Recording.RecordingActs;
+      //FixedList<RecordingAct> list = transaction.Recording.RecordingActs;
       //const string template = "<tr width='24px'><td>{NUMBER}</td><td style='white-space:nowrap'>{RECORDING.ACT}&nbsp; &nbsp; &nbsp;</td><td style='white-space:nowrap'>{PROPERTY}</td>" + 
       //                        "<td align='center' style='white-space:nowrap'>{PROPERTY.AMOUNT}</td>" +
       //                        "<td align='center' style='white-space:nowrap'>{OPERATION.AMOUNT}</td>" +

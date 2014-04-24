@@ -127,7 +127,7 @@ namespace Empiria.Web.UI.LRS {
                       "<td align='right'>{SUBTOTAL}</td>" +
                       "<td align='right'>{DISCOUNTS}</td>" +
                       "<td align='right'><b>{TOTAL}</b></td></tr>";
-      ObjectList<LRSTransactionAct> list = transaction.RecordingActs;
+      FixedList<LRSTransactionAct> list = transaction.RecordingActs;
       string html = String.Empty;
 
       for (int i = 0; i < list.Count; i++) {
@@ -161,7 +161,7 @@ namespace Empiria.Web.UI.LRS {
                               "<td style='white-space:nowrap'>{UNIT}</td>" +
                               "<td style='white-space:normal'><b>{LAW.ARTICLE}</b></td>" +
                               "<td style='white-space:nowrap'>{NOTES}</td></tr>";
-      ObjectList<LRSTransactionAct> list = transaction.RecordingActs;
+      FixedList<LRSTransactionAct> list = transaction.RecordingActs;
       string html = String.Empty;
 
       for (int i = 0; i < list.Count; i++) {
@@ -185,7 +185,7 @@ namespace Empiria.Web.UI.LRS {
     }
 
     protected string GetRecordingActsWithTotals() {
-      ObjectList<LRSTransactionAct> list = transaction.RecordingActs;
+      FixedList<LRSTransactionAct> list = transaction.RecordingActs;
       const string template = "<tr width='24px'><td>{NUMBER}</td><td>{CONCEPT.CODE}</td>" +
                               "<td style='white-space:normal'>{RECORDING.ACT}&nbsp; &nbsp; &nbsp;</td>" +
                               "<td style='white-space:nowrap'>{LAW.ARTICLE}</td>" +

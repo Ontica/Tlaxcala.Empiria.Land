@@ -57,13 +57,13 @@ namespace Empiria.Web.UI.LRS {
       HtmlSelectContent.LoadCombo(cboAddressPlace, "( Seleccionar lugar de residencia )",
                                   String.Empty, GeographicRegionItem.Unknown.Name);
 
-      ObjectList<RecordingActParty> parties = RecordingActParty.GetInvolvedDomainParties(this.recordingAct);
+      FixedList<RecordingActParty> parties = RecordingActParty.GetInvolvedDomainParties(this.recordingAct);
 
       LoadRolesCombo(parties);
       LoadFirstPartyInRoleCombo(parties);
     }
 
-    private void LoadFirstPartyInRoleCombo(ObjectList<RecordingActParty> parties) {
+    private void LoadFirstPartyInRoleCombo(FixedList<RecordingActParty> parties) {
       cboFirstPartyInRole.Items.Clear();
       parties.Sort((x, y) => x.Party.FullName.CompareTo(y.Party.FullName));
 
@@ -112,7 +112,7 @@ namespace Empiria.Web.UI.LRS {
       return html;
     }
 
-    private void LoadRolesCombo(ObjectList<RecordingActParty> parties) {
+    private void LoadRolesCombo(FixedList<RecordingActParty> parties) {
       this.cboRole.Items.Clear();
 
       if (parties.Count == 0 || parties.Count((x) => x.OwnershipMode == OwnershipMode.Owner) == 0) {
@@ -206,7 +206,7 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void FillHumanPartyOnRecording() {
-      ObjectList<RecordingActParty> list = RecordingActParty.GetList(this.RecordingAct.Recording, this.Party);
+      FixedList<RecordingActParty> list = RecordingActParty.GetList(this.RecordingAct.Recording, this.Party);
       foreach (RecordingActParty rap in list) {
         if ((rap.Party.Equals(this.Party) && rap.SecondaryParty.IsEmptyInstance) || rap.SecondaryParty.Equals(this.Party)) {
           UpdateRecordingActParty(rap);
@@ -237,7 +237,7 @@ namespace Empiria.Web.UI.LRS {
       cboBornLocation.Items.Clear();
       cboBornLocation.Items.Add(new ListItem(person.RegistryLocation.CompoundName, person.RegistryLocation.Id.ToString()));
 
-      ObjectList<RecordingActParty> list = RecordingActParty.GetList(this.RecordingAct.Recording, this.Party);
+      FixedList<RecordingActParty> list = RecordingActParty.GetList(this.RecordingAct.Recording, this.Party);
       List<RecordingActParty> p = list.FindAll((x) => (x.Party.Equals(this.Party) && x.SecondaryParty.IsEmptyInstance) || x.SecondaryParty.Equals(this.Party));
 
       RecordingActParty lastParty = null;
@@ -287,7 +287,7 @@ namespace Empiria.Web.UI.LRS {
       cboParty.Items.Clear();
       cboParty.Items.Add(new ListItem(this.Party.ExtendedName, this.Party.Id.ToString()));
 
-      ObjectList<RecordingActParty> parties = RecordingActParty.GetInvolvedDomainParties(this.recordingAct);
+      FixedList<RecordingActParty> parties = RecordingActParty.GetInvolvedDomainParties(this.recordingAct);
 
       LoadRolesCombo(parties);
       LoadFirstPartyInRoleCombo(parties);

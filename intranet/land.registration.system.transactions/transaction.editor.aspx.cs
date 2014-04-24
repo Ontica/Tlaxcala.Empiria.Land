@@ -135,7 +135,7 @@ namespace Empiria.Web.UI.LRS {
         txtReceiptTotal.Value = transaction.ReceiptTotal.ToString("N2");
       }
 
-      ObjectList<LRSDocumentType> list = transaction.TransactionType.GetDocumentTypes();
+      FixedList<LRSDocumentType> list = transaction.TransactionType.GetDocumentTypes();
 
 
       HtmlSelectContent.LoadCombo(this.cboDocumentType, list, "Id", "Name",
@@ -192,7 +192,7 @@ namespace Empiria.Web.UI.LRS {
     private void LoadRecordingActCombos() {
       if (!String.IsNullOrEmpty(cboRecordingActTypeCategory.Value)) {
         RecordingActTypeCategory recordingActTypeCategory = RecordingActTypeCategory.Parse(int.Parse(cboRecordingActTypeCategory.Value));
-        ObjectList<RecordingActType> list = recordingActTypeCategory.GetItems();
+        FixedList<RecordingActType> list = recordingActTypeCategory.GetItems();
 
         HtmlSelectContent.LoadCombo(this.cboRecordingActType, list, "Id", "DisplayName",
                                     "( Seleccionar el acto jurídico )");
@@ -206,7 +206,6 @@ namespace Empiria.Web.UI.LRS {
     private void UndeleteTransaction() {
       transaction.Undelete();
     }
-
 
     protected bool ShowPrintPaymentOrderButton {
       get {
@@ -241,7 +240,7 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private decimal CalculatePayment() {
-      //ObjectList<RecordingAct> list = transaction.Recording.RecordingActs;
+      //FixedList<RecordingAct> list = transaction.Recording.RecordingActs;
       decimal total = 0m;
       //for (int i = 0; i < list.Count; i++) {
       //  RecordingAct recordingAct = list[i];
@@ -303,7 +302,7 @@ namespace Empiria.Web.UI.LRS {
             AppendConcept(2115, 859, decimal.Parse(txtReceiptTotal.Value));
             return;
           case 715: //Búsqueda de bienes
-            AppendConcept(2116, 869, decimal.Parse(txtReceiptTotal.Value));
+            AppendConcept(2116, 887, decimal.Parse(txtReceiptTotal.Value));
             return;
           case 724: // Copias certificadas
             AppendConcept(2117, 886, decimal.Parse(txtReceiptTotal.Value));
@@ -391,7 +390,7 @@ namespace Empiria.Web.UI.LRS {
     }
 
     protected string GetRecordingActs() {
-      ObjectList<LRSTransactionAct> list = transaction.RecordingActs;
+      FixedList<LRSTransactionAct> list = transaction.RecordingActs;
       const string template = "<tr class='{CLASS}'><td>{COUNT}</td><td style='white-space:normal'>{ACT}</td><td>{LAW}</td><td align='right'>{RECEIPT}</td>" +
                               "<td align='right'>{OP.VALUE}</td><td align='right'>{REC.RIGHTS}</td>" +
                               "<td align='right'>{SHEETS}</td><td align='right'>{ACLARATION}</td>" +
@@ -436,7 +435,7 @@ namespace Empiria.Web.UI.LRS {
 
       const string footer = "<tr class='detailsSuperHeader' valign='middle'><td colspan='5' style='height:28px'>&nbsp;&nbsp;{NEXT.STATUS}</td><td  align='right'><b>{WORK.TOTAL.TIME}</b></td><td>&nbsp;</td><td>&nbsp;&nbsp;&nbsp;Duración total: <b>{TOTAL.TIME}</b></td></tr>";
 
-      ObjectList<LRSTransactionTrack> track = this.transaction.Track;
+      FixedList<LRSTransactionTrack> track = this.transaction.Track;
 
       string html = String.Empty;
       double subTotalWorkTimeSeconds = 0.0d;

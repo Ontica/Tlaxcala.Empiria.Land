@@ -86,7 +86,7 @@
                 <td>&nbsp;</td>
               </tr>
               <%=GetRecordingActPartiesGrid()%>
-              <% if (base.recordingAct.Status != Empiria.Land.Registration.RecordingActStatus.Registered) { %>
+              <% if (base.recordingAct.Status != Empiria.Land.Registration.RecordableObjectStatus.Registered) { %>
               <tr class="selectedItem">
                 <td><a href="javascript:doOperation('showRecordingActPartyEditor')">Agregar una persona u organización a este acto jurídico</a></td>
                 <td colspan="5" align="right"><a href="javascript:doOperation('saveRecordingActAsComplete')">Toda la información está completa</a></td>

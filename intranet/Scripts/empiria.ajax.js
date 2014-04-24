@@ -107,7 +107,7 @@ function invokeAjaxValidator(url) {
 
 function invokeAjaxComboItemsLoader(url, oCombo) {
   var comboOptionsString = invokeAjaxMethod(false, url, null);
-
+  //alert(comboOptionsString);
   addComboItemsFromJoinString(oCombo, comboOptionsString);
 }
 

@@ -52,29 +52,33 @@ namespace Empiria.Web.UI.LRS {
       if (txtAppraisalAmount.Value.Length == 0) {
         txtAppraisalAmount.Value = "0.00";
       }
-      recordingAct.AppraisalAmount = Money.Parse(Currency.Parse(int.Parse(cboAppraisalCurrency.Value)),
-                                                 decimal.Parse(txtAppraisalAmount.Value));
+      recordingAct.ExtensionData.AppraisalAmount =
+                                  Money.Parse(Currency.Parse(int.Parse(cboAppraisalCurrency.Value)),
+                                              decimal.Parse(txtAppraisalAmount.Value));
       if (!this.DisplayOperationAmount) {
         return;
       }
       if (txtOperationAmount.Value.Length == 0) {
         txtOperationAmount.Value = "0.00";
       }
-      recordingAct.OperationAmount = Money.Parse(Currency.Parse(int.Parse(cboOperationCurrency.Value)),
-                                                 decimal.Parse(txtOperationAmount.Value));
+      recordingAct.ExtensionData.OperationAmount = 
+                                  Money.Parse(Currency.Parse(int.Parse(cboOperationCurrency.Value)),
+                                              decimal.Parse(txtOperationAmount.Value));
     }
 
     private void FillCreditFields() {
+      var contract = recordingAct.ExtensionData.Contract;
+
       if (!String.IsNullOrEmpty(Request.Form[txtContractDate.Name])) {
-        recordingAct.ContractDate = EmpiriaString.ToDateTime(txtContractDate.Value);
+        contract.Date = EmpiriaString.ToDateTime(txtContractDate.Value);
       } else {
-        recordingAct.ContractDate = ExecutionServer.DateMaxValue;
+        contract.Date = ExecutionServer.DateMaxValue;
       }
-      recordingAct.ContractNumber = txtContractNumber.Value;
+      recordingAct.ExtensionData.Contract.Number = txtContractNumber.Value;
       if (!String.IsNullOrEmpty(Request.Form[cboContractPlace.Name])) {
-        recordingAct.ContractPlace = GeographicRegionItem.Parse(int.Parse(Request.Form[cboContractPlace.Name]));
+        contract.Place = GeographicRegionItem.Parse(int.Parse(Request.Form[cboContractPlace.Name]));
       } else {
-        recordingAct.ContractPlace = GeographicRegionItem.Unknown;
+        contract.Place = GeographicRegionItem.Unknown;
       }
       if (txtTermPeriod.Value.Length == 0) {
         txtTermPeriod.Value = "0";
@@ -82,10 +86,10 @@ namespace Empiria.Web.UI.LRS {
       if (txtInterestRate.Value.Length == 0) {
         txtInterestRate.Value = "0.00";
       }
-      recordingAct.TermPeriods = int.Parse(txtTermPeriod.Value);
-      recordingAct.TermUnit = DataTypes.Unit.Parse(int.Parse(cboTermUnit.Value));
-      recordingAct.InterestRate = decimal.Parse(txtInterestRate.Value);
-      recordingAct.InterestRateType = InterestRateType.Parse(int.Parse(cboInterestRateType.Value));
+      contract.Interest.TermPeriods = int.Parse(txtTermPeriod.Value);
+      contract.Interest.TermUnit = DataTypes.Unit.Parse(int.Parse(cboTermUnit.Value));
+      contract.Interest.Rate = decimal.Parse(txtInterestRate.Value);
+      contract.Interest.RateType = InterestRateType.Parse(int.Parse(cboInterestRateType.Value));
     }
 
     public void LoadRecordingAct() {
@@ -96,22 +100,26 @@ namespace Empiria.Web.UI.LRS {
         creditFieldsRow2.Visible = false;
         creditFieldsRow3.Visible = false;
       }
-      if (recordingAct.AppraisalAmount.Currency.IsEmptyInstance || recordingAct.AppraisalAmount.Currency.Equals(Currency.Unknown)) {
+      var data = recordingAct.ExtensionData;
+
+      if (data.AppraisalAmount.Currency.IsEmptyInstance ||
+          data.AppraisalAmount.Currency.Equals(Currency.Unknown)) {
         txtAppraisalAmount.Value = String.Empty;
       } else {
-        txtAppraisalAmount.Value = recordingAct.AppraisalAmount.Amount.ToString("N2");
+        txtAppraisalAmount.Value = data.AppraisalAmount.Amount.ToString("N2");
       }
-      cboAppraisalCurrency.Value = recordingAct.AppraisalAmount.Currency.Id.ToString();
+      cboAppraisalCurrency.Value = data.AppraisalAmount.Currency.Id.ToString();
 
       if (!this.DisplayOperationAmount) {
         return;
       }
-      if (recordingAct.OperationAmount.Currency.IsEmptyInstance || recordingAct.OperationAmount.Currency.Equals(Currency.Unknown)) {
+      if (data.OperationAmount.Currency.IsEmptyInstance ||
+          data.OperationAmount.Currency.Equals(Currency.Unknown)) {
         txtOperationAmount.Value = String.Empty;
       } else {
-        txtOperationAmount.Value = recordingAct.OperationAmount.Amount.ToString("0,###.00##");
+        txtOperationAmount.Value = data.OperationAmount.Amount.ToString("0,###.00##");
       }
-      cboOperationCurrency.Value = recordingAct.OperationAmount.Currency.Id.ToString();
+      cboOperationCurrency.Value = data.OperationAmount.Currency.Id.ToString();
     }
 
     private void LoadCreditFields() {
@@ -119,24 +127,28 @@ namespace Empiria.Web.UI.LRS {
       creditFieldsRow2.Visible = true;
       creditFieldsRow3.Visible = true;
 
-      if (recordingAct.ContractDate != ExecutionServer.DateMaxValue) {
-        txtContractDate.Value = recordingAct.ContractDate.ToString("dd/MMM/yyyy");
+      var contract = recordingAct.ExtensionData.Contract;
+      var interest = recordingAct.ExtensionData.Contract.Interest;
+
+      if (contract.Date != ExecutionServer.DateMaxValue) {
+        txtContractDate.Value = contract.Date.ToString("dd/MMM/yyyy");
       }
-      txtContractNumber.Value = recordingAct.ContractNumber;
+      txtContractNumber.Value = contract.Number;
 
       cboContractPlace.Items.Clear();
       cboContractPlace.Items.Add(new ListItem("( Seleccionar lugar del contrato )", String.Empty));
-      cboContractPlace.Items.Add(new ListItem(recordingAct.ContractPlace.FullName, recordingAct.ContractPlace.Id.ToString()));
-      cboContractPlace.Value = recordingAct.ContractPlace.Id.ToString();
 
-      if (recordingAct.TermPeriods != 0) {
-        txtTermPeriod.Value = recordingAct.TermPeriods.ToString();
+      cboContractPlace.Items.Add(new ListItem(contract.Place.FullName, contract.Place.Id.ToString()));
+      cboContractPlace.Value = contract.Place.Id.ToString();
+
+      if (interest.TermPeriods != 0) {
+        txtTermPeriod.Value = interest.TermPeriods.ToString();
       }
-      cboTermUnit.Value = recordingAct.TermUnit.Id.ToString();
-      if (recordingAct.InterestRate != 0) {
-        txtInterestRate.Value = recordingAct.InterestRate.ToString("N2");
+      cboTermUnit.Value = interest.TermUnit.Id.ToString();
+      if (interest.Rate != 0) {
+        txtInterestRate.Value = interest.Rate.ToString("N2");
       }
-      cboInterestRateType.Value = recordingAct.InterestRateType.Id.ToString();
+      cboInterestRateType.Value = interest.RateType.Id.ToString();
     }
 
     #endregion Public methods

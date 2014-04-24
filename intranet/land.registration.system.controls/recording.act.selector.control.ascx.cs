@@ -64,7 +64,7 @@ namespace Empiria.Web.UI.LRS {
 
       RecordingSection recordingSection = RecordingSection.Parse(1051);
 
-      ObjectList<RecordingBook> booksList = this.Recording.RecordingBook.RecorderOffice.GetRecordingBooks(recordingSection);
+      FixedList<RecordingBook> booksList = this.Recording.RecordingBook.RecorderOffice.GetRecordingBooks(recordingSection);
 
       if (booksList.Count != 0) {
         HtmlSelectContent.LoadCombo(this.cboAnotherRecordingBook, booksList, "Id", "FullName",

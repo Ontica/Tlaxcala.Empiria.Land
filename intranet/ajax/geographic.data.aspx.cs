@@ -54,7 +54,7 @@ namespace Empiria.Web.UI.Ajax {
       GeographicRegionItem municipality = GeographicRegionItem.Parse(municipalityId);
       GeographicRegionItem settlement = GeographicRegionItem.Parse(settlementId);
 
-      ObjectList<GeographicRegionItem> list = null;
+      FixedList<GeographicRegionItem> list = null;
       if (settlement.IsEmptyInstance) {
         list = municipality.GetRegions("Municipality_PostalCodes");
       } else {
@@ -80,7 +80,7 @@ namespace Empiria.Web.UI.Ajax {
       GeographicRegionItem municipality = GeographicRegionItem.Parse(municipalityId);
       GeographicItemType settlementType = GeographicItemType.Parse(settlementTypeId);
 
-      ObjectList<GeographicRegionItem> list = new ObjectList<GeographicRegionItem>();
+      FixedList<GeographicRegionItem> list = new FixedList<GeographicRegionItem>();
       list = municipality.GetRegions("Municipality_Settlements", settlementType);
 
       if (list.Count != 0) {
@@ -111,7 +111,7 @@ namespace Empiria.Web.UI.Ajax {
       GeographicRegionItem settlement = GeographicRegionItem.Parse(settlementId);
       GeographicItemType pathType = GeographicItemType.Parse(streetRoadTypeId);
 
-      ObjectList<GeographicPathItem> list = null;
+      FixedList<GeographicPathItem> list = null;
       if (settlement.IsEmptyInstance) {
         list = municipality.GetPaths("Municipality_Paths", pathType);
       } else {
@@ -144,7 +144,7 @@ namespace Empiria.Web.UI.Ajax {
       }
       filter += "GeoItemTypeId IN (307, 308, 315, 316, 317, 318, 322)";
 
-      ObjectList<GeographicRegionItem> list = GeographicRegionItem.GetList(filter);
+      FixedList<GeographicRegionItem> list = GeographicRegionItem.GetList(filter);
 
       return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "CompoundName", header, String.Empty, GeographicRegionItem.Unknown.Name);
     }
@@ -171,7 +171,7 @@ namespace Empiria.Web.UI.Ajax {
       string name = GetCommandParameter("name", true);
 
       GeographicRegionItem municipality = GeographicRegionItem.Parse(municipalityId);
-      ObjectList<GeographicRegionItem> list = GeographicItemValidator.SearchSettlements(municipality, name, 0.75m);
+      FixedList<GeographicRegionItem> list = GeographicItemValidator.SearchSettlements(municipality, name, 0.75m);
 
       string temp = String.Empty;
       foreach (GeographicRegionItem region in list) {

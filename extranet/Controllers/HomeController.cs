@@ -72,7 +72,7 @@ namespace EmpiriaWeb.Government.LandRegistration.Controllers {
       }
 
       RecorderOffice recorderOffice = RecorderOffice.Parse(recorderOfficeId);
-      ObjectList<RecordingBook> recordingBookList = null;
+      FixedList<RecordingBook> recordingBookList = null;
 
       RecordingSection section = RecordingSection.Parse(recordingSectionId);
       recordingBookList = recorderOffice.GetRecordingBooks(section);

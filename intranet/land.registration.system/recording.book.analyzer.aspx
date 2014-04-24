@@ -929,7 +929,7 @@
       } else {
         sMsg += "\n";
       }
-      <% if (base.recording.Status == RecordingStatus.Obsolete) { %>
+      <% if (base.recording.Status == RecordableObjectStatus.Obsolete) { %>
       sMsg += "IMPORTANTE: La inscripción pasará de estado No vigente a Incompleta.\n\n";
       <% } %>
       sMsg += "¿Agrego el acto jurídico a la inscripción " + getElement('txtRecordingNumber').value + 
@@ -2096,13 +2096,13 @@
   }	
   
   function saveRecording() {
-    if (getElement("cboStatus").value == "<%=(char) Empiria.Land.Registration.RecordingStatus.Obsolete%>") {
+    if (getElement("cboStatus").value == "<%=(char) Empiria.Land.Registration.RecordableObjectStatus.Obsolete%>") {
       return registerAsObsoleteRecording();
-    } else if (getElement("cboStatus").value == "<%= (char) Empiria.Land.Registration.RecordingStatus.NoLegible%>") {
+    } else if (getElement("cboStatus").value == "<%= (char) Empiria.Land.Registration.RecordableObjectStatus.NoLegible%>") {
       return registerAsNoLegibleRecording();
-    } else if (getElement("cboStatus").value == "<%=(char) Empiria.Land.Registration.RecordingStatus.Pending%>") {
+    } else if (getElement("cboStatus").value == "<%=(char) Empiria.Land.Registration.RecordableObjectStatus.Pending%>") {
       return registerAsPendingRecording();		
-    } else if (getElement("cboStatus").value == "<%= (char) Empiria.Land.Registration.RecordingStatus.Incomplete%>") {
+    } else if (getElement("cboStatus").value == "<%= (char) Empiria.Land.Registration.RecordableObjectStatus.Incomplete%>") {
       return registerAsIncompleteRecording(false);
     }
   }

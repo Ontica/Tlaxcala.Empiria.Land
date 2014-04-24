@@ -86,7 +86,7 @@ namespace Empiria.Web.UI.LRS {
       HtmlSelectContent.LoadCombo(this.cboJudicialDocIssuePlace, office.GetJudicialDocumentIssuePlaces(), "Id", "Name",
                                   "( Seleccionar )", String.Empty, "No consta");
 
-      ObjectList<Contact> signers = office.GetPropertyTitleSigners(book.RecordingsControlTimePeriod);
+      FixedList<Contact> signers = office.GetPropertyTitleSigners(book.RecordingsControlTimePeriod);
       HtmlSelectContent.LoadCombo(this.cboPropTitleDocIssuedBy, signers, "Id", "FullName",
                                   "( Seleccionar al C. Funcionario Público )", String.Empty, "No consta o no se puede determinar");
 
@@ -94,7 +94,7 @@ namespace Empiria.Web.UI.LRS {
                                      "( Seleccionar )", String.Empty, "No consta");
 
       GeneralList listType = GeneralList.Parse("PrivateContract.WitnessPosition.List");
-      ObjectList<TypeAssociationInfo> witnessRole = listType.GetTypeRelationItems();
+      FixedList<TypeAssociationInfo> witnessRole = listType.GetTypeRelationItems();
       HtmlSelectContent.LoadCombo(this.cboPrivateDocMainWitnessPosition, witnessRole, "Id", "DisplayName",
                                   "( Seleccionar )", "No consta", String.Empty);
     }

@@ -120,7 +120,7 @@ namespace Empiria.Web.UI.FSM {
                       "<td align='right'>{SUBTOTAL}</td>" +
                       "<td align='right'>{DISCOUNTS}</td>" +
                       "<td align='right'><b>{TOTAL}</b></td></tr>";
-      ObjectList<LRSTransactionAct> list = transaction.RecordingActs;
+      FixedList<LRSTransactionAct> list = transaction.RecordingActs;
       string html = String.Empty;
 
       for (int i = 0; i < list.Count; i++) {
@@ -146,7 +146,7 @@ namespace Empiria.Web.UI.FSM {
     }
 
     protected string GetConcepts() {
-      ObjectList<LRSTransactionAct> list = transaction.RecordingActs;
+      FixedList<LRSTransactionAct> list = transaction.RecordingActs;
 
       const string template = "<tr width='24px'><td>{NUMBER}</td>" +
                               "<td style='white-space:normal'>{CONCEPT}&nbsp; &nbsp; &nbsp;</td>" +
@@ -197,7 +197,7 @@ namespace Empiria.Web.UI.FSM {
 
       string html = String.Empty;
 
-      ObjectList<LRSTransactionAct> list = transaction.RecordingActs;
+      FixedList<LRSTransactionAct> list = transaction.RecordingActs;
       for (int i = 0; i < list.Count; i++) {
         LRSTransactionAct recordingAct = list[i];
         string temp = template.Replace("{NUMBER}", (i + 1).ToString("00"));

@@ -111,15 +111,15 @@ namespace Empiria.Web.UI.Ajax {
       }
       for (int i = 0; i < recording.RecordingActs.Count; i++) {
         RecordingAct recordingAct = recording.RecordingActs[i];
-        for (int j = 0; j < recordingAct.PropertiesEvents.Count; j++) {
-          if (html.Contains(recordingAct.PropertiesEvents[j].Property.UniqueCode)) {
+        for (int j = 0; j < recordingAct.TractIndex.Count; j++) {
+          if (html.Contains(recordingAct.TractIndex[j].Property.UniqueCode)) {
             continue;
           }
           if (html.Length != 0) {
             html += "|";
           }
-          html += HtmlSelectContent.GetComboAjaxHtmlItem(recordingAct.PropertiesEvents[j].Property.Id.ToString(),
-                                                         recordingAct.PropertiesEvents[j].Property.UniqueCode);
+          html += HtmlSelectContent.GetComboAjaxHtmlItem(recordingAct.TractIndex[j].Property.Id.ToString(),
+                                                         recordingAct.TractIndex[j].Property.UniqueCode);
         }
       }
       return html;
@@ -264,7 +264,7 @@ namespace Empiria.Web.UI.Ajax {
       if (partyTypeId != 0) {
         partyTypeInfo = ObjectTypeInfo.Parse(partyTypeId);
       }
-      ObjectList<Party> list = Party.GetList(partyFilterType, partyTypeInfo, recordingAct, keywords);
+      FixedList<Party> list = Party.GetList(partyFilterType, partyTypeInfo, recordingAct, keywords);
 
       string html = String.Empty;
 
@@ -295,7 +295,7 @@ namespace Empiria.Web.UI.Ajax {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar un juzgado )");
       }
       JudicialOffice judicialOffice = JudicialOffice.Parse(judicialOfficeId);
-      ObjectList<Person> list = judicialOffice.GetJudges();
+      FixedList<Person> list = judicialOffice.GetJudges();
 
       return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "FamilyFullName", "( Seleccionar al C. Juez )", String.Empty, "No consta");
     }
@@ -307,7 +307,7 @@ namespace Empiria.Web.UI.Ajax {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar una ciudad )");
       }
       GeographicRegionItem place = GeographicRegionItem.Parse(placeId);
-      ObjectList<JudicialOffice> list = JudicialOffice.GetList(place);
+      FixedList<JudicialOffice> list = JudicialOffice.GetList(place);
 
       return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "Number", "( Seleccionar )", String.Empty, "No consta");
     }
@@ -329,7 +329,7 @@ namespace Empiria.Web.UI.Ajax {
 
       GeographicRegionItem place = GeographicRegionItem.Parse(placeId);
       TypeAssociationInfo role = place.ObjectTypeInfo.Associations[positionId];
-      ObjectList<Person> list = place.GetPeople(role.Name);
+      FixedList<Person> list = place.GetPeople(role.Name);
 
       return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "FamilyFullName", "( Seleccionar al certificador del contrato )",
                                             String.Empty, "No consta o no se puede determinar");
@@ -371,7 +371,7 @@ namespace Empiria.Web.UI.Ajax {
       }
 
       RecorderOffice recorderOffice = RecorderOffice.Parse(recorderOfficeId);
-      ObjectList<RecordingBook> recordingBookList = null;
+      FixedList<RecordingBook> recordingBookList = null;
 
       RecordingSection recordingSection = RecordingSection.Parse(recordingTypeCategoryId);
       recordingBookList = recorderOffice.GetRecordingBooks(recordingSection);
@@ -393,7 +393,7 @@ namespace Empiria.Web.UI.Ajax {
 
       RecordingBook recordingBook = RecordingBook.Parse(recordingBookId);
       RecorderOffice office = recordingBook.RecorderOffice;
-      ObjectList<Person> officers = office.GetRecorderOfficials(recordingBook.RecordingsControlTimePeriod);
+      FixedList<Person> officers = office.GetRecorderOfficials(recordingBook.RecordingsControlTimePeriod);
 
       return HtmlSelectContent.GetComboAjaxHtml(officers, 0, "Id", "FamilyFullName", "( Seleccionar al C. Oficial Registrador )",
                                                 "No se puede determinar o sólo aparece la firma", String.Empty);
@@ -404,7 +404,7 @@ namespace Empiria.Web.UI.Ajax {
 
       if (annotationTypeCategoryId != 0) {
         RecordingActTypeCategory recordingActTypeCategory = RecordingActTypeCategory.Parse(annotationTypeCategoryId);
-        ObjectList<RecordingActType> list = recordingActTypeCategory.GetItems();
+        FixedList<RecordingActType> list = recordingActTypeCategory.GetItems();
 
         return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "DisplayName", "( Seleccionar el tipo de movimiento que se desea agregar )");
       } else {
@@ -417,7 +417,7 @@ namespace Empiria.Web.UI.Ajax {
 
       if (cadastralOfficeId != 0) {
         RecorderOffice cadastralOffice = RecorderOffice.Parse(cadastralOfficeId);
-        ObjectList<GeographicRegionItem> list = cadastralOffice.GetMunicipalities();
+        FixedList<GeographicRegionItem> list = cadastralOffice.GetMunicipalities();
         if (list.Count != 0) {
           return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "Name", "( Seleccionar un municipio )");
         } else {
@@ -513,7 +513,7 @@ namespace Empiria.Web.UI.Ajax {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar una ciudad )");
       }
       GeographicRegionItem place = GeographicRegionItem.Parse(placeId);
-      ObjectList<NotaryOffice> list = NotaryOffice.GetList(place);
+      FixedList<NotaryOffice> list = NotaryOffice.GetList(place);
 
       return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "Number", "( ? )", String.Empty, "N/C");
     }
@@ -525,7 +525,7 @@ namespace Empiria.Web.UI.Ajax {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar una notaría )");
       }
       NotaryOffice notaryOffice = NotaryOffice.Parse(notaryOfficeId);
-      ObjectList<Person> list = notaryOffice.GetNotaries();
+      FixedList<Person> list = notaryOffice.GetNotaries();
 
       return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "FamilyFullName", "( Seleccionar al C. Notario Público )",
                                                 String.Empty, "No consta o no se puede determinar");
@@ -614,7 +614,7 @@ namespace Empiria.Web.UI.Ajax {
       string items = String.Empty;
       if (recordingActTypeCategoryId != 0) {
         RecordingActTypeCategory recordingActTypeCategory = RecordingActTypeCategory.Parse(recordingActTypeCategoryId);
-        ObjectList<RecordingActType> list = recordingActTypeCategory.GetItems();
+        FixedList<RecordingActType> list = recordingActTypeCategory.GetItems();
 
         return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "DisplayName", "( Seleccionar el tipo de acto que se desea agregar)");
       } else {
@@ -628,7 +628,7 @@ namespace Empiria.Web.UI.Ajax {
       string items = String.Empty;
       if (recordingActTypeId != 0) {
         RecordingActType recordingActType = RecordingActType.Parse(recordingActTypeId);
-        ObjectList<LRSLawArticle> list = recordingActType.GetFinancialLawArticles();
+        FixedList<LRSLawArticle> list = recordingActType.GetFinancialLawArticles();
         if (list.Count == 0) {
           list = LRSLawArticle.GetList();
         }
