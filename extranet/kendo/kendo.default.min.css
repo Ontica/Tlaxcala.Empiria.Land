@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Kendo UI Complete v2012.2.710 (http://kendoui.com)
 * Copyright 2012 Telerik AD. All rights reserved.
 *

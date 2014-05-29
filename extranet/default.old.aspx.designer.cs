@@ -121,3 +121,4 @@ namespace Empiria.Web.UI {
         protected global::System.Web.UI.HtmlControls.HtmlInputButton cmdSend;
     }
 }
+

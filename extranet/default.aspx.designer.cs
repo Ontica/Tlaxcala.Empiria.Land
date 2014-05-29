@@ -13,3 +13,4 @@ namespace EmpiriaWeb.Government.LandRegistration {
     public partial class RedirectPage {
     }
 }
+

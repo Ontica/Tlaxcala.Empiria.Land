@@ -67,3 +67,4 @@ namespace Empiria.Web.UI.LRS {
         protected global::System.Web.UI.HtmlControls.HtmlSelect cboZoomLevel;
     }
 }
+

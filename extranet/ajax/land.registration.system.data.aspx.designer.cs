@@ -13,3 +13,4 @@ namespace Empiria.Web.UI.Ajax {
     public partial class LandRegistrationSystemData {
     }
 }
+
