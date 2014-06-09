@@ -165,7 +165,7 @@ namespace Empiria.Web.UI.LRS {
 
     private FixedList<RecordingAct> GetRecordingActs() {
       if (recordingActs == null) {
-        recordingActs = RecordingAct.GetList(transaction);
+        recordingActs = RecordingAct.GetList(this.transaction);
       }
       return recordingActs;
     }

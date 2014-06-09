@@ -53,32 +53,32 @@
             Distrito o mesa origen:
             <select id="cboRecorderOffice" class="selectBox" style="width:154px" onchange="return updateUserInterface(this);" runat="server">				  
               <option value="-1">No determinado</option>
-              <option value="101">Hidalgo</option>
-              <option value="102">Cuauhtémoc</option>
-              <option value="103">Juárez</option>
-              <option value="104">Lardizábal y Uribe</option>
-              <option value="105">Morelos</option>
-              <option value="106">Ocampo</option>
-              <option value="107">Xicohténcatl</option>
-              <option value="108">Zaragoza</option>
-              <option value=""> </option>
-              <option value="146">Archivo General de Notarías</option>
-              <option value="145">Oficialía de partes</option>
-              <option value="147">Oficina del C. Director</option>
-              <option value="154">Jurídico</option>
-              <option value=""> </option>
-              <option value="139">Asoc civiles y créditos particulares (Rosario)</option>
+     	        <option value="101">Hidalgo</option>
+	            <option value="102">Cuauhtémoc</option>
+	            <option value="103">Juárez</option>
+	            <option value="104">Lardizábal y Uribe</option>
+	            <option value="105">Morelos</option>
+	            <option value="106">Ocampo</option>
+	            <option value="107">Xicohténcatl</option>
+	            <option value="108">Zaragoza</option>
+	            <option value=""> </option>
+	            <option value="146">Archivo General de Notarías</option>
+	            <option value="145">Oficialía de partes</option>
+	            <option value="147">Oficina del C. Director</option>
+	            <option value="154">Jurídico</option>
+	            <option value=""> </option>
+	            <option value="139">Asoc civiles y créditos particulares (Rosario)</option>
               <option value="142">Avisos preventivos (Gregoria)</option>
-              <option value="138">Cert. de hipotecas (Lupita)</option>
-              <option value="135">Certificados (Lety Palacios)</option>
+	            <option value="138">Cert. de hipotecas (Lupita)</option>
+	            <option value="135">Certificados (Lety Palacios)</option>
               <option value="137">Comercio (Laura)</option>
               <option value="134">Copias certificadas</option>
               <option value="141">Créditos (Javier Ceballos)</option>
               <option value="140">Embargos (Alejandra)</option>
               <option value="144">Infonavit (Rubén)</option>
               <option value="143">Procede (Tere Roldán)</option>
-              <option value="133">Sección 4ta</option>
-              <option value="136">Sección 5ta</option>
+	            <option value="133">Sección 4ta</option>
+	            <option value="136">Sección 5ta</option>
             </select>
           </td>
         </tr>
