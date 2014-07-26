@@ -85,7 +85,7 @@ namespace Empiria.Web.UI.LRS {
             filter += " AND ";
           }
           filter += "((ResponsibleId = " + User.Id.ToString() + ") OR (TransactionStatus = 'Y')) AND (TrackStatus = 'P') AND (TransactionStatus NOT IN ('D','L'))";
-          return TransactionData.GetLRSTransactions(filter, sort);
+          return TransactionData.GetLRSTransactionsForUI(filter, sort);
         }
       } else if (base.SelectedTabStrip == 1) {
         return TransactionData.GetLRSResponsibleTransactionInbox(me, TrackStatus.OnDelivery, filter, sort);
@@ -105,12 +105,12 @@ namespace Empiria.Web.UI.LRS {
           filter += " AND ";
         }
         filter += "(TransactionStatus IN ('D','L'))";
-        return TransactionData.GetLRSTransactions(filter, sort);
+        return TransactionData.GetLRSTransactionsForUI(filter, sort);
       } else if (base.SelectedTabStrip == 5) {
         // CORRECT THIS
-        return TransactionData.GetLRSTransactions(filter, sort);
+        return TransactionData.GetLRSTransactionsForUI(filter, sort);
       } else if (base.SelectedTabStrip == 6) {
-        return TransactionData.GetLRSTransactions(filter, sort);
+        return TransactionData.GetLRSTransactionsForUI(filter, sort);
       }
       return new DataView();
     }

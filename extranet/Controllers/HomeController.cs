@@ -45,14 +45,14 @@ namespace EmpiriaWeb.Government.LandRegistration.Controllers {
       }
       var result = new {
         Id = o.Id.ToString(),
-        Key = o.Key,
+        Key = o.UniqueCode,
         RequestedBy = o.RequestedBy,
         Type = o.TransactionType.Name,
         DocumentType = o.DocumentType.Name,
         RecorderOffice = o.RecorderOffice.Alias,
         PresentationTime = o.PresentationTime.ToString("dd/MMM/yyyy HH:mm:ss"),
         ClosingTime = o.ClosingTime.ToString("dd/MMM/yyyy HH:mm"),
-        ReceiptTotal = o.ReceiptTotal.ToString("C2"),
+        ReceiptTotal = o.Items.TotalFee.Total.ToString("C2"),
         StatusName = LRSTransaction.StatusName(o.Status),
         DeliveryEstimatedDate = GetDeliveryEstimatedDate(o)
       };

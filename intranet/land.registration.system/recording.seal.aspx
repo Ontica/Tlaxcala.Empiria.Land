@@ -60,9 +60,9 @@
         <tr valign="top" style="font-size:8pt">
           <td style="font-size:8pt;vertical-align:middle;white-space:nowrap"><%=GetRecordingOfficialsInitials()%></td>
           <td align="right">
-            <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.Document.DocumentKey%>" />
+            <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.Document.UniqueCode%>" />
             <br />
-            <span><%=transaction.Document.DocumentKey%></span>
+            <span><%=transaction.Document.UniqueCode%></span>
           </td>
         </tr>
       </table>

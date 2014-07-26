@@ -48,14 +48,11 @@
 					      <table width="100%">
 						      <tr>
 							      <td valign="bottom" align="right">
-								      <h3><%=transaction.Key%></h3>
+								      <h3><%=transaction.UniqueCode%></h3>
 							      </td>
 						      </tr>
 						      <tr>
-							      <td align="right"><img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.Key%>" />
-                    <% if (Empiria.ExecutionServer.LicenseName == "Zacatecas") { %>
-                    <br />Control: <%=transaction.ControlNumber%></td>
-                    <% } %>
+							      <td align="right"><img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.UniqueCode%>" /></td>
 						      </tr>
 					      </table>
 				      </td>
@@ -73,16 +70,16 @@
             <tr>
               <td style="white-space:nowrap">Notaría/Gestor:</td><td style="white-space:nowrap;width:30%"><b><%=!transaction.ManagementAgency.IsEmptyInstance ? transaction.ManagementAgency.Alias : "Particular"%></b></td>
 							<td style="white-space:nowrap">Tipo de trámite:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.TransactionType.Name%></b></td>
-              <td style="white-space:nowrap">Importe:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.TotalFee.Total.ToString("C2")%></b>&nbsp; (R: <b><%=transaction.ReceiptNumber%>)</b></td>
+              <td style="white-space:nowrap">Importe:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.Items.TotalFee.Total.ToString("C2")%></b>&nbsp; (R: <b><%=transaction.Payments.ReceiptNumbers%>)</b></td>
             </tr>
             <tr>
 							<td style="white-space:nowrap">Hora de presentación:</td><td style="white-space:nowrap"><b><%=transaction.PresentationTime.ToString("dd/MMM/yyyy HH:mm:ss")%></b></td>
-							<td style="white-space:nowrap">Instrumento:</td><td><b><%=transaction.DocumentNumber%></b></td>              
+							<td style="white-space:nowrap">Instrumento:</td><td><b><%=transaction.DocumentDescriptor%></b></td>              
               <td style="white-space:nowrap">Recibió:</td><td style="white-space:nowrap"><b><%=transaction.ReceivedBy.Alias%></b></td>
             </tr>
-            <tr style='display:<%=transaction.RequestNotes.Length != 0 ? "inline" : "none" %>'>
+            <tr style='display:<%=transaction.ExtensionData.RequesterNotes.Length != 0 ? "inline" : "none" %>'>
               <td valign="top" style="white-space:nowrap">Observaciones:</td>
-              <td colspan="6" style='white-space:normal;'><%=transaction.RequestNotes%></td>
+              <td colspan="6" style='white-space:normal;'><%=transaction.ExtensionData.RequesterNotes%></td>
             </tr>
           </table>
         </td>

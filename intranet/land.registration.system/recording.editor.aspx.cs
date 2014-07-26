@@ -54,10 +54,10 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void LoadEditor() {
-      cboRecordingType.Value = transaction.Document.RecordingDocumentType.Id.ToString();
+      cboRecordingType.Value = transaction.Document.DocumentType.Id.ToString();
       txtObservations.Value = transaction.Document.Notes;
       cboSheetsCount.Value = transaction.Document.SheetsCount.ToString();
-      cboSealPosition.Value = transaction.Document.SealUpperPosition.ToString("N1");
+      cboSealPosition.Value = transaction.Document.ExtensionData.SealUpperPosition.ToString("N1");
 
       LoadRecordingActTypeCategoriesCombo();
       LoadPrecedentRecordingCombos();
@@ -141,7 +141,7 @@ namespace Empiria.Web.UI.LRS {
 
       RecorderExpert.Execute(task);
 
-      recordingActs = RecordingAct.GetList(transaction);
+      recordingActs = RecordingAct.GetList(transaction.Document);
     }
 
     private RecordingTask ParseRecordingTaskParameters() {
@@ -165,7 +165,7 @@ namespace Empiria.Web.UI.LRS {
 
     private FixedList<RecordingAct> GetRecordingActs() {
       if (recordingActs == null) {
-        recordingActs = RecordingAct.GetList(this.transaction);
+        recordingActs = RecordingAct.GetList(this.transaction.Document);
       }
       return recordingActs;
     }
@@ -213,12 +213,12 @@ namespace Empiria.Web.UI.LRS {
 
       document.Notes = txtObservations.Value;
       document.SheetsCount = int.Parse(cboSheetsCount.Value);
-      document.SealUpperPosition = decimal.Parse(cboSealPosition.Value);
+      document.ExtensionData.SealUpperPosition = decimal.Parse(cboSealPosition.Value);
       transaction.AttachDocument(document);
       oRecordingDocumentEditor.LoadRecordingDocument(document);
       Assertion.Require(!transaction.Document.IsEmptyInstance && !transaction.Document.IsNew,
                         "Recording document after transaction attachment can't be null or an empty instance.");
-      SetMessageBox("El documento " + transaction.Document.DocumentKey + " se guardó correctamente.");
+      SetMessageBox("El documento " + transaction.Document.UniqueCode + " se guardó correctamente.");
     }
 
     private void Initialize() {

@@ -45,7 +45,7 @@ namespace Empiria.Web.UI.LRS {
 
     protected override void ImplementsLoadRecordingDocument() {
       Assertion.Assert(base.Document != null, "Document can't be null");
-      RecordingDocumentType documentType = base.Document.RecordingDocumentType;
+      RecordingDocumentType documentType = base.Document.DocumentType;
       oNotaryRecording.Style["display"] = "none";
       oTitleRecording.Style["display"] = "none";
       oJudicialRecording.Style["display"] = "none";
@@ -119,7 +119,7 @@ namespace Empiria.Web.UI.LRS {
       //}
       cboJudicialDocIssuedBy.Value = document.IssuedBy.Id.ToString();
 
-      txtJudicialDocBook.Value = document.BookNumber;
+      txtJudicialDocBook.Value = document.ExtensionData.BookNo;
       txtJudicialDocNumber.Value = document.Number;
       if (document.IssueDate != ExecutionServer.DateMinValue) {
         txtJudicialDocIssueDate.Value = document.IssueDate.ToString("dd/MMM/yyyy");
@@ -144,10 +144,10 @@ namespace Empiria.Web.UI.LRS {
 
       cboNotaryDocIssuedBy.Value = document.IssuedBy.Id.ToString();
 
-      txtNotaryDocBook.Value = document.BookNumber;
+      txtNotaryDocBook.Value = document.ExtensionData.BookNo;
       txtNotaryDocNumber.Value = document.Number;
-      txtNotaryDocStartSheet.Value = document.StartSheet;
-      txtNotaryDocEndSheet.Value = document.EndSheet;
+      txtNotaryDocStartSheet.Value = document.ExtensionData.StartSheet;
+      txtNotaryDocEndSheet.Value = document.ExtensionData.EndSheet;
       if (document.IssueDate != ExecutionServer.DateMinValue) {
         txtNotaryDocIssueDate.Value = document.IssueDate.ToString("dd/MMM/yyyy");
       } else {
@@ -161,15 +161,15 @@ namespace Empiria.Web.UI.LRS {
       cboPrivateDocSubtype.Value = document.Subtype.Id.ToString();
       cboPrivateDocIssuePlace.Value = document.IssuePlace.Id.ToString();
       txtPrivateDocNumber.Value = document.Number;
-      cboPrivateDocMainWitnessPosition.Value = document.MainWitnessPosition.Id.ToString();
-      if (document.MainWitnessPosition.Id == -1) {
+      cboPrivateDocMainWitnessPosition.Value = document.ExtensionData.MainWitnessPosition.Id.ToString();
+      if (document.ExtensionData.MainWitnessPosition.Id == -1) {
         cboPrivateDocMainWitness.Items.Clear();
         cboPrivateDocMainWitness.Items.Add(new ListItem("No consta o no se puede determinar", "-2"));
       } else {
-        HtmlSelectContent.LoadCombo(this.cboPrivateDocMainWitness, document.IssuePlace.GetPeople(document.MainWitnessPosition.Name), "Id", "FamilyFullName",
+        HtmlSelectContent.LoadCombo(this.cboPrivateDocMainWitness, document.IssuePlace.GetPeople(document.ExtensionData.MainWitnessPosition.Name), "Id", "FamilyFullName",
                                     "( Seleccionar al C. Funcionario Público )", String.Empty, "No consta o no se puede determinar");
       }
-      cboPrivateDocMainWitness.Value = document.MainWitness.Id.ToString();
+      cboPrivateDocMainWitness.Value = document.ExtensionData.MainWitness.Id.ToString();
       if (document.IssueDate != ExecutionServer.DateMinValue) {
         txtPrivateDocIssueDate.Value = document.IssueDate.ToString("dd/MMM/yyyy");
       } else {
@@ -183,7 +183,7 @@ namespace Empiria.Web.UI.LRS {
       txtPropTitleDocNumber.Value = document.Number;
       cboPropTitleDocIssuedBy.Value = document.IssuedBy.Id.ToString();
       cboPropTitleIssueOffice.Value = document.IssueOffice.Id.ToString();
-      txtPropTitleStartSheet.Value = document.StartSheet;
+      txtPropTitleStartSheet.Value = document.ExtensionData.StartSheet;
       if (document.IssueDate != ExecutionServer.DateMinValue) {
         txtPropTitleIssueDate.Value = document.IssueDate.ToString("dd/MMM/yyyy");
       } else {
@@ -205,7 +205,7 @@ namespace Empiria.Web.UI.LRS {
       document.IssuePlace = GeographicRegionItem.Parse(int.Parse(Request.Form[cboJudicialDocIssuePlace.Name]));
       document.IssueOffice = Organization.Parse(int.Parse(Request.Form[cboJudicialDocIssueOffice.Name]));
       document.IssuedBy = Contact.Parse(int.Parse(Request.Form[cboJudicialDocIssuedBy.Name]));
-      document.BookNumber = txtJudicialDocBook.Value;
+      document.ExtensionData.BookNo = txtJudicialDocBook.Value;
       document.Number = txtJudicialDocNumber.Value;
       if (txtJudicialDocIssueDate.Value.Length != 0) {
         document.IssueDate = EmpiriaString.ToDate(txtJudicialDocIssueDate.Value);
@@ -221,10 +221,10 @@ namespace Empiria.Web.UI.LRS {
       document.IssuePlace = GeographicRegionItem.Parse(int.Parse(cboNotaryDocIssuePlace.Value));
       document.IssueOffice = NotaryOffice.Parse(int.Parse(Request.Form[cboNotaryDocIssueOffice.Name]));
       document.IssuedBy = Contact.Parse(int.Parse(Request.Form[cboNotaryDocIssuedBy.Name]));
-      document.BookNumber = txtNotaryDocBook.Value;
+      document.ExtensionData.BookNo = txtNotaryDocBook.Value;
       document.Number = txtNotaryDocNumber.Value;
-      document.StartSheet = txtNotaryDocStartSheet.Value;
-      document.EndSheet = txtNotaryDocEndSheet.Value;
+      document.ExtensionData.StartSheet = txtNotaryDocStartSheet.Value;
+      document.ExtensionData.EndSheet = txtNotaryDocEndSheet.Value;
       if (txtNotaryDocIssueDate.Value.Length != 0) {
         document.IssueDate = EmpiriaString.ToDate(txtNotaryDocIssueDate.Value);
       } else {
@@ -240,8 +240,8 @@ namespace Empiria.Web.UI.LRS {
       document.Subtype = LRSDocumentType.Parse(int.Parse(cboPrivateDocSubtype.Value));
       document.IssuePlace = GeographicRegionItem.Parse(int.Parse(cboPrivateDocIssuePlace.Value));
       document.Number = txtPrivateDocNumber.Value;
-      document.MainWitnessPosition = TypeAssociationInfo.Parse(int.Parse(Request.Form[cboPrivateDocMainWitnessPosition.Name]));
-      document.MainWitness = Contact.Parse(int.Parse(Request.Form[cboPrivateDocMainWitness.Name]));
+      document.ExtensionData.MainWitnessPosition = TypeAssociationInfo.Parse(int.Parse(Request.Form[cboPrivateDocMainWitnessPosition.Name]));
+      document.ExtensionData.MainWitness = Contact.Parse(int.Parse(Request.Form[cboPrivateDocMainWitness.Name]));
       if (txtPrivateDocIssueDate.Value.Length != 0) {
         document.IssueDate = EmpiriaString.ToDate(txtPrivateDocIssueDate.Value);
       } else {
@@ -257,7 +257,7 @@ namespace Empiria.Web.UI.LRS {
       document.Number = txtPropTitleDocNumber.Value;
       document.IssuedBy = Contact.Parse(int.Parse(cboPropTitleDocIssuedBy.Value));
       document.IssueOffice = Organization.Parse(int.Parse(cboPropTitleIssueOffice.Value));
-      document.StartSheet = txtPropTitleStartSheet.Value;
+      document.ExtensionData.StartSheet = txtPropTitleStartSheet.Value;
       if (txtPropTitleIssueDate.Value.Length != 0) {
         document.IssueDate = EmpiriaString.ToDate(txtPropTitleIssueDate.Value);
       } else {

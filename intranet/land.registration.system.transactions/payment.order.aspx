@@ -48,11 +48,11 @@
                 <table width="100%">
                   <tr>
                     <td valign="bottom" align="right">
-                      <h3><%=transaction.Key%></h3>
+                      <h3><%=transaction.UniqueCode%></h3>
                     </td>
                   </tr>
                   <tr>
-                    <td align="right"><img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.Key%>" /><br /></td>
+                    <td align="right"><img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.UniqueCode%>" /><br /></td>
                   </tr>
                 </table>
               </td>
@@ -72,14 +72,14 @@
               <td style="white-space:nowrap">Tipo de trámite:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.TransactionType.Name%></b></td>
               <td style="white-space:nowrap">Emitió:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.PostedBy.Alias%>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
             </tr>
-            <tr>					
-              <td style="white-space:nowrap">Instrumento:</td><td><b><%=transaction.DocumentNumber%></b></td>
+            <tr>
+              <td style="white-space:nowrap">Instrumento:</td><td><b><%=transaction.DocumentDescriptor%></b></td>
               <td style="white-space:nowrap">Tipo de documento:</td><td style="white-space:nowrap"><b><%=transaction.DocumentType.Name%></b></td>
               <td style="white-space:nowrap">Emisión:</td><td style="white-space:nowrap"><b><%=transaction.PostingTime.ToString("dd/MMM/yyyy HH:mm")%>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
             </tr>
-            <tr style='display:<%=transaction.RequestNotes.Length != 0 ? "inline" : "none" %>'>
+            <tr style='display:<%=transaction.ExtensionData.RequesterNotes.Length != 0 ? "inline" : "none" %>'>
               <td valign="top" style="white-space:nowrap">Observaciones:</td>
-              <td colspan="6" style='white-space:normal;'><%=transaction.RequestNotes%></td>
+              <td colspan="6" style='white-space:normal;'><%=transaction.ExtensionData.RequesterNotes%></td>
             </tr>
           </table>
         </td>
@@ -156,11 +156,11 @@
                 <table width="100%">
                   <tr>
                     <td valign="bottom" align="right">
-                      <h3><%=transaction.Key%></h3>
+                      <h3><%=transaction.UniqueCode%></h3>
                     </td>
                   </tr>
                   <tr>
-                    <td align="right"><img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.Key%>" /><br /></td>
+                    <td align="right"><img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.UniqueCode%>" /><br /></td>
                   </tr>
                 </table>
               </td>
@@ -181,13 +181,13 @@
               <td style="white-space:nowrap">Emitió:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.PostedBy.Alias%>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
             </tr>
             <tr>					
-              <td style="white-space:nowrap">Instrumento:</td><td><b><%=transaction.DocumentNumber%></b></td>
+              <td style="white-space:nowrap">Instrumento:</td><td><b><%=transaction.DocumentDescriptor%></b></td>
               <td style="white-space:nowrap">Tipo de documento:</td><td style="white-space:nowrap"><b><%=transaction.DocumentType.Name%></b></td>
               <td style="white-space:nowrap">Emisión:</td><td style="white-space:nowrap"><b><%=transaction.PostingTime.ToString("dd/MMM/yyyy HH:mm")%>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
             </tr>
-            <tr style='display:<%=transaction.RequestNotes.Length != 0 ? "inline" : "none" %>'>
+            <tr style='display:<%=transaction.ExtensionData.RequesterNotes.Length != 0 ? "inline" : "none" %>'>
               <td valign="top" style="white-space:nowrap">Observaciones:</td>
-              <td colspan="6" style='white-space:normal;'><%=transaction.RequestNotes%></td>
+              <td colspan="6" style='white-space:normal;'><%=transaction.ExtensionData.RequesterNotes%></td>
             </tr>
           </table>
         </td>

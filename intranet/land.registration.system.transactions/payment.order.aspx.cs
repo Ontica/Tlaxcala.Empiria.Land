@@ -127,24 +127,24 @@ namespace Empiria.Web.UI.LRS {
                       "<td align='right'>{SUBTOTAL}</td>" +
                       "<td align='right'>{DISCOUNTS}</td>" +
                       "<td align='right'><b>{TOTAL}</b></td></tr>";
-      FixedList<LRSTransactionAct> list = transaction.RecordingActs;
+      FixedList<LRSTransactionItem> list = transaction.Items;
       string html = String.Empty;
 
       for (int i = 0; i < list.Count; i++) {
-        LRSTransactionAct recordingAct = list[i];
+        LRSTransactionItem recordingAct = list[i];
         string temp = cert.Replace("{NUMBER}", (i + 1).ToString("00"));
-        temp = temp.Replace("{CODE}", recordingAct.LawArticle.FinancialConceptCode);
-        temp = temp.Replace("{CONCEPT}", recordingAct.RecordingActType.DisplayName);
-        temp = temp.Replace("{LAW.ARTICLE}", recordingAct.LawArticle.Name);
-        if (!recordingAct.Unit.IsEmptyInstance) {
-          temp = temp.Replace("{QTY}", recordingAct.Quantity.ToString("N0"));
-          temp = temp.Replace("{UNIT}", recordingAct.Unit.Name);
+        temp = temp.Replace("{CODE}", recordingAct.TreasuryCode.FinancialConceptCode);
+        temp = temp.Replace("{CONCEPT}", recordingAct.TransactionItemType.DisplayName);
+        temp = temp.Replace("{LAW.ARTICLE}", recordingAct.TreasuryCode.Name);
+        if (!recordingAct.Quantity.Unit.IsEmptyInstance) {
+          temp = temp.Replace("{QTY}", recordingAct.Quantity.Amount.ToString("N0"));
+          temp = temp.Replace("{UNIT}", recordingAct.Quantity.Unit.Name);
         } else {
           temp = temp.Replace("{QTY}", "&nbsp;");
           temp = temp.Replace("{UNIT}", "&nbsp;");
         }
         temp = temp.Replace("{SUBTOTAL}", recordingAct.Fee.SubTotal.ToString("C2"));
-        temp = temp.Replace("{DISCOUNTS}", recordingAct.Fee.Discount.ToString("C2"));
+        temp = temp.Replace("{DISCOUNTS}", recordingAct.Fee.Discount.Amount.ToString("C2"));
         temp = temp.Replace("{TOTAL}", recordingAct.Fee.Total.ToString("C2"));
         temp = temp.Replace("{NOTES}", recordingAct.Notes);
         html += temp;
@@ -161,23 +161,23 @@ namespace Empiria.Web.UI.LRS {
                               "<td style='white-space:nowrap'>{UNIT}</td>" +
                               "<td style='white-space:normal'><b>{LAW.ARTICLE}</b></td>" +
                               "<td style='white-space:nowrap'>{NOTES}</td></tr>";
-      FixedList<LRSTransactionAct> list = transaction.RecordingActs;
+      FixedList<LRSTransactionItem> list = transaction.Items;
       string html = String.Empty;
 
       for (int i = 0; i < list.Count; i++) {
-        LRSTransactionAct recordingAct = list[i];
+        LRSTransactionItem recordingAct = list[i];
         string temp = template.Replace("{NUMBER}", (i + 1).ToString("00"));
-        temp = temp.Replace("{CODE}", recordingAct.LawArticle.FinancialConceptCode);
-        temp = temp.Replace("{CONCEPT}", recordingAct.RecordingActType.DisplayName);
+        temp = temp.Replace("{CODE}", recordingAct.TreasuryCode.FinancialConceptCode);
+        temp = temp.Replace("{CONCEPT}", recordingAct.TransactionItemType.DisplayName);
         temp = temp.Replace("{OPERATION.VALUE}", recordingAct.OperationValue.Amount != decimal.Zero ? recordingAct.OperationValue.ToString() : "&nbsp;");
-        if (!recordingAct.Unit.IsEmptyInstance) {
-          temp = temp.Replace("{QTY}", recordingAct.Quantity.ToString("N0"));
-          temp = temp.Replace("{UNIT}", recordingAct.Unit.Name);
+        if (!recordingAct.Quantity.Unit.IsEmptyInstance) {
+          temp = temp.Replace("{QTY}", recordingAct.Quantity.Amount.ToString("N0"));
+          temp = temp.Replace("{UNIT}", recordingAct.Quantity.Unit.Name);
         } else {
           temp = temp.Replace("{QTY}", "&nbsp;");
           temp = temp.Replace("{UNIT}", "&nbsp;");
         }
-        temp = temp.Replace("{LAW.ARTICLE}", recordingAct.LawArticle.Name);
+        temp = temp.Replace("{LAW.ARTICLE}", recordingAct.TreasuryCode.Name);
         temp = temp.Replace("{NOTES}", recordingAct.Notes);
         html += temp;
       }
@@ -185,7 +185,7 @@ namespace Empiria.Web.UI.LRS {
     }
 
     protected string GetRecordingActsWithTotals() {
-      FixedList<LRSTransactionAct> list = transaction.RecordingActs;
+      FixedList<LRSTransactionItem> list = transaction.Items;
       const string template = "<tr width='24px'><td>{NUMBER}</td><td>{CONCEPT.CODE}</td>" +
                               "<td style='white-space:normal'>{RECORDING.ACT}&nbsp; &nbsp; &nbsp;</td>" +
                               "<td style='white-space:nowrap'>{LAW.ARTICLE}</td>" +
@@ -206,11 +206,11 @@ namespace Empiria.Web.UI.LRS {
       string html = String.Empty;
 
       for (int i = 0; i < list.Count; i++) {
-        LRSTransactionAct recordingAct = list[i];
+        LRSTransactionItem recordingAct = list[i];
         string temp = template.Replace("{NUMBER}", (i + 1).ToString("00"));
-        temp = temp.Replace("{RECORDING.ACT}", recordingAct.RecordingActType.DisplayName);
-        temp = temp.Replace("{LAW.ARTICLE}", recordingAct.LawArticle.Name);
-        temp = temp.Replace("{CONCEPT.CODE}", recordingAct.LawArticle.FinancialConceptCode);
+        temp = temp.Replace("{RECORDING.ACT}", recordingAct.TransactionItemType.DisplayName);
+        temp = temp.Replace("{LAW.ARTICLE}", recordingAct.TreasuryCode.Name);
+        temp = temp.Replace("{CONCEPT.CODE}", recordingAct.TreasuryCode.FinancialConceptCode);
         temp = temp.Replace("{OPERATION.VALUE}", recordingAct.OperationValue.ToString());
         temp = temp.Replace("{RECORDING.RIGHTS}", recordingAct.Fee.RecordingRights.ToString("C2"));
         temp = temp.Replace("{SHEETS.REVISION}", recordingAct.Fee.SheetsRevision.ToString("C2"));
@@ -218,7 +218,7 @@ namespace Empiria.Web.UI.LRS {
                             recordingAct.Fee.SignCertification + recordingAct.Fee.ForeignRecord;
         temp = temp.Replace("{OTHERS.FEE}", (othersFee).ToString("C2"));
         temp = temp.Replace("{SUBTOTAL}", recordingAct.Fee.SubTotal.ToString("C2"));
-        temp = temp.Replace("{DISCOUNTS}", recordingAct.Fee.Discount.ToString("C2"));
+        temp = temp.Replace("{DISCOUNTS}", recordingAct.Fee.Discount.Amount.ToString("C2"));
         temp = temp.Replace("{TOTAL}", recordingAct.Fee.Total.ToString("C2"));
         html += temp;
         if (othersFee != decimal.Zero) {
@@ -242,14 +242,14 @@ namespace Empiria.Web.UI.LRS {
         }
       }
 
-      LRSFee totalFee = transaction.TotalFee;
+      LRSFee totalFee = transaction.Items.TotalFee;
 
       string temp1 = totalsTemplate.Replace("{0}", totalFee.RecordingRights.ToString("C2"));
       temp1 = temp1.Replace("{1}", totalFee.SheetsRevision.ToString("C2"));
       temp1 = temp1.Replace("{2}", (totalFee.Aclaration + totalFee.Usufruct + totalFee.Easement +
                                     totalFee.SignCertification + totalFee.ForeignRecord).ToString("C2"));
       temp1 = temp1.Replace("{3}", totalFee.SubTotal.ToString("C2"));
-      temp1 = temp1.Replace("{4}", totalFee.Discount.ToString("C2"));
+      temp1 = temp1.Replace("{4}", totalFee.Discount.Amount.ToString("C2"));
       temp1 = temp1.Replace("{5}", totalFee.Total.ToString("C2"));
 
       temp1 = temp1.Replace("{TOTAL_SPEECH}", EmpiriaString.SpeechMoney(totalFee.Total));

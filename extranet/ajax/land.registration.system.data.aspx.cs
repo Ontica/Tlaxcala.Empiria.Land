@@ -165,7 +165,7 @@ namespace Empiria.Web.UI.Ajax {
       rawData += recording.AuthorizedBy.Id.ToString() + "|";
 
       if (recording.RecordingDocument != null && !recording.RecordingDocument.IsEmptyInstance) {
-        rawData += recording.RecordingDocument.RecordingDocumentType.Id.ToString() + "|";
+        rawData += recording.RecordingDocument.DocumentType.Id.ToString() + "|";
       } else {
         rawData += "|";
       }
@@ -182,7 +182,7 @@ namespace Empiria.Web.UI.Ajax {
 
       string rawData = String.Empty;
 
-      switch (recording.RecordingDocument.RecordingDocumentType.Name) {
+      switch (recording.RecordingDocument.DocumentType.Name) {
         case "ObjectType.RecordingDocument.Empty":
           return String.Empty;
         case "ObjectType.RecordingDocument.NotaryDeed":
@@ -204,10 +204,10 @@ namespace Empiria.Web.UI.Ajax {
       rawData += document.IssuePlace.Id.ToString() + "|";
       rawData += document.IssueOffice.Id.ToString() + "|";
       rawData += document.IssuedBy.Id.ToString() + "|";
-      rawData += document.BookNumber + "|";
+      rawData += document.ExtensionData.BookNo + "|";
       rawData += document.Number + "|";
-      rawData += document.StartSheet + "|";
-      rawData += document.EndSheet + "|";
+      rawData += document.ExtensionData.StartSheet + "|";
+      rawData += document.ExtensionData.EndSheet + "|";
       rawData += document.IssueDate.ToString("dd/MMM/yyyy");
 
       return rawData;
@@ -220,7 +220,7 @@ namespace Empiria.Web.UI.Ajax {
       rawData += document.IssuedBy.Id.ToString() + "|";
       rawData += document.IssueDate.ToString("dd/MMM/yyyy") + "|";
       rawData += document.IssueOffice.Id + "|";
-      rawData += document.StartSheet;
+      rawData += document.ExtensionData.StartSheet;
 
       return rawData;
     }
@@ -231,7 +231,7 @@ namespace Empiria.Web.UI.Ajax {
       rawData += document.IssuePlace.Id.ToString() + "|";
       rawData += document.IssueOffice.Id.ToString() + "|";
       rawData += document.IssuedBy.Id.ToString() + "|";
-      rawData += document.BookNumber + "|";
+      rawData += document.ExtensionData.BookNo + "|";
       rawData += document.Number + "|";
       rawData += document.IssueDate.ToString("dd/MMM/yyyy");
 
@@ -244,8 +244,8 @@ namespace Empiria.Web.UI.Ajax {
       rawData += document.IssuePlace.Id.ToString() + "|";
       rawData += document.IssueDate.ToString("dd/MMM/yyyy") + "|";
       rawData += document.Number + "|";
-      rawData += document.MainWitnessPosition.Id.ToString() + "|";
-      rawData += document.MainWitness.Id.ToString();
+      rawData += document.ExtensionData.MainWitnessPosition.Id.ToString() + "|";
+      rawData += document.ExtensionData.MainWitness.Id.ToString();
 
       return rawData;
     }

@@ -73,6 +73,7 @@
         <option value=''>( Seleccionar )</option>
         <option value='773'>Decreto</option>
         <option value='770'>Embargo</option>
+        <option value='775'>Programa de Desarrollo Municipal</option>
         <option value='772'>Resolución judicial</option>
         <option value='771'>Sentencia de usucapión</option>
         <option value=''></option>

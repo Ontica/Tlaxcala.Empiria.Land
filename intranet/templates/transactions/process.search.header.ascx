@@ -3,11 +3,10 @@
   <tr>
     <th>
 			<a href="javascript:sendPageCommand('sortData', 'TransactionKey ASC')">Trámite</a> / 
-			<a href="javascript:sendPageCommand('sortData', 'DocumentKey DESC')">Núm documento</a> /
+			<a href="javascript:sendPageCommand('sortData', 'DocumentKey DESC')">Documento</a> /
 			<a href="javascript:sendPageCommand('sortData', 'TransactionType DESC')">Tipo trámite</a> / 
 			<a href="javascript:sendPageCommand('sortData', 'RecorderOffice DESC')">Distrito</a> /
-			<a href="javascript:sendPageCommand('sortData', 'TransactionStatusName DESC')">Estado</a> /
-			<a href="javascript:sendPageCommand('sortData', 'ControlNumber DESC')">Ctr</a>
+			<a href="javascript:sendPageCommand('sortData', 'TransactionStatusName DESC')">Estado</a>
 		</th>
     <th>
 			<a href="javascript:sendPageCommand('sortData', 'RequestedBy ASC')">Nombre</a> / 

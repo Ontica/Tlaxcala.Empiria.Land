@@ -84,7 +84,7 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void LoadControls() {
-      cboRecordingType.Value = recording.RecordingDocument.RecordingDocumentType.Id.ToString();
+      cboRecordingType.Value = recording.RecordingDocument.DocumentType.Id.ToString();
       LoadRecordingBooksCombo();
       LoadRecordingActTypeCategoriesCombo();
       LoadAnnotationActsCategoriesCombo();

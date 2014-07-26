@@ -99,13 +99,11 @@ namespace Empiria.Web.UI.LRS {
     private void SaveRecordingAct() {
       oRecordingActAttributes.FillRecordingAct();
       recordingAct.Notes = txtObservations.Value;
-      recordingAct.Status = (RecordableObjectStatus) Convert.ToChar(cboStatus.Value);
-      recordingAct.Save();
+      recordingAct.ChangeStatusTo((RecordableObjectStatus) Convert.ToChar(cboStatus.Value));
     }
 
     private void SaveRecordingActAsComplete() {
-      recordingAct.Status = RecordableObjectStatus.Registered;
-      recordingAct.Save();
+      recordingAct.ChangeStatusTo(RecordableObjectStatus.Registered);
     }
 
     private void Initialize() {

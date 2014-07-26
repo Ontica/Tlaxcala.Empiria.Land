@@ -87,7 +87,7 @@ namespace Empiria.Web.UI {
     }
 
     private void ShowProperty() {
-      Property p = Property.ParseWithTractKey(txtPropertyKey.Value);
+      Property p = Property.ParseWithUniqueCode(txtPropertyKey.Value);
       if (p != null) {
         RecordingAct r = p.LastRecordingAct;
         theClientScript = @"alert('El predio está registrado en: \n" + r.Recording.FullNumber + ".')";

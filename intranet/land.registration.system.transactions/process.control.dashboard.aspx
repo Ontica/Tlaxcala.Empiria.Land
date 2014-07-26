@@ -62,11 +62,7 @@
       <td nowrap="nowrap">
         <select id="cboDate" name="cboDate" class="selectBox" onchange="doOperation('updateUserInterface', this);" style="width:98px" runat="server">
           <option value="">No filtrar</option>
-          <option value="PostingTime">Calificación</option>
           <option value="PresentationTime">Presentación</option>
-          <option value="ElaborationTime">Elaboración</option>
-          <option value="SignTime">Firma</option>
-          <option value="ClosingTime">Cierre</option>
           <option value="LastDeliveryTime">Entrega</option>
         </select>
         Del:
