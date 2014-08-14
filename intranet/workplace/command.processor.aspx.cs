@@ -91,7 +91,7 @@ namespace Empiria.Web.UI.Workplace {
 
       WebViewModel viewModel = (WebViewModel) ViewModel.Parse(viewName);
 
-      string viewParameters = viewModel.GetQueryString(Request.QueryString);
+      string viewParameters = String.Empty; // Assign Request.QueryString?
 
       Presentation.Workplace workplace = WebContext.WorkplaceManager.CreateWorkplace();
       workplace.ActivateView(viewModel, viewParameters);
@@ -123,7 +123,7 @@ namespace Empiria.Web.UI.Workplace {
       string userInterfaceItemId = GetCommandParameter("userInterfaceItemId", false);
       WebViewModel viewModel = (WebViewModel) ViewModel.Parse(viewName);
 
-      string viewParameters = viewModel.GetQueryString(Request.QueryString);
+      string viewParameters = String.Empty; // Assign Request.QueryString?
       viewParameters += (viewParameters.Length != 0 ? "&" : String.Empty) + "dashboardId=" + userInterfaceItemId;
       Presentation.Workplace workplace = GetWorkplace();
       workplace.ActivateView(viewModel, viewParameters);

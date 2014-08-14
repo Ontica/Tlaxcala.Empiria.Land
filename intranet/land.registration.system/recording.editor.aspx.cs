@@ -131,10 +131,10 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void AppendRecordingAct() {
-      Assertion.Require(transaction != null && !transaction.IsEmptyInstance,
-                        "Transaction cannot be null or an empty instance.");
-      Assertion.Require(transaction.Document != null && !transaction.Document.IsEmptyInstance,
-                        "Document cannot be an empty instance.");
+      Assertion.Assert(transaction != null && !transaction.IsEmptyInstance,
+                       "Transaction cannot be null or an empty instance.");
+      Assertion.Assert(transaction.Document != null && !transaction.Document.IsEmptyInstance,
+                       "Document cannot be an empty instance.");
 
       RecordingTask task = ParseRecordingTaskParameters();
       task.AssertValid();
@@ -204,20 +204,20 @@ namespace Empiria.Web.UI.LRS {
       RecordingDocumentType documentType = RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value));
       RecordingDocument document = oRecordingDocumentEditor.FillRecordingDocument(documentType);
 
-      Assertion.Require(transaction != null && !transaction.IsEmptyInstance,
-                        "Transaction cant' be null or an empty instance.");
-      Assertion.Require(int.Parse(cboSheetsCount.Value) != 0 && decimal.Parse(cboSealPosition.Value) != 0,
-                        "Document sheets count or seal position has invalid data.");
-      Assertion.Require(document != null && !document.IsEmptyInstance,
-                        "Recording document can't be null or an empty instance.");
+      Assertion.Assert(transaction != null && !transaction.IsEmptyInstance,
+                       "Transaction cant' be null or an empty instance.");
+      Assertion.Assert(int.Parse(cboSheetsCount.Value) != 0 && decimal.Parse(cboSealPosition.Value) != 0,
+                       "Document sheets count or seal position have invalid data.");
+      Assertion.Assert(document != null && !document.IsEmptyInstance,
+                       "Recording document can't be null or an empty instance.");
 
       document.Notes = txtObservations.Value;
       document.SheetsCount = int.Parse(cboSheetsCount.Value);
       document.ExtensionData.SealUpperPosition = decimal.Parse(cboSealPosition.Value);
       transaction.AttachDocument(document);
       oRecordingDocumentEditor.LoadRecordingDocument(document);
-      Assertion.Require(!transaction.Document.IsEmptyInstance && !transaction.Document.IsNew,
-                        "Recording document after transaction attachment can't be null or an empty instance.");
+      Assertion.Assert(!transaction.Document.IsEmptyInstance && !transaction.Document.IsNew,
+                       "Recording document after transaction attachment can't be null or an empty instance.");
       SetMessageBox("El documento " + transaction.Document.UniqueCode + " se guardó correctamente.");
     }
 

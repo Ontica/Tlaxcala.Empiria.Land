@@ -38,7 +38,7 @@ namespace Empiria.Web.UI.FSM {
     private void Initialize() {
       transaction = LRSTransaction.Parse(int.Parse(Request.QueryString["transactionId"]));
       recordingActs = RecordingAct.GetList(transaction.Document);
-      Assertion.Require(recordingActs.Count > 0, "Document does not have recordings.");
+      Assertion.Assert(recordingActs.Count > 0, "Document does not has recordings.");
 
       int recordingId = int.Parse(Request.QueryString["id"]);
       if (recordingId != -1) {
@@ -47,7 +47,7 @@ namespace Empiria.Web.UI.FSM {
         recordingActs.Sort((x, y) => x.Recording.CapturedTime.CompareTo(y.Recording.CapturedTime));
         baseRecording = recordingActs[recordingActs.Count - 1].Recording;
       }
-      Assertion.EnsureObject(baseRecording, "We have a problem reading document recording data.");
+      Assertion.AssertObject(baseRecording, "We have a problem reading document recording data.");
     }
 
     protected string CustomerOfficeName() {
