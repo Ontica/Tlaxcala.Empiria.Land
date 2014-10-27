@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EmpiriaWeb.Government.LandRegistration {
+namespace Empiria.Land.Extranet {
 
   public partial class RedirectPage : System.Web.UI.Page {
 

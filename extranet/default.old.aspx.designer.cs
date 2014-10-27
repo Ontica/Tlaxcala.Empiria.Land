@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Empiria.Web.UI {
+namespace Empiria.Land.Extranet {
     
     
     public partial class OLDLogonPage {
@@ -121,4 +121,3 @@ namespace Empiria.Web.UI {
         protected global::System.Web.UI.HtmlControls.HtmlInputButton cmdSend;
     }
 }
-

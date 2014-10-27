@@ -299,6 +299,7 @@
         $("#txtPropertyCode").showBubble("<b>Requiero se proporcione el folio electrónico del predio.</b>" + hint);
         return false;
       }
+
       if ($("#txtPropertyCode").val().length != 19) {
         $("#txtPropertyCode").showBubble("<b>El folio electrónico del predio está incompleto.</b>" + hint);
         return false;
@@ -461,7 +462,6 @@
     }
 
     function e_onpage_ready() {
-
       $('#divHtml5Compliance').css('opacity', '0.2');
 
       $('#txtTransactionKey').maskEdit('alphaNumericCodeFilter');
@@ -470,7 +470,7 @@
       $('#txtRecordingNumber').maskEdit('alphaNumericCodeFilter');
 
       $('#divHtml5Compliance').hover(function (e) { $('#divHtml5Compliance').animate({ opacity: 1 }, 'slow') },
-                                      function (e) { $('#divHtml5Compliance').animate({ opacity: 0.2 }, 'slow') });
+                                     function (e) { $('#divHtml5Compliance').animate({ opacity: 0.2 }, 'slow') });
 
 
       $('#executeButton').click(function () {
@@ -537,17 +537,6 @@
       $('body').ajaxComplete(function () {
         $('body').css('cursor', 'auto');
       });
-
-
-      //var _oldJQhide = $.fn.hide;
-      //$.fn.hide = function (speed, callback) {
-      //	$(this).trigger('hide');
-      //	return _oldJQhide.apply(this, arguments);
-      //}
-
-      //$('#helperWindow').hide('slow', function () { alert('Bye bye... '); });
-
-
     }
 
     $(document).ready(function () {

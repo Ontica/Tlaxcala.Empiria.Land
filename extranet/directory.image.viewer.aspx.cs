@@ -12,7 +12,7 @@ using System;
 using Empiria.Land.Registration;
 using Empiria.Presentation.Web;
 
-namespace Empiria.Web.UI.LRS {
+namespace Empiria.Land.Extranet {
 
   public partial class DirectoryImageViewer : WebPage {
 
@@ -137,4 +137,4 @@ namespace Empiria.Web.UI.LRS {
 
   } // class DirectoryImageViewer
 
-} // namespace Empiria.Web.UI.LRS
+} // namespace Empiria.Land.Extranet

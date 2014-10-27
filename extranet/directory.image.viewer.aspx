@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Web.UI.LRS.DirectoryImageViewer" Codebehind="directory.image.viewer.aspx.cs" %>
+﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.Extranet.DirectoryImageViewer" Codebehind="directory.image.viewer.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
@@ -74,7 +74,7 @@
       return false;
     }
     
-    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getDirectoryImageURL";
+    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getDirectoryImageURLCmd";
     var newPosition = Number(getElement("txtGoToImage").value) -  1;
     ajaxURL += "&position=" + newPosition;
     ajaxURL += "&directoryId=<%=directory.Id%>";
@@ -87,7 +87,7 @@
   }
 
   function moveToImage(position) {
-    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getDirectoryImageURL";
+    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getDirectoryImageURLCmd";
     var newPosition = 0;
     switch (position) {
       case "first":

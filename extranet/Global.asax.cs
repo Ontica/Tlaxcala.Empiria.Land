@@ -6,7 +6,7 @@ using System.Web.Routing;
 
 using Empiria.Presentation.Web;
 
-namespace EmpiriaWeb.Government.LandRegistration {
+namespace Empiria.Land.Extranet {
   // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
   // visit http://go.microsoft.com/?LinkId=9394801
 
@@ -109,6 +109,6 @@ namespace EmpiriaWeb.Government.LandRegistration {
       );
     }
 
-  }	//WebApiConfig
+  }	// class WebApiConfig
 
-}  // EmpiriaWeb.Government.LandRegistration
+}  // namespace Empiria.Land.Extranet

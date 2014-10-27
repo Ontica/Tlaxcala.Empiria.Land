@@ -1,20 +1,21 @@
 ﻿/* Empiria® Land 2014 ****************************************************************************************
 *																																																						 *
 *	 Solution  : Empiria® Land                                    System   : Land Extranet Application         *
-*	 Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Extranet.dll         *
-*	 Type      : LogonPage										                    Pattern  : Logon Web Page                    *
+*	 Namespace : Empiria.Land.Extranet                            Assembly : Empiria.Land.Extranet.dll         *
+*	 Type      : OLDLogonPage 										                Pattern  : Logon Web Page                    *
 *	 Date      : 28/Mar/2014                                      Version  : 1.5  License: CC BY-NC-SA 4.0     *
 *																																																						 *
 *  Summary   : Gets user credentials and redirects users to the workplace start page.                        *
 *																																																						 *
 **************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 1994-2014. **/
 using System;
+
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
 using Empiria.Presentation.Web;
 using Empiria.Presentation.Web.Controllers;
 
-namespace Empiria.Web.UI {
+namespace Empiria.Land.Extranet {
 
   public partial class OLDLogonPage : WebPage {
 
@@ -87,7 +88,7 @@ namespace Empiria.Web.UI {
     }
 
     private void ShowProperty() {
-      Property p = Property.ParseWithUniqueCode(txtPropertyKey.Value);
+      Property p = Property.TryParseWithUniqueCode(txtPropertyKey.Value);
       if (p != null) {
         RecordingAct r = p.LastRecordingAct;
         theClientScript = @"alert('El predio está registrado en: \n" + r.Recording.FullNumber + ".')";
@@ -97,7 +98,7 @@ namespace Empiria.Web.UI {
     }
 
     private void ShowTransaction() {
-      LRSTransaction t = LRSTransaction.ParseWithNumber(txtTransactionKey.Value);
+      LRSTransaction t = LRSTransaction.TryParseWithNumber(txtTransactionKey.Value);
       if (t != null) {
         lblTransactionState.InnerText = LRSTransaction.StatusName(t.Status);
         if (t.Status == TransactionStatus.Delivered) {
@@ -129,4 +130,4 @@ namespace Empiria.Web.UI {
 
   } // class LogonPage
 
-} // namespace Empiria.Web.UI
+} // namespace Empiria.Land.Extranet

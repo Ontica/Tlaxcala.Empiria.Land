@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Empiria.Web.UI.LRS {
+namespace Empiria.Land.Extranet {
     
     
     public partial class DirectoryImageViewer {
@@ -67,4 +67,3 @@ namespace Empiria.Web.UI.LRS {
         protected global::System.Web.UI.HtmlControls.HtmlSelect cboZoomLevel;
     }
 }
-

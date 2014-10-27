@@ -9,27 +9,13 @@ using Empiria.Presentation.Web.Content;
 using Empiria.Presentation.Web.Controllers;
 using Empiria.Security;
 
-namespace EmpiriaWeb.Government.LandRegistration.Controllers {
+namespace Empiria.Land.Extranet.Controllers {
 
   [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
   public class HomeController : Controller {
 
-    public bool IsSessionAlive {
-      get { return (ExecutionServer.CurrentPrincipal != null); }
-    }
-
-    private void CreateGuestSessionIfUnauthenticated() {
-      if (!IsSessionAlive) {
-        GuestLogonController guestLogon = new GuestLogonController();
-        if (!guestLogon.Logon()) {
-          throw new SecurityException(SecurityException.Msg.WrongAuthentication);
-        }
-      }
-    }
-
     #region Public methods
 
-    //
     // GET: /Home/
     public ActionResult Index() {
       CreateGuestSessionIfUnauthenticated();
@@ -39,10 +25,12 @@ namespace EmpiriaWeb.Government.LandRegistration.Controllers {
     // GET: /Home/GetLRSTransaction
     public JsonResult GetLRSTransaction(string transactionNumber) {
       CreateGuestSessionIfUnauthenticated();
-      var o = LRSTransaction.ParseWithNumber(transactionNumber);
+      var o = LRSTransaction.TryParseWithNumber(transactionNumber);
+      
       if (o == null) {
         return null;
       }
+
       var result = new {
         Id = o.Id.ToString(),
         Key = o.UniqueCode,
@@ -56,19 +44,19 @@ namespace EmpiriaWeb.Government.LandRegistration.Controllers {
         StatusName = LRSTransaction.StatusName(o.Status),
         DeliveryEstimatedDate = GetDeliveryEstimatedDate(o)
       };
-
       return base.Json(result, JsonRequestBehavior.AllowGet);
-    } // GetLRSTransaction
-
+    }
 
     // GET: /Home/GetRecordingBooks
     public string GetRecordingBooks(int recorderOfficeId, int recordingSectionId) {
       CreateGuestSessionIfUnauthenticated();
       if (recorderOfficeId == 0) {
-        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "Primero seleccionar un Distrito");
+        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, 
+                                                      "Primero seleccionar un Distrito");
       }
       if (recordingSectionId == 0) {
-        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar una sección de actos jurídicos )");
+        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, 
+                                                      "( Seleccionar una sección de actos jurídicos )");
       }
 
       RecorderOffice recorderOffice = RecorderOffice.Parse(recorderOfficeId);
@@ -78,15 +66,26 @@ namespace EmpiriaWeb.Government.LandRegistration.Controllers {
       recordingBookList = recorderOffice.GetRecordingBooks(section);
       List<RecordingBook> imagingList = recordingBookList.FindAll((x) => !x.ImagingFilesFolder.IsEmptyInstance);
       if (imagingList.Count != 0) {
-        return HtmlSelectContent.GetComboAjaxHtml(imagingList, 0, "Id", "FullName", "( Seleccionar el libro registral donde se encuentra )");
+        return HtmlSelectContent.GetComboAjaxHtml(imagingList, 0, "Id", "FullName", 
+                                                  "( Seleccionar el libro registral donde se encuentra )");
       } else {
-        return HtmlSelectContent.GetComboAjaxHtml("No existen libros registrales para el Distrito", String.Empty, String.Empty);
+        return HtmlSelectContent.GetComboAjaxHtml("No existen libros registrales para el Distrito", 
+                                                  String.Empty, String.Empty);
       }
     }
 
     #endregion Public methods
 
-    #region Private methods
+    #region Private members
+
+    private void CreateGuestSessionIfUnauthenticated() {
+      if (!IsSessionAlive) {
+        GuestLogonController guestLogon = new GuestLogonController();
+        if (!guestLogon.Logon()) {
+          throw new SecurityException(SecurityException.Msg.WrongAuthentication);
+        }
+      }
+    }
 
     private string GetDeliveryEstimatedDate(LRSTransaction transaction) {
       if (transaction == null) {
@@ -95,14 +94,21 @@ namespace EmpiriaWeb.Government.LandRegistration.Controllers {
       if (transaction.Status == TransactionStatus.Delivered) {
         return transaction.ClosingTime.ToString("dd/MMM/yyyy");
       }
-      if (transaction.Status == TransactionStatus.ToDeliver || transaction.Status == TransactionStatus.ToReturn) {
+      if (transaction.Status == TransactionStatus.ToDeliver ||
+          transaction.Status == TransactionStatus.ToReturn) {
         return "Listo para entregarse";
       }
       return "No determinada";
-    }  // GetDeliveryEstimatedDate
+    }
 
-    #endregion Private methods
+    private bool IsSessionAlive {
+      get {
+        return (ExecutionServer.CurrentPrincipal != null);
+      }
+    }
+
+    #endregion Private members
 
   }  // class HomeController
 
-}  // namespace EmpiriaWeb.Government.LandRegistration.Controllers
+}  // namespace Empiria.Land.Extranet.Controllers

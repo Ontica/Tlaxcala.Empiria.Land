@@ -7,10 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EmpiriaWeb.Government.LandRegistration {
+namespace Empiria.Land.Extranet {
     
     
     public partial class RedirectPage {
     }
 }
-

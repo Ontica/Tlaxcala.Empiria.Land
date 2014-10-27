@@ -1,4 +1,4 @@
-﻿<%@ Page language="c#" Inherits="Empiria.Web.UI.OLDLogonPage" EnableViewState="false" EnableSessionState="true" Codebehind="default.old.aspx.cs" %>
+﻿<%@ Page language="c#" Inherits="Empiria.Land.Extranet.OLDLogonPage" EnableViewState="false" EnableSessionState="true" Codebehind="default.old.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
@@ -292,7 +292,9 @@
               <td colspan="2">
                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                <input id="cmdSend" name="cmdSend" type="button" style="width:128px;height:28px" value="Consultar" onclick="doOperation('sendOperation')" runat="server" />
+                <input id="cmdSend" name="cmdSend" type="button"
+                       style="width:128px;height:28px" value="Consultar"
+                       onclick="doOperation('sendOperation')" runat="server" />
               </td>
             </tr>
           </table>

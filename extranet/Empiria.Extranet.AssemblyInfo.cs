@@ -13,14 +13,14 @@ using System.Runtime.InteropServices;
 /*************************************************************************************************************
 * Assembly configuration attributes.																																	       *
 *************************************************************************************************************/
-[assembly: AssemblyTitle("Tlaxcala.Empiria.Land.Extranet.dll")]
+[assembly: AssemblyTitle("Empiria.Land.Extranet.dll")]
 [assembly: AssemblyDescription("Empiria Land 2014 Tlaxcala Edition: Web Extranet App")]
-[assembly: AssemblyVersion("1.1.0328")]
-[assembly: AssemblyFileVersion("1.1.0328")]
-[assembly: AssemblyCompany("La Vía Óntica, S.C.")]
-[assembly: AssemblyProduct("Empiria® Land 2014")]
-[assembly: AssemblyCopyright("© La Vía Óntica SC / Ontica LLC. All rights reserved.")]
-[assembly: AssemblyTrademark("Empiria and Ontica are either registered trademarks of La Vía Óntica, SC.")]
+[assembly: AssemblyVersion("2.0.1023.0")]
+[assembly: AssemblyFileVersion("2.0.1023")]
+[assembly: AssemblyCompany("Ontica")]
+[assembly: AssemblyProduct("Empiria Land 2014")]
+[assembly: AssemblyCopyright("(c) 2009-2014. La Vía Óntica SC, Ontica LLC and contributors.")]
+[assembly: AssemblyTrademark("Empiria and Ontica are either registered trademarks of La Vía Óntica SC or Ontica LLC.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
