@@ -191,7 +191,7 @@ namespace Empiria.Web.UI.LRS {
     private void LoadRecordingActCombos() {
       if (!String.IsNullOrEmpty(cboRecordingActTypeCategory.Value)) {
         RecordingActTypeCategory recordingActTypeCategory = RecordingActTypeCategory.Parse(int.Parse(cboRecordingActTypeCategory.Value));
-        FixedList<RecordingActType> list = recordingActTypeCategory.GetItems();
+        FixedList<RecordingActType> list = recordingActTypeCategory.RecordingActTypes;
 
         HtmlSelectContent.LoadCombo(this.cboRecordingActType, list, "Id", "DisplayName",
                                     "( Seleccionar el acto jurídico )");
@@ -266,8 +266,6 @@ namespace Empiria.Web.UI.LRS {
       transaction.ManagementAgency = Contact.Parse(int.Parse(cboManagementAgency.Value));
       transaction.Save();
       onloadScript = "alert('Los cambios efectuados en la información del trámite se guardaron correctamente.');";
-
-      transaction.Save();
 
       if (!isNew) {
         return;
@@ -483,7 +481,6 @@ namespace Empiria.Web.UI.LRS {
       act.Save();
       transaction.Save();
     }
-
 
     private LRSFee ParseFee() {
       var fee = new LRSFee();

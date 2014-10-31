@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EmpiriaWeb.Government.LandRegistration</RootNamespace>
-    <AssemblyName>Empiria.Land.WebAPI</AssemblyName>
+    <RootNamespace>Empiria.Land.WebApi</RootNamespace>
+    <AssemblyName>Empiria.Land.WebApi</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -23,14 +23,15 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -43,42 +44,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Empiria.Data">
-      <HintPath>E:\empiria.assemblies\Empiria.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Empiria.Documents">
-      <HintPath>E:\empiria.assemblies\Empiria.Documents.dll</HintPath>
-    </Reference>
-    <Reference Include="Empiria.Expressions">
-      <HintPath>E:\empiria.assemblies\Empiria.Expressions.dll</HintPath>
-    </Reference>
-    <Reference Include="Empiria.Foundation">
-      <HintPath>E:\empiria.assemblies\Empiria.Foundation.dll</HintPath>
-    </Reference>
-    <Reference Include="Empiria.Geography">
-      <HintPath>E:\empiria.assemblies\Empiria.Geography.dll</HintPath>
-    </Reference>
-    <Reference Include="Empiria.Kernel">
-      <HintPath>E:\empiria.assemblies\Empiria.Kernel.dll</HintPath>
-    </Reference>
-    <Reference Include="Empiria.Land.Registration">
-      <HintPath>..\..\..\..\empiria.assemblies\Empiria.Land.Registration.dll</HintPath>
-    </Reference>
-    <Reference Include="Empiria.Land.WebServices">
-      <HintPath>..\..\..\..\empiria.assemblies\Empiria.Land.WebServices.dll</HintPath>
-    </Reference>
-    <Reference Include="Empiria.Messaging">
-      <HintPath>E:\empiria.assemblies\Empiria.Messaging.dll</HintPath>
-    </Reference>
-    <Reference Include="Empiria.Presentation">
-      <HintPath>E:\empiria.assemblies\Empiria.Presentation.dll</HintPath>
-    </Reference>
-    <Reference Include="Empiria.Presentation.Web">
-      <HintPath>E:\empiria.assemblies\Empiria.Presentation.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="Empiria.WebServices">
-      <HintPath>E:\empiria.assemblies\Empiria.WebServices.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Security">
       <HintPath>E:\empiria.assemblies\Mono.Security.dll</HintPath>
@@ -133,38 +98,88 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Empiria.Land.WebAPI.AssemblyInfo.cs" />
+    <Compile Include="Empiria.Land.WebApi.AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="data.integration\services.asmx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="land.registration.system\payment.services.asmx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
+    <Folder Include="geography\" />
+    <Folder Include="land.registration\" />
+    <Folder Include="land.transactions\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferences Include="Web References\" />
+    <ProjectReference Include="..\..\..\..\empiria\core\Data\Empiria.Data.csproj">
+      <Project>{20c01648-86cc-4e9e-ad71-ba7aa8e44dbc}</Project>
+      <Name>Empiria.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\empiria\core\Foundation\Empiria.Foundation.csproj">
+      <Project>{73ea993b-576b-4a5b-acc5-117dad0254ee}</Project>
+      <Name>Empiria.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\empiria\core\Kernel\Empiria.Kernel.csproj">
+      <Project>{f518e007-2b16-4804-ba45-695ea098e1c0}</Project>
+      <Name>Empiria.Kernel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\empiria\core\Messaging\Empiria.Messaging.csproj">
+      <Project>{c653959d-e6f2-40c6-bf0d-a05bed14df17}</Project>
+      <Name>Empiria.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\empiria\extended\Documents\Empiria.Documents.csproj">
+      <Project>{2bd53d27-bd61-49fe-afe1-d68e21f58e9a}</Project>
+      <Name>Empiria.Documents</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\empiria\extended\Geography\Empiria.Geography.csproj">
+      <Project>{96267945-dbe1-4b2c-88e2-0ecdc5ca7669}</Project>
+      <Name>Empiria.Geography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\empiria\extended\WebServices\Empiria.WebServices.csproj">
+      <Project>{29b783cb-dc89-4156-b61c-a889365bc93e}</Project>
+      <Name>Empiria.WebServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\empiria\land\Land.Registration\Empiria.Land.Registration.csproj">
+      <Project>{ea85313c-bbbb-4f31-b6b9-05bb79addff1}</Project>
+      <Name>Empiria.Land.Registration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\empiria\land\Land.UI\Empiria.Land.UI.csproj">
+      <Project>{90d29b34-a9c5-47ee-8279-7473fa37d194}</Project>
+      <Name>Empiria.Land.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\empiria\land\Land.WebServices\Empiria.Land.WebServices.csproj">
+      <Project>{81492947-b902-4ee9-b506-f9ddad9cf06a}</Project>
+      <Name>Empiria.Land.WebServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

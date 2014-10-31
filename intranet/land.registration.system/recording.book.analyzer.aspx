@@ -35,7 +35,7 @@
       <div id="divContent">
         <table cellpadding="0" cellspacing="0">
           <tr>
-            <td id="divImageViewer" valign='top' style="position:relative;<%=!base.DisplayImages() ? "display:none;" : String.Empty%>">
+            <td id="divImageViewer" valign='top' style="position:relative;<%=base.DisplayImages() == false ? "display:none;" : String.Empty%>">
               <div id="divImageContainer" style="overflow:auto;width:520px;height:540px;top:0px;">
                 <img id="imgCurrent" name="imgCurrent" src="<%=GetCurrentImagePath()%>" alt="" width="<%=GetCurrentImageWidth()%>" height="<%=GetCurrentImageHeight()%>" style="top:0px;" />
               </div>
@@ -1288,10 +1288,10 @@
     if (!validateAnnotationSemantics()) {
       return false;
     }
-    var currentAnnotationId = findAnnotationIdWithEditorData();
-    if (currentAnnotationId > 0) {
-      return appendPropertyToAnnotation(currentAnnotationId);
-    }
+    //var currentAnnotationId = findAnnotationIdWithEditorData();
+    //if (currentAnnotationId > 0) {
+    //  return appendPropertyToAnnotation(currentAnnotationId);
+    //}
     
     var sMsg = "Registrar la anotación o limitación\n\n";
     

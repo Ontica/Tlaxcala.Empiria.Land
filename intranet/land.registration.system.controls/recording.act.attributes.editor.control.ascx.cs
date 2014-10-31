@@ -76,9 +76,9 @@ namespace Empiria.Web.UI.LRS {
       }
       recordingAct.ExtensionData.Contract.Number = txtContractNumber.Value;
       if (!String.IsNullOrEmpty(Request.Form[cboContractPlace.Name])) {
-        contract.Place = GeographicRegionItem.Parse(int.Parse(Request.Form[cboContractPlace.Name]));
+        contract.Place = GeographicRegion.Parse(int.Parse(Request.Form[cboContractPlace.Name]));
       } else {
-        contract.Place = GeographicRegionItem.Unknown;
+        contract.Place = GeographicRegion.Unknown;
       }
       if (txtTermPeriod.Value.Length == 0) {
         txtTermPeriod.Value = "0";

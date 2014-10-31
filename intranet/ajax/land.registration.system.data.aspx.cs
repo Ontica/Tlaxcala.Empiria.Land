@@ -24,8 +24,6 @@ namespace Empiria.Web.UI.Ajax {
 
     protected override string ImplementsCommandRequest(string commandName) {
       switch (commandName) {
-        case "findAnnotationIdCmd":
-          return FindAnnotationIdCommandHandler();
         case "getRecordingBooksStringArrayCmd":
           return GetRecordingBooksStringArrayCommandHandler();
         case "getDomainBooksStringArrayCmd":
@@ -199,7 +197,7 @@ namespace Empiria.Web.UI.Ajax {
       }
       var recordingBook = RecordingBook.Parse(recordingBookId);
       var recordingActType = RecordingActType.Parse(recordingActTypeId);
-      var recordings = recordingBook.Recordings.FindAll((x) => x.BaseRecordingId == -1);
+      var recordings = recordingBook.Recordings;
       return HtmlSelectContent.GetComboAjaxHtml(recordings, 0, "Id", "Number",
                                                 recordings.Count == 0 ? "(Libro vacío)" : "(Seleccionar)",
                                                 recordingBook.IsAvailableForManualEditing &&
@@ -217,19 +215,20 @@ namespace Empiria.Web.UI.Ajax {
 
       rawData += recording.PresentationTime.Date.ToString("dd/MMM/yyyy") + "|";
       rawData += recording.PresentationTime.ToString("HH:mm") + "|";
-      rawData += recording.AuthorizedTime.ToString("dd/MMM/yyyy") + "|";
-      if (recording.ReceiptTotal > 0) {
-        rawData += recording.ReceiptTotal.ToString("N2") + "|";
+      rawData += recording.AuthorizationTime.ToString("dd/MMM/yyyy") + "|";
+
+      if (recording.Payments.Total > 0) {
+        rawData += recording.Payments.Total.ToString("N2") + "|";
         rawData += "600" + "|";
-        rawData += recording.ReceiptNumber + "|";
+        rawData += recording.Payments.ReceiptNumbers + "|";
         rawData += "" + "|";
       } else {
         rawData += "||||";
       }
       rawData += recording.AuthorizedBy.Id.ToString() + "|";
 
-      if (recording.RecordingDocument != null && !recording.RecordingDocument.IsEmptyInstance) {
-        rawData += recording.RecordingDocument.DocumentType.Id.ToString() + "|";
+      if (recording.Document != null && !recording.Document.IsEmptyInstance) {
+        rawData += recording.Document.DocumentType.Id.ToString() + "|";
       } else {
         rawData += "|";
       }
@@ -240,23 +239,23 @@ namespace Empiria.Web.UI.Ajax {
       int recordingId = int.Parse(GetCommandParameter("recordingId", true));
       Recording recording = Recording.Parse(recordingId);
 
-      if (recording.RecordingDocument == null || recording.RecordingDocument.IsEmptyInstance) {
+      if (recording.Document.IsEmptyInstance) {
         return String.Empty;
       }
 
       string rawData = String.Empty;
 
-      switch (recording.RecordingDocument.DocumentType.Name) {
+      switch (recording.Document.DocumentType.Name) {
         case "ObjectType.RecordingDocument.Empty":
           return String.Empty;
         case "ObjectType.RecordingDocument.NotaryDeed":
-          return GetNotaryDeedRecordingDocumentRawData(recording.RecordingDocument);
+          return GetNotaryDeedRecordingDocumentRawData(recording.Document);
         case "ObjectType.RecordingDocument.PropertyTitle":
-          return GetPropertyTitleRecordingDocumentRawData(recording.RecordingDocument);
+          return GetPropertyTitleRecordingDocumentRawData(recording.Document);
         case "ObjectType.RecordingDocument.JudicialOrder":
-          return GetJudicialOrderRecordingDocumentRawData(recording.RecordingDocument);
+          return GetJudicialOrderRecordingDocumentRawData(recording.Document);
         case "ObjectType.RecordingDocument.PrivateContract":
-          return GetPrivateContractRecordingDocumentRawData(recording.RecordingDocument);
+          return GetPrivateContractRecordingDocumentRawData(recording.Document);
       }
 
       return rawData;
@@ -370,7 +369,7 @@ namespace Empiria.Web.UI.Ajax {
       if (placeId == 0) {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar una ciudad )");
       }
-      GeographicRegionItem place = GeographicRegionItem.Parse(placeId);
+      var place = GeographicRegion.Parse(placeId);
       FixedList<JudicialOffice> list = JudicialOffice.GetList(place);
 
       return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "Number", "( Seleccionar )", String.Empty, "No consta");
@@ -391,35 +390,12 @@ namespace Empiria.Web.UI.Ajax {
         return HtmlSelectContent.GetComboAjaxHtmlItem("-2", "No consta o no se puede determinar");
       }
 
-      GeographicRegionItem place = GeographicRegionItem.Parse(placeId);
-      TypeAssociationInfo role = place.ObjectTypeInfo.Associations[positionId];
-      FixedList<Person> list = place.GetPeople(role.Name);
+      var roleType = RoleType.Parse(positionId);
+      var place = GeographicRegion.Parse(placeId);
+      FixedList<Person> list = roleType.GetActors<Person>(place);
 
       return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "FamilyFullName", "( Seleccionar al certificador del contrato )",
-                                            String.Empty, "No consta o no se puede determinar");
-    }
-
-    private string FindAnnotationIdCommandHandler() {
-      int annotationBookId = int.Parse(GetCommandParameter("annotationBookId", true));
-      int annotationTypeId = int.Parse(GetCommandParameter("annotationTypeId", true));
-      int number = int.Parse(GetCommandParameter("number", false));
-      string bisSuffixNumber = GetCommandParameter("bisSuffixNumber", false, String.Empty);
-      int imageStartIndex = int.Parse(GetCommandParameter("imageStartIndex", true));
-      int imageEndIndex = int.Parse(GetCommandParameter("imageEndIndex", true));
-      int propertyId = int.Parse(GetCommandParameter("propertyId", true));
-      DateTime presentationTime = EmpiriaString.ToDateTime(GetCommandParameter("presentationTime", false, ExecutionServer.DateMinValue.ToString("dd/MMM/yyyy")));
-      DateTime authorizationDate = EmpiriaString.ToDate(GetCommandParameter("authorizationDate", false, ExecutionServer.DateMaxValue.ToString("dd/MMM/yyyy")));
-      int authorizedById = int.Parse(GetCommandParameter("authorizedById", false, "-1"));
-
-      RecordingBook recordingBook = RecordingBook.Parse(annotationBookId);
-      RecordingActType annotationType = RecordingActType.Parse(annotationTypeId);
-      Person authorizedBy = Person.Parse(authorizedById);
-      Property property = Property.Parse(propertyId);
-
-      return LRSValidator.FindAnnotationId(recordingBook, annotationType,
-                                           Recording.RecordingNumber(number, bisSuffixNumber),
-                                           imageStartIndex, imageEndIndex, presentationTime,
-                                           authorizationDate, authorizedBy, property).ToString();
+                                                String.Empty, "No consta o no se puede determinar");
     }
 
     private string GetRecordingBooksStringArrayCommandHandler() {
@@ -475,7 +451,7 @@ namespace Empiria.Web.UI.Ajax {
 
       if (annotationTypeCategoryId != 0) {
         RecordingActTypeCategory recordingActTypeCategory = RecordingActTypeCategory.Parse(annotationTypeCategoryId);
-        FixedList<RecordingActType> list = recordingActTypeCategory.GetItems();
+        FixedList<RecordingActType> list = recordingActTypeCategory.RecordingActTypes;
 
         return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "DisplayName", "( Seleccionar el tipo de movimiento que se desea agregar )");
       } else {
@@ -488,7 +464,7 @@ namespace Empiria.Web.UI.Ajax {
 
       if (cadastralOfficeId != 0) {
         RecorderOffice cadastralOffice = RecorderOffice.Parse(cadastralOfficeId);
-        FixedList<GeographicRegionItem> list = cadastralOffice.GetMunicipalities();
+        FixedList<Municipality> list = cadastralOffice.GetMunicipalities();
         if (list.Count != 0) {
           return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "Name", "( Seleccionar un municipio )");
         } else {
@@ -583,7 +559,7 @@ namespace Empiria.Web.UI.Ajax {
       if (placeId == 0) {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar una ciudad )");
       }
-      GeographicRegionItem place = GeographicRegionItem.Parse(placeId);
+      var place = GeographicRegion.Parse(placeId);
       FixedList<NotaryOffice> list = NotaryOffice.GetList(place);
 
       return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "Number", "( ? )", String.Empty, "N/C");
@@ -624,9 +600,8 @@ namespace Empiria.Web.UI.Ajax {
       string number = GetCommandParameter("number", true);
       string bisSuffixNumber = GetCommandParameter("bisSuffixNumber", false, String.Empty);
 
-      RecordingBook recordingBook = RecordingBook.Parse(recordingBookId);
-      Recording recording = recordingBook.FindRecording(Recording.RecordingNumber(int.Parse(number),
-                                                        bisSuffixNumber));
+      var recordingBook = RecordingBook.Parse(recordingBookId);
+      var recording = recordingBook.FindRecording(int.Parse(number), bisSuffixNumber);
       if (recording != null) {
         return recording.Id.ToString();
       } else {
@@ -686,7 +661,7 @@ namespace Empiria.Web.UI.Ajax {
       string items = String.Empty;
       if (recordingActTypeCategoryId != 0) {
         RecordingActTypeCategory recordingActTypeCategory = RecordingActTypeCategory.Parse(recordingActTypeCategoryId);
-        FixedList<RecordingActType> list = recordingActTypeCategory.GetItems();
+        FixedList<RecordingActType> list = recordingActTypeCategory.RecordingActTypes;
 
         return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "DisplayName",
                                                   "( ¿Qué acto jurídico se agregará al documento? )");
@@ -826,7 +801,7 @@ namespace Empiria.Web.UI.Ajax {
       if (recordingId != 0) {
         recording = Recording.Parse(recordingId);
       } else {
-        recording = new Recording();
+        recording = Recording.Empty;
       }
       LandRegistrationException exception = null;
       exception = LRSValidator.ValidateRecordingNumber(recordingBook, recording, number, bisSuffixNumber,

@@ -39,18 +39,21 @@ namespace Empiria.Web.UI.Security {
     }
 
     private void Initialize() {
-      int userId = int.Parse(Request.QueryString["id"]);
-      if (userId == 0) {
-        user = new Empiria.Security.EmpiriaUser();
-      } else {
-        user = Empiria.Security.EmpiriaUser.Parse(userId);
-      }
-      if (userId == 0) {
-        base.Title = "Agregar Usuario";
-      } else {
-        base.Title = "Editor de Usuarios";
-      }
-      SetEditorButtons();
+      throw new NotImplementedException("OOJJOO");
+
+
+      //int userId = int.Parse(Request.QueryString["id"]);
+      //if (userId == 0) {
+      //  user = new Empiria.Security.EmpiriaUser();
+      //} else {
+      //  user = Empiria.Security.EmpiriaUser.Parse(userId);
+      //}
+      //if (userId == 0) {
+      //  base.Title = "Agregar Usuario";
+      //} else {
+      //  base.Title = "Editor de Usuarios";
+      //}
+      //SetEditorButtons();
     }
 
     private void ExecuteCommand() {
@@ -199,12 +202,12 @@ namespace Empiria.Web.UI.Security {
 
       if (user.IsNew || user.IsSystemUser) {
         ///onDeleteButtonAttrs = "disabled='disabled'";
-      } else if (!principal.CanExecute(user.ObjectTypeInfo.Id, 'D', user.Id)) {
+      } else if (!principal.CanExecute(user.GetEmpiriaType().Id, 'D', user.Id)) {
         //onDeleteButtonAttrs = "disabled='disabled'";
       }
-      if (user.IsNew && (!principal.CanExecute(user.ObjectTypeInfo.Id, 'A'))) {
+      if (user.IsNew && (!principal.CanExecute(user.GetEmpiriaType().Id, 'A'))) {
         //onChangesButtonAttrs = "disabled='disabled' tabIndex='-1'";
-      } else if (!user.IsNew && !principal.CanExecute(user.ObjectTypeInfo.Id, 'U', user.Id)) {
+      } else if (!user.IsNew && !principal.CanExecute(user.GetEmpiriaType().Id, 'U', user.Id)) {
         //onChangesButtonAttrs = "disabled='disabled' tabIndex='-1'";
       }
     }

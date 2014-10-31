@@ -44,7 +44,7 @@ namespace Empiria.Web.UI.FSM {
       if (recordingId != -1) {
         baseRecording = recordingActs.Find((x) => x.Recording.Id == recordingId).Recording;
       } else {
-        recordingActs.Sort((x, y) => x.Recording.CapturedTime.CompareTo(y.Recording.CapturedTime));
+        recordingActs.Sort((x, y) => x.Recording.RecordingTime.CompareTo(y.Recording.RecordingTime));
         baseRecording = recordingActs[recordingActs.Count - 1].Recording;
       }
       Assertion.AssertObject(baseRecording, "We have a problem reading document recording data.");
@@ -129,7 +129,7 @@ namespace Empiria.Web.UI.FSM {
       string temp = String.Empty;
 
       for (int i = 0; i < recordingActs.Count; i++) {
-        string initials = recordingActs[i].Recording.CapturedBy.Nickname;
+        string initials = recordingActs[i].Recording.RecordedBy.Nickname;
         if (initials.Length == 0) {
           continue;
         }
@@ -186,8 +186,8 @@ namespace Empiria.Web.UI.FSM {
     protected string GetRecordingPlaceAndDate() {
       const string t = "Registrado en {CITY}, a las {TIME} horas del {DATE}. Doy Fe.";
 
-      string x = t.Replace("{DATE}", baseRecording.CapturedTime.ToString(@"dd \de MMMM \de yyyy"));
-      x = x.Replace("{TIME}", baseRecording.CapturedTime.ToString(@"HH:mm"));
+      string x = t.Replace("{DATE}", baseRecording.RecordingTime.ToString(@"dd \de MMMM \de yyyy"));
+      x = x.Replace("{TIME}", baseRecording.RecordingTime.ToString(@"HH:mm"));
       if (ExecutionServer.LicenseName == "Tlaxcala") {
         x = x.Replace("{CITY}", "Tlaxcala de Xicohténcatl, Tlaxcala");
       } else {

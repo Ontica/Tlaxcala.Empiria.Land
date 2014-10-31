@@ -17,9 +17,6 @@ namespace Empiria.Web.UI.Ajax {
 
     protected override string ImplementsCommandRequest(string commandName) {
       switch (commandName) {
-        case "doDumpPerformanceAnalysisCmd":
-          DumpPerformanceAnalysisCommandHandler();
-          return "true";
         case "resetSystemCacheCmd":
           ResetSystemCacheHandler();
           return "true";
@@ -32,11 +29,6 @@ namespace Empiria.Web.UI.Ajax {
     }
 
     #region Private command handlers
-
-    private void DumpPerformanceAnalysisCommandHandler() {
-      Empiria.Data.DataOperation.DumpPerformanceTable();
-      Ontology.MetaModelType.DumpCache();
-    }
 
     private void ResetSystemCacheHandler() {
       //ObjectType.ResetCache();

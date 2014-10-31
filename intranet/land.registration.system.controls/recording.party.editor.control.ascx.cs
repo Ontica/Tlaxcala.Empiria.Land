@@ -52,10 +52,10 @@ namespace Empiria.Web.UI.LRS {
                                   "( ? )", String.Empty, "No consta");
 
       HtmlSelectContent.LoadCombo(cboBornLocation, "( Seleccionar lugar de nacimiento )",
-                                  String.Empty, GeographicRegionItem.Unknown.Name);
+                                  String.Empty, GeographicRegion.Unknown.Name);
 
       HtmlSelectContent.LoadCombo(cboAddressPlace, "( Seleccionar lugar de residencia )",
-                                  String.Empty, GeographicRegionItem.Unknown.Name);
+                                  String.Empty, GeographicRegion.Unknown.Name);
 
       FixedList<RecordingActParty> parties = RecordingActParty.GetInvolvedDomainParties(this.recordingAct);
 
@@ -151,9 +151,9 @@ namespace Empiria.Web.UI.LRS {
         org.RegistryDate = ExecutionServer.DateMaxValue;
       }
       if (!String.IsNullOrEmpty(Request.Form[cboOrgRegistryLocation.Name])) {
-        org.RegistryLocation = GeographicRegionItem.Parse(int.Parse(Request.Form[cboOrgRegistryLocation.Name]));
+        org.RegistryLocation = GeographicRegion.Parse(int.Parse(Request.Form[cboOrgRegistryLocation.Name]));
       } else {
-        org.RegistryLocation = GeographicRegionItem.Unknown;
+        org.RegistryLocation = GeographicRegion.Unknown;
       }
       org.Save();
 
@@ -172,9 +172,9 @@ namespace Empiria.Web.UI.LRS {
         person.RegistryDate = ExecutionServer.DateMaxValue;
       }
       if (!String.IsNullOrEmpty(Request.Form[cboBornLocation.Name])) {
-        person.RegistryLocation = GeographicRegionItem.Parse(int.Parse(Request.Form[cboBornLocation.Name]));
+        person.RegistryLocation = GeographicRegion.Parse(int.Parse(Request.Form[cboBornLocation.Name]));
       } else {
-        person.RegistryLocation = GeographicRegionItem.Unknown;
+        person.RegistryLocation = GeographicRegion.Unknown;
       }
       person.CURPNumber = txtCURPNumber.Value;
       person.FirstFamilyName = txtFirstFamilyName.Value;
@@ -195,9 +195,9 @@ namespace Empiria.Web.UI.LRS {
       rap.Notes = txtNotes.Value;
       rap.PartyAddress = txtAddress.Value;
       if (!String.IsNullOrEmpty(Request.Form[cboAddressPlace.Name])) {
-        rap.PartyAddressPlace = GeographicRegionItem.Parse(int.Parse(Request.Form[cboAddressPlace.Name]));
+        rap.PartyAddressPlace = GeographicRegion.Parse(int.Parse(Request.Form[cboAddressPlace.Name]));
       } else {
-        rap.PartyAddressPlace = GeographicRegionItem.Unknown;
+        rap.PartyAddressPlace = GeographicRegion.Unknown;
       }
       rap.PartyMarriageStatus = MarriageStatus.Parse(int.Parse(cboMarriageStatus.Value));
       rap.PartyOccupation = Occupation.Parse(int.Parse(cboOccupation.Value));
@@ -217,7 +217,7 @@ namespace Empiria.Web.UI.LRS {
     private void LoadHumanParty() {
       HumanParty person = (HumanParty) this.Party;
 
-      cboPartyType.Value = person.ObjectTypeInfo.Id.ToString();
+      cboPartyType.Value = person.GetEmpiriaType().Id.ToString();
 
       if (person.RegistryDate != ExecutionServer.DateMaxValue) {
         txtBornDate.Value = person.RegistryDate.ToString("dd/MMM/yyyy");
@@ -262,7 +262,7 @@ namespace Empiria.Web.UI.LRS {
     private void LoadOrganizationParty() {
       OrganizationParty org = (OrganizationParty) this.Party;
 
-      cboPartyType.Value = org.ObjectTypeInfo.Id.ToString();
+      cboPartyType.Value = org.GetEmpiriaType().Id.ToString();
       if (org.RegistryDate != ExecutionServer.DateMaxValue) {
         txtOrgRegistryDate.Value = org.RegistryDate.ToString("dd/MMM/yyyy");
       } else {
@@ -279,7 +279,7 @@ namespace Empiria.Web.UI.LRS {
 
     public void SelectParty(int partyId) {
       this.Party = Party.Parse(partyId);
-      if (this.Party.ObjectTypeInfo.Id == 2433) {
+      if (this.Party.GetEmpiriaType().Id == 2433) {
         LoadHumanParty();
       } else {
         LoadOrganizationParty();
@@ -313,7 +313,7 @@ namespace Empiria.Web.UI.LRS {
 
     public void SaveParty(int partyId) {
       this.Party = Party.Parse(partyId);
-      if (this.Party.ObjectTypeInfo.Id == 2433) {
+      if (this.Party.GetEmpiriaType().Id == 2433) {
         this.Party = FillHumanParty();
         if (IsPartyInRecordingAct) {
           FillHumanPartyOnRecording();
@@ -356,9 +356,9 @@ namespace Empiria.Web.UI.LRS {
         rap.Notes = txtNotes.Value;
         rap.PartyAddress = txtAddress.Value;
         if (!String.IsNullOrEmpty(Request.Form[cboAddressPlace.Name])) {
-          rap.PartyAddressPlace = GeographicRegionItem.Parse(int.Parse(Request.Form[cboAddressPlace.Name]));
+          rap.PartyAddressPlace = GeographicRegion.Parse(int.Parse(Request.Form[cboAddressPlace.Name]));
         } else {
-          rap.PartyAddressPlace = GeographicRegionItem.Unknown;
+          rap.PartyAddressPlace = GeographicRegion.Unknown;
         }
         if (!String.IsNullOrEmpty(Request.Form[cboMarriageStatus.Name])) {
           rap.PartyMarriageStatus = MarriageStatus.Parse(int.Parse(Request.Form[cboMarriageStatus.Name]));

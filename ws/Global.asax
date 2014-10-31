@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="EmpiriaWeb.Government.LandRegistration.WebApiApplication" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Empiria.Land.WebApi.WebApiApplication" Language="C#" %>

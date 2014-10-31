@@ -161,12 +161,17 @@ namespace Empiria.Web.UI.LRS {
       cboPrivateDocSubtype.Value = document.Subtype.Id.ToString();
       cboPrivateDocIssuePlace.Value = document.IssuePlace.Id.ToString();
       txtPrivateDocNumber.Value = document.Number;
-      cboPrivateDocMainWitnessPosition.Value = document.ExtensionData.MainWitnessPosition.Id.ToString();
+
+      var roleType = RoleType.Parse(document.ExtensionData.MainWitnessPosition.Id);
+
+      cboPrivateDocMainWitnessPosition.Value = roleType.Id.ToString();
+
       if (document.ExtensionData.MainWitnessPosition.Id == -1) {
         cboPrivateDocMainWitness.Items.Clear();
         cboPrivateDocMainWitness.Items.Add(new ListItem("No consta o no se puede determinar", "-2"));
       } else {
-        HtmlSelectContent.LoadCombo(this.cboPrivateDocMainWitness, document.IssuePlace.GetPeople(document.ExtensionData.MainWitnessPosition.Name), "Id", "FamilyFullName",
+        FixedList<Person> peopleInRoleList = roleType.GetActors<Person>(document.IssuePlace);
+        HtmlSelectContent.LoadCombo(this.cboPrivateDocMainWitness, peopleInRoleList, "Id", "FamilyFullName",
                                     "( Seleccionar al C. Funcionario Público )", String.Empty, "No consta o no se puede determinar");
       }
       cboPrivateDocMainWitness.Value = document.ExtensionData.MainWitness.Id.ToString();
@@ -202,7 +207,7 @@ namespace Empiria.Web.UI.LRS {
 
       document.Subtype = LRSDocumentType.Parse(int.Parse(cboJudicialDocSubtype.Value));
       document.ChangeDocumentType(documentType);
-      document.IssuePlace = GeographicRegionItem.Parse(int.Parse(Request.Form[cboJudicialDocIssuePlace.Name]));
+      document.IssuePlace = GeographicRegion.Parse(int.Parse(Request.Form[cboJudicialDocIssuePlace.Name]));
       document.IssueOffice = Organization.Parse(int.Parse(Request.Form[cboJudicialDocIssueOffice.Name]));
       document.IssuedBy = Contact.Parse(int.Parse(Request.Form[cboJudicialDocIssuedBy.Name]));
       document.ExtensionData.BookNo = txtJudicialDocBook.Value;
@@ -218,7 +223,7 @@ namespace Empiria.Web.UI.LRS {
       RecordingDocument document = base.Document;
 
       document.ChangeDocumentType(documentType);
-      document.IssuePlace = GeographicRegionItem.Parse(int.Parse(cboNotaryDocIssuePlace.Value));
+      document.IssuePlace = GeographicRegion.Parse(int.Parse(cboNotaryDocIssuePlace.Value));
       document.IssueOffice = NotaryOffice.Parse(int.Parse(Request.Form[cboNotaryDocIssueOffice.Name]));
       document.IssuedBy = Contact.Parse(int.Parse(Request.Form[cboNotaryDocIssuedBy.Name]));
       document.ExtensionData.BookNo = txtNotaryDocBook.Value;
@@ -238,7 +243,7 @@ namespace Empiria.Web.UI.LRS {
       document.ChangeDocumentType(documentType);
 
       document.Subtype = LRSDocumentType.Parse(int.Parse(cboPrivateDocSubtype.Value));
-      document.IssuePlace = GeographicRegionItem.Parse(int.Parse(cboPrivateDocIssuePlace.Value));
+      document.IssuePlace = GeographicRegion.Parse(int.Parse(cboPrivateDocIssuePlace.Value));
       document.Number = txtPrivateDocNumber.Value;
       document.ExtensionData.MainWitnessPosition = TypeAssociationInfo.Parse(int.Parse(Request.Form[cboPrivateDocMainWitnessPosition.Name]));
       document.ExtensionData.MainWitness = Contact.Parse(int.Parse(Request.Form[cboPrivateDocMainWitness.Name]));

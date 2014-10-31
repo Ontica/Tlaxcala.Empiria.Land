@@ -4,7 +4,7 @@ using System.Web.Routing;
 
 using Empiria.WebServices;
 
-namespace EmpiriaWeb.Government.LandRegistration {
+namespace Empiria.Land.WebApi {
   // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
   // visit http://go.microsoft.com/?LinkId=9394801
 
@@ -106,4 +106,4 @@ namespace EmpiriaWeb.Government.LandRegistration {
 
   }	//WebApiConfig
 
-}  // EmpiriaWeb.Government.LandRegistration
+}  // Empiria.Land.WebServices

@@ -62,29 +62,31 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void LoadRecordingBooksCombo() {
-      cboRecordingBookSelector.Items.Clear();
-      cboRecordingBookSelector.Items.Add(new ListItem("Libro Raíz", recording.Id.ToString()));
+      throw new NotImplementedException("OOJJOO");
 
-      FixedList<TractIndexItem> annotations = recording.GetPropertiesAnnotationsList();
-      for (int i = 0; i < annotations.Count; i++) {
-        cboRecordingBookSelector.Items.Add(new ListItem(Char.ConvertFromUtf32(65 + i),
-                                           annotations[i].RecordingAct.Recording.Id.ToString()));
-      }
-      if (RecordingBook.UseBookAttachments) {
-        RecordingAttachmentFolderList attachmentFolders = recording.GetAttachmentFolderList();
-        if (attachmentFolders.Count != 0) {
-          cboRecordingBookSelector.Items.Add(new ListItem("( Apéndices )", String.Empty));
-        }
-        foreach (RecordingAttachmentFolder folder in attachmentFolders) {
-          cboRecordingBookSelector.Items.Add(new ListItem(folder.Alias,
-                                             "&attachment=true&name=" + folder.Name +
-                                             "&recordingId=" + folder.Recording.Id.ToString()));
-        }
-      }
+      //cboRecordingBookSelector.Items.Clear();
+      //cboRecordingBookSelector.Items.Add(new ListItem("Libro Raíz", recording.Id.ToString()));
+
+      //FixedList<TractIndexItem> annotations = recording.GetPropertiesAnnotationsList();
+      //for (int i = 0; i < annotations.Count; i++) {
+      //  cboRecordingBookSelector.Items.Add(new ListItem(Char.ConvertFromUtf32(65 + i),
+      //                                     annotations[i].RecordingAct.Recording.Id.ToString()));
+      //}
+      //if (RecordingBook.UseBookAttachments) {
+      //  RecordingAttachmentFolderList attachmentFolders = recording.GetAttachmentFolderList();
+      //  if (attachmentFolders.Count != 0) {
+      //    cboRecordingBookSelector.Items.Add(new ListItem("( Apéndices )", String.Empty));
+      //  }
+      //  foreach (RecordingAttachmentFolder folder in attachmentFolders) {
+      //    cboRecordingBookSelector.Items.Add(new ListItem(folder.Alias,
+      //                                       "&attachment=true&name=" + folder.Name +
+      //                                       "&recordingId=" + folder.Recording.Id.ToString()));
+      //  }
+      //}
     }
 
     private void LoadControls() {
-      cboRecordingType.Value = recording.RecordingDocument.DocumentType.Id.ToString();
+      cboRecordingType.Value = recording.Document.DocumentType.Id.ToString();
       LoadRecordingBooksCombo();
       LoadRecordingActTypeCategoriesCombo();
       LoadAnnotationActsCategoriesCombo();
@@ -254,11 +256,11 @@ namespace Empiria.Web.UI.LRS {
         txtPresentationDate.Value = recording.PresentationTime.ToString("dd/MMM/yyyy");
         txtPresentationTime.Value = recording.PresentationTime.ToString("HH:mm");
       }
-      if (recording.AuthorizedTime.Date != ExecutionServer.DateMaxValue) {
-        txtAuthorizationDate.Value = recording.AuthorizedTime.ToString("dd/MMM/yyyy");
+      if (recording.AuthorizationTime.Date != ExecutionServer.DateMaxValue) {
+        txtAuthorizationDate.Value = recording.AuthorizationTime.ToString("dd/MMM/yyyy");
       }
-      txtRecordingPayment.Value = recording.ReceiptTotal.ToString();
-      txtRecordingPaymentReceipt.Value = recording.ReceiptNumber;
+      txtRecordingPayment.Value = recording.Payments.Total.ToString();
+      txtRecordingPaymentReceipt.Value = recording.Payments.ReceiptNumbers;
       cboAuthorizedBy.Value = recording.AuthorizedBy.Id.ToString();
 
       LoadStatusCombo();
@@ -364,8 +366,7 @@ namespace Empiria.Web.UI.LRS {
       if (recording.RecordingActs.Count > 0) {
         return;
       }
-      recording.Status = RecordableObjectStatus.Deleted;
-      recording.Save();
+      recording.Delete();
 
       this.recordingBook.Refresh();
     }
@@ -380,13 +381,15 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void ModifyRecordingActType() {
-      int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
-      int recordingActTypeId = int.Parse(Request.Form["cboRecordingActType"]);
+      throw new NotImplementedException("OOJJOO");
 
-      RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
-      RecordingActType recordingActType = RecordingActType.Parse(recordingActTypeId);
-      recordingAct.RecordingActType = recordingActType;
-      recordingAct.Save();
+      //int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
+      //int recordingActTypeId = int.Parse(Request.Form["cboRecordingActType"]);
+
+      //RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
+      //RecordingActType recordingActType = RecordingActType.Parse(recordingActTypeId);
+      //recordingAct.RecordingActType = recordingActType;
+      //recordingAct.Save();
     }
 
     private void InsertEmptyImageBefore() {
@@ -408,15 +411,17 @@ namespace Empiria.Web.UI.LRS {
       RecordingAct annotation = RecordingAct.Parse(annotationId);
       Property property = Property.Parse(propertyId);
 
-      annotation.AttachProperty(property);
+      annotation.AttachResource(property);
     }
 
     private void AppendPropertyToRecordingAct() {
-      int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
+      throw new NotImplementedException("OOJJOO");
 
-      RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
+      //int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
 
-      recordingAct.AttachProperty(new Property());
+      //RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
+
+      //recordingAct.AttachResource(new Property());
     }
 
     private void UpwardRecordingAct() {
@@ -436,173 +441,188 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void RegisterAsNoLegibleRecording(bool appendMode) {
-      if (appendMode) {
-        this.recording = new Recording();
-      }
-      recording.RecordingBook = this.recordingBook;
-      recording.SetNumber(int.Parse(txtRecordingNumber.Value), cboBisRecordingNumber.Value);
-      recording.Status = RecordableObjectStatus.NoLegible;
-      SetRecordingImageIndex();
-      recording.Notes = txtObservations.Value;
-      if (txtPresentationDate.Value.Length != 0 && txtPresentationTime.Value.Length != 0) {
-        recording.PresentationTime = EmpiriaString.ToDateTime(txtPresentationDate.Value + " " + txtPresentationTime.Value);
-      }
-      if (txtAuthorizationDate.Value.Length != 0) {
-        recording.AuthorizedTime = EmpiriaString.ToDate(txtAuthorizationDate.Value);
-      }
-      if (cboAuthorizedBy.Value.Length != 0) {
-        recording.AuthorizedBy = Contact.Parse(int.Parse(cboAuthorizedBy.Value));
-      }
-      RecordingDocumentType documentType = RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value));
-      recording.Document = oRecordingDocumentEditor.FillRecordingDocument(documentType);
-      recording.Save();
+      throw new NotImplementedException("OOJJOO");
 
-      this.recordingBook.Refresh();
+      //if (appendMode) {
+      //  this.recording = Recording.Empty;
+      //}
+      //recording.RecordingBook = this.recordingBook;
+      //recording.SetNumber(int.Parse(txtRecordingNumber.Value), cboBisRecordingNumber.Value);
+      //recording.Status = RecordableObjectStatus.NoLegible;
+      //SetRecordingImageIndex();
+      //recording.Notes = txtObservations.Value;
+      //if (txtPresentationDate.Value.Length != 0 && txtPresentationTime.Value.Length != 0) {
+      //  recording.PresentationTime = EmpiriaString.ToDateTime(txtPresentationDate.Value + " " + txtPresentationTime.Value);
+      //}
+      //if (txtAuthorizationDate.Value.Length != 0) {
+      //  recording.AuthorizationTime = EmpiriaString.ToDate(txtAuthorizationDate.Value);
+      //}
+      //if (cboAuthorizedBy.Value.Length != 0) {
+      //  recording.AuthorizedBy = Contact.Parse(int.Parse(cboAuthorizedBy.Value));
+      //}
+      //RecordingDocumentType documentType = RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value));
+      //recording.Document = oRecordingDocumentEditor.FillRecordingDocument(documentType);
+      //recording.Save();
+
+      //this.recordingBook.Refresh();
     }
 
     private void SetAnnotationImageIndex(Recording annotation) {
-      if (!annotation.RecordingBook.ImagingFilesFolder.IsEmptyInstance &&
-           txtAnnotationImageStartIndex.Value.Length != 0) {
-        annotation.StartImageIndex = int.Parse(txtAnnotationImageStartIndex.Value);
-        annotation.EndImageIndex = int.Parse(txtAnnotationImageEndIndex.Value);
-      }
+      throw new NotImplementedException("OOJJOO");
+      //if (!annotation.RecordingBook.ImagingFilesFolder.IsEmptyInstance &&
+      //     txtAnnotationImageStartIndex.Value.Length != 0) {
+      //  annotation.StartImageIndex = int.Parse(txtAnnotationImageStartIndex.Value);
+      //  annotation.EndImageIndex = int.Parse(txtAnnotationImageEndIndex.Value);
+      //}
     }
 
     private void SetRecordingImageIndex() {
-      if (this.DisplayImages() && txtImageStartIndex.Value.Length != 0) {
-        recording.StartImageIndex = int.Parse(txtImageStartIndex.Value);
-        recording.EndImageIndex = int.Parse(txtImageEndIndex.Value);
-      }
+      throw new NotImplementedException("OOJJOO");
+      //if (this.DisplayImages() && txtImageStartIndex.Value.Length != 0) {
+      //  recording.StartImageIndex = int.Parse(txtImageStartIndex.Value);
+      //  recording.EndImageIndex = int.Parse(txtImageEndIndex.Value);
+      //}
     }
 
     private void RegisterAsObsoleteRecording(bool appendMode) {
-      if (appendMode) {
-        this.recording = new Recording();
-      }
-      recording.RecordingBook = this.recordingBook;
-      recording.SetNumber(int.Parse(txtRecordingNumber.Value), cboBisRecordingNumber.Value);
-      recording.Status = RecordableObjectStatus.Obsolete;
-      SetRecordingImageIndex();
-      recording.Notes = txtObservations.Value;
-      if (txtPresentationDate.Value.Length != 0 && txtPresentationTime.Value.Length != 0) {
-        recording.PresentationTime = EmpiriaString.ToDateTime(txtPresentationDate.Value + " " + txtPresentationTime.Value);
-      }
-      if (txtAuthorizationDate.Value.Length != 0) {
-        recording.AuthorizedTime = EmpiriaString.ToDate(txtAuthorizationDate.Value);
-      }
-      if (cboAuthorizedBy.Value.Length != 0) {
-        recording.AuthorizedBy = Contact.Parse(int.Parse(cboAuthorizedBy.Value));
-      }
-      recording.ReceiptTotal = decimal.Parse(txtRecordingPayment.Value);
-      recording.ReceiptNumber = EmpiriaString.TrimAll(txtRecordingPaymentReceipt.Value);
-      recording.Document = oRecordingDocumentEditor.FillRecordingDocument(RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value)));
-      recording.Save();
+      throw new NotImplementedException("OOJJOO");
+      //if (appendMode) {
+      //  this.recording = new Recording();
+      //}
+      //recording.RecordingBook = this.recordingBook;
+      //recording.SetNumber(int.Parse(txtRecordingNumber.Value), cboBisRecordingNumber.Value);
+      //recording.Status = RecordableObjectStatus.Obsolete;
+      //SetRecordingImageIndex();
+      //recording.Notes = txtObservations.Value;
+      //if (txtPresentationDate.Value.Length != 0 && txtPresentationTime.Value.Length != 0) {
+      //  recording.PresentationTime = EmpiriaString.ToDateTime(txtPresentationDate.Value + " " + txtPresentationTime.Value);
+      //}
+      //if (txtAuthorizationDate.Value.Length != 0) {
+      //  recording.AuthorizedTime = EmpiriaString.ToDate(txtAuthorizationDate.Value);
+      //}
+      //if (cboAuthorizedBy.Value.Length != 0) {
+      //  recording.AuthorizedBy = Contact.Parse(int.Parse(cboAuthorizedBy.Value));
+      //}
+      //recording.ReceiptTotal = decimal.Parse(txtRecordingPayment.Value);
+      //recording.ReceiptNumber = EmpiriaString.TrimAll(txtRecordingPaymentReceipt.Value);
+      //recording.Document = oRecordingDocumentEditor.FillRecordingDocument(RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value)));
+      //recording.Save();
 
-      this.recordingBook.Refresh();
+      //this.recordingBook.Refresh();
     }
 
     private void RegisterAsPendingRecording(bool appendMode) {
-      if (appendMode) {
-        this.recording = new Recording();
-      }
-      recording.RecordingBook = this.recordingBook;
-      recording.SetNumber(int.Parse(txtRecordingNumber.Value), cboBisRecordingNumber.Value);
-      recording.Status = RecordableObjectStatus.Pending;
-      SetRecordingImageIndex();
-      recording.PresentationTime = EmpiriaString.ToDateTime(txtPresentationDate.Value + " " + txtPresentationTime.Value);
-      recording.AuthorizedTime = EmpiriaString.ToDate(txtAuthorizationDate.Value);
-      recording.AuthorizedBy = Contact.Parse(int.Parse(cboAuthorizedBy.Value));
-      recording.ReceiptTotal = decimal.Parse(txtRecordingPayment.Value);
-      recording.ReceiptNumber = EmpiriaString.TrimAll(txtRecordingPaymentReceipt.Value);
-      recording.Notes = txtObservations.Value;
-      recording.Document = oRecordingDocumentEditor.FillRecordingDocument(RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value)));
-      recording.Save();
+      throw new NotImplementedException("OOJJOO");
 
-      this.recordingBook.Refresh();
+      //if (appendMode) {
+      //  this.recording = new Recording();
+      //}
+      //recording.RecordingBook = this.recordingBook;
+      //recording.SetNumber(int.Parse(txtRecordingNumber.Value), cboBisRecordingNumber.Value);
+      //recording.Status = RecordableObjectStatus.Pending;
+      //SetRecordingImageIndex();
+      //recording.PresentationTime = EmpiriaString.ToDateTime(txtPresentationDate.Value + " " + txtPresentationTime.Value);
+      //recording.AuthorizedTime = EmpiriaString.ToDate(txtAuthorizationDate.Value);
+      //recording.AuthorizedBy = Contact.Parse(int.Parse(cboAuthorizedBy.Value));
+      //recording.ReceiptTotal = decimal.Parse(txtRecordingPayment.Value);
+      //recording.ReceiptNumber = EmpiriaString.TrimAll(txtRecordingPaymentReceipt.Value);
+      //recording.Notes = txtObservations.Value;
+      //recording.Document = oRecordingDocumentEditor.FillRecordingDocument(RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value)));
+      //recording.Save();
+
+      //this.recordingBook.Refresh();
     }
 
     private void RegisterAsIncompleteRecording(bool appendRecordingAct) {
-      recording.RecordingBook = this.recordingBook;
-      recording.SetNumber(int.Parse(txtRecordingNumber.Value), cboBisRecordingNumber.Value);
-      recording.Status = RecordableObjectStatus.Incomplete;
-      SetRecordingImageIndex();
-      recording.PresentationTime = EmpiriaString.ToDateTime(txtPresentationDate.Value + " " + txtPresentationTime.Value);
-      recording.AuthorizedTime = EmpiriaString.ToDate(txtAuthorizationDate.Value);
-      recording.AuthorizedBy = Contact.Parse(int.Parse(cboAuthorizedBy.Value));
-      recording.ReceiptTotal = decimal.Parse(txtRecordingPayment.Value);
-      recording.ReceiptNumber = EmpiriaString.TrimAll(txtRecordingPaymentReceipt.Value);
-      recording.Notes = txtObservations.Value;
-      recording.Document = oRecordingDocumentEditor.FillRecordingDocument(RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value)));
-      recording.Save();
-      if (appendRecordingAct) {
-        AppendRecordingAct();
-      }
-      this.recordingBook.Refresh();
+      throw new NotImplementedException("OOJJOO");
+
+      //recording.RecordingBook = this.recordingBook;
+      //recording.SetNumber(int.Parse(txtRecordingNumber.Value), cboBisRecordingNumber.Value);
+      //recording.Status = RecordableObjectStatus.Incomplete;
+      //SetRecordingImageIndex();
+      //recording.PresentationTime = EmpiriaString.ToDateTime(txtPresentationDate.Value + " " + txtPresentationTime.Value);
+      //recording.AuthorizedTime = EmpiriaString.ToDate(txtAuthorizationDate.Value);
+      //recording.AuthorizedBy = Contact.Parse(int.Parse(cboAuthorizedBy.Value));
+      //recording.ReceiptTotal = decimal.Parse(txtRecordingPayment.Value);
+      //recording.ReceiptNumber = EmpiriaString.TrimAll(txtRecordingPaymentReceipt.Value);
+      //recording.Notes = txtObservations.Value;
+      //recording.Document = oRecordingDocumentEditor.FillRecordingDocument(RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value)));
+      //recording.Save();
+      //if (appendRecordingAct) {
+      //  AppendRecordingAct();
+      //}
+      //this.recordingBook.Refresh();
     }
 
     private void AppendRecordingAct() {
-      int propertyId = int.Parse(cboProperty.Value);
-      Property property = null;
-      if (propertyId == 0) {
-        property = new Property();
-      } else if (propertyId == -1) {
-        property = Property.Parse(int.Parse(Request.Form["cboAnotherProperty"]));
-      } else {
-        property = Property.Parse(propertyId);
-      }
-      RecordingActType recordingActType = RecordingActType.Parse(int.Parse(Request.Form["cboRecordingActType"]));
-      recording.CreateRecordingAct(recordingActType, property);
+      throw new NotImplementedException("OOJJOO");
+
+      //int propertyId = int.Parse(cboProperty.Value);
+      //Property property = null;
+      //if (propertyId == 0) {
+      //  property = new Property();
+      //} else if (propertyId == -1) {
+      //  property = Property.Parse(int.Parse(Request.Form["cboAnotherProperty"]));
+      //} else {
+      //  property = Property.Parse(propertyId);
+      //}
+      //RecordingActType recordingActType = RecordingActType.Parse(int.Parse(Request.Form["cboRecordingActType"]));
+      //recording.CreateRecordingAct(recordingActType, property);
     }
 
     private void AppendAnnotation() {
-      Recording annotation = new Recording();
-      annotation.RecordingBook = RecordingBook.Parse(int.Parse(Request.Form["cboAnnotationBook"]));
-      annotation.SetNumber(int.Parse(txtAnnotationNumber.Value), cboBisAnnotationNumber.Value);
-      annotation.Status = RecordableObjectStatus.Incomplete;
-      SetAnnotationImageIndex(annotation);
-      annotation.BaseRecordingId = -2;
-      annotation.PresentationTime = EmpiriaString.ToDateTime(txtAnnotationPresentationDate.Value + " " + txtAnnotationPresentationTime.Value);
-      annotation.AuthorizedTime = EmpiriaString.ToDate(txtAnnotationAuthorizationDate.Value);
-      annotation.AuthorizedBy = Contact.Parse(int.Parse(Request.Form["cboAnnotationAuthorizedBy"]));
-      annotation.ReceiptTotal = decimal.Parse(txtAnnotationPayment.Value);
-      annotation.ReceiptNumber = EmpiriaString.TrimAll(txtAnnotationPaymentReceipt.Value);
-      annotation.Notes = txtAnnotationObservations.Value;
-      annotation.Document = oAnnotationDocumentEditor.FillRecordingDocument(RecordingDocumentType.Parse(int.Parse(cboAnnotationDocumentType.Value)));
-      annotation.Save();
-      Property property = Property.Parse(int.Parse(cboAnnotationProperty.Value));
-      RecordingActType annotationRecordingActType = RecordingActType.Parse(int.Parse(Request.Form["cboAnnotation"]));
-      annotation.CreateRecordingAct(annotationRecordingActType, property);
+      throw new NotImplementedException("OOJJOO");
 
-      annotation.RecordingBook.Refresh();
+      //Recording annotation = new Recording();
+      //annotation.RecordingBook = RecordingBook.Parse(int.Parse(Request.Form["cboAnnotationBook"]));
+      //annotation.SetNumber(int.Parse(txtAnnotationNumber.Value), cboBisAnnotationNumber.Value);
+      //annotation.Status = RecordableObjectStatus.Incomplete;
+      //SetAnnotationImageIndex(annotation);
+      //annotation.BaseRecordingId = -2;
+      //annotation.PresentationTime = EmpiriaString.ToDateTime(txtAnnotationPresentationDate.Value + " " + txtAnnotationPresentationTime.Value);
+      //annotation.AuthorizedTime = EmpiriaString.ToDate(txtAnnotationAuthorizationDate.Value);
+      //annotation.AuthorizedBy = Contact.Parse(int.Parse(Request.Form["cboAnnotationAuthorizedBy"]));
+      //annotation.ReceiptTotal = decimal.Parse(txtAnnotationPayment.Value);
+      //annotation.ReceiptNumber = EmpiriaString.TrimAll(txtAnnotationPaymentReceipt.Value);
+      //annotation.Notes = txtAnnotationObservations.Value;
+      //annotation.Document = oAnnotationDocumentEditor.FillRecordingDocument(RecordingDocumentType.Parse(int.Parse(cboAnnotationDocumentType.Value)));
+      //annotation.Save();
+      //Property property = Property.Parse(int.Parse(cboAnnotationProperty.Value));
+      //RecordingActType annotationRecordingActType = RecordingActType.Parse(int.Parse(Request.Form["cboAnnotation"]));
+      //annotation.CreateRecordingAct(annotationRecordingActType, property);
+
+      //annotation.RecordingBook.Refresh();
     }
 
     private void AppendNoLegibleAnnotation() {
-      Recording annotation = new Recording();
-      annotation.RecordingBook = RecordingBook.Parse(int.Parse(Request.Form["cboAnnotationBook"]));
-      annotation.SetNumber(int.Parse(txtAnnotationNumber.Value), cboBisAnnotationNumber.Value);
-      annotation.Status = RecordableObjectStatus.NoLegible;
-      SetAnnotationImageIndex(annotation);
-      if (txtAnnotationPresentationTime.Value.Length != 0) {
-        annotation.PresentationTime = EmpiriaString.ToDateTime(txtAnnotationPresentationDate.Value + " " + txtAnnotationPresentationTime.Value);
-      } else if (txtAnnotationPresentationDate.Value.Length != 0) {
-        annotation.PresentationTime = EmpiriaString.ToDate(txtAnnotationPresentationDate.Value);
-      }
-      if (txtAnnotationAuthorizationDate.Value.Length != 0) {
-        annotation.AuthorizedTime = EmpiriaString.ToDate(txtAnnotationAuthorizationDate.Value);
-      }
-      if (Request.Form["cboAnnotationAuthorizedBy"].Length != 0) {
-        annotation.AuthorizedBy = Contact.Parse(int.Parse(Request.Form["cboAnnotationAuthorizedBy"]));
-      }
-      annotation.ReceiptTotal = decimal.Parse(txtAnnotationPayment.Value);
-      annotation.ReceiptNumber = EmpiriaString.TrimAll(txtAnnotationPaymentReceipt.Value);
-      annotation.Notes = txtAnnotationObservations.Value;
-      annotation.Document = oAnnotationDocumentEditor.FillRecordingDocument(RecordingDocumentType.Parse(int.Parse(cboAnnotationDocumentType.Value)));
-      annotation.Save();
-      Property property = Property.Parse(int.Parse(cboAnnotationProperty.Value));
-      RecordingActType annotationRecordingActType = RecordingActType.Parse(int.Parse(Request.Form["cboAnnotation"]));
-      annotation.CreateRecordingAct(annotationRecordingActType, property);
+      throw new NotImplementedException("OOJJOO");
 
-      annotation.RecordingBook.Refresh();
+      //Recording annotation = new Recording();
+      //annotation.RecordingBook = RecordingBook.Parse(int.Parse(Request.Form["cboAnnotationBook"]));
+      //annotation.SetNumber(int.Parse(txtAnnotationNumber.Value), cboBisAnnotationNumber.Value);
+      //annotation.Status = RecordableObjectStatus.NoLegible;
+      //SetAnnotationImageIndex(annotation);
+      //if (txtAnnotationPresentationTime.Value.Length != 0) {
+      //  annotation.PresentationTime = EmpiriaString.ToDateTime(txtAnnotationPresentationDate.Value + " " + txtAnnotationPresentationTime.Value);
+      //} else if (txtAnnotationPresentationDate.Value.Length != 0) {
+      //  annotation.PresentationTime = EmpiriaString.ToDate(txtAnnotationPresentationDate.Value);
+      //}
+      //if (txtAnnotationAuthorizationDate.Value.Length != 0) {
+      //  annotation.AuthorizedTime = EmpiriaString.ToDate(txtAnnotationAuthorizationDate.Value);
+      //}
+      //if (Request.Form["cboAnnotationAuthorizedBy"].Length != 0) {
+      //  annotation.AuthorizedBy = Contact.Parse(int.Parse(Request.Form["cboAnnotationAuthorizedBy"]));
+      //}
+      //annotation.ReceiptTotal = decimal.Parse(txtAnnotationPayment.Value);
+      //annotation.ReceiptNumber = EmpiriaString.TrimAll(txtAnnotationPaymentReceipt.Value);
+      //annotation.Notes = txtAnnotationObservations.Value;
+      //annotation.Document = oAnnotationDocumentEditor.FillRecordingDocument(RecordingDocumentType.Parse(int.Parse(cboAnnotationDocumentType.Value)));
+      //annotation.Save();
+      //Property property = Property.Parse(int.Parse(cboAnnotationProperty.Value));
+      //RecordingActType annotationRecordingActType = RecordingActType.Parse(int.Parse(Request.Form["cboAnnotation"]));
+      //annotation.CreateRecordingAct(annotationRecordingActType, property);
+
+      //annotation.RecordingBook.Refresh();
     }
 
     private void CleanControls() {
@@ -703,40 +723,42 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void Initialize() {
-      recordingBook = RecordingBook.Parse(int.Parse(Request.QueryString["bookId"]));
-      if (String.IsNullOrEmpty(Request.QueryString["id"])) {
-        recording = recordingBook.GetLastRecording();
-        if (recording != null) {
-          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() + 
-                            "&id=" + recording.Id.ToString(), true);
-        } else {
-          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() + 
-                            "&id=-1", true);
-        }
-      } else if (int.Parse(Request.QueryString["id"]) == -1 || int.Parse(Request.QueryString["id"]) == 0) {
-        recording = new Recording();
-        recording.RecordingBook = this.recordingBook;
-      } else {
-        recording = Recording.Parse(int.Parse(Request.QueryString["Id"]));
-      }
-      if (!String.IsNullOrEmpty(Request.QueryString["image"])) {
-        currentImagePosition = int.Parse(Request.QueryString["image"]);
-      } else if (!IsPostBack && !recording.IsNew && DisplayImages()) {
-        currentImagePosition = recording.StartImageIndex - 1;
-      } else {
-        currentImagePosition = -1;
-      }
-      if (IsPostBack && !String.IsNullOrEmpty(hdnCurrentImagePosition.Value)) {
-        currentImagePosition = int.Parse(hdnCurrentImagePosition.Value);
-      }
-      if (!IsPostBack) {
-        cboZoomLevel.Value = "1.00";
-      }
-      SetImageZoom();
-      oRecordingDocumentEditor.LoadRecordingDocument(recording.Document);
-      Recording annotation = new Recording();
-      annotation.RecordingBook = this.recordingBook;
-      oAnnotationDocumentEditor.LoadRecordingDocument(annotation.Document);
+      throw new NotImplementedException("OOJJOO");
+
+      //recordingBook = RecordingBook.Parse(int.Parse(Request.QueryString["bookId"]));
+      //if (String.IsNullOrEmpty(Request.QueryString["id"])) {
+      //  recording = recordingBook.GetLastRecording();
+      //  if (recording != null) {
+      //    Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() + 
+      //                      "&id=" + recording.Id.ToString(), true);
+      //  } else {
+      //    Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() + 
+      //                      "&id=-1", true);
+      //  }
+      //} else if (int.Parse(Request.QueryString["id"]) == -1 || int.Parse(Request.QueryString["id"]) == 0) {
+      //  recording = new Recording();
+      //  recording.RecordingBook = this.recordingBook;
+      //} else {
+      //  recording = Recording.Parse(int.Parse(Request.QueryString["Id"]));
+      //}
+      //if (!String.IsNullOrEmpty(Request.QueryString["image"])) {
+      //  currentImagePosition = int.Parse(Request.QueryString["image"]);
+      //} else if (!IsPostBack && !recording.IsNew && DisplayImages()) {
+      //  currentImagePosition = recording.StartImageIndex - 1;
+      //} else {
+      //  currentImagePosition = -1;
+      //}
+      //if (IsPostBack && !String.IsNullOrEmpty(hdnCurrentImagePosition.Value)) {
+      //  currentImagePosition = int.Parse(hdnCurrentImagePosition.Value);
+      //}
+      //if (!IsPostBack) {
+      //  cboZoomLevel.Value = "1.00";
+      //}
+      //SetImageZoom();
+      //oRecordingDocumentEditor.LoadRecordingDocument(recording.Document);
+      //Recording annotation = new Recording();
+      //annotation.RecordingBook = this.recordingBook;
+      //oAnnotationDocumentEditor.LoadRecordingDocument(annotation.Document);
     }
 
     private void LoadRecorderOfficersCombo() {
