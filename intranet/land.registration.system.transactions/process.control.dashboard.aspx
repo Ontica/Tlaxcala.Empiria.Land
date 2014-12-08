@@ -6,8 +6,8 @@
     <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 1);" title="">Documentos por entregar</td>
     <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 2);" title="">Mi trabajo realizado</td>
     <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 3);" title="">Recibir documentos</td> 
-    <td id="tabStripItem_4"  style='display:<%=User.CanExecute("LRSTransaction.DeliveryDesk") ? "inline" : "none"%>' class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Ventanilla de entregas</td>
-    <td id="tabStripItem_5" style='display:<%=User.CanExecute("LRSTransaction.ControlDesk") ? "inline" : "none"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 5);" title="">Mesa de control</td>
+    <td id="tabStripItem_4"  style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk") ? "inline" : "none"%>' class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Ventanilla de entregas</td>
+    <td id="tabStripItem_5" style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ControlDesk") ? "inline" : "none"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 5);" title="">Mesa de control</td>
     <td id="tabStripItem_6" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 6);" title="">Buscar trámites</td>    
     <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
     <td><input id="currentTabStripItem" name="currentTabStripItem" type="hidden" /></td>
@@ -269,37 +269,37 @@
     var nextStatus = getInnerText('ancNextStatusID' + transactionId);
 
     if (nextStatus == 'S') {
-    <% if (!User.CanExecute("LRSTransaction.DocumentSigner")) { %>
+    <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSigner")) { %>
       alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEl documento está marcado como 'Recibir para firma'.");
       return;
     <% } %>
     }
   	if (nextStatus == 'K') {
-    <% if (!User.CanExecute("LRSTransaction.ControlDesk")) { %>
+    <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ControlDesk")) { %>
       alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEl documento está marcado para recibirlo en mesa de control.\n\nSólo los responsables de la mesa de control pueden tomarlo.");
       return;
     <% } %>
     }
   	if (nextStatus == 'A') {
-    <% if (!User.CanExecute("LRSTransaction.DocumentSafeguard")) { %>
+    <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSafeguard")) { %>
  		alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEl documento está marcado para recibirlo en la mesa de digitalización y resguardo'.");
  		return;
 	 	<% } %>
 		}
   	if (nextStatus == 'D' || nextStatus == 'L') {
-    <% if (!User.CanExecute("LRSTransaction.DeliveryDesk")) { %>
+    <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) { %>
       alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEl documento ya está listo para entregarlo (o devolverlo) al interesado.\n\nSólo los responsables de ventanilla de entregas pueden tomarlo.");
       return;
     <% } %>
     }
   	if (nextStatus == 'V') {
-      <% if (!User.CanExecute("LRSTransaction.QualityControl")) { %>
+      <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.QualityControl")) { %>
   	    alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEste trámite está listo para enviarse al área de revisión.\n\nSólo el personal del área de revisión puede tomar este trámite.");
         return;
       <% } %>
     }
   	if (nextStatus == 'J') {
-      <% if (!User.CanExecute("LRSTransaction.Juridic")) { %>
+      <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Juridic")) { %>
         alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEste trámite está marcado para entregarse al área jurídica.");
         return;
       <% } %>

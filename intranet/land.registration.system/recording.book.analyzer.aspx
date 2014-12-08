@@ -57,7 +57,7 @@
                   <td><img src='../themes/default/buttons/last.gif' onclick='doOperation("moveToImage", "last");' title='Muestra la última imagen' alt='' /></td>
                   <td width='10px' nowrap='nowrap'>&nbsp;</td>
                   <td nowrap='nowrap'>
-                    <% if (User.CanExecute("BatchCapture.Supervisor")) { %>
+                    <% if (Empiria.ExecutionServer.CurrentPrincipal.IsInRole("BatchCapture.Supervisor")) { %>
                     <select id="cboImageOperation" name="cboImageOperation" class="selectBox" style="width:100px" title="" runat="server">
                       <option value="selectRecordingActOperation">(Operación)</option>
                       <option value="insertEmptyImageBefore">Insertar</option>
@@ -1048,7 +1048,7 @@
   }
 
   function deleteAnnotation(propertyId, recordingActId) {
-    <% if (!User.CanExecute("BatchCapture.Supervisor")) { %>
+    <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("BatchCapture.Supervisor")) { %>
       showNotAllowedMessage();
       return;
     <% } %>
@@ -1071,7 +1071,7 @@
   }
   
   function deleteRecording() {	
-    <% if (!User.CanExecute("BatchCapture.Supervisor")) { %>
+    <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("BatchCapture.Supervisor")) { %>
       showNotAllowedMessage();
       return false;
     <% } %> 
@@ -1098,7 +1098,7 @@
   }
   
   function deleteRecordingAct(recordingActId, propertyId) {
-    <% if (!User.CanExecute("BatchCapture.Supervisor")) { %>
+    <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("BatchCapture.Supervisor")) { %>
       showNotAllowedMessage();
       return;
     <% } %>
@@ -1128,7 +1128,7 @@
   }	
   
   function deleteRecordingActProperty(recordingActId, propertyId) {
-    <% if (!User.CanExecute("BatchCapture.Supervisor")) { %>
+    <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("BatchCapture.Supervisor")) { %>
       showNotAllowedMessage();
       return;
     <% } %>
@@ -1153,7 +1153,7 @@
   }
     
   function modifyRecordingActType(recordingActId, propertyId) {
-    <% if (!User.CanExecute("BatchCapture.Supervisor")) { %>
+    <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("BatchCapture.Supervisor")) { %>
       showNotAllowedMessage();
       return;
     <% } %>

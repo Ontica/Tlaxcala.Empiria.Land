@@ -15,8 +15,8 @@ using System.Runtime.InteropServices;
 *************************************************************************************************************/
 [assembly: AssemblyTitle("Empiria.Land.Extranet.dll")]
 [assembly: AssemblyDescription("Empiria Land 2014 Tlaxcala Edition: Web Extranet App")]
-[assembly: AssemblyVersion("2.0.1023.0")]
-[assembly: AssemblyFileVersion("2.0.1023")]
+[assembly: AssemblyVersion("2.0.0328.0")]
+[assembly: AssemblyFileVersion("2.0.0328")]
 [assembly: AssemblyCompany("Ontica")]
 [assembly: AssemblyProduct("Empiria Land 2014")]
 [assembly: AssemblyCopyright("(c) 2009-2014. La Vía Óntica SC, Ontica LLC and contributors.")]

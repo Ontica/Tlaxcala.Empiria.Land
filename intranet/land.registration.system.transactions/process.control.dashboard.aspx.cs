@@ -74,7 +74,7 @@ namespace Empiria.Web.UI.LRS {
       string filter = GetFilter();
       string sort = String.Empty;
       if (base.SelectedTabStrip == 0) {
-        if (!User.CanExecute("LRSTransaction.ReceiveTransaction")) {
+        if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReceiveTransaction")) {
           if (filter.Length != 0) {
             filter += " AND ";
           }

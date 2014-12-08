@@ -32,7 +32,7 @@ namespace Empiria.Land.Extranet {
   public class BundleConfig {
     // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
 
-    public static void RegisterBundles(BundleCollection bundles) {
+    static public void RegisterBundles(BundleCollection bundles) {
       bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                   "~/Scripts/jquery-{version}.js"));
 
@@ -78,7 +78,7 @@ namespace Empiria.Land.Extranet {
 
   public class FilterConfig {
 
-    public static void RegisterGlobalFilters(GlobalFilterCollection filters) {
+    static public void RegisterGlobalFilters(GlobalFilterCollection filters) {
       filters.Add(new HandleErrorAttribute());
     }
 
@@ -86,7 +86,7 @@ namespace Empiria.Land.Extranet {
 
   public class RouteConfig {
 
-    public static void RegisterRoutes(RouteCollection routes) {
+    static public void RegisterRoutes(RouteCollection routes) {
       routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
       routes.IgnoreRoute("{resource}.aspx/{*pathInfo}");
 
@@ -99,9 +99,9 @@ namespace Empiria.Land.Extranet {
   }		// class RouteConfig
 
 
-  public static class WebApiConfig {
+  static public class WebApiConfig {
 
-    public static void Register(HttpConfiguration config) {
+    static public void Register(HttpConfiguration config) {
       config.Routes.MapHttpRoute(
           name: "DefaultApi",
           routeTemplate: "api/{controller}/{id}",

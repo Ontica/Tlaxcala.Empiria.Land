@@ -58,13 +58,15 @@ namespace Empiria.Web.UI {
     #region Private methods
 
     private bool TryLogon(string userName, string password) {
+      const string clientAppKey = "vQNLXJeCoRPOtINfussrnSabsNs5jaOCRpdEYg5aXIOehqiBIARTgPUwtbrA940Q";
+
       userName = userName.Trim();
       password = password.Trim();
 
       userName = Cryptographer.Encrypt(EncryptionMode.EntropyKey, userName, Session.SessionID);
       password = Cryptographer.Encrypt(EncryptionMode.EntropyKey, password, Session.SessionID);
 
-      return this.Controller.Logon(userName, password, 1);
+      return this.Controller.Logon(clientAppKey, userName, password, 1);
     }
 
     private void SetDefaultValues() {

@@ -57,7 +57,7 @@
       <td nowrap="nowrap">
         <img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('loadData')" title="Ejecuta la búsqueda" />
       </td>
-      <% if (this.SelectedTabStrip == 0 && Empiria.ExecutionServer.CurrentUser.Id == -3) { %>
+      <% if (this.SelectedTabStrip == 0 && Empiria.ExecutionServer.CurrentUserId == -3) { %>
       <td align="left" nowrap="nowrap">
 					&nbsp; &nbsp; &nbsp;
 					<a href="javascript:doOperation('processImagingDirectories');"

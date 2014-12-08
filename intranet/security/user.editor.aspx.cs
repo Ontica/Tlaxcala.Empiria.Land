@@ -94,7 +94,7 @@ namespace Empiria.Web.UI.Security {
       txtObservations.Value = String.Empty;
       txtUserName.Value = user.UserName;
       chkIsActive.Checked = user.IsActive;
-      if (user.IsSystemUser) {
+      if (user.Id < 0) {      // System user
         txtDisplayName.Disabled = true;
         txtObservations.Disabled = true;
         txtEmail.Disabled = true;
@@ -123,9 +123,6 @@ namespace Empiria.Web.UI.Security {
     }
 
     private bool ValidateObject() {
-      if (user.IsSystemUser) {
-        return false;
-      }
       txtDisplayName.Value = EmpiriaString.TrimAll(txtDisplayName.Value);
       txtObservations.Value = EmpiriaString.TrimAll(txtObservations.Value);
       txtUserName.Value = EmpiriaString.TrimAll(txtUserName.Value);
@@ -178,16 +175,20 @@ namespace Empiria.Web.UI.Security {
     }
 
     private void SaveObject() {
-      Empiria.Security.IEmpiriaPrincipal principal = Empiria.ExecutionServer.CurrentPrincipal;
+      throw new NotImplementedException();
 
-      bool isForAppend = user.IsNew;
-      user.UserName = txtUserName.Value;
-      user.UITheme = "default";
-      if (txtNewPassword.Value.Length != 0) {
-        user.SetPassword(txtNewPassword.Value, user.UserName);
-      }
-      user.IsActive = chkIsActive.Checked;
-      //user.Save();
+      // TODO Changed Dec 8th, 2014
+
+      //Empiria.Security.IEmpiriaPrincipal principal = Empiria.ExecutionServer.CurrentPrincipal;
+
+      //bool isForAppend = user.IsNew;
+      //user.UserName = txtUserName.Value;
+      //user.UITheme = "default";
+      //if (txtNewPassword.Value.Length != 0) {
+      //  user.SetPassword(txtNewPassword.Value, user.UserName);
+      //}
+      //user.IsActive = chkIsActive.Checked;
+
     }
 
     private void DeleteObject() {
@@ -199,48 +200,14 @@ namespace Empiria.Web.UI.Security {
 
       btnAcceptChangesText = "Aceptar";
       btnApplyChangesText = "Aplicar";
-
-      if (user.IsNew || user.IsSystemUser) {
-        ///onDeleteButtonAttrs = "disabled='disabled'";
-      } else if (!principal.CanExecute(user.GetEmpiriaType().Id, 'D', user.Id)) {
-        //onDeleteButtonAttrs = "disabled='disabled'";
-      }
-      if (user.IsNew && (!principal.CanExecute(user.GetEmpiriaType().Id, 'A'))) {
-        //onChangesButtonAttrs = "disabled='disabled' tabIndex='-1'";
-      } else if (!user.IsNew && !principal.CanExecute(user.GetEmpiriaType().Id, 'U', user.Id)) {
-        //onChangesButtonAttrs = "disabled='disabled' tabIndex='-1'";
-      }
     }
 
     private bool AlreadyExistsUserName(string userName) {
-      string filter = "([EOSObjects].[DisplayName] = '" + userName + "')";
-      filter += " AND ([EOSObjects].[ObjectId] <> " + user.Id + ")";
-
       return false;
-      //ObjectSearcher searcher = new ObjectSearcher("ObjectType.RolePlayer.SecurityRolePlayer.User", filter, false);
-      //return (searcher.FindOne() != null);
     }
 
     private bool AlreadyExistsUserId(string userId) {
       return false;
-      //int objectTypeId = ObjectTypeInfo.Parse("ObjectType.RolePlayer.SecurityRolePlayer.User").Id;
-
-      //DataTable table = DataReader.GetDataTable(DataOperation.Parse("qryObjectsWithAttributeValue",
-      //                                          objectTypeId, 207, userId));
-
-      //if (table.Rows.Count == 0) {
-      //  return false;
-      //} else if (table.Rows.Count != 1) {
-      //  return true;
-      //} else if (table.Rows.Count == 1) {
-      //  if ((int) table.Rows[0]["ObjectId"] == user.Id) {
-      //    return false;
-      //  } else {
-      //    return true;
-      //  }
-      //} else {
-      //  return true;
-      //}
     }
 
     private string GetEntitiesGroupsValues() {
@@ -263,14 +230,6 @@ namespace Empiria.Web.UI.Security {
         } // if
       } // for
       return valuesString;
-    }
-
-    private bool GetCanEditEntitiesGroupFlag(int typeId) {
-      if (ExecutionServer.CurrentPrincipal.CanExecute(typeId, 'A')) {
-        return true;
-      } else {
-        return false;
-      }
     }
 
   } // class UserEditor

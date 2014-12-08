@@ -174,7 +174,7 @@ namespace Empiria.Web.UI.LRS {
       if (transaction.IsEmptyInstance) {
         return false;
       }
-      if (!User.CanExecute("LRSTransaction.Register")) {
+      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register")) {
         return false;
       }
       if (transaction.Status == TransactionStatus.Recording) {
@@ -190,7 +190,8 @@ namespace Empiria.Web.UI.LRS {
       if (this.GetRecordingActs().Count == 0) {
         return false;
       }
-      if (User.CanExecute("LRSTransaction.Register") || !User.CanExecute("LRSTransaction.DocumentSigner")) {
+      if (Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
+          !Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSigner")) {
         return true;
       }
       return false;

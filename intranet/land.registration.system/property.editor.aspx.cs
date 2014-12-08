@@ -228,7 +228,7 @@ namespace Empiria.Web.UI.LRS {
       txtCadastralNumber.Value = property.CadastralData.CadastralCode;
       txtTractNumber.Value = property.UniqueCode;
       txtStatus.Value = property.StatusName;
-      cboPropertyType.Value = property.PropertyKind.Id.ToString();
+      cboPropertyType.Value = property.PropertyKind.Value;
       txtPropertyCommonName.Value = property.Name;
       txtAntecendent.Value = property.AntecedentNotes;
       txtObservations.Value = property.RecordingNotes;

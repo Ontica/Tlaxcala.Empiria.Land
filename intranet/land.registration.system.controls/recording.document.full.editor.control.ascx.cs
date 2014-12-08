@@ -77,26 +77,28 @@ namespace Empiria.Web.UI.LRS {
       RecordingBook book = RecordingBook.Empty;
       RecorderOffice office = RecorderOffice.Empty;
 
-      HtmlSelectContent.LoadCombo(this.cboNotaryDocIssuePlace, office.GetNotaryOfficePlaces(), "Id", "Name",
-                                  "( Seleccionar )", String.Empty, "No consta");
+      HtmlSelectContent.LoadCombo(this.cboNotaryDocIssuePlace, office.GetNotaryOfficePlaces(),
+                                  "Id", "Name", "( Seleccionar )", String.Empty, "No consta");
 
-      HtmlSelectContent.LoadCombo(this.cboPrivateDocIssuePlace, office.GetPrivateDocumentIssuePlaces(), "Id", "Name",
-                                  "( Seleccionar )", String.Empty, "No consta");
+      HtmlSelectContent.LoadCombo(this.cboPrivateDocIssuePlace, office.GetPrivateDocumentIssuePlaces(),
+                                  "Id", "Name", "( Seleccionar )", String.Empty, "No consta");
 
-      HtmlSelectContent.LoadCombo(this.cboJudicialDocIssuePlace, office.GetJudicialDocumentIssuePlaces(), "Id", "Name",
-                                  "( Seleccionar )", String.Empty, "No consta");
+      HtmlSelectContent.LoadCombo(this.cboJudicialDocIssuePlace, office.GetJudicialDocumentIssuePlaces(),
+                                  "Id", "Name", "( Seleccionar )", String.Empty, "No consta");
 
-      FixedList<Contact> signers = office.GetPropertyTitleSigners(book.RecordingsControlTimePeriod);
+      FixedList<Person> signers = office.GetPropertyTitleSigners(book.RecordingsControlTimePeriod);
       HtmlSelectContent.LoadCombo(this.cboPropTitleDocIssuedBy, signers, "Id", "FullName",
-                                  "( Seleccionar al C. Funcionario Público )", String.Empty, "No consta o no se puede determinar");
+                                  "( Seleccionar al C. Funcionario Público )", String.Empty, 
+                                  "No consta o no se puede determinar");
 
-      HtmlSelectContent.LoadCombo(this.cboPropTitleIssueOffice, office.GetPropertyTitleOffices(), "Id", "Alias",
-                                     "( Seleccionar )", String.Empty, "No consta");
+      HtmlSelectContent.LoadCombo(this.cboPropTitleIssueOffice, office.GetPropertyTitleOffices(),
+                                  "Id", "Alias", "( Seleccionar )", String.Empty, "No consta");
 
       GeneralList listType = GeneralList.Parse("PrivateContract.WitnessPosition.List");
-      FixedList<TypeAssociationInfo> witnessRole = listType.GetTypeRelationItems();
-      HtmlSelectContent.LoadCombo(this.cboPrivateDocMainWitnessPosition, witnessRole, "Id", "DisplayName",
-                                  "( Seleccionar )", "No consta", String.Empty);
+      FixedList<TypeAssociationInfo> witnessRoles = 
+                  listType.GetItems<TypeAssociationInfo>((x, y) => x.DisplayName.CompareTo(y.DisplayName));
+      HtmlSelectContent.LoadCombo(this.cboPrivateDocMainWitnessPosition, witnessRoles,
+                                  "Id", "DisplayName", "( Seleccionar )", "No consta", String.Empty);
     }
 
     private void LoadJudicialDocument() {
@@ -105,8 +107,8 @@ namespace Empiria.Web.UI.LRS {
       cboJudicialDocSubtype.Value = document.Subtype.Id.ToString();
       cboJudicialDocIssuePlace.Value = document.IssuePlace.Id.ToString();
 
-      HtmlSelectContent.LoadCombo(this.cboJudicialDocIssueOffice, JudicialOffice.GetList(document.IssuePlace), "Id", "Number",
-                                  "( Seleccionar )", String.Empty, "No consta");
+      HtmlSelectContent.LoadCombo(this.cboJudicialDocIssueOffice, JudicialOffice.GetList(document.IssuePlace),
+                                  "Id", "Number", "( Seleccionar )", String.Empty, "No consta");
       cboJudicialDocIssueOffice.Value = document.IssueOffice.Id.ToString();
 
       //if (document.IssueOffice is JudicialOffice) {
@@ -172,7 +174,8 @@ namespace Empiria.Web.UI.LRS {
       } else {
         FixedList<Person> peopleInRoleList = roleType.GetActors<Person>(document.IssuePlace);
         HtmlSelectContent.LoadCombo(this.cboPrivateDocMainWitness, peopleInRoleList, "Id", "FamilyFullName",
-                                    "( Seleccionar al C. Funcionario Público )", String.Empty, "No consta o no se puede determinar");
+                                    "( Seleccionar al C. Funcionario Público )", String.Empty,
+                                    "No consta o no se puede determinar");
       }
       cboPrivateDocMainWitness.Value = document.ExtensionData.MainWitness.Id.ToString();
       if (document.IssueDate != ExecutionServer.DateMinValue) {
@@ -245,7 +248,7 @@ namespace Empiria.Web.UI.LRS {
       document.Subtype = LRSDocumentType.Parse(int.Parse(cboPrivateDocSubtype.Value));
       document.IssuePlace = GeographicRegion.Parse(int.Parse(cboPrivateDocIssuePlace.Value));
       document.Number = txtPrivateDocNumber.Value;
-      document.ExtensionData.MainWitnessPosition = TypeAssociationInfo.Parse(int.Parse(Request.Form[cboPrivateDocMainWitnessPosition.Name]));
+      document.ExtensionData.MainWitnessPosition = RoleType.Parse(Request.Form[cboPrivateDocMainWitnessPosition.Name]);
       document.ExtensionData.MainWitness = Contact.Parse(int.Parse(Request.Form[cboPrivateDocMainWitness.Name]));
       if (txtPrivateDocIssueDate.Value.Length != 0) {
         document.IssueDate = EmpiriaString.ToDate(txtPrivateDocIssueDate.Value);
