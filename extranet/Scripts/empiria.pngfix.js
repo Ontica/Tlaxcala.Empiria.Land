@@ -2,7 +2,7 @@
 *																																																						 *
 *	 Solution  : Empiria® Web																			System   : Javascript Core Library					 *
 *	 File      : /pngfix.js																				Pattern  : JavaScript Methods Library				 *
-*	 Date      : 25/Jun/2013                                      Version  : 1.0  License: CC BY-NC-SA 3.0     *
+*	 Date      : 25/Jun/2013                                      Version  : 2.0  License: LICENSE.TXT file    *
 *																																																						 *
 *  Summary   : Correctly handle PNG transparency in Windows Internet Explorer 5.5 & 6.0											 *
 *																																																						 *

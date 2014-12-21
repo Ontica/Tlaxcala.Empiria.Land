@@ -2,11 +2,11 @@
 *																																																						 *
 *	 Solution  : Empiria® Web																			System   : Javascript Core Library					 *
 *	 File      : /general.js																			Pattern  : JavaScript Methods Library				 *
-*	 Date      : 28/Mar/2014                                      Version  : 1.5  License: CC BY-NC-SA 4.0     *
+*	 Date      : 04/Jan/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
 *																																																						 *
 *  Summary   : Contains general methods for web browser javascript clients.																	 *
 *																																																						 *
-**************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 1994-2014. **/
+**************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 1994-2015. **/
 
 var gbSended = false;
 var gsWaitScreenMessage = "";

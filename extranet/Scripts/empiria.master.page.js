@@ -2,7 +2,7 @@
 *																																																						 *
 *	 Solution  : Empiria® Web																			System   : Javascript Core Library					 *
 *	 File      : /workplace/master_page.js											  Pattern  : JavaScript Methods Library				 *
-*	 Date      : 25/Jun/2013                                      Version  : 1.0  License: CC BY-NC-SA 3.0     *
+*	 Date      : 25/Jun/2013                                      Version  : 2.0  License: LICENSE.TXT file    *
 *																																																						 *
 *  Summary   : Contains methods for workplace master page interaction.																			 *
 *																																																						 *

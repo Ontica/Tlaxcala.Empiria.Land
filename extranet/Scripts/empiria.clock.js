@@ -2,7 +2,7 @@
 *																																																						 *
 *	 Solution  : Empiria® Web																			System   : Javascript Core Library					 *
 *	 File      : /clock.js																				Pattern  : JavaScript Methods Library				 *
-*	 Date      : 25/Jun/2013                                      Version  : 1.0  License: CC BY-NC-SA 3.0     *
+*	 Date      : 25/Jun/2013                                      Version  : 2.0  License: LICENSE.TXT file    *
 *																																																						 *
 *  Summary   : Displays the client system date-time in an html item.                                         *
 *																																																						 *
