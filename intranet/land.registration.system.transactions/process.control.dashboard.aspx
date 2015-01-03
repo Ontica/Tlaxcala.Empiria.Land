@@ -36,10 +36,10 @@
 			<td nowrap="nowrap">
         <select id="cboSearch" name="cboSearch" class="selectBox" style="width:130px" runat="server">
           <option value="">Todos los campos</option>
-          <option value="TransactionKey">Número de trámite</option>
-          <option value="DocumentKey">Número de documento</option>
-          <option value="ReceiptNumber">Número de boleta</option>
-          <option value="DocumentNumber">Instrumento</option>
+          <option value="TransactionUID">Número de trámite</option>
+          <option value="DocumentUID">Número de documento</option>
+          <option value="ReceiptNo">Número de boleta</option>
+          <option value="DocumentNo">Instrumento</option>
         </select>
       </td>
       <td nowrap="nowrap">

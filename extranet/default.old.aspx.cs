@@ -88,7 +88,7 @@ namespace Empiria.Land.Extranet {
     }
 
     private void ShowProperty() {
-      Property p = Property.TryParseWithUniqueCode(txtPropertyKey.Value);
+      Property p = Property.TryParseWithUID(txtPropertyKey.Value);
       if (p != null) {
         RecordingAct r = p.LastRecordingAct;
         theClientScript = @"alert('El predio está registrado en: \n" + r.Recording.FullNumber + ".')";
@@ -98,28 +98,29 @@ namespace Empiria.Land.Extranet {
     }
 
     private void ShowTransaction() {
-      LRSTransaction t = LRSTransaction.TryParseWithNumber(txtTransactionKey.Value);
-      if (t != null) {
-        lblTransactionState.InnerText = LRSTransaction.StatusName(t.Status);
-        if (t.Status == TransactionStatus.Delivered) {
-          lblTransactionDelivery.InnerText = t.ClosingTime.ToString("dd/MMM/yyyy");
-          isFinished = true;
-        } else if (t.Status == TransactionStatus.ToDeliver || t.Status == TransactionStatus.ToReturn) {
-          lblTransactionDelivery.InnerText = "Listo para entregarse";
-          isFinished = true;
-        } else if (t.Status == TransactionStatus.OnSign) {
-          lblTransactionDelivery.InnerText = "En dos días hábiles";
-        } else {
-          lblTransactionDelivery.InnerText = "No determinada";
-        }
-        viewResultFlag = true;
-        cmdSend.Value = "Otra consulta";
-      } else {
+      LRSTransaction t = LRSTransaction.TryParse(txtTransactionKey.Value);
+
+      if (t == null) {
         lblTransactionState.InnerText = "Trámite no encontrado";
         lblTransactionDelivery.InnerText = String.Empty;
         theClientScript = "alert('No tenemos registrado ningún trámite con el número proporcionado.')";
         viewResultFlag = false;
+        return;
       }
+      lblTransactionState.InnerText = LRSTransaction.StatusName(t.Status);
+      if (t.Status == TransactionStatus.Delivered) {
+        lblTransactionDelivery.InnerText = t.ClosingTime.ToString("dd/MMM/yyyy");
+        isFinished = true;
+      } else if (t.Status == TransactionStatus.ToDeliver || t.Status == TransactionStatus.ToReturn) {
+        lblTransactionDelivery.InnerText = "Listo para entregarse";
+        isFinished = true;
+      } else if (t.Status == TransactionStatus.OnSign) {
+        lblTransactionDelivery.InnerText = "En dos días hábiles";
+      } else {
+        lblTransactionDelivery.InnerText = "No determinada";
+      }
+      viewResultFlag = true;
+      cmdSend.Value = "Otra consulta";
     }
 
     private void SetDefaultValues() {

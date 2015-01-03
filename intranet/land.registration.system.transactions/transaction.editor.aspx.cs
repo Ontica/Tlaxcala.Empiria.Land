@@ -126,7 +126,7 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void LoadEditor() {
-      txtTransactionKey.Value = transaction.UniqueCode;
+      txtTransactionKey.Value = transaction.UID;
       cboRecorderOffice.Value = transaction.RecorderOffice.Id.ToString();
 
       txtReceiptNumber.Value = transaction.Payments.ReceiptNumbers;
@@ -147,7 +147,7 @@ namespace Empiria.Web.UI.LRS {
       txtRequestedBy.Value = transaction.RequestedBy;
       txtContactEMail.Value = transaction.ExtensionData.RequesterEmail;
       txtContactPhone.Value = transaction.ExtensionData.RequesterPhone;
-      cboManagementAgency.Value = transaction.ManagementAgency.Id.ToString();
+      cboManagementAgency.Value = transaction.Agency.Id.ToString();
 
       txtRequestNotes.Value = transaction.ExtensionData.RequesterNotes;
       txtOfficeNotes.Value = transaction.ExtensionData.OfficeNotes;
@@ -263,7 +263,7 @@ namespace Empiria.Web.UI.LRS {
       transaction.RequestedBy = txtRequestedBy.Value.Replace("\'\'", "\"").Replace("\'", "¿");
       transaction.ExtensionData.RequesterEmail = txtContactEMail.Value;
       transaction.ExtensionData.RequesterPhone = txtContactPhone.Value;
-      transaction.ManagementAgency = Contact.Parse(int.Parse(cboManagementAgency.Value));
+      transaction.Agency = Contact.Parse(int.Parse(cboManagementAgency.Value));
       transaction.Save();
       onloadScript = "alert('Los cambios efectuados en la información del trámite se guardaron correctamente.');";
 
@@ -335,7 +335,7 @@ namespace Empiria.Web.UI.LRS {
       SaveTransaction();
       LRSTransaction copy = this.transaction.MakeCopy();
     
-      onloadScript = @"alert('Este trámite fue copiado correctamente.\n\nEl nuevo trámite es el " + copy.UniqueCode +
+      onloadScript = @"alert('Este trámite fue copiado correctamente.\n\nEl nuevo trámite es el " + copy.UID +
                      @".\n\nAl cerrar esta ventana se mostrará el nuevo trámite.');";
       onloadScript += "doOperation('goToTransaction', " + copy.Id.ToString() + ");";
     }
@@ -510,9 +510,9 @@ namespace Empiria.Web.UI.LRS {
 
     protected string GetTitle() {
       if (this.transaction.IsNew) {
-        return this.transaction.UniqueCode + ": " + this.transaction.TransactionType.Name;
+        return this.transaction.UID + ": " + this.transaction.TransactionType.Name;
       } else {
-        return this.transaction.TransactionType.Name + ": " + this.transaction.UniqueCode;
+        return this.transaction.TransactionType.Name + ": " + this.transaction.UID;
       }
     }
 

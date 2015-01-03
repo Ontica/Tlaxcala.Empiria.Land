@@ -15,7 +15,7 @@
     Participa como: <b class="boldItem"><%#DataBinder.Eval(Container, "DataItem.PartyRole")%></b> &nbsp; &nbsp; Modo: <b class="boldItem"><%#DataBinder.Eval(Container, "DataItem.OwnershipModeName")%></b>
   </td>
   <td style="width:40%;line-height:22px; white-space:normal">
-    <a href="javascript:doOperation('showRecording', <%#DataBinder.Eval(Container, "DataItem.RecordingBookId")%>, <%#DataBinder.Eval(Container, "DataItem.RecordingId")%>)"  class="detailsLinkTitle"><%#DataBinder.Eval(Container, "DataItem.PropertyUniqueCode")%></a> 
+    <a href="javascript:doOperation('showRecording', <%#DataBinder.Eval(Container, "DataItem.RecordingBookId")%>, <%#DataBinder.Eval(Container, "DataItem.RecordingId")%>)"  class="detailsLinkTitle"><%#DataBinder.Eval(Container, "DataItem.PropertyUID")%></a> 
     &nbsp; &nbsp;  &nbsp;  &nbsp; Clave catastral: <b class="boldItem"><%#DataBinder.Eval(Container, "DataItem.CadastralKey")%></b>
     &nbsp; &nbsp; <a href="#">Ver en mapa</a>
     <br />

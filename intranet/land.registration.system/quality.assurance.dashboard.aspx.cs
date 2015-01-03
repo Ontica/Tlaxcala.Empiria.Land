@@ -115,7 +115,7 @@ namespace Empiria.Web.UI.LRS {
       RecordingBook recordingBook = RecordingBook.Parse(recordingBookId);
       recordingBook.SendToRevision();
 
-      base.SetOKScriptMsg("El libro registral " + recordingBook.Name + " fue enviado al área de control de calidad.");
+      base.SetOKScriptMsg("El libro registral " + recordingBook.AsText + " fue enviado al área de control de calidad.");
     }
 
     protected sealed override void SetRepeaterTemplates() {

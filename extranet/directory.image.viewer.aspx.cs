@@ -97,8 +97,9 @@ namespace Empiria.Land.Extranet {
       directory = RecordBookDirectory.Empty;
       if (!String.IsNullOrEmpty(Request.QueryString["id"])) {
         RecordingBook book = RecordingBook.Parse(int.Parse(Request.QueryString["id"]));
-        directory = book.ImagingFilesFolder;
-        pageTitle = book.FullName;
+        throw new NotImplementedException();
+        //directory = book.ImagingFilesFolder;  // oojjoo
+        //pageTitle = book.AsText;
       } else if (!String.IsNullOrEmpty(Request.QueryString["directoryId"])) {
         directory = RecordBookDirectory.Parse(int.Parse(Request.QueryString["directoryId"]));
         pageTitle = "Directorio " + directory.DisplayName;

@@ -136,7 +136,7 @@ namespace Empiria.Web.UI.LRS {
         if (!property.IsFirstRecordingAct(recordingAct)) {
           this.oAntecedentParties.Visible = true;
         }
-        cboProperty.Items.Add(new ListItem(property.UniqueCode, property.Id.ToString()));
+        cboProperty.Items.Add(new ListItem(property.UID, property.Id.ToString()));
       }
     }
 

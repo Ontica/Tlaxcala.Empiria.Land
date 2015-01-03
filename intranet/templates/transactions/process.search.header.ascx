@@ -2,8 +2,8 @@
   <%=((Empiria.Presentation.Web.MultiViewDashboard) this.Page).ViewTitle%>
   <tr>
     <th>
-			<a href="javascript:sendPageCommand('sortData', 'TransactionKey ASC')">Trámite</a> / 
-			<a href="javascript:sendPageCommand('sortData', 'DocumentKey DESC')">Documento</a> /
+			<a href="javascript:sendPageCommand('sortData', 'TransactionUID ASC')">Trámite</a> / 
+			<a href="javascript:sendPageCommand('sortData', 'DocumentUID DESC')">Documento</a> /
 			<a href="javascript:sendPageCommand('sortData', 'TransactionType DESC')">Tipo trámite</a> / 
 			<a href="javascript:sendPageCommand('sortData', 'RecorderOffice DESC')">Distrito</a> /
 			<a href="javascript:sendPageCommand('sortData', 'TransactionStatusName DESC')">Estado</a>
@@ -16,7 +16,7 @@
 			<a href="javascript:sendPageCommand('sortData', 'PresentationTime DESC')">Present</a>
     </th>
     <th>
-			<a href="javascript:sendPageCommand('sortData', 'ManagementAgency ASC')">Tramitó</a> / 
+			<a href="javascript:sendPageCommand('sortData', 'Agency ASC')">Tramitó</a> / 
 			<a href="javascript:sendPageCommand('sortData', 'WorkingTime DESC')">Tiempo</a> / 
 			<a href="javascript:sendPageCommand('sortData', 'TotalTime DESC')">Dur</a> / 
 			<a href="javascript:sendPageCommand('sortData', 'ComplexityIndex DESC')">Cj</a> / 

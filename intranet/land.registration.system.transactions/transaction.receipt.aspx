@@ -48,11 +48,11 @@
 					      <table width="100%">
 						      <tr>
 							      <td valign="bottom" align="right">
-								      <h3><%=transaction.UniqueCode%></h3>
+								      <h3><%=transaction.UID%></h3>
 							      </td>
 						      </tr>
 						      <tr>
-							      <td align="right"><img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.UniqueCode%>" /></td>
+							      <td align="right"><img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.UID%>" /></td>
 						      </tr>
 					      </table>
 				      </td>
@@ -68,7 +68,7 @@
 							<td style="white-space:nowrap">Distrito:</td><td><b><%=transaction.RecorderOffice.Alias%></b></td>
             </tr>
             <tr>
-              <td style="white-space:nowrap">Notaría/Gestor:</td><td style="white-space:nowrap;width:30%"><b><%=!transaction.ManagementAgency.IsEmptyInstance ? transaction.ManagementAgency.Alias : "Particular"%></b></td>
+              <td style="white-space:nowrap">Notaría/Gestor:</td><td style="white-space:nowrap;width:30%"><b><%=!transaction.Agency.IsEmptyInstance ? transaction.Agency.Alias : "Particular"%></b></td>
 							<td style="white-space:nowrap">Tipo de trámite:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.TransactionType.Name%></b></td>
               <td style="white-space:nowrap">Importe:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.Items.TotalFee.Total.ToString("C2")%></b>&nbsp; (R: <b><%=transaction.Payments.ReceiptNumbers%>)</b></td>
             </tr>

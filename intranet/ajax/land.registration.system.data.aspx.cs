@@ -42,8 +42,8 @@ namespace Empiria.Web.UI.Ajax {
           return GetAnnotationTypesStringArrayCommandHandler();
         case "getCadastralOfficeMunicipalitiesComboCmd":
           return GetCadastralOfficeMunicipalitiesComboCommandHandler();
-        case "getDirectoryImageURL":
-          return GetDirectoryImageUrlCommandHandler();
+        //case "getDirectoryImageURL":
+        //  return GetDirectoryImageUrlCommandHandler();
         case "getJudgesInJudicialOfficeStringArrayCmd":
           return GetJudgesInJudicialOfficeStringArrayCommandHandler();
         case "getJudicialOfficeInPlaceStringArrayCmd":
@@ -56,8 +56,8 @@ namespace Empiria.Web.UI.Ajax {
           return GetOverlappingRecordingsCountCommandHandler();
         case "getRecordingIdCmd":
           return GetRecordingIdCommandHandler();
-        case "getRecordingBookImageCountCmd":
-          return GetRecordingBookImageCountCommandHandler();
+        //case "getRecordingBookImageCountCmd":
+        //  return GetRecordingBookImageCountCommandHandler();
         case "getLawArticlesStringArrayCmd":
           return GetLawArticlesStringArrayCommandHandler();
         case "getRecordingRawData":
@@ -174,13 +174,13 @@ namespace Empiria.Web.UI.Ajax {
         html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar el folio del predio )");
       }
       foreach (Property property in recording.GetProperties()) {
-        if (html.Contains(property.UniqueCode)) {
+        if (html.Contains(property.UID)) {
           continue;
         }
         if (html.Length != 0) {
           html += "|";
         }
-        html += HtmlSelectContent.GetComboAjaxHtmlItem(property.Id.ToString(), property.UniqueCode);      
+        html += HtmlSelectContent.GetComboAjaxHtmlItem(property.Id.ToString(), property.UID);      
       }
       return html;
     }
@@ -213,8 +213,8 @@ namespace Empiria.Web.UI.Ajax {
 
       string rawData = String.Empty;
 
-      rawData += recording.PresentationTime.Date.ToString("dd/MMM/yyyy") + "|";
-      rawData += recording.PresentationTime.ToString("HH:mm") + "|";
+      rawData += recording.Document.PresentationTime.Date.ToString("dd/MMM/yyyy") + "|";
+      rawData += recording.Document.PresentationTime.ToString("HH:mm") + "|";
       rawData += recording.AuthorizationTime.ToString("dd/MMM/yyyy") + "|";
 
       if (recording.Payments.Total > 0) {
@@ -268,7 +268,7 @@ namespace Empiria.Web.UI.Ajax {
       rawData += document.IssueOffice.Id.ToString() + "|";
       rawData += document.IssuedBy.Id.ToString() + "|";
       rawData += document.ExtensionData.BookNo + "|";
-      rawData += document.Number + "|";
+      rawData += document.AsText + "|";
       rawData += document.ExtensionData.StartSheet + "|";
       rawData += document.ExtensionData.EndSheet + "|";
       rawData += document.IssueDate.ToString("dd/MMM/yyyy");
@@ -475,83 +475,83 @@ namespace Empiria.Web.UI.Ajax {
       }
     }
 
-    private string GetDirectoryImageUrlCommandHandler() {
-      bool attachment = bool.Parse(GetCommandParameter("attachment", false, "false"));
+    //private string GetDirectoryImageUrlCommandHandler() {
+    //  bool attachment = bool.Parse(GetCommandParameter("attachment", false, "false"));
 
-      if (attachment) {
-        return GetAttachmentImageDirectoryCommandHandler();
-      }
+    //  if (attachment) {
+    //    return GetAttachmentImageDirectoryCommandHandler();
+    //  }
 
-      string position = GetCommandParameter("position", true);
-      int currentPosition = int.Parse(GetCommandParameter("currentPosition", true));
+    //  string position = GetCommandParameter("position", true);
+    //  int currentPosition = int.Parse(GetCommandParameter("currentPosition", true));
 
-      int recordingId = int.Parse(GetCommandParameter("recordingId", false, "0"));
-      RecordBookDirectory directory = null;
+    //  int recordingId = int.Parse(GetCommandParameter("recordingId", false, "0"));
+    //  RecordBookDirectory directory = null;
 
-      if (recordingId == 0) {
-        int directoryId = int.Parse(GetCommandParameter("directoryId", true));
-        directory = RecordBookDirectory.Parse(directoryId);
-      } else {
-        Recording recording = Recording.Parse(recordingId);
-        if (currentPosition == -1) {
-          currentPosition = recording.StartImageIndex - 1;
-        }
-        directory = recording.RecordingBook.ImagingFilesFolder;
-      }
+    //  if (recordingId == 0) {
+    //    int directoryId = int.Parse(GetCommandParameter("directoryId", true));
+    //    directory = RecordBookDirectory.Parse(directoryId);
+    //  } else {
+    //    Recording recording = Recording.Parse(recordingId);
+    //    if (currentPosition == -1) {
+    //      currentPosition = recording.StartImageIndex - 1;
+    //    }
+    //    directory = recording.RecordingBook.ImagingFilesFolder;
+    //  }
 
-      if (!EmpiriaString.IsInteger(position)) {
-        switch (position) {
-          case "first":
-            return directory.GetImageURL(0);
-          case "previous":
-            return directory.GetImageURL(Math.Max(currentPosition - 1, 0));
-          case "next":
-            return directory.GetImageURL(Math.Min(currentPosition + 1, directory.FilesCount - 1));
-          case "last":
-            return directory.GetImageURL(directory.FilesCount - 1);
-          case "refresh":
-            return directory.GetImageURL(currentPosition);
-          default:
-            return directory.GetImageURL(currentPosition);
-        }
-      } else {
-        return directory.GetImageURL(int.Parse(position));
-      }
-    }
+    //  if (!EmpiriaString.IsInteger(position)) {
+    //    switch (position) {
+    //      case "first":
+    //        return directory.GetImageURL(0);
+    //      case "previous":
+    //        return directory.GetImageURL(Math.Max(currentPosition - 1, 0));
+    //      case "next":
+    //        return directory.GetImageURL(Math.Min(currentPosition + 1, directory.FilesCount - 1));
+    //      case "last":
+    //        return directory.GetImageURL(directory.FilesCount - 1);
+    //      case "refresh":
+    //        return directory.GetImageURL(currentPosition);
+    //      default:
+    //        return directory.GetImageURL(currentPosition);
+    //    }
+    //  } else {
+    //    return directory.GetImageURL(int.Parse(position));
+    //  }
+    //}
 
-    private string GetAttachmentImageDirectoryCommandHandler() {
-      string position = GetCommandParameter("position", true);
-      string folderName = GetCommandParameter("name", false, String.Empty);
+    //private string GetAttachmentImageDirectoryCommandHandler() {
+    //  string position = GetCommandParameter("position", true);
+    //  string folderName = GetCommandParameter("name", false, String.Empty);
 
-      int currentPosition = int.Parse(GetCommandParameter("currentPosition", true));
+    //  int currentPosition = int.Parse(GetCommandParameter("currentPosition", true));
 
-      int recordingId = int.Parse(GetCommandParameter("recordingId", false, "0"));
+    //  int recordingId = int.Parse(GetCommandParameter("recordingId", false, "0"));
 
-      Recording recording = Recording.Parse(recordingId);
-      if (currentPosition == -1) {
-        currentPosition = 0;
-      }
-      RecordingAttachmentFolder folder = recording.GetAttachementFolder(folderName);
+    //  Recording recording = Recording.Parse(recordingId);
+    //  if (currentPosition == -1) {
+    //    currentPosition = 0;
+    //  }
+    //  RecordingAttachmentFolder folder = recording.GetAttachementFolder(folderName);
 
-      if (!EmpiriaString.IsInteger(position)) {
-        switch (position) {
-          case "first":
-            return folder.GetImageURL(0);
-          case "previous":
-            return folder.GetImageURL(Math.Max(currentPosition - 1, 0));
-          case "next":
-            return folder.GetImageURL(Math.Min(currentPosition + 1, folder.FilesCount - 1));
-          case "last":
-            return folder.GetImageURL(folder.FilesCount - 1);
-          case "refresh":
-            return folder.GetImageURL(currentPosition);
-          default:
-            return folder.GetImageURL(currentPosition);
-        }
-      } else {
-        return folder.GetImageURL(int.Parse(position));
-      }
-    }
+    //  if (!EmpiriaString.IsInteger(position)) {
+    //    switch (position) {
+    //      case "first":
+    //        return folder.GetImageURL(0);
+    //      case "previous":
+    //        return folder.GetImageURL(Math.Max(currentPosition - 1, 0));
+    //      case "next":
+    //        return folder.GetImageURL(Math.Min(currentPosition + 1, folder.FilesCount - 1));
+    //      case "last":
+    //        return folder.GetImageURL(folder.FilesCount - 1);
+    //      case "refresh":
+    //        return folder.GetImageURL(currentPosition);
+    //      default:
+    //        return folder.GetImageURL(currentPosition);
+    //    }
+    //  } else {
+    //    return folder.GetImageURL(int.Parse(position));
+    //  }
+    //}
 
     private string GetNotaryOfficesInPlaceStringArrayCommandHandler() {
       int placeId = int.Parse(GetCommandParameter("placeId", false, "0"));
@@ -609,34 +609,34 @@ namespace Empiria.Web.UI.Ajax {
       }
     }
 
-    private string GetRecordingBookImageCountCommandHandler() {
-      bool attachment = bool.Parse(GetCommandParameter("attachment", false, "false"));
+    //private string GetRecordingBookImageCountCommandHandler() {
+    //  bool attachment = bool.Parse(GetCommandParameter("attachment", false, "false"));
 
-      if (attachment) {
-        return GetAttachmentImageCountCommandHandler();
-      }
-      int recordingId = int.Parse(GetCommandParameter("recordingId", false, "0"));
-      RecordingBook recordingBook = null;
-      if (recordingId == 0) {
-        int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
-        recordingBook = RecordingBook.Parse(recordingBookId);
-      } else {
-        Recording recording = Recording.Parse(recordingId);
-        recordingBook = recording.RecordingBook;
-      }
-      return recordingBook.ImagingFilesFolder.FilesCount.ToString();
-    }
+    //  if (attachment) {
+    //    return GetAttachmentImageCountCommandHandler();
+    //  }
+    //  int recordingId = int.Parse(GetCommandParameter("recordingId", false, "0"));
+    //  RecordingBook recordingBook = null;
+    //  if (recordingId == 0) {
+    //    int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
+    //    recordingBook = RecordingBook.Parse(recordingBookId);
+    //  } else {
+    //    Recording recording = Recording.Parse(recordingId);
+    //    recordingBook = recording.RecordingBook;
+    //  }
+    //  return recordingBook.ImagingFilesFolder.FilesCount.ToString();
+    //}
 
-    private string GetAttachmentImageCountCommandHandler() {
-      int recordingId = int.Parse(GetCommandParameter("recordingId", false, "0"));
-      string folderName = GetCommandParameter("name", false, String.Empty);
+    //private string GetAttachmentImageCountCommandHandler() {
+    //  int recordingId = int.Parse(GetCommandParameter("recordingId", false, "0"));
+    //  string folderName = GetCommandParameter("name", false, String.Empty);
 
-      Recording recording = Recording.Parse(recordingId);
+    //  Recording recording = Recording.Parse(recordingId);
 
-      RecordingAttachmentFolder folder = recording.GetAttachementFolder(folderName);
+    //  RecordingAttachmentFolder folder = recording.GetAttachementFolder(folderName);
 
-      return folder.FilesCount.ToString();
-    }
+    //  return folder.FilesCount.ToString();
+    //}
 
     private string GetRecordingStartImageIndexCommandHandler() {
       int recordingId = int.Parse(GetCommandParameter("recordingId", true));

@@ -107,7 +107,7 @@
                   <table id='tblRecording' class="editionTable">
                   <tr>
                     <td colspan="4">Libro:
-                      <input type="text" class="textBox" readonly="readonly" style="width:368px"  title="" value="<%=recordingBook.FullName%>" />
+                      <input type="text" class="textBox" readonly="readonly" style="width:368px"  title="" value="<%=recordingBook.AsText%>" />
                       &nbsp;Tipo de inscripción:
                     </td>
                     <td>
@@ -918,7 +918,7 @@
       
       sMsg += "Esta operación agregará el siguiente acto jurídico a esta inscripción:\n\n";
           
-      sMsg += "Libro:\t\t<%=recordingBook.FullName%>\n";
+      sMsg += "Libro:\t\t<%=recordingBook.AsText%>\n";
       sMsg += "Inscripción:\t" + getElement('txtRecordingNumber').value + 
               getElement('cboBisRecordingNumber').value + "\n\n";
       
@@ -1086,7 +1086,7 @@
     
     var sMsg = "Eliminar la inscripción del libro registral.\n\n";		
     sMsg += "Esta operación eliminará la siguiente inscripción contenida en este libro registral:\n\n";				
-    sMsg += "Libro:\t\t<%=recordingBook.FullName%>\n";
+    sMsg += "Libro:\t\t<%=recordingBook.AsText%>\n";
     sMsg += "Inscripción:\t" + getElement('txtRecordingNumber').value + 
             getElement('cboBisRecordingNumber').value + "\n\n";
     sMsg += "¿Elimino la inscripción " + getElement('txtRecordingNumber').value + 
@@ -1166,7 +1166,7 @@
     var sMsg = "Modificar el tipo del acto jurídico.\n\n";		
     sMsg += "Esta operación modificará el tipo del siguiente acto jurídico:\n\n";
     
-    sMsg += "Libro:\t\t<%=recordingBook.FullName%>\n";
+    sMsg += "Libro:\t\t<%=recordingBook.AsText%>\n";
     sMsg += "Inscripción:\t" + getElement('txtRecordingNumber').value + 
             getElement('cboBisRecordingNumber').value + "\n\n";		
     sMsg += getInnerText('ancRecordingAct_' + recordingActId).toUpperCase() + "\n";
@@ -1829,7 +1829,7 @@
     if (getElement('cboRecordingBookSelector').value.length == 0) {
       return;
     } else if (getElement('cboRecordingBookSelector').selectedIndex == 0) {
-      ajaxURL += "&directoryId=<%=recordingBook.ImagingFilesFolder.Id%>";
+      ajaxURL += "&recordingBookId=<%=recordingBook.Id%>";
     } else if (getElement("cboRecordingBookSelector").value.substring(0, 1) != "&") {
       ajaxURL += "&recordingId=" + getElement('cboRecordingBookSelector').value;
     } else if (getElement("cboRecordingBookSelector").value.substring(0, 1) == "&") {
@@ -1858,7 +1858,7 @@
   function setPageTitle() {
     var s = String();    
     var imageXOfY = getCurrentImage() + " de " + selectedBookImageCount();
-    setInnerText(getElement("spanPageTitle"), '<%=recording.IsNew ? "Nueva inscripción" : "Inscripción " + recording.Number%> en <%=recordingBook.FullName%>');
+    setInnerText(getElement("spanPageTitle"), '<%=recording.IsNew ? "Nueva inscripción" : "Inscripción " + recording.Number%> en <%=recordingBook.AsText%>');
     <% if (!base.DisplayImages()) { %>
     setInnerText(getElement("spanCurrentImage"), "No digitalizado");
     return;
@@ -1886,7 +1886,7 @@
   
   function selectedBookImageCount() {
     if (arguments.length == 1) {
-      return <%=recordingBook.ImagingFilesFolder.FilesCount.ToString()%>;
+      return "N/D"; // OOJJO recordingBook.ImagingFilesFolder.FilesCount.ToString()
     }
 
     var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getRecordingBookImageCountCmd";
@@ -1942,7 +1942,7 @@
     var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getDirectoryImageURL";
     var newPosition = Number(getElement("txtGoToImage").value) -  1;
     ajaxURL += "&position=" + newPosition;
-    ajaxURL += "&directoryId=<%=recordingBook.ImagingFilesFolder.Id%>";
+    ajaxURL += "&recordingBookId=<%=recordingBook.Id%>";
     ajaxURL += "&currentPosition=" + getElement("hdnCurrentImagePosition").value;
     var result = invokeAjaxMethod(false, ajaxURL, null);
     getElement("imgCurrent").src = result;
@@ -2110,7 +2110,7 @@
   function getAnnotationDataForm() {
     var sMsg = "";
     
-    sMsg += "Libro:\t\t<%=recordingBook.FullName%>\n";
+    sMsg += "Libro:\t\t<%=recordingBook.AsText%>\n";
     sMsg += "Inscripción:\t" + getElement('txtRecordingNumber').value + 
             getElement('cboBisRecordingNumber').value + "\n\n";
     sMsg += getComboOptionText(getElement('cboAnnotation')).toUpperCase() + "\n";
@@ -2142,7 +2142,7 @@
   function getRecordingDataForm() {
     var sMsg = "";
     
-    sMsg += "Libro:\t\t<%=recordingBook.FullName%>\n";
+    sMsg += "Libro:\t\t<%=recordingBook.AsText%>\n";
     sMsg += "Inscripción:\t" + getElement('txtRecordingNumber').value + 
             getElement('cboBisRecordingNumber').value + "\n";
     <% if (base.DisplayImages()) { %>

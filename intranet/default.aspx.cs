@@ -63,10 +63,13 @@ namespace Empiria.Web.UI {
       userName = userName.Trim();
       password = password.Trim();
 
-      userName = Cryptographer.Encrypt(EncryptionMode.EntropyKey, userName, Session.SessionID);
-      password = Cryptographer.Encrypt(EncryptionMode.EntropyKey, password, Session.SessionID);
+      string entropy = String.Empty; // Session.SessionID;
 
-      return this.Controller.Logon(clientAppKey, userName, password, 1);
+      password = Cryptographer.Encrypt(EncryptionMode.EntropyHashCode, password, userName);
+      password = Cryptographer.Decrypt(password, userName);
+      //password = Cryptographer.GetMD5HashCode(Cryptographer.GetMD5HashCode(password) + entropy);
+
+      return this.Controller.Logon(clientAppKey, userName, password, entropy, 1);
     }
 
     private void SetDefaultValues() {

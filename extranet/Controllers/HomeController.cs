@@ -25,7 +25,7 @@ namespace Empiria.Land.Extranet.Controllers {
     // GET: /Home/GetLRSTransaction
     public JsonResult GetLRSTransaction(string transactionNumber) {
       CreateGuestSessionIfUnauthenticated();
-      var o = LRSTransaction.TryParseWithNumber(transactionNumber);
+      var o = LRSTransaction.TryParse(transactionNumber);
       
       if (o == null) {
         return null;
@@ -33,7 +33,7 @@ namespace Empiria.Land.Extranet.Controllers {
 
       var result = new {
         Id = o.Id.ToString(),
-        Key = o.UniqueCode,
+        Key = o.UID,
         RequestedBy = o.RequestedBy,
         Type = o.TransactionType.Name,
         DocumentType = o.DocumentType.Name,
@@ -48,31 +48,31 @@ namespace Empiria.Land.Extranet.Controllers {
     }
 
     // GET: /Home/GetRecordingBooks
-    public string GetRecordingBooks(int recorderOfficeId, int recordingSectionId) {
-      CreateGuestSessionIfUnauthenticated();
-      if (recorderOfficeId == 0) {
-        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, 
-                                                      "Primero seleccionar un Distrito");
-      }
-      if (recordingSectionId == 0) {
-        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, 
-                                                      "( Seleccionar una sección de actos jurídicos )");
-      }
+    //public string GetRecordingBooks(int recorderOfficeId, int recordingSectionId) {
+    //  CreateGuestSessionIfUnauthenticated();
+    //  if (recorderOfficeId == 0) {
+    //    return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, 
+    //                                                  "Primero seleccionar un Distrito");
+    //  }
+    //  if (recordingSectionId == 0) {
+    //    return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, 
+    //                                                  "( Seleccionar una sección de actos jurídicos )");
+    //  }
 
-      RecorderOffice recorderOffice = RecorderOffice.Parse(recorderOfficeId);
-      FixedList<RecordingBook> recordingBookList = null;
+    //  RecorderOffice recorderOffice = RecorderOffice.Parse(recorderOfficeId);
+    //  FixedList<RecordingBook> recordingBookList = null;
 
-      RecordingSection section = RecordingSection.Parse(recordingSectionId);
-      recordingBookList = recorderOffice.GetRecordingBooks(section);
-      List<RecordingBook> imagingList = recordingBookList.FindAll((x) => !x.ImagingFilesFolder.IsEmptyInstance);
-      if (imagingList.Count != 0) {
-        return HtmlSelectContent.GetComboAjaxHtml(imagingList, 0, "Id", "FullName", 
-                                                  "( Seleccionar el libro registral donde se encuentra )");
-      } else {
-        return HtmlSelectContent.GetComboAjaxHtml("No existen libros registrales para el Distrito", 
-                                                  String.Empty, String.Empty);
-      }
-    }
+    //  RecordingSection section = RecordingSection.Parse(recordingSectionId);
+    //  recordingBookList = recorderOffice.GetRecordingBooks(section);
+    //  List<RecordingBook> imagingList = recordingBookList.FindAll((x) => !x.ImagingFilesFolder.IsEmptyInstance);
+    //  if (imagingList.Count != 0) {
+    //    return HtmlSelectContent.GetComboAjaxHtml(imagingList, 0, "Id", "FullName", 
+    //                                              "( Seleccionar el libro registral donde se encuentra )");
+    //  } else {
+    //    return HtmlSelectContent.GetComboAjaxHtml("No existen libros registrales para el Distrito", 
+    //                                              String.Empty, String.Empty);
+    //  }
+    //}
 
     #endregion Public methods
 

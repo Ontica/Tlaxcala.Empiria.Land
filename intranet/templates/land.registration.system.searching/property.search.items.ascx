@@ -5,7 +5,7 @@
 <%# ((int) DataBinder.Eval(Container, "ItemIndex")) == 0 ? "<tbody>" : String.Empty %>
 <tr class="<%# ((int) DataBinder.Eval(Container, "ItemIndex") % 2 == 0 ? String.Empty  : "oddDataRow") %>" onmouseover="dataGridRowSelect(this, true);" onmouseout="dataGridRowSelect(this, false);">
   <td style="width:30%;white-space:nowrap; line-height:22px">
-    <a href="javascript:doOperation('showRecording', <%#DataBinder.Eval(Container, "DataItem.RecordingBookId")%>, <%#DataBinder.Eval(Container, "DataItem.RecordingId")%>)" class="detailsLinkTitle"><%#DataBinder.Eval(Container, "DataItem.PropertyUniqueCode")%></a> 
+    <a href="javascript:doOperation('showRecording', <%#DataBinder.Eval(Container, "DataItem.RecordingBookId")%>, <%#DataBinder.Eval(Container, "DataItem.RecordingId")%>)" class="detailsLinkTitle"><%#DataBinder.Eval(Container, "DataItem.PropertyUID")%></a> 
     &nbsp; &nbsp;  &nbsp;  &nbsp; Clave catastral: <b class="boldItem"><%#DataBinder.Eval(Container, "DataItem.CadastralKey")%></b>
     &nbsp; &nbsp; <a href="#">Ver en mapa</a>
     <br />

@@ -73,7 +73,7 @@
         <option value="21.0">21.0</option>
         <option value="21.0">22.0</option>
       </select>
-      <b style="font-size:10pt"><%=transaction.Document.UniqueCode%></b>
+      <b style="font-size:10pt"><%=transaction.Document.UID%></b>
       <br />
       <span id="spanRecordingDocumentEditor" runat="server"></span>
       <table class="editionTable">
@@ -358,8 +358,8 @@
   function showConfirmFormCreateRecordingAct() {
     var sMsg = "Agregar un acto jurídico al documento:\n\n";
 
-    sMsg += 'Documento:\t<%=transaction.Document.UniqueCode%>\n';
-    sMsg += 'Trámite:\t\t<%=transaction.UniqueCode%>\n';
+    sMsg += 'Documento:\t<%=transaction.Document.UID%>\n';
+    sMsg += 'Trámite:\t\t<%=transaction.UID%>\n';
     sMsg += 'Interesado(s):\t<%=Empiria.EmpiriaString.FormatForScripting(transaction.RequestedBy)%>\n\n';
    
     sMsg += "Acto jurídico que se agegará:\n\n";

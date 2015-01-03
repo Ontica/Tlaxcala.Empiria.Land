@@ -196,7 +196,7 @@ namespace Empiria.Web.UI.LRS {
       RecordingBook recordingBook = RecordingBook.Parse(recordingBookId);
       recordingBook.Assign(Contact.Parse(analystId), notes);
 
-      base.SetOKScriptMsg("El libro registral " + recordingBook.Name + " fue asignado para su análisis.");
+      base.SetOKScriptMsg("El libro registral " + recordingBook.AsText + " fue asignado para su análisis.");
     }
 
     private void CloseRecordingBook() {
@@ -206,7 +206,7 @@ namespace Empiria.Web.UI.LRS {
 
       RecordingBook recordingBook = RecordingBook.Parse(recordingBookId);
       if (recordingBook.Close(esign, notes)) {
-        base.SetOKScriptMsg("El libro registral " + recordingBook.Name + " fue cerrado correctamente.");
+        base.SetOKScriptMsg("El libro registral " + recordingBook.AsText + " fue cerrado correctamente.");
       } else {
         base.SetOKScriptMsg("La firma electrónica proporcionada no es válida.");
       }
@@ -219,7 +219,7 @@ namespace Empiria.Web.UI.LRS {
       RecordingBook recordingBook = RecordingBook.Parse(recordingBookId);
       recordingBook.Unassign(notes);
 
-      base.SetOKScriptMsg("El libro registral " + recordingBook.Name + " ya no tiene analista asignado.");
+      base.SetOKScriptMsg("El libro registral " + recordingBook.AsText + " ya no tiene analista asignado.");
     }
 
     private void SendRecordingBookToLastAnalyst() {
@@ -232,7 +232,7 @@ namespace Empiria.Web.UI.LRS {
       } else {
         recordingBook.Unassign(notes);
       }
-      base.SetOKScriptMsg("Se regresó el libro registral " + recordingBook.Name + " al área de análisis y captura.");
+      base.SetOKScriptMsg("Se regresó el libro registral " + recordingBook.AsText + " al área de análisis y captura.");
     }
 
     private void SendRecordingBookToQualityControl() {
@@ -241,7 +241,7 @@ namespace Empiria.Web.UI.LRS {
       RecordingBook recordingBook = RecordingBook.Parse(recordingBookId);
       recordingBook.SendToRevision();
 
-      base.SetOKScriptMsg("El libro registral " + recordingBook.Name + " fue enviado al área de control de calidad.");
+      base.SetOKScriptMsg("El libro registral " + recordingBook.AsText + " fue enviado al área de control de calidad.");
     }
 
     private void UpdateRecordingsControlCount() {

@@ -226,7 +226,7 @@ namespace Empiria.Web.UI.LRS {
 
     private void LoadPropertyControls() {
       txtCadastralNumber.Value = property.CadastralData.CadastralCode;
-      txtTractNumber.Value = property.UniqueCode;
+      txtTractNumber.Value = property.UID;
       txtStatus.Value = property.StatusName;
       cboPropertyType.Value = property.PropertyKind.Value;
       txtPropertyCommonName.Value = property.Name;

@@ -244,7 +244,7 @@ namespace Empiria.Web.UI.LRS {
       if (p.Count != 0) {
         lastParty = p[0];
       } else {
-        lastParty = person.GetLastRecordingActParty(this.recordingAct.Recording.PresentationTime);
+        lastParty = person.GetLastRecordingActParty(this.recordingAct.Document.PresentationTime);
       }
       if (lastParty == null) {
         isLoaded = true;

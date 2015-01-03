@@ -92,7 +92,7 @@ namespace Empiria.Web.UI.FSM {
 
       string x = t.Replace("{DATE}", presentationTime.ToString(@"dd \de MMMM \de yyyy"));
       x = x.Replace("{TIME}", presentationTime.ToString("HH:mm:ss"));
-      x = x.Replace("{NUMBER}", transaction.UniqueCode);
+      x = x.Replace("{NUMBER}", transaction.UID);
       if (ExecutionServer.LicenseName == "Tlaxcala") {
         x = x.Replace("{CITY}", "Tlaxcala de Xicohténcatl, Tlaxcala");
       } else {
@@ -117,10 +117,10 @@ namespace Empiria.Web.UI.FSM {
       } else {
         x = zacatecas.Replace("{NUMBER}", baseRecording.Number);
       }
-      x = x.Replace("{VOL}", baseRecording.RecordingBook.Name);
-      x = x.Replace("{SECTION}", baseRecording.RecordingBook.RecordingSectionType.Name);
+      x = x.Replace("{VOL}", baseRecording.RecordingBook.AsText);
+      x = x.Replace("{SECTION}", baseRecording.RecordingBook.RecordingSection.Name);
       x = x.Replace("{DISTRICT}", baseRecording.RecordingBook.RecorderOffice.Alias);
-      x = x.Replace("{DOCUMENT}", transaction.Document.UniqueCode);
+      x = x.Replace("{DOCUMENT}", transaction.Document.UID);
 
       return x;
     }
@@ -162,11 +162,11 @@ namespace Empiria.Web.UI.FSM {
       string docOne = ExecutionServer.LicenseName == "Tlaxcala" ? docOneTlax : docOneZac;
 
       if (this.recordingActs.Count > 1) {
-        html = docMulti.Replace("{DOCUMENT}", transaction.Document.UniqueCode);
+        html = docMulti.Replace("{DOCUMENT}", transaction.Document.UID);
         html = html.Replace("{COUNT}", this.recordingActs.Count.ToString() + 
                             " (" + EmpiriaString.SpeechInteger(this.recordingActs.Count).ToLower() + ")");
       } else if (this.recordingActs.Count == 1) {
-        html = docOne.Replace("{DOCUMENT}", transaction.Document.UniqueCode);
+        html = docOne.Replace("{DOCUMENT}", transaction.Document.UID);
       } else if (this.recordingActs.Count == 0) {
         throw new Exception("Document does not have recordings.");
       }
@@ -175,8 +175,8 @@ namespace Empiria.Web.UI.FSM {
         string x = (ExecutionServer.LicenseName == "Tlaxcala" ? t1Tlax : t1Zac).Replace("{NUMBER}", recordingAct.Recording.Number);
         var recordingBook = recordingAct.Recording.RecordingBook;
 
-        x = x.Replace("{VOL}", recordingBook.Name);
-        x = x.Replace("{SECTION}", recordingBook.RecordingSectionType.Name);
+        x = x.Replace("{VOL}", recordingBook.AsText);
+        x = x.Replace("{SECTION}", recordingBook.RecordingSection.Name);
         x = x.Replace("{DISTRICT}", recordingBook.RecorderOffice.Alias);
         html += x;
       }
@@ -213,7 +213,7 @@ namespace Empiria.Web.UI.FSM {
     }
 
     protected string GetDigitalSeal() {
-      string s = "||" + transaction.UniqueCode + "|" + transaction.Document.UniqueCode;
+      string s = "||" + transaction.UID + "|" + transaction.Document.UID;
       if (this.ShowAllRecordings) {
         for (int i = 0; i < recordingActs.Count; i++) {
           s += "|" + recordingActs[i].Id.ToString();
@@ -226,7 +226,7 @@ namespace Empiria.Web.UI.FSM {
     }
 
     protected string GetDigitalSignature() {
-      string s = "||" + transaction.UniqueCode + "|" + transaction.Document.UniqueCode;
+      string s = "||" + transaction.UID + "|" + transaction.Document.UID;
       if (this.ShowAllRecordings) {
         for (int i = 0; i < recordingActs.Count; i++) {
           s += "|" + recordingActs[i].Id.ToString();

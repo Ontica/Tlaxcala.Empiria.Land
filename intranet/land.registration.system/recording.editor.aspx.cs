@@ -219,7 +219,7 @@ namespace Empiria.Web.UI.LRS {
       oRecordingDocumentEditor.LoadRecordingDocument(document);
       Assertion.Assert(!transaction.Document.IsEmptyInstance && !transaction.Document.IsNew,
                        "Recording document after transaction attachment can't be null or an empty instance.");
-      SetMessageBox("El documento " + transaction.Document.UniqueCode + " se guardó correctamente.");
+      SetMessageBox("El documento " + transaction.Document.UID + " se guardó correctamente.");
     }
 
     private void Initialize() {

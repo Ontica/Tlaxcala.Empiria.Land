@@ -252,9 +252,9 @@ namespace Empiria.Web.UI.LRS {
         txtImageEndIndex.Disabled = true;
       }
       cboRecordingActTypeCategory.Value = "0";
-      if (recording.PresentationTime.Date != ExecutionServer.DateMaxValue) {
-        txtPresentationDate.Value = recording.PresentationTime.ToString("dd/MMM/yyyy");
-        txtPresentationTime.Value = recording.PresentationTime.ToString("HH:mm");
+      if (recording.Document.PresentationTime.Date != ExecutionServer.DateMaxValue) {
+        txtPresentationDate.Value = recording.Document.PresentationTime.ToString("dd/MMM/yyyy");
+        txtPresentationTime.Value = recording.Document.PresentationTime.ToString("HH:mm");
       }
       if (recording.AuthorizationTime.Date != ExecutionServer.DateMaxValue) {
         txtAuthorizationDate.Value = recording.AuthorizationTime.ToString("dd/MMM/yyyy");
@@ -296,7 +296,7 @@ namespace Empiria.Web.UI.LRS {
         cboProperty.Items.Add(new ListItem("( Seleccionar )", ""));
       }
       foreach (Property property in recording.GetProperties()) {
-        var item = new ListItem(property.UniqueCode, property.Id.ToString());
+        var item = new ListItem(property.UID, property.Id.ToString());
         cboProperty.Items.Add(item);
       }
       cboProperty.Items.Add(new ListItem("Crear un nuevo folio", "0"));
@@ -343,7 +343,8 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void DeleteImage() {
-      recordingBook.DeleteImageAtIndex(int.Parse(hdnCurrentImagePosition.Value));
+      throw new NotImplementedException();
+     // recordingBook.DeleteImageAtIndex(int.Parse(hdnCurrentImagePosition.Value));
     }
 
     private void DeleteRecordingAct() {
@@ -393,15 +394,19 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void InsertEmptyImageBefore() {
-      recordingBook.InsertEmptyImageAtIndex(int.Parse(hdnCurrentImagePosition.Value));
+      throw new NotImplementedException();
+
+      //recordingBook.InsertEmptyImageAtIndex(int.Parse(hdnCurrentImagePosition.Value));
     }
 
     private void RefreshImagesStatistics() {
-      recordingBook.ImagingFilesFolder.RenameDirectoryImages();
-      recordingBook.ImagingFilesFolder.UpdateStatistics();
-      recordingBook.ImagingFilesFolder.Save();
+      throw new NotImplementedException();
 
-      recordingBook.Refresh();
+      //recordingBook.ImagingFilesFolder.RenameDirectoryImages();
+      //recordingBook.ImagingFilesFolder.UpdateStatistics();
+      //recordingBook.ImagingFilesFolder.Save();
+
+      //recordingBook.Refresh();
     }
 
     private void AppendPropertyToAnnotation() {
@@ -663,11 +668,14 @@ namespace Empiria.Web.UI.LRS {
           currentImagePosition = Math.Max(currentImagePosition - 1, 0);
           break;
         case "Next":
-          currentImagePosition = Math.Min(currentImagePosition + 1, recordingBook.ImagingFilesFolder.FilesCount - 1);
-          break;
+          throw new NotImplementedException();
+
+          //currentImagePosition = Math.Min(currentImagePosition + 1, recordingBook.ImagingFilesFolder.FilesCount - 1);
+          //break;
         case "Last":
-          currentImagePosition = recordingBook.ImagingFilesFolder.FilesCount - 1;
-          break;
+          throw new NotImplementedException();
+          //currentImagePosition = recordingBook.ImagingFilesFolder.FilesCount - 1;
+          //break;
         default:
           currentImagePosition = int.Parse(position) - 1;
           break;
@@ -715,11 +723,14 @@ namespace Empiria.Web.UI.LRS {
     }
 
     protected bool DisplayImages() {
-      return !recordingBook.ImagingFilesFolder.IsEmptyInstance;
+      throw new NotImplementedException();
+      //return !recordingBook.ImagingFilesFolder.IsEmptyInstance;
     }
 
     protected string GetCurrentImagePath() {
-      return recordingBook.ImagingFilesFolder.GetImageURL(currentImagePosition);
+      throw new NotImplementedException();
+
+      //return recordingBook.ImagingFilesFolder.GetImageURL(currentImagePosition);
     }
 
     private void Initialize() {

@@ -135,7 +135,7 @@ namespace Empiria.Web.UI.FSM {
       //  RecordingAct recordingAct = list[i];
       //  string temp = template.Replace("{NUMBER}", (i + 1).ToString("00"));
       //  temp = temp.Replace("{RECORDING.ACT}", recordingAct.RecordingActType.DisplayName);
-      //  temp = temp.Replace("{PROPERTY}", recordingAct.PropertiesEvents[0].Property.UniqueCode);
+      //  temp = temp.Replace("{PROPERTY}", recordingAct.PropertiesEvents[0].Property.UID);
       //  temp = temp.Replace("{PROPERTY.AMOUNT}", recordingAct.AppraisalAmount.Amount.ToString("C2"));
       //  temp = temp.Replace("{OPERATION.AMOUNT}", recordingAct.OperationAmount.Amount.ToString("C2"));        
       //  temp = temp.Replace("{ANNOTATIONS.COUNT}", "1");
