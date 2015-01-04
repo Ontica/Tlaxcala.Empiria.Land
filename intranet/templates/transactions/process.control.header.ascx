@@ -11,7 +11,7 @@
 		</th>
     <th>
 			<a href="javascript:sendPageCommand('sortData', 'RequestedBy ASC')">Nombre</a> / 
-		  <a href="javascript:sendPageCommand('sortData', 'DocumentNo ASC')">Instrumento</a> / 
+		  <a href="javascript:sendPageCommand('sortData', 'DocumentDescriptor ASC')">Instrumento</a> / 
 			<a href="javascript:sendPageCommand('sortData', 'ReceiptTotal ASC')">Derechos</a> / 
 			<a href="javascript:sendPageCommand('sortData', 'ReceiptNo DESC')">Recibo</a> /
 			<a href="javascript:sendPageCommand('sortData', 'PresentationTime ASC')">Presentación</a>

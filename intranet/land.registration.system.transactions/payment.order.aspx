@@ -68,7 +68,7 @@
               <td style="white-space:nowrap">Distrito:</td><td><b><%=transaction.RecorderOffice.Alias%></b></td>
             </tr>
             <tr>
-              <td style="white-space:nowrap;">Notaría/Gestor:</td><td style="white-space:nowrap;width:30%"><b><%=!transaction.Agency.IsEmptyInstance ? transaction.Agency.Alias : "Particular"%></b></td>
+              <td style="white-space:nowrap;">Notaría/Gestor:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.Agency.Alias%></b></td>
               <td style="white-space:nowrap">Tipo de trámite:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.TransactionType.Name%></b></td>
               <td style="white-space:nowrap">Emitió:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.PostedBy.Alias%>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
             </tr>
@@ -176,7 +176,7 @@
               <td style="white-space:nowrap">Distrito:</td><td><b><%=transaction.RecorderOffice.Alias%></b></td>
             </tr>
             <tr>
-              <td style="white-space:nowrap;">Notaría/Gestor:</td><td style="white-space:nowrap;width:30%"><b><%=!transaction.Agency.IsEmptyInstance ? transaction.Agency.Alias : "Particular"%></b></td>
+              <td style="white-space:nowrap;">Notaría/Gestor:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.Agency.Alias%></b></td>
               <td style="white-space:nowrap">Tipo de trámite:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.TransactionType.Name%></b></td>
               <td style="white-space:nowrap">Emitió:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.PostedBy.Alias%>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
             </tr>

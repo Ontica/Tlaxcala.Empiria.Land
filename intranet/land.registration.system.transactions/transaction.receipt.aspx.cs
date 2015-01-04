@@ -10,8 +10,6 @@
 **************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 2009-2015. **/
 using System;
 
-
-
 using Empiria.Land.Registration.Transactions;
 
 namespace Empiria.Web.UI.FSM {
@@ -207,8 +205,7 @@ namespace Empiria.Web.UI.FSM {
         temp = temp.Replace("{OPERATION.VALUE}", item.OperationValue.Amount.ToString("C2"));
         temp = temp.Replace("{RECORDING.RIGHTS}", item.Fee.RecordingRights.ToString("C2"));
         temp = temp.Replace("{SHEETS.REVISION}", item.Fee.SheetsRevision.ToString("C2"));
-        decimal othersFee = item.Fee.Aclaration + item.Fee.Usufruct + item.Fee.Easement +
-                            item.Fee.SignCertification + item.Fee.ForeignRecord;
+        decimal othersFee = item.Fee.ForeignRecordingFee;
         temp = temp.Replace("{OTHERS.FEE}", othersFee.ToString("C2"));
         temp = temp.Replace("{SUBTOTAL}", item.Fee.SubTotal.ToString("C2"));
         temp = temp.Replace("{DISCOUNTS}", item.Fee.Discount.Amount.ToString("C2"));
@@ -216,20 +213,8 @@ namespace Empiria.Web.UI.FSM {
         html += temp;
         if (othersFee != decimal.Zero) {
           temp = String.Empty;
-          if (item.Fee.Aclaration != decimal.Zero) {
-            temp = " Aclaración: " + item.Fee.Aclaration.ToString("C2") + " &nbsp;";
-          }
-          if (item.Fee.Usufruct != decimal.Zero) {
-            temp += " Usufructo: " + item.Fee.Usufruct.ToString("C2") + " &nbsp;";
-          }
-          if (item.Fee.Easement != decimal.Zero) {
-            temp += " Servidumbre: " + item.Fee.Easement.ToString("C2") + " &nbsp;";
-          }
-          if (item.Fee.SignCertification != decimal.Zero) {
-            temp += " Reconocimiento de firma: " + item.Fee.SignCertification.ToString("C2") + " &nbsp;";
-          }
-          if (item.Fee.ForeignRecord != decimal.Zero) {
-            temp += " Trámite foráneo: " + item.Fee.ForeignRecord.ToString("C2") + " &nbsp;";
+          if (item.Fee.ForeignRecordingFee != decimal.Zero) {
+            temp += " Trámite foráneo: " + item.Fee.ForeignRecordingFee.ToString("C2") + " &nbsp;";
           }
           html += othersTemplate.Replace("{CONCEPTS}", temp);
         }
@@ -239,8 +224,7 @@ namespace Empiria.Web.UI.FSM {
 
       string temp1 = totalsTemplate.Replace("{0}", totalFee.RecordingRights.ToString("C2"));
       temp1 = temp1.Replace("{1}", totalFee.SheetsRevision.ToString("C2"));
-      temp1 = temp1.Replace("{2}", (totalFee.Aclaration + totalFee.Usufruct + totalFee.Easement +
-                                    totalFee.SignCertification + totalFee.ForeignRecord).ToString("C2"));
+      temp1 = temp1.Replace("{2}", totalFee.ForeignRecordingFee.ToString("C2"));
       temp1 = temp1.Replace("{3}", totalFee.SubTotal.ToString("C2"));
       temp1 = temp1.Replace("{4}", totalFee.Discount.Amount.ToString("C2"));
       temp1 = temp1.Replace("{5}", totalFee.Total.ToString("C2"));

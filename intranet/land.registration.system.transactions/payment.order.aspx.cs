@@ -214,8 +214,7 @@ namespace Empiria.Web.UI.LRS {
         temp = temp.Replace("{OPERATION.VALUE}", recordingAct.OperationValue.ToString());
         temp = temp.Replace("{RECORDING.RIGHTS}", recordingAct.Fee.RecordingRights.ToString("C2"));
         temp = temp.Replace("{SHEETS.REVISION}", recordingAct.Fee.SheetsRevision.ToString("C2"));
-        decimal othersFee = recordingAct.Fee.Aclaration + recordingAct.Fee.Usufruct + recordingAct.Fee.Easement +
-                            recordingAct.Fee.SignCertification + recordingAct.Fee.ForeignRecord;
+        decimal othersFee = recordingAct.Fee.ForeignRecordingFee;
         temp = temp.Replace("{OTHERS.FEE}", (othersFee).ToString("C2"));
         temp = temp.Replace("{SUBTOTAL}", recordingAct.Fee.SubTotal.ToString("C2"));
         temp = temp.Replace("{DISCOUNTS}", recordingAct.Fee.Discount.Amount.ToString("C2"));
@@ -223,20 +222,8 @@ namespace Empiria.Web.UI.LRS {
         html += temp;
         if (othersFee != decimal.Zero) {
           temp = String.Empty;
-          if (recordingAct.Fee.Aclaration != decimal.Zero) {
-            temp = " Aclaración: " + recordingAct.Fee.Aclaration.ToString("C2") + " &nbsp;";
-          }
-          if (recordingAct.Fee.Usufruct != decimal.Zero) {
-            temp += " Usufructo: " + recordingAct.Fee.Usufruct.ToString("C2") + " &nbsp;";
-          }
-          if (recordingAct.Fee.Easement != decimal.Zero) {
-            temp += " Servidumbre: " + recordingAct.Fee.Easement.ToString("C2") + " &nbsp;";
-          }
-          if (recordingAct.Fee.SignCertification != decimal.Zero) {
-            temp += " Reconocimiento de firma: " + recordingAct.Fee.SignCertification.ToString("C2") + " &nbsp;";
-          }
-          if (recordingAct.Fee.ForeignRecord != decimal.Zero) {
-            temp += " Trámite foráneo: " + recordingAct.Fee.ForeignRecord.ToString("C2") + " &nbsp;";
+          if (recordingAct.Fee.ForeignRecordingFee != decimal.Zero) {
+            temp += " Trámite foráneo: " + recordingAct.Fee.ForeignRecordingFee.ToString("C2") + " &nbsp;";
           }
           html += othersTemplate.Replace("{CONCEPTS}", temp);
         }
@@ -246,8 +233,7 @@ namespace Empiria.Web.UI.LRS {
 
       string temp1 = totalsTemplate.Replace("{0}", totalFee.RecordingRights.ToString("C2"));
       temp1 = temp1.Replace("{1}", totalFee.SheetsRevision.ToString("C2"));
-      temp1 = temp1.Replace("{2}", (totalFee.Aclaration + totalFee.Usufruct + totalFee.Easement +
-                                    totalFee.SignCertification + totalFee.ForeignRecord).ToString("C2"));
+      temp1 = temp1.Replace("{2}", totalFee.ForeignRecordingFee.ToString("C2"));
       temp1 = temp1.Replace("{3}", totalFee.SubTotal.ToString("C2"));
       temp1 = temp1.Replace("{4}", totalFee.Discount.Amount.ToString("C2"));
       temp1 = temp1.Replace("{5}", totalFee.Total.ToString("C2"));

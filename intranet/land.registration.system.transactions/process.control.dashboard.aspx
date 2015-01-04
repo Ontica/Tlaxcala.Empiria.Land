@@ -39,7 +39,7 @@
           <option value="TransactionUID">Número de trámite</option>
           <option value="DocumentUID">Número de documento</option>
           <option value="ReceiptNo">Número de boleta</option>
-          <option value="DocumentNo">Instrumento</option>
+          <option value="DocumentDescriptor">Instrumento</option>
         </select>
       </td>
       <td nowrap="nowrap">

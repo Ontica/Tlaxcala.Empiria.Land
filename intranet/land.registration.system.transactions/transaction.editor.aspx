@@ -31,27 +31,55 @@
     <div id="divContent">
   <table class="tabStrip">
     <tr>
-      <td id="tabStripItem_0" class="tabOn" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Información del trámite</td>
-      <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Conceptos y pago de derechos</td>
-      <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Inscripción de documentos</td>
-      <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Emisión de certificados</td>
-      <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Historia del trámite</td>
+      <td id="tabStripItem_0" class="tabOn" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Información del trámite y conceptos</td>
+      <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Inscripción de documentos</td>
+      <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Emisión de certificados</td>
+      <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Historia del trámite</td>
       <td class="lastCell" colspan="1" rowspan="1"><a id="top" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
     </tr>
   </table>
   <table id="tabStripItemView_0" class="editionTable" style="display:inline">
     <tr>
-      <td class="subTitle">Número de trámite, tipo de documento y recibo de pago</td>
+      <td class="subTitle">Información del interesado, número de trámite y tipo de documento</td>
     </tr>
     <tr>
     <td>
       <table id="transactionEditor0" class="editionTable">
+        <tr>        
+          <td><b>Interesado:</b></td>
+          <td colspan="3">
+            <input id='txtRequestedBy' type="text" class="textBox" style="width:478px;" title="" runat="server" />
+            <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" 
+                 style="margin-left:-4px" onclick="doOperation('searchParty')" />
+            <input type="hidden" id="txtTransactionKey" runat="server" />
+          </td>
+          <td class="lastCell" valign="top">
+            <% if (base.IsEditable()) { %>
+              <input id="cmdSaveTransaction" class="button" type="button" value="Crear la solicitud" onclick="doOperation('saveTransaction')" style="height:28px;width:110px" runat="server" />
+              <br />
+            <% } %>
+          </td>
+        </tr>
         <tr>
-          <td>Número de trámite:</td>
-          <td colspan="3" class="lastCell">
-            <input id='txtTransactionKey' type="text" class="textBox" readonly="readonly" style="width:180px;" title="" runat="server" />
-            Distrito o mesa origen:
-            <select id="cboRecorderOffice" class="selectBox" style="width:154px" onchange="return updateUserInterface(this);" runat="server">				  
+          <td>Tipo de documento:</td>
+          <td colspan="4" class="lastCell">
+            <select id="cboDocumentType" class="selectBox" style="width:186px" onchange="return updateUserInterface(this);" runat="server">
+              <option value="">( Seleccionar )</option>
+            </select>
+            No. Instrumento:
+            <input id='txtDocumentNumber' type="text" class="textBox" style="width:194px;" title="" maxlength="128" runat="server" />
+            <img src="../themes/default/buttons/search.gif" alt="" title="Busca un número de instrumento"
+                 style="margin-left:-4px" onclick="doOperation('searchParty')" />
+          </td>
+        </tr>
+        <tr>
+          <td>Tramitado por:</td>
+          <td colspan="4" class="lastCell">
+            <select id="cboManagementAgency" class="selectBox" style="width:286px" runat='server'>
+              <option value="-1" title="oPrivateRecording">No determinado</option>
+            </select>
+            Mesa origen:
+            <select id="cboRecorderOffice" class="selectBox" style="width:150px" onchange="return updateUserInterface(this);" runat="server">				  
               <option value="-1">No determinado</option>
      	        <option value="101">Hidalgo</option>
 	            <option value="102">Cuauhtémoc</option>
@@ -80,153 +108,45 @@
 	            <option value="133">Sección 4ta</option>
 	            <option value="136">Sección 5ta</option>
             </select>
-          </td>
-        </tr>
-        <tr valign="bottom">
-          <td>Tipo de documento:</td>
-          <td colspan="3" class="lastCell">
-            <select id="cboDocumentType" class="selectBox" style="width:186px" onchange="return updateUserInterface(this);" runat="server">
-              <option value="">( Seleccionar )</option>
-            </select>
-            Núm de instrumento:
-            <input id='txtDocumentNumber' type="text" class="textBox" style="width:128px;" title="" maxlength="32" runat="server" />
-            <img src="../themes/default/buttons/search.gif" alt="" title="Busca un número de recibo" style="margin-left:-4px" onclick="doOperation('searchParty')" />
-          </td>
-        </tr>
-        <tr>
-          <td>Recibo de pago:</td>
-          <td colspan="3" class="lastCell" valign="bottom">
-            <input id='txtReceiptNumber' type="text" class="textBox" style="width:86px;" title="" maxlength="7" runat="server" onkeypress="return positiveKeyFilter(this);" />
-            <input class="button" type="button" value="Validar pago" onclick="doOperation('validatePayment')" style="top:5px;height:26px;width:84px" /> 
-            &nbsp;
-            Importe total del pago de derechos:
-            <b>$</b>&nbsp;<input id='txtReceiptTotal' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" />
-          </td>
+         </td>
         </tr>
       </table>
     </td>
   </tr>
-  <tr>
-    <td class="subTitle">Información del interesado</td>
-  </tr>
-   <tr>
-    <td>
-      <table class="editionTable">
-        <tr>
-          <td>Nombre del interesado:</td>
-          <td colspan="3" class="lastCell">
-            <input id='txtRequestedBy' type="text" class="textBox" style="width:428px;" title="" runat="server" />
-            <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-4px" onclick="doOperation('searchParty')" />
-          </td>
-        </tr>
-        <tr>
-          <td>Correo electrónico:</td>
-          <td colspan="3" class="lastCell">
-            <input id='txtContactEMail' type="text" class="textBox" style="width:189px;" title="" runat="server" />
-            Teléfonos:
-            <input id='txtContactPhone' type="text" class="textBox" style="width:168px;" title="" runat="server" />
-          </td>
-        </tr>
-        <tr>
-          <td>Tramitado por:</td>
-          <td colspan="3" class="lastCell">
-            <select id="cboManagementAgency" class="selectBox" style="width:336px" runat='server'>
-              <option value="-1" title="oPrivateRecording">No determinado</option>
-            </select>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td class="subTitle">Observaciones del interesado y de la Dependencia</td>
-  </tr>
-  <tr>
-    <td>
-      <table id="transactionEditor1" class="editionTable">
-        <tr>
-          <td>Interesado:<br />&nbsp;</td>
-          <td colspan="2">
-            <textarea id="txtRequestNotes" class="textArea" style="width:470px" cols="320" rows="2" runat="server"></textarea>
-          </td>
-          <td class="lastCell">&nbsp;</td>
-        </tr>
-        <tr>
-          <td>Dependencia:<br />&nbsp;</td>
-          <td colspan="2">
-            <textarea id="txtOfficeNotes" class="textArea" style="width:470px" cols="320" rows="2" runat="server"></textarea>
-          </td>
-          <td class="lastCell">&nbsp;</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td nowrap="nowrap">
-            <% if (!transaction.IsNew) { %>
-              <input class="button" type="button" value="Crear nuevo" onclick="doOperation('createNew')" style="height:28px;width:82px" runat="server" />
-              &nbsp; &nbsp;
-              <% if (base.ShowPrintPaymentOrderButton) { %>
-                <input class="button" type="button" value="Orden de pago" onclick="doOperation('printOrderPayment')" style="height:28px;width:90px" runat="server" />
-              <% } %>
-              <% if (base.ShowTransactionVoucher) { %>
-                <img src="../themes/default/bullets/pixel.gif" width="40px" height="1px" alt='' />
-                <input id="button" class="button" type="button" value="Boleta de Recepción" onclick="doOperation('printTransactionReceipt')" style="height:28px;width:110px" runat="server" />
-              <% } %>
-            <% } else { %>
-              <img src="../themes/default/bullets/pixel.gif" width="200px" height="1px" alt='' />
-            <% } %>
-          </td>
-          <td nowrap="nowrap" width="280px">
-            <% if (base.CanReceiveTransaction()) { %>
-            <input id="cmdSaveAndReceive" class="button" type="button" value="Recibir trámite" onclick="doOperation('saveAndReceive')" style="height:30px;width:100px" runat="server" />
-            <% } %>
-            <% if (transaction.ReadyForReentry) { %>
-            <input class="button" type="button" value="Reingresar trámite" onclick="doOperation('reentryTransaction')" style="height:30px;width:100px" runat="server" />
-            <% } %>
-            <input id="cmdSaveTransaction" class="button" type="button" value="Crear la solicitud" onclick="doOperation('saveTransaction')" style="height:28px;width:110px" runat="server" />
-          </td>
-          <td class="lastCell"></td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
-
-    <table id="tabStripItemView_1" class="editionTable" style="display:none">
+<tr>
+  <td class="subTitle">Actos jurídicos y conceptos involucrados en el trámite</td>
+</tr>
+<!--Inicio editor de pago de derechos!-->
+<tr>
+  <td>
+    <table class="editionTable">
       <tr>
-        <td class="subTitle">Actos jurídicos y conceptos involucrados</td>
+        <td colspan="8" class="lastCell">
+          <div style="overflow:auto;width:772px;">
+            <table class="details" style="width:99%">
+              <tr class="detailsHeader">
+                <td>#</td>
+                <td style="width:240px;white-space:nowrap">Concepto</td>
+                <td align='right'>V.Operación</td>
+                <td>Fundamento</td>
+                <td align='right'>Derechos</td>
+                <td align='right'>Cotejo</td>       
+                <td align='right'>Foráneo</td>
+                <td align='right'>Subtotal</td>
+                <td align='right'>Dcto</td>
+                <td align='right'>Total</td>
+                <td>&nbsp;</td>
+              </tr>
+              <%=base.GetRecordingActs()%>
+            </table>
+          </div>
+        </td>
       </tr>
-      <tr>
-        <td>
-          <table class="editionTable" style="display:<%=base.transaction.IsNew ? "none" : "inline"%>">
-            <tr>
-              <td colspan="8" class="lastCell">
-                <div style="overflow:auto;width:820px;">
-                  <table class="details" style="width:99%">
-                    <tr class="detailsHeader">
-                      <td>#</td>
-                      <td style="width:260px;white-space:nowrap">Acto jurídico</td>
-                      <td>Fundamento</td>
-                      <td>Recibo</td>
-                      <td align='right'>Valor oper</td>
-                      <td align='right'>D.Reg</td>
-                      <td align='right'>Cotejo</td>
-                      <td align='right'>Aclar</td>
-                      <td align='right'>Usufr</td>
-                      <td align='right'>Serv</td>
-                      <td align='right'>C.Firmas</td>
-                      <td align='right'>Foráneo</td>
-                      <td align='right'>Subtotal</td>
-                      <td align='right'>Dcto</td>
-                      <td align='right'>Total</td>
-                      <td>&nbsp;</td>
-                    </tr>
-                    <%=base.GetRecordingActs()%>
-                  </table>
-                </div>
-              </td>                      
-            </tr>
-            <tr>
-              <td>Tipo:</td>
+      <tr id="divConceptsEditor" style='display:<%=base.CanAppendItems() && base.transaction.Items.Count == 0 ? "inline": "none"%>'>
+        <td colspan="8" class="lastCell" style="width:99%">
+          <table>
+           <tr>
+            <td>Tipo:</td>
               <td>
                 <select id="cboRecordingActTypeCategory" class="selectBox" style="width:160px" onchange="return updateUserInterface(this);" runat="server">
                   <option value="1070">Traslativo de dominio</option>
@@ -255,60 +175,121 @@
                   <option value="">( Fundamento )</option>
                 </select>
               </td>
-              <td>Recibo:</td>
+              <td>Valor de la operación:</td>
               <td>
-                <select id="cboReceipts" class="selectBox" style="width:86px" onchange="return updateUserInterface(this);" runat="server">
-                  <option value="">(Recibos)</option>
+              $<input id='txtOperationValue' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              <td>Derechos de registro:</td>
+              <td>
+              $<input id='txtRecordingRightsFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+            </tr>
+            <tr>
+              <td>Cotejo:</td>
+              <td>
+                $<input id='txtSheetsRevisionFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:64px;" title="" maxlength="8" runat="server" />
+                &nbsp;
+                Fojas: <input id='txtSheetsCount' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:28px;" title="" maxlength="3" runat="server" /> 
+
+              </td>
+              <td>Támite foráneo:</td>
+              <td>$<input id='txtForeignRecordFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              <td><b>Subtotal:</b></td>
+              <td>$<input id='txtSubtotal' disabled="disabled" type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+            </tr>
+            <tr>
+              <td>Tipo de descuento:</td>
+              <td>
+                <select id="cboAuthorizationType" class="selectBox" style="width:160px" onchange="return updateUserInterface(this);" runat="server">
+                  <option value="">( Seleccionar )</option>
                 </select>
               </td>
-              <td>
-                Otro recibo:
-              </td>
-              <td>
-                <input id='txtRecordingActReceipt' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" />
-              </td>
-              <td class="lastCell">&nbsp;</td>
-            </tr>
-            <tr>
-              <td>Valor operación:</td>
-              <td><input id='txtOperationValue' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
-              <td>Derechos de registro:</td>
-              <td><input id='txtRecordingRightsFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
-              <td>Cotejo:</td>
-              <td><input id='txtSheetsRevisionFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
-            </tr>
-            <tr>
-              <td>Aclaración:</td>
-              <td><input id='txtAclarationFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
-              <td>Usufructo:</td>
-              <td><input id='txtUsufructFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
-              <td>Servidumbre:</td>
-              <td><input id='txtServidumbreFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
-            </tr>
-            <tr>
-              <td>Certificación firmas:</td>
-              <td><input id='txtSignCertificationFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
-              <td>Foráneo:</td>
-              <td><input id='txtForeignRecordFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
-              <td><b>Subtotal:</b></td>
-              <td><input id='txtSubtotal' disabled="disabled" type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
-            </tr>
-            <tr>
-              <td colspan="4">&nbsp;</td>
+              <td>Clave de autorización:</td>
+              <td><input id='txtDiscountAuthorization' type="text" class="textBox" style="width:76px;" title="" maxlength="8" runat="server" /></td>
               <td>Descuento:</td>
-              <td><input id='txtDiscount' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              <td>$<input id='txtDiscount' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
             </tr>
             <tr>
               <td colspan="4">&nbsp;</td>
               <td><b>TOTAL:</b></td>
-              <td><input id='txtTotal' disabled="disabled" type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              <td>$<input id='txtTotal' disabled="disabled" type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
             </tr>
           </table>
         </td>
+       </tr>  
+    </table>
+  </td>
+</tr>
+<!--Fin editor de pago de derechos!-->
+<tr style='display:<%=base.CanReceivePayment() ? "inline" : "none" %>'>
+  <td class="subTitle">Recibo de pago y validación del pago de derechos</td>
+</tr>
+<tr style='display:<%=base.CanReceivePayment() ? "inline" : "none" %>'>
+  <td>
+    <table class="editionTable">
+      <tr>
+        <td>Recibo de pago:</td>
+        <td>
+          <input id='txtReceiptNumber' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);"
+                 style="width:86px;" title="" maxlength="7" runat="server" />
+        </td>
+        <td>
+        Importe:
+        </td>
+        <td colspan="3" valign="bottom">
+          <b>$</b>&nbsp;<input id='txtReceiptTotal' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);"
+                         style="width:71px;" title="" maxlength="8" runat="server" />
+        </td>
+        <td class="lastCell">
+          <input class="button" type="button" value="Validar pago" onclick="doOperation('validatePayment')"
+                 style="top:15px;height:26px;width:84px" disabled="disabled" />
+          <input class="button" type="button" value="Guardar pago" onclick="doOperation('appendPayment')"
+                 style="top:15px;height:26px;width:84px" />
+        </td>
       </tr>
     </table>
+  </td>
+</tr>
+  <tr>
+    <td class="subTitle">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+      <table id="transactionEditor1" class="editionTable">    
+        <tr>
+          <td>&nbsp;</td>
+          <td nowrap="nowrap">
+            <% if (!transaction.IsNew) { %>
+              <input class="button" type="button" value="Crear nuevo" onclick="doOperation('createNew')" style="height:28px;width:92px" runat="server" />
+              &nbsp; &nbsp;
+              <input id="copyFromLastTransaction" class="button" type="button" value="Crear una copia" onclick="doOperation('copyFromMyLastTransaction')" style="height:28px;width:92px" runat="server" />
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              <% if (base.ShowPrintPaymentOrderButton) { %>
+                <input class="button" type="button" value="Orden de pago" onclick="doOperation('printOrderPayment')" style="height:28px;width:90px" runat="server" />
+              <% } %>
+              <% if (base.ShowTransactionVoucher) { %>
+                <img src="../themes/default/bullets/pixel.gif" width="40px" height="1px" alt='' />
+                <input id="button" class="button" type="button" value="Boleta de Recepción" onclick="doOperation('printTransactionReceipt')" style="height:28px;width:110px" runat="server" />
+              <% } %>
+            <% } else { %>
+              <img src="../themes/default/bullets/pixel.gif" width="200px" height="1px" alt='' />
+            <% } %>
+          </td>
+          <td nowrap="nowrap" width="280px">
+            <% if (base.IsReadyForReception()) { %>
+            <input id="cmdSaveAndReceive" class="button" type="button" value="Recibir trámite" onclick="doOperation('saveAndReceive')" style="height:30px;width:100px" runat="server" />
+            <% } %>
+            <% if (transaction.ReadyForReentry) { %>
+            <input class="button" type="button" value="Reingresar trámite" onclick="doOperation('reentryTransaction')" style="height:30px;width:100px" runat="server" />
+            <% } %>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+          </td>
+          <td class="lastCell"></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
-    <table id="tabStripItemView_2" class="editionTable" style="display:none">
+    <table id="tabStripItemView_1" class="editionTable" style="display:none">
       <tr>
         <td class="lastCell">
           <iframe id="ifraRecordingEditor" style="z-index:99;left:0px;top:0px;" 
@@ -319,7 +300,7 @@
       </tr>
     </table>
 
-    <table id="tabStripItemView_3" class="editionTable" style="display:none">
+    <table id="tabStripItemView_2" class="editionTable" style="display:none">
       <tr>
         <td class="subTitle">Certificados emitidos</td>
       </tr>
@@ -342,7 +323,7 @@
       </tr>
     </table>
 
-    <table id="tabStripItemView_4" class="editionTable" style="display:none">
+    <table id="tabStripItemView_3" class="editionTable" style="display:none">
     <tr>
       <td class="subTitle">Historia del trámite</td>
     </tr>
@@ -447,6 +428,12 @@
       case 'undelete':
         sendPageCommand("undeleteTransaction");
         return;
+      case "showConceptsEditor":
+        showConceptsEditor();
+        return;
+      case "appendPayment":
+        appendPayment();
+        return;
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
@@ -456,6 +443,44 @@
       gbSended = true;
     }
   }
+
+  function appendPayment() {
+    if (isEmpty(getElement('txtReceiptNumber'))) {
+      alert("Requiero se proporcione el número del recibo de pago para este trámite.");
+      return false;
+    }
+    if (isEmpty(getElement('txtReceiptTotal'))) {
+      alert("Requiero se ingrese el importe del recibo de pago.");
+      return false;
+    }
+    if (convertToNumber(getElement('txtReceiptTotal').value) != <%=transaction.Items.TotalFee.Total%>) {
+      alert("El total del recibo no coincide con el importe correcto del pago de derechos.");
+      return false;
+    }
+    var sMsg = "Agregar recibo de pago al trámite.\n\n";
+
+    sMsg += "Número de trámite:\t" + getElement('txtTransactionKey').value + "\n";
+    sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n\n";
+
+    sMsg += "Recibo de pago:\t" + getElement('txtReceiptNumber').value + "\n";
+    sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
+
+    sMsg += "¿Agrego el pago a este trámite?";
+
+    if (confirm(sMsg)) {
+      sendPageCommand("appendPayment");
+      gbSended = true;
+    }
+  }
+
+  function showConceptsEditor() {
+    if (getElement('divConceptsEditor').style.display == "inline") {
+      getElement('divConceptsEditor').style.display = 'none';
+    } else {
+      getElement('divConceptsEditor').style.display = 'inline';
+    }
+  }
+
 
   function reentryTransaction() {
     var sMsg = "Reingreso de trámites.\n\n";
@@ -523,26 +548,14 @@
     if (!doValidateRecordingAct()) {
       return;
     }
-    var sMsg = getComboOptionText(getElement('cboRecordingActType')) + "\n"; 
-    sMsg += "Fundamento:\t\t" + getComboOptionText(getElement('cboLawArticle')) + "\n"; 
-    sMsg += "Número de recibo:\t\t" + getComboOptionText(getElement('cboReceipts')) + "\n"; 
+    var sMsg = getComboOptionText(getElement('cboRecordingActType')) + "\n\n";
+
+    sMsg += "Fundamento:\t\t" + getComboOptionText(getElement('cboLawArticle')) + "\n\n"; 
     sMsg += "Valor de la operación:\t" + formatAsCurrency(getElement('txtOperationValue').value) + "\n\n"; 
     sMsg += "Derechos registrales:\t\t" + formatAsCurrency(getElement('txtRecordingRightsFee').value) + "\n";
 
     if (convertToNumber(getElement('txtSheetsRevisionFee').value) != 0) {
       sMsg += "Cotejo:\t\t\t" + formatAsCurrency(getElement('txtSheetsRevisionFee').value) + "\n";
-    }
-    if (convertToNumber(getElement('txtAclarationFee').value) != 0) {
-      sMsg += "Aclaración:\t\t" + formatAsCurrency(getElement('txtAclarationFee').value) + "\n";
-    }
-    if (convertToNumber(getElement('txtUsufructFee').value) != 0) {
-      sMsg += "Usufructo:\t\t\t" + formatAsCurrency(getElement('txtUsufructFee').value) + "\n";
-    }
-    if (convertToNumber(getElement('txtServidumbreFee').value) != 0) {
-      sMsg += "Servidumbre:\t\t" + formatAsCurrency(getElement('txtServidumbreFee').value) + "\n";
-    }
-    if (convertToNumber(getElement('txtSignCertificationFee').value) != 0) {
-      sMsg += "Certificación firmas:\t\t" + formatAsCurrency(getElement('txtSignCertificationFee').value) + "\n";
     }
     if (convertToNumber(getElement('txtForeignRecordFee').value) != 0) {
       sMsg += "Foráneo:\t\t\t" + formatAsCurrency(getElement('txtForeignRecordFee').value) + "\n";
@@ -572,12 +585,6 @@
       alert("Requiero se proporcione el fundamento del cobro.");
       return false;
     }
-    if (getElement('cboReceipts').length > 1 && getElement('cboReceipts').value.length == 0 && getElement('txtRecordingActReceipt').value.length == 0) {
-      alert("Necesito se introduzca el número de recibo adicional.");
-      return false;
-    } else if (getElement('cboReceipts').length == 1 && getElement('cboReceipts').value.length == 0 && getElement('txtRecordingActReceipt').value.length == 0) {
-      getElement('txtRecordingActReceipt').value = "N/D";
-    }
     if (!validateQuantity(getElement('txtOperationValue'), "Valor de la operación")) {
       return false;
     }
@@ -585,18 +592,6 @@
       return false;
     }
     if (!validateQuantity(getElement('txtSheetsRevisionFee'), "Cotejo")) {
-      return false;
-    }
-    if (!validateQuantity(getElement('txtAclarationFee'), "Aclaración")) {
-      return false;
-    }
-    if (!validateQuantity(getElement('txtUsufructFee'), "Usufructo")) {
-      return false;
-    }
-    if (!validateQuantity(getElement('txtServidumbreFee'), "Servidumbre")) {
-      return false;
-    }
-    if (!validateQuantity(getElement('txtSignCertificationFee'), "Certificación de firmas")) {
       return false;
     }
     if (!validateQuantity(getElement('txtForeignRecordFee'), "Trámite foráneo")) {
@@ -622,10 +617,6 @@
 
     subtotal += convertToNumber(getElement('txtRecordingRightsFee').value);
     subtotal += convertToNumber(getElement('txtSheetsRevisionFee').value);
-    subtotal += convertToNumber(getElement('txtAclarationFee').value);
-    subtotal += convertToNumber(getElement('txtUsufructFee').value);
-    subtotal += convertToNumber(getElement('txtServidumbreFee').value);
-    subtotal += convertToNumber(getElement('txtSignCertificationFee').value);
     subtotal += convertToNumber(getElement('txtForeignRecordFee').value);
 
     return subtotal;    
@@ -657,9 +648,6 @@
     sMsg  = "Número de trámite:\t" + getElement('txtTransactionKey').value + "\n";
     sMsg += "Tipo de documento:\t" + getComboOptionText(getElement('cboDocumentType')) + "\n";
     sMsg += "Núm instrumento:\t" + getElement('txtDocumentNumber').value + "\n\n";
-    sMsg += "Número de recibo:\t" + getElement('txtReceiptNumber').value + "\n";
-    sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
-    sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n\n";
 
     if (command == "saveTransaction") {
     <% if (base.transaction.IsNew) { %>
@@ -670,10 +658,15 @@
     sMsg += "¿Modifico la información de este trámite?";
     <% } %>
     } else if (command == "saveAndReceiveTransacion") {
-    <% if (base.transaction.IsNew) { %>
-    sMsg = "Crear y recibir una nueva solicitud de trámite.\n\n" + sMsg;
-    sMsg += "¿Creo este nuevo trámite y lo marco como recibido?";
+      <% if (base.transaction.IsNew) { %>
+      sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
+      sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n\n";
+
+      sMsg = "Crear y recibir una nueva solicitud de trámite.\n\n" + sMsg;
+      sMsg += "¿Creo este nuevo trámite y lo marco como recibido?";
     <% } else { %>
+    sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
+    sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n\n";
     sMsg = "Recibir la solicitud de trámite " + getElement('txtTransactionKey').value + ".\n\n" + sMsg;
     sMsg += "¿Recibo este trámite?";
     <% } %>
@@ -719,8 +712,16 @@
     var sMsg = "";
     var oPayment = getElement('txtReceiptTotal');
 
+    if (isEmpty(getElement('txtRequestedBy'))) {
+      alert("Requiero se proporcione el nombre del interesado.");
+      return false;
+    }
     if (isEmpty(getElement('cboDocumentType'))) {
       alert("Requiero se proporcione el tipo de documento que se desea inscribir."); 
+      return false;
+    }
+    if (isEmpty(getElement('cboManagementAgency'))) {
+      alert("Requiero conocer la notaría o agencia que tramita.");
       return false;
     }
     if (command == 'saveAndReceiveTransaction') {
@@ -729,31 +730,17 @@
         return false;
       }
     }
-    if (oPayment.value.length == 0) {
-      alert("Requiero se proporcione el importe total por pago de derechos.");
-      return false;
-    }
-    if (!isNumeric(oPayment)) {
-      alert("No reconozco el importe total por pago de derechos.");
-      return false;
-    }
-    if (convertToNumber(oPayment.value) < 0) {
-      alert("El importe por pago de derechos debe ser mayor o igual a cero.");
-      return false;
-    }
-    if (isEmpty(getElement('txtRequestedBy'))) {
-      alert("Requiero se proporcione el nombre del solicitante."); 
-      return false;
-    }
     return true;
   }
 
   function window_onload() {
     setWorkplace();
+    getElement('ifraRecordingEditor').src = "../workplace/out.of.service.aspx";
+
     <% if (!base.transaction.IsNew && !base.transaction.IsEmptyInstance) { %>
-      getElement('ifraRecordingEditor').src = "../land.registration.system/recording.editor.aspx?transactionId=<%=transaction.Id%>";
+     // getElement('ifraRecordingEditor').src = "../land.registration.system/recording.editor.aspx?transactionId=<%=transaction.Id%>";
     <% } else { %>
-      getElement('ifraRecordingEditor').src = "../workplace/empty.page.aspx";
+    //  getElement('ifraRecordingEditor').src = "../workplace/empty.page.aspx";
     <% } %>
     <%=base.OnloadScript()%>
   }
@@ -792,7 +779,9 @@
   addEvent(window, 'resize', window_onresize);
   addEvent(getElement("ifraRecordingEditor"), 'resize', ifraRecordingEditor_onresize);
   addEvent(getElement("txtRequestedBy"), 'keypress', upperCaseKeyFilter);
-
+  addEvent(getElement("txtDocumentNumber"), 'keypress', upperCaseKeyFilter);
+  addEvent(getElement("txtDiscountAuthorization"), 'keypress', upperCaseKeyFilter);
+  
   /* ]]> */
   </script>
 </html>
