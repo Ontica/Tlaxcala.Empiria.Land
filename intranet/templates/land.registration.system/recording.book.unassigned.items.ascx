@@ -35,10 +35,10 @@
 			<select id="cboOperation<%#DataBinder.Eval(Container, "DataItem.RecordingBookId")%>" class="selectBox" onchange="changePendingBookOperationsUI(<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>)" style="width:290px" title="">
 				<option value=''>¿Qué debo hacer con este libro registral?</option>
 				<option value=''></option>
-				<%# ((int) DataBinder.Eval(Container, "DataItem.RecordingsClassId") == 1051 || (int) DataBinder.Eval(Container, "DataItem.RecordingsClassId") == 1057) ? "<option value='assignRecordingBook'>Asignarlo a un analista para su registro</option><option value=''></option>" : String.Empty%>
+				<%# ((int) DataBinder.Eval(Container, "DataItem.RecordingSectionId") == 1051 || (int) DataBinder.Eval(Container, "DataItem.RecordingSectionId") == 1057) ? "<option value='assignRecordingBook'>Asignarlo a un analista para su registro</option><option value=''></option>" : String.Empty%>
 				<option value='updateRecordingsControlCount'>Modificar el número de inscripciones</option>
 				<option value='updateRecordingsControlDates'>Modificar el rango de control de fechas</option>
-				<%# ((int) DataBinder.Eval(Container, "DataItem.RecordingsClassId") != 1051 && (int) DataBinder.Eval(Container, "DataItem.RecordingsClassId") != 1057) ? "<option value=''></option><option value='sendRecordingBookToQualityControl'>Enviarlo al área de control de calidad</option>" : String.Empty%>				
+				<%# ((int) DataBinder.Eval(Container, "DataItem.RecordingSectionId") != 1051 && (int) DataBinder.Eval(Container, "DataItem.RecordingSectionId") != 1057) ? "<option value=''></option><option value='sendRecordingBookToQualityControl'>Enviarlo al área de control de calidad</option>" : String.Empty%>				
 				<%#(int) DataBinder.Eval(Container, "DataItem.LeftCapturedRecordingsCount") == 0 ? "<option value=''></option><option value='sendRecordingBookToQualityControl'>Enviarlo al área de control de calidad</option>" : String.Empty%>
       </select><img class='comboExecuteImage' src="../themes/default/buttons/next.gif" alt=""  title="Ejecuta la operación seleccionada" onclick="doPendingBookOperation(<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>)"/> 
       <br />

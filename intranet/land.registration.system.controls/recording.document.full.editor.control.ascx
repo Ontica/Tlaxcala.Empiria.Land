@@ -1,4 +1,32 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="false" EnableViewState="true" Inherits="Empiria.Web.UI.LRS.RecordingDocumentFullEditorControl" CodeFile="recording.document.full.editor.control.ascx.cs" %>
+<table id="oPreemptiveNotice" class="editionTable" style="display:none;" runat="server">
+    <tr>
+    <td>Ciudad:</td>
+    <td>
+      <select id="cboPreemptiveNoticeIssuePlace" class="selectBox" style="width:168px" title="" runat="server" >
+      </select>
+    </td>
+    <td class="lastCell">
+      Notaría:
+      <select id="cboPreemptiveNoticeIssueOffice" class="selectBox" style="width:50px" title="" runat="server" >
+      </select>
+      Lic:
+      <select id="cboPreemptiveNoticeIssuedBy" class="selectBox" style="width:262px" title="" runat="server" >
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td colspan='2'>&nbsp;</td>
+    <td class="lastCell">
+      Oficio: &nbsp;
+      <input id="txtPreemptiveNoticeDocNumber" type="text" class="textBox" style="width:100px" title="" maxlength="36"  runat="server" />
+      <input type="button" class="button" value="Sin Núm." style="width:52px;height:24px;vertical-align:middle;margin-left:-8px" onclick="getElement('<%=txtPreemptiveNoticeDocNumber.ClientID%>').value='S/N'" />
+      &nbsp;&nbsp;Fecha del oficio:
+      <input id='txtPreemptiveNoticeDocIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
+      <img id='imgPreemptiveNoticeIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtPreemptiveNoticeDocIssueDate.ClientID%>'), getElement('imgPreemptiveNoticeIssueDate'));" title="Despliega el calendario" alt="" />
+    </td>
+  </tr>
+</table>
 <table id="oNotaryRecording" class="editionTable" style="display:none;" runat="server">
     <tr>
     <td>Ciudad:</td>
@@ -41,7 +69,7 @@
       Título de propiedad número:
     </td>
     <td><input id="txtPropTitleDocNumber" type="text" class="textBox" style="width:106px" onkeypress="return upperCaseKeyFilter(this);" 
-         title="" maxlength="16" runat="server" /></td>
+         title="" maxlength="32" runat="server" /></td>
     <td>Expedido por:</td>
     <td class="lastCell">C. 
       <select id="cboPropTitleDocIssuedBy" class="selectBox" style="width:290px" title="" runat="server">
@@ -59,7 +87,7 @@
       <select id="cboPropTitleIssueOffice" class="selectBox" style="width:166px" title="" runat="server">
       </select>
       Folio:
-      <input id="txtPropTitleStartSheet" type="text" class="textBox" style="width:100px" onkeypress="return integerKeyFilter(this);" title="" maxlength="16"  runat="server" />
+      <input id="txtPropTitleStartSheet" type="text" class="textBox" style="width:100px" onkeypress="return integerKeyFilter(this);" title="" maxlength="32"  runat="server" />
     </td>
   </tr>
 </table>
@@ -415,6 +443,7 @@
   }
 
   function <%=this.ClientID%>_updateUserInterface(documentTypeTag) {
+    getElement("<%=oPreemptiveNotice.ClientID%>").style.display = 'none';
     getElement("<%=oNotaryRecording.ClientID%>").style.display = 'none';
     getElement("<%=oTitleRecording.ClientID%>").style.display = 'none';
     getElement("<%=oJudicialRecording.ClientID%>").style.display = 'none';
@@ -426,6 +455,7 @@
   }
 
   function <%=this.ClientID%>_disabledControl(disabledFlag) {
+    disableControls(getElement("<%=oPreemptiveNotice.ClientID%>"), disabledFlag);
     disableControls(getElement("<%=oNotaryRecording.ClientID%>"), disabledFlag);
     disableControls(getElement("<%=oTitleRecording.ClientID%>"), disabledFlag);
     disableControls(getElement("<%=oJudicialRecording.ClientID%>"), disabledFlag);
@@ -435,6 +465,16 @@
   function <%=this.ClientID%>_updateControls(sourceName) {
     var url = "../ajax/land.registration.system.data.aspx";
     switch (sourceName) {
+      case "oPreemptiveNoticeRecording.IssuePlace":
+        url += "?commandName=getNotaryOfficesInPlaceStringArrayCmd";
+        url += "&placeId=" + getElement('<%=cboPreemptiveNoticeIssuePlace.ClientID%>').value;
+        invokeAjaxComboItemsLoader(url, getElement('<%=cboPreemptiveNoticeIssueOffice.ClientID%>'));
+        return;
+      case "oPreemptiveNoticeRecording.IssueOffice":
+        url += "?commandName=getNotariesInNotaryOfficeStringArrayCmd";
+        url += "&notaryOfficeId=" + getElement('<%=cboPreemptiveNoticeIssueOffice.ClientID%>').value;
+        invokeAjaxComboItemsLoader(url, getElement('<%=cboPreemptiveNoticeIssuedBy.ClientID%>'));
+        return;
       case "oNotaryRecording.IssuePlace":
         url += "?commandName=getNotaryOfficesInPlaceStringArrayCmd";
         url += "&placeId=" + getElement('<%=cboNotaryDocIssuePlace.ClientID%>').value;
@@ -468,8 +508,12 @@
     }
   }
 
+  addEvent(getElement('<%=cboPreemptiveNoticeIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPreemptiveNoticeRecording.IssuePlace") } );
+  addEvent(getElement('<%=cboPreemptiveNoticeIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPreemptiveNoticeRecording.IssueOffice") } );
+
   addEvent(getElement('<%=cboNotaryDocIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oNotaryRecording.IssuePlace") } );
   addEvent(getElement('<%=cboNotaryDocIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oNotaryRecording.IssueOffice") } );
+
   addEvent(getElement('<%=cboJudicialDocIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oJudicialRecording.IssuePlace") } );
   addEvent(getElement('<%=cboJudicialDocIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oJudicialRecording.IssueOffice") } );
   addEvent(getElement('<%=cboPrivateDocIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPrivateRecording.IssuePlace") } );

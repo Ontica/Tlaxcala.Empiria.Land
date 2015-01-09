@@ -2,7 +2,7 @@
   <%=((Empiria.Presentation.Web.MultiViewDashboard) this.Page).ViewTitle%>
   <tr>
     <th>
-			<a href="javascript:sendPageCommand('sortData', 'RecordingBookFullName ASC')">Libro</a> / 
+			<a href="javascript:sendPageCommand('sortData', 'BookAsText ASC')">Libro</a> / 
 			<a href="javascript:sendPageCommand('sortData', 'RecordingsControlCount DESC')">Inscripciones</a> / 
 			<a href="javascript:sendPageCommand('sortData', 'RegisteredRecordingsCount DESC')">Completas</a> / 
 			<a href="javascript:sendPageCommand('sortData', 'IncompleteRecordingsCount DESC')">Incompletas</a> /

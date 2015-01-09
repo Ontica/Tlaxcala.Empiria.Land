@@ -12,7 +12,6 @@
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
   <script type="text/javascript" src="../scripts/empiria.validation.js"></script>
-  <script type="text/javascript" src="../scripts/empiria.calendar.js"></script>
 </head>
 <body>
 <form id="aspnetForm" method="post" runat="server">
@@ -358,10 +357,6 @@
       </div> <!-- end divBottomToolbar !-->
     </div> <!-- end divCanvas !-->
   </form>
-  <iframe id="ifraCalendar" style="z-index: 99; LEFT: 0px; visibility: hidden; position: absolute; TOP: 0px" 
-          hspace="0px" vspace="0" marginheight="0"  marginwidth="0" frameborder="0" scrolling="no" 
-          src="../user.controls/calendar.aspx" width="100%">
-  </iframe>
 </body>
   <script type="text/javascript">
   /* <![CDATA[ */
@@ -725,22 +720,24 @@
       return false;
     }
     if (command == 'saveAndReceiveTransaction') {
+      <% if (!base.transaction.IsEmptyItemsTransaction) { %>
       if (isEmpty(getElement('txtReceiptNumber'))) {
         alert("Requiero se proporcione el número del recibo emitido para este trámite.");
         return false;
       }
+      <% } %>
     }
     return true;
   }
 
   function window_onload() {
     setWorkplace();
-    getElement('ifraRecordingEditor').src = "../workplace/out.of.service.aspx";
-
-    <% if (!base.transaction.IsNew && !base.transaction.IsEmptyInstance) { %>
-     // getElement('ifraRecordingEditor').src = "../land.registration.system/recording.editor.aspx?transactionId=<%=transaction.Id%>";
+    <% if (base.ShowDocumentsEditor()) { %>
+     getElement('ifraRecordingEditor').src = "../land.registration.system/recording.editor.aspx?transactionId=<%=transaction.Id%>";
+    <% } else if (!base.transaction.Document.IsEmptyInstance) { %>
+     getElement('ifraRecordingEditor').src = "../land.registration.system/recording.editor.aspx?readonly=true&transactionId=<%=transaction.Id%>";
     <% } else { %>
-    //  getElement('ifraRecordingEditor').src = "../workplace/empty.page.aspx";
+     getElement('ifraRecordingEditor').src = "../workplace/empty.page.aspx";
     <% } %>
     <%=base.OnloadScript()%>
   }

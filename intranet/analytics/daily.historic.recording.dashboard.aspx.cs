@@ -60,7 +60,7 @@ namespace Empiria.Web.UI.LRSAnalytics {
           return AnalyticsData.RecorderOfficesStats();
         }
         //} else if ((base.SelectedTabStrip == 0) && (cboView.Value == "DayByDayProgressAnalysis")) {
-        //return RecordingBooksData.GetVolumeRecordingBooks(RecordingBookStatus.Assigned, String.Empty, "RecordingBookFullName");
+        //return RecordingBooksData.GetVolumeRecordingBooks(RecordingBookStatus.Assigned, String.Empty, "BookAsText");
       } else if ((base.SelectedTabStrip == 0) && (cboView.Value == "ProductivityByAnalyst")) {
         if (ExecutionServer.CurrentPrincipal.IsInRole("BatchCapture.Supervisor")) {
           return AnalyticsData.PerformanceByAnalyst(selectedRecorderOffice, EmpiriaString.ToDate(txtFromDate.Value),

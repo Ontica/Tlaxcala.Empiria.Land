@@ -24,6 +24,9 @@ namespace Empiria.Web.UI.LRS {
 
     protected override RecordingDocument ImplementsFillRecordingDocument(RecordingDocumentType documentType) {
       switch (documentType.Name) {
+        case "ObjectType.RecordingDocument.PreemptiveNotice":
+          FillPreemptiveNoticeDocument(documentType);
+          break;
         case "ObjectType.RecordingDocument.NotaryDeed":
           FillNotaryDocument(documentType);
           break;
@@ -46,12 +49,17 @@ namespace Empiria.Web.UI.LRS {
     protected override void ImplementsLoadRecordingDocument() {
       Assertion.Assert(base.Document != null, "Document can't be null");
       RecordingDocumentType documentType = base.Document.DocumentType;
+      oPreemptiveNotice.Style["display"] = "none";
       oNotaryRecording.Style["display"] = "none";
       oTitleRecording.Style["display"] = "none";
       oJudicialRecording.Style["display"] = "none";
       oPrivateRecording.Style["display"] = "none";
       LoadMainCombos();
       switch (documentType.Name) {
+        case "ObjectType.RecordingDocument.PreemptiveNotice":
+          oPreemptiveNotice.Style["display"] = "inline";
+          LoadPreemptiveNoticeDocument();
+          return;
         case "ObjectType.RecordingDocument.NotaryDeed":
           oNotaryRecording.Style["display"] = "inline";
           LoadNotaryDocument();
@@ -77,28 +85,50 @@ namespace Empiria.Web.UI.LRS {
       RecordingBook book = RecordingBook.Empty;
       RecorderOffice office = RecorderOffice.Empty;
 
+      HtmlSelectContent.LoadCombo(this.cboPreemptiveNoticeIssuePlace, office.GetNotaryOfficePlaces(),
+                            "Id", "Name", "( Seleccionar )");
+
       HtmlSelectContent.LoadCombo(this.cboNotaryDocIssuePlace, office.GetNotaryOfficePlaces(),
-                                  "Id", "Name", "( Seleccionar )", String.Empty, "No consta");
+                                  "Id", "Name", "( Seleccionar )");
+
 
       HtmlSelectContent.LoadCombo(this.cboPrivateDocIssuePlace, office.GetPrivateDocumentIssuePlaces(),
-                                  "Id", "Name", "( Seleccionar )", String.Empty, "No consta");
+                                  "Id", "Name", "( Seleccionar )");
 
       HtmlSelectContent.LoadCombo(this.cboJudicialDocIssuePlace, office.GetJudicialDocumentIssuePlaces(),
-                                  "Id", "Name", "( Seleccionar )", String.Empty, "No consta");
+                                  "Id", "Name", "( Seleccionar )");
 
       FixedList<Person> signers = office.GetPropertyTitleSigners(book.RecordingsControlTimePeriod);
       HtmlSelectContent.LoadCombo(this.cboPropTitleDocIssuedBy, signers, "Id", "FullName",
-                                  "( Seleccionar al C. Funcionario Público )", String.Empty, 
-                                  "No consta o no se puede determinar");
+                                  "( Seleccionar al C. Funcionario Público )");
 
       HtmlSelectContent.LoadCombo(this.cboPropTitleIssueOffice, office.GetPropertyTitleOffices(),
-                                  "Id", "Alias", "( Seleccionar )", String.Empty, "No consta");
+                                  "Id", "Alias", "( Seleccionar )");
 
       GeneralList listType = GeneralList.Parse("PrivateContract.WitnessPosition.List");
       FixedList<TypeAssociationInfo> witnessRoles = 
                   listType.GetItems<TypeAssociationInfo>((x, y) => x.DisplayName.CompareTo(y.DisplayName));
       HtmlSelectContent.LoadCombo(this.cboPrivateDocMainWitnessPosition, witnessRoles,
-                                  "Id", "DisplayName", "( Seleccionar )", "No consta", String.Empty);
+                                  "Id", "DisplayName", "( Seleccionar )");
+    }
+
+    private void LoadPreemptiveNoticeDocument() {
+      RecordingDocument document = base.Document;
+
+      cboPreemptiveNoticeIssuePlace.Value = document.IssuePlace.Id.ToString();
+
+      HtmlSelectContent.LoadCombo(this.cboPreemptiveNoticeIssueOffice, NotaryOffice.GetList(document.IssuePlace),
+                                  "Id", "Number", "( ? )");
+
+      cboPreemptiveNoticeIssueOffice.Value = document.IssueOffice.Id.ToString();
+
+      HtmlSelectContent.LoadCombo(this.cboPreemptiveNoticeIssuedBy, NotaryOffice.Parse(document.IssueOffice.Id).GetNotaries(),
+                                  "Id", "FamilyFullName", "( Seleccionar al C. Notario Público )");
+
+      cboPreemptiveNoticeIssuedBy.Value = document.IssuedBy.Id.ToString();
+
+      txtPreemptiveNoticeDocNumber.Value = document.Number;
+      txtPreemptiveNoticeDocIssueDate.Value = document.IssueDate.ToString("dd/MMM/yyyy");    
     }
 
     private void LoadJudicialDocument() {
@@ -108,12 +138,12 @@ namespace Empiria.Web.UI.LRS {
       cboJudicialDocIssuePlace.Value = document.IssuePlace.Id.ToString();
 
       HtmlSelectContent.LoadCombo(this.cboJudicialDocIssueOffice, JudicialOffice.GetList(document.IssuePlace),
-                                  "Id", "Number", "( Seleccionar )", String.Empty, "No consta");
+                                  "Id", "Number", "( Seleccionar )");
       cboJudicialDocIssueOffice.Value = document.IssueOffice.Id.ToString();
 
       //if (document.IssueOffice is JudicialOffice) {
       HtmlSelectContent.LoadCombo(this.cboJudicialDocIssuedBy, JudicialOffice.Parse(document.IssueOffice.Id).GetJudges(),
-                                  "Id", "FamilyFullName", "( C. Juez )", String.Empty, "No consta");
+                                  "Id", "FamilyFullName", "( C. Juez )");
       //HtmlSelectContent.LoadCombo(this.cboJudicialDocIssuedBy, ((JudicialOffice) document.IssueOffice).GetJudges(),
       //                            "Id", "FamilyFullName", "( C. Juez )", String.Empty, "No consta");
       //} else {
@@ -136,13 +166,12 @@ namespace Empiria.Web.UI.LRS {
       cboNotaryDocIssuePlace.Value = document.IssuePlace.Id.ToString();
 
       HtmlSelectContent.LoadCombo(this.cboNotaryDocIssueOffice, NotaryOffice.GetList(document.IssuePlace), "Id", "Number",
-                                  "( ? )", String.Empty, "N/C");
+                                  "( ? )");
 
       cboNotaryDocIssueOffice.Value = document.IssueOffice.Id.ToString();
 
       HtmlSelectContent.LoadCombo(this.cboNotaryDocIssuedBy, NotaryOffice.Parse(document.IssueOffice.Id).GetNotaries(),
-                                  "Id", "FamilyFullName", "( Seleccionar al C. Notario Público )", String.Empty,
-                                  "No consta o no se puede determinar");
+                                  "Id", "FamilyFullName", "( Seleccionar al C. Notario Público )");
 
       cboNotaryDocIssuedBy.Value = document.IssuedBy.Id.ToString();
 
@@ -174,8 +203,7 @@ namespace Empiria.Web.UI.LRS {
       } else {
         FixedList<Person> peopleInRoleList = roleType.GetActors<Person>(document.IssuePlace);
         HtmlSelectContent.LoadCombo(this.cboPrivateDocMainWitness, peopleInRoleList, "Id", "FamilyFullName",
-                                    "( Seleccionar al C. Funcionario Público )", String.Empty,
-                                    "No consta o no se puede determinar");
+                                    "( Seleccionar al C. Funcionario Público )");
       }
       cboPrivateDocMainWitness.Value = document.ExtensionData.MainWitness.Id.ToString();
       if (document.IssueDate != ExecutionServer.DateMinValue) {
@@ -203,6 +231,17 @@ namespace Empiria.Web.UI.LRS {
       RecordingDocument document = base.Document;
 
       document.ChangeDocumentType(documentType);
+    }
+
+    private void FillPreemptiveNoticeDocument(RecordingDocumentType documentType) {
+      RecordingDocument document = base.Document;
+
+      document.ChangeDocumentType(documentType);
+      document.IssuePlace = GeographicRegion.Parse(int.Parse(cboPreemptiveNoticeIssuePlace.Value));
+      document.IssueOffice = NotaryOffice.Parse(int.Parse(Request.Form[cboPreemptiveNoticeIssueOffice.Name]));
+      document.IssuedBy = Contact.Parse(int.Parse(Request.Form[cboPreemptiveNoticeIssuedBy.Name]));
+      document.Number = txtPreemptiveNoticeDocNumber.Value;
+      document.IssueDate = EmpiriaString.ToDate(txtPreemptiveNoticeDocIssueDate.Value);
     }
 
     private void FillJudicialDocument(RecordingDocumentType documentType) {

@@ -27,7 +27,6 @@ namespace Empiria.Web.UI.LRS {
 
     protected LRSDocumentEditorControl oRecordingDocumentEditor = null;
     protected LRSTransaction transaction = null;
-    private FixedList<RecordingAct> recordingActs = null;
     protected string OnLoadScript = String.Empty;
 
     #endregion Fields
@@ -57,7 +56,6 @@ namespace Empiria.Web.UI.LRS {
       cboRecordingType.Value = transaction.Document.DocumentType.Id.ToString();
       txtObservations.Value = transaction.Document.Notes;
       cboSheetsCount.Value = transaction.Document.SheetsCount.ToString();
-      cboSealPosition.Value = transaction.Document.ExtensionData.SealUpperPosition.ToString("N1");
 
       LoadRecordingActTypeCategoriesCombo();
       LoadPrecedentRecordingCombos();
@@ -118,16 +116,16 @@ namespace Empiria.Web.UI.LRS {
       int id = GetCommandParameter<int>("id");
 
       var recordingAct = RecordingAct.Parse(id);
-      var recording = recordingAct.Recording;
-      recording.DeleteRecordingAct(recordingAct);
 
-      string msg = "Se canceló el acto jurídico " + recordingAct.RecordingActType.DisplayName;
-      if (recording.Status != RecordableObjectStatus.Deleted) {
-        SetMessageBox(msg);
-      } else {
+      var document = recordingAct.Document;
+      document.RemoveRecordingAct(recordingAct);
+
+      string msg = "Se canceló el acto jurídico " + recordingAct.RecordingActType.DisplayName; 
+      if (!recordingAct.Recording.IsEmptyInstance && 
+          recordingAct.Recording.Status == RecordableObjectStatus.Deleted) {
         msg += ", así como la partida correspondiente.";
-        SetMessageBox(msg);
       }
+      SetMessageBox(msg);
     }
 
     private void AppendRecordingAct() {
@@ -140,8 +138,6 @@ namespace Empiria.Web.UI.LRS {
       task.AssertValid();
 
       RecorderExpert.Execute(task);
-
-      recordingActs = RecordingAct.GetList(transaction.Document);
     }
 
     private RecordingTask ParseRecordingTaskParameters() {
@@ -163,13 +159,6 @@ namespace Empiria.Web.UI.LRS {
       return task;
     }
 
-    private FixedList<RecordingAct> GetRecordingActs() {
-      if (recordingActs == null) {
-        recordingActs = RecordingAct.GetList(this.transaction.Document);
-      }
-      return recordingActs;
-    }
-
     protected bool IsReadyForEdition() {
       if (transaction.IsEmptyInstance) {
         return false;
@@ -187,7 +176,7 @@ namespace Empiria.Web.UI.LRS {
       if (transaction.IsEmptyInstance || transaction.Document.IsEmptyInstance) {
         return false;
       }
-      if (this.GetRecordingActs().Count == 0) {
+      if (this.transaction.Document.RecordingActs.Count == 0) {
         return false;
       }
       if (Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
@@ -207,14 +196,11 @@ namespace Empiria.Web.UI.LRS {
 
       Assertion.Assert(transaction != null && !transaction.IsEmptyInstance,
                        "Transaction cant' be null or an empty instance.");
-      Assertion.Assert(int.Parse(cboSheetsCount.Value) != 0 && decimal.Parse(cboSealPosition.Value) != 0,
-                       "Document sheets count or seal position have invalid data.");
       Assertion.Assert(document != null && !document.IsEmptyInstance,
                        "Recording document can't be null or an empty instance.");
 
       document.Notes = txtObservations.Value;
       document.SheetsCount = int.Parse(cboSheetsCount.Value);
-      document.ExtensionData.SealUpperPosition = decimal.Parse(cboSealPosition.Value);
       transaction.AttachDocument(document);
       oRecordingDocumentEditor.LoadRecordingDocument(document);
       Assertion.Assert(!transaction.Document.IsEmptyInstance && !transaction.Document.IsNew,
@@ -232,7 +218,7 @@ namespace Empiria.Web.UI.LRS {
     }
 
     protected string RecordingActsGrid() {
-      return LRSGridControls.GetRecordingActsGrid(this.GetRecordingActs());
+      return LRSGridControls.GetRecordingActsGrid(this.transaction.Document);
     }
 
     private void SetMessageBox(string msg) {

@@ -36,8 +36,9 @@
           <td colspan="2">
             <%=GetPrelationText()%>
             <br /><br />
-            <%=GetRecordingsText()%>
+            <span><%=GetRecordingsText()%></span>
             <br /><br />
+            <span style="font-size:small"><%=GetDocumentText()%></span>
             <%=GetPaymentText()%>
             <br /><br />
             <%=GetRecordingPlaceAndDate()%>

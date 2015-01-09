@@ -352,7 +352,7 @@ namespace Empiria.Web.UI.LRS {
 
       RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
 
-      recording.DeleteRecordingAct(recordingAct);
+      recording.Document.RemoveRecordingAct(recordingAct);
     }
 
     private void DeleteRecording() {
@@ -434,7 +434,7 @@ namespace Empiria.Web.UI.LRS {
 
       RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
 
-      recording.UpwardRecordingAct(recordingAct);
+      recording.Document.UpwardRecordingAct(recordingAct);
     }
 
     private void DownwardRecordingAct() {
@@ -442,7 +442,7 @@ namespace Empiria.Web.UI.LRS {
 
       RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
 
-      recording.DownwardRecordingAct(recordingAct);
+      recording.Document.DownwardRecordingAct(recordingAct);
     }
 
     private void RegisterAsNoLegibleRecording(bool appendMode) {

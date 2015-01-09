@@ -30,12 +30,16 @@
       Categoría del documento:
       <select id="cboRecordingType" name="cboRecordingType" class="selectBox" style="width:136px" title="" onchange="return updateUserInterface(this);" runat="server">
         <option value="">( Seleccionar )</option>
+        <option value="2414" title="oPreemptiveNotice">Aviso preventivo</option>
+      </select>
+      <!--
+        <option value="2415" title="">Cancelación</option>
         <option value="2410" title="oNotaryRecording">Escritura pública</option>
-        <option value="2411" title="oTitleRecording">Título de propiedad</option>
         <option value="2412" title="oJudicialRecording">Orden/Resolución</option>
         <option value="2413" title="oPrivateRecording">Contrato</option>
-        <option value="2409" title="">No determinado</option>
-      </select>
+        <option value="2411" title="oTitleRecording">Título de propiedad</option>
+        <option value="2416" title="">Otros (oficio)</option>
+        !-->
       &nbsp;
       Núm de hojas <b>del instrumento</b>:
       <select id="cboSheetsCount" name="cboSheetsCount" class="selectBox" style="width:46px" title="" onchange="return updateUserInterface(this);" runat="server">
@@ -61,26 +65,14 @@
         <option value="91">91</option><option value="92">92</option><option value="93">93</option><option value="94">94</option><option value="95">95</option>
         <option value="96">96</option><option value="97">97</option><option value="98">98</option><option value="99">99</option><option value="100">100</option>
       </select>
-      &nbsp;
-      Margen sello:
-      <select id="cboSealPosition" name="cboSealPosition" class="selectBox" style="width:52px" title="" onchange="return updateUserInterface(this);" runat="server">
-        <option value="">( cms )</option>
-        <option value="5.0">5.0</option>
-        <option value="10.0">10.0</option>
-        <option value="15.0">15.0</option>
-        <option value="17.5">17.5</option>
-        <option value="20.0">20.0</option>
-        <option value="21.0">21.0</option>
-        <option value="21.0">22.0</option>
-      </select>
       <b style="font-size:10pt"><%=transaction.Document.UID%></b>
       <br />
       <span id="spanRecordingDocumentEditor" runat="server"></span>
       <table class="editionTable">
         <tr>
-          <td>Observaciones:<br /><br /><br /><br /></td>
+          <td>Descripción:<br /><br /><br /><br /><br /><br />&nbsp;</td>
           <td colspan="2" class="lastCell">
-            <textarea id="txtObservations" name="txtObservations" class="textArea" style="width:558px" cols="320" rows="4" runat="server"></textarea>
+            <textarea id="txtObservations" name="txtObservations" class="textArea" style="width:658px" cols="320" rows="6" runat="server"></textarea>
           </td>
         </tr>
         <tr id="rowEditButtons" style="display:inline">
@@ -106,17 +98,15 @@
     <td>
       <table class="editionTable">
         <tr>
-          <td colspan="8" class="lastCell">
-            <div style="overflow:auto;width:860px;">
+          <td class="lastCell">
+            <div style="overflow:auto;width:780px;">
               <table class="details"style="width:99%">
                 <tr class="detailsHeader">
                   <td>#</td>
-                  <td>Volumen</td>
-                  <td>Partida</td>
                   <td>Acto jurídico</td>
-                  <td>Estado acto</td>
                   <td>Predio / Recurso</td>
-                  <td>Estado predio</td>
+                  <td>Registrado en</td>
+                  <td>Estado</td>
                   <td>¿Qué desea hacer?</td>
                 </tr>
                 <%=RecordingActsGrid()%>
@@ -124,9 +114,15 @@
             </div>
           </td>
         </tr>
-        <tr>
+      </table>
+    </td>
+  </tr>
+  <tr id="divRecordingActEditor">
+    <td>
+      <table class="editionTable">
+       <tr>
           <td>Tipo de acto:</td>
-          <td colspan="5">
+          <td>
             <select id="cboRecordingActTypeCategory" name="cboRecordingActTypeCategory" class="selectBox" 
                     style="width:192px" title="" onchange="return updateUserInterface(this);" runat='server'>
             </select>
@@ -134,13 +130,19 @@
                     onchange="return updateUserInterface(this);">
               <option value="">( Primero seleccionar el tipo de acto jurídico )</option>
             </select>
+            <span id="divCreateFraction" style="display:none">
+            Fracción:
+            <input id="txtPropertyPart" name="txtPropertyPart" type="text" class="textBox" 
+                    style="width:35px;margin-right:0px" onkeypress="return integerKeyFilter(this);" 
+                    title="" maxlength="4" runat="server" />
+            </span>
             <input type="button" value="Agregar acto" class="button" style="width:78px" onclick='doOperation("appendRecordingAct")' />    
           </td>
           <td class="lastCell">&nbsp;</td>
         </tr>
         <tr id="divPropertyTypeSelector" style="display:none">
           <td>Sobre el predio:</td>
-          <td colspan="5">
+          <td>
             <select id="cboPropertyTypeSelector" class="selectBox" style="width:192px" title="" onchange="return updateUserInterface(this);">
               <option value="">( Seleccionar acto )</option>
             </select>
@@ -159,39 +161,58 @@
               </select>
             </span>
             <span id="divPrecedentActSection" style="display:none">
-              Antecedente en:
-              <select id="cboPrecedentRecordingSection" class="selectBox" style="width:222px" title="" 
-                      onchange="return updateUserInterface(this);" runat='server'>
-              </select>
-              <a href='javascript:doOperation("refreshPrecedentRecordingCombos")' class="button">Actualizar datos</a>
+              Folio del predio:
+              <input id="txtDocumentKey" class="textBox" type="text" maxlength="18" style="width:160px" runat="server" />
+              <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" 
+                   onclick="doOperation('showPrecedentRecording')" />
+              <a href='javascript:doOperation("refreshPrecedentRecordingCombos")' class="button">Buscarlo o agregarlo en libros físicos</a>
             </span>
           </td>
           <td class="lastCell">&nbsp;</td>
         </tr>
+      </table>
+    </td>
+  </tr>
+  <tr id="divPhysicalRecordingSelector">
+    <td>
+      <table class="editionTable">
         <tr id="divPrecedentRecordingSection" style="display:none">
-          <td>Volumen:<br /><br />&nbsp;</td>
-          <td colspan="6">
-            <select id="cboPrecedentRecordingBook" class="selectBox" style="width:460px" title="" 
+          <td>Registrado en:</td>
+          <td>
+            <select id="cboPrecedentRecordingSection" class="selectBox" style="width:196px" title="" 
                     onchange="return updateUserInterface(this);" runat='server'>
             </select>
-            <br />
-            Partida:
+          </td>
+          <td>Volumen:<br /></td>
+          <td>
+            <select id="cboPrecedentRecordingBook" class="selectBox" style="width:260px" title="" 
+                    onchange="return updateUserInterface(this);" runat='server'>
+            </select>
+          </td>
+          <td>Partida:</td>
+          <td>
             <select id="cboPrecedentRecording" class="selectBox" style="width:98px" title="" 
                     onchange="return updateUserInterface(this);" runat='server'>
             </select>
             <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" 
                  onclick="doOperation('showPrecedentRecording')" />
-            <span id="divPropertySelectorSection" style="display:inline">
+          </td>
+          <td class="lastCell">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+          <td colspan="4">
+            <span id="divPropertySelectorSection" style="display:none">
               &nbsp;Folio del predio:&nbsp;
               <select id="cboPrecedentProperty" class="selectBox" style="width:182px" title="" runat='server'>
               </select>
               <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" 
-                   onclick="doOperation('showPrecedentProperty')" />
+                    onclick="doOperation('showPrecedentProperty')" />
             </span>
             <span id="divRecordingQuickAddSection" style="display:none">
             &nbsp;Partida donde está registrado el predio:
             <input id="txtQuickAddRecordingNumber" type="text" class="textBox" style="width:35px;margin-right:0px" 
-                   onkeypress="return integerKeyFilter(this);" title="" maxlength="5" runat="server" />
+                    onkeypress="return integerKeyFilter(this);" title="" maxlength="5" runat="server" />
             <select id="cboQuickAddBisRecordingTag" class="selectBox" style="width:52px" title="" runat='server'>
               <option value=""></option>
               <option value="-Bis">-Bis</option>
@@ -202,14 +223,18 @@
               <option value="-05">-05</option>
               <option value="-06">-06</option>
             </select>
-            Fracción:
-            <input id="txtPropertyPart" name="txtPropertyPart" type="text" class="textBox" 
-                   style="width:35px;margin-right:0px" onkeypress="return integerKeyFilter(this);" 
-                   title="" maxlength="4" runat="server" />
             </span>
           </td>
+
+
           <td class="lastCell">&nbsp;</td>
         </tr>
+      </table> 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table class="editionTable">
         <tr id="divTargetPrecedentActSection" style="display:none">
           <td>Que aplica a:</td>
           <td colspan="5">
@@ -220,11 +245,10 @@
             <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" onclick="doOperation('showPrecedentRecordingAct')" />
           </td>
           <td class="lastCell">&nbsp;</td>
-        </tr>
-      </table>
-    </td>
+          </tr>
+        </table>
+      </td>
   </tr>
-  <% %>
 </table>
 </div>
 </form>
@@ -242,6 +266,8 @@
     }
     switch (command) {
       case 'deleteRecordingAct':
+        alert('Operación deshabilitada temporalmente...');
+        return false;
         return deleteRecordingAct(arguments[1]);
       case 'deleteBookRecording':
         alert(arguments[1]);
@@ -255,8 +281,12 @@
       case 'appendRecordingAct':
         return appendRecordingAct();
       case 'editRecordingAct':
+        alert('Operación deshabilitada temporalmente... Gracias por su comprensión.');
+        return;
         return editRecordingAct(arguments[1], arguments[2]);
       case 'editProperty':
+        alert('Operación deshabilitada temporalmente... Gracias por su comprensión.');
+        return;
         return editProperty(arguments[1], arguments[2], arguments[3]);
       case 'viewRecordingSeal':
         viewRecordingSeal(arguments[1]);
@@ -343,6 +373,10 @@
       return false;
     }
     if (!validateRecordingActSemantics()) {
+      return false;
+    }
+    if (Number(getElement('cboRecordingActType').value) != 2284) {
+      alert("Por el momento sólo es posible agregar avisos preventivos. Gracias por su comprensión.");
       return false;
     }
 
@@ -484,10 +518,6 @@
     }
     if (getElement('cboSheetsCount').value.length == 0) {
       alert("Necesito conocer el número de hojas que tiene el documento, incluyendo la hoja donde irán los sellos.");
-      return false;
-    }
-    if (getElement('cboSealPosition').value.length == 0) {
-      alert("Necesito conocer el margen superior donde se colocará el sello.");
       return false;
     }
     if (!<%=oRecordingDocumentEditor.ClientID%>_validate('<%=transaction.PresentationTime.ToString("dd/MMM/yyyy")%>')) {

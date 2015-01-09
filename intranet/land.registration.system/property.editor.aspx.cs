@@ -231,7 +231,7 @@ namespace Empiria.Web.UI.LRS {
       cboPropertyType.Value = property.PropertyKind.Value;
       txtPropertyCommonName.Value = property.Name;
       txtAntecendent.Value = property.AntecedentNotes;
-      txtObservations.Value = property.RecordingNotes;
+      txtObservations.Value = property.Notes;
       //cboCadastralOffice.Value = property.CadastralData.CadastralOffice.Id.ToString();
       cboMunicipality.Value = property.Location.Municipality.Id.ToString();
       cboSettlementType.Value = property.Location.Settlement.Id.ToString();

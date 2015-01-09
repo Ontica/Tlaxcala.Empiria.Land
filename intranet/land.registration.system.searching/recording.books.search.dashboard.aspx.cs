@@ -58,7 +58,7 @@ namespace Empiria.Web.UI.LRS {
     protected sealed override DataView LoadDataSource() {
       if (base.SelectedTabStrip == 0) {
         return RecordingBooksData.GetVolumeRecordingBooks(selectedRecorderOffice, RecordingBookStatus.Revision,
-                                                          GetRecordingBooksFilter(), "RecordingBookNumber DESC, RecordingBookFullName ASC");
+                                                          GetRecordingBooksFilter(), "BookNo DESC, BookAsText ASC");
       } else if (base.SelectedTabStrip == 1) {
         if (txtSearchExpression.Value.Length != 0) {
           return IndexesData.FindByParty(selectedRecorderOffice, DateTime.MinValue, DateTime.MaxValue, txtSearchExpression.Value);
@@ -78,18 +78,18 @@ namespace Empiria.Web.UI.LRS {
       string filter = String.Empty;
 
       if (!selectedRecordingBookClass.IsEmptyInstance) {
-        filter += "[RecordingsClassId] = " + selectedRecordingBookClass.Id.ToString();
+        filter += "[RecordingSectionId] = " + selectedRecordingBookClass.Id.ToString();
       }
       if (txtSearchExpression.Value.Length != 0) {
         if (filter.Length != 0) {
           filter += " AND ";
         }
-        filter += "[RecordingBookNumber] LIKE '%" + txtSearchExpression.Value + "%'";
+        filter += "[BookNo] LIKE '%" + txtSearchExpression.Value + "%'";
       }
       if (filter.Length != 0) {
         filter += " AND ";
       }
-      filter += "[RecordingBookStatus] = 'R'";
+      filter += "[BookStatus] = 'R'";
       return filter;
     }
 

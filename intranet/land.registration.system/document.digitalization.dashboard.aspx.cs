@@ -103,16 +103,16 @@ namespace Empiria.Web.UI.LRS {
         return DocumentsData.GetFilesFolders(RecordBookDirectory.DirectoryType, GetDirectoriesFilter(), "FilesFolderDisplayName DESC");
       } else if (base.SelectedTabStrip == 1) {
         return RecordingBooksData.GetVolumeRecordingBooks(selectedRecorderOffice, RecordingBookStatus.Pending,
-                                                          GetRecordingBooksFilter(), "RecordingBookFullName DESC");
+                                                          GetRecordingBooksFilter(), "BookAsText DESC");
       } else if (base.SelectedTabStrip == 2) {
         return RecordingBooksData.GetVolumeRecordingBooks(selectedRecorderOffice, RecordingBookStatus.Assigned,
-                                                          GetRecordingBooksFilter(), "RecordingBookFullName DESC");
+                                                          GetRecordingBooksFilter(), "BookAsText DESC");
       } else if (base.SelectedTabStrip == 3) {
         return RecordingBooksData.GetVolumeRecordingBooks(selectedRecorderOffice, RecordingBookStatus.Revision,
-                                                          GetRecordingBooksFilter(), "RecordingBookFullName");
+                                                          GetRecordingBooksFilter(), "BookAsText");
       } else if (base.SelectedTabStrip == 4) {
         return RecordingBooksData.GetVolumeRecordingBooks(selectedRecorderOffice, RecordingBookStatus.Closed,
-                                                          GetRecordingBooksFilter(), "RecordingBookFullName");
+                                                          GetRecordingBooksFilter(), "BookAsText");
       } else {
         return new DataView();
       }
@@ -134,13 +134,13 @@ namespace Empiria.Web.UI.LRS {
       string filter = String.Empty;
 
       if (!selectedRecordingBookClass.IsEmptyInstance) {
-        filter += "[RecordingsClassId] = " + selectedRecordingBookClass.Id.ToString();
+        filter += "[RecordingSectionId] = " + selectedRecordingBookClass.Id.ToString();
       }
       if (txtSearchExpression.Value.Length != 0) {
         if (filter.Length != 0) {
           filter += " AND ";
         }
-        filter += "[RecordingBookNumber] LIKE '%" + txtSearchExpression.Value + "%'";
+        filter += "[BookNo] LIKE '%" + txtSearchExpression.Value + "%'";
       }
       return filter;
     }

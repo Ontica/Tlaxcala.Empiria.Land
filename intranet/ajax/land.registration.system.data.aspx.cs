@@ -156,24 +156,17 @@ namespace Empiria.Web.UI.Ajax {
       if (recordingId == 0) {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar partida )");
       }
-      if (recordingActTypeId == 0) {
-        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( ¿Acto jurídico? )");
-      }
       var recording = Recording.Parse(recordingId);
-      var recordingActType = RecordingActType.Parse(recordingActTypeId);
       string html = String.Empty;
 
-      if (recording.RecordingActs.Count == 0) {
-        html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "Sin predios asociados"); 
-      } else if (recording.RecordingActs.Count == 1 && 
-                 recording.RecordingActs[0].RecordingActType == RecordingActType.Empty) {
-        if (recordingActType.RecordingRule.AppliesTo == RecordingRuleApplication.Property) {
-          html += "|" + HtmlSelectContent.GetComboAjaxHtmlItem("0", "Crear predio en la partida " + recording.Number);
-        }
-      } else if (recording.RecordingActs.Count > 1) {
-        html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar el folio del predio )");
+      var recordingProperties = recording.GetProperties();
+
+      if (recordingProperties.Count == 0) {
+        html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "Sin predios asociados");
+      } else if (recordingProperties.Count >= 0) {
+        html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar el predio )");
       }
-      foreach (Property property in recording.GetProperties()) {
+      foreach (Property property in recordingProperties) {
         if (html.Contains(property.UID)) {
           continue;
         }
@@ -197,13 +190,13 @@ namespace Empiria.Web.UI.Ajax {
       }
       var recordingBook = RecordingBook.Parse(recordingBookId);
       var recordingActType = RecordingActType.Parse(recordingActTypeId);
-      var recordings = recordingBook.Recordings;
+      var recordings = recordingBook.GetRecordings();
       return HtmlSelectContent.GetComboAjaxHtml(recordings, 0, "Id", "Number",
                                                 recordings.Count == 0 ? "(Libro vacío)" : "(Seleccionar)",
                                                 recordingBook.IsAvailableForManualEditing &&
                                                 recordingActType.RecordingRule.AppliesTo == RecordingRuleApplication.Property ||
                                                 recordingActType.RecordingRule.AppliesTo == RecordingRuleApplication.Structure
-                                                            ? "Crear nueva" : String.Empty,
+                                                            ? "Crear nueva" : "Crear nueva",
                                                 String.Empty);
     }
 
@@ -412,7 +405,7 @@ namespace Empiria.Web.UI.Ajax {
         RecordingSection recordingSection = RecordingSection.Parse(recordingSectionId);
         recordingBookList = recorderOffice.GetRecordingBooks(recordingSection);
         if (recordingBookList.Count != 0) {
-          return HtmlSelectContent.GetComboAjaxHtml(recordingBookList, 0, "Id", "FullName", "( Seleccionar el libro registral donde se encuentra )");
+          return HtmlSelectContent.GetComboAjaxHtml(recordingBookList, 0, "Id", "AsText", "( Seleccionar el libro registral donde se encuentra )");
         } else {
           return HtmlSelectContent.GetComboAjaxHtml("No existen libros registrales para el Distrito", String.Empty, String.Empty);
         }
@@ -429,7 +422,7 @@ namespace Empiria.Web.UI.Ajax {
       }
       FixedList<RecordingBook> booksList = RecordingBook.GetList(sectionFilter);
       if (booksList.Count != 0) {
-        return HtmlSelectContent.GetComboAjaxHtml(booksList, 0, "Id", "FullName", "( Seleccionar el libro registral )");
+        return HtmlSelectContent.GetComboAjaxHtml(booksList, 0, "Id", "AsText", "( Seleccionar el libro registral )");
       } else {
         return HtmlSelectContent.GetComboAjaxHtml("No existen libros registrales para el Distrito", String.Empty, String.Empty);
       }

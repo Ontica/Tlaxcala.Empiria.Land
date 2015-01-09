@@ -21,7 +21,6 @@ namespace Empiria.Web.UI.FSM {
 
     protected LRSTransaction transaction = null;
     private FixedList<RecordingAct> recordingActs = null;
-    private Recording baseRecording = null;
 
     #endregion Fields
 
@@ -37,17 +36,8 @@ namespace Empiria.Web.UI.FSM {
 
     private void Initialize() {
       transaction = LRSTransaction.Parse(int.Parse(Request.QueryString["transactionId"]));
-      recordingActs = RecordingAct.GetList(transaction.Document);
-      Assertion.Assert(recordingActs.Count > 0, "Document does not has recordings.");
-
-      int recordingId = int.Parse(Request.QueryString["id"]);
-      if (recordingId != -1) {
-        baseRecording = recordingActs.Find((x) => x.Recording.Id == recordingId).Recording;
-      } else {
-        recordingActs.Sort((x, y) => x.Recording.RecordingTime.CompareTo(y.Recording.RecordingTime));
-        baseRecording = recordingActs[recordingActs.Count - 1].Recording;
-      }
-      Assertion.AssertObject(baseRecording, "We have a problem reading document recording data.");
+      recordingActs = transaction.Document.RecordingActs;
+      Assertion.Assert(recordingActs.Count > 0, "Document does not has recording acts.");
     }
 
     protected string CustomerOfficeName() {
@@ -101,28 +91,77 @@ namespace Empiria.Web.UI.FSM {
       return x;
     }
 
-    protected string GetRecordingsText() {
-      if (this.ShowAllRecordings) {
-        return GetAllRecordingsText();
-      }
-
-      const string tlaxcala = "Registrado bajo el número de <b>partida {NUMBER}</b> del <b>{VOL}</b> Sección <b>{SECTION}</b> " + 
-                              "del <b>Distrito de {DISTRICT}</b>, con el número de documento electrónico: <b>{DOCUMENT}</b>";
-      const string zacatecas = "Registrado bajo el número de <b>inscripción {NUMBER}</b> del <b>{VOL}</b> <b>{SECTION}</b> " + 
-                               "del <b>Distrito Judicial de {DISTRICT}</b>.";
-      string x = String.Empty;
-
-      if (ExecutionServer.LicenseName == "Tlaxcala") {
-        x = tlaxcala.Replace("{NUMBER}", baseRecording.Number);
+    protected string GetDocumentText() {
+      if (transaction.Document.Notes.Length > 100) {
+        return "DESCRIPCIÓN:<br />" + transaction.Document.Notes + "<br /><br />";
       } else {
-        x = zacatecas.Replace("{NUMBER}", baseRecording.Number);
+        return String.Empty;
       }
-      x = x.Replace("{VOL}", baseRecording.RecordingBook.AsText);
-      x = x.Replace("{SECTION}", baseRecording.RecordingBook.RecordingSection.Name);
-      x = x.Replace("{DISTRICT}", baseRecording.RecordingBook.RecorderOffice.Alias);
-      x = x.Replace("{DOCUMENT}", transaction.Document.UID);
+    }
 
-      return x;
+    protected string GetRecordingsText() {
+      const string docMultiTlax = "Registrado con el número de documento electrónico <b>{DOCUMENT}</b>, " +
+                                   "con los siguientes {COUNT} actos jurídicos:<br/><br/>";
+      const string docMultiZac = "Registrado bajo los siguientes {COUNT} actos jurídicos:<br/><br/>";
+
+      const string docOneTlax = "Registrado con el número de documento electrónico <b>{DOCUMENT}</b>, con el " +
+                                "siguiente acto jurídico:<br/><br/>";
+      const string docOneZac = "Registrado bajo la siguiente inscripción:<br/><br/>";
+
+      const string t1Tlax = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre {PROPERTY.DESCRIPTION}." +
+                            "<br/>";
+      const string t1Zac = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inscripción <b>{NUMBER}</b> del <b>{VOL}</b> <b>{SECTION}</b> del " +
+                           "<b>Distrito Judicial de {DISTRICT}</b>.<br/>";
+
+      string html = String.Empty;
+
+
+      string docMulti = ExecutionServer.LicenseName == "Tlaxcala" ? docMultiTlax : docMultiZac;
+      string docOne = ExecutionServer.LicenseName == "Tlaxcala" ? docOneTlax : docOneZac;
+
+      if (this.recordingActs.Count > 1) {
+        html = docMulti.Replace("{DOCUMENT}", transaction.Document.UID);
+        html = html.Replace("{COUNT}", this.recordingActs.Count.ToString() +
+                            " (" + EmpiriaString.SpeechInteger(this.recordingActs.Count).ToLower() + ")");
+      } else if (this.recordingActs.Count == 1) {
+        html = docOne.Replace("{DOCUMENT}", transaction.Document.UID);
+      } else if (this.recordingActs.Count == 0) {
+        throw new Exception("Document does not have recordings.");
+      }
+
+      int index = 0;
+      foreach (RecordingAct recordingAct in recordingActs) {
+        index++;
+        string x = (ExecutionServer.LicenseName == "Tlaxcala" ? t1Tlax : t1Zac).Replace("{NUMBER}", recordingAct.Recording.Number);
+        var recordingBook = recordingAct.Recording.RecordingBook;
+
+        x = x.Replace("{INDEX}", index.ToString());
+        x = x.Replace("{RECORDING.ACT}", recordingAct.RecordingActType.DisplayName);
+        if (!recordingAct.RecordingActType.RecordingRule.AllowsPartitions) {
+          x = x.Replace("{PROPERTY.DESCRIPTION}", "el predio con folio único {PROPERTY.UID}");
+        } else if (recordingAct.TractIndex[0].Property.IsPartitionOf.IsEmptyInstance) {
+          x = x.Replace("{PROPERTY.DESCRIPTION}", "la totalidad del predio con folio único {PROPERTY.UID}");
+        } else {
+          x = x.Replace("{PROPERTY.DESCRIPTION}",
+              String.Format("la fracción<b>{0}</b> del predio <u>{1}</u>, misma que se le asignó el folio único {PROPERTY.UID}",
+                            recordingAct.TractIndex[0].Property.PartitionNo,
+                            recordingAct.TractIndex[0].Property.IsPartitionOf.UID));
+        }
+
+        var antecedent = recordingAct.TractIndex[0].Property.GetDomainAntecedent(recordingAct);
+        if (!antecedent.Recording.IsEmptyInstance) {
+          x = x.Replace("{PROPERTY.UID}", "<b>" + recordingAct.TractIndex[0].Property.UID + "</b>" +
+                        ", con antecedente de inscripción en " + antecedent.Recording.AsText);
+        } else {
+          x = x.Replace("{PROPERTY.UID}", "<b>" + recordingAct.TractIndex[0].Property.UID + "</b>");
+        }
+
+        x = x.Replace("{VOL}", recordingBook.AsText);
+        x = x.Replace("{SECTION}", recordingBook.RecordingSection.Name);
+        x = x.Replace("{DISTRICT}", recordingBook.RecorderOffice.Alias);
+        html += x;
+      }
+      return html;
     }
 
     protected string GetRecordingOfficialsInitials() {
@@ -141,53 +180,11 @@ namespace Empiria.Web.UI.FSM {
       return temp.Length != 0 ? "* " + temp : String.Empty;
     }
 
-    protected string GetAllRecordingsText() {
-      const string docMultiTlax = "Registrado con el número de documento electrónico <b>{DOCUMENT}</b>, " + 
-                                  "bajo las siguientes {COUNT} partidas registrales:<br/><br/>";
-      const string docMultiZac = "Registrado bajo las siguientes {COUNT} inscripciones:<br/><br/>";
-
-      const string docOneTlax = "Registrado con el número de documento electrónico <b>{DOCUMENT}</b>, bajo la " + 
-                                "siguiente partida registral:<br/><br/>";
-      const string docOneZac = "Registrado bajo la siguiente inscripción:<br/><br/>";
-
-      const string t1Tlax = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Partida <b>{NUMBER}</b> del <b>{VOL}</b> Sección <b>{SECTION}</b> " + 
-                            "del <b>Distrito de {DISTRICT}</b>.<br/>";
-      const string t1Zac = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inscripción <b>{NUMBER}</b> del <b>{VOL}</b> <b>{SECTION}</b> del " + 
-                           "<b>Distrito Judicial de {DISTRICT}</b>.<br/>";
-
-      string html = String.Empty;
-
-
-      string docMulti = ExecutionServer.LicenseName == "Tlaxcala" ? docMultiTlax : docMultiZac;
-      string docOne = ExecutionServer.LicenseName == "Tlaxcala" ? docOneTlax : docOneZac;
-
-      if (this.recordingActs.Count > 1) {
-        html = docMulti.Replace("{DOCUMENT}", transaction.Document.UID);
-        html = html.Replace("{COUNT}", this.recordingActs.Count.ToString() + 
-                            " (" + EmpiriaString.SpeechInteger(this.recordingActs.Count).ToLower() + ")");
-      } else if (this.recordingActs.Count == 1) {
-        html = docOne.Replace("{DOCUMENT}", transaction.Document.UID);
-      } else if (this.recordingActs.Count == 0) {
-        throw new Exception("Document does not have recordings.");
-      }
-
-      foreach(RecordingAct recordingAct in recordingActs) {
-        string x = (ExecutionServer.LicenseName == "Tlaxcala" ? t1Tlax : t1Zac).Replace("{NUMBER}", recordingAct.Recording.Number);
-        var recordingBook = recordingAct.Recording.RecordingBook;
-
-        x = x.Replace("{VOL}", recordingBook.AsText);
-        x = x.Replace("{SECTION}", recordingBook.RecordingSection.Name);
-        x = x.Replace("{DISTRICT}", recordingBook.RecorderOffice.Alias);
-        html += x;
-      }
-      return html;
-    }
-
     protected string GetRecordingPlaceAndDate() {
       const string t = "Registrado en {CITY}, a las {TIME} horas del {DATE}. Doy Fe.";
 
-      string x = t.Replace("{DATE}", baseRecording.RecordingTime.ToString(@"dd \de MMMM \de yyyy"));
-      x = x.Replace("{TIME}", baseRecording.RecordingTime.ToString(@"HH:mm"));
+      string x = t.Replace("{DATE}", transaction.Document.AuthorizationTime.ToString(@"dd \de MMMM \de yyyy"));
+      x = x.Replace("{TIME}", transaction.Document.AuthorizationTime.ToString(@"HH:mm"));
       if (ExecutionServer.LicenseName == "Tlaxcala") {
         x = x.Replace("{CITY}", "Tlaxcala de Xicohténcatl, Tlaxcala");
       } else {
@@ -214,12 +211,8 @@ namespace Empiria.Web.UI.FSM {
 
     protected string GetDigitalSeal() {
       string s = "||" + transaction.UID + "|" + transaction.Document.UID;
-      if (this.ShowAllRecordings) {
-        for (int i = 0; i < recordingActs.Count; i++) {
-          s += "|" + recordingActs[i].Id.ToString();
-        }
-      } else {
-        s += "|" + this.baseRecording.Id.ToString();
+      for (int i = 0; i < recordingActs.Count; i++) {
+        s += "|" + recordingActs[i].Id.ToString();
       }
       s += "||";
       return Empiria.Security.Cryptographer.CreateDigitalSign(s);
@@ -227,18 +220,14 @@ namespace Empiria.Web.UI.FSM {
 
     protected string GetDigitalSignature() {
       string s = "||" + transaction.UID + "|" + transaction.Document.UID;
-      if (this.ShowAllRecordings) {
-        for (int i = 0; i < recordingActs.Count; i++) {
-          s += "|" + recordingActs[i].Id.ToString();
-        }
-      } else {
-        s += "|" + this.baseRecording.Id.ToString();
+      for (int i = 0; i < recordingActs.Count; i++) {
+        s += "|" + recordingActs[i].Id.ToString();
       }
       return Empiria.Security.Cryptographer.CreateDigitalSign(s + "eSign");
     }
 
     protected string GetUpperMarginPoints() {
-      decimal centimeters = Math.Max(transaction.Document.ExtensionData.SealUpperPosition, 1.0m);
+      decimal centimeters = 5.0m;
       if (ExecutionServer.LicenseName == "Tlaxcala") {
         return (28.3464657m).ToString("G4");
       } else {

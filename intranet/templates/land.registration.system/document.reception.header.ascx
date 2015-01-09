@@ -2,19 +2,19 @@
   <%=((Empiria.Presentation.Web.MultiViewDashboard) this.Page).ViewTitle%>
   <tr>
     <th>
-			<a href="javascript:sendPageCommand('sortData', 'RecordingBookFullName ASC')">Trámite / Origen / Folio</a>
+			<a href="javascript:sendPageCommand('sortData', 'BookAsText ASC')">Trámite / Origen / Folio</a>
 		</th>
     <th>
-			<a href="javascript:sendPageCommand('sortData', 'RecordingBookFullName ASC')">Solicitado por</a>
+			<a href="javascript:sendPageCommand('sortData', 'BookAsText ASC')">Solicitado por</a>
 		</th>
     <th>
-			<a href="javascript:sendPageCommand('sortData', 'RecordingBookFullName ASC')">Prelación</a>
+			<a href="javascript:sendPageCommand('sortData', 'BookAsText ASC')">Prelación</a>
 		</th>
     <th>
-			<a href="javascript:sendPageCommand('sortData', 'RecordingBookFullName ASC')">Documento principal</a>
+			<a href="javascript:sendPageCommand('sortData', 'BookAsText ASC')">Documento principal</a>
 		</th>
     <th>
-			<a href="javascript:sendPageCommand('sortData', 'RecordingBookFullName ASC')">Observaciones</a>
+			<a href="javascript:sendPageCommand('sortData', 'BookAsText ASC')">Observaciones</a>
 		</th>
     <th>
 			&nbsp;

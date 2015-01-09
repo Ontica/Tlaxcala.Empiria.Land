@@ -128,6 +128,22 @@ namespace Empiria.Web.UI.LRS {
       if (!IsEditable()) {
         return false;
       }
+      if (transaction.IsEmptyItemsTransaction) {
+        return false;
+      }
+      return true;
+    }
+
+    protected bool ShowDocumentsEditor() {
+      if (transaction.IsNew || transaction.IsEmptyInstance) {
+        return false;
+      }
+      if (transaction.Status == TransactionStatus.Payment) {
+        return false;
+      }
+      if (transaction.IsEmptyItemsTransaction) {
+        return false;
+      }
       return true;
     }
 
@@ -162,6 +178,9 @@ namespace Empiria.Web.UI.LRS {
       if (!CanReceiveTransaction()) {
         return false;
       }
+      if (transaction.IsEmptyItemsTransaction) {
+        return true;
+      }
       return transaction.Payments.Count > 0;
     }
 
@@ -187,7 +206,7 @@ namespace Empiria.Web.UI.LRS {
                                   "( Seleccionar )", String.Empty, "No consta");
 
 
-      HtmlSelectContent.LoadCombo(this.cboManagementAgency, LRSTransaction.GetManagementAgenciesList(),
+      HtmlSelectContent.LoadCombo(this.cboManagementAgency, LRSTransaction.GetAgenciesList(),
                                   "Id", "Alias", "( Seleccionar notaría/agencia que tramita )");
 
       LRSHtmlSelectControls.LoadTransactionActTypesCategoriesCombo(this.cboRecordingActTypeCategory);
@@ -197,9 +216,6 @@ namespace Empiria.Web.UI.LRS {
 
       cboManagementAgency.Value = transaction.Agency.Id.ToString();
 
-      //txtContactEMail.Value = transaction.ExtensionData.RequesterEmail;
-      //txtContactPhone.Value = transaction.ExtensionData.RequesterPhone;
-      //txtRequestNotes.Value = transaction.ExtensionData.RequesterNotes;
       //txtOfficeNotes.Value = transaction.ExtensionData.OfficeNotes;
 
       cboRecordingActType.SelectedIndex = 0;
@@ -238,6 +254,9 @@ namespace Empiria.Web.UI.LRS {
 
     protected bool ShowPrintPaymentOrderButton {
       get {
+        if (this.transaction.IsEmptyItemsTransaction) {
+          return false;
+        }
         if (this.transaction.Status == TransactionStatus.Payment) {
           return true;
         }
@@ -403,6 +422,8 @@ namespace Empiria.Web.UI.LRS {
       string message = "&nbsp;";
       if (this.IsEditable() && this.transaction.Items.Count > 0) {
         message = "<a href=\"javascript:doOperation('showConceptsEditor')\">Agregar más conceptos</a>";
+      } else if (transaction.IsEmptyItemsTransaction) {
+        message = "Este trámite no lleva conceptos";
       } else if (!this.IsEditable()) {
         if (this.transaction.Items.Count == 0) {
           message = "No se han definido conceptos/actos";
