@@ -40,11 +40,11 @@
         &nbsp;&nbsp;al día
         <input type="text" class="textBox" id='txtToDate' name='txtToDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
         <img id='imgToDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtToDate.ClientID%>'), getElement('imgToDate'));" title="Despliega el calendario" alt="" />
-      </td>            
-      <td align="left" nowrap="nowrap">
-        <img src="../themes/default/buttons/search.gif" alt="" onclick="doOperation('loadData')" title="Ejecuta la búsqueda" />   
       </td>
-      <% } %>      
+      <td align="left" nowrap="nowrap">
+        <img src="../themes/default/buttons/search.gif" alt="" onclick="doOperation('loadData')" title="Ejecuta la búsqueda" />
+      </td>
+      <% } %>
      <td width="80%">&nbsp;</td>
     </tr>
   </table>
@@ -76,14 +76,14 @@
   }
 
   function createObject() {
-    alert('La operación solicitada todavía no ha sido definida en el programa.');  
+    alert('La operación solicitada todavía no ha sido definida en el programa.');
     return false;
   }
 
   function loadData() {
     sendPageCommand("loadData");
   }
-  
+
   function updateUserInterface(oSourceControl) {
     sendPageCommand("updateUserInterface");
   }	

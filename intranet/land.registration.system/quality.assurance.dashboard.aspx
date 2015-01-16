@@ -33,10 +33,10 @@
 				</select>
       </td>
       <td nowrap="nowrap">Buscar: </td>
-      <td nowrap="nowrap">      
+      <td nowrap="nowrap">
         <input id="txtSearchExpression" name="txtSearchExpression" class="textBox" onkeypress="return searchTextBoxKeyFilter(window.event);"
                type="text" tabindex="-1" maxlength="80" style="width:140px" runat="server" />
-        <img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('loadData')" title="Ejecuta la búsqueda" />               
+        <img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('loadData')" title="Ejecuta la búsqueda" />
       </td>
       <% } %>
       <td width="80%">&nbsp;</td>
@@ -65,7 +65,7 @@
         return;
       case 'sendRecordingBookToQualityControl':
         sendRecordingBookToQualityControl(arguments[1]);
-        return;        
+        return;
       default:
         alert('La operación \'' + operationName + '\' todavía no ha sido definida en el programa.');
         return;
@@ -99,7 +99,7 @@
   function updateUserInterface(oSourceControl) {
     sendPageCommand("updateUserInterface");
   }
-  
+
 	/* ]]> */
 	</script>
 </asp:Content>

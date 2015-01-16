@@ -144,7 +144,15 @@ namespace Empiria.Web.UI.LRS {
       if (transaction.IsEmptyItemsTransaction) {
         return false;
       }
-      return true;
+      if (transaction.Document.IsEmptyInstance ||
+          EmpiriaMath.IsMemberOf(transaction.Document.DocumentType.Id,
+                                 new int[] { 2414, 2412, 2411, 2410 } )) {
+        return true;
+      }
+      if (ExecutionServer.CurrentUserId == 3) {
+        return true;
+      }
+      return false;
     }
 
     protected bool CanReceivePayment() {
@@ -306,7 +314,7 @@ namespace Empiria.Web.UI.LRS {
       if (txtReceiptTotal.Value.Length != 0 && txtReceiptNumber.Value.Length != 0) {
         decimal total = decimal.Parse(txtReceiptTotal.Value);
         transaction.AddPayment(txtReceiptNumber.Value, total);
-      }     
+      }
       transaction.DocumentDescriptor = txtDocumentNumber.Value;
       transaction.DocumentType = LRSDocumentType.Parse(int.Parse(cboDocumentType.Value));
       transaction.RequestedBy = txtRequestedBy.Value.Replace("\'\'", "\"").Replace("\'", "¿");
@@ -356,7 +364,7 @@ namespace Empiria.Web.UI.LRS {
 
     private void ApplyReceipt() {
       Assertion.AssertObject(txtReceiptNumber.Value, "txtReceiptNumber value can't be null.");
-      Assertion.Assert(decimal.Parse(txtReceiptTotal.Value) == transaction.Items.TotalFee.Total, 
+      Assertion.Assert(decimal.Parse(txtReceiptTotal.Value) == transaction.Items.TotalFee.Total,
                        "Receipt total should be equal to the transaction total.");
 
       transaction.AddPayment(txtReceiptNumber.Value, decimal.Parse(txtReceiptTotal.Value));
@@ -372,7 +380,6 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void ReentryTransaction() {
-      SaveTransaction();
       transaction.DoReentry("Trámite reingresado");
 
       onloadScript = "alert('Este trámite fue reingresado correctamente.');doOperation('redirectThis')";
@@ -381,14 +388,14 @@ namespace Empiria.Web.UI.LRS {
     private void CopyTransaction() {
       SaveTransaction();
       LRSTransaction copy = this.transaction.MakeCopy();
-    
+
       onloadScript = @"alert('Este trámite fue copiado correctamente.\n\nEl nuevo trámite es el " + copy.UID +
                      @".\n\nAl cerrar esta ventana se mostrará el nuevo trámite.');";
       onloadScript += "doOperation('goToTransaction', " + copy.Id.ToString() + ");";
     }
 
     protected string GetRecordingActs() {
-      const string template = "<tr class='{CLASS}'><td>{COUNT}</td><td style='white-space:normal'>{ACT}</td>" + 
+      const string template = "<tr class='{CLASS}'><td>{COUNT}</td><td style='white-space:normal'>{ACT}</td>" +
                               "<td align='right'>{OP.VALUE}</td><td>{LAW}</td>" +
                               "<td align='right'>{REC.RIGHTS}</td>" +
                               "<td align='right'>{SHEETS}</td><td align='right'>{FOREIGN}</td>" +
@@ -414,7 +421,7 @@ namespace Empiria.Web.UI.LRS {
         temp = temp.Replace("{DISCOUNT}", list[i].Fee.Discount.Amount.ToString("N2"));
         temp = temp.Replace("{TOTAL}", list[i].Fee.Total.ToString("C2"));
         temp = temp.Replace("{ID}", list[i].Id.ToString());
-        
+
         html += temp;
         total += list[i].Fee.Total;
       }
@@ -466,7 +473,7 @@ namespace Empiria.Web.UI.LRS {
           html += temp;
         }
 
-        temp = template.Replace("{CURRENT.STATUS}", task.CurrentStatus == TransactionStatus.Reentry ? 
+        temp = template.Replace("{CURRENT.STATUS}", task.CurrentStatus == TransactionStatus.Reentry ?
                                                     "<b>" + task.CurrentStatusName + "</b>" : task.CurrentStatusName);
 
         temp = temp.Replace("{CLASS}", ((i % 2) == 0) ? "detailsItem" : "detailsOddItem");
@@ -477,13 +484,13 @@ namespace Empiria.Web.UI.LRS {
           dateFormat = "dd/MMM HH:mm";
         }
         temp = temp.Replace("{CHECK.IN}", task.CheckInTime.ToString(dateFormat));
-        temp = temp.Replace("{END.PROCESS}", task.EndProcessTime != ExecutionServer.DateMaxValue ? 
+        temp = temp.Replace("{END.PROCESS}", task.EndProcessTime != ExecutionServer.DateMaxValue ?
                                                       task.EndProcessTime.ToString(dateFormat) : "&nbsp;");
-        temp = temp.Replace("{CHECK.OUT}", task.CheckOutTime != ExecutionServer.DateMaxValue ? 
+        temp = temp.Replace("{CHECK.OUT}", task.CheckOutTime != ExecutionServer.DateMaxValue ?
                                                       task.CheckOutTime.ToString(dateFormat) : "&nbsp;");
 
         TimeSpan elapsedTime = task.OfficeWorkElapsedTime;
-        temp = temp.Replace("{ELAPSED.TIME}", elapsedTime == TimeSpan.Zero ? 
+        temp = temp.Replace("{ELAPSED.TIME}", elapsedTime == TimeSpan.Zero ?
                                                   "&nbsp;" : EmpiriaString.TimeSpanString(elapsedTime));
         temp = temp.Replace("{STATUS}", task.StatusName);
 
@@ -496,14 +503,14 @@ namespace Empiria.Web.UI.LRS {
         elapsedTimeSeconds += task.ElapsedTime.TotalSeconds;
       }
       if (hasReentries) {
-        string temp = subTotalTemplate.Replace("{WORK.TOTAL.TIME}", 
+        string temp = subTotalTemplate.Replace("{WORK.TOTAL.TIME}",
                                                EmpiriaString.TimeSpanString(subTotalWorkTimeSeconds));
         temp = temp.Replace("{TOTAL.TIME}", EmpiriaString.TimeSpanString(subTotalElapsedTimeSeconds));
         html += temp;
       }
       html += footer.Replace("{WORK.TOTAL.TIME}", EmpiriaString.TimeSpanString(workTimeSeconds));
       html = html.Replace("{TOTAL.TIME}", EmpiriaString.TimeSpanString(elapsedTimeSeconds));
-      html = html.Replace("{NEXT.STATUS}", (task != null && task.Status == TrackStatus.OnDelivery) ? 
+      html = html.Replace("{NEXT.STATUS}", (task != null && task.Status == TrackStatus.OnDelivery) ?
                                                       "Próximo estado: &nbsp;<b>" + task.NextStatusName + "</b>" : String.Empty);
 
       return html;
@@ -516,8 +523,8 @@ namespace Empiria.Web.UI.LRS {
       int treasuryCodeId = int.Parse(Request.Form[cboLawArticle.ClientID]);
       Money operationValue = Money.Parse(decimal.Parse(txtOperationValue.Value));
 
-      LRSTransactionItem act = this.transaction.AddItem(RecordingActType.Parse(recordingActTypeId), 
-                                                        LRSLawArticle.Parse(treasuryCodeId), operationValue, 
+      LRSTransactionItem act = this.transaction.AddItem(RecordingActType.Parse(recordingActTypeId),
+                                                        LRSLawArticle.Parse(treasuryCodeId), operationValue,
                                                         Quantity.Parse(DataTypes.Unit.Empty, 1m), fee);
 
       act.Save();

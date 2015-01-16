@@ -1,4 +1,4 @@
-<thead>
+ï»¿<thead>
   <%=((Empiria.Presentation.Web.MultiViewDashboard) this.Page).ViewTitle%>
   <tr>
     <th><a href="javascript:sendPageCommand('sortData', 'RecordingCapturedBy ASC')">Distrito</a></th>
@@ -21,7 +21,7 @@
     <td align="center">2</td>
     <td align="center">15</td>
     <td align="center">9</td>
-    <td align="center">2.74 días</td>
+    <td align="center">2.74 dÃ­as</td>
     <td>&nbsp;</td>
   </tr>
   <tr class="oddDataRow">
@@ -32,7 +32,7 @@
     <td align="center">1</td>
     <td align="center">9</td>
     <td align="center">3</td>
-    <td align="center">2.45 días</td>
+    <td align="center">2.45 dÃ­as</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
@@ -43,18 +43,18 @@
     <td align="center">0</td>
     <td align="center">3</td>
     <td align="center">1</td>
-    <td align="center">1.67 días</td>
+    <td align="center">1.67 dÃ­as</td>
     <td>&nbsp;</td>
   </tr>
   <tr class="oddDataRow">
-    <td><b>Distrito IV Río Grande</b></td>
+    <td><b>Distrito IV RÃ­o Grande</b></td>
     <td align="center">30</td>
     <td align="center">12</td>
     <td align="center">19</td>
     <td align="center">1</td>
     <td align="center">2</td>
     <td align="center">0</td>
-    <td align="center">2.10 días</td>
+    <td align="center">2.10 dÃ­as</td>
     <td>&nbsp;</td>
   </tr>
 </tbody>
@@ -67,7 +67,7 @@
     <td align="center"><b>4</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td align="center"><b>29</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td align="center"><b>13</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td align="center"><b>2.24 días prom</b></td>
+    <td align="center"><b>2.24 dÃ­as prom</b></td>
     <td>&nbsp;</td>
   </tr>
 </tfoot>

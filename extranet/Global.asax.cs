@@ -7,7 +7,7 @@ using System.Web.Routing;
 using Empiria.Presentation.Web;
 
 namespace Empiria.Land.Extranet {
-  // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
+  // Note: For instructions on enabling IIS6 or IIS7 classic mode,
   // visit http://go.microsoft.com/?LinkId=9394801
 
   public class MvcApplication : MVCGlobal {
@@ -55,7 +55,7 @@ namespace Empiria.Land.Extranet {
 
 
       //bundles.Add(new StyleBundle("~/Content/kendo.css").Include(
-      //						"~/Content/kendo.common.min.css", 
+      //						"~/Content/kendo.common.min.css",
       //						"~/Content/kendo.default.min.css"));
 
       bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));

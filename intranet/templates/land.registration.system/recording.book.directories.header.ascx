@@ -1,11 +1,11 @@
-<thead>
+ï»¿<thead>
   <%=((Empiria.Presentation.Web.MultiViewDashboard) this.Page).ViewTitle%>
   <tr>
     <th colspan="3">
-			<a href="javascript:sendPageCommand('sortData', 'FilesFolderDisplayName ASC')">Directorio de imágenes</a> / 
-			<a href="javascript:sendPageCommand('sortData', 'FilesCount ASC')">Número de imágenes</a> / 
-			<a href="javascript:sendPageCommand('sortData', 'FilesTotalSize ASC')">Tamaño</a> / 
-			<a href="javascript:sendPageCommand('sortData', 'LastUpdateDate ASC')">Última modificación</a>    			
+			<a href="javascript:sendPageCommand('sortData', 'FilesFolderDisplayName ASC')">Directorio de imÃ¡genes</a> /
+			<a href="javascript:sendPageCommand('sortData', 'FilesCount ASC')">NÃºmero de imÃ¡genes</a> /
+			<a href="javascript:sendPageCommand('sortData', 'FilesTotalSize ASC')">TamaÃ±o</a> /
+			<a href="javascript:sendPageCommand('sortData', 'LastUpdateDate ASC')">Ãšltima modificaciÃ³n</a>
 		</th>
   </tr>
 </thead>

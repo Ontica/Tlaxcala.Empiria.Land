@@ -8,7 +8,7 @@
   border-collapse: collapse;
   border-left: #dadada 1px solid;
   border-right: #dadada 1px solid;
-  border-bottom: #dadada 1px solid;    
+  border-bottom: #dadada 1px solid;
 }
 table.details .detailsHeader td {
 	background-color: #d2b48c;
@@ -90,4 +90,5 @@ table.details .alertItem td {
 	color: #103a6b;
 	text-decoration: none;
 }
+
 

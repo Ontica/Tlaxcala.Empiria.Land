@@ -35,7 +35,7 @@
       <td nowrap="nowrap">
         <input id="txtSearchExpression" name="txtSearchExpression" class="textBox" onkeypress="return searchTextBoxKeyFilter(window.event);"
                type="text" tabindex="-1" maxlength="320" style="width:320px" runat="server" />
-        <img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('loadData')" title="Ejecuta la búsqueda" />               
+        <img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('loadData')" title="Ejecuta la búsqueda" />
       </td>
       <td width="80%">&nbsp;</td>
     </tr>
@@ -85,7 +85,7 @@
 
 		createNewWindow(source);
 	}
-  
+
 	function showRecordingBookViewer(recordingBookId, recordingId) {
 		var source = "../land.registration.system/recording.book.analyzer.aspx?"
 		source += "bookId=" + recordingBookId + "&id=" + recordingId;

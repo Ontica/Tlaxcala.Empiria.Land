@@ -2,7 +2,7 @@
 /*  Operaciones generales para la validación de información																					       */
 /***********************************************************************************************************/
 
-function alphaKeyFilter(oEvent) { 
+function alphaKeyFilter(oEvent) {
   var keyCode = getKeyCode(oEvent);
   if (arguments.length == 2 && arguments[1] == true) {
     convertToUpperCaseKeyCode(oEvent, keyCode);
@@ -51,7 +51,7 @@ function notSpaceKeyFilter(oEvent) {
     }
 }
 
-function alphaNumericKeyFilter(oEvent) { 
+function alphaNumericKeyFilter(oEvent) {
   var keyCode = getKeyCode(oEvent);
   if (arguments.length == 2 && arguments[1] == true) {
     convertToUpperCaseKeyCode(oEvent, keyCode);
@@ -75,25 +75,25 @@ function searchTextBoxKeyFilter(oEvent) {
     return true;
   }
 }
-  
+
 function eMailAddressKeyFilter(oEvent) {
   var keyCode = getKeyCode(oEvent);
-  
+
   convertToLowerCaseKeyCode(oEvent, keyCode);
-  if (isEnglishLetterKeyCode(keyCode) || isNumericKeyCode(keyCode) || isPeriodKeyCode(keyCode) || 
+  if (isEnglishLetterKeyCode(keyCode) || isNumericKeyCode(keyCode) || isPeriodKeyCode(keyCode) ||
      (keyCode == 45) || (keyCode == 64) || (keyCode == 95) ) {
     return true;
   } else {
     return false;
   }
 }
-    
+
 function urlKeyFilter(oEvent) {
   var keyCode = getKeyCode(oEvent);
-  
+
   convertToLowerCaseKeyCode(oEvent, keyCode);
-  
-  if (isEnglishLetterKeyCode(keyCode) || isNumericKeyCode(keyCode) || 
+
+  if (isEnglishLetterKeyCode(keyCode) || isNumericKeyCode(keyCode) ||
       isPeriodKeyCode(keyCode) || keyCode == 47 || keyCode == 58 || keyCode == 95) {
     return true;
   } else {
@@ -184,9 +184,9 @@ function hourKeyFilter(oEvent) {
   }
 }
 
-function convertToUpperCase(oSource) { 
+function convertToUpperCase(oSource) {
   oSource.value = String(oSource.value).toUpperCase();
-  
+
   return true;
 }
 
@@ -221,7 +221,7 @@ function convertToLowerCaseKeyCode(oEvent, keyCode) {
     keyCode = 250;
   } else if (keyCode == 220) {
     keyCode = 252;
-  }  
+  }
   if (oEvent.which == undefined || oEvent.which == null) {
     oEvent.keyCode = keyCode;
   } else {
@@ -253,7 +253,7 @@ function convertToUpperCaseKeyCode(oEvent, keyCode) {
   if (oEvent.which == undefined || oEvent.which == null) {
     oEvent.keyCode = keyCode;
   } else {
-    // oEvent.which = keyCode; // Firefox bug 
+    // oEvent.which = keyCode; // Firefox bug
   }
 }
 
@@ -267,7 +267,7 @@ function getKeyCode(oEvent) {
 }
 
 function isLowerCaseKeyCode(keyCode) {
-  return ( (97 <= keyCode && keyCode <= 122) || 
+  return ( (97 <= keyCode && keyCode <= 122) ||
            (keyCode == 225) || (keyCode == 233) || (keyCode == 237) || (keyCode == 241) ||
            (keyCode == 243) || (keyCode == 250) || (keyCode == 252) );
 }
@@ -280,7 +280,7 @@ function isEnglishLetterKeyCode(keyCode) {
 function isLetterKeyCode(keyCode) {
   return ( (65 <= keyCode && keyCode <= 90) || (97 <= keyCode && keyCode <= 122) ||
            (keyCode == 193) || (keyCode == 201) || (keyCode == 205) || (keyCode == 209) ||
-           (keyCode == 211) || (keyCode == 218) || (keyCode == 220) || 
+           (keyCode == 211) || (keyCode == 218) || (keyCode == 220) ||
            (keyCode == 225) || (keyCode == 233) || (keyCode == 237) || (keyCode == 241) ||
            (keyCode == 243) || (keyCode == 250) || (keyCode == 252) );
 }
@@ -298,9 +298,9 @@ function isSpaceKeyCode(keyCode) {
 }
 
 function isSpecialKeyCode(keyCode) {
-  return ( (32 <= keyCode && keyCode <= 47 && keyCode != 34 && keyCode != 39) || 
-           (keyCode == 58) || (keyCode == 59) || (keyCode == 61) || (keyCode == 63) || 
-           (keyCode == 64) || (keyCode == 92) || (keyCode == 95) || (keyCode == 124) || 
+  return ( (32 <= keyCode && keyCode <= 47 && keyCode != 34 && keyCode != 39) ||
+           (keyCode == 58) || (keyCode == 59) || (keyCode == 61) || (keyCode == 63) ||
+           (keyCode == 64) || (keyCode == 92) || (keyCode == 95) || (keyCode == 124) ||
            (keyCode == 161) || (keyCode == 191) );
 }
 
@@ -311,7 +311,7 @@ function isDate(oSource) {
   if (dateParts.length != 3) {
     return false;
   }
-  
+
   if (!(1 <= Number(dateParts[0]) && Number(dateParts[0]) <= 31)) {
     return false;
   }
@@ -350,7 +350,7 @@ function isDate(oSource) {
 function isDatePeriod(oFromDateSource, oToDateSource) {
   formatAsDate(oFromDateSource);
   formatAsDate(oToDateSource);
-  
+
   if (!isDate(oFromDateSource) || !isDate(oToDateSource)) {
     return false;
   }
@@ -475,7 +475,7 @@ function isUnique(oSource, objectTypeInfoName, attributeName, objectId) {
     return true;
   }
   var attributeValue = oSource.value;
-  return (alreadyExistsObjectWithUniqueAttribute(objectTypeInfoName, attributeName, 
+  return (alreadyExistsObjectWithUniqueAttribute(objectTypeInfoName, attributeName,
                                                  objectId, attributeValue) == false);
 }
 
@@ -523,7 +523,7 @@ function isNumeric(oSource) {
 function isNumericValue(value) {
   var re = /,/g; // Regular expression
   value = value.replace(re, "");    //Cleans ","
-  
+
   if (!isNaN(Number(value))) {
     return true;
   }
@@ -539,7 +539,7 @@ function isNumericValue(value) {
 function convertToNumber(value) {
   var re = /,/g; // Regular expression
   value = value.replace(re, "");    //Cleans ","
-  
+
   re = /\$/g; // Regular expression
   value = value.replace(re, "");    //Cleans "$"
 
@@ -548,7 +548,7 @@ function convertToNumber(value) {
 
 function isNonEmptyNumeric(oSource) {
   var value = oSource.value;
- 
+
   if (value == '') {
     return false;
   }
@@ -567,7 +567,7 @@ function isNonEmptyNumeric(oSource) {
 function isUrl(oSource) {
   var urlRegExp = /^(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.|http:\/\/|https:\/\/){1}([\w]+)(.[\w]+){1,2}$/;
   var checkValue = oSource.value;
-  
+
   if (checkValue.match(urlRegExp)) {
     return true;
   }
@@ -597,7 +597,7 @@ function formatAsCurrency(theNumber) {
 function formatAsDate(oSource) {
   if (oSource.value == "") {
     return;
-  }  
+  }
   var temp = String(oSource.value).toLowerCase();
   var regex = /-/g;
   temp = temp.replace(regex, "/");
@@ -606,7 +606,7 @@ function formatAsDate(oSource) {
   regex = /[ \t]/g;
   temp = temp.replace(regex, "");    //Cleans spaces or tabs
   var dateParts = temp.split("/");
-  
+
   if (dateParts.length != 3) {
     return;
   }
@@ -617,8 +617,8 @@ function formatAsDate(oSource) {
     return;
   }
   if (Number(dateParts[0]) < 10) {
-    dateParts[0] = "0" + Number(dateParts[0]); 
-  }  
+    dateParts[0] = "0" + Number(dateParts[0]);
+  }
   if (Number(dateParts[2]) < 100) {
     var today = new Date();
     var year = Number(today.getFullYear().toString().substr(2, 2));
@@ -626,7 +626,7 @@ function formatAsDate(oSource) {
       dateParts[2] = Number(dateParts[2]) + 2000;
     } else {
       dateParts[2] = Number(dateParts[2]) + 1900;
-    }  
+    }
   }
   if (isNumericValue(dateParts[1])) {
     if (!(1 <= Number(dateParts[1]) && Number(dateParts[1]) <= 12)) {
@@ -710,7 +710,7 @@ function formatAsTaxKey(oSource) {
 function isTaxKeyAltern(oSource) {
   var temp = oSource.value;
   var validation = "";
-  
+
   if (temp.length == 0) {
     return true;
   }
@@ -729,11 +729,11 @@ function isTaxKey(oSource) {
   if (temp.length == 0) {
     return true;
   }
-    
+
   if (!(temp.length == 14 || temp.length == 15)) {
     return false;
   }
-  var regex; 
+  var regex;
   if (temp.length == 14) {
     regex = /[A-Z]{3}-\d{6}-.../;
     if (temp.match(regex) == null) {
@@ -760,9 +760,9 @@ function setCurrentDate(oSource) {
   var temp = today.getDate() + "/";
   temp += (today.getMonth() + 1) + "/";
   temp += today.getYear();
-  
+
   oSource.value = temp;
   formatAsDate(oSource);
-  
+
   return true;
 }

@@ -44,7 +44,7 @@ div.dashboardItemImage {
 img.dashboardImage {
   cursor: default;
 	height: 64px;
-	width: 64px;  
+	width: 64px;
 }
 div.dashboardItemContents {
 	float: left;
@@ -117,3 +117,4 @@ td.tabDisabled {
 	white-space: nowrap;
 	color: #c8c8c8;
 }
+

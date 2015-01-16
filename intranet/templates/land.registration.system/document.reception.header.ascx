@@ -1,14 +1,14 @@
-<thead>
+Ôªø<thead>
   <%=((Empiria.Presentation.Web.MultiViewDashboard) this.Page).ViewTitle%>
   <tr>
     <th>
-			<a href="javascript:sendPageCommand('sortData', 'BookAsText ASC')">Tr·mite / Origen / Folio</a>
+			<a href="javascript:sendPageCommand('sortData', 'BookAsText ASC')">Tr√°mite / Origen / Folio</a>
 		</th>
     <th>
 			<a href="javascript:sendPageCommand('sortData', 'BookAsText ASC')">Solicitado por</a>
 		</th>
     <th>
-			<a href="javascript:sendPageCommand('sortData', 'BookAsText ASC')">PrelaciÛn</a>
+			<a href="javascript:sendPageCommand('sortData', 'BookAsText ASC')">Prelaci√≥n</a>
 		</th>
     <th>
 			<a href="javascript:sendPageCommand('sortData', 'BookAsText ASC')">Documento principal</a>

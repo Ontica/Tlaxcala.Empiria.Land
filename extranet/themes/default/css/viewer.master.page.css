@@ -47,7 +47,7 @@ img.decoratorImage {
   margin: 2px 2px 2px 2px;
   padding: 12px 12px 0px 12px;
   position: absolute;
-  float: left;  
+  float: left;
   overflow: auto;
 }
 tr.detailsSuperHeader {
@@ -93,7 +93,7 @@ div.rightItem, span.rightItem {
 	text-align: right;
 }
 span.rightItem img {
- padding-top: 6px; 
+ padding-top: 6px;
 }
 .actionButton {
 	height: 24px;
@@ -118,7 +118,7 @@ input.textBox {
   color: #264b71;
   font: 8pt Arial, Helvetica;
   font-weight: bold;
-	height: 15px;  
+	height: 15px;
   margin: 2px 8px 2px 0px;
   padding: 4px 2px 2px 2px;
 	vertical-align: middle;
@@ -133,7 +133,7 @@ input.fileTextBox {
   color: #264b71;
   font: 8pt Arial, Helvetica;
   font-weight: bold;
-	height: 22px;  
+	height: 22px;
   margin: 2px 8px 2px 0px;
   padding: 4px 2px 2px 2px;
 	vertical-align: middle;
@@ -193,7 +193,7 @@ input.checkBox {
   border-right: 1px solid #e0e0e0;
 	color: #264b71;
   font: 8pt Arial, Helvetica;
-  font-weight: bold;  
+  font-weight: bold;
   margin: 2px 8px 2px 0px;
   padding: 4px 2px 2px 2px;
   width: 99%;
@@ -208,7 +208,7 @@ table.details {
   border-collapse: collapse;
   border-left: #dadada 1px solid;
   border-right: #dadada 1px solid;
-  border-bottom: #dadada 1px solid;    
+  border-bottom: #dadada 1px solid;
 }
 table.details .detailsHeader td {
 	background-color: #4682b4;
@@ -244,3 +244,4 @@ table.gridNavigationBar {
 	background-color: #4682b4;
 	color: #000064;
 }
+

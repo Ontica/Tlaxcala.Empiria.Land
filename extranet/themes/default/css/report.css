@@ -11,7 +11,7 @@
 .mainTable {
 	border-bottom: #000046 6pt solid;
 }
-table 
+table
 {
 	padding: 0pt 0pt 0pt 0pt;
 	margin: 0px 0px 0px 0px;
@@ -101,7 +101,7 @@ h2 {
   background: transparent;
   color: #6a6a6a;
   height: 18px;
-  white-space: nowrap;  
+  white-space: nowrap;
 }
 table td {
   vertical-align: top;
@@ -116,13 +116,13 @@ table.reportTable {
   font-size: 8pt;
   border-spacing: 0pt;
   border-collapse: collapse;
-  vertical-align: middle;  
+  vertical-align: middle;
 }
 .reportTableHeader td {
   background-color: #c4c4c4;
   color: #0d245f;
   font-family: Arial, Sans-serif;
-  font-size: 8pt;  
+  font-size: 8pt;
   margin: 0pt;
   height:16pt;
   border: none;
@@ -130,8 +130,8 @@ table.reportTable {
   border-collapse: collapse;
   border-spacing: 0pt;
   padding: 2pt;
-  border-top: #192d5c 2px solid;  
-  border-bottom: #192d5c 1px solid;  
+  border-top: #192d5c 2px solid;
+  border-bottom: #192d5c 1px solid;
 }
 
 .reportTableTotals td {
@@ -150,7 +150,7 @@ table.reportTable {
   height: 16pt;
   vertical-align: middle;
   padding: 2pt;
-  font-size: 8pt;  
+  font-size: 8pt;
 }
 
 .detailsOddItem td {
@@ -159,9 +159,9 @@ table.reportTable {
   height: 16pt;
   vertical-align: middle;
   padding: 2pt;
-  border-top: #192d5c 1px solid;  
+  border-top: #192d5c 1px solid;
   border-bottom: #192d5c 1px solid;
-  font-size: 8pt;  
+  font-size: 8pt;
 }
 
 .separator td {
@@ -178,3 +178,4 @@ table.internalTable {
 	margin: 0px 6px 0px -6px;
   width: 100%;
 }
+

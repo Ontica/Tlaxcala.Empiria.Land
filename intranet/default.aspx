@@ -20,7 +20,7 @@
     function txtPassword_onkeypress(e) {
       var oEvent = getEvent(e);
       var keycode = oEvent.which ? oEvent.which : oEvent.keyCode;
-      
+
       if ((keycode == 13) && (getElement("txtPassword").value != '')) {
         doLogin();
         cancelEvent(oEvent);
@@ -30,7 +30,7 @@
     function txtUserId_onkeypress(e) {
       var oEvent = getEvent(e);
       var keycode = oEvent.which ? oEvent.which : oEvent.keyCode;
-      
+
       if ((keycode == 13) && (getElement("txtUserId").value != '')) {
         getElement("txtPassword").focus();
         cancelEvent(oEvent);
@@ -40,13 +40,13 @@
     function txtAccessCode_onkeypress(e) {
       var oEvent = getEvent(e);			
       var keycode = oEvent.which ? oEvent.which : oEvent.keyCode;
-      
+
       if ((keycode == 13) && (getElement("txtAccessCode").value != '')) {
         doLogin();
         cancelEvent(oEvent);
       }
     }
-    
+
     function validate() {
       if (getElement("txtUserId").value == '') {
         alert("Para ingresar a este sitio se requiere proporcionar el identificador de acceso.");
@@ -104,15 +104,15 @@
 <body>
   <form id="frmEditor" method="post" target="_self" runat="server">
     <div id="divMainBanner"><img src="./themes/default/customer/pleca-roja.png" style="cursor: auto;"  width="636px" alt="" title="" /></div>
-    <div id="divMain">     
+    <div id="divMain">
       <div id="divLeftColumn">
         <br />
         <img align="middle" class="decoratorImage" src="./themes/default/customer/customer.full.logo.png" alt="" style='margin-left:16px;margin-top:8px' />
         <br /><br /><br /><br /><br /><br /><br />
         <ul style="margin-left:12px;">
           <li><a href="<%=Empiria.ExecutionServer.CustomerUrl%>">Gobierno del Estado de Tlaxcala</a></li>
-          <li><a href="http://www.inegi.org.mx/inegi/default.aspx?s=inegi&e=32">Instituto Nacional de Estadística y Geografía (INEGI)</a></li>				  
-          <li><a href="http://www.notariadomexicano.org.mx/">Asociación Nacional del Notariado Mexicano</a></li>				  
+          <li><a href="http://www.inegi.org.mx/inegi/default.aspx?s=inegi&e=32">Instituto Nacional de Estadística y Geografía (INEGI)</a></li>				
+          <li><a href="http://www.notariadomexicano.org.mx/">Asociación Nacional del Notariado Mexicano</a></li>				
           <li><a href="http://www.banxico.org.mx/PortalesEspecializados/tiposCambio/TiposCambio.html">Información financiera</a></li>
           <li><a href="http://www.precisa.gob.mx/www.php?categoria=180">Periódicos y revistas</a></li>
           <li><a href="http://smn.cna.gob.mx/">Consultar el estado del tiempo</a></li>
@@ -144,7 +144,7 @@
             <span class="formButton">
               <a href="javascript:doLogin();" target="_self">							
               <img id="loginBtn" src="./themes/default/buttons/go.button.png" alt="" />Ingresar al sitio</a>
-            </span>            
+            </span>
           </div>
         </div>
         <div class="divOptionsMenu">

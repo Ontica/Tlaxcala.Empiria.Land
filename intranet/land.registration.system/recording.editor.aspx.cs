@@ -120,8 +120,8 @@ namespace Empiria.Web.UI.LRS {
       var document = recordingAct.Document;
       document.RemoveRecordingAct(recordingAct);
 
-      string msg = "Se canceló el acto jurídico " + recordingAct.RecordingActType.DisplayName; 
-      if (!recordingAct.Recording.IsEmptyInstance && 
+      string msg = "Se eliminó el acto jurídico " + recordingAct.RecordingActType.DisplayName;
+      if (!recordingAct.Recording.IsEmptyInstance &&
           recordingAct.Recording.Status == RecordableObjectStatus.Deleted) {
         msg += ", así como la partida correspondiente.";
       }

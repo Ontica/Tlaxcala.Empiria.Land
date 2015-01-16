@@ -305,26 +305,26 @@ namespace Empiria.Web.UI.LRS {
       //locationData.UbicationReference = txtUbication.Value;
       //locationData.ExternalNo = txtExternalNumber.Value;
       //locationData.InternalNo = txtInternalNumber.Value;
-      ////property.PartitionNo = txtFractionTag.Value;     
+      ////property.PartitionNo = txtFractionTag.Value;
     }
 
     private void FillPropertyEventData() {
       CadastralInfo cadastralData = property.CadastralData;
 
       if (cboTotalAreaUnit.Value.Length != 0 && txtTotalArea.Value.Length != 0) {
-        cadastralData.TotalArea = Quantity.Parse(DataTypes.Unit.Parse(int.Parse(cboTotalAreaUnit.Value)), 
+        cadastralData.TotalArea = Quantity.Parse(DataTypes.Unit.Parse(int.Parse(cboTotalAreaUnit.Value)),
                                                  decimal.Parse(txtTotalArea.Value));
       } else {
         cadastralData.TotalArea = Quantity.Parse(DataTypes.Unit.Empty, 0m);
       }
       if (cboFloorAreaUnit.Value.Length != 0 && txtFloorArea.Value.Length != 0) {
-        cadastralData.FloorArea = Quantity.Parse(DataTypes.Unit.Parse(int.Parse(cboFloorAreaUnit.Value)), 
+        cadastralData.FloorArea = Quantity.Parse(DataTypes.Unit.Parse(int.Parse(cboFloorAreaUnit.Value)),
                                                  decimal.Parse(txtFloorArea.Value));
       } else {
         cadastralData.FloorArea = Quantity.Parse(DataTypes.Unit.Empty, 0m);
       }
       if (cboCommonAreaUnit.Value.Length != 0 && txtCommonArea.Value.Length != 0) {
-        cadastralData.CommonArea = Quantity.Parse(DataTypes.Unit.Parse(int.Parse(cboCommonAreaUnit.Value)), 
+        cadastralData.CommonArea = Quantity.Parse(DataTypes.Unit.Parse(int.Parse(cboCommonAreaUnit.Value)),
                                                   decimal.Parse(txtCommonArea.Value));
       } else {
         cadastralData.CommonArea = Quantity.Parse(DataTypes.Unit.Empty, 0m);

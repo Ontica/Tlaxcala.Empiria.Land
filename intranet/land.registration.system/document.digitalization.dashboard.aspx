@@ -10,7 +10,7 @@
     <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 2);" title="">Libros en análisis y captura</td>
     <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 3);" title="">Libros en revisión de calidad</td>
     <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Libros terminados</td>
-    <td id="tabStripItem_5" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 5);" title="">Control de inscripciones</td>    
+    <td id="tabStripItem_5" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 5);" title="">Control de inscripciones</td>
     <td>&nbsp; &nbsp; &nbsp; &nbsp;</td>
     <td><input id="currentTabStripItem" name="currentTabStripItem" type="hidden" /></td>
   </tr>
@@ -84,7 +84,7 @@
         return;
       case 'processImagingDirectories':
 				processImagingDirectories();
-				return; 
+				return;
       case 'createObject':
         createObject();
         return;
@@ -114,13 +114,13 @@
         return;
       case 'sendRecordingBookToQualityControl':
         sendRecordingBookToQualityControl(arguments[1]);
-        return;         
+        return;
       case 'updateRecordingsControlCount':
         updateRecordingsControlCount(arguments[1]);
         return;
       case 'updateRecordingsControlDates':
         updateRecordingsControlDates(arguments[1]);
-        return; 
+        return;
       case 'closeRecordingBook':
         closeRecordingBook(arguments[1]);
         return;
@@ -452,7 +452,7 @@
   function loadData() {
     sendPageCommand("loadData");
   }
-  
+
   function updateUserInterface(oSourceControl) {
     sendPageCommand("updateUserInterface");
   }
@@ -469,7 +469,7 @@
 			case "sendRecordingBookToLastAnalyst":
 				return doOperation(operationName, recordingBookId);
 	    case "sendRecordingBookToQualityControl":
-				return doOperation(operationName, recordingBookId);	    
+				return doOperation(operationName, recordingBookId);	
 			case "closeRecordingBook":
 				return doOperation(operationName, recordingBookId);
       case 'updateRecordingsControlDates':
@@ -488,7 +488,7 @@
     getElement('divRecordingsControlCount' + recordingBookId).style.display = "none";
     getElement('divRecordingsControlDates' + recordingBookId).style.display = "none";
     getElement('divCloseRecordingBook' + recordingBookId).style.display = "none";
-    
+
     var operationName = getElement('cboOperation' + recordingBookId).value;
 		switch(operationName) {
 	    case "assignRecordingBook":
@@ -502,7 +502,7 @@
 	      return;
 	   case "unassignRecordingBook":
 				getElement('divRecordingBookAnalyst' + recordingBookId).style.display = "inline";
-	      return;   
+	      return;
 	   case "closeRecordingBook":
 	      getElement('divCloseRecordingBook' + recordingBookId).style.display = "inline";
 	      return;

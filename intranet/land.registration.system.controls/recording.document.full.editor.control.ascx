@@ -1,37 +1,51 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="false" EnableViewState="true" Inherits="Empiria.Web.UI.LRS.RecordingDocumentFullEditorControl" CodeFile="recording.document.full.editor.control.ascx.cs" %>
-<table id="oPreemptiveNotice" class="editionTable" style="display:none;" runat="server">
-    <tr>
+<table id="oNotaryOfficialLetter" class="editionTable" style="display:none;" runat="server">
+  <tr>
+    <td>
+      Tipo de oficio:
+    </td>
+    <td>
+      <select id="cboNotaryOfficialLetterSubtype" class="selectBox" style="width:220px" title="" runat="server">
+        <option value=''>( Seleccionar )</option>
+        <option value='744'>Aviso preventivo</option>
+        <option value='757'>Aviso definitivo</option>
+      </select>
+      <!--
+        <option value='757'>Corrección</option>
+        <option value='739'>Cancelación de aviso</option>
+        <option value='741'>Cancelación de hipoteca</option>
+!-->
+    </td>
+    <td class="lastCell">
+      No. Oficio: &nbsp;
+      <input id="txtNotaryOfficialLetterNo" type="text" class="textBox" style="width:100px" title="" maxlength="36"  runat="server" />
+      <input type="button" class="button" value="Sin Núm." style="width:52px;height:24px;vertical-align:middle;margin-left:-8px" onclick="getElement('<%=txtNotaryOfficialLetterNo.ClientID%>').value='S/N'" />
+      &nbsp;&nbsp;Fecha del oficio:
+      <input id='txtNotaryOfficialLetterIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
+      <img id='imgNotaryOfficialLetterIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtNotaryOfficialLetterIssueDate.ClientID%>'), getElement('imgNotaryOfficialLetterIssueDate'));" title="Despliega el calendario" alt="" />
+    </td>
+  </tr>
+  <tr>
     <td>Ciudad:</td>
     <td>
-      <select id="cboPreemptiveNoticeIssuePlace" class="selectBox" style="width:168px" title="" runat="server" >
+      <select id="cboNotaryOfficialLetterIssuePlace" class="selectBox" style="width:220px" title="" runat="server" >
       </select>
     </td>
     <td class="lastCell">
       Notaría:
-      <select id="cboPreemptiveNoticeIssueOffice" class="selectBox" style="width:50px" title="" runat="server" >
+      <select id="cboNotaryOfficialLetterIssueOffice" class="selectBox" style="width:50px" title="" runat="server" >
       </select>
       Lic:
-      <select id="cboPreemptiveNoticeIssuedBy" class="selectBox" style="width:262px" title="" runat="server" >
+      <select id="cboNotaryOfficialLetterIssuedBy" class="selectBox" style="width:262px" title="" runat="server" >
       </select>
-    </td>
-  </tr>
-  <tr>
-    <td colspan='2'>&nbsp;</td>
-    <td class="lastCell">
-      Oficio: &nbsp;
-      <input id="txtPreemptiveNoticeDocNumber" type="text" class="textBox" style="width:100px" title="" maxlength="36"  runat="server" />
-      <input type="button" class="button" value="Sin Núm." style="width:52px;height:24px;vertical-align:middle;margin-left:-8px" onclick="getElement('<%=txtPreemptiveNoticeDocNumber.ClientID%>').value='S/N'" />
-      &nbsp;&nbsp;Fecha del oficio:
-      <input id='txtPreemptiveNoticeDocIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgPreemptiveNoticeIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtPreemptiveNoticeDocIssueDate.ClientID%>'), getElement('imgPreemptiveNoticeIssueDate'));" title="Despliega el calendario" alt="" />
     </td>
   </tr>
 </table>
-<table id="oNotaryRecording" class="editionTable" style="display:none;" runat="server">
+<table id="oNotaryPublicDeed" class="editionTable" style="display:none;" runat="server">
     <tr>
     <td>Ciudad:</td>
     <td>
-      <select id="cboNotaryDocIssuePlace" class="selectBox" style="width:168px" title="" runat="server" >
+      <select id="cboNotaryDocIssuePlace" class="selectBox" style="width:220px" title="" runat="server" >
       </select>
     </td>
     <td class="lastCell">
@@ -46,32 +60,32 @@
   <tr>
     <td>Volumen / libro:</td>
     <td class="lastCell" colspan="2">
-      <input id="txtNotaryDocBook" type="text" class="textBox" style="width:40px" 
+      <input id="txtNotaryDocBook" type="text" class="textBox" style="width:40px"
              onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
       Escritura:
-        <input id="txtNotaryDocNumber" name="txtNotaryDocNumber" type="text" class="textBox" style="width:40px" 
+        <input id="txtNotaryDocNumber" name="txtNotaryDocNumber" type="text" class="textBox" style="width:40px"
          onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
-       &nbsp;Folios del: &nbsp;<input id="txtNotaryDocStartSheet" name="txtNotaryDocStartSheet" type="text" class="textBox" style="width:50px" 
+       &nbsp;Folios del: &nbsp;<input id="txtNotaryDocStartSheet" name="txtNotaryDocStartSheet" type="text" class="textBox" style="width:50px"
          onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
        al:&nbsp;&nbsp;
-       <input id="txtNotaryDocEndSheet" name="txtNotaryDocEndSheet" type="text" class="textBox" style="width:40px" 
+       <input id="txtNotaryDocEndSheet" name="txtNotaryDocEndSheet" type="text" class="textBox" style="width:40px"
          onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
       Fecha de la escritura:
       <input type="text" class="textBox" id='txtNotaryDocIssueDate' name='txtNotaryDocIssueDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgNotaryDocIssueDate' src="../themes/default/buttons/ellipsis.gif" 
+      <img id='imgNotaryDocIssueDate' src="../themes/default/buttons/ellipsis.gif"
       onclick="return showCalendar(getElement('<%=txtNotaryDocIssueDate.ClientID%>'), getElement('imgNotaryDocIssueDate'));" title="Despliega el calendario" alt="" />
     </td>
   </tr>
 </table>
-<table id="oTitleRecording" class="editionTable" style="display:none;" runat="server">
+<table id="oEjidalSystemTitle" class="editionTable" style="display:none;" runat="server">
   <tr>
     <td>
       Título de propiedad número:
     </td>
-    <td><input id="txtPropTitleDocNumber" type="text" class="textBox" style="width:106px" onkeypress="return upperCaseKeyFilter(this);" 
+    <td><input id="txtPropTitleDocNumber" type="text" class="textBox" style="width:106px" onkeypress="return upperCaseKeyFilter(this);"
          title="" maxlength="32" runat="server" /></td>
     <td>Expedido por:</td>
-    <td class="lastCell">C. 
+    <td class="lastCell">C.
       <select id="cboPropTitleDocIssuedBy" class="selectBox" style="width:290px" title="" runat="server">
       </select>
     </td>
@@ -80,7 +94,7 @@
     <td>Fecha del acta de asamblea:</td>
     <td>
       <input id='txtPropTitleIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgPropTitleIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtPropTitleIssueDate.ClientID%>'), getElement('imgPropTitleIssueDate'));" title="Despliega el calendario" alt="" />                    
+      <img id='imgPropTitleIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtPropTitleIssueDate.ClientID%>'), getElement('imgPropTitleIssueDate'));" title="Despliega el calendario" alt="" />
     </td>
     <td class="lastCell" colspan="2">
       Expedido en:
@@ -91,22 +105,29 @@
     </td>
   </tr>
 </table>
-<table id="oJudicialRecording" class="editionTable" style="display:none;" runat="server">
+<table id="oJudgeOfficialLetter" class="editionTable" style="display:none;" runat="server">
   <tr>
     <td>
-      Tipo de documento:
+      Tipo de oficio:
     </td>
     <td>
-      <select id="cboJudicialDocSubtype" class="selectBox" style="width:160px" title="" runat="server">
+      <select id="cboJudicialDocSubtype" class="selectBox" style="width:220px" title="" runat="server">
         <option value=''>( Seleccionar )</option>
-        <option value='773'>Decreto</option>
+        <option value='770'>Embargo</option>
+        <option value='771'>Sentencia de usucapión</option>
+      </select>
+
+      <!--
+
+              <option value='773'>Decreto</option>
         <option value='770'>Embargo</option>
         <option value='775'>Programa de Desarrollo Municipal</option>
         <option value='772'>Resolución judicial</option>
         <option value='771'>Sentencia de usucapión</option>
         <option value=''></option>
         <option value='774'>Cancelación de embargo</option>
-      </select>
+
+        !-->
     </td>
     <td>
       Expediente: &nbsp;
@@ -125,7 +146,7 @@
       Ciudad:
     </td>
     <td>
-      <select id="cboJudicialDocIssuePlace" class="selectBox" style="width:160px" title="" runat="server">
+      <select id="cboJudicialDocIssuePlace" class="selectBox" style="width:220px" title="" runat="server">
       </select>
     </td>
     <td>
@@ -140,7 +161,11 @@
     </td>
   </tr>
 </table>
-<table id="oPrivateRecording" class="editionTable" style="display:none;" runat="server">
+
+<table id="oThirdPartyOfficialLetter" class="editionTable" style="display:none;" runat="server">
+
+</table>
+<table id="oPrivateContract" class="editionTable" style="display:none;" runat="server">
   <tr>
     <td>
       Tipo de contrato:
@@ -191,99 +216,17 @@
 <script type="text/javascript">
   /* <![CDATA[ */
 
-  function <%=this.ClientID%>_inheritAnnotationData(baseRecordingId) {    
-    var rawData = <%=this.ClientID%>_getRecordingDocumentRawData(baseRecordingId);
-
-    if (rawData.length == 0) {
-      <%=this.ClientID%>_updateUserInterface('');
-      return;
-    }
-    var dataArray = rawData.split('|');
-
-    <%=this.ClientID%>_updateUserInterface(dataArray[0]);
-
-    switch (dataArray[0]) {
-      case "oNotaryRecording":
-        <%=this.ClientID%>_inheritNotaryRecordingData(dataArray);
-        return;
-      case "oTitleRecording":
-        <%=this.ClientID%>_inheritTitleRecordingData(dataArray);
-        return;
-      case "oJudicialRecording":
-        <%=this.ClientID%>_inheritJudicialRecordingData(dataArray);
-        return;
-      case "oPrivateRecording":
-        <%=this.ClientID%>_inheritPrivateRecordingData(dataArray);
-        return;
-      default:
-        alert("No reconozco el tipo de documento regresado: " + dataArray[0]);
-        return;
-    }
-  }
-
-  function <%=this.ClientID%>_inheritNotaryRecordingData(dataArray) {
-     getElement('<%=this.ClientID%>_cboNotaryDocIssuePlace').value = dataArray[1];
-     <%=this.ClientID%>_updateControls('oNotaryRecording.IssuePlace');
-
-     getElement('<%=this.ClientID%>_cboNotaryDocIssueOffice').value = dataArray[2];
-     <%=this.ClientID%>_updateControls('oNotaryRecording.IssueOffice');
-
-     getElement('<%=this.ClientID%>_cboNotaryDocIssuedBy').value = dataArray[3];
-     getElement('<%=this.ClientID%>_txtNotaryDocBook').value = dataArray[4];
-     getElement('<%=this.ClientID%>_txtNotaryDocNumber').value = dataArray[5];
-     getElement('<%=this.ClientID%>_txtNotaryDocStartSheet').value = dataArray[6];
-     getElement('<%=this.ClientID%>_txtNotaryDocEndSheet').value = dataArray[7];
-     getElement('<%=this.ClientID%>_txtNotaryDocIssueDate').value = dataArray[8];
-  }
-
-  function <%=this.ClientID%>_inheritTitleRecordingData(dataArray) {
-    getElement('<%=this.ClientID%>_txtPropTitleDocNumber').value = dataArray[1];
-    getElement('<%=this.ClientID%>_cboPropTitleDocIssuedBy').value = dataArray[2];
-    getElement('<%=this.ClientID%>_txtPropTitleIssueDate').value = dataArray[3];
-    getElement('<%=this.ClientID%>_cboPropTitleIssueOffice').value = dataArray[4];
-    getElement('<%=this.ClientID%>_txtPropTitleStartSheet').value = dataArray[5];
-  }
-
-  function <%=this.ClientID%>_inheritJudicialRecordingData(dataArray) {
-
-    getElement('<%=this.ClientID%>_cboJudicialDocIssuePlace').value = dataArray[1];
-    <%=this.ClientID%>_updateControls('oJudicialRecording.IssuePlace');
-
-    getElement('<%=this.ClientID%>_cboJudicialDocIssueOffice').value = dataArray[2];
-    <%=this.ClientID%>_updateControls('oJudicialRecording.IssueOffice');
-
-    getElement('<%=this.ClientID%>_cboJudicialDocIssuedBy').value = dataArray[3];
-    getElement('<%=this.ClientID%>_txtJudicialDocBook').value = dataArray[4];
-    getElement('<%=this.ClientID%>_txtJudicialDocNumber').value = dataArray[5];
-    getElement('<%=this.ClientID%>_txtJudicialDocIssueDate').value = dataArray[6];
-  }
-
-  function <%=this.ClientID%>_inheritPrivateRecordingData(dataArray) {
-    getElement('<%=this.ClientID%>_cboPrivateDocIssuePlace').value = dataArray[1];
-    <%=this.ClientID%>_updateControls('oPrivateRecording.IssuePlace');
-    getElement('<%=this.ClientID%>_txtPrivateDocIssueDate').value = dataArray[2];
-    getElement('<%=this.ClientID%>_txtPrivateDocNumber').value = dataArray[3];
-    getElement('<%=this.ClientID%>_cboPrivateDocMainWitnessPosition').value = dataArray[4];
-    <%=this.ClientID%>_updateControls('oPrivateRecording.MainWitnessPosition');
-    getElement('<%=this.ClientID%>_cboPrivateDocMainWitness').value = dataArray[5];  
-  }
-
-  function <%=this.ClientID%>_getRecordingDocumentRawData(baseRecordingId) {
-    var ajaxURL = "../ajax/land.registration.system.data.aspx";
-    ajaxURL += "?commandName=getRecordingDocumentRawData";
-    ajaxURL += "&recordingId=" + baseRecordingId;
-
-    return invokeAjaxMethod(false, ajaxURL, null);
-  }
 
   function <%=this.ClientID%>_validate(presentationDate) {
-    if (getElement("<%=oNotaryRecording.ClientID%>").style.display == 'inline') {
+    if (getElement("<%=oNotaryPublicDeed.ClientID%>").style.display == 'inline') {
       return <%=this.ClientID%>_validateNotaryRecording(presentationDate);
-    } else if (getElement("<%=oTitleRecording.ClientID%>").style.display == 'inline') {
+    } else if (getElement("<%=oNotaryOfficialLetter.ClientID%>").style.display == 'inline') {
+      return <%=this.ClientID%>_validateNotaryOfficialLetter(presentationDate);
+    } else if (getElement("<%=oEjidalSystemTitle.ClientID%>").style.display == 'inline') {
       return <%=this.ClientID%>_validateTitleRecording(presentationDate);
-    } else if (getElement("<%=oJudicialRecording.ClientID%>").style.display == 'inline') {
+    } else if (getElement("<%=oJudgeOfficialLetter.ClientID%>").style.display == 'inline') {
       return <%=this.ClientID%>_validateJudicialRecording(presentationDate);
-    } else if (getElement("<%=oPrivateRecording.ClientID%>").style.display == 'inline') {
+    } else if (getElement("<%=oPrivateContract.ClientID%>").style.display == 'inline') {
       return <%=this.ClientID%>_validatePrivateRecording(presentationDate);
     } else {
       return true;
@@ -324,6 +267,41 @@
       if (!confirm("No se ha proporcionado la fecha en que se protocolizó la inscripción.\n\n¿Se desconoce la fecha de protocolozación?")) {
         return false;
       }
+    }
+    return true;
+  }
+
+  function <%=this.ClientID%>_validateNotaryOfficialLetter(presentationDate) {
+    if (getElement("<%=cboNotaryOfficialLetterSubtype.ClientID%>").value.length == 0) {
+      alert("Requiero se proporcione el tipo de oficio.");
+      return false;
+    }
+    if (getElement("<%=txtNotaryDocNumber.ClientID%>").value.length == 0) {
+      getElement("<%=txtNotaryDocNumber.ClientID%>").value = "S/N";
+    }
+    if (getElement("<%=txtNotaryOfficialLetterIssueDate.ClientID%>").value.length == 0) {
+      alert("Necesito se proporcione la fecha del oficio.")
+      return false;
+    }
+    if (!isDate(getElement('<%=txtNotaryOfficialLetterIssueDate.ClientID%>'))) {
+      alert("No reconozco la fecha del oficio.");
+      return false;
+    }
+    if (!isValidDatePeriod(getElement('<%=txtNotaryOfficialLetterIssueDate.ClientID%>').value, presentationDate)) {
+      alert("La fecha del oficio no puede ser posterior a su fecha de presentación.");
+      return false;
+    }
+    if (getElement("<%=cboNotaryOfficialLetterIssuePlace.ClientID%>").value.length == 0) {
+      alert("Requiero se proporcione la ciudad a la que pertenece la\nnotaría que envió el oficio.")
+      return false;
+    }
+    if (getElement("<%=cboNotaryOfficialLetterIssueOffice.ClientID%>").value.length == 0) {
+      alert("Requiero se proporcione la notaría que envió el oficio.")
+      return false;
+    }
+    if (getElement("<%=cboNotaryOfficialLetterIssuedBy.ClientID%>").value.length == 0) {
+      alert("Necesito se proporcione el nombre del notario que firmó el oficio.")
+      return false;
     }
     return true;
   }
@@ -406,11 +384,11 @@
 
   function <%=this.ClientID%>_validatePrivateRecording(presentationDate) {
     if (getElement("<%=cboPrivateDocSubtype.ClientID%>").value.length == 0) {
-      alert("Requiero se proporcione el tipo de documento.")
+      alert("Requiero se proporcione el tipo de documento.");
       return false;
     }
     if (getElement("<%=cboPrivateDocIssuePlace.ClientID%>").value.length == 0) {
-      alert("Requiero conocer la ciudad donde se celebró el contrato.")
+      alert("Requiero conocer la ciudad donde se celebró el contrato.");
       return false;
     }
     if (getElement("<%=txtPrivateDocIssueDate.ClientID%>").value.length != 0) {
@@ -443,11 +421,12 @@
   }
 
   function <%=this.ClientID%>_updateUserInterface(documentTypeTag) {
-    getElement("<%=oPreemptiveNotice.ClientID%>").style.display = 'none';
-    getElement("<%=oNotaryRecording.ClientID%>").style.display = 'none';
-    getElement("<%=oTitleRecording.ClientID%>").style.display = 'none';
-    getElement("<%=oJudicialRecording.ClientID%>").style.display = 'none';
-    getElement("<%=oPrivateRecording.ClientID%>").style.display = 'none';
+    getElement("<%=oNotaryOfficialLetter.ClientID%>").style.display = 'none';
+    getElement("<%=oNotaryPublicDeed.ClientID%>").style.display = 'none';
+    getElement("<%=oEjidalSystemTitle.ClientID%>").style.display = 'none';
+    getElement("<%=oJudgeOfficialLetter.ClientID%>").style.display = 'none';
+    getElement("<%=oThirdPartyOfficialLetter.ClientID%>").style.display = 'none';
+    getElement("<%=oPrivateContract.ClientID%>").style.display = 'none';
 
     if (documentTypeTag.length != 0) {
       getElement("<%=this.ClientID%>_" + documentTypeTag).style.display = 'inline';
@@ -455,48 +434,49 @@
   }
 
   function <%=this.ClientID%>_disabledControl(disabledFlag) {
-    disableControls(getElement("<%=oPreemptiveNotice.ClientID%>"), disabledFlag);
-    disableControls(getElement("<%=oNotaryRecording.ClientID%>"), disabledFlag);
-    disableControls(getElement("<%=oTitleRecording.ClientID%>"), disabledFlag);
-    disableControls(getElement("<%=oJudicialRecording.ClientID%>"), disabledFlag);
-    disableControls(getElement("<%=oPrivateRecording.ClientID%>"), disabledFlag);
+    disableControls(getElement("<%=oNotaryOfficialLetter.ClientID%>"), disabledFlag);
+    disableControls(getElement("<%=oNotaryPublicDeed.ClientID%>"), disabledFlag);
+    disableControls(getElement("<%=oEjidalSystemTitle.ClientID%>"), disabledFlag);
+    disableControls(getElement("<%=oJudgeOfficialLetter.ClientID%>"), disabledFlag);
+    disableControls(getElement("<%=oThirdPartyOfficialLetter.ClientID%>"), disabledFlag);
+    disableControls(getElement("<%=oPrivateContract.ClientID%>"), disabledFlag);
   }
 
   function <%=this.ClientID%>_updateControls(sourceName) {
     var url = "../ajax/land.registration.system.data.aspx";
     switch (sourceName) {
-      case "oPreemptiveNoticeRecording.IssuePlace":
+      case "oNotaryOfficialLetterRecording.IssuePlace":
         url += "?commandName=getNotaryOfficesInPlaceStringArrayCmd";
-        url += "&placeId=" + getElement('<%=cboPreemptiveNoticeIssuePlace.ClientID%>').value;
-        invokeAjaxComboItemsLoader(url, getElement('<%=cboPreemptiveNoticeIssueOffice.ClientID%>'));
+        url += "&placeId=" + getElement('<%=cboNotaryOfficialLetterIssuePlace.ClientID%>').value;
+        invokeAjaxComboItemsLoader(url, getElement('<%=cboNotaryOfficialLetterIssueOffice.ClientID%>'));
         return;
-      case "oPreemptiveNoticeRecording.IssueOffice":
+      case "oNotaryOfficialLetterRecording.IssueOffice":
         url += "?commandName=getNotariesInNotaryOfficeStringArrayCmd";
-        url += "&notaryOfficeId=" + getElement('<%=cboPreemptiveNoticeIssueOffice.ClientID%>').value;
-        invokeAjaxComboItemsLoader(url, getElement('<%=cboPreemptiveNoticeIssuedBy.ClientID%>'));
+        url += "&notaryOfficeId=" + getElement('<%=cboNotaryOfficialLetterIssueOffice.ClientID%>').value;
+        invokeAjaxComboItemsLoader(url, getElement('<%=cboNotaryOfficialLetterIssuedBy.ClientID%>'));
         return;
-      case "oNotaryRecording.IssuePlace":
+      case "oNotaryPublicDeed.IssuePlace":
         url += "?commandName=getNotaryOfficesInPlaceStringArrayCmd";
         url += "&placeId=" + getElement('<%=cboNotaryDocIssuePlace.ClientID%>').value;
         invokeAjaxComboItemsLoader(url, getElement('<%=cboNotaryDocIssueOffice.ClientID%>'));
         return;
-      case "oNotaryRecording.IssueOffice":
+      case "oNotaryPublicDeed.IssueOffice":
         url += "?commandName=getNotariesInNotaryOfficeStringArrayCmd";
         url += "&notaryOfficeId=" + getElement('<%=cboNotaryDocIssueOffice.ClientID%>').value;
         invokeAjaxComboItemsLoader(url, getElement('<%=cboNotaryDocIssuedBy.ClientID%>'));
         return;
-      case "oJudicialRecording.IssuePlace":
+      case "oJudgeOfficialLetter.IssuePlace":
         url += "?commandName=getJudicialOfficeInPlaceStringArrayCmd";
         url += "&placeId=" + getElement('<%=cboJudicialDocIssuePlace.ClientID%>').value;
         invokeAjaxComboItemsLoader(url, getElement('<%=cboJudicialDocIssueOffice.ClientID%>'));
         return;
-      case "oJudicialRecording.IssueOffice":
+      case "oJudgeOfficialLetter.IssueOffice":
         url += "?commandName=getJudgesInJudicialOfficeStringArrayCmd";
         url += "&judicialOfficeId=" + getElement('<%=cboJudicialDocIssueOffice.ClientID%>').value;
         invokeAjaxComboItemsLoader(url, getElement('<%=cboJudicialDocIssuedBy.ClientID%>'));
         return;
-      case "oPrivateRecording.IssuePlace":
-      case "oPrivateRecording.MainWitnessPosition":
+      case "oPrivateContract.IssuePlace":
+      case "oPrivateContract.MainWitnessPosition":
         url += "?commandName=getWitnessInPositionStringArrayCmd";
         url += "&placeId=" + getElement('<%=cboPrivateDocIssuePlace.ClientID%>').value;
         url += "&positionId=" + getElement('<%=cboPrivateDocMainWitnessPosition.ClientID%>').value;
@@ -508,19 +488,18 @@
     }
   }
 
-  addEvent(getElement('<%=cboPreemptiveNoticeIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPreemptiveNoticeRecording.IssuePlace") } );
-  addEvent(getElement('<%=cboPreemptiveNoticeIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPreemptiveNoticeRecording.IssueOffice") } );
+  addEvent(getElement('<%=cboNotaryOfficialLetterIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oNotaryOfficialLetterRecording.IssuePlace") } );
+  addEvent(getElement('<%=cboNotaryOfficialLetterIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oNotaryOfficialLetterRecording.IssueOffice") } );
 
-  addEvent(getElement('<%=cboNotaryDocIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oNotaryRecording.IssuePlace") } );
-  addEvent(getElement('<%=cboNotaryDocIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oNotaryRecording.IssueOffice") } );
+  addEvent(getElement('<%=cboNotaryDocIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oNotaryPublicDeed.IssuePlace") } );
+  addEvent(getElement('<%=cboNotaryDocIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oNotaryPublicDeed.IssueOffice") } );
 
-  addEvent(getElement('<%=cboJudicialDocIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oJudicialRecording.IssuePlace") } );
-  addEvent(getElement('<%=cboJudicialDocIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oJudicialRecording.IssueOffice") } );
-  addEvent(getElement('<%=cboPrivateDocIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPrivateRecording.IssuePlace") } );
-  addEvent(getElement('<%=cboPrivateDocMainWitnessPosition.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPrivateRecording.MainWitnessPosition") } );
+  addEvent(getElement('<%=cboJudicialDocIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oJudgeOfficialLetter.IssuePlace") } );
+  addEvent(getElement('<%=cboJudicialDocIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oJudgeOfficialLetter.IssueOffice") } );
+  addEvent(getElement('<%=cboPrivateDocIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPrivateContract.IssuePlace") } );
+  addEvent(getElement('<%=cboPrivateDocMainWitnessPosition.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPrivateContract.MainWitnessPosition") } );
   addEvent(getElement('<%=txtJudicialDocBook.ClientID%>'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('<%=txtJudicialDocNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
 
   /* ]]> */
 </script>
- 

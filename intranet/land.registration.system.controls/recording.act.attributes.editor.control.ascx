@@ -58,7 +58,7 @@
 <tr>
   <td>Importe del avalúo:&nbsp;</td>
   <td colspan="5" class="lastCell">
-    <input id="txtAppraisalAmount" type="text" class="textBox" style="width:90px;" 
+    <input id="txtAppraisalAmount" type="text" class="textBox" style="width:90px;"
             onkeypress="return positiveKeyFilter(this);" onblur='this_formatAsNumber(this);'
             title="" maxlength="18" runat="server" />
     <select id="cboAppraisalCurrency" class="selectBox" style="width:52px;margin-left:-6px" runat="server">
@@ -100,12 +100,12 @@
       alert("Requiero la moneda del importe del avalúo.");
       return false;
     }
-    if (Number(getElement('<%=cboAppraisalCurrency.ClientID%>').value) < 0 && 
+    if (Number(getElement('<%=cboAppraisalCurrency.ClientID%>').value) < 0 &&
         getElement('<%=txtAppraisalAmount.ClientID%>').value.length != 0) {
       alert("Se seleccionó 'No consta' como moneda pero el importe del avalúo sí se proporcionó.");
       return false;
     }
-    if (Number(getElement('<%=cboAppraisalCurrency.ClientID%>').value) > 0 && 
+    if (Number(getElement('<%=cboAppraisalCurrency.ClientID%>').value) > 0 &&
         getElement('<%=txtAppraisalAmount.ClientID%>').value.length == 0) {
       alert("Requiero el importe del avalúo.");
       return false;
@@ -115,12 +115,12 @@
         alert("Requiero la moneda del importe de la operación.");
         return false;
       }
-      if (Number(getElement('<%=cboOperationCurrency.ClientID%>').value) < 0 && 
+      if (Number(getElement('<%=cboOperationCurrency.ClientID%>').value) < 0 &&
           getElement('<%=txtOperationAmount.ClientID%>').value.length != 0) {
         alert("Se seleccionó 'No consta' como moneda pero el importe de la operación sí se proporcionó.");
         return false;
       }
-      if (Number(getElement('<%=cboOperationCurrency.ClientID%>').value) > 0 && 
+      if (Number(getElement('<%=cboOperationCurrency.ClientID%>').value) > 0 &&
           getElement('<%=txtOperationAmount.ClientID%>').value.length == 0) {
         alert("Requiero el importe de la operación.");
         return false;
@@ -169,7 +169,7 @@
     }
     return true;
   }
-  
+
   function this_searchContractPlaces() {
     var url = "../ajax/geographic.data.aspx";
     url += "?commandName=getRegionsStringArrayCmd";
@@ -192,6 +192,6 @@
 
   <% if (base.DisplayCreditFields) { %>
     addEvent(getElement('<%=txtContractNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
-  <% } %> 
+  <% } %>
 /* ]]> */
 </script>

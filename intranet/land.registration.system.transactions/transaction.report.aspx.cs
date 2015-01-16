@@ -125,7 +125,7 @@ namespace Empiria.Web.UI.FSM {
 
     protected string GetRecordingActs() {
       //FixedList<RecordingAct> list = transaction.Recording.RecordingActs;
-      //const string template = "<tr width='24px'><td>{NUMBER}</td><td style='white-space:nowrap'>{RECORDING.ACT}&nbsp; &nbsp; &nbsp;</td><td style='white-space:nowrap'>{PROPERTY}</td>" + 
+      //const string template = "<tr width='24px'><td>{NUMBER}</td><td style='white-space:nowrap'>{RECORDING.ACT}&nbsp; &nbsp; &nbsp;</td><td style='white-space:nowrap'>{PROPERTY}</td>" +
       //                        "<td align='center' style='white-space:nowrap'>{PROPERTY.AMOUNT}</td>" +
       //                        "<td align='center' style='white-space:nowrap'>{OPERATION.AMOUNT}</td>" +
       //                        "<td align='center' style='white-space:nowrap'>{ANNOTATIONS.COUNT}<td>{OBSERVATIONS}</td>";
@@ -137,7 +137,7 @@ namespace Empiria.Web.UI.FSM {
       //  temp = temp.Replace("{RECORDING.ACT}", recordingAct.RecordingActType.DisplayName);
       //  temp = temp.Replace("{PROPERTY}", recordingAct.PropertiesEvents[0].Property.UID);
       //  temp = temp.Replace("{PROPERTY.AMOUNT}", recordingAct.AppraisalAmount.Amount.ToString("C2"));
-      //  temp = temp.Replace("{OPERATION.AMOUNT}", recordingAct.OperationAmount.Amount.ToString("C2"));        
+      //  temp = temp.Replace("{OPERATION.AMOUNT}", recordingAct.OperationAmount.Amount.ToString("C2"));
       //  temp = temp.Replace("{ANNOTATIONS.COUNT}", "1");
       //  temp = temp.Replace("{OBSERVATIONS}", String.Empty);
       //  html += temp;

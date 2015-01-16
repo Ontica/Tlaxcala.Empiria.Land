@@ -1,4 +1,4 @@
-<%@ Import Namespace="Empiria.Presentation" %>
+﻿<%@ Import Namespace="Empiria.Presentation" %>
 <%@ Import Namespace="Empiria.Land.Registration" %>
 <%@ Import Namespace="Empiria.Land.UI" %>
 <%# ((int) DataBinder.Eval(Container, "ItemIndex")) == 0 ? "<tbody>" : String.Empty %>
@@ -7,7 +7,7 @@
     <%# DataBinder.Eval(Container, "DataItem.RecordingActTypeDisplayName")%>
 	</td>
 	<td style="white-space:nowrap;" align="right">
-    <%#((int)DataBinder.Eval(Container, "DataItem.RecordingActsCount")).ToString("N0")%>   
+    <%#((int)DataBinder.Eval(Container, "DataItem.RecordingActsCount")).ToString("N0")%>
 	</td>
 	<td style="white-space:nowrap;" align="right">
     <%# Convert.ToDecimal(DataBinder.Eval(Container, "DataItem.ParetoItemPercentage")).ToString("P2")%>

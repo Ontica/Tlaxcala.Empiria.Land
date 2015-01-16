@@ -64,7 +64,7 @@ namespace Empiria.Web.UI.FSM {
     }
 
     protected string GetPaymentText() {
-      const string t = "Derechos por <b>{AMOUNT}</b> según recibo <b>{RECEIPT}</b> expedido por " + 
+      const string t = "Derechos por <b>{AMOUNT}</b> según recibo <b>{RECEIPT}</b> expedido por " +
                        "la Secretaría de Finanzas del Estado, que se archiva.";
 
       string x = t.Replace("{AMOUNT}", transaction.Items.TotalFee.Total.ToString("C2"));
@@ -74,10 +74,10 @@ namespace Empiria.Web.UI.FSM {
     }
 
     protected string GetPrelationText() {
-      const string t = "Presentado para su examen y registro en	{CITY}, el <b>{DATE} a las {TIME} horas</b>, " + 
+      const string t = "Presentado para su examen y registro en	{CITY}, el <b>{DATE} a las {TIME} horas</b>, " +
                        "bajo el número de trámite <b>{NUMBER}</b> - Conste";
 
-      DateTime presentationTime = transaction.LastReentryTime == ExecutionServer.DateMaxValue ? 
+      DateTime presentationTime = transaction.LastReentryTime == ExecutionServer.DateMaxValue ?
                                           transaction.PresentationTime : transaction.LastReentryTime;
 
       string x = t.Replace("{DATE}", presentationTime.ToString(@"dd \de MMMM \de yyyy"));
@@ -168,7 +168,7 @@ namespace Empiria.Web.UI.FSM {
       string temp = String.Empty;
 
       for (int i = 0; i < recordingActs.Count; i++) {
-        string initials = recordingActs[i].Recording.RecordedBy.Nickname;
+        string initials = recordingActs[i].RegisteredBy.Nickname;
         if (initials.Length == 0) {
           continue;
         }
@@ -237,7 +237,7 @@ namespace Empiria.Web.UI.FSM {
 
     protected string GetLeftMargin() {
       if (ExecutionServer.LicenseName == "Tlaxcala") {
-        return "padding-left:2cm;";
+        return "padding-left:1.7cm;padding-right:1cm";
       } else {
         return String.Empty;
       }

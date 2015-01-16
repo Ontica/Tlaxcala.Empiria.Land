@@ -69,10 +69,10 @@ li {
 }
 #divMainBanner {
   position:absolute;
-  top:30%; 
+  top:30%;
   margin-top:20px;
   left:50%;
-  margin-left: -270px; 
+  margin-left: -270px;
   z-index:100;
 }
 #divLeftColumn
@@ -151,7 +151,7 @@ input.textBox {
   color: #424242;
   font: 8pt Arial, Helvetica;
   font-weight: bold;
-	height: 15px;  
+	height: 15px;
   margin: 2px 8px 2px 0px;
   padding: 4px 2px 2px 2px;
 	vertical-align: middle;
@@ -216,3 +216,4 @@ div.divOptionsMenu cite
 #loginBtn {
 	height: 18px;
 }
+

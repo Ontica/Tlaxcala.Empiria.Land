@@ -23,26 +23,26 @@
         <option value="702">Determinar importe de derechos</option>
 				<option value="703">Inscripciones</option>
         <option value="704">Anotaciones</option>
-        <option value="705">Actos registrales</option>        
+        <option value="705">Actos registrales</option>
         <option value="706">Calificaciones</option>
         <option value="707">Certificaciones</option>
         <option value="708">Devolución de documentos</option>
-        <option value="709">Otras tareas</option>        
+        <option value="709">Otras tareas</option>
 		    </select>
       </td>
       <td nowrap="nowrap">Buscar por: </td>
-      <td nowrap="nowrap">      
+      <td nowrap="nowrap">
         <input id="txtSearchExpression" name="txtSearchExpression" class="textBox" onkeypress="return searchTextBoxKeyFilter(window.event);"
                type="text" tabindex="-1" maxlength="80" style="width:200px" runat="server" />
       </td>
       <td align="left" nowrap="nowrap">
         <img src="../themes/default/buttons/search.gif" alt="" onclick="doOperation('loadData')" title="Ejecuta la búsqueda" />
         &nbsp; &nbsp; &nbsp;
-			<% if (this.SelectedTabStrip >= 1)  { %>        
+			<% if (this.SelectedTabStrip >= 1)  { %>
         <a href="javascript:doOperation('createObject')"><img src="../themes/default/buttons/go.button.png" alt=""
                  title="Imprime el reporte con la programación de reparto para las unidades seleccionadas" />Crear una nueva tarea</a> &nbsp; &nbsp;
       <% } %>
-      </td>      
+      </td>
      <td width="80%">&nbsp;</td>
     </tr>
     <tr>
@@ -66,7 +66,7 @@
           <option value="C">Cancelado</option>
         </select>
       </td>
-			<% } %>      
+			<% } %>
       <td nowrap="nowrap" colspan="3">
 
       </td>
@@ -100,18 +100,18 @@
   }
 
   function createObject() {
-    alert('La operación solicitada todavía no ha sido definida en el programa.');  
+    alert('La operación solicitada todavía no ha sido definida en el programa.');
     return false;
   }
 
   function loadData() {
     sendPageCommand("loadData");
   }
-  
+
   function updateUserInterface(oSourceControl) {
     sendPageCommand("updateUserInterface");
   }
-  
+
 	/* ]]> */
 	</script>
 </asp:Content>

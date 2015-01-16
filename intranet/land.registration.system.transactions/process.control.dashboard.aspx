@@ -5,10 +5,10 @@
     <td id="tabStripItem_0" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 0);" title="">Mis trámites pendientes</td>
     <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 1);" title="">Documentos por entregar</td>
     <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 2);" title="">Mi trabajo realizado</td>
-    <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 3);" title="">Recibir documentos</td> 
+    <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 3);" title="">Recibir documentos</td>
     <td id="tabStripItem_4"  style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk") ? "inline" : "none"%>' class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Ventanilla de entregas</td>
     <td id="tabStripItem_5" style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ControlDesk") ? "inline" : "none"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 5);" title="">Mesa de control</td>
-    <td id="tabStripItem_6" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 6);" title="">Buscar trámites</td>    
+    <td id="tabStripItem_6" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 6);" title="">Buscar trámites</td>
     <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
     <td><input id="currentTabStripItem" name="currentTabStripItem" type="hidden" /></td>
   </tr>
@@ -316,7 +316,7 @@
 
     sMsg += "Estado actual:\t" + getInnerText('ancStatus' + transactionId) + "\n";
     sMsg += "Nuevo estado:\t" + getInnerText('ancNextStatus' + transactionId) + "\n\n";
-        
+
     sMsg += "¿Está recibiendo los documentos del trámite referido?";
 
     if (confirm(sMsg)) {
@@ -398,7 +398,7 @@
       temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
       temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
       temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
-      
+
       temp += "¿Muevo este trámite al estado seleccionado?";
     }
     if (confirm(temp)) {
@@ -425,14 +425,14 @@
   }
 
   function createObject() {
-    alert('La operación solicitada todavía no ha sido definida en el programa.');  
+    alert('La operación solicitada todavía no ha sido definida en el programa.');
     return false;
   }
 
   function loadData() {
     sendPageCommand("loadData");
   }
-  
+
   function updateUserInterface(oSourceControl) {
     sendPageCommand("updateUserInterface");
   }
@@ -447,9 +447,10 @@
     getElement('<%=cboRecorderOffice.ClientID%>').value = '';
     getElement('<%=cboStatus.ClientID%>').value = '';
     getElement('<%=cboElapsedTime.ClientID%>').value = '';
-    getElement('<%=cboResponsible.ClientID%>').value = '';    
+    getElement('<%=cboResponsible.ClientID%>').value = '';
   }
 
 	/* ]]> */
 	</script>
 </asp:Content>
+

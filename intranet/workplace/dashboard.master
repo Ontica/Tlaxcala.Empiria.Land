@@ -5,9 +5,9 @@
   <title>Dashboard Item</title>
   <meta http-equiv="Expires" content="-1" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />  
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
   <link href="../themes/default/css/dashboard.item.css" type="text/css" rel="stylesheet" />
-  <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />  
+  <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
 	<script type="text/javascript" src="../scripts/empiria.general.js"></script>
 	<script type="text/javascript" src="../scripts/empiria.validation.js"></script>
@@ -31,7 +31,7 @@
 	  }
 	  if (gLastSelectedRowCell != null && gLastSelectedRowCell != gridCell) {
       gLastSelectedRowCell.parentElement.className = gLastSelectedRowClassName;
-      gLastSelectedRowCell.innerHTML = "&nbsp;";  
+      gLastSelectedRowCell.innerHTML = "&nbsp;";
 	  }
     gLastSelectedRowClassName = gridCell.parentElement.className;
     gLastSelectedRowCell = gridCell;
@@ -48,8 +48,8 @@
     window_onresize();
     <%=OnEndLoadScript()%>
 	}
-  
-  function searchFilter(oEvent) { 
+
+  function searchFilter(oEvent) {
     var keyCode = getKeyCode(oEvent);
     if (arguments.length == 2 && arguments[1] == true) {
       convertToUpperCaseKeyCode(oEvent, keyCode);
@@ -89,7 +89,7 @@
 	  <asp:contentplaceholder id="dashboardItemPlaceHolder" runat="server" EnableViewState="true" ViewStateMode="Disabled">
 		</asp:contentplaceholder>
   </form>
-  <iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top:0px" 
+  <iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top:0px"
         hspace="0px" vspace="0" marginheight="0"  marginwidth="0" frameborder="0" scrolling="no"
         src="../user.controls/calendar.aspx" width="100%">
   </iframe>

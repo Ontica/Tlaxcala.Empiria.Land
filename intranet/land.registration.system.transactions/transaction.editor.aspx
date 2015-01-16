@@ -44,11 +44,11 @@
     <tr>
     <td>
       <table id="transactionEditor0" class="editionTable">
-        <tr>        
+        <tr>
           <td><b>Interesado:</b></td>
           <td colspan="3">
             <input id='txtRequestedBy' type="text" class="textBox" style="width:478px;" title="" runat="server" />
-            <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" 
+            <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda"
                  style="margin-left:-4px" onclick="doOperation('searchParty')" />
             <input type="hidden" id="txtTransactionKey" runat="server" />
           </td>
@@ -75,10 +75,10 @@
           <td>Tramitado por:</td>
           <td colspan="4" class="lastCell">
             <select id="cboManagementAgency" class="selectBox" style="width:286px" runat='server'>
-              <option value="-1" title="oPrivateRecording">No determinado</option>
+              <option value="-1" title="oPrivateContract">No determinado</option>
             </select>
             Mesa origen:
-            <select id="cboRecorderOffice" class="selectBox" style="width:150px" onchange="return updateUserInterface(this);" runat="server">				  
+            <select id="cboRecorderOffice" class="selectBox" style="width:150px" onchange="return updateUserInterface(this);" runat="server">				
               <option value="-1">No determinado</option>
      	        <option value="101">Hidalgo</option>
 	            <option value="102">Cuauhtémoc</option>
@@ -129,7 +129,7 @@
                 <td align='right'>V.Operación</td>
                 <td>Fundamento</td>
                 <td align='right'>Derechos</td>
-                <td align='right'>Cotejo</td>       
+                <td align='right'>Cotejo</td>
                 <td align='right'>Foráneo</td>
                 <td align='right'>Subtotal</td>
                 <td align='right'>Dcto</td>
@@ -186,8 +186,7 @@
               <td>
                 $<input id='txtSheetsRevisionFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:64px;" title="" maxlength="8" runat="server" />
                 &nbsp;
-                Fojas: <input id='txtSheetsCount' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:28px;" title="" maxlength="3" runat="server" /> 
-
+                Fojas: <input id='txtSheetsCount' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:28px;" title="" maxlength="3" runat="server" />
               </td>
               <td>Támite foráneo:</td>
               <td>$<input id='txtForeignRecordFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
@@ -213,7 +212,7 @@
             </tr>
           </table>
         </td>
-       </tr>  
+       </tr>
     </table>
   </td>
 </tr>
@@ -252,7 +251,7 @@
   </tr>
   <tr>
     <td>
-      <table id="transactionEditor1" class="editionTable">    
+      <table id="transactionEditor1" class="editionTable">
         <tr>
           <td>&nbsp;</td>
           <td nowrap="nowrap">
@@ -291,7 +290,7 @@
     <table id="tabStripItemView_1" class="editionTable" style="display:none">
       <tr>
         <td class="lastCell">
-          <iframe id="ifraRecordingEditor" style="z-index:99;left:0px;top:0px;" 
+          <iframe id="ifraRecordingEditor" style="z-index:99;left:0px;top:0px;"
                   marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
                   src="../workplace/empty.page.aspx" width="90%" height="1500px" visible="true" >
           </iframe>
@@ -352,15 +351,15 @@
     </tr>
  </table>
         </div>
-      </div> <!-- end divBody !-->  
-      <div id="divBottomToolbar" style="display:none">        
+      </div> <!-- end divBody !-->
+      <div id="divBottomToolbar" style="display:none">
       </div> <!-- end divBottomToolbar !-->
     </div> <!-- end divCanvas !-->
   </form>
 </body>
   <script type="text/javascript">
   /* <![CDATA[ */
-  
+
   function doPageCommand(commandName, commandArguments) {
     switch (commandName) {
       default:
@@ -545,8 +544,8 @@
     }
     var sMsg = getComboOptionText(getElement('cboRecordingActType')) + "\n\n";
 
-    sMsg += "Fundamento:\t\t" + getComboOptionText(getElement('cboLawArticle')) + "\n\n"; 
-    sMsg += "Valor de la operación:\t" + formatAsCurrency(getElement('txtOperationValue').value) + "\n\n"; 
+    sMsg += "Fundamento:\t\t" + getComboOptionText(getElement('cboLawArticle')) + "\n\n";
+    sMsg += "Valor de la operación:\t" + formatAsCurrency(getElement('txtOperationValue').value) + "\n\n";
     sMsg += "Derechos registrales:\t\t" + formatAsCurrency(getElement('txtRecordingRightsFee').value) + "\n";
 
     if (convertToNumber(getElement('txtSheetsRevisionFee').value) != 0) {
@@ -614,7 +613,7 @@
     subtotal += convertToNumber(getElement('txtSheetsRevisionFee').value);
     subtotal += convertToNumber(getElement('txtForeignRecordFee').value);
 
-    return subtotal;    
+    return subtotal;
   }
 
   function getTotal() {
@@ -636,7 +635,7 @@
     }
     return true;
   }
-  
+
   function doSendMsg(command) {
     var sMsg = "";
 
@@ -685,11 +684,10 @@
     }
   }
 
-  function resetRecordingsTypesCombo() {    
+  function resetRecordingsTypesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
-    url += "&recordingActTypeCategoryId=" + getElement("cboRecordingActTypeCategory").value; 
-
+    url += "&recordingActTypeCategoryId=" + getElement("cboRecordingActTypeCategory").value;
     invokeAjaxComboItemsLoader(url, getElement("cboRecordingActType"));
 
     resetLawArticlesCombo();
@@ -698,8 +696,7 @@
   function resetLawArticlesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getLawArticlesStringArrayCmd";
-    url += "&recordingActTypeId=" + getElement("cboRecordingActType").value; 
-
+    url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
     invokeAjaxComboItemsLoader(url, getElement("cboLawArticle"));
   }
 
@@ -712,7 +709,7 @@
       return false;
     }
     if (isEmpty(getElement('cboDocumentType'))) {
-      alert("Requiero se proporcione el tipo de documento que se desea inscribir."); 
+      alert("Requiero se proporcione el tipo de documento que se desea inscribir.");
       return false;
     }
     if (isEmpty(getElement('cboManagementAgency'))) {
@@ -734,10 +731,8 @@
     setWorkplace();
     <% if (base.ShowDocumentsEditor()) { %>
      getElement('ifraRecordingEditor').src = "../land.registration.system/recording.editor.aspx?transactionId=<%=transaction.Id%>";
-    <% } else if (!base.transaction.Document.IsEmptyInstance) { %>
-     getElement('ifraRecordingEditor').src = "../land.registration.system/recording.editor.aspx?readonly=true&transactionId=<%=transaction.Id%>";
     <% } else { %>
-     getElement('ifraRecordingEditor').src = "../workplace/empty.page.aspx";
+     getElement('ifraRecordingEditor').src = "../workplace/out.of.service.aspx";
     <% } %>
     <%=base.OnloadScript()%>
   }
@@ -778,7 +773,7 @@
   addEvent(getElement("txtRequestedBy"), 'keypress', upperCaseKeyFilter);
   addEvent(getElement("txtDocumentNumber"), 'keypress', upperCaseKeyFilter);
   addEvent(getElement("txtDiscountAuthorization"), 'keypress', upperCaseKeyFilter);
-  
+
   /* ]]> */
   </script>
 </html>

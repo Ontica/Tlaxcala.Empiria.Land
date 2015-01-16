@@ -49,7 +49,7 @@
   </tr>
   <tr>
     <td>Apellido materno:</td>
-    <td class="lastCell" colspan="5">      
+    <td class="lastCell" colspan="5">
       <input id='txtSecondFamilyName' type="text" class="textBox" style="width: 200px;margin-right:0px;" maxlength="64" runat='server' />
       &nbsp; &nbsp;Apellido conyugal:
       <input id='txtMaritalFamilyName' type="text" class="textBox" style="width: 200px;margin-right:0px;" maxlength="64" runat='server' />
@@ -141,7 +141,7 @@
     <td>Fecha de registro:</td>
     <td class="lastCell separator">
       <input id='txtOrgRegistryDate' type="text" class="textBox" style="width:64px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgOrgRegistryDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtOrgRegistryDate.ClientID%>'), getElement('imgOrgRegistryDate'));" style="margin-left:-6px" title="Despliega el calendario" alt="" />      
+      <img id='imgOrgRegistryDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtOrgRegistryDate.ClientID%>'), getElement('imgOrgRegistryDate'));" style="margin-left:-6px" title="Despliega el calendario" alt="" />
       <img src="../themes/default/textures/pixel.gif" height="1px" width="124px" alt="" />
       Lugar de registro:
       <select id="cboOrgRegistryLocation" class="selectBox" style="width:165px" title="" onchange="return updateUserInterface();" runat="server">
@@ -219,7 +219,7 @@
             <div id="divUsufructuaryRole" style="display:none;">
               De la nuda de:&nbsp;
               <select id="cboUsufructuaryOf" class="selectBox" style="width:296px" onchange="return this_updateUserInterface(this);" runat="server">
-                <option value="">( Seleccionar al nudo propietario )</option>     
+                <option value="">( Seleccionar al nudo propietario )</option>
               </select>
               <div id="lstUsufructuaryOf" style="display:none;">
                 <table>
@@ -342,7 +342,7 @@
     getElement('<%=txtTaxIDNumber.ClientID%>').readOnly = disabledFlag;
     getElement('<%=txtIFENumber.ClientID%>').readOnly = disabledFlag;
 
-    
+
 //    getElement('<%=cboOccupation.ClientID%>').disabled = !disabledFlag;
 //    getElement('<%=cboMarriageStatus.ClientID%>').disabled = !disabledFlag;
 //    getElement('txtSearchAddressPlace').readOnly = !disabledFlag;
@@ -377,7 +377,7 @@
     url += "&partyTypeId=" + getElement('<%=cboPartyType.ClientID%>').value;
     url += "&filterType=" + getElement('<%=cboPartyFilter.ClientID%>').value;
     url += "&keywords=" + getElement('<%=txtSearchParty.ClientID%>').value;
-        
+
     invokeAjaxComboItemsLoader(url, getElement('<%=cboParty.ClientID%>'));
     this_displayEditor();
   }
@@ -440,7 +440,7 @@
     if (oControl == getElement('<%=cboParty.ClientID%>')) {
       this_displayEditor();
     } else if (oControl == getElement('<%=cboPartyType.ClientID%>')) {
-      this_searchParties();     
+      this_searchParties();
     } else if (oControl == getElement('<%=cboPartyFilter.ClientID%>')) {
       this_searchParties();
     } else if (oControl == getElement('<%=cboRole.ClientID%>')) {
@@ -448,7 +448,7 @@
     } else if (oControl == getElement('<%=cboOwnership.ClientID%>')) {
       this_updateDomainRoleUserInterface();
     } else if (oControl == getElement('<%=cboOwnershipPartUnit.ClientID%>')) {
-      this_updateDomainRoleUserInterface();    
+      this_updateDomainRoleUserInterface();
     } else if (oControl == getElement('<%=cboUsufruct.ClientID%>')) {
       this_updateUsufructRoleUserInterface();
     } else if (oControl == getElement('<%=cboUsufructPartUnit.ClientID%>')) {
@@ -719,7 +719,7 @@
     }
     return false;
   }
-  
+
   function this_usufructuraryRole_validate() {
     var usufructPartUnit = getElement('<%=cboUsufructPartUnit.ClientID%>').value;
     var usufructPart = getElement('<%=txtUsufructPartAmount.ClientID%>').value;
@@ -789,7 +789,7 @@
       alert("Requiero conocer la parte de la que es " + getComboOptionText(getElement('<%=cboOwnership.ClientID%>')) + " " + this_getPersonName());
       return false;
     }
-    if (confirm("¿Agrego a " + this_getPersonName() + " como " + 
+    if (confirm("¿Agrego a " + this_getPersonName() + " como " +
                 getComboOptionText(getElement('<%=cboOwnership.ClientID%>')) + " en este acto jurídico?")) {
       getElement('<%=cboOwnershipPartUnit.ClientID%>').disabled = false;
       return true;
@@ -799,9 +799,9 @@
 
   function this_getPersonName() {
     if (getElement('<%=cboParty.ClientID%>').value.length == 0 || getElement('<%=cboParty.ClientID%>').value == "appendParty") {
-      return getElement('<%=txtFirstName.ClientID%>').value + " " + 
-             getElement('<%=txtFirstFamilyName.ClientID%>').value + " " + 
-             getElement('<%=txtSecondFamilyName.ClientID%>').value;      
+      return getElement('<%=txtFirstName.ClientID%>').value + " " +
+             getElement('<%=txtFirstFamilyName.ClientID%>').value + " " +
+             getElement('<%=txtSecondFamilyName.ClientID%>').value;
     } else {
       return getComboOptionText(getElement('<%=cboParty.ClientID%>'));
     }
@@ -833,7 +833,7 @@
       <%=tblPartySeacher.ClientID%>.style.display = "inline";
       <%=tblHumanPartyEditor.ClientID%>.style.display = "none";
       <%=tblOrganizationPartyEditor.ClientID%>.style.display = "none";
-      <%=tblPartyRoleEditor.ClientID%>.style.display = "none";  
+      <%=tblPartyRoleEditor.ClientID%>.style.display = "none";
     }
     if (getElement('<%=cboParty.ClientID%>').value == "appendParty") {
       this_cleanEditor();
@@ -845,7 +845,7 @@
         <%=tblHumanPartyEditor.ClientID%>.style.display = "none";
         <%=tblOrganizationPartyEditor.ClientID%>.style.display = "inline";
       }
-      <%=tblPartyRoleEditor.ClientID%>.style.display = "inline";  
+      <%=tblPartyRoleEditor.ClientID%>.style.display = "inline";
     } else if (getElement('<%=cboParty.ClientID%>').value.length != 0) {
       doOperation('selectParty', getElement('<%=cboParty.ClientID%>').value);
     }
@@ -865,7 +865,7 @@
     getElement('<%=cboBornLocation.ClientID%>').value = '';
     getElement('txtSearchAddressPlace').value = '';
     getElement('<%=cboAddressPlace.ClientID%>').value = '';
-    getElement('<%=txtAddress.ClientID%>').value = '';    
+    getElement('<%=txtAddress.ClientID%>').value = '';
     getElement('<%=txtCURPNumber.ClientID%>').value = '';
     getElement('<%=txtTaxIDNumber.ClientID%>').value = '';
     getElement('<%=txtIFENumber.ClientID%>').value = '';
@@ -881,7 +881,7 @@
   function this_onSearchTextBoxKeyFilter() {
     var oEvent = window.event;
     var keyCode = getKeyCode();
-  
+
     if (keyCode == 60 || keyCode == 62) {
       return false;
     } else if ((keyCode == 13) && (getEventSource(oEvent).value != '')) {
@@ -895,7 +895,7 @@
   addEvent(getElement('<%=txtCURPNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('<%=txtTaxIDNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('<%=txtIFENumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
-  
+
   <% if (base.isLoaded) { %>
     <%=tblPartySeacher.ClientID%>.style.display = "inline";
     if (this_isPersonPartySelected()) {
@@ -903,7 +903,7 @@
       <%=tblOrganizationPartyEditor.ClientID%>.style.display = "none";
     } else {
       <%=tblHumanPartyEditor.ClientID%>.style.display = "none";
-      <%=tblOrganizationPartyEditor.ClientID%>.style.display = "inline";      
+      <%=tblOrganizationPartyEditor.ClientID%>.style.display = "inline";
     }
     this_setPartyControlsForEdition(false);
     <%=tblPartyRoleEditor.ClientID%>.style.display = "inline";

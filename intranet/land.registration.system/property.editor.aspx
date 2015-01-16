@@ -64,13 +64,13 @@
       </table>
     </td>
   </tr>
-   
+
   <tr>
     <td class="subTitle">Ubicación del predio</td>
   </tr>
   <tr>
     <td>
-      <table class="editionTable">		  
+      <table class="editionTable">		
       <tr>
         <td>Buscar/Agregar:</td>
         <td class="lastCell" colspan="5">
@@ -82,10 +82,10 @@
           </select>
           <input type="text" class="textBox" id='txtSearchText' name='txtSearchText' style="width:240px" onkeypress="return onSearchTextBoxKeyFilter(window.event);" runat='server'/>
           <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-4px" onclick="doOperation('searchGeographicalItems')" />
-          &nbsp;<input type="button" value="Agregar" class="button" style="vertical-align:middle;width:54px;" tabindex="-1" onclick="doOperation('appendGeographicalItem')" />          
+          &nbsp;<input type="button" value="Agregar" class="button" style="vertical-align:middle;width:54px;" tabindex="-1" onclick="doOperation('appendGeographicalItem')" />
         </td>
       </tr>
-      
+
       <tr>
         <td>Distrito:</td>
         <td class="lastCell" colspan="5">
@@ -95,7 +95,7 @@
           <select id='cboMunicipality' name='cboMunicipality' class='selectBox' style='width:284px' onchange="return updateUserInterface(this);" runat='server'>
             <option value="">( Seleccionar )</option>
           </select>
-        </td> 
+        </td>
       </tr>
 
       <tr>
@@ -177,15 +177,15 @@
     </table>
     </td>
   </tr>
-   
+
   <tr>
     <td class="subTitle">Superficie, indiviso y medidas y colindancias</td>
   </tr>
-  
+
   <tr>
     <td>
       <table class="editionTable">
-      <tr>  
+      <tr>
         <td>Superficie:</td>
         <td class="lastCell" colspan="5">
           <input type="text" class="textBox" id='txtTotalArea' name='txtTotalArea' style="width:68px" maxlength="16" onkeypress="return positiveKeyFilter(this);" runat='server' title="" />
@@ -454,7 +454,7 @@
       alert("No reconozco la superficie del indiviso del predio.");
       return false;
     }
-    if (isNumeric(getElement("txtCommonArea")) && (getElement("cboCommonAreaUnit").value > 0) && 
+    if (isNumeric(getElement("txtCommonArea")) && (getElement("cboCommonAreaUnit").value > 0) &&
         Number(getElement("txtCommonArea").value) > 100) {
       alert("El indiviso no puede ser mayor a cien por ciento.");
       return false;
@@ -522,13 +522,13 @@
       alert("Necesito se proporcione en la caja de texto de la izquierda,\nel nombre del asentamiento que se desea agregar.");
       return;
     }
-    
-    var settlementId = getSettlementId(getElement("cboSettlementType").value, getElement("cboMunicipality").value, 
+
+    var settlementId = getSettlementId(getElement("cboSettlementType").value, getElement("cboMunicipality").value,
                                        getElement("txtSearchText").value);
     if (settlementId.length != 0) {
       sMsg = "Ya existe un asentamiento del tipo " + getComboOptionText(getElement("cboSettlementType"));
       sMsg += " en el municipio de " + getComboOptionText(getElement("cboMunicipality"));
-      sMsg += " con el nombre proprocionado.\n\n¿Lo selecciono automáticamente de la lista?"; 
+      sMsg += " con el nombre proprocionado.\n\n¿Lo selecciono automáticamente de la lista?";
       if (confirm(sMsg)) {
         getElement("cboSettlement").value = settlementId;
       }

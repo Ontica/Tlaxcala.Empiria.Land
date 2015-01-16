@@ -99,7 +99,7 @@ span.appTitle {
   color: white;
   font-size: 16pt;
   font-family: Century, Serif;
-  padding-top: 10px; 
+  padding-top: 10px;
 }
 tr.detailsSuperHeader {
    background: #3a5577;
@@ -128,7 +128,7 @@ tr.detailsSuperFooter {
   margin: 2px 0px 2px 0px;
   padding: 12px 12px 0px 12px;
   position: absolute;
-  float: left;  
+  float: left;
   overflow: auto;
 }
 #divContentAlwaysVisible {
@@ -139,7 +139,7 @@ tr.detailsSuperFooter {
   margin: 2px 0px 2px 0px;
   padding: 12px 12px 0px 12px;
   position: absolute;
-  float: left;  
+  float: left;
   overflow:visible;
 }
 #divRightMenu {
@@ -204,7 +204,7 @@ div.rightItem, span.rightItem {
   text-align: right;
 }
 span.rightItem img {
- padding-top: 6px; 
+ padding-top: 6px;
 }
 .actionButton {
   height: 24px;

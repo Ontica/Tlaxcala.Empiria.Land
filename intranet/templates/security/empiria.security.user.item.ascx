@@ -1,4 +1,4 @@
-<tr class="<%# ((int) DataBinder.Eval(Container, "ItemIndex") % 2 == 0) ? "detailsItem" : "detailsOddItem" %>">
+﻿<tr class="<%# ((int) DataBinder.Eval(Container, "ItemIndex") % 2 == 0) ? "detailsItem" : "detailsOddItem" %>">
 	<td style="width: 75%;">
 		<a class="detailsLinkTitle" href="javascript:doCommand('createViewCmd', '~/security/user.editor.aspx?id=<%# DataBinder.Eval(Container, "DataItem.Id") %>', 750, 1000, null, true)" target="_top"><%# DataBinder.Eval(Container, "DataItem.DisplayName") %></a>
 		<br />

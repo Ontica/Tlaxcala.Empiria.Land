@@ -69,7 +69,7 @@ namespace Empiria.Web.UI.Ajax {
         case "getRecordingTypesStringArrayCmd":
           return GetRecordingTypesStringArrayCommandHandler();
         case "getRecordingsViewerPageCmd":
-          return GetRecordingsViewerPageCommandHandler();        
+          return GetRecordingsViewerPageCommandHandler();
         case "getWitnessInPositionStringArrayCmd":
           return GetWitnessInPositionStringArrayCommandHandler();
         case "searchRecordingActPartiesCmd":
@@ -139,7 +139,7 @@ namespace Empiria.Web.UI.Ajax {
           counter++;
         }
       }
-  
+
       if (counter > 1) {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( ¿A qué predio se aplicará? )") + "|" + html;
       } else if (counter == 1) {
@@ -173,7 +173,7 @@ namespace Empiria.Web.UI.Ajax {
         if (html.Length != 0) {
           html += "|";
         }
-        html += HtmlSelectContent.GetComboAjaxHtmlItem(property.Id.ToString(), property.UID);      
+        html += HtmlSelectContent.GetComboAjaxHtmlItem(property.Id.ToString(), property.UID);
       }
       return html;
     }
@@ -255,7 +255,7 @@ namespace Empiria.Web.UI.Ajax {
     }
 
     private string GetNotaryDeedRecordingDocumentRawData(RecordingDocument document) {
-      string rawData = "oNotaryRecording|";
+      string rawData = "oNotaryPublicDeed|";
 
       rawData += document.IssuePlace.Id.ToString() + "|";
       rawData += document.IssueOffice.Id.ToString() + "|";
@@ -270,7 +270,7 @@ namespace Empiria.Web.UI.Ajax {
     }
 
     private string GetPropertyTitleRecordingDocumentRawData(RecordingDocument document) {
-      string rawData = "oTitleRecording|";
+      string rawData = "oEjidalSystemTitle|";
 
       rawData += document.Number + "|";
       rawData += document.IssuedBy.Id.ToString() + "|";
@@ -282,7 +282,7 @@ namespace Empiria.Web.UI.Ajax {
     }
 
     private string GetJudicialOrderRecordingDocumentRawData(RecordingDocument document) {
-      string rawData = "oJudicialRecording|";
+      string rawData = "oJudgeOfficialLetter|";
 
       rawData += document.IssuePlace.Id.ToString() + "|";
       rawData += document.IssueOffice.Id.ToString() + "|";
@@ -295,7 +295,7 @@ namespace Empiria.Web.UI.Ajax {
     }
 
     private string GetPrivateContractRecordingDocumentRawData(RecordingDocument document) {
-      string rawData = "oPrivateRecording|";
+      string rawData = "oPrivateContract|";
 
       rawData += document.IssuePlace.Id.ToString() + "|";
       rawData += document.IssueDate.ToString("dd/MMM/yyyy") + "|";

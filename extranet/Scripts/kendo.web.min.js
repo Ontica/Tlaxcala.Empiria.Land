@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Kendo UI v2014.1.528 (http://www.telerik.com/kendo-ui)
 * Copyright 2014 Telerik AD. All rights reserved.
 *

@@ -193,12 +193,12 @@ namespace Empiria.Web.UI.LRS {
           return;
         case "gotoRecording":
           GoToRecording();
-          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() + 
+          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
                             "&id=" + recording.Id.ToString(), true);
           return;
         case "moveToRecording":
           MoveToRecording();
-          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() + 
+          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
                             "&id=" + recording.Id.ToString(), true);
           return;
         case "gotoImage":
@@ -206,12 +206,12 @@ namespace Empiria.Web.UI.LRS {
           return;
         case "insertEmptyImageBefore":
           InsertEmptyImageBefore();
-          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() + 
+          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
                             "&id=0&image=" + hdnCurrentImagePosition.Value, true);
           return;
         case "deleteImage":
           DeleteImage();
-          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() + 
+          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
                             "&id=0&image=" + hdnCurrentImagePosition.Value, true);
           return;
         case "refreshImagesStatistics":
@@ -232,7 +232,7 @@ namespace Empiria.Web.UI.LRS {
     #region Private methods
 
     private void RefreshPage() {
-      Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() + 
+      Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
                         "&id=" + recording.Id.ToString() + "&image=" + hdnCurrentImagePosition.Value, true);
     }
 
@@ -641,7 +641,7 @@ namespace Empiria.Web.UI.LRS {
       cboRecordingActTypeCategory.Value = "0";
       txtPresentationDate.Value = String.Empty;
       txtPresentationTime.Value = String.Empty;
-      txtAuthorizationDate.Value = String.Empty;      
+      txtAuthorizationDate.Value = String.Empty;
       txtRecordingPayment.Value = String.Empty;
       txtRecordingPaymentReceipt.Value = String.Empty;
       cboAuthorizedBy.Value = String.Empty;
@@ -740,10 +740,10 @@ namespace Empiria.Web.UI.LRS {
       //if (String.IsNullOrEmpty(Request.QueryString["id"])) {
       //  recording = recordingBook.GetLastRecording();
       //  if (recording != null) {
-      //    Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() + 
+      //    Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
       //                      "&id=" + recording.Id.ToString(), true);
       //  } else {
-      //    Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() + 
+      //    Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
       //                      "&id=-1", true);
       //  }
       //} else if (int.Parse(Request.QueryString["id"]) == -1 || int.Parse(Request.QueryString["id"]) == 0) {

@@ -1,4 +1,4 @@
-<thead>
+﻿<thead>
   <%=((Empiria.Presentation.Web.MultiViewDashboard) this.Page).ViewTitle%>
   <tr>
     <th>
@@ -7,9 +7,9 @@
     <th>
 			<a>Predio</a>
     </th>
-    <th> 
+    <th>
 			<a>Inscrito en</a> |
-			<a>Acto jur�dico</a>
+			<a>Acto jurídico</a>
     </th>
   </tr>
 </thead>

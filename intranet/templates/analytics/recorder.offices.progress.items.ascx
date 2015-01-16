@@ -1,4 +1,4 @@
-<%@ Import Namespace="Empiria.Presentation" %>
+﻿<%@ Import Namespace="Empiria.Presentation" %>
 <%@ Import Namespace="Empiria.Land.Registration" %>
 <%@ Import Namespace="Empiria.Land.UI" %>
 <%# ((int) DataBinder.Eval(Container, "ItemIndex")) == 0 ? "<tbody>" : String.Empty %>
@@ -15,7 +15,7 @@
 	</td>
   <td style="white-space:nowrap;">
     <table class="ghostTable">
-      <tr><td>Total im�genes:&nbsp;&nbsp;&nbsp;</td><td align="right" style='width:120px'><span class='boldItem'><%#((int)DataBinder.Eval(Container, "DataItem.DomainFilesCount")).ToString("N0")%></span></td><td>&nbsp;</td></tr>
+      <tr><td>Total imágenes:&nbsp;&nbsp;&nbsp;</td><td align="right" style='width:120px'><span class='boldItem'><%#((int)DataBinder.Eval(Container, "DataItem.DomainFilesCount")).ToString("N0")%></span></td><td>&nbsp;</td></tr>
       <tr><td>No legibles:</td><td align="right"><span class='boldItem'><%#((decimal)DataBinder.Eval(Container, "DataItem.NoLegibleToReplaceImages")).ToString("N0")%></span></td><td align="right">&nbsp; &nbsp; &nbsp;<span class='boldItem'><%#((decimal)DataBinder.Eval(Container, "DataItem.NoLegibleToReplaceImagesPct")).ToString("P2")%></span></td></tr>
       <tr><td>Proyectadas:</td><td align="right"><span class='boldItem'><%#((decimal)DataBinder.Eval(Container, "DataItem.NoLegibleToReplaceImagesPry")).ToString("N0")%></span></td><td align="right">&nbsp; &nbsp; &nbsp;<span class='boldItem'><%#((decimal)DataBinder.Eval(Container, "DataItem.NoLegibleToReplaceImagesPryPct")).ToString("P2")%></span></td></tr>
     </table>

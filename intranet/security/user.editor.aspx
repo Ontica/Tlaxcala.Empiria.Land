@@ -15,7 +15,7 @@
         <td class="lastCell" colspan="1" rowspan="1">
           <textarea id='txtObservations' name='txtObservations' class="textArea" cols="60" rows="2" onkeypress='return alphaSpaceKeyFilter(event);' title="Observaciones sobre el usuario" runat="server"></textarea>
         </td>
-      </tr>      
+      </tr>
       <tr>
         <td colspan="1" rowspan="1"><div>Correo electrónico:</div></td>
         <td class="lastCell" colspan="1" rowspan="1">
@@ -68,12 +68,12 @@
             <td style="width: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             <td><b>Grupos de entidades</b></td>
             <td align="right">Buscar:
-                <input type="text" id='txtgrdMembersIds' name="txtgrdMembersIds" class="textBox" onkeypress='return alphaNumericKeyFilter(event, true);' 
+                <input type="text" id='txtgrdMembersIds' name="txtgrdMembersIds" class="textBox" onkeypress='return alphaNumericKeyFilter(event, true);'
                        maxlength="48" style="width:100px" />
-                <img src="~/themes/default/buttons/ellipsis.gif" alt="" title="" 
+                <img src="~/themes/default/buttons/ellipsis.gif" alt="" title=""
                      onclick="return updateGrid('grdMembersIds', 563, getElement('txtgrdMembersIds').value, '-1')" />
                 <% if (canEditEntitiesGroup) { %>
-                <img src="~/themes/default/buttons/edit.gif" 
+                <img src="~/themes/default/buttons/edit.gif"
                      onclick="javascript:doCommand('createViewCmd', '../explorers/object.editor.aspx?id=0&amp;type=ObjectType.NestedObjectType.EntityGroup', 750, 1000, null, false)" alt="" title="" />
                 <% } %>
                 &nbsp; &nbsp; &nbsp;
@@ -101,7 +101,7 @@
   <span class="rightItem nowrap">
     <input id="btnAcceptChanges" name="btnAcceptChanges" type="button" class="button" <%=onChangesButtonAttrs%> onclick="doOperation('acceptChangesCmd')" title="Acepta los cambios y cierra la página" style="width: 70px" value="<%=btnAcceptChangesText%>" />
     <img src="../themes/default/textures/pixel.gif" width="8px" alt="" title="" />
-    <input id="btnCancelEdition" name="btnCancelEdition" type="button" class="button" onclick="doOperation('cancelEditionCmd')" title="Descarta todos los cambios y cierra esta página de edición" style="width: 70px" value="Cancelar" />  
+    <input id="btnCancelEdition" name="btnCancelEdition" type="button" class="button" onclick="doOperation('cancelEditionCmd')" title="Descarta todos los cambios y cierra esta página de edición" style="width: 70px" value="Cancelar" />
     <img src="../themes/default/textures/pixel.gif" width="12px" alt="" title="" />
     <input id="btnApplyChanges" name="btnApplyChanges" type="button" class="button"  <%=onChangesButtonAttrs%> onclick="doOperation('applyChangesCmd')" title="Aplica los cambios efectuados y mantiene esta página abierta" style="width: 70px" value="<%=btnApplyChangesText%>" />
   </span>
@@ -118,13 +118,13 @@
         return;
        case 'cancelEditionCmd':
         sendPageCommand("cancelEditionCmd");
-        return;        
+        return;
       default:
         alert('La operación \'' + operationName + '\' todavía no ha sido definida en el programa.');
         return;
     }
   }
-    
+
   /* ]]> */
   </script>
 </asp:Content>

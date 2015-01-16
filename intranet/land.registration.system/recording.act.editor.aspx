@@ -67,7 +67,7 @@
         </tr>
       </table>
     </td>
-  </tr> 
+  </tr>
   <tr>
     <td class="subTitle">Personas físicas y morales involucradas en el acto jurídico</td>
   </tr>
@@ -108,7 +108,7 @@
 </table>
 </div>
 </form>
-<iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top:0px" 
+<iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top:0px"
     marginheight="0" marginwidth="0" frameborder="0" scrolling="no" src="../user.controls/calendar.aspx" width="100%">
 </iframe>
 </body>
@@ -179,7 +179,7 @@
     sMsg += "La siguiente operación guardará la información del siguiente acto jurídico:\n\n";
     sMsg += "Tipo:\t<%=recordingAct.RecordingActType.DisplayName%>\n";
     sMsg += "Estado:\t" + getComboOptionText(getElement("cboStatus")) + "\n\n";
-    sMsg += "¿Toda la información está correcta?";    
+    sMsg += "¿Toda la información está correcta?";
     if (confirm(sMsg)) {
       sendPageCommand("saveRecordingAct");
     }

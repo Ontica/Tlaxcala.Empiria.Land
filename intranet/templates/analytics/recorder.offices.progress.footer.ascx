@@ -1,4 +1,4 @@
-<tfoot align="left">
+﻿<tfoot align="left">
   <tr align='left'>
     <td>
       <b>Totales:</b>
@@ -13,7 +13,7 @@
 	  </td>
     <td style="white-space:nowrap;" align='left'>
       <table class="ghostTable" align='left'>
-        <tr><td style="text-align:left">Total im�genes:&nbsp;&nbsp;&nbsp;</td><td align="right" style='width:120px'><span class='boldItem'><%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).GetColumnTotal("DomainFilesCount").ToString("N0")%></span></td><td>(traslat)</td></tr>
+        <tr><td style="text-align:left">Total imágenes:&nbsp;&nbsp;&nbsp;</td><td align="right" style='width:120px'><span class='boldItem'><%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).GetColumnTotal("DomainFilesCount").ToString("N0")%></span></td><td>(traslat)</td></tr>
         <tr><td style="text-align:left">No legibles:</td><td align="right"><span class='boldItem'><%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).GetColumnTotal("NoLegibleToReplaceImages").ToString("N0")%></span></td><td align="right">&nbsp; &nbsp; &nbsp;<span class='boldItem'><%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).GetColumnPercentage("NoLegibleToReplaceImages", "DomainFilesCount").ToString("N2")%> %</span></td></tr>
         <tr><td style="text-align:left">Proyectadas:</td><td align="right"><span class='boldItem'><%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).GetColumnTotal("NoLegibleToReplaceImagesPry").ToString("N0")%></span></td><td align="right">&nbsp; &nbsp; &nbsp;<span class='boldItem'><%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).GetColumnPercentage("NoLegibleToReplaceImagesPry", "DomainFilesCount").ToString("N2")%> %</span></td></tr>
       </table>

@@ -28,21 +28,21 @@
   <tr id="divDocumentData">
     <td>
       Categoría del documento:
-      <select id="cboRecordingType" name="cboRecordingType" class="selectBox" style="width:136px" title="" onchange="return updateUserInterface(this);" runat="server">
+      <select id="cboRecordingType" name="cboRecordingType" class="selectBox" style="width:136px" title=""
+                  onchange="return updateUserInterface(this);" runat="server">
         <option value="">( Seleccionar )</option>
-        <option value="2414" title="oPreemptiveNotice">Aviso preventivo</option>
+        <option value="2410" title="oNotaryPublicDeed">Escritura pública</option>
+        <option value="2414" title="oNotaryOfficialLetter">Oficio de notaría</option>
+        <option value="2412" title="oJudgeOfficialLetter">Oficio de juzgado</option>
+        <option value="2411" title="oEjidalSystemTitle">Título de propiedad</option>
       </select>
       <!--
-        <option value="2415" title="">Cancelación</option>
-        <option value="2410" title="oNotaryRecording">Escritura pública</option>
-        <option value="2412" title="oJudicialRecording">Orden/Resolución</option>
-        <option value="2413" title="oPrivateRecording">Contrato</option>
-        <option value="2411" title="oTitleRecording">Título de propiedad</option>
-        <option value="2416" title="">Otros (oficio)</option>
-        !-->
-      &nbsp;
+      <option value="2413" title="oPrivateContract">Contrato privado</option>
+      <option value="2415" title="oThirdPartyOfficialLetter">Oficio de terceros</option>
+              <option value="2408" title="oUnknownDocumentType">No determinado</option>!-->
       Núm de hojas <b>del instrumento</b>:
-      <select id="cboSheetsCount" name="cboSheetsCount" class="selectBox" style="width:46px" title="" onchange="return updateUserInterface(this);" runat="server">
+      <select id="cboSheetsCount" name="cboSheetsCount" class="selectBox" style="width:46px" title=""
+                  onchange="return updateUserInterface(this);" runat="server">
         <option value="">( ? )</option>
         <option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option>
         <option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option>
@@ -123,20 +123,20 @@
        <tr>
           <td>Tipo de acto:</td>
           <td>
-            <select id="cboRecordingActTypeCategory" name="cboRecordingActTypeCategory" class="selectBox" 
+            <select id="cboRecordingActTypeCategory" name="cboRecordingActTypeCategory" class="selectBox"
                     style="width:192px" title="" onchange="return updateUserInterface(this);" runat='server'>
             </select>
-            <select id="cboRecordingActType" name="cboRecordingActType" class="selectBox" style="width:306px" title="" 
+            <select id="cboRecordingActType" name="cboRecordingActType" class="selectBox" style="width:306px" title=""
                     onchange="return updateUserInterface(this);">
               <option value="">( Primero seleccionar el tipo de acto jurídico )</option>
             </select>
             <span id="divCreateFraction" style="display:none">
             Fracción:
-            <input id="txtPropertyPart" name="txtPropertyPart" type="text" class="textBox" 
-                    style="width:35px;margin-right:0px" onkeypress="return integerKeyFilter(this);" 
+            <input id="txtPropertyPart" name="txtPropertyPart" type="text" class="textBox"
+                    style="width:35px;margin-right:0px" onkeypress="return integerKeyFilter(this);"
                     title="" maxlength="4" runat="server" />
             </span>
-            <input type="button" value="Agregar acto" class="button" style="width:78px" onclick='doOperation("appendRecordingAct")' />    
+            <input type="button" value="Agregar acto" class="button" style="width:78px" onclick='doOperation("appendRecordingAct")' />
           </td>
           <td class="lastCell">&nbsp;</td>
         </tr>
@@ -163,7 +163,7 @@
             <span id="divPrecedentActSection" style="display:none">
               Folio del predio:
               <input id="txtDocumentKey" class="textBox" type="text" maxlength="18" style="width:160px" runat="server" />
-              <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" 
+              <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px"
                    onclick="doOperation('showPrecedentRecording')" />
               <a href='javascript:doOperation("refreshPrecedentRecordingCombos")' class="button">Buscarlo o agregarlo en libros físicos</a>
             </span>
@@ -179,22 +179,22 @@
         <tr id="divPrecedentRecordingSection" style="display:none">
           <td>Registrado en:</td>
           <td>
-            <select id="cboPrecedentRecordingSection" class="selectBox" style="width:196px" title="" 
+            <select id="cboPrecedentRecordingSection" class="selectBox" style="width:196px" title=""
                     onchange="return updateUserInterface(this);" runat='server'>
             </select>
           </td>
           <td>Volumen:<br /></td>
           <td>
-            <select id="cboPrecedentRecordingBook" class="selectBox" style="width:260px" title="" 
+            <select id="cboPrecedentRecordingBook" class="selectBox" style="width:260px" title=""
                     onchange="return updateUserInterface(this);" runat='server'>
             </select>
           </td>
           <td>Partida:</td>
           <td>
-            <select id="cboPrecedentRecording" class="selectBox" style="width:98px" title="" 
+            <select id="cboPrecedentRecording" class="selectBox" style="width:98px" title=""
                     onchange="return updateUserInterface(this);" runat='server'>
             </select>
-            <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" 
+            <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px"
                  onclick="doOperation('showPrecedentRecording')" />
           </td>
           <td class="lastCell">&nbsp;</td>
@@ -206,12 +206,12 @@
               &nbsp;Folio del predio:&nbsp;
               <select id="cboPrecedentProperty" class="selectBox" style="width:182px" title="" runat='server'>
               </select>
-              <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" 
+              <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px"
                     onclick="doOperation('showPrecedentProperty')" />
             </span>
             <span id="divRecordingQuickAddSection" style="display:none">
             &nbsp;Partida donde está registrado el predio:
-            <input id="txtQuickAddRecordingNumber" type="text" class="textBox" style="width:35px;margin-right:0px" 
+            <input id="txtQuickAddRecordingNumber" type="text" class="textBox" style="width:35px;margin-right:0px"
                     onkeypress="return integerKeyFilter(this);" title="" maxlength="5" runat="server" />
             <select id="cboQuickAddBisRecordingTag" class="selectBox" style="width:52px" title="" runat='server'>
               <option value=""></option>
@@ -229,7 +229,7 @@
 
           <td class="lastCell">&nbsp;</td>
         </tr>
-      </table> 
+      </table>
     </td>
   </tr>
   <tr>
@@ -252,7 +252,7 @@
 </table>
 </div>
 </form>
-<iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top:0px" 
+<iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top:0px"
     marginheight="0" marginwidth="0" frameborder="0" scrolling="no" src="../user.controls/calendar.aspx" width="100%">
 </iframe>
 </body>
@@ -266,8 +266,6 @@
     }
     switch (command) {
       case 'deleteRecordingAct':
-        alert('Operación deshabilitada temporalmente...');
-        return false;
         return deleteRecordingAct(arguments[1]);
       case 'deleteBookRecording':
         alert(arguments[1]);
@@ -349,7 +347,7 @@
   }
 
   function getRecordingActQueryString() {
-    var qs = "transactionId=<%=transaction.Id%>";    
+    var qs = "transactionId=<%=transaction.Id%>";
     qs += "&documentId=<%=transaction.Document.Id%>\n";
     qs += "&recordingActTypeCategoryId=" + getElement('cboRecordingActTypeCategory').value;
     qs += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
@@ -375,8 +373,15 @@
     if (!validateRecordingActSemantics()) {
       return false;
     }
-    if (Number(getElement('cboRecordingActType').value) != 2284) {
-      alert("Por el momento sólo es posible agregar avisos preventivos. Gracias por su comprensión.");
+    if (Number(getElement('cboRecordingActType').value) != 2284 &&
+        Number(getElement('cboRecordingActType').value) != 2257 &&
+        Number(getElement('cboRecordingActType').value) != 2729 &&
+        Number(getElement('cboRecordingActType').value) != 2701 &&
+        Number(getElement('cboRecordingActType').value) != 2228 &&
+        Number(getElement('cboRecordingActType').value) != 2203 &&
+        Number(getElement('cboRecordingActType').value) != 2250 &&
+        Number(getElement('cboRecordingActType').value) != 2755) {
+      alert("Por el momento no es posible inscribir actos jurídicos de ese tipo.");
       return false;
     }
 
@@ -395,7 +400,7 @@
     sMsg += 'Documento:\t<%=transaction.Document.UID%>\n';
     sMsg += 'Trámite:\t\t<%=transaction.UID%>\n';
     sMsg += 'Interesado(s):\t<%=Empiria.EmpiriaString.FormatForScripting(transaction.RequestedBy)%>\n\n';
-   
+
     sMsg += "Acto jurídico que se agegará:\n\n";
     sMsg += "Acto jurídico:\t" + getComboOptionText(getElement('cboRecordingActType')) + "\n";
     if (getElement('cboPrecedentRecording').value.length == 0) {
@@ -408,7 +413,7 @@
       sMsg += "Antecedente en:\t" + "Partida " + getComboOptionText(getElement('cboPrecedentRecording')) + "\n";
       sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
     } else {
-      sMsg += "Antecedente:\t" + "Registrar antecedente en partida " + getElement('txtQuickAddRecordingNumber').value + 
+      sMsg += "Antecedente:\t" + "Registrar antecedente en partida " + getElement('txtQuickAddRecordingNumber').value +
               getComboOptionText(getElement('cboQuickAddBisRecordingTag')) + "\n";
       sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
     }
@@ -439,7 +444,7 @@
         alert("Necesito conocer el distrito donde se inscribirá el acto jurídico " + recordingAct + ".");
         getElement('cboNewPropertyRecorderOffice').focus();
         return false;
-      }      
+      }
     }
     if (getElement('cboPropertyTypeSelector').value == 'createProperty' &&
         getElement('cboNewPropertyRecorderOffice').value.length == 0) {
@@ -470,14 +475,14 @@
         return false;
       }
       if (getElement('cboPrecedentRecording').value == "-1" &&
-          getElement('txtQuickAddRecordingNumber').value.length != 0 && 
+          getElement('txtQuickAddRecordingNumber').value.length != 0 &&
           !isNumeric(getElement('txtQuickAddRecordingNumber'))) {
         alert("El número de partida tiene un formato que no reconozco.\nDebería ser un número.");
         getElement('txtQuickAddRecordingNumber').focus();
         return false;
       }
       if (getElement('cboPrecedentRecording').value.length != 0 &&
-          getElement('cboPrecedentRecording').value != "-1" && 
+          getElement('cboPrecedentRecording').value != "-1" &&
           getElement('cboPrecedentProperty').value.length == 0) {
         alert("Necesito se seleccione de la lista el folio del predio al que aplicará el acto jurídico " + recordingAct + ".");
         getElement('cboPrecedentProperty').focus();
@@ -541,7 +546,7 @@
 
     createNewWindow(url);
   }
-  
+
   function showPrecedentRecording() {
     var bookId = getElement('cboPrecedentRecordingBook').value;
     var recordingId = getElement('cboPrecedentRecording').value;
@@ -559,7 +564,7 @@
 
     createNewWindow(url);
   }
-  
+
   function showPrecedentProperty() {
     var propertyId = getElement("cboPrecedentProperty").value;
     if (propertyId.length == 0 || propertyId == "-1" || propertyId == "0") {
@@ -604,7 +609,7 @@
     if (selectedValue != "-1") {
       resetPrecedentPropertiesCombo();
       getElement('divRecordingQuickAddSection').style.display = 'none';
-      getElement('divPropertySelectorSection').style.display = 'inline';     
+      getElement('divPropertySelectorSection').style.display = 'inline';
     } else {
       getElement('divRecordingQuickAddSection').style.display = 'inline';
       getElement('divPropertySelectorSection').style.display = 'none';
@@ -684,7 +689,7 @@
       getElement("divPrecedentActSection").style.display = "inline";
       getElement("divPrecedentRecordingSection").style.display = "inline";
       getElement("divNewPropertyRecorderOfficeSection").style.display = "none";
-      getElement("divTargetPrecedentActSection").style.display = "none";      
+      getElement("divTargetPrecedentActSection").style.display = "none";
     } else if (getElement("cboPropertyTypeSelector").value == "createProperty") {   // New properties
       getElement("divPropertyTypeSelector").style.display = "inline";
       getElement("divPrecedentActSection").style.display = "none";
@@ -705,7 +710,7 @@
       getElement("divPrecedentRecordingSection").style.display = "inline";
       getElement("divNewPropertyRecorderOfficeSection").style.display = "none";
       getElement("divTargetPrecedentActSection").style.display = "inline";
-    } else if (getElement("cboPropertyTypeSelector").value == "actAppliesOnlyToSection") {   // Recording act only needs a district 
+    } else if (getElement("cboPropertyTypeSelector").value == "actAppliesOnlyToSection") {   // Recording act only needs a district
       getElement("divPropertyTypeSelector").style.display = "inline";
       getElement("divPrecedentActSection").style.display = "none";
       getElement("divPrecedentRecordingSection").style.display = "none";
@@ -736,6 +741,6 @@
   }
 
   addEvent(window, 'load', window_onload);
-  
+
 </script>
 </html>

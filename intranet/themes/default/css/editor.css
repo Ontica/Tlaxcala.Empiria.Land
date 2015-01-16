@@ -5,13 +5,13 @@
   width: 100%;
 }
 table.editionTable td {
-  padding: 2px 4px 6px 0px; 
+  padding: 2px 4px 6px 0px;
   vertical-align: middle;
   white-space: nowrap;
 }
 table.editionTable td.lastCell {
   vertical-align: middle;
-  white-space: nowrap;  
+  white-space: nowrap;
   width: 100%;
 }
 table.gridNavigationBar {
@@ -87,7 +87,7 @@ input.textBox {
   color: #424242;
   font: 8pt Arial, Helvetica;
   font-weight: bold;
-	height: 15px;  
+	height: 15px;
   margin: 2px 8px 2px 0px;
   padding: 4px 2px 2px 2px;
 	vertical-align: middle;
@@ -102,7 +102,7 @@ input.fileTextBox {
   color: #424242;
   font: 8pt Arial, Helvetica;
   font-weight: bold;
-	height: 22px;  
+	height: 22px;
   margin: 2px 8px 2px 0px;
   padding: 4px 2px 2px 2px;
 	vertical-align: middle;
@@ -164,7 +164,7 @@ input.checkBox {
   border-right: 1px solid #e0e0e0;
 	color: #2a302a;
   font: 8pt Arial, Helvetica;
-  font-weight: bold;  
+  font-weight: bold;
   margin: 2px 8px 2px 0px;
   padding: 4px 2px 2px 2px;
   width: 99%;
@@ -192,7 +192,7 @@ table.details {
   border-collapse: collapse;
   border-left: #dadada 1px solid;
   border-right: #dadada 1px solid;
-  border-bottom: #dadada 1px solid;    
+  border-bottom: #dadada 1px solid;
 }
 table.details .detailsHeader td
 {
@@ -208,7 +208,7 @@ table.details .detailsHeader td
 table.details .detailsTotals td {
   background-color: #dfdfdf;
   color: #191970;
-  border-top: #4682b4 2px solid;  
+  border-top: #4682b4 2px solid;
   margin: 0px;
   padding: 2px 4px 2px 8px;
   font-family: Tahoma, Verdana;
@@ -235,9 +235,9 @@ table.details .detailsItem td {
   margin: 2px 2px 2px 2px;
   padding: 4px 4px 4px 8px;
   vertical-align: top;
-  height: 20px; 
+  height: 20px;
   border-left: gainsboro 1px solid;
-	font: 8pt Arial, Helvetica;  
+	font: 8pt Arial, Helvetica;
 }
 table.details td.totalsCell {
   background-color:#cecece;
@@ -271,18 +271,18 @@ table.details a:hover {
   background-color: inherit;
   color: #4a4f4a;
   white-space: nowrap;
-	font-weight: bold;  
+	font-weight: bold;
 }
 table.details .detailsOddItem td {
   background-color: #FFFEFB;
   border-bottom: #efefef 1px solid;
   margin: 2px 2px 2px 2px;
   padding: 4px 4px 4px 8px;
-  height: 22px; 
+  height: 22px;
   vertical-align: top;
   border-left: gainsboro 1px solid;
   border-bottom: gainsboro 1px solid;
-	font: 8pt Arial, Helvetica;  
+	font: 8pt Arial, Helvetica;
 }
 table.details .detailsGreenItem td {
   background-color: #f0fce1;
@@ -366,7 +366,7 @@ div.dataTableContainer table {
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
   position: relative;
-  width: 98%;  
+  width: 98%;
   z-index: 0;
 }
 div.dataTableContainer table th
@@ -389,8 +389,8 @@ div.dataTableContainer thead tr {
   position: relative;
   z-index: 20;
 }
-div.dataTableContainer thead a, div.dataTableContainer thead a:link, 
-div.dataTableContainer thead a:visited, 
+div.dataTableContainer thead a, div.dataTableContainer thead a:link,
+div.dataTableContainer thead a:visited,
 div.dataTableContainer thead a:active {
   background-color: inherit;
   cursor:pointer;

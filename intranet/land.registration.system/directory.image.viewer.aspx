@@ -14,7 +14,7 @@
   <script type="text/javascript" src="../scripts/empiria.calendar.js"></script>
   <script type="text/javascript">
   /* <![CDATA[ */	
-    
+
   function doPageCommand(commandName, commandArguments) {
     switch (commandName) {
       case 'refreshViewCmd':
@@ -29,10 +29,10 @@
         return false;
     }
   }
-  
+
   function doOperation(command) {
     var success = false;
-    
+
     if (gbSended) {
       return;
     }
@@ -73,7 +73,7 @@
       alert("Este libro sólo contiene " + bookImageCount() + " imágenes.");
       return false;
     }
-    
+
     var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getDirectoryImageURL";
     var newPosition = Number(getElement("txtGoToImage").value) -  1;
     ajaxURL += "&position=" + newPosition;
@@ -111,8 +111,7 @@
         return;
     }
     ajaxURL += "&directoryId=<%=directory.Id%>";
-    ajaxURL += "&currentPosition=" + getElement("hdnCurrentImagePosition").value;    
-  
+    ajaxURL += "&currentPosition=" + getElement("hdnCurrentImagePosition").value;
     var result = invokeAjaxMethod(false, ajaxURL, null);
     getElement("imgCurrent").src = result;
     getElement("hdnCurrentImagePosition").value = newPosition;
@@ -121,20 +120,20 @@
 
   function doZoom() {
     var oImage = getElement("imgCurrent");
-    
+
     var width = 1336;
     var height = 994;
     var zoomLevel = Number(getElement('cboZoomLevel').value);
     oImage.setAttribute('width', Number(width) * zoomLevel);
     oImage.setAttribute('height', Number(height) * zoomLevel);
   }
-    
+
   function setPageTitle() {
     var imageXOfY = Number(Number(getElement("hdnCurrentImagePosition").value) + 1) + " de <%=directory.FilesCount.ToString()%>";
     setInnerText(getElement("spanPageTitle"), "<%=pageTitle%>");
     setInnerText(getElement("spanCurrentImage"), "Imagen " + imageXOfY);
   }
-  
+
   function window_onload() {
     setWorkplace2();
     setPageTitle();
@@ -173,14 +172,13 @@
   function bookImageCount() {
     return <%=directory.FilesCount.ToString()%>;
   }
-  
+
   function window_onscroll() {
     fixDataTableItems(getElement('divObjectExplorer'));
   }
 
   addEvent(window, 'load', window_onload);	
-  //addEvent(document, 'keypress', upperCaseKeyFilter);   
-      
+  //addEvent(document, 'keypress', upperCaseKeyFilter);
   /* ]]> */
   </script>	
 </head>
@@ -239,10 +237,10 @@
           </tr>
         </table>
       </div> <!--divContent!-->		
-    </div> <!-- end divBody !-->  
+    </div> <!-- end divBody !-->
   </div> <!-- end divCanvas !-->
 </form>
-<iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top:0px" 
+<iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top:0px"
     marginheight="0"  marginwidth="0" frameborder="0" scrolling="no" src="../user.controls/calendar.aspx" width="100%">
 </iframe>
 </body>

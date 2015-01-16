@@ -57,7 +57,6 @@ namespace Empiria.Web.UI.LRS {
       AppendOnUpdateUSerInterfaceEvent(cboAnotherRecording);
     }
 
-
     private void LoadAnotherPropertyRecorderOfficesCombo() {
       LRSHtmlSelectControls.LoadRecorderOfficeCombo(this.cboAnotherRecorderOffice, ComboControlUseMode.ObjectCreation,
                                                     this.Recording.RecordingBook.RecorderOffice);

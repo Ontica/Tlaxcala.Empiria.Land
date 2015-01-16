@@ -63,7 +63,7 @@ namespace Empiria.Web.UI.Ajax {
       //  postalCodesList = location.PostalCodes;
       //}
       //if (postalCodesList.Count != 0) {
-      //  return HtmlSelectContent.GetComboAjaxHtml(postalCodesList, 0, "Id", "Name", "( ? )", String.Empty, 
+      //  return HtmlSelectContent.GetComboAjaxHtml(postalCodesList, 0, "Id", "Name", "( ? )", String.Empty,
       //                                            PostalCode.Unknown.Name);
       //} else {
       //  return HtmlSelectContent.GetComboAjaxHtml("( No def ) ", String.Empty, PostalCode.Unknown.Name);

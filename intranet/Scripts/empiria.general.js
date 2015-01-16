@@ -14,11 +14,11 @@ var gsWaitScreenMessage = "";
 // region Public methods
 
 function doCommand(commandName) {
-  if (gbSended) { 
+  if (gbSended) {
     return;
   }
   var catched = false;
-  
+
   gbSended = true;
   if (doPageCommand(commandName, arguments)) {
     catched = true;
@@ -111,9 +111,9 @@ function getEventSource(oEvent) {
 
 function getInnerText(elementId) {
   var element = getElement(elementId);
-  
+
   if (element.innerText != undefined) {
-    return element.innerText;  
+    return element.innerText;
   } else {
     return element.textContent;
   }
@@ -126,7 +126,7 @@ function setFocus(oControl) {
   try {
     oControl.focus();
   } catch (e) {
-    
+
   }
 }
 
@@ -186,7 +186,7 @@ function setStatus(e) {
 function showNotAllowedMessage() {
   alert("Lo siento, el usuario registrado no cuenta con los permisos\nnecesarios para efectuar esta operación.");
 }
-  
+
 function showExceptionMsg(message) {
   alert(message);
 }
@@ -198,17 +198,17 @@ function showMsg(message) {
 function showMessage(title, message) {
   var temp = title + "\n\n";
   temp += message;
-  
+
   alert(temp);
 }
 
-function selectAllCheckboxes(checkBoxName) {  
+function selectAllCheckboxes(checkBoxName) {
   var oCheckboxes = getElements(checkBoxName);
   if (oCheckboxes == undefined || oCheckboxes == null) {
     return;
   }
   var sourceElement = getEventSource(window.event);
-   
+
   for (var i = 0; i < oCheckboxes.length; i++) {
     oCheckboxes[i].checked = sourceElement.checked;
   }
@@ -253,7 +253,7 @@ function ungrayImage(e) {
   var imageDirectory = imageSource.substr(0, imageSource.lastIndexOf('/'));
   var imageFileName  = imageSource.substr(imageSource.lastIndexOf('/') + 1);
   var regEx = /grayed./g;
-  
+
   sourceElement.src = imageDirectory + "/" + imageFileName.replace(regEx, "");
   setStatus(e);
 }
@@ -270,8 +270,8 @@ function ungrayImage(e) {
 
   function fixDataTableItems(oDivDataTable) {
     try {
-      var oTableHeader = oDivDataTable.getElementsByTagName('tr')[0];      
-      oTableHeader.style.top = oDivDataTable.scrollTop - 1 + "px"; 
+      var oTableHeader = oDivDataTable.getElementsByTagName('tr')[0];
+      oTableHeader.style.top = oDivDataTable.scrollTop - 1 + "px";
     } catch (e) {
       // no-op
     }
@@ -289,7 +289,7 @@ function ungrayImage(e) {
         dataTableControlsHeight = 0;
       }
       var newHeight = windowHeight - menuHeight - pageOptionsHeight - dataTableControlsHeight;
-      
+
       getElement('divObjectExplorer').style.height = newHeight + "px";
       fixDataTableItems(getElement('divObjectExplorer'));
     } catch (e) {
@@ -407,13 +407,13 @@ function onClickMenuCommandHandler(tabStrip) {
   }
   var tabPrefix = tabStrip.id.substr(0, tabStrip.id.length - 1);
   var tabIndex = new Number(tabStrip.id.substr(tabStrip.id.length - 1));
-  
+
   for (var i = 0; i < 10; i++) {
-    var tabStripName = tabPrefix + i.toString();    
+    var tabStripName = tabPrefix + i.toString();
     if (existsElement(tabStripName)) {
       if (getElement(tabStripName).className != 'tabDisabled') {
         getElement(tabStripName).className = "tabOff";
-      }      
+      }
     } else {
       break;
     }
@@ -427,8 +427,7 @@ function onClickMenuCommandHandler(tabStrip) {
     getElement('mnu_' + tabIndex.toString()).style.display = 'inline';
   }
   return false;
-} 
-
+}
 function showTabStrip(tabIndex) {
   var tabPrefix = "tabStrip_";
   var tabStrip = getElement(tabPrefix + tabIndex);
@@ -436,7 +435,7 @@ function showTabStrip(tabIndex) {
   getElement('currentTabStrip').value = tabIndex;
 
   for (var i = 0; i < 10; i++) {
-    var tabStripName = tabPrefix + i.toString();    
+    var tabStripName = tabPrefix + i.toString();
     if (existsElement(tabStripName)) {
       if (getElement(tabStripName).className != 'tabDisabled') {
         getElement(tabStripName).className = "tabOff";
@@ -458,14 +457,14 @@ function showTabStrip(tabIndex) {
 function showTabStripItem(tabIndex) {
   var tabPrefix = "tabStripItem_";
   var tabStrip = getElement(tabPrefix + tabIndex);
-  
+
   getElement('currentTabStripItem').value = tabIndex;
   for (var i = 0; i < 10; i++) {
-    var tabStripName = tabPrefix + i.toString();    
+    var tabStripName = tabPrefix + i.toString();
     if (existsElement(tabStripName)) {
       if (getElement(tabStripName).className != 'tabDisabled') {
         getElement(tabStripName).className = "tabOff";
-      }      
+      }
     } else {
       break;
     }
@@ -499,18 +498,18 @@ function onClickTabStripCommandHandler(tabStrip, processOnServer) {
     return false;
   }
   var tabPrefix = tabStrip.id.substr(0, tabStrip.id.length - 1);
-  var tabIndex = new Number(tabStrip.id.substr(tabStrip.id.length - 1)); 
-  if (processOnServer != undefined && processOnServer != null) { 
+  var tabIndex = new Number(tabStrip.id.substr(tabStrip.id.length - 1));
+  if (processOnServer != undefined && processOnServer != null) {
     getElement('currentTabStripItem').value = tabIndex;
     return true;
   }
-  
+
   for (var i = 0; i < 10; i++) {
-    var tabStripName = tabPrefix + i.toString();    
+    var tabStripName = tabPrefix + i.toString();
     if (existsElement(tabStripName)) {
       if (getElement(tabStripName).className != 'tabDisabled') {
         getElement(tabStripName).className = "tabOff";
-      }      
+      }
     } else {
       break;
     }
@@ -540,11 +539,11 @@ function onMouseOutTabStripCommandHandler(tabStrip) {
   tabStrip.className = "tabOff";
 }
 
-function createNewWindow(commandPage) {  
+function createNewWindow(commandPage) {
   var oViewer = null;
   var openExclusive = false;
   //var options = getWindowFeatures(viewName);
-  
+
   var options = "status=yes,scrollbars=yes,fullscreen=no,location=no,menubar=no,resizable=yes,height=780px,width=900px";
 
 //  if ((viewParameters != null) && (viewParameters != "")) {
@@ -561,11 +560,11 @@ function createNewWindow(commandPage) {
   }
 }
 
-function createViewCommandHandler(commandName, viewName, viewParameters) {  
+function createViewCommandHandler(commandName, viewName, viewParameters) {
   var oViewer = null;
   var openExclusive = false;
   var options = getWindowFeatures(viewName);
-  
+
   var commandPage = "../workplace/command.processor.aspx";
   commandPage += "?commandName=" + commandName;
   commandPage += "&viewName=" + viewName;
@@ -591,8 +590,8 @@ function showFileUploaderCommandHandler() {
     getElement('btnUploadFile').value = "Cancelar la operación";
   } else {
     getElement('divFileUploader').style.display = "none";
-    getElement('btnUploadFile').value = "Agregar documento ...";   
-  }  
+    getElement('btnUploadFile').value = "Agregar documento ...";
+  }
 }
 
 function showContextualHelpCommandHandler() {
@@ -601,22 +600,22 @@ function showContextualHelpCommandHandler() {
   if (display == "none") {
     getElement('divRightMenu').style.display = "inline";
     getElement('divContextualHelp').style.display = "inline";
-    getElement('divDocuments').style.display = "none";    
+    getElement('divDocuments').style.display = "none";
   } else {
     getElement('divRightMenu').style.display = "none";
     getElement('divContextualHelp').style.display = "none";
-    getElement('divDocuments').style.display = "none";    
-  }  
+    getElement('divDocuments').style.display = "none";
+  }
 }
 
-function doWorkItemCommandHandler(commandName, workItemId) {  
+function doWorkItemCommandHandler(commandName, workItemId) {
   var oViewer = null;
   var openExclusive = false;
   var options = getWindowFeatures(commandName);
-  
+
   var commandPage = "../workflow/do.workitem.aspx";
   commandPage += "?workItemId=" + workItemId;
-  
+
   if (openExclusive) {
     oViewer = getExclusiveWindow(pageName);
   }
@@ -628,11 +627,11 @@ function doWorkItemCommandHandler(commandName, workItemId) {
   }
 }
 
-function createReportViewCommandHandler(reportName) {  
+function createReportViewCommandHandler(reportName) {
   var oViewer = null;
   var openExclusive = false;
   var options = getReportWindowFeatures(reportName);
-  
+
   var url = reportName;  // TODO: change this to ReportName later
   if (openExclusive) {
     oViewer = getExclusiveWindow(reportName);
@@ -645,12 +644,12 @@ function createReportViewCommandHandler(reportName) {
   }
 }
 
-function createFileDownloadCommandHandler(url) {  
+function createFileDownloadCommandHandler(url) {
   var oViewer = null;
   var openExclusive = false;
   var options = "status=yes,scrollbars=no,fullscreen=no,location=no,menubar=no,resizable=no,";
   options += "height=220px,width=420px";
-  
+
   if (openExclusive) {
     oViewer = getExclusiveWindow(url);
   }
@@ -664,7 +663,7 @@ function createFileDownloadCommandHandler(url) {
 
 function loadViewCommandHandler(commandName, viewName, viewParameters) {
   var commandPage = "../workplace/command.processor.aspx";
-  
+
   commandPage += "?commandName=" + commandName;
   commandPage += "&viewName=" + viewName;
   if ((viewParameters != null) && (viewParameters != "")) {
@@ -678,7 +677,7 @@ function loadViewCommandHandler(commandName, viewName, viewParameters) {
 
 function workplaceCommandHandler(commandName) {
   var commandPage = "../workplace/command.processor.aspx";
-  
+
   commandPage += "?commandName=" + commandName;
   if (getElement('hdnEmpiriaWorkplace').value != "") {
     commandPage += "&workplace=" + getElement('hdnEmpiriaWorkplace').value;
@@ -697,7 +696,7 @@ function getWindowFeatures(viewName) {
 //  var url = "../ajax/workplace.data.aspx";
 //  url += "?commandName=windowFeaturesCmd";
 //  url += "&viewName=" + viewName;
-//  
+//
 //
 // return invokeAjaxMethod(false, url, null);
 
@@ -711,7 +710,7 @@ function getReportWindowFeatures(reportName) {
 //  var url = "../ajax/workplace.data.aspx";
 //  url += "?commandName=windowFeaturesCmd";
 //  url += "&viewName=" + viewName;
-//  
+//
 //
 // return invokeAjaxMethod(false, url, null);
 

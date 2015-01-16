@@ -7,8 +7,8 @@
     <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 1);" title="">Control de usuarios</td>
     <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 2);" title="">Visor de cargas de trabajo</td>
     <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 3);" title="">Tareas en proceso</td>
-    <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Tareas reasignadas</td>        
-    <td id="tabStripItem_5" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 5);" title="">Tareas descartadas</td>    
+    <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Tareas reasignadas</td>
+    <td id="tabStripItem_5" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 5);" title="">Tareas descartadas</td>
     <td>&nbsp; &nbsp;</td>
     <td><input id="currentTabStripItem" name="currentTabStripItem" type="hidden" /></td>
   </tr>
@@ -21,29 +21,29 @@
 		  <select id="cboOffice" class="selectBox" style="width:238px" runat="server" onchange="doOperation('updateUserInterface', this);">
         <option value="">( Todos los Distritos )</option>
         <option value="700">Calera</option>
-        <option value="701">Concepción del Oro</option>                 
+        <option value="701">Concepción del Oro</option>
         <option value="702">Fresnillo</option>
         <option value="703">Jalpa</option>
-        <option value="704">Jeréz</option>        
+        <option value="704">Jeréz</option>
         <option value="705">Juchipila</option>
 				<option value="706">Loreto</option>
         <option value="707">Miguel Auza</option>
         <option value="708">Nochistlán</option>
         <option value="709">Ojo Caliente</option>
-        <option value="710">Pinos</option>                        			           
-        <option value="711">Río Grande</option>        
+        <option value="710">Pinos</option>
+        <option value="711">Río Grande</option>
         <option value="712">Sombrerete</option>
-        <option value="713">Teul de González Ortega</option>          
+        <option value="713">Teul de González Ortega</option>
         <option value="714">Tlaltenango</option>
-        <option value="715">Valparaíso</option>        
+        <option value="715">Valparaíso</option>
         <option value="716">Villanueva</option>
         <option value="717">Zacatecas</option>
         <option value=''></option>
 				<option value="718">Oficinas de terceros</option>
 		    </select>
       </td>
-			<% if (this.SelectedTabStrip < 3) { %>      
-      <td nowrap="nowrap">Buscar por: </td>      
+			<% if (this.SelectedTabStrip < 3) { %>
+      <td nowrap="nowrap">Buscar por: </td>
 			<% } %>
 			<% if (this.SelectedTabStrip >= 3) { %>
       <td nowrap="nowrap">Buscar: </td>
@@ -51,13 +51,13 @@
         <select id="cboSearch" name="cboSearch" class="selectBox" style="width:130px" runat="server">
           <option value="CustomerKeywords">Todos los campos</option>
           <option value="Phone1|Phone2">Asunto</option>
-          <option value="Phone1|Phone22">Contenido</option>            
+          <option value="Phone1|Phone22">Contenido</option>
           <option value="CustomerAlias|CustomerNumber|RsFC">Emisor</option>
-          <option value="CustomerAlias|CustomerNumber|RFdC">Involucrados</option>          
+          <option value="CustomerAlias|CustomerNumber|RFdC">Involucrados</option>
         </select>
       </td>
-      <% } %>      
-      <td nowrap="nowrap">      
+      <% } %>
+      <td nowrap="nowrap">
         <input id="txtSearchExpression" name="txtSearchExpression" class="textBox" onkeypress="return searchTextBoxKeyFilter(window.event);"
                type="text" tabindex="-1" maxlength="80" style="width:200px" runat="server" />
       </td>
@@ -65,12 +65,12 @@
         <img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('loadData')" title="Ejecuta la búsqueda" />
 				<% if (this.SelectedTabStrip == 0) { %>
         <a href="javascript:doOperation('createWorkgroup')"><img src="../themes/default/buttons/go.button.png" alt=""
-                 title="Imprime el reporte con la programación de reparto para las unidades seleccionadas" />Crear un grupo de trabajo</a> &nbsp; &nbsp;      
+                 title="Imprime el reporte con la programación de reparto para las unidades seleccionadas" />Crear un grupo de trabajo</a> &nbsp; &nbsp;
         <% } %>
 				<% if (this.SelectedTabStrip == 1) { %>
         <a href="javascript:doOperation('createUser')"><img src="../themes/default/buttons/go.button.png" alt=""
-                 title="Imprime el reporte con la programación de reparto para las unidades seleccionadas" />Registrar un nuevo usuario</a> &nbsp; &nbsp;       
-        <% } %>        
+                 title="Imprime el reporte con la programación de reparto para las unidades seleccionadas" />Registrar un nuevo usuario</a> &nbsp; &nbsp;
+        <% } %>
      </td>
      <td width="80%">&nbsp;</td>
     </tr>
@@ -93,9 +93,9 @@
         Prioridad:
         <% } %>				
       </td>
-			<% if (this.SelectedTabStrip >= 3) { %>           
+			<% if (this.SelectedTabStrip >= 3) { %>
       <td nowrap="nowrap">
- 
+
         <select id="cboDistributionType" name="cboDistributionType" class="selectBox" onchange="doOperation('updateUserInterface', this);" style="width:130px" runat="server">
           <option value="">( Todas )</option>
           <option value="5">Urgente</option>
@@ -103,7 +103,7 @@
           <option value="2">Normal</option>
         </select>
       </td>
-      <% } %>      
+      <% } %>
 			<% if (this.SelectedTabStrip >= 2) { %>
       <td colspan="3">
 				<select id="cboOrganization" class="selectBox" style="width:238px" runat="server" onchange="doOperation('updateUserInterface', this);">
@@ -148,18 +148,18 @@
   }
 
   function createObject() {
-    alert('La operación solicitada todavía no ha sido definida en el programa.');  
+    alert('La operación solicitada todavía no ha sido definida en el programa.');
     return false;
   }
 
   function loadData() {
     sendPageCommand("loadData");
   }
-  
+
   function updateUserInterface(oSourceControl) {
     sendPageCommand("updateUserInterface");
   }
-  
+
 	/* ]]> */
 	</script>
 </asp:Content>

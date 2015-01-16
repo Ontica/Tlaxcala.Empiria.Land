@@ -7,7 +7,7 @@
     <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 1);" title="">Trabajos en proceso</td>
     <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 2);" title="">Tareas efectuadas</td>
     <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 3);" title="">Tareas descartadas</td>
-    <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Todas las tareas</td>        
+    <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Todas las tareas</td>
     <td>&nbsp; &nbsp;</td>
     <td><input id="currentTabStripItem" name="currentTabStripItem" type="hidden" /></td>
   </tr>
@@ -21,11 +21,11 @@
         <option value="">( Todas las categorías )</option>
 				<option value="703">Inscripciones</option>
         <option value="704">Anotaciones preventivas</option>
-        <option value="705">Actos registrales</option>        
+        <option value="705">Actos registrales</option>
         <option value="706">Calificaciones</option>
         <option value="707">Certificaciones</option>
         <option value="708">Devolución de trámites</option>
-        <option value="709">Otras tareas</option>        
+        <option value="709">Otras tareas</option>
 		    </select>
       </td>
       <td nowrap="nowrap">Buscar por: </td>
@@ -43,13 +43,13 @@
           <option value="Emisor">Emisor</option>
         </select>
       </td>
-      <td nowrap="nowrap">      
+      <td nowrap="nowrap">
         <input id="txtSearchExpression" name="txtSearchExpression" class="textBox" onkeypress="return searchTextBoxKeyFilter(window.event);"
                type="text" tabindex="-1" maxlength="80" style="width:200px" runat="server" />
-				<img src="../themes/default/buttons/search.gif" alt="" onclick="doOperation('loadData')" title="Ejecuta la búsqueda" />               
+				<img src="../themes/default/buttons/search.gif" alt="" onclick="doOperation('loadData')" title="Ejecuta la búsqueda" />
       </td>
       <td align="left">
-        
+
       </td>
      <td width="80%">&nbsp;</td>
     </tr>
@@ -72,7 +72,7 @@
           <option value="3">Alta</option>
           <option value="2">Normal</option>
         </select>
-      </td>      
+      </td>
       <td nowrap="nowrap" colspan="3">
         <a href="javascript:doOperation('createObject')"><img src="../themes/default/buttons/go.button.png" alt=""
                  title="Imprime el reporte con la programación de reparto para las unidades seleccionadas" />Crear una nueva tarea</a> &nbsp; &nbsp;
@@ -107,14 +107,14 @@
   }
 
   function createObject() {
-    alert('La operación solicitada todavía no ha sido definida en el programa.');  
+    alert('La operación solicitada todavía no ha sido definida en el programa.');
     return false;
   }
 
   function loadData() {
     sendPageCommand("loadData");
   }
-  
+
   function updateUserInterface(oSourceControl) {
     sendPageCommand("updateUserInterface");
   }

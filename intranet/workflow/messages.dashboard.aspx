@@ -7,7 +7,7 @@
     <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 1);" title="">Pendientes de envío</td>
     <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 2);" title="">Elementos enviados</td>
     <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 3);" title="">Elementos eliminados</td>
-    <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Todos los mensajes y alertas</td>        
+    <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Todos los mensajes y alertas</td>
     <td>&nbsp; &nbsp;</td>
     <td><input id="currentTabStripItem" name="currentTabStripItem" type="hidden" /></td>
   </tr>
@@ -29,11 +29,11 @@
         <select id="cboSearch" name="cboSearch" class="selectBox" style="width:130px" runat="server">
           <option value="CustomerKeywords">Todos los campos</option>
           <option value="Phone1|Phone2">Asunto</option>
-          <option value="Phone1|Phone22">Contenido</option>            
-          <option value="CustomerAlias|CustomerNumber|RsFC">Emisor</option>     
+          <option value="Phone1|Phone22">Contenido</option>
+          <option value="CustomerAlias|CustomerNumber|RsFC">Emisor</option>
         </select>
       </td>
-      <td nowrap="nowrap">      
+      <td nowrap="nowrap">
         <input id="txtSearchExpression" name="txtSearchExpression" class="textBox" onkeypress="return searchTextBoxKeyFilter(window.event);"
                type="text" tabindex="-1" maxlength="80" style="width:200px" runat="server" />
       </td>
@@ -61,7 +61,7 @@
           <option value="3">Alta</option>
           <option value="2">Normal</option>
         </select>
-      </td>      
+      </td>
       <td nowrap="nowrap" colspan="3">
         <a href="javascript:doOperation('createObject')"><img src="../themes/default/buttons/go.button.png" alt=""
                  title="Imprime el reporte con la programación de reparto para las unidades seleccionadas" />Enviar un nuevo mensaje</a> &nbsp; &nbsp;
@@ -96,14 +96,14 @@
   }
 
   function createObject() {
-    alert('La operación solicitada todavía no ha sido definida en el programa.');  
+    alert('La operación solicitada todavía no ha sido definida en el programa.');
     return false;
   }
 
   function loadData() {
     sendPageCommand("loadData");
   }
-  
+
   function updateUserInterface(oSourceControl) {
     sendPageCommand("updateUserInterface");
   }

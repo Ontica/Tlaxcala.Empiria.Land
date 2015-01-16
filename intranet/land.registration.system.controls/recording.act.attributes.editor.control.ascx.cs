@@ -61,7 +61,7 @@ namespace Empiria.Web.UI.LRS {
       if (txtOperationAmount.Value.Length == 0) {
         txtOperationAmount.Value = "0.00";
       }
-      recordingAct.ExtensionData.OperationAmount = 
+      recordingAct.ExtensionData.OperationAmount =
                                   Money.Parse(Currency.Parse(int.Parse(cboOperationCurrency.Value)),
                                               decimal.Parse(txtOperationAmount.Value));
     }

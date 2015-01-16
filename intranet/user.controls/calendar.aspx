@@ -9,27 +9,27 @@
 
 			function setDate(value) {
 				getElement('txtDate').value = value;
-        document.forms[0].action = "calendar.aspx?changed=true"; 
+        document.forms[0].action = "calendar.aspx?changed=true";
 				getElement('divCalendar').style.visibility = "hidden";
         document.forms[0].submit();
       }
 
-      function on_calendar_date_selected(value) {        
+      function on_calendar_date_selected(value) {
         window.parent.execScript("on_calendar_date_selected('" + value + "')");
       }
-      
-      function on_calendar_lost_focus() {        
+
+      function on_calendar_lost_focus() {
         window.parent.execScript("on_calendar_lost_focus()");
       }
-                 
+
       function on_calendar_resize() {
-        var oBody	=	document.body;        
+        var oBody	=	document.body;
         var x = oBody.scrollWidth + (oBody.offsetWidth - oBody.clientWidth) + 1;
         var y = oBody.scrollHeight + (oBody.offsetHeight - oBody.clientHeight) + 1;
-        
+
         window.parent.execScript("on_calendar_resize(" + x + ", " + y + ")");
       }
-      
+
       function window_onload() {
         <% if (!isVisible) { %>
       		getElement('divCalendar').style.visibility = "hidden";
@@ -39,7 +39,7 @@
           on_calendar_date_selected('<%=selectedValue%>');
         <% } %>
         on_calendar_resize();
-      }      
+      }
     //-->
 		</script>
 	</head>

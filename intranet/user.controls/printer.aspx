@@ -6,14 +6,13 @@
 		<title>Impresión de documentos</title>
 	  <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" language="javascript">
-    <!-- 
-      
+    <!--
       function window_onload() {
         document.ifraPrintPage.focus();
         document.ifraPrintPage.print();
         addEvent(document.ifraPrintPage.window, 'onafterprint', printPage_onafterprint);
       }
-      
+
       function printPage_onafterprint() {
         self.close();
       }

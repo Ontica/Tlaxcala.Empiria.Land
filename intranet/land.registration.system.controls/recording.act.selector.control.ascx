@@ -34,7 +34,7 @@
       </select>
       <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" onclick="<%=this.ClientID%>_doOperation('showRecording')" />
       &nbsp; &nbsp; &nbsp; &nbsp;Folio del predio:&nbsp;
-      <select id="cboAnotherProperty" class="selectBox" style="width:202px" title="" runat='server'>                          
+      <select id="cboAnotherProperty" class="selectBox" style="width:202px" title="" runat='server'>
       </select>
       <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" onclick="<%=this.ClientID%>_doOperation('showRecording')" />
     </td>
@@ -43,7 +43,7 @@
   <tr>
     <td>Importe del avalúo:&nbsp;</td>
     <td colspan="6" class="lastCell">
-      <input id="txtAppraisalAmount" type="text" class="textBox" style="width:90px;" 
+      <input id="txtAppraisalAmount" type="text" class="textBox" style="width:90px;"
               onkeypress="return positiveKeyFilter(this);" onblur='this_formatAsNumber(this);'
               title="" maxlength="18" runat="server" />
       <select id="cboAppraisalCurrency" class="selectBox" style="width:52px;margin-left:-6px" runat="server">
@@ -60,7 +60,7 @@
         <option value="603" title="Salarios mínimos">SM</option>
         <option value="601" title="Dólares americanos">USD</option>
       </select>
-      <input type="button" value="Igualar" class="button" tabindex="-1" style="width:60px;vertical-align:middle" 
+      <input type="button" value="Igualar" class="button" tabindex="-1" style="width:60px;vertical-align:middle"
              onclick="javascript:equateValues('<%=txtAppraisalAmount.ClientID%>', '<%=txtOperationAmount.ClientID%>');equateValues('<%=cboAppraisalCurrency.ClientID%>', '<%=cboOperationCurrency.ClientID%>')" />
     </td>
   </tr>
@@ -74,7 +74,7 @@
 </table>
 <script type="text/javascript">
 /* <![CDATA[ */
-  
+
   var <%=this.ClientID%>_gbSended = false;
 
   function <%=this.ClientID%>_doOperation(command) {
@@ -91,7 +91,7 @@
         return;
     }
   }
-  
+
   function this_formatAsNumber(oControl) {
     if (oControl.value.length == 0) {
       return;
@@ -134,12 +134,12 @@
       alert("Requiero la moneda del importe del avalúo.");
       return false;
     }
-    if (Number(getElement('<%=cboAppraisalCurrency.ClientID%>').value) < 0 && 
+    if (Number(getElement('<%=cboAppraisalCurrency.ClientID%>').value) < 0 &&
         getElement('<%=txtAppraisalAmount.ClientID%>').value.length != 0) {
       alert("Se seleccionó 'No consta' como moneda pero el importe del avalúo sí se proporcionó.");
       return false;
     }
-    if (Number(getElement('<%=cboAppraisalCurrency.ClientID%>').value) > 0 && 
+    if (Number(getElement('<%=cboAppraisalCurrency.ClientID%>').value) > 0 &&
         getElement('<%=txtAppraisalAmount.ClientID%>').value.length == 0) {
       alert("Requiero el importe del avalúo.");
       return false;
@@ -148,12 +148,12 @@
       alert("Requiero la moneda del importe de la operación.");
       return false;
     }
-    if (Number(getElement('<%=cboOperationCurrency.ClientID%>').value) < 0 && 
+    if (Number(getElement('<%=cboOperationCurrency.ClientID%>').value) < 0 &&
         getElement('<%=txtOperationAmount.ClientID%>').value.length != 0) {
       alert("Se seleccionó 'No consta' como moneda pero el importe de la operación sí se proporcionó.");
       return false;
     }
-    if (Number(getElement('<%=cboOperationCurrency.ClientID%>').value) > 0 && 
+    if (Number(getElement('<%=cboOperationCurrency.ClientID%>').value) > 0 &&
         getElement('<%=txtOperationAmount.ClientID%>').value.length == 0) {
       alert("Requiero el importe de la operación.");
       return false;
@@ -233,12 +233,12 @@
     invokeAjaxComboItemsLoader(url, getElement('<%=cboAnotherRecording.ClientID%>'));
     <%=this.ClientID%>_resetAnotherPropertiesCombo();
   }
-    
+
   function <%=this.ClientID%>_resetAnotherPropertiesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingPropertiesArrayCmd";
     if (getElement('<%=cboAnotherRecording.ClientID%>').value.length != 0) {
-      url += "&recordingId=" + getElement('<%=cboAnotherRecording.ClientID%>').value; 
+      url += "&recordingId=" + getElement('<%=cboAnotherRecording.ClientID%>').value;
     } else {
       url += "&recordingId=0";
     }
@@ -253,11 +253,10 @@
     }
   }
 
-  function <%=this.ClientID%>_resetRecordingsTypesCombo() {    
+  function <%=this.ClientID%>_resetRecordingsTypesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
-    url += "&recordingActTypeCategoryId=" + getElement("<%=cboRecordingActTypeCategory.ClientID%>").value; 
-
+    url += "&recordingActTypeCategoryId=" + getElement("<%=cboRecordingActTypeCategory.ClientID%>").value;
     invokeAjaxComboItemsLoader(url, getElement('cboRecordingActType'));
   }
 

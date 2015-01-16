@@ -18,7 +18,7 @@ var gsPageTitle = "";
 var gsDashboardTitle = "";
 
 // endregion Global variables
-    
+
 // region Public methods
 
 function doMasterPageCommand(commandName, commandArguments) {
@@ -99,9 +99,9 @@ function onClickMenuCommandHandler(menuItem) {
   }
   var menuPrefix = "masterMenu_";
   var menuIndex = new Number(menuItem.id.substr("masterMenu_".length));
-  
+
   for (var i = 0; i < 10; i++) {
-    var menuItemId = menuPrefix + i.toString();    
+    var menuItemId = menuPrefix + i.toString();
     if (existsElement(menuItemId)) {
       if (getElement(menuItemId).className != 'menuDisabled') {
         getElement(menuItemId).className = "menuOff";
@@ -124,7 +124,7 @@ function setMenuOption(menuOptionId) {
   var subMenuId = getElement(menuOptionId).parentElement.id;
   var subMenuIndex = new Number(subMenuId.substr("masterSubMenu_".length));
 
-  getElement(menuOptionId).className = "selectedMenu";  
+  getElement(menuOptionId).className = "selectedMenu";
   doCommand('onClickMenuCmd', getElement("masterMenu_" + subMenuIndex));
 
   gsDashboardTitle = getElement(menuOptionId).innerText;
@@ -148,12 +148,12 @@ function displayPageTitle() {
 // region Private command handler methods
 
 function createWorkplaceCommandHandler(commandName) {
-	var commandPage = "../workplace/command.processor.aspx";  
+	var commandPage = "../workplace/command.processor.aspx";
   commandPage += "?commandName=" + commandName;
    if (getElement('hdnEmpiriaWorkplace').value != "") {
     commandPage += "&workplace=" + getElement('hdnEmpiriaWorkplace').value;
   }
-  
+
 	window.open(commandPage);
 }
 
@@ -212,7 +212,7 @@ function hideDefaultContextMenu() {
   return false;
 }
 
-function showContextMenu() { 
+function showContextMenu() {
   return false;
 }
 
@@ -221,7 +221,7 @@ function getMenuItemsDisabledPattern() {
   url += "objectTypeInfoName=" + gContextMenuItemType + "&";
   url += "selectedMenuItem=" + gContextMenuItem + "&";
   url += "clipboardMenuItem=" + gClipboardContextMenuItem;
-  
+
   return invokeAjaxMethod(false, url, null);
 }
 
