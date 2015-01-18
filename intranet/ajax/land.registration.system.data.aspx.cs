@@ -9,8 +9,11 @@
 *																																																						 *
 **************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 2009-2015. **/
 using System;
+
 using Empiria.Contacts;
 using Empiria.Geography;
+using Empiria.Json;
+
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
 using Empiria.Land.UI;
@@ -24,6 +27,8 @@ namespace Empiria.Web.UI.Ajax {
 
     protected override string ImplementsCommandRequest(string commandName) {
       switch (commandName) {
+        case "getRecordingActRule":
+          return GetRecordingActRuleCommandHandler();
         case "getRecordingBooksStringArrayCmd":
           return GetRecordingBooksStringArrayCommandHandler();
         case "getDomainBooksStringArrayCmd":
@@ -94,6 +99,19 @@ namespace Empiria.Web.UI.Ajax {
       }
     }
 
+    private string GetRecordingActRuleCommandHandler() {
+      int recordingActTypeId = GetCommandParameter<int>("recordingActTypeId", -1);
+      RecordingActType recordingActType = RecordingActType.Empty;
+
+      if (recordingActTypeId != -1) {
+        recordingActType = RecordingActType.Parse(recordingActTypeId);
+      }
+
+      JsonObject jsonRule = recordingActType.RecordingRule.ToJson();
+
+      return jsonRule.ToString();
+    }
+
     #region Private command handlers
 
     private string GetPropertyTypeSelectorComboCommandHandler() {
@@ -102,7 +120,7 @@ namespace Empiria.Web.UI.Ajax {
       int recordingId = GetCommandParameter<int>("recordingId", -1);
 
       if (recordingActTypeId == -1) {
-        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar acto )");
+        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar el acto jurídico )");
       }
 
       var recordingActType = RecordingActType.Parse(recordingActTypeId);
@@ -121,7 +139,7 @@ namespace Empiria.Web.UI.Ajax {
         }
         counter++;
       } else if (rule.AppliesTo == RecordingRuleApplication.RecordingAct) {
-        html += HtmlSelectContent.GetComboAjaxHtmlItem("actAppliesToOtherRecordingAct", "Seleccionar el acto jurídico");
+        html += HtmlSelectContent.GetComboAjaxHtmlItem("actAppliesToOtherRecordingAct", "Ya registrado");
         counter++;
       } else {
         if (rule.PropertyRecordingStatus == PropertyRecordingStatus.Unregistered ||
@@ -135,7 +153,7 @@ namespace Empiria.Web.UI.Ajax {
           if (html.Length != 0) {
             html += "|";
           }
-          html += HtmlSelectContent.GetComboAjaxHtmlItem("selectProperty", "Seleccionar el antecedente");
+          html += HtmlSelectContent.GetComboAjaxHtmlItem("selectProperty", "Ya registrado");
           counter++;
         }
       }
@@ -654,12 +672,11 @@ namespace Empiria.Web.UI.Ajax {
       string items = String.Empty;
       if (recordingActTypeCategoryId != 0) {
         RecordingActTypeCategory recordingActTypeCategory = RecordingActTypeCategory.Parse(recordingActTypeCategoryId);
-        FixedList<RecordingActType> list = recordingActTypeCategory.RecordingActTypes;
-
+        FixedList<RecordingActType> list = recordingActTypeCategory.RecordingActTypes.FindAll((x) => x.RecordingRule.IsActive).ToFixedList();
         return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "DisplayName",
                                                   "( ¿Qué acto jurídico se agregará al documento? )");
       } else {
-        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar el tipo o de acto jurídico )");
+        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar el tipo de acto )");
       }
     }
 
