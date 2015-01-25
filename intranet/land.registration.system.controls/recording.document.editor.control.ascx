@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="false" EnableViewState="true" Inherits="Empiria.Web.UI.LRS.RecordingDocumentFullEditorControl" CodeFile="recording.document.full.editor.control.ascx.cs" %>
+﻿<%@ Control Language="C#" AutoEventWireup="false" EnableViewState="true" Inherits="Empiria.Web.UI.LRS.RecordingDocumentFullEditorControl" CodeFile="recording.document.editor.control.ascx.cs" %>
 <table id="oNotaryOfficialLetter" class="editionTable" style="display:none;" runat="server">
   <tr>
     <td>
@@ -9,12 +9,10 @@
         <option value=''>( Seleccionar )</option>
         <option value='744'>Aviso preventivo</option>
         <option value='757'>Aviso definitivo</option>
-      </select>
-      <!--
-        <option value='757'>Corrección</option>
         <option value='739'>Cancelación de aviso</option>
         <option value='741'>Cancelación de hipoteca</option>
-!-->
+        <option value='755'>Fe de erratas</option>
+      </select>
     </td>
     <td class="lastCell">
       No. Oficio: &nbsp;
@@ -79,14 +77,13 @@
 </table>
 <table id="oEjidalSystemTitle" class="editionTable" style="display:none;" runat="server">
   <tr>
-    <td>
-      Título de propiedad número:
-    </td>
-    <td><input id="txtPropTitleDocNumber" type="text" class="textBox" style="width:106px" onkeypress="return upperCaseKeyFilter(this);"
+    <td colspan="2">
+      Título de propiedad No: &nbsp;
+    <input id="txtPropTitleDocNumber" type="text" class="textBox" style="width:136px" onkeypress="return upperCaseKeyFilter(this);"
          title="" maxlength="32" runat="server" /></td>
     <td>Expedido por:</td>
     <td class="lastCell">C.
-      <select id="cboPropTitleDocIssuedBy" class="selectBox" style="width:290px" title="" runat="server">
+      <select id="cboPropTitleDocIssuedBy" class="selectBox" style="width:328px" title="" runat="server">
       </select>
     </td>
   </tr>
@@ -101,7 +98,7 @@
       <select id="cboPropTitleIssueOffice" class="selectBox" style="width:166px" title="" runat="server">
       </select>
       Folio:
-      <input id="txtPropTitleStartSheet" type="text" class="textBox" style="width:100px" onkeypress="return integerKeyFilter(this);" title="" maxlength="32"  runat="server" />
+      <input id="txtPropTitleStartSheet" type="text" class="textBox" style="width:136px" onkeypress="return upperCaseKeyFilter(this);" title="" maxlength="32"  runat="server" />
     </td>
   </tr>
 </table>
@@ -113,21 +110,26 @@
     <td>
       <select id="cboJudicialDocSubtype" class="selectBox" style="width:220px" title="" runat="server">
         <option value=''>( Seleccionar )</option>
+        <option value='782'>Adjudicación por herencia</option>
+        <option value='783'>Adjudicación por remate judicial</option>
+        <option value='778'>Apeo y deslinde</option>
+        <option value='784'>Apertura de servidumbre</option>
+        <option value='737'>Cancelación de embargo</option>
+        <option value='779'>Cancelación de servidumbre</option>
         <option value='770'>Embargo</option>
+        <option value='769'>Embargo (reinscripción)</option>
+        <option value='780'>Inmovilización de predio</option>
+        <option value='776'>Nombramiento de albacea provisional</option>
+        <option value='720'>Nombramiento de albacea definitivo</option>
+        <option value='781'>Nulidad de inscripción</option>
+        <option value='777'>Sentencia de patrimonio familiar</option>
         <option value='771'>Sentencia de usucapión</option>
       </select>
-
       <!--
-
-              <option value='773'>Decreto</option>
-        <option value='770'>Embargo</option>
+        <option value='768'>Adjudicación por juicio mercantil</option>
+        <option value='773'>Decreto</option>
         <option value='775'>Programa de Desarrollo Municipal</option>
-        <option value='772'>Resolución judicial</option>
-        <option value='771'>Sentencia de usucapión</option>
-        <option value=''></option>
-        <option value='774'>Cancelación de embargo</option>
-
-        !-->
+      !-->
     </td>
     <td>
       Expediente: &nbsp;
@@ -500,6 +502,9 @@
   addEvent(getElement('<%=cboPrivateDocMainWitnessPosition.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPrivateContract.MainWitnessPosition") } );
   addEvent(getElement('<%=txtJudicialDocBook.ClientID%>'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('<%=txtJudicialDocNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
+
+  addEvent(getElement('<%=txtPropTitleDocNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
+  addEvent(getElement('<%=txtPropTitleStartSheet.ClientID%>'), 'keypress', upperCaseKeyFilter);
 
   /* ]]> */
 </script>

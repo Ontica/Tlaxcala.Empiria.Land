@@ -144,15 +144,7 @@ namespace Empiria.Web.UI.LRS {
       if (transaction.IsEmptyItemsTransaction) {
         return false;
       }
-      if (transaction.Document.IsEmptyInstance ||
-          EmpiriaMath.IsMemberOf(transaction.Document.DocumentType.Id,
-                                 new int[] { 2414, 2412, 2411, 2410 } )) {
-        return true;
-      }
-      if (ExecutionServer.CurrentUserId == 3) {
-        return true;
-      }
-      return false;
+      return true;
     }
 
     protected bool CanReceivePayment() {

@@ -10,6 +10,7 @@
 **************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 2009-2015. **/
 using System;
 
+using Empiria.DataTypes;
 using Empiria.Contacts;
 using Empiria.Geography;
 using Empiria.Json;
@@ -27,6 +28,10 @@ namespace Empiria.Web.UI.Ajax {
 
     protected override string ImplementsCommandRequest(string commandName) {
       switch (commandName) {
+        case "getDomainTraslativeSectionsCmd":
+          return DomainTraslativeSectionsCommandHandler();
+        case "getRecordingActTypesEditingCategoriesCmd":
+          return RecordingActTypesEditingCategoriesCommandHandler();
         case "getRecordingActRule":
           return GetRecordingActRuleCommandHandler();
         case "getRecordingBooksStringArrayCmd":
@@ -99,6 +104,20 @@ namespace Empiria.Web.UI.Ajax {
       }
     }
 
+    private string RecordingActTypesEditingCategoriesCommandHandler() {
+      var list = RecordingActTypeCategory.GetList("RecordingActTypesCategories.List");
+
+      return HtmlSelectContent.GetComboAjaxHtml(list, 0,
+                                          "Id", "Name", "( Tipo de acto jurídico )");
+    }
+
+    private string DomainTraslativeSectionsCommandHandler() {
+      var list = GeneralList.Parse("LRSDomainTraslativeSection.Combo.List");
+
+      return HtmlSelectContent.GetComboAjaxHtml(list.GetItems<NameValuePair>(), 0,
+                                                "Value", "Name", "( Distrito / Sección )");
+    }
+
     private string GetRecordingActRuleCommandHandler() {
       int recordingActTypeId = GetCommandParameter<int>("recordingActTypeId", -1);
       RecordingActType recordingActType = RecordingActType.Empty;
@@ -116,7 +135,6 @@ namespace Empiria.Web.UI.Ajax {
 
     private string GetPropertyTypeSelectorComboCommandHandler() {
       int recordingActTypeId = GetCommandParameter<int>("recordingActTypeId", -1);
-      int transactionId = GetCommandParameter<int>("transactionId", -1);
       int recordingId = GetCommandParameter<int>("recordingId", -1);
 
       if (recordingActTypeId == -1) {
@@ -371,7 +389,8 @@ namespace Empiria.Web.UI.Ajax {
       JudicialOffice judicialOffice = JudicialOffice.Parse(judicialOfficeId);
       FixedList<Person> list = judicialOffice.GetJudges();
 
-      return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "FamilyFullName", "( Seleccionar al C. Juez )", String.Empty, "No consta");
+      return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "FamilyFullName",
+                                                "( Seleccionar al C. Juez )", String.Empty, "No consta");
     }
 
     private string GetJudicialOfficeInPlaceStringArrayCommandHandler() {
@@ -383,7 +402,8 @@ namespace Empiria.Web.UI.Ajax {
       var place = GeographicRegion.Parse(placeId);
       FixedList<JudicialOffice> list = JudicialOffice.GetList(place);
 
-      return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "Number", "( Seleccionar )", String.Empty, "No consta");
+      return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "Number",
+                                                "( Seleccionar )", String.Empty, "No consta");
     }
 
     private string GetWitnessInPositionStringArrayCommandHandler() {
@@ -391,7 +411,8 @@ namespace Empiria.Web.UI.Ajax {
       int positionId = int.Parse(GetCommandParameter("positionId", false, "0"));
 
       if (positionId == 0) {
-        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar el rol del certificador )");
+        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty,
+                                                      "( Primero seleccionar el rol del certificador )");
       } else if (positionId == -2) {
         return HtmlSelectContent.GetComboAjaxHtmlItem("-2", "No consta o no se puede determinar");
       }
@@ -609,10 +630,11 @@ namespace Empiria.Web.UI.Ajax {
     private string GetRecordingIdCommandHandler() {
       int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
       string number = GetCommandParameter("number", true);
+      string subNumber = GetCommandParameter("subNumber", false, String.Empty);
       string bisSuffixNumber = GetCommandParameter("bisSuffixNumber", false, String.Empty);
 
       var recordingBook = RecordingBook.Parse(recordingBookId);
-      var recording = recordingBook.FindRecording(int.Parse(number), bisSuffixNumber);
+      var recording = recordingBook.FindRecording(int.Parse(number), subNumber, bisSuffixNumber);
       if (recording != null) {
         return recording.Id.ToString();
       } else {
@@ -668,11 +690,18 @@ namespace Empiria.Web.UI.Ajax {
 
     private string GetRecordingTypesStringArrayCommandHandler() {
       int recordingActTypeCategoryId = int.Parse(GetCommandParameter("recordingActTypeCategoryId", false, "0"));
+      bool filtered = base.GetCommandParameter<bool>("filtered", false);
 
       string items = String.Empty;
       if (recordingActTypeCategoryId != 0) {
         RecordingActTypeCategory recordingActTypeCategory = RecordingActTypeCategory.Parse(recordingActTypeCategoryId);
-        FixedList<RecordingActType> list = recordingActTypeCategory.RecordingActTypes.FindAll((x) => x.RecordingRule.IsActive).ToFixedList();
+
+        FixedList<RecordingActType> list = null;
+        if (filtered) {
+          list = recordingActTypeCategory.RecordingActTypes.FindAll((x) => x.RecordingRule.IsActive).ToFixedList();
+        } else {
+          list = recordingActTypeCategory.RecordingActTypes;
+        }
         return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "DisplayName",
                                                   "( ¿Qué acto jurídico se agregará al documento? )");
       } else {
@@ -795,6 +824,7 @@ namespace Empiria.Web.UI.Ajax {
       int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
       int recordingId = int.Parse(GetCommandParameter("recordingId", true));
       int number = int.Parse(GetCommandParameter("number", false));
+      string subNumber = GetCommandParameter("subNumber", false, String.Empty);
       string bisSuffixNumber = GetCommandParameter("bisSuffixNumber", false, String.Empty);
       int imageStartIndex = int.Parse(GetCommandParameter("imageStartIndex", false, "-1"));
       int imageEndIndex = int.Parse(GetCommandParameter("imageEndIndex", false, "-1"));
@@ -814,7 +844,7 @@ namespace Empiria.Web.UI.Ajax {
         recording = Recording.Empty;
       }
       LandRegistrationException exception = null;
-      exception = LRSValidator.ValidateRecordingNumber(recordingBook, recording, number, bisSuffixNumber,
+      exception = LRSValidator.ValidateRecordingNumber(recordingBook, recording, number, subNumber, bisSuffixNumber,
                                                        imageStartIndex, imageEndIndex);
       if (exception != null) {
         return exception.Message;
@@ -857,7 +887,8 @@ namespace Empiria.Web.UI.Ajax {
          targetResourceId: GetCommandParameter<int>("precedentPropertyId", -1),
          targetRecordingActId: GetCommandParameter<int>("targetRecordingActId", -1),
          quickAddRecordingNumber: GetCommandParameter<int>("quickAddRecordingNumber", -1),
-         quickAddBisRecordingSuffixTag: GetCommandParameter<string>("quickAddBisRecordingSuffixTag", String.Empty)
+         quickAddRecordingSubnumber: GetCommandParameter<string>("quickAddRecordingSubNumber", String.Empty),
+         quickAddRecordingSuffixTag: GetCommandParameter<string>("quickAddRecordingSuffixTag", String.Empty)
       );
       return task;
     }

@@ -37,11 +37,12 @@
             <%=GetPrelationText()%>
             <br /><br />
             <span>
-              <%=GetRecordingsText()%>
+              <%=base.GetDocumentHeaderText()%>
+              <%=base.GetRecordingActsText()%>
             </span>
             <br /><br />
             <p align="justify" style="font-size:small">
-              <%=GetDocumentText()%>
+              <%=GetDocumentDescriptionText()%>
             </p>
             <%=GetPaymentText()%>
             <br /><br />

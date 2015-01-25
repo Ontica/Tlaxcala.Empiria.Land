@@ -71,6 +71,15 @@ function alreadyExistsObjectWithUniqueAttribute(objectTypeInfoName, attributeNam
 /*  XMLHttp Javscript Wrapper Class																					                               */
 /***********************************************************************************************************/
 
+function invokeAjaxGetJsonObject(url) {
+  var jsonText = invokeAjaxMethod(false, url, null);
+  if (window.JSON == undefined) {
+    return eval("(" + jsonText + ")");
+  } else {
+    return window.JSON.parse(jsonText)
+  }
+}
+
 function invokeAjaxMethod(isAsync, url, callbackMethod) {
   var client = new HttpClient();
   client.isAsync = isAsync;

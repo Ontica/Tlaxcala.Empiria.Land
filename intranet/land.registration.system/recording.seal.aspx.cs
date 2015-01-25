@@ -91,7 +91,7 @@ namespace Empiria.Web.UI.FSM {
       return x;
     }
 
-    protected string GetDocumentText() {
+    protected string GetDocumentDescriptionText() {
       if (transaction.Document.Notes.Length > 100) {
         return "DESCRIPCIÓN:<br />" + transaction.Document.Notes + "<br /><br />";
       } else {
@@ -99,69 +99,110 @@ namespace Empiria.Web.UI.FSM {
       }
     }
 
-    protected string GetRecordingsText() {
+    protected string GetDocumentHeaderText() {
       const string docMultiTlax = "Registrado con el número de documento electrónico <b>{DOCUMENT}</b>, " +
-                                   "con los siguientes {COUNT} actos jurídicos:<br/><br/>";
-      const string docMultiZac = "Registrado bajo los siguientes {COUNT} actos jurídicos:<br/><br/>";
-
+                             "con los siguientes {COUNT} actos jurídicos:<br/><br/>";
       const string docOneTlax = "Registrado con el número de documento electrónico <b>{DOCUMENT}</b>, con el " +
                                 "siguiente acto jurídico:<br/><br/>";
-      const string docOneZac = "Registrado bajo la siguiente inscripción:<br/><br/>";
-
-      const string t1Tlax = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre {PROPERTY.DESCRIPTION}." +
-                            "<br/>";
-      const string t1Zac = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inscripción <b>{NUMBER}</b> del <b>{VOL}</b> <b>{SECTION}</b> del " +
-                           "<b>Distrito Judicial de {DISTRICT}</b>.<br/>";
-
       string html = String.Empty;
-
-
-      string docMulti = ExecutionServer.LicenseName == "Tlaxcala" ? docMultiTlax : docMultiZac;
-      string docOne = ExecutionServer.LicenseName == "Tlaxcala" ? docOneTlax : docOneZac;
-
       if (this.recordingActs.Count > 1) {
-        html = docMulti.Replace("{DOCUMENT}", transaction.Document.UID);
+        html = docMultiTlax.Replace("{DOCUMENT}", transaction.Document.UID);
         html = html.Replace("{COUNT}", this.recordingActs.Count.ToString() +
                             " (" + EmpiriaString.SpeechInteger(this.recordingActs.Count).ToLower() + ")");
       } else if (this.recordingActs.Count == 1) {
-        html = docOne.Replace("{DOCUMENT}", transaction.Document.UID);
+        html = docOneTlax.Replace("{DOCUMENT}", transaction.Document.UID);
       } else if (this.recordingActs.Count == 0) {
-        throw new Exception("Document does not have recordings.");
+        throw new Exception("Document doesn't have recordings.");
       }
+      return html;
+    }
+
+    protected string GetRecordingActsText() {
+      const string act00 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre un " +
+                           "testamento no inscrito.<br/>";
+      const string act01 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
+                           "predio con folio único {PROPERTY.UID}.<br/>";
+      const string act02 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
+                           "totalidad del predio con folio único {PROPERTY.UID}.<br/>";
+      const string act03a = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la fracción " +
+                           "<b>{PARTITION.NUMBER}</b> del predio {PARTITION.OF}, misma a la " +
+                           "que se le asignó el folio único {PROPERTY.UID}.<br/>";
+      const string act03b = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el lote " +
+                           "<b>{PARTITION.NUMBER}</b> del predio {PARTITION.OF}, mismo al que " +
+                           "se le asignó el folio único {PROPERTY.UID}.<br/>";
+      const string act04 = "{INDEX}.- <b style='text-transform:uppercase'>{CANCELATION.ACT}</b> registrado en " +
+                           "{CANCELED.ACT.RECORDING}, sobre el predio con folio único {PROPERTY.UID}.<br/>";
+      string html = String.Empty;
 
       int index = 0;
       foreach (RecordingAct recordingAct in recordingActs) {
         index++;
-        string x = (ExecutionServer.LicenseName == "Tlaxcala" ? t1Tlax : t1Zac).Replace("{NUMBER}", recordingAct.Recording.Number);
-        var recordingBook = recordingAct.Recording.RecordingBook;
 
-        x = x.Replace("{INDEX}", index.ToString());
+        string x = String.Empty;
+
+        var property = recordingAct.TractIndex[0].Property;
+
+        if (recordingAct.RecordingActType.Id == 2752) {
+          x = act00.Replace("{INDEX}", index.ToString());
+
+        } else if (recordingAct.RecordingActType.RecordingRule.IsCancelation) {
+          RecordingAct amendmentOf = recordingAct.AmendmentOf;
+
+          x = act04.Replace("{INDEX}", index.ToString());
+          x = x.Replace("{CANCELATION.ACT}", "CANCELACIÓN " +
+                        (amendmentOf.RecordingActType.FemaleGenre ? " DE LA " : " DEL ") +
+                         amendmentOf.RecordingActType.DisplayName);
+          if (recordingAct.AmendmentOf.PhysicalRecording.IsEmptyInstance) {
+            x = x.Replace("{CANCELED.ACT.RECORDING}", " el documento electrónico " +
+                          "<b>" + recordingAct.AmendmentOf.Document.UID + "</b>");
+          } else {
+            x = x.Replace("{CANCELED.ACT.RECORDING}", " la " +
+                          recordingAct.AmendmentOf.PhysicalRecording.AsText);
+          }
+        } else if (!recordingAct.RecordingActType.RecordingRule.AllowsPartitions) {
+          x = act01.Replace("{INDEX}", index.ToString());
+        } else if (property.IsPartitionOf.IsEmptyInstance) {
+          x = act02.Replace("{INDEX}", index.ToString());
+        } else {
+          var partitionAntecedent = property.IsPartitionOf.GetDomainAntecedent(recordingAct);
+          var ante = property.IsPartitionOf.GetAntecedent(recordingAct);
+          var isLotification = (ante.RecordingActType.Id == 2374) || (partitionAntecedent.RecordingActType.Id == 2374);
+          if (isLotification) {
+            x = act03b.Replace("{INDEX}", index.ToString());
+            x = x.Replace("{PARTITION.NUMBER}", property.PartitionNo);
+          } else {
+            x = act03a.Replace("{INDEX}", index.ToString());
+            x = x.Replace("{PARTITION.NUMBER}", property.PartitionNo +
+                         (property.IsPartitionOf.MergedInto.Equals(property) ? " y última" : String.Empty));
+          }
+          x = x.Replace("{PARTITION.OF}", "<u>" + property.IsPartitionOf.UID + "</u>" +
+                        (!partitionAntecedent.PhysicalRecording.IsEmptyInstance ?
+                        " con antecedente de inscripción en " + partitionAntecedent.PhysicalRecording.AsText : String.Empty));
+        }
         x = x.Replace("{RECORDING.ACT}", recordingAct.RecordingActType.DisplayName);
-        if (!recordingAct.RecordingActType.RecordingRule.AllowsPartitions) {
-          x = x.Replace("{PROPERTY.DESCRIPTION}", "el predio con folio único {PROPERTY.UID}");
-        } else if (recordingAct.TractIndex[0].Property.IsPartitionOf.IsEmptyInstance) {
-          x = x.Replace("{PROPERTY.DESCRIPTION}", "la totalidad del predio con folio único {PROPERTY.UID}");
-        } else {
-          x = x.Replace("{PROPERTY.DESCRIPTION}",
-              String.Format("la fracción<b>{0}</b> del predio <u>{1}</u>, misma que se le asignó el folio único {PROPERTY.UID}",
-                            recordingAct.TractIndex[0].Property.PartitionNo,
-                            recordingAct.TractIndex[0].Property.IsPartitionOf.UID));
-        }
 
-        var antecedent = recordingAct.TractIndex[0].Property.GetDomainAntecedent(recordingAct);
-        if (!antecedent.Recording.IsEmptyInstance) {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + recordingAct.TractIndex[0].Property.UID + "</b>" +
-                        ", con antecedente de inscripción en " + antecedent.Recording.AsText);
+        var antecedent = property.GetDomainAntecedent(recordingAct);
+        if (property.IsPartitionOf.IsEmptyInstance && antecedent.Equals(InformationAct.Empty)) {
+          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> sin antecedente registral");
+        } else if (!antecedent.PhysicalRecording.IsEmptyInstance) {
+          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>" +
+                        ", con antecedente de inscripción en " + antecedent.PhysicalRecording.AsText);
         } else {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + recordingAct.TractIndex[0].Property.UID + "</b>");
+          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>");
         }
-
-        x = x.Replace("{VOL}", recordingBook.AsText);
-        x = x.Replace("{SECTION}", recordingBook.RecordingSection.Name);
-        x = x.Replace("{DISTRICT}", recordingBook.RecorderOffice.Alias);
         html += x;
       }
       return html;
+    }
+
+    protected string GetRecordingsTextZac() {
+      //const string docMultiZac = "Registrado bajo los siguientes {COUNT} actos jurídicos:<br/><br/>";
+      //const string docOneZac = "Registrado bajo la siguiente inscripción:<br/><br/>";
+
+      //const string t1Zac = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inscripción <b>{NUMBER}</b> del <b>{VOL}</b> <b>{SECTION}</b> del " +
+      //               "<b>Distrito Judicial de {DISTRICT}</b>.<br/>";
+
+      return String.Empty;
     }
 
     protected string GetRecordingOfficialsInitials() {

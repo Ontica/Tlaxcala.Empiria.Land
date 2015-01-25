@@ -23,7 +23,7 @@ function daysBetween(fromDate, toDate) {
   ajaxUrl += "?commandName=daysBetweenCmd";
   ajaxUrl += "&fromDate=" + fromDate;
   ajaxUrl += "&toDate=" + toDate;
-  
+
   var result = invokeAjaxMethod(false, ajaxUrl, null);
 
   return Number(result);
@@ -40,7 +40,7 @@ function alreadyExistsObject(objectTypeInfoName, objectId, objectName) {
   url += "&objectTypeInfoName=" + objectTypeInfoName;
   url += "&objectId=" + objectId;
   url += "&objectName=" + objectName;
-  
+
   var result = invokeAjaxMethod(false, url, null);
   if (result.toLowerCase() == "true") {
     return true;
@@ -71,6 +71,15 @@ function alreadyExistsObjectWithUniqueAttribute(objectTypeInfoName, attributeNam
 /*  XMLHttp Javscript Wrapper Class																					                               */
 /***********************************************************************************************************/
 
+function invokeAjaxGetJsonObject(url) {
+  var jsonText = invokeAjaxMethod(false, url, null);
+  if (window.JSON == undefined) {
+    return eval("(" + jsonText + ")");
+  } else {
+    return window.JSON.parse(jsonText)
+  }
+}
+
 function invokeAjaxMethod(isAsync, url, callbackMethod) {
   var client = new HttpClient();
   client.isAsync = isAsync;
@@ -86,41 +95,41 @@ function invokeAjaxMethod(isAsync, url, callbackMethod) {
 
 function invokeAjaxValidator(url) {
   var client = new HttpClient();
-  
-  client.isAsync = false;  
+
+  client.isAsync = false;
   var ajaxResult = client.makeRequest(url, null);
 
-	if (ajaxResult == null) {   // "@ERROR@NULL_COMMAND_NAME" || "@ERROR@NULL_COMMAND_NAME"
-	  window.close();
-	  return false;
-	}
-	if (ajaxResult.length == 0) {
-	  return true;
-	}
-	if (ajaxResult.indexOf('¿') != -1 || ajaxResult.indexOf('?') != -1) {
-	  return confirm(ajaxResult);
-	} else {
-		alert(ajaxResult);
-		return false;
-	}
+  if (ajaxResult == null) {   // "@ERROR@NULL_COMMAND_NAME" || "@ERROR@NULL_COMMAND_NAME"
+    window.close();
+    return false;
+  }
+  if (ajaxResult.length == 0) {
+    return true;
+  }
+  if (ajaxResult.indexOf('¿') != -1 || ajaxResult.indexOf('?') != -1) {
+    return confirm(ajaxResult);
+  } else {
+    alert(ajaxResult);
+    return false;
+  }
 }
 
 function invokeAjaxComboItemsLoader(url, oCombo) {
   var comboOptionsString = invokeAjaxMethod(false, url, null);
-
+  //alert(comboOptionsString);
   addComboItemsFromJoinString(oCombo, comboOptionsString);
 }
 
 function addComboItemsFromJoinString(oCombo, itemsString) {
   var itemsArray = new Array();
   itemsArray = itemsString.split('|');
-  
+
   oCombo.selectedIndex = -1;
-  oCombo.options.length = 0;    
+  oCombo.options.length = 0;
   for (var i = 0; i < itemsArray.length; i++) {
     var comboOptionArray = new Array(2);
     comboOptionArray = itemsArray[i].split('~');
-    
+
     var optionItem = document.createElement("option");
     oCombo.options.add(optionItem);
     optionItem.value = comboOptionArray[0];
@@ -132,56 +141,54 @@ function addComboItemsFromJoinString(oCombo, itemsString) {
 /*  HttpClient Class																					                                             */
 /***********************************************************************************************************/
 
-function HttpClient() { }  
-
-  HttpClient.prototype = {   
-    
+function HttpClient() { }
+  HttpClient.prototype = {
     // type GET, POST passed to open
     requestType: 'GET',
-    
+
     // when set to true, async calls are made
     isAsync: false,
-    
+
     // where an XMLHttpRequest instance is stored
     xmlhttp: false,
-    
+
     // what is called when a successful async call is made
     callback: false,
-    
+
     onBeforeSend: function() {
       window.status = "Estoy ejecutando la operación. Un momento por favor ...";
       document.body.style.cursor = "wait";
     },
-    
+
     // what is called when send is called on XMLHttpRequest
     // set your own function to onSend to have a custom loading effect
     onSend: function() {
 
     },
-    
+
     onReceiving: function() {
 
     },
-    
+
     // what is called when readyState 4 is reached, this is called before your callback
     onLoad: function() {
       window.status = '';
-      document.body.style.cursor = "auto";      
+      document.body.style.cursor = "auto";
     },
-    
+
     // what is called when an http error happens
     onError: function(error) {
       window.status = '';
-      document.body.style.cursor = "auto";       
-      alert("Ocurrió un problema:\n\n" + error);   
+      document.body.style.cursor = "auto";
+      alert("Ocurrió un problema:\n\n" + error);
     },
-    
+
     // method to initialize an XMLHttpRequest
     start: function() {
       try {
         this.xmlhttp = new window.XMLHttpRequest();   // Mozilla / Safari / IE7 - 8.0
       } catch (e) {  // Not IE
-        var XMLHTTP_IDS = new Array('MSXML2.XMLHTTP.5.0', 'MSXML2.XMLHTTP.4.0', 'MSXML2.XMLHTTP.3.0', 
+        var XMLHTTP_IDS = new Array('MSXML2.XMLHTTP.5.0', 'MSXML2.XMLHTTP.4.0', 'MSXML2.XMLHTTP.3.0',
                                     'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP');
         var success = false;
         for (var i = 0; i < XMLHTTP_IDS.length && !success; i++) {
@@ -209,12 +216,11 @@ function HttpClient() { }
       // set onreadystatechange here since it will be reset after a completed call in Mozilla
       var self = this;
       this.xmlhttp.onreadystatechange = function() {
-        self.onStateChangeCallback(); 
-      }      
-
+        self.onStateChangeCallback();
+      }
       this.xmlhttp.send(content);
-      
-      if (this.xmlhttp.responseText == "@ERROR@NULL_COMMAND_NAME") {      
+
+      if (this.xmlhttp.responseText == "@ERROR@NULL_COMMAND_NAME") {
         var sMsg = "Tuve un problema al ejecutar la operación.\n\n";
         sMsg += "Se intentó ejecutar una operación mediante Ajax, pero no se indicó\n";
         sMsg += "el nombre de la instrucción correspondiente.\n\n";
@@ -226,39 +232,38 @@ function HttpClient() { }
         window.close();
         return null;
       }
-      
+
       if (this.xmlhttp.responseText == "@ERROR@SESSION_TIMEOUT_RESPONSE") {
-        var sMsg = "La sessión de trabajo ha caducado.\n\n";      
-        
+        var sMsg = "La sessión de trabajo ha caducado.\n\n";
         sMsg += "La sesión de trabajo ha caducado, por lo que se debe ingresar\n";
         sMsg += "nuevamente a la aplicación desde la página de inicio.\n\n";
         sMsg += "Por seguridad de la aplicación, esta página se cerrará automáticamente.";
-        document.body.style.cursor = "auto";        
+        document.body.style.cursor = "auto";
         alert(sMsg);
         window.close();
         return null;
       }
-      
+
       if (!this.isAsync) {
         return this.xmlhttp.responseText;
       }
     },
 
     // private method used to handle ready state changes
-    onStateChangeCallback: function() { 
+    onStateChangeCallback: function() {
       switch(this.xmlhttp.readyState) {
         case 0:                   // 0 (Uninitialized): The object has been created, but not initialized (the open method has not been called).
           return;
         case 1:
           this.onBeforeSend();    // 1 (Open) The object has been created, but the send method has not been called.
-          return;    
-        case 2:
-          this.onSend();          // 2 (Sent) The send method has been called. responseText is not available. responseBody is not available. 
           return;
-        case 3:                   // 3 (Receiving) Some data has been received. responseText is not available. responseBody is not available. 
+        case 2:
+          this.onSend();          // 2 (Sent) The send method has been called. responseText is not available. responseBody is not available.
+          return;
+        case 3:                   // 3 (Receiving) Some data has been received. responseText is not available. responseBody is not available.
           this.onReceiving();
           return;
-        case 4:                   // 4 (Loaded) All the data has been received. responseText is available. responseBody is available. 
+        case 4:                   // 4 (Loaded) All the data has been received. responseText is available. responseBody is available.
           this.onLoad();
           if (this.xmlhttp.status == 200) {
             if (this.callback != false) {

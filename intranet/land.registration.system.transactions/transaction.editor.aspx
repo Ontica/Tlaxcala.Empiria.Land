@@ -688,6 +688,8 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
     url += "&recordingActTypeCategoryId=" + getElement("cboRecordingActTypeCategory").value;
+    url += "&filtered=false";
+
     invokeAjaxComboItemsLoader(url, getElement("cboRecordingActType"));
 
     resetLawArticlesCombo();
@@ -732,7 +734,7 @@
     <% if (base.ShowDocumentsEditor()) { %>
      getElement('ifraRecordingEditor').src = "../land.registration.system/recording.editor.aspx?transactionId=<%=transaction.Id%>";
     <% } else { %>
-     getElement('ifraRecordingEditor').src = "../workplace/out.of.service.aspx";
+     getElement('ifraRecordingEditor').src = "../workplace/empty.page.aspx";
     <% } %>
     <%=base.OnloadScript()%>
   }

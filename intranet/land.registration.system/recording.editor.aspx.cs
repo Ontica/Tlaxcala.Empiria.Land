@@ -26,6 +26,7 @@ namespace Empiria.Web.UI.LRS {
     #region Fields
 
     protected LRSDocumentEditorControl oRecordingDocumentEditor = null;
+    protected RecordingActEditorControlBase oRecordingActEditor = null;
     protected LRSTransaction transaction = null;
     protected string OnLoadScript = String.Empty;
 
@@ -34,21 +35,31 @@ namespace Empiria.Web.UI.LRS {
     #region Protected methods
 
     protected void Page_Init(object sender, EventArgs e) {
-      LoadDocumentEditorControl();
+      LoadControls();
     }
 
-    private void LoadDocumentEditorControl() {
+    private void LoadControls() {
       oRecordingDocumentEditor = (LRSDocumentEditorControl) Page.LoadControl(LRSDocumentEditorControl.ControlVirtualPath);
       spanRecordingDocumentEditor.Controls.Add(oRecordingDocumentEditor);
+
+      oRecordingActEditor = (RecordingActEditorControlBase) Page.LoadControl(RecordingActEditorControlBase.ControlVirtualPath);
+      spanRecordingActEditor.Controls.Add(oRecordingActEditor);
     }
 
     protected void Page_Load(object sender, EventArgs e) {
       Initialize();
       oRecordingDocumentEditor.LoadRecordingDocument(transaction.Document);
+      oRecordingActEditor.Initialize(transaction, transaction.Document);
       if (!IsPostBack) {
         LoadEditor();
       } else {
         ExecuteCommand();
+      }
+    }
+
+    protected FixedList<RecordingAct> RecordingActs {
+      get {
+        return transaction.Document.RecordingActs;
       }
     }
 
@@ -57,33 +68,6 @@ namespace Empiria.Web.UI.LRS {
       txtObservations.Value = transaction.Document.Notes;
       cboSheetsCount.Value = transaction.Document.SheetsCount.ToString();
 
-      LoadRecordingActTypeCategoriesCombo();
-      LoadPrecedentRecordingCombos();
-    }
-
-    private void LoadRecordingActTypeCategoriesCombo() {
-      LRSHtmlSelectControls.LoadRecordingActTypesCategoriesCombo(this.cboRecordingActTypeCategory);
-    }
-
-    private void LoadPrecedentRecordingCombos() {
-      LRSHtmlSelectControls.LoadDomainRecordingSections(this.cboPrecedentRecordingSection,
-                                                        ComboControlUseMode.ObjectCreation);
-
-      //FixedList<RecordingBook> recordingBookList = recordingBook.RecorderOffice.GetTraslativeRecordingBooks();
-
-      //if (recordingBookList.Count != 0) {
-      //  HtmlSelectContent.LoadCombo(this.cboAnotherRecordingBook, recordingBookList, "Id", "FullName",
-      //                              "( Seleccionar el libro registral donde se encuentra )", String.Empty, String.Empty);
-      //} else {
-      HtmlSelectContent.LoadCombo(this.cboPrecedentRecordingBook, "No encontré volúmenes en el Distrito o Sección seleccionados",
-                                  String.Empty, String.Empty);
-      //}
-
-      cboPrecedentRecording.Items.Clear();
-      cboPrecedentRecording.Items.Add(new ListItem("¿Libro?", String.Empty));
-
-      cboPrecedentProperty.Items.Clear();
-      cboPrecedentProperty.Items.Add(new ListItem("( ¿Inscripción? )", String.Empty));
     }
 
     #endregion Protected methods
@@ -97,7 +81,7 @@ namespace Empiria.Web.UI.LRS {
           SetRefreshPageScript();
           return;
         case "appendRecordingAct":
-          AppendRecordingAct();
+          oRecordingActEditor.CreateRecordingAct();
           SetRefreshPageScript();
           return;
         case "deleteRecordingAct":
@@ -121,44 +105,12 @@ namespace Empiria.Web.UI.LRS {
       document.RemoveRecordingAct(recordingAct);
 
       string msg = "Se eliminó el acto jurídico " + recordingAct.RecordingActType.DisplayName;
-      if (!recordingAct.Recording.IsEmptyInstance &&
-          recordingAct.Recording.Status == RecordableObjectStatus.Deleted) {
+      if (!recordingAct.PhysicalRecording.IsEmptyInstance &&
+          recordingAct.PhysicalRecording.Status == RecordableObjectStatus.Deleted) {
         msg += ", así como la partida correspondiente.";
       }
       SetMessageBox(msg);
     }
-
-    private void AppendRecordingAct() {
-      Assertion.Assert(transaction != null && !transaction.IsEmptyInstance,
-                       "Transaction cannot be null or an empty instance.");
-      Assertion.Assert(transaction.Document != null && !transaction.Document.IsEmptyInstance,
-                       "Document cannot be an empty instance.");
-
-      RecordingTask task = ParseRecordingTaskParameters();
-      task.AssertValid();
-
-      RecorderExpert.Execute(task);
-    }
-
-    private RecordingTask ParseRecordingTaskParameters() {
-      RecordingTask task = new RecordingTask(
-         transactionId: GetCommandParameter<int>("transactionId", -1),
-         documentId: GetCommandParameter<int>("documentId", -1),
-         recordingActTypeCategoryId: GetCommandParameter<int>("recordingActTypeCategoryId", -1),
-         recordingActTypeId: GetCommandParameter<int>("recordingActTypeId"),
-         propertyType: (PropertyRecordingType) Enum.Parse(typeof(PropertyRecordingType),
-                                                          GetCommandParameter<string>("propertyType")),
-         recorderOfficeId: GetCommandParameter<int>("recorderOfficeId", -1),
-         precedentRecordingBookId: GetCommandParameter<int>("precedentRecordingBookId", -1),
-         precedentRecordingId: GetCommandParameter<int>("precedentRecordingId", -1),
-         targetResourceId: GetCommandParameter<int>("precedentPropertyId", -1),
-         targetRecordingActId: GetCommandParameter<int>("targetRecordingActId", -1),
-         quickAddRecordingNumber: GetCommandParameter<int>("quickAddRecordingNumber", -1),
-         quickAddBisRecordingSuffixTag: GetCommandParameter<string>("quickAddBisRecordingSuffixTag", String.Empty)
-      );
-      return task;
-    }
-
     protected bool IsReadyForEdition() {
       if (transaction.IsEmptyInstance) {
         return false;
@@ -166,10 +118,20 @@ namespace Empiria.Web.UI.LRS {
       if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register")) {
         return false;
       }
-      if (transaction.Status == TransactionStatus.Recording) {
+      if (transaction.Status != TransactionStatus.Recording) {
+        return false;
+      }
+      if (transaction.Document.IsEmptyInstance) {
         return true;
       }
-      return false;
+      if (transaction.Document.Status != RecordableObjectStatus.Incomplete) {
+        return false;
+      }
+      return true;
+    }
+
+    protected bool IsReadyToAppendRecordingActs() {
+      return oRecordingActEditor.IsReadyForEdition();
     }
 
     protected bool IsReadyForPrintFinalSeal() {
