@@ -40,9 +40,9 @@ function setPNGTransparency(img) {
 				 if (img.parentElement.href) {
 					imgStyle = "cursor:pointer;" + imgStyle;
 				 }
-				 var strNewHTML = "<span " + imgID + imgClass + imgTitle + " style=\"" + 
-													"width:" + (img.width != 0 ? img.width : arguments[1]) + "px; height:" + (img.height != 0 ? img.height : arguments[2]) + "px;" + 
-													imgStyle + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader" + 
+				 var strNewHTML = "<span " + imgID + imgClass + imgTitle + " style=\"" +
+													"width:" + (img.width != 0 ? img.width : arguments[1]) + "px; height:" + (img.height != 0 ? img.height : arguments[2]) + "px;" +
+													imgStyle + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader" +
 													"(src=\'" + img.src + "\', sizingMethod='scale');\"></span>";
 				 img.outerHTML = strNewHTML;
 			//	 i = i - 1;

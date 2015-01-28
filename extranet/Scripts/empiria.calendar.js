@@ -1,5 +1,4 @@
-﻿var oCurrentCalendarDataSource = null;    
-
+﻿var oCurrentCalendarDataSource = null;
 function on_calendar_date_selected(value) {
   if (oCurrentCalendarDataSource != null) {
     oCurrentCalendarDataSource.value = value;
@@ -10,25 +9,25 @@ function on_calendar_date_selected(value) {
 
 function on_calendar_lost_focus() {
   if (document.activeElement != document.all.ifraCalendar) {
-    document.all.ifraCalendar.style.visibility = "hidden";  
+    document.all.ifraCalendar.style.visibility = "hidden";
   }
 }
 
-function on_calendar_resize(x, y) {        
+function on_calendar_resize(x, y) {
   document.all.ifraCalendar.width = x;
-  document.all.ifraCalendar.height = y;        
+  document.all.ifraCalendar.height = y;
 }
 
 function hideCalendar() {
 //  var oCalendar = document.all.ifraCalendar;
-//  
+//
 //	if (oCalendar.style.visibility == "visible") {
-//    //oCalendar.style.visibility = "hidden";   
+//    //oCalendar.style.visibility = "hidden";
 //  }
-  
+
   if (document.activeElement != document.all.ifraCalendar) {
-    getElement("ifraCalendar").style.visibility = "hidden";  
-  } 
+    getElement("ifraCalendar").style.visibility = "hidden";
+  }
 }
 
 function showCalendar(oDataSource, oImageSource) {
@@ -45,23 +44,23 @@ function showCalendar(oDataSource, oImageSource) {
 
   var calendarWidth = oCalendar.contentWindow.document.body.clientWidth;
   var calendarHeight = oCalendar.contentWindow.document.body.clientHeight;
-  
+
   if ((x + calendarWidth) >= parentX) {
     x = x - calendarWidth;
-    y = y + oImageSource.height + 1;    
+    y = y + oImageSource.height + 1;
     if (x < 0) {
       x = 0;
     }
   }
   if ((y + calendarHeight) >= parentY) {
-    x = x - calendarWidth;    
+    x = x - calendarWidth;
     y = y - calendarHeight - 1;
- 
+
     if (y < 0) {
       y = 0;
     }
   }
-  oCurrentCalendarDataSource = oDataSource;        
+  oCurrentCalendarDataSource = oDataSource;
 	if (oCalendar.style.visibility == "visible") {
     oCalendar.style.visibility = "hidden";
 	} else {
@@ -85,7 +84,7 @@ function cal_isDate(oSource) {
   if (dateParts.length != 3) {
     return false;
   }
-  
+
   if (!(1 <= Number(dateParts[0]) && Number(dateParts[0]) <= 31)) {
     return false;
   }
@@ -118,14 +117,14 @@ function cal_isDate(oSource) {
 function cal_formatAsDate(oSource) {
   if (oSource.value == "") {
     return;
-  }  
+  }
   var temp = String(oSource.value).toLowerCase();
 	var regex = /-/g;
 	temp = temp.replace(regex, "/");
 	regex = /[.]/g;
 	temp = temp.replace(regex, "/");
   var dateParts = temp.split("/");
-  
+
   if (dateParts.length != 3) {
     return;
   }
@@ -136,8 +135,8 @@ function cal_formatAsDate(oSource) {
     return;
   }
   if (Number(dateParts[0]) < 10) {
-    dateParts[0] = "0" + Number(dateParts[0]); 
-  }  
+    dateParts[0] = "0" + Number(dateParts[0]);
+  }
   if (Number(dateParts[2]) < 100) {
     var today = new Date();
     var year = Number(today.getFullYear().toString().substr(2, 2));

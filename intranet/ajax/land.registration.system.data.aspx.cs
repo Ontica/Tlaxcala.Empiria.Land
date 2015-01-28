@@ -107,8 +107,7 @@ namespace Empiria.Web.UI.Ajax {
     private string RecordingActTypesEditingCategoriesCommandHandler() {
       var list = RecordingActTypeCategory.GetList("RecordingActTypesCategories.List");
 
-      return HtmlSelectContent.GetComboAjaxHtml(list, 0,
-                                          "Id", "Name", "( Tipo de acto jurídico )");
+      return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "Name", "( Tipo de acto jurídico )");
     }
 
     private string DomainTraslativeSectionsCommandHandler() {

@@ -147,7 +147,7 @@ namespace Empiria.Web.UI.LRS {
     private void LoadControls() {
       LRSHtmlSelectControls.LoadPropertyTypesCombo(this.cboPropertyType, ComboControlUseMode.ObjectCreation, property.PropertyKind);
 
-      RecorderOffice selectedRecorderOffice = recordingAct.Recording.RecordingBook.RecorderOffice;
+      RecorderOffice selectedRecorderOffice = recordingAct.PhysicalRecording.RecordingBook.RecorderOffice;
 
       LRSHtmlSelectControls.LoadRecorderOfficeCombo(this.cboCadastralOffice, ComboControlUseMode.ObjectCreation, selectedRecorderOffice);
       LRSHtmlSelectControls.LoadRecorderOfficeMunicipalitiesCombo(this.cboMunicipality, ComboControlUseMode.ObjectCreation,

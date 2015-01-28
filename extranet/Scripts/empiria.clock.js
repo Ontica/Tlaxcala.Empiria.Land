@@ -23,7 +23,7 @@ function setClock(elementId, displayClock, useSpanish, useMilitar) {
 // region Private methods
 
 function displayDate(elementId, useSpanish, useMilitar) {
-  var aMonthsSpanish = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", 
+  var aMonthsSpanish = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
                                  "Septiembre", "Octubre", "Noviembre", "Diciembre");
   var aMonthsEnglish = new Array("January", "February", "March", "April", "May", "June", "July", "August",
                                  "September", "October", "November", "December");
@@ -31,7 +31,7 @@ function displayDate(elementId, useSpanish, useMilitar) {
   var aDaysEnglish   = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
   var today          = new Date();
   var dateString		 = "";
-  
+
   if (useSpanish) {
     dateString = aDaysSpanish[today.getDay()] + " " + today.getDate() + (today.getDate() == 1 ? "º" : "") + " de " + aMonthsSpanish[today.getMonth()] + " » " + getTime(useMilitar);
   } else {
@@ -49,11 +49,11 @@ function getTime(useMilitar) {
   intHours   = today.getHours();
   intMinutes = today.getMinutes();
 
-  if (!useMilitar) { 
+  if (!useMilitar) {
       if (intHours == 0) {
        hours = "12";
        ap = "a.m.";
-    } else if (intHours < 12) { 
+    } else if (intHours < 12) {
        hours = intHours;
        ap = "a.m.";
     } else if (intHours == 12) {
@@ -77,7 +77,7 @@ function getTime(useMilitar) {
 
   if (intMinutes < 10) {
     minutes = "0" + minutes;
-  }    
+  }
   return (hours + ":" + minutes + ' ' + ap);
 }
 

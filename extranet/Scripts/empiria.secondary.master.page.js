@@ -36,19 +36,19 @@ function doMasterPageCommand(commandName, commandArguments) {
 // region Private command handler methods
 
 function createWorkplaceCommandHandler(commandName) {
-  var commandPage = "../workplace/command.processor.aspx";  
+  var commandPage = "../workplace/command.processor.aspx";
   commandPage += "?commandName=" + commandName;
    if (getElement('hdnEmpiriaWorkplace').value != "") {
     commandPage += "&workplace=" + getElement('hdnEmpiriaWorkplace').value;
   }
-  
+
   window.open(commandPage);
 }
 
 function displayCalendar(textBoxName, imgCalendarName) {
   var dateTextBox = getElement(textBoxName);
   var calendarImg = getElement(imgCalendarName);
-  
+
   showCalendar(dateTextBox, calendarImg);
 }
 
@@ -78,7 +78,7 @@ function setWorkplace() {
 
 function hideControlDivisions() {
   var elements = document.forms[0].childNodes;
-  
+
   for (var i = 0; i < elements.length; i++) {
     var tagName = String(elements[i].tagName).toLowerCase();
     if (tagName == "div") {
@@ -110,19 +110,19 @@ function setHelperObjects() {
     addEvent(link, 'mouseover', setStatus);
     addEvent(link, 'mouseout', resetStatus);
   }
-  
+
   var elements = document.forms[0].getElementsByTagName('input');	
   for (var i = 0; i < elements.length; i++) {
     addEvent(elements[i], 'mouseover', setStatus);
     addEvent(elements[i], 'mouseout', resetStatus);		
   }
-  
+
   elements = document.forms[0].getElementsByTagName('textarea');	
   for (var i = 0; i < elements.length; i++) {
     addEvent(elements[i], 'mouseover', setStatus);
     addEvent(elements[i], 'mouseout', resetStatus);
   }
-  
+
   elements = document.forms[0].getElementsByTagName('select');	
   for (var i = 0; i < elements.length; i++) {
     addEvent(elements[i], 'mouseover', setStatus);
@@ -139,29 +139,29 @@ function setEditionObjects() {
     }
     return;
   }
-  
+
   var elements = document.forms[0].getElementsByTagName('input');
   for (var i = 0; i < elements.length; i++) {
     addEvent(elements[i], 'keypress', setDirtyFlag);
     addEvent(elements[i], 'click', setDirtyFlag);
   }
-  
+
   elements = document.forms[0].getElementsByTagName('textarea');
   for (var i = 0; i < elements.length; i++) {
     addEvent(elements[i], 'keypress', setDirtyFlag);
-    addEvent(elements[i], 'click', setDirtyFlag);    
+    addEvent(elements[i], 'click', setDirtyFlag);
   }
-  
+
   elements = document.forms[0].getElementsByTagName('select');
   for (var i = 0; i < elements.length; i++) {
     addEvent(elements[i], 'change', setDirtyFlag);
   }
 }
-  
+
 function setWorkplaceGrayedImages() {
   for (var i = 0; i < document.images.length; i++) {
     var image = document.images[i];
-    if ((image.className == "grayedImage") || (image.className == "navButton") || 
+    if ((image.className == "grayedImage") || (image.className == "navButton") ||
         (image.className == "newWindowImage") || (image.className == "expandHeaderImg")) {
       addEvent(image, 'mouseover', ungrayImage);
       addEvent(image, 'mouseout', grayImage);
@@ -171,7 +171,7 @@ function setWorkplaceGrayedImages() {
 
 function setDirtyFlag() {
   gbIsDirty = true;
-  
+
   var oApplyButton = getElement('btnApplyChanges');
   if (oApplyButton == null || oApplyButton == 'undefined') {
     // no-op

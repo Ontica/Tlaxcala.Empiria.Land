@@ -524,6 +524,9 @@ function isNumericValue(value) {
   var re = /,/g; // Regular expression
   value = value.replace(re, "");    //Cleans ","
 
+  if (value == '' || value == undefined) {
+    return false;
+  }
   if (!isNaN(Number(value))) {
     return true;
   }

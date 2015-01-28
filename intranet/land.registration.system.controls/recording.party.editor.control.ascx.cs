@@ -206,7 +206,7 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void FillHumanPartyOnRecording() {
-      FixedList<RecordingActParty> list = RecordingActParty.GetList(this.RecordingAct.Recording, this.Party);
+      FixedList<RecordingActParty> list = RecordingActParty.GetList(this.RecordingAct.PhysicalRecording, this.Party);
       foreach (RecordingActParty rap in list) {
         if ((rap.Party.Equals(this.Party) && rap.SecondaryParty.IsEmptyInstance) || rap.SecondaryParty.Equals(this.Party)) {
           UpdateRecordingActParty(rap);
@@ -237,7 +237,7 @@ namespace Empiria.Web.UI.LRS {
       cboBornLocation.Items.Clear();
       cboBornLocation.Items.Add(new ListItem(person.RegistryLocation.CompoundName, person.RegistryLocation.Id.ToString()));
 
-      FixedList<RecordingActParty> list = RecordingActParty.GetList(this.RecordingAct.Recording, this.Party);
+      FixedList<RecordingActParty> list = RecordingActParty.GetList(this.RecordingAct.PhysicalRecording, this.Party);
       List<RecordingActParty> p = list.FindAll((x) => (x.Party.Equals(this.Party) && x.SecondaryParty.IsEmptyInstance) || x.SecondaryParty.Equals(this.Party));
 
       RecordingActParty lastParty = null;

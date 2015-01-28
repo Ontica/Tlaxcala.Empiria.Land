@@ -28,38 +28,38 @@
       <legend></legend>
       <div id="transactionNumberRow">
         <label for="txtTransactionKey">Número de trámite:</label>
-        <input id="txtTransactionKey" name="txtTransactionKey" type="text" placeholder="Número de trámite" 
+        <input id="txtTransactionKey" name="txtTransactionKey" type="text" placeholder="Número de trámite"
                title="El número de trámite se encuentra en la esquina superior derecha de la boleta de recepción."
                style='width:198px;' maxlength="14" />
         <a id='viewHelperLink' href='#' tabindex='-1'>¿Dónde se encuentra?</a>
       </div>
       <div id="partyNameRow" style="display:none">
         <label for="txtPartyName">Nombre:</label>
-        <input id="txtPartyName" name="txtPartyName" type="text" placeholder="Nombre del propietario" 
+        <input id="txtPartyName" name="txtPartyName" type="text" placeholder="Nombre del propietario"
                title="Nombre de la persona, empresa u organización propietaria del predio que se desea consultar."
                style='width:262px;' maxlength="64" />
       </div>
       <div id="propertyRow" style="display:none">
         <label for="txtPropertyCode">Folio electrónico:</label>
-        <input id="txtPropertyCode" name="txtPropertyCode" type="text" placeholder="Folio electrónico del predio" 
+        <input id="txtPropertyCode" name="txtPropertyCode" type="text" placeholder="Folio electrónico del predio"
                title="Folio electrónico del predio cuyo estado desea consultar."
                style='width:214px;' maxlength="19" />
       </div>
       <div id="certificateRow" style="display:none">
         <label for="txtCertificateNumber">Certificado:</label>
-        <input id="txtCertificateNumber" name="txtCertificateNumber" type="text" placeholder="Número electrónico del certificado" 
+        <input id="txtCertificateNumber" name="txtCertificateNumber" type="text" placeholder="Número electrónico del certificado"
                title="Número o folio electrónico del certificado cuya autenticidad se desea verificar."
                style='width:248px;' maxlength="23" />
       </div>
       <div id="recordingRow" style="display:none">
         <label for="txtRecordingNumber">Inscripción:</label>
-        <input id="txtRecordingNumber" name="txtRecordingNumber" type="text" placeholder="Número electrónico de la inscripción" 
+        <input id="txtRecordingNumber" name="txtRecordingNumber" type="text" placeholder="Número electrónico de la inscripción"
                title="Número electrónico de la inscripción cuya autenticidad se desea verificar."
                style='width:248px;' maxlength="20" />
       </div>
       <div id="fingerprintRow" style="display:none">
         <label for="txtFingerprint">Huella dactilar:</label>
-        <input id="txtFingerprint" name="txtFingerprint" type="password" placeholder="Capture su huella dactilar" 
+        <input id="txtFingerprint" name="txtFingerprint" type="password" placeholder="Capture su huella dactilar"
                title="Huella dactilar del usuario que desea ingresar."
                style='width:228px;' maxlength="1024" />
         <button class="k-button" style="width:94px;" onclick="$('#txtFingerprint').val('')">Limpiar</button>
@@ -76,10 +76,10 @@
           <option value="106">Ocampo</option>
           <option value="107">Xicohténcatl</option>
           <option value="108">Zaragoza</option>
-        </select> 
+        </select>
         <br />
         <label for="cboRecordingActType">Sección:</label>
-        <select id="cboRecordingActType" class="e-control" style="margin-left:8px;width:342px" 
+        <select id="cboRecordingActType" class="e-control" style="margin-left:8px;width:342px"
                 onchange="doOperation('lookupRecordingBook', this)">
           <option value="0">( Sección a la que pertenece el libro )</option>
           <option value="1051">Primera: Traslativos de dominio</option>
@@ -121,7 +121,7 @@
 </section>
 <div id="divHtml5Compliance">
   <a href="http://www.w3.org/html/logo/" target="_blank">
-    <img src="http://www.w3.org/html/logo/badge/html5-badge-v-css3-semantics.png" style="width:28px;" alt="Empiria 2014: HTML5 Powered with CSS3 / Styling, and Semantics" 
+    <img src="http://www.w3.org/html/logo/badge/html5-badge-v-css3-semantics.png" style="width:28px;" alt="Empiria 2014: HTML5 Powered with CSS3 / Styling, and Semantics"
          title="Empiria 2015: HTML5 Powered with CSS3 / Styling, and Semantics" />
   </a>
 </div>
@@ -145,7 +145,7 @@
   <script type="text/javascript" src="~/Scripts/kendo.web.min.js"></script>	
   <script type="text/javascript" src="~/Scripts/empiria.jquery.js"></script>
   <script type="text/javascript" src="~/Scripts/empiria.ajax.js"></script>
-    
+
   <script type="text/x-kendo-template" id="lrsTransactionStatusTemplate">
     <div style='margin: 4px 12px'>
       <span class='efx-object-title'>#= Key #</span>
@@ -200,8 +200,8 @@
                  "en la penúltima posición. (Ej: <b>TL61AE99KH87-0</b>)</small>";
 
       if ($("#txtTransactionKey").val().length == 0) {
-        $("#txtTransactionKey").showBubble("<b>Necesito el número de trámite.</b>" + 
-                                           "\n<small>El número de trámite está impreso en la <u>boleta de recepción</u>, " + 
+        $("#txtTransactionKey").showBubble("<b>Necesito el número de trámite.</b>" +
+                                           "\n<small>El número de trámite está impreso en la <u>boleta de recepción</u>, " +
                                            "arriba del código de barras.</small>");
         return false;
       }
@@ -261,7 +261,7 @@
       }
       if ($("#cboRecordingActType").val().length == 0 || $("#cboRecordingActType").val() == '0') {
         $("#cboRecordingActType").showBubble("<b>Necesito conocer la sección a la que pertenece el libro.</b>" +
-               "\n<small>Los libros registrales se clasifican en secciones. Las inscripciones relativas a " + 
+               "\n<small>Los libros registrales se clasifican en secciones. Las inscripciones relativas a " +
                "compras-ventas y donaciones están en la sección primera, las hipotecas en la sección segunda.</small>");
         return false;
       }
@@ -292,7 +292,7 @@
     }
 
     function execPropertySearch() {
-      var hint = "<br /><small>El folio del predio debe constar de <u>cuatro bloques</u> de letras y dígitos separados por guiones. " + 
+      var hint = "<br /><small>El folio del predio debe constar de <u>cuatro bloques</u> de letras y dígitos separados por guiones. " +
                  "En documentos inscritos recientemente, está impreso al final de la escritura.\nEjemplo: <b>TL3T-9N2H-K7W2-P4HA</b></small>";
 
       if ($("#txtPropertyCode").val().length == 0) {
@@ -314,7 +314,7 @@
     }
 
     function execVerifyCertificate() {
-      var hint = "<br /><small>El número de certificado está formado por <u>cuatro bloques</u> de cinco caracteres " + 
+      var hint = "<br /><small>El número de certificado está formado por <u>cuatro bloques</u> de cinco caracteres " +
                  "separados por guiones, y está impreso en el certificado. Ejemplo: <b>CT954-2HK7W-2P4W8-UA4BF</b></small>";
 
       if ($("#txtCertificateNumber").val().length == 0) {
@@ -334,7 +334,7 @@
     }
 
     function execVerifyRecording() {
-      var hint = "<br /><small>El número de inscripción está formado por <u>tres bloques</u> de seis caracteres, " + 
+      var hint = "<br /><small>El número de inscripción está formado por <u>tres bloques</u> de seis caracteres, " +
                  "y se encuentra impreso al final de la escritura. Ejemplo: <b>RP92ET-H62HK7-W2P4J3</b></small>";
 
       if ($("#txtRecordingNumber").val().length == 0) {

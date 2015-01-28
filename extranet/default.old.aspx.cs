@@ -91,7 +91,7 @@ namespace Empiria.Land.Extranet {
       Property p = Property.TryParseWithUID(txtPropertyKey.Value);
       if (p != null) {
         RecordingAct r = p.LastRecordingAct;
-        theClientScript = @"alert('El predio está registrado en: \n" + r.Recording.FullNumber + ".')";
+        theClientScript = @"alert('El predio está registrado en: \n" + r.PhysicalRecording.FullNumber + ".')";
       } else {
         theClientScript = "alert('No tenemos registrado ningún predio con el folio electrónico proporcionado.')";
       }

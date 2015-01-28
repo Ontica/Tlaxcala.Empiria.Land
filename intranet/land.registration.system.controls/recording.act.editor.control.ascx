@@ -7,7 +7,7 @@
         <tr id="divRecordingActTypeSelector">
           <td>Tipo de acto:</td>
           <td>
-            <select id="cboRecordingActTypeCategory" name="cboRecordingActTypeCategory" class="selectBox"
+            <select id="cboRecordingActTypeCategory" class="selectBox"
                     style="width:192px" title="" onchange="return updateUI(this);">
             </select>
           </td>
@@ -16,21 +16,22 @@
                     onchange="return updateUI(this);">
               <option value="">( Primero seleccionar el tipo de acto jurídico )</option>
             </select>
-            <input type="button" value="Agregar acto" class="button" style="width:78px;height:28px;vertical-align:middle" onclick='doRecordingActEditorOperation("appendRecordingAct")' />
+            <input type="button" value="Agregar acto" class="button" style="width:78px;height:28px;vertical-align:middle"
+                   onclick='doRecordingActEditorOperation("appendRecordingAct")' />
           </td>
           <td class="lastCell">&nbsp;</td>
         </tr>
         <tr id="divPropertyTypeSelector">
-          <td>Del predio:</td>
-          <td valign="top">
-            <select id="cboPropertyTypeSelector" class="selectBox" style="width:192px" title="" onchange="return updateUI(this);">
+          <td style="vertical-align:baseline">Del predio:</td>
+          <td style="vertical-align:top">
+            <select id="cboPropertyTypeSelector" class="selectBox" style="width:192px" onchange="return updateUI(this);">
               <option value="">( Seleccionar )</option>
             </select>
           </td>
           <td>
             <span id="divNewPropertyRecorderOfficeSection" style="display:none">
               Distrito donde se encuentra:
-              <select id="cboNewPropertyRecorderOffice" class="selectBox" style="width:164px" title="" onchange="return updateUI(this);">
+              <select id="cboNewPropertyRecorderOffice" class="selectBox" style="width:164px" onchange="return updateUI(this);">
                 <option value="">( Seleccionar ) </option>
                 <option value="101">Hidalgo</option>
                 <option value="102">Cuauhtémoc</option>
@@ -43,30 +44,54 @@
               </select>
             </span>
             <span id="divPrecedentActSection" style="display:none">
-            <span id="divFractionSection" style="display:none">
+            <span id="divPropertyPartitionSection" style="display:none">
               Sobre:
-              <select id="cboPropertySubdivisionType" class="selectBox" style="width:132px" title=""
+              <select id="cboPropertyPartitionType" class="selectBox" style="width:188px" title=""
                       onchange="return updateUI(this);">
                 <option value="" title="None">( Seleccionar )</option>
                 <option value="whole" title="None">la Totalidad</option>
                 <option value="partial" title="Partial">la Fracción</option>
-                <option value="last" title="Last">la Fracción Última</option>
-                <option value="full" title="Full">el Lote</option>
+                <option value="partialUnknown" title="Partial">la Fracción sin número</option>
+                <option value="last" title="Last">la Última Fracción</option>
+                <option value="lastUnknown" title="Last">la Última Fracción sin número</option>
               </select>
-              <span id="divFractionPartXofYSection" style="display:none">
+              <!--<option value="full" title="Full">el Lote</option> !-->
+              <span id="divPartitionPartXofYSection" style="display:none">
                 Número:
-                <input id="txtPropertySubdivisionNo" type="text" class="textBox"
+                <input id="txtPropertyPartitionNo" type="text" class="textBox"
                         style="width:24px;margin-right:0px" onblur="return setPropertyPartsTotal();"
-                        onkeypress="return integerKeyFilter(this);" title="" maxlength="4" />
-                de:
-                <input id="txtPropertyTotalLots" name="txtPropertyTotalLots" type="text" class="textBox"
+                        onkeypress="return integerKeyFilter(this);"
+                        maxlength="4" />
+                &nbsp; de:
+                <input id="txtPropertyTotalPartitions" type="text" class="textBox"
                         style="width:24px;margin-right:0px" onkeypress="return integerKeyFilter(this);"
-                        title="" maxlength="4" />
+                        maxlength="4" />
+                <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                Con superficie de:
+                <input id="txtPartitionSize" type="text" class="textBox"
+                  style="width:66px;margin-right:0px" onkeypress="return positiveKeyFilter(this);"
+                  title="" maxlength="12" /><select id="cboPartitionSizeUnit" class="selectBox"
+                  style="width:48px" onchange="return updateUI(this);">
+                  <option value="">( ? )</option>
+                  <option value="-2" title="No consta">N/C</option>
+                  <option value="621" title="metros cuadrados">m2</option>
+                  <option value="624" title="hectáreas">ha</option>
+                </select>
+                &nbsp;de:
+                <input id="txtPartitionAvailableSize" type="text" class="textBox"
+                  style="width:82px;margin-right:0px" onkeypress="return positiveKeyFilter(this);"
+                  maxlength="12" /><select id="cboPartitionAvailableSizeUnit" class="selectBox"
+                  style="width:48px" onchange="return updateUI(this);">
+                  <option value="">( ? )</option>
+                  <option value="-2" title="No consta">N/C</option>
+                  <option value="621" title="metros cuadrados">m2</option>
+                  <option value="624" title="hectáreas">ha</option>
+                </select>disponibles.
               </span>
               <br />
             </span>
             Folio del predio:
-            <input id="txtDocumentKey" class="textBox" type="text" maxlength="18" style="width:152px" />
+            <input id="txtDocumentKey" class="textBox" type="text" maxlength="18" style="width:136px" />
             <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px"
                   onclick="doRecordingActEditorOperation('lookupProperty')" />
             <a href='javascript:doRecordingActEditorOperation("refreshPrecedentRecordingCombos")' class="button">Buscarlo o agregarlo en libros físicos</a>
@@ -121,7 +146,7 @@
             Partida donde está registrado el predio:
             <input id="txtQuickAddRecordingNumber" type="text" class="textBox" style="width:32px;margin-right:0px"
                     onkeypress="return integerKeyFilter(this);" title="" maxlength="5" />
-            <select id="cboQuickAddRecordingSubNumber" class="selectBox" 
+            <select id="cboQuickAddRecordingSubNumber" class="selectBox"
                   style="width:52px;margin-right:0px" title="">
               <option value=""></option>
               <option value="/01">/01</option><option value="/02">/02</option><option value="/03">/03</option><option value="/04">/04</option><option value="/05">/05</option>
@@ -192,7 +217,7 @@
               <option value="-Bis2">-Bis2</option>
             </select>
             <br />
-            Acto origen del predio:
+            <span style="color:red">Acto origen del predio:</span>
             <select id="Select1" class="selectBox" style="width:238px" title=""
                     onchange="return updateUI(this);">
               <option value="">( Acto que originó el antecedente )</option>
@@ -202,18 +227,22 @@
               <option value="">Donación en pago</option>
               <option value="">Donación simple y pura</option>
               <option value="">Información Ad Perpetuam</option>
+              <option value="">Lotificación</option>
               <option value="">Permuta</option>
               <option value="">Sentencia de usucapión</option>
               <option value="">Título de propiedad</option>
               <option value="">Transmisión de propiedad</option>
             </select>
             <br />
-            Fecha de registro de la partida:
+            <span style="color:red">Fecha de registro de la partida:</span>
             <input id='txtPresentationDate' name='txtPresentationDate' type="text" class="textBox" style="width:66px;margin-right:0" onblur="formatAsDate(this)" title="" />
             <img id='imgPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtPresentationDate'), getElement('imgPresentationDate'));" title="Despliega el calendario" alt="" />
-            Hora:
+             <span style="color:red">Hora:</span>
             <input id="txtPresentationTime" name="txtPresentationTime" type="text" class="textBox" style="width:40px;margin-right:2px" maxlength="5" title="" onkeypress='return hourKeyFilter(this);' />Hrs
+            <br />
+            <span style="color:red">* Próximamente</span>
             </span>
+            <br />
           </td>
           <td class="lastCell">&nbsp;</td>
         </tr>
@@ -226,7 +255,7 @@
       <table class="editionTable">
         <tr>
           <td>Que aplica a:</td>
-          <td>                  
+          <td>
             <select id="cboTargetAct" name="cboTargetAct" class="selectBox" style="width:236px" title="" onchange="return updateUI(this);">
               <option value="">( Acto a cancelar o modificar )</option>
               <option value="">Embargo (no registrado)</option>
@@ -377,8 +406,12 @@
       resetPropertyTypeSelectorCombo();
     } else if (oControl == getElement("cboPropertyTypeSelector")) {
       showPrecedentRecordingSection();
-    } else if (oControl == getElement("cboPropertySubdivisionType")) {
+    } else if (oControl == getElement("cboPropertyPartitionType")) {
       updatePropertyFractionSection();
+    } else if (oControl == getElement("cboPartitionSizeUnit")) {
+      updateLotSizeContros(getElement("cboPartitionSizeUnit"), getElement("txtPartitionSize"));
+    } else if (oControl == getElement("cboPartitionAvailableSizeUnit")) {
+      updateLotSizeContros(getElement("cboPartitionAvailableSizeUnit"), getElement("txtPartitionAvailableSize"));
     } else if (oControl == getElement("cboPrecedentRecordingSection")) {
       resetPrecedentDomainBooksCombo();
     } else if (oControl == getElement("cboPrecedentRecordingBook")) {
@@ -388,43 +421,71 @@
     }
   }
 
-  function setPropertyPartsTotal() {
-    var selectedValue = getElement("cboPropertySubdivisionType").value;
+  function updateLotSizeContros(oUnitCombo, oSizeTextbox) {
+    if (oUnitCombo.value == '') {
+      oSizeTextbox.disabled = false;
+    } else if (oUnitCombo.value == -2) {
+      oSizeTextbox.value = 'No consta';
+      oSizeTextbox.disabled = true;
+    } else {
+      oSizeTextbox.disabled = false;
+    }
+    if (!oSizeTextbox.disabled && oSizeTextbox.value != '' && !isNumeric(oSizeTextbox)) {
+      oSizeTextbox.value = '';
+    }
+  }
 
-    if (!isNumeric(getElement('txtPropertySubdivisionNo'))) {
+  function setPropertyPartsTotal() {
+    var selectedValue = getElement("cboPropertyPartitionType").value;
+
+    if (!isNumeric(getElement('txtPropertyPartitionNo'))) {
       alert("No reconozco el número de lote o fracción proporcionado.");
       return;
     }
     if (selectedValue == 'last') {
-      getElement('txtPropertyTotalLots').value = getElement('txtPropertySubdivisionNo').value;
+      getElement('txtPropertyTotalPartitions').value = getElement('txtPropertyPartitionNo').value;
     }
   }
 
   function updatePropertyFractionSection() {
-    var selectedValue = getElement("cboPropertySubdivisionType").value;
+    var selectedValue = getElement("cboPropertyPartitionType").value;
 
-    getElement('txtPropertySubdivisionNo').value = '';
-    getElement('txtPropertyTotalLots').value = '';
+    getElement('txtPropertyPartitionNo').value = '';
+    getElement('txtPropertyTotalPartitions').value = '';
     switch (selectedValue) {
       case '':
       case 'whole':
-        getElement('divFractionPartXofYSection').style.display = 'none';
+        getElement('divPartitionPartXofYSection').style.display = 'none';
         break;
       case 'partial':
-        getElement('divFractionPartXofYSection').style.display = 'inline';
-        getElement('txtPropertySubdivisionNo').disabled = false;
-        getElement('txtPropertyTotalLots').disabled = true;
-        getElement('txtPropertyTotalLots').value = '?';
+        getElement('divPartitionPartXofYSection').style.display = 'inline';
+        getElement('txtPropertyPartitionNo').disabled = false;
+        getElement('txtPropertyTotalPartitions').disabled = true;
+        getElement('txtPropertyTotalPartitions').value = '?';
+        break;
+      case 'partialUnknown':
+        getElement('divPartitionPartXofYSection').style.display = 'inline';
+        getElement('txtPropertyPartitionNo').disabled = true;
+        getElement('txtPropertyTotalPartitions').disabled = true;
+        getElement('txtPropertyPartitionNo').value = '?';
+        getElement('txtPropertyTotalPartitions').value = '?';
         break;
       case 'last':
-        getElement('divFractionPartXofYSection').style.display = 'inline';
-        getElement('txtPropertySubdivisionNo').disabled = false;
-        getElement('txtPropertyTotalLots').disabled = true;
+        getElement('divPartitionPartXofYSection').style.display = 'inline';
+        getElement('txtPropertyPartitionNo').disabled = false;
+        getElement('txtPropertyTotalPartitions').disabled = true;
+        break;
+      case 'lastUnknown':
+        getElement('divPartitionPartXofYSection').style.display = 'inline';
+        getElement('txtPropertyPartitionNo').disabled = true;
+        getElement('txtPropertyTotalPartitions').disabled = true;
+        getElement('txtPropertyPartitionNo').value = '?';
+        getElement('txtPropertyTotalPartitions').value = '?';
         break;
       case 'full':
-        getElement('divFractionPartXofYSection').style.display = 'inline';
-        getElement('txtPropertySubdivisionNo').disabled = false;
-        getElement('txtPropertyTotalLots').disabled = false;
+        getElement('divPartitionPartXofYSection').style.display = 'inline';
+        getElement('txtPropertyPartitionNo').disabled = false;
+        getElement('txtPropertyTotalPartitions').disabled = false;
         break;
     }
   }
@@ -524,10 +585,10 @@
   }
 
   function showPrecedentRecordingSection() {
-    getElement("divFractionSection").style.display = "none";
+    getElement("divPropertyPartitionSection").style.display = "none";
     if (getElement("cboPropertyTypeSelector").value == "selectProperty") {          // Already registered
       getElement("divPrecedentActSection").style.display = "inline";
-      getElement("divFractionSection").style.display = oCurrentRecordingRule.AllowsPartitions ? "inline" : "none";
+      getElement("divPropertyPartitionSection").style.display = oCurrentRecordingRule.AllowsPartitions ? "inline" : "none";
       getElement("divPhysicalRecordingSelectorTitle").style.display = "inline";
       getElement("divPhysicalRecordingSelector").style.display = "inline";
       getElement("divPrecedentRecordingSection").style.display = "inline";
@@ -621,9 +682,9 @@
       sMsg += "Distrito:\t\t" + getComboOptionText(getElement('cboNewPropertyRecorderOffice')) + "\n\n";
     } else if (getElement('cboPrecedentRecording').value != "-1") {
       if (oCurrentRecordingRule.AllowsPartitions) {
-        sMsg += "\t\tSobre " + getComboOptionText(getElement('cboPropertySubdivisionType'));
-        if (getElement("txtPropertySubdivisionNo").value.length != 0) {
-          sMsg += " número " + getElement("txtPropertySubdivisionNo").value + " de " + getElement("txtPropertyTotalLots").value;
+        sMsg += "\t\tSobre " + getComboOptionText(getElement('cboPropertyPartitionType'));
+        if (getElement("txtPropertyPartitionNo").value.length != 0) {
+          sMsg += " número " + getElement("txtPropertyPartitionNo").value + " de " + getElement("txtPropertyTotalPartitions").value;
         }
         sMsg += "\n";
       }
@@ -632,9 +693,9 @@
       sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
     } else {
       if (oCurrentRecordingRule.AllowsPartitions) {
-        sMsg += "\t\tSobre " + getComboOptionText(getElement('cboPropertySubdivisionType'));
-        if (getElement("txtPropertySubdivisionNo").value.length != 0) {
-          sMsg += " número " + getElement("txtPropertySubdivisionNo").value + " de " + getElement("txtPropertyTotalLots").value;
+        sMsg += "\t\tSobre " + getComboOptionText(getElement('cboPropertyPartitionType'));
+        if (getElement("txtPropertyPartitionNo").value.length != 0) {
+          sMsg += " número " + getElement("txtPropertyPartitionNo").value + " de " + getElement("txtPropertyTotalPartitions").value;
         }
         sMsg += "\n\n";
       }
@@ -644,9 +705,9 @@
       sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
     }
     sMsg += "¿Agrego este acto jurídico al documento";
-    if (oCurrentRecordingRule.AllowsPartitions && getElement('txtPropertySubdivisionNo').value != '') {
-      sMsg += " y lo aplico a " + getComboOptionText(getElement('cboPropertySubdivisionType')) +
-              " " + getElement('txtPropertySubdivisionNo').value + " en el antecedente";
+    if (oCurrentRecordingRule.AllowsPartitions && getElement('txtPropertyPartitionNo').value != '') {
+      sMsg += " y lo aplico a " + getComboOptionText(getElement('cboPropertyPartitionType')) +
+              " " + getElement('txtPropertyPartitionNo').value + " en el antecedente";
     }
     sMsg += "?";
     return confirm(sMsg);
@@ -698,10 +759,7 @@
         return false;
       }
     } else {
-      // clean partitions data fields
-      getElement("cboPropertySubdivisionType").value = '';
-      getElement("txtPropertySubdivisionNo").value = '';
-      getElement("txtPropertyTotalLots").value = '';
+      cleanPartitionDataFields();
     }
 
     if (getElement('cboPropertyTypeSelector').value == 'selectProperty') {    // Select precedent property
@@ -712,7 +770,20 @@
     return true;
   }
 
+
+  function cleanPartitionDataFields() {
+    getElement("cboPropertyPartitionType").value = '';
+    getElement("txtPropertyPartitionNo").value = '';
+    getElement("txtPropertyTotalPartitions").value = '';
+    getElement("cboPartitionSizeUnit").value = '';
+    getElement("txtPartitionSize").value = '';
+    getElement("cboPartitionAvailableSizeUnit").value = '';
+    getElement("txtPartitionAvailableSize").value = '';
+  }
+
   function validatePrecedentRecording() {
+    var recordingAct = getComboOptionText(getElement('cboRecordingActType'));
+
     if (getElement('cboPrecedentRecordingSection').value.length == 0) {
       alert("Necesito conocer el distrito o sección donde se encuentra el antecedente registral del predio.");
       getElement('cboPrecedentRecordingSection').focus();
@@ -752,54 +823,121 @@
   }
 
   function validateSubdivision() {
-    if (!isNumeric(getElement("txtPropertySubdivisionNo"))) {
-      getElement("txtPropertySubdivisionNo").value = '';
-    }
-    if (getElement("txtPropertyTotalLots").value != "?" &&
-        !isNumeric(getElement("txtPropertyTotalLots"))) {
-      getElement("txtPropertyTotalLots").value = '';
-    }
+    var recordingAct = getComboOptionText(getElement('cboRecordingActType'));
 
-    if (getElement("cboPropertySubdivisionType").value.length == 0) {
+    if (getElement("cboPropertyPartitionType").value.length == 0) {
       alert("Necesito conocer sobre qué parte del predio se aplicará el acto de " + recordingAct + ".");
-      getElement("cboPropertySubdivisionType").focus();
+      getElement("cboPropertyPartitionType").focus();
       return false;
     }
-    if (getElement("cboPropertySubdivisionType").value == "partial" ||
-        getElement("cboPropertySubdivisionType").value == "last" ||
-        getElement("cboPropertySubdivisionType").value == "full") {
-      if (getElement("txtPropertySubdivisionNo").value.length == 0) {
+
+    if (getElement("cboPropertyPartitionType").value == "whole") {
+      cleanPartitionDataFields();
+      return true;
+    }
+
+    if (!isNumeric(getElement("txtPropertyPartitionNo"))) {
+      getElement("txtPropertyPartitionNo").value = '';
+    }
+
+    if (getElement("txtPropertyPartitionNo").value != "?" &&
+        !isNumeric(getElement("txtPropertyPartitionNo"))) {
+      getElement("txtPropertyPartitionNo").value = '';
+    }
+    if (getElement("txtPropertyTotalPartitions").value != "?" &&
+        !isNumeric(getElement("txtPropertyTotalPartitions"))) {
+      getElement("txtPropertyTotalPartitions").value = '';
+    }
+
+    if (getElement("cboPropertyPartitionType").value == "partial" ||
+        getElement("cboPropertyPartitionType").value == "last" ||
+        getElement("cboPropertyPartitionType").value == "full") {
+      if (getElement("txtPropertyPartitionNo").value.length == 0) {
         alert("Necesito conocer el número de fracción (o lote) del antecedente a la que se le aplicará el acto de " + recordingAct + ".");
-        getElement("txtPropertySubdivisionNo").focus();
+        getElement("txtPropertyPartitionNo").focus();
         return false;
       }
-      if (!isNumeric(getElement("txtPropertySubdivisionNo"))) {
+      if (!isNumeric(getElement("txtPropertyPartitionNo"))) {
         alert("No reconozco el número de fracción o lote proporcionado.");
-        getElement("txtPropertySubdivisionNo").focus();
+        getElement("txtPropertyPartitionNo").focus();
         return false;
       }
     }
-    if (getElement("cboPropertySubdivisionType").value == "last" ||
-        getElement("cboPropertySubdivisionType").value == "full") {
-      if (getElement("txtPropertyTotalLots").value.length == 0) {
+    if (getElement("cboPropertyPartitionType").value == "last" ||
+        getElement("cboPropertyPartitionType").value == "full") {
+      if (getElement("txtPropertyTotalPartitions").value.length == 0) {
         alert("Necesito conocer el número de fracciones o lotes totales que están inscritos en el antecedente.");
-        getElement("txtPropertyTotalLots").focus();
+        getElement("txtPropertyTotalPartitions").focus();
         return false;
       }
-      if (!isNumeric(getElement("txtPropertyTotalLots"))) {
+      if (!isNumeric(getElement("txtPropertyTotalPartitions"))) {
         alert("No reconozco el número de fracciones o lotes totales que están inscritos en el antecedente.");
-        getElement("txtPropertyTotalLots").focus();
+        getElement("txtPropertyTotalPartitions").focus();
         return false;
       }
-      if (convertToNumber(getElement("txtPropertyTotalLots").value) <
-          convertToNumber(getElement("txtPropertySubdivisionNo").value)) {
+      if (convertToNumber(getElement("txtPropertyTotalPartitions").value) <
+          convertToNumber(getElement("txtPropertyPartitionNo").value)) {
         alert("El número total de fracciones (o lotes) no puede ser menor al número de fracción o lote al que se aplicará el acto de " + recordingAct + ".");
-        getElement("txtPropertySubdivisionNo").focus();
+        getElement("txtPropertyPartitionNo").focus();
         return false;
       }
-      if (convertToNumber(getElement("txtPropertyTotalLots").value) < 2) {
+      if (convertToNumber(getElement("txtPropertyTotalPartitions").value) < 2) {
         alert("El número total de fracciones (o lotes) en que se divide un predio no puede ser menor a dos.");
-        getElement("txtPropertyTotalLots").focus();
+        getElement("txtPropertyTotalPartitions").focus();
+        return false;
+      }
+    }
+
+    if (getElement("cboPartitionSizeUnit").value == '') {
+      alert("Requiero conocer la unidad de medida de la superficie de la fracción.");
+      getElement("cboPartitionSizeUnit").focus();
+      return false;
+    }
+    if (getElement("cboPartitionSizeUnit").value != '-2') {
+      if (getElement("txtPartitionSize").value.length == 0) {
+        alert("Requiero se proporcione la superficie de la fracción.");
+        getElement("txtPartitionSize").focus();
+        return false;
+      }
+      if (!isNumeric(getElement("txtPartitionSize"))) {
+        alert("No reconozco la superficie de la fracción.");
+        getElement("txtPartitionSize").focus();
+        return false;
+      }
+      if (convertToNumber(getElement("txtPartitionSize").value) <= 0) {
+        alert("La superficie de la fracción debe ser mayor a cero.");
+        getElement("txtPartitionSize").focus();
+        return false;
+      }
+    }
+
+    if (getElement("cboPartitionAvailableSizeUnit").value == '') {
+      alert("Requiero conocer la superficie disponible del predio que se está fraccionando.");
+      getElement("cboPartitionAvailableSizeUnit").focus();
+      return false;
+    }
+    if (getElement("cboPartitionAvailableSizeUnit").value != '-2') {
+      if (getElement("txtPartitionAvailableSize").value.length == 0) {
+        alert("Requiero se proporcione la superficie disponible del predio que se está fraccionando.");
+        getElement("txtPartitionAvailableSize").focus();
+        return false;
+      }
+      if (!isNumeric(getElement("txtPartitionAvailableSize"))) {
+        alert("No reconozco la superficie disponible del predio que se está fraccionando.");
+        getElement("txtPartitionAvailableSize").focus();
+        return false;
+      }
+      if (convertToNumber(getElement("txtPartitionAvailableSize").value) <= 0) {
+        alert("La superficie disponible del predio que se está fraccionando debe ser mayor a cero.");
+        getElement("txtPartitionAvailableSize").focus();
+        return false;
+      }
+    }
+    if (isNumeric(getElement("txtPartitionSize")) &&
+        isNumeric(getElement("txtPartitionAvailableSize"))) {
+      if (convertToNumber(getElement("txtPartitionAvailableSize").value) < convertToNumber(getElement("txtPartitionSize").value)) {
+        alert("La superficie disponible del predio no puede ser menor a la superficie de la fracción.");
+        getElement("txtPartitionSize").focus();
         return false;
       }
     }
@@ -821,14 +959,42 @@
     qs += "&precedentPropertyId=" + getElement('cboPrecedentProperty').value;
     qs += "&targetRecordingActId=" + getElement('cboTargetAct').value;
 
-    qs += "&lotSubdivisionType=" + getComboSelectedOption('cboPropertySubdivisionType').title;
-    qs += "&lotNumber=" + getElement('txtPropertySubdivisionNo').value;
-    if (getElement('txtPropertyTotalLots').value.length == 0 ||
-        getElement('txtPropertyTotalLots').value == '?') {
-      qs += "&totalLots=" + getElement('txtPropertySubdivisionNo').value;
+    qs += "&partitionType=" + getComboSelectedOption('cboPropertyPartitionType').title;
+
+    if (isNumeric(getElement("txtPropertyPartitionNo"))) {
+      qs += "&partitionNo=" + getElement('txtPropertyPartitionNo').value;
     } else {
-      qs += "&totalLots=" + getElement('txtPropertyTotalLots').value;
+      qs += "&partitionNo=0";
     }
+
+    if (isNumeric(getElement("txtPropertyTotalPartitions"))) {
+      qs += "&totalPartitions=" + getElement('txtPropertyTotalPartitions').value;
+    } else {
+      qs += "&totalPartitions=0";
+    }
+
+    if (isNumeric(getElement("txtPartitionSize"))) {
+      qs += "&partitionSize=" + getElement('txtPartitionSize').value;
+    } else {
+      qs += "&partitionSize=0";
+    }
+    if (isNumeric(getElement("cboPartitionSizeUnit"))) {
+      qs += "&partitionSizeUnitId=" + getElement('cboPartitionSizeUnit').value;
+    } else {
+      qs += "&partitionSizeUnitId=-1";
+    }
+
+    if (isNumeric(getElement("txtPartitionAvailableSize"))) {
+      qs += "&partitionAvailableSize=" + getElement('txtPartitionAvailableSize').value;
+    } else {
+      qs += "&partitionAvailableSize=0";
+    }
+    if (isNumeric(getElement("cboPartitionAvailableSizeUnit"))) {
+      qs += "&partitionAvailableSizeUnitId=" + getElement('cboPartitionAvailableSizeUnit').value;
+    } else {
+      qs += "&partitionAvailableSizeUnitId=-1";
+    }
+    alert(qs);
     return qs;
   }
 

@@ -956,8 +956,8 @@ $.widget("ui.draggable", $.ui.mouse, {
 	
 	_mouseUp: function(event) {
 		if (this.options.iframeFix === true) {
-			$("div.ui-draggable-iframeFix").each(function() { 
-				this.parentNode.removeChild(this); 
+			$("div.ui-draggable-iframeFix").each(function() {
+				this.parentNode.removeChild(this);
 			}); //Remove frame helpers
 		}
 		
@@ -2400,7 +2400,7 @@ $.ui.plugin.add("resizable", "alsoResize", {
 
 		_alsoResize = function (exp, c) {
 			$(exp).each(function() {
-				var el = $(this), start = $(this).data("resizable-alsoresize"), style = {}, 
+				var el = $(this), start = $(this).data("resizable-alsoresize"), style = {},
 					css = c && c.length ? c : el.parents(ui.originalElement[0]).length ? ['width', 'height'] : ['width', 'height', 'top', 'left'];
 
 				$.each(css, function (i, prop) {
@@ -3562,27 +3562,27 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 	_contactContainers: function(event) {
 		
-		// get innermost container that intersects with item 
+		// get innermost container that intersects with item
 		var innermostContainer = null, innermostIndex = null;		
 		
 		
 		for (var i = this.containers.length - 1; i >= 0; i--){
 
-			// never consider a container that's located within the item itself 
+			// never consider a container that's located within the item itself
 			if($.ui.contains(this.currentItem[0], this.containers[i].element[0]))
 				continue;
 
 			if(this._intersectsWith(this.containers[i].containerCache)) {
 
-				// if we've already found a container and it's more "inner" than this, then continue 
+				// if we've already found a container and it's more "inner" than this, then continue
 				if(innermostContainer && $.ui.contains(this.containers[i].element[0], innermostContainer.element[0]))
 					continue;
 
-				innermostContainer = this.containers[i]; 
+				innermostContainer = this.containers[i];
 				innermostIndex = i;
 					
 			} else {
-				// container doesn't intersect. trigger "out" event if necessary 
+				// container doesn't intersect. trigger "out" event if necessary
 				if(this.containers[i].containerCache.over) {
 					this.containers[i]._trigger("out", event, this._uiHash(this));
 					this.containers[i].containerCache.over = 0;
@@ -3591,41 +3591,33 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 		}
 		
-		// if no intersecting containers found, return 
-		if(!innermostContainer) return; 
-
+		// if no intersecting containers found, return
+		if(!innermostContainer) return;
 		// move the item into the container if it's not there already
 		if(this.containers.length === 1) {
 			this.containers[innermostIndex]._trigger("over", event, this._uiHash(this));
 			this.containers[innermostIndex].containerCache.over = 1;
-		} else if(this.currentContainer != this.containers[innermostIndex]) { 
-
-			//When entering a new container, we will find the item with the least distance and append our item near it 
-			var dist = 10000; var itemWithLeastDistance = null; var base = this.positionAbs[this.containers[innermostIndex].floating ? 'left' : 'top']; 
-			for (var j = this.items.length - 1; j >= 0; j--) { 
-				if(!$.ui.contains(this.containers[innermostIndex].element[0], this.items[j].item[0])) continue; 
-				var cur = this.items[j][this.containers[innermostIndex].floating ? 'left' : 'top']; 
-				if(Math.abs(cur - base) < dist) { 
-					dist = Math.abs(cur - base); itemWithLeastDistance = this.items[j]; 
-				} 
-			} 
-
-			if(!itemWithLeastDistance && !this.options.dropOnEmpty) //Check if dropOnEmpty is enabled 
-				return; 
-
-			this.currentContainer = this.containers[innermostIndex]; 
-			itemWithLeastDistance ? this._rearrange(event, itemWithLeastDistance, null, true) : this._rearrange(event, null, this.containers[innermostIndex].element, true); 
-			this._trigger("change", event, this._uiHash()); 
-			this.containers[innermostIndex]._trigger("change", event, this._uiHash(this)); 
-
-			//Update the placeholder 
-			this.options.placeholder.update(this.currentContainer, this.placeholder); 
-		
-			this.containers[innermostIndex]._trigger("over", event, this._uiHash(this)); 
+		} else if(this.currentContainer != this.containers[innermostIndex]) {
+			//When entering a new container, we will find the item with the least distance and append our item near it
+			var dist = 10000; var itemWithLeastDistance = null; var base = this.positionAbs[this.containers[innermostIndex].floating ? 'left' : 'top'];
+			for (var j = this.items.length - 1; j >= 0; j--) {
+				if(!$.ui.contains(this.containers[innermostIndex].element[0], this.items[j].item[0])) continue;
+				var cur = this.items[j][this.containers[innermostIndex].floating ? 'left' : 'top'];
+				if(Math.abs(cur - base) < dist) {
+					dist = Math.abs(cur - base); itemWithLeastDistance = this.items[j];
+				}
+			}
+			if(!itemWithLeastDistance && !this.options.dropOnEmpty) //Check if dropOnEmpty is enabled
+				return;
+			this.currentContainer = this.containers[innermostIndex];
+			itemWithLeastDistance ? this._rearrange(event, itemWithLeastDistance, null, true) : this._rearrange(event, null, this.containers[innermostIndex].element, true);
+			this._trigger("change", event, this._uiHash());
+			this.containers[innermostIndex]._trigger("change", event, this._uiHash(this));
+			//Update the placeholder
+			this.options.placeholder.update(this.currentContainer, this.placeholder);
+			this.containers[innermostIndex]._trigger("over", event, this._uiHash(this));
 			this.containers[innermostIndex].containerCache.over = 1;
-		} 
-	
-		
+		}
 	},
 
 	_createHelper: function(event) {
@@ -6424,7 +6416,7 @@ $.extend( $.ui.autocomplete, {
 
 /*
  * jQuery UI Menu (not officially released)
- * 
+ *
  * This widget isn't yet finished and the API is subject to change. We plan to finish
  * it for the next release. You're welcome to give it a try anyway and give us feedback,
  * as long as you're okay with migrating your code later on. We can help with that, too.
@@ -6919,8 +6911,7 @@ $.widget( "ui.button", {
 				.text(),
 			icons = this.options.icons,
 			multipleIcons = icons.primary && icons.secondary,
-			buttonClasses = [];  
-
+			buttonClasses = [];
 		if ( icons.primary || icons.secondary ) {
 			if ( this.options.text ) {
 				buttonClasses.push( "ui-button-text-icon" + ( multipleIcons ? "s" : ( icons.primary ? "-primary" : "-secondary" ) ) );
@@ -7232,7 +7223,7 @@ $.extend(Datepicker.prototype, {
 				if ($.datepicker._datepickerShowing && $.datepicker._lastInput == input[0])
 					$.datepicker._hideDatepicker();
 				else if ($.datepicker._datepickerShowing && $.datepicker._lastInput != input[0]) {
-					$.datepicker._hideDatepicker(); 
+					$.datepicker._hideDatepicker();
 					$.datepicker._showDatepicker(input[0]);
 				} else
 					$.datepicker._showDatepicker(input[0]);
@@ -7528,7 +7519,7 @@ $.extend(Datepicker.prototype, {
 				case 9: $.datepicker._hideDatepicker();
 						handled = false;
 						break; // hide on tab out
-				case 13: var sel = $('td.' + $.datepicker._dayOverClass + ':not(.' + 
+				case 13: var sel = $('td.' + $.datepicker._dayOverClass + ':not(.' +
 									$.datepicker._currentClass + ')', inst.dpDiv);
 						if (sel[0])
 							$.datepicker._selectDay(event.target, inst.selectedMonth, inst.selectedYear, sel[0]);
@@ -7626,7 +7617,7 @@ $.extend(Datepicker.prototype, {
 	},
 
 	/* Pop-up the date picker for a given input field.
-       If false returned from beforeShow event handler do not show. 
+       If false returned from beforeShow event handler do not show.
 	   @param  input  element - the input field attached to the date picker or
 	                  event - if triggered by focus */
 	_showDatepicker: function(input) {
@@ -7732,7 +7723,7 @@ $.extend(Datepicker.prototype, {
 				// this breaks the change event in IE
 				inst.input.is(':visible') && !inst.input.is(':disabled') && inst.input[0] != document.activeElement)
 			inst.input.focus();
-		// deffered render of the years select (to avoid flashes on Firefox) 
+		// deffered render of the years select (to avoid flashes on Firefox)
 		if( inst.yearshtml ){
 			var origyearshtml = inst.yearshtml;
 			setTimeout(function(){
@@ -8560,7 +8551,7 @@ $.extend(Datepicker.prototype, {
 					drawMonth = 0;
 					drawYear++;
 				}
-				calender += '</tbody></table>' + (isMultiMonth ? '</div>' + 
+				calender += '</tbody></table>' + (isMultiMonth ? '</div>' +
 							((numMonths[0] > 0 && col == numMonths[1]-1) ? '<div class="ui-datepicker-row-break"></div>' : '') : '');
 				group += calender;
 			}
@@ -8739,7 +8730,7 @@ $.extend(Datepicker.prototype, {
  * Bind hover events for datepicker elements.
  * Done via delegate so the binding only occurs once in the lifetime of the parent div.
  * Global instActive, set by _updateDatepicker allows the handlers to find their way back to the active picker.
- */ 
+ */
 function bindHover(dpDiv) {
 	var selector = 'button, .ui-datepicker-prev, .ui-datepicker-next, .ui-datepicker-calendar td a';
 	return dpDiv.bind('mouseout', function(event) {
@@ -9338,8 +9329,7 @@ $.widget("ui.dialog", {
 					at: myAt.join(" "),
 					offset: offset.join(" ")
 				};
-			} 
-
+			}
 			position = $.extend({}, $.ui.dialog.prototype.options.position, position);
 		} else {
 			position = $.ui.dialog.prototype.options.position;
@@ -9730,7 +9720,7 @@ $.fn.position = function( options ) {
 	}
 
 	// force my and at to have valid horizontal and veritcal positions
-	// if a value is missing or invalid, it will be converted to center 
+	// if a value is missing or invalid, it will be converted to center
 	$.each( [ "my", "at" ], function() {
 		var pos = ( options[this] || "" ).split( " " );
 		if ( pos.length === 1) {
@@ -9918,7 +9908,7 @@ if ( !$.offset.setOffset ) {
 	$.fn.offset = function( options ) {
 		var elem = this[ 0 ];
 		if ( !elem || !elem.ownerDocument ) { return null; }
-		if ( options ) { 
+		if ( options ) {
 			return this.each(function() {
 				$.offset.setOffset( this, options );
 			});
@@ -9929,7 +9919,7 @@ if ( !$.offset.setOffset ) {
 
 // fraction support test (older versions of jQuery don't support fractions)
 (function () {
-	var body = document.getElementsByTagName( "body" )[ 0 ], 
+	var body = document.getElementsByTagName( "body" )[ 0 ],
 		div = document.createElement( "div" ),
 		testElement, testElementParent, testElementStyle, offset, offsetTotal;
 
@@ -10131,7 +10121,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 				.addClass( "ui-slider-range" +
 				// note: this isn't the most fittingly semantic framework class for this element,
 				// but worked best visually with a variety of themes
-				" ui-widget-header" + 
+				" ui-widget-header" +
 				( ( o.range === "min" || o.range === "max" ) ? " ui-slider-range-" + o.range : "" ) );
 		}
 
@@ -10434,7 +10424,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 		if ( this.options.values && this.options.values.length ) {
 			otherVal = this.values( index ? 0 : 1 );
 
-			if ( ( this.options.values.length === 2 && this.options.range === true ) && 
+			if ( ( this.options.values.length === 2 && this.options.range === true ) &&
 					( ( index === 0 && newVal > otherVal) || ( index === 1 && newVal < otherVal ) )
 				) {
 				newVal = otherVal;

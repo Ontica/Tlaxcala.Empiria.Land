@@ -27,6 +27,17 @@ namespace Empiria.Web.UI.LRS {
     private RecordingTask ParseRecordingTask() {
       Command command = base.GetCurrentCommand();
 
+      var partition = new PropertyPartition(
+          partitionType: (PropertyPartitionType) Enum.Parse(typeof(PropertyPartitionType),
+                                                            command.GetParameter<string>("partitionType", "None")),
+          partitionNo: command.GetParameter<int>("partitionNo", 0),
+          totalPartitions: command.GetParameter<int>("totalPartitions", 0),
+          partitionSize: command.GetParameter<Decimal>("partitionSize", 0m),
+          partitionSizeUnitId: command.GetParameter<int>("partitionSizeUnitId", -1),
+          availableSize: command.GetParameter<Decimal>("partitionAvailableSize", 0m),
+          availableSizeUnitId: command.GetParameter<int>("partitionAvailableSizeUnitId", -1)
+        );
+
       return new RecordingTask(
          transactionId: command.GetParameter<int>("transactionId", -1),
          documentId: command.GetParameter<int>("documentId", -1),
@@ -42,10 +53,7 @@ namespace Empiria.Web.UI.LRS {
          quickAddRecordingNumber: command.GetParameter<int>("quickAddRecordingNumber", -1),
          quickAddRecordingSubnumber: command.GetParameter<string>("quickAddRecordingSubNumber", String.Empty),
          quickAddRecordingSuffixTag: command.GetParameter<string>("quickAddRecordingSuffixTag", String.Empty),
-         lotSubdivisionType: (LotSubdivisionType) Enum.Parse(typeof(LotSubdivisionType),
-                                                             command.GetParameter<string>("lotSubdivisionType", "None")),
-         lotNumber: command.GetParameter<int>("lotNumber", 0),
-         totalLots: command.GetParameter<int>("totalLots", 0)
+         partition: partition
       );
     }
 

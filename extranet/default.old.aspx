@@ -23,7 +23,7 @@
         case 'updateUserInterface':
           return updateUserInterface(arguments[1]);
         case 'sendOperation':
-          return sendOperation();          
+          return sendOperation();
         default:
           alert("La operación proporcionada está fuera de servicio. Favor de intentar más tarde.");
           return;
@@ -62,7 +62,7 @@
           return validateProperty();
         case 'recording':
           return validateRecording();
-        case 'book':         
+        case 'book':
           return validateBook();
       }
       return false;
@@ -96,13 +96,13 @@
       return true;
     }
 
-    function validateRecording() { 
+    function validateRecording() {
       return false;
     }
 
     function validateBook() {
       createNewWindow("./land.registration.system/directory.image.viewer.aspx?id=" + getElement('cboVolume').value);
-      return false;      
+      return false;
     }
 
     function updateUserInterface(oControl) {
@@ -157,13 +157,12 @@
         getElement('rowRecordings2').style.display = 'inline';
       }
     }
-   
+
    	function resetRecordingBooksCombo() {
       var url = "./ajax/land.registration.system.data.aspx";
       url += "?commandName=getRecordingBooksStringArrayCmd";
-      url += "&recorderOfficeId=" + getElement('cboRecordingOffice').value;       
-      url += "&recordingActTypeCategoryId=" + getElement('cboSection').value; 
-
+      url += "&recorderOfficeId=" + getElement('cboRecordingOffice').value;
+      url += "&recordingActTypeCategoryId=" + getElement('cboSection').value;
       invokeAjaxComboItemsLoader(url, getElement("cboVolume"))
 	  }
 
@@ -183,7 +182,7 @@
 <body>
 	<form id="frmEditor" method="post" target="_self" runat="server">
     <div id="divMainBanner"><img src="./themes/default/customer/pleca-roja.png" style="cursor: auto;" width="636px" alt="" title="" /></div>
-		<div id="divMain">     
+		<div id="divMain">
 			<div id="divLeftColumn">
 			  <br />
 			  <img align="middle" class="decoratorImage" src="./themes/default/customer/customer.full.logo.png" alt="" style='margin-left:16px;margin-top:8px' />
@@ -253,7 +252,7 @@
 	                <option value="106">Ocampo</option>
 	                <option value="107">Xicohténcatl</option>
 	                <option value="108">Zaragoza</option>
-                </select> 
+                </select>
               </td>
             </tr>
             <tr id="rowRecordings1" style="display:none">
@@ -269,7 +268,7 @@
 	                <option value="1056">Cr&#233;ditos agr&#237;colas</option>
 	                <option value="1057">Procede</option>
 	                <option value="1063">Diario</option>
-                </select> 
+                </select>
               </td>
             </tr>
             <tr id="rowRecordings2" style="display:none">
@@ -277,7 +276,7 @@
               <td>
                 <select id="cboVolume" class="selectBox" style="width:268px" runat="server" onchange="doOperation('updateUserInterface', this)">
                   <option value="">( Volumen )</option>
-                </select> 
+                </select>
               </td>
             </tr>
             <tr id="rowRecordings3" style="display:none">
@@ -285,7 +284,7 @@
               <td>
                 <select id="cboRecording" style="width:268px" runat="server" >
                   <option value="">( Partida )</option>
-                </select> 
+                </select>
               </td>
             </tr>
             <tr id="rowSubmit" style="display:inline">
