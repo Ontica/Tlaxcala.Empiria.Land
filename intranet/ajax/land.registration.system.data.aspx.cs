@@ -119,11 +119,7 @@ namespace Empiria.Web.UI.Ajax {
 
     private string GetRecordingActRuleCommandHandler() {
       int recordingActTypeId = GetCommandParameter<int>("recordingActTypeId", -1);
-      RecordingActType recordingActType = RecordingActType.Empty;
-
-      if (recordingActTypeId != -1) {
-        recordingActType = RecordingActType.Parse(recordingActTypeId);
-      }
+      var recordingActType = RecordingActType.Parse(recordingActTypeId);
 
       JsonObject jsonRule = recordingActType.RecordingRule.ToJson();
 
@@ -145,42 +141,39 @@ namespace Empiria.Web.UI.Ajax {
 
       string html = String.Empty;
       int counter = 0;
-      if (rule.AppliesTo == RecordingRuleApplication.None ||
-          rule.AppliesTo == RecordingRuleApplication.Undefined) {
-        if (!rule.FixedRecorderOffice.IsEmptyInstance) {
-          html += HtmlSelectContent.GetComboAjaxHtmlItem("actNotApplyToProperty", "No aplica a predios");
-        } else if (!rule.RecordingSection.IsEmptyInstance) {
-          html += HtmlSelectContent.GetComboAjaxHtmlItem("actAppliesOnlyToSection", "¿En qué distrito se inscribe?");
-        } else {
-          html += HtmlSelectContent.GetComboAjaxHtmlItem("undefinedRule", "ERROR: *REGLA NO DEFINIDA* ");
-        }
-        counter++;
-      } else if (rule.AppliesTo == RecordingRuleApplication.RecordingAct) {
-        html += HtmlSelectContent.GetComboAjaxHtmlItem("actAppliesToOtherRecordingAct", "Ya registrado");
-        counter++;
-      } else {
-        if (rule.PropertyRecordingStatus == PropertyRecordingStatus.Unregistered ||
-            rule.PropertyRecordingStatus == PropertyRecordingStatus.Both) {
-          html = HtmlSelectContent.GetComboAjaxHtmlItem("createProperty", "Sin antecedente registral");
-          counter++;
-        }
-        if (rule.AppliesTo == RecordingRuleApplication.Structure ||
-            rule.PropertyRecordingStatus == PropertyRecordingStatus.Registered ||
-            rule.PropertyRecordingStatus == PropertyRecordingStatus.Both) {
-          if (html.Length != 0) {
-            html += "|";
-          }
-          html += HtmlSelectContent.GetComboAjaxHtmlItem("selectProperty", "Ya registrado");
-          counter++;
-        }
-      }
 
+      switch (rule.AppliesTo) {
+        case RecordingRuleApplication.Property:
+        case RecordingRuleApplication.Structure:
+          if (rule.PropertyRecordingStatus == PropertyRecordingStatus.Unregistered ||
+              rule.PropertyRecordingStatus == PropertyRecordingStatus.Both) {
+            html = HtmlSelectContent.GetComboAjaxHtmlItem("createProperty", "Sin antecedente registral");
+            counter++;
+          }
+          if (rule.AppliesTo == RecordingRuleApplication.Structure ||
+              rule.PropertyRecordingStatus == PropertyRecordingStatus.Registered ||
+              rule.PropertyRecordingStatus == PropertyRecordingStatus.Both) {
+            if (html.Length != 0) {
+              html += "|";
+            }
+            html += HtmlSelectContent.GetComboAjaxHtmlItem("selectProperty", "Ya registrado");
+            counter++;
+          }
+          break;
+        case RecordingRuleApplication.RecordingAct:
+          html += HtmlSelectContent.GetComboAjaxHtmlItem("actAppliesToOtherRecordingAct", "Ya registrado");
+          counter++;
+          break;
+        default:
+          break;
+          // actNotApplyToProperty  // actAppliesOnlyToSection  // undefinedRule
+      }
       if (counter > 1) {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( ¿A qué predio se aplicará? )") + "|" + html;
       } else if (counter == 1) {
         return html;
       } else {
-        return HtmlSelectContent.GetComboAjaxHtmlItem("undefinedRule", "ERR: *REGLA CON PROBLEMAS* ");
+        return HtmlSelectContent.GetComboAjaxHtmlItem("undefinedRule", "ERR: *REGLA NO DEFINIDA* ");
       }
     }
 
@@ -215,23 +208,16 @@ namespace Empiria.Web.UI.Ajax {
 
     private string GetRecordingNumbersStringArrayCommandHandler() {
       int recordingBookId = GetCommandParameter<int>("recordingBookId", 0);
-      int recordingActTypeId = GetCommandParameter<int>("recordingActTypeId", 0);
 
       if (recordingBookId == 0) {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( ¿Libro? )");
       }
-      if (recordingActTypeId == 0) {
-        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( ¿Acto? )");
-      }
       var recordingBook = RecordingBook.Parse(recordingBookId);
-      var recordingActType = RecordingActType.Parse(recordingActTypeId);
+
       var recordings = recordingBook.GetRecordings();
       return HtmlSelectContent.GetComboAjaxHtml(recordings, 0, "Id", "Number",
                                                 recordings.Count == 0 ? "(Libro vacío)" : "(Seleccionar)",
-                                                recordingBook.IsAvailableForManualEditing &&
-                                                recordingActType.RecordingRule.AppliesTo == RecordingRuleApplication.Property ||
-                                                recordingActType.RecordingRule.AppliesTo == RecordingRuleApplication.Structure
-                                                            ? "Crear nueva" : "Crear nueva",
+                                                (true || recordingBook.IsAvailableForManualEditing) ? "Crear nueva" : "",
                                                 String.Empty);
     }
 
@@ -883,8 +869,7 @@ namespace Empiria.Web.UI.Ajax {
          recorderOfficeId: GetCommandParameter<int>("recorderOfficeId", -1),
          precedentRecordingBookId: GetCommandParameter<int>("precedentRecordingBookId", -1),
          precedentRecordingId: GetCommandParameter<int>("precedentRecordingId", -1),
-         targetResourceId: GetCommandParameter<int>("precedentPropertyId", -1),
-         targetRecordingActId: GetCommandParameter<int>("targetRecordingActId", -1),
+         precedentResourceId: GetCommandParameter<int>("precedentPropertyId", -1),
          quickAddRecordingNumber: GetCommandParameter<int>("quickAddRecordingNumber", -1),
          quickAddRecordingSubnumber: GetCommandParameter<string>("quickAddRecordingSubNumber", String.Empty),
          quickAddRecordingSuffixTag: GetCommandParameter<string>("quickAddRecordingSuffixTag", String.Empty)

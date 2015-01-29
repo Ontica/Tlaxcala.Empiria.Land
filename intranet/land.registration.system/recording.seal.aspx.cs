@@ -130,8 +130,8 @@ namespace Empiria.Web.UI.FSM {
       const string act03b = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el lote " +
                            "<b>{PARTITION.NUMBER}</b> del predio {PARTITION.OF}, mismo al que " +
                            "se le asignó el folio único {PROPERTY.UID}.<br/>";
-      const string act04 = "{INDEX}.- <b style='text-transform:uppercase'>{CANCELATION.ACT}</b> registrado en " +
-                           "{CANCELED.ACT.RECORDING}, sobre el predio con folio único {PROPERTY.UID}.<br/>";
+      const string act04 = "{INDEX}.- {CANCELATION.ACT} {CANCELED.ACT.RECORDING}, " +
+                           "sobre el predio con folio único {PROPERTY.UID}.<br/>";
       string html = String.Empty;
 
       int index = 0;
@@ -149,9 +149,14 @@ namespace Empiria.Web.UI.FSM {
           RecordingAct amendmentOf = recordingAct.AmendmentOf;
 
           x = act04.Replace("{INDEX}", index.ToString());
-          x = x.Replace("{CANCELATION.ACT}", "CANCELACIÓN " +
-                        (amendmentOf.RecordingActType.FemaleGenre ? " DE LA " : " DEL ") +
-                         amendmentOf.RecordingActType.DisplayName);
+
+          if (amendmentOf.RecordingActType.FemaleGenre) {
+            x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>CANCELACIÓN DE LA " +
+                          amendmentOf.RecordingActType.DisplayName + "</b> registrada en");
+          } else {
+            x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>CANCELACIÓN DEL " +
+                          amendmentOf.RecordingActType.DisplayName + "</b> registrado en");
+          }
           if (recordingAct.AmendmentOf.PhysicalRecording.IsEmptyInstance) {
             x = x.Replace("{CANCELED.ACT.RECORDING}", " el documento electrónico " +
                           "<b>" + recordingAct.AmendmentOf.Document.UID + "</b>");

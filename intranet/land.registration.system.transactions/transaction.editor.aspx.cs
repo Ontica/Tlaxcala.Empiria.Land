@@ -165,6 +165,9 @@ namespace Empiria.Web.UI.LRS {
     }
 
     protected bool IsEditable() {
+      if (transaction.DocumentType.Id == 734) {
+        return true;
+      }
       if (transaction.Status != TransactionStatus.Payment) {
         return false;
       }

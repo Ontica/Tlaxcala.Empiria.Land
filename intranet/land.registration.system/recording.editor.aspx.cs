@@ -111,6 +111,7 @@ namespace Empiria.Web.UI.LRS {
       }
       SetMessageBox(msg);
     }
+
     protected bool IsReadyForEdition() {
       if (transaction.IsEmptyInstance) {
         return false;

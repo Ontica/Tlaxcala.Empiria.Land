@@ -36,7 +36,16 @@ namespace Empiria.Web.UI.LRS {
           partitionSizeUnitId: command.GetParameter<int>("partitionSizeUnitId", -1),
           availableSize: command.GetParameter<Decimal>("partitionAvailableSize", 0m),
           availableSizeUnitId: command.GetParameter<int>("partitionAvailableSizeUnitId", -1)
-        );
+      );
+
+      var targetActInfo = new RecordingActInfo(
+        recordingActTypeId: command.GetParameter<int>("targetActTypeId", -1),
+        physicalBookId: command.GetParameter<int>("targetActPhysicalBookId", -1),
+        recordingId: command.GetParameter<int>("targetActRecordingId", -1),
+        recordingNo: command.GetParameter<int>("targetRecordingNumber", -1),
+        recordingSubNo: command.GetParameter<string>("targetRecordingSubNumber", String.Empty),
+        recordingSuffixTag: command.GetParameter<string>("targetRecordingSuffixTag", String.Empty)
+      );
 
       return new RecordingTask(
          transactionId: command.GetParameter<int>("transactionId", -1),
@@ -48,12 +57,12 @@ namespace Empiria.Web.UI.LRS {
          recorderOfficeId: command.GetParameter<int>("recorderOfficeId", -1),
          precedentRecordingBookId: command.GetParameter<int>("precedentRecordingBookId", -1),
          precedentRecordingId: command.GetParameter<int>("precedentRecordingId", -1),
-         targetResourceId: command.GetParameter<int>("precedentPropertyId", -1),
-         targetRecordingActId: command.GetParameter<int>("targetRecordingActId", -1),
+         precedentResourceId: command.GetParameter<int>("precedentPropertyId", -1),
          quickAddRecordingNumber: command.GetParameter<int>("quickAddRecordingNumber", -1),
          quickAddRecordingSubnumber: command.GetParameter<string>("quickAddRecordingSubNumber", String.Empty),
          quickAddRecordingSuffixTag: command.GetParameter<string>("quickAddRecordingSuffixTag", String.Empty),
-         partition: partition
+         partition: partition,
+         targetActInfo: targetActInfo
       );
     }
 
