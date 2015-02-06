@@ -56,7 +56,7 @@
                 <option value="lastUnknown" title="Last">la Última Fracción sin número</option>
               </select>
               <!--<option value="full" title="Full">el Lote</option> !-->
-              <span id="divPartitionPartXofYSection" style="display:none">
+              <span id="divPartitionPartXofYSection" style="display:none">        
                 Número:
                 <input id="txtPropertyPartitionNo" type="text" class="textBox"
                         style="width:24px;margin-right:0px" onblur="return setPropertyPartsTotal();"
@@ -87,6 +87,16 @@
                   <option value="621" title="metros cuadrados">m2</option>
                   <option value="624" title="hectáreas">ha</option>
                 </select>disponibles.
+                 <br/>
+                  <span style="color:red">IMPORTANTE</span>: Las fracciones <u><b style="color:red">SIEMPRE</b> generan un <b style="color:red">nuevo folio real</b></u>.<br />
+                  Los notarios a veces escriben la palabra "fracción" en las escrituras como una forma<br />
+                  de identificar al predio, pero eso <u>NO necesariamente</u> significa que se esté indicando en la<br />
+                  escritura que se haga una segregación o desmembración del predio original.<br />
+                  También es posible que dicha fracción ya haya sido previamente registrada en partidas o al margen, <br />
+                  o que se le haya creado folio real con el sistema, o bien, puede ser que su antecedente ni siquiera <br />
+                  esté registrado. En cualquiera de estos casos <u><b>NO SE DEBERÍA CREAR</b> una fracción.</u><br />
+                  Si tiene dudas acerca de si debe o no crear la fracción, por favor dirígase al área<br />
+                  jurídica o de soporte. Gracias.<br />
               </span>
               <br />
             </span>
@@ -136,7 +146,7 @@
           <td colspan="4">
             <span id="divPropertySelectorSection" style="display:none">
               Predio: &nbsp; &nbsp;
-              <select id="cboPrecedentProperty" class="selectBox" style="width:300px" title="">
+              <select id="cboPrecedentProperty" class="selectBox" style="width:300px" title="" onchange="return updateUI(this);">
                 <option value="">¿Inscripción?</option>
               </select>
               <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px"
@@ -249,8 +259,40 @@
       </table>
     </td>
   </tr>
-  <tr id="divTargetPrecedentActSectionTitle" style="display:none"><td class="actionsSeparator">(3) Seleccionar el acto jurídico a cancelar o modificar</td></tr>
-  <tr id="divTargetPrecedentActSection" style="display:none">
+  <tr id="divTargetPrecedentActSectionTitle" style="display:none">
+    <td class="actionsSeparator">(3) Seleccionar el acto jurídico a cancelar o modificar</td>
+  </tr>
+  <tr id="divTargetPrecedentActTable" style="display:none">
+    <td>
+      <table class="editionTable">
+        <tr>
+          <td class="lastCell">
+            <div style="overflow:auto;width:780px;">
+              <table class="details"style="width:99%">
+                <tr class="detailsHeader">
+                  <td>#</td>
+                  <td>Acto jurídico</td>
+                  <td>Documento</td>
+                  <td>Presentación</td>
+                  <td>Registrado en</td>
+                  <td>Estado</td>
+                </tr> 
+                <tr id='tblTargetPrecedentActsTable' class='totalsRow' style='display:inline'>
+                  <td>&nbsp;</td>
+                  <td colspan='5'>
+                    <select id="cboTemporalId" class="selectBox" style="width:600px" title="">
+                      <option value="">( Actos jurídicos del predio )</option>
+                    </select>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+    </tr>
+    <tr id="divTargetPrecedentActSection" style="display:none">
     <td>
       <table class="editionTable">
         <tr>
@@ -460,6 +502,18 @@
     url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
 
     oCurrentRecordingRule = invokeAjaxGetJsonObject(url);
+    
+    if (oCurrentRecordingRule.IsCancelation) {
+      updateTargetRecordingActCombos();
+    }
+  }
+
+  function updateTargetRecordingActCombos() {
+    var url = "../ajax/land.registration.system.data.aspx";
+    url += "?commandName=getTargetRecordingActTypesCmd";
+    url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+
+    invokeAjaxComboItemsLoader(url, getElement('cboTargetAct'));
   }
 
   function updateUI(oControl) {
@@ -481,16 +535,20 @@
     } else if (oControl == getElement("cboPropertyPartitionType")) {
       updatePropertyFractionSection();
     } else if (oControl == getElement("cboPartitionSizeUnit")) {
-      updateLotSizeContros(getElement("cboPartitionSizeUnit"), getElement("txtPartitionSize"));
+      updateLotSizeControls(getElement("cboPartitionSizeUnit"), getElement("txtPartitionSize"));
     } else if (oControl == getElement("cboPartitionAvailableSizeUnit")) {
-      updateLotSizeContros(getElement("cboPartitionAvailableSizeUnit"), getElement("txtPartitionAvailableSize"));
+      updateLotSizeControls(getElement("cboPartitionAvailableSizeUnit"), getElement("txtPartitionAvailableSize"));
     } else if (oControl == getElement("cboPrecedentRecordingSection")) {
       resetPrecedentDomainBooksCombo();
     } else if (oControl == getElement("cboPrecedentRecordingBook")) {
       resetPrecedentRecordingsCombo();
     } else if (oControl == getElement("cboPrecedentRecording")) {
       showPrecedentPropertiesSection();
-
+      updateSelectedResource();
+      showTargetRecordingActSections();
+    } else if (oControl == getElement("cboPrecedentProperty")) {
+      updateSelectedResource();
+      showTargetRecordingActSections();
     } else if (oControl == getElement("cboTargetAct")) {
       resetTargetActSectionCombo();
     } else if (oControl == getElement("cboTargetActSection")) {
@@ -501,7 +559,6 @@
       resetTargetActsGrid();
     }
   }
-
 
   function resetTargetActSectionCombo() {
    // alert("resetTargetActSectionCombo");
@@ -534,7 +591,7 @@
     //alert("resetTargetActsGrid");
   }
 
-  function updateLotSizeContros(oUnitCombo, oSizeTextbox) {
+  function updateLotSizeControls(oUnitCombo, oSizeTextbox) {
     if (oUnitCombo.value == '') {
       oSizeTextbox.disabled = false;
     } else if (oUnitCombo.value == -2) {
@@ -619,7 +676,6 @@
   function resetRecordingActTypesCategoriesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingActTypesEditingCategoriesCmd";
-
     invokeAjaxComboItemsLoader(url, getElement('cboRecordingActTypeCategory'));
   }
 
@@ -654,6 +710,8 @@
     }
     invokeAjaxComboItemsLoader(url, getElement("cboPrecedentRecording"));
     showPrecedentPropertiesSection();
+    updateSelectedResource();
+    showTargetRecordingActSections();
   }
 
   function resetPropertyTypeSelectorCombo() {
@@ -706,16 +764,12 @@
       getElement("divPhysicalRecordingSelector").style.display = "inline";
       getElement("divPrecedentRecordingSection").style.display = "inline";
       getElement("divNewPropertyRecorderOfficeSection").style.display = "none";
-      getElement("divTargetPrecedentActSectionTitle").style.display = "none";
-      getElement("divTargetPrecedentActSection").style.display = "none";
     } else if (getElement("cboPropertyTypeSelector").value == "createProperty") {   // New properties
       getElement("divPrecedentActSection").style.display = "none";
       getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
       getElement("divPhysicalRecordingSelector").style.display = "none";
       getElement("divPrecedentRecordingSection").style.display = "none";
       getElement("divNewPropertyRecorderOfficeSection").style.display = "inline";
-      getElement("divTargetPrecedentActSectionTitle").style.display = "none";
-      getElement("divTargetPrecedentActSection").style.display = "none";
     } else if (getElement("cboPropertyTypeSelector").value == "searchProperty") {   // Search by property number
 
     } else if (getElement("cboPropertyTypeSelector").value == "actNotApplyToProperty") {   // Recording act doesn't apply to properties
@@ -724,30 +778,86 @@
       getElement("divPhysicalRecordingSelector").style.display = "none";
       getElement("divPrecedentRecordingSection").style.display = "none";
       getElement("divNewPropertyRecorderOfficeSection").style.display = "none";
-      getElement("divTargetPrecedentActSectionTitle").style.display = "none";
-      getElement("divTargetPrecedentActSection").style.display = "none";
     } else if (getElement("cboPropertyTypeSelector").value == "actAppliesToOtherRecordingAct") {   // Recording act applies to another recording act
       getElement("divPrecedentActSection").style.display = "inline";
       getElement("divPhysicalRecordingSelectorTitle").style.display = "inline";
       getElement("divPhysicalRecordingSelector").style.display = "inline";
       getElement("divPrecedentRecordingSection").style.display = "inline";
       getElement("divNewPropertyRecorderOfficeSection").style.display = "none";
-      getElement("divTargetPrecedentActSectionTitle").style.display = "inline";
-      getElement("divTargetPrecedentActSection").style.display = "inline";
     } else if (getElement("cboPropertyTypeSelector").value == "actAppliesOnlyToSection") {   // Recording act only needs a district
       getElement("divPrecedentActSection").style.display = "none";
       getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
       getElement("divPrecedentRecordingSection").style.display = "none";
       getElement("divNewPropertyRecorderOfficeSection").style.display = "inline";
-      getElement("divTargetPrecedentActSectionTitle").style.display = "none";
-      getElement("divTargetPrecedentActSection").style.display = "none";
     } else {
       getElement("divPrecedentActSection").style.display = "none";
       getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
       getElement("divPhysicalRecordingSelector").style.display = "none";
       getElement("divPrecedentRecordingSection").style.display = "none";
       getElement("divNewPropertyRecorderOfficeSection").style.display = "none";
+    }
+    showTargetRecordingActSections();
+  }
+
+  // Represents the resource that was selected using the search box. Returns null if no resource was selected.
+  var _selectedResource = null;
+  function getSelectedResource() {
+    return _selectedResource;
+  }
+
+  function updateSelectedResource() {
+    var isResourceSelected = (!createAntecedentResource() && getElement("cboPrecedentProperty").value != '');
+
+    if (!isResourceSelected) {
+      _selectedResource = null;
+    } else if (isResourceSelected && _selectedResource == null) {
+      _selectedResource = getElement("cboPrecedentProperty").value;
+    } else if (isResourceSelected && _selectedResource != null) {
+      // TODO: && was changed
+      _selectedResource = getElement("cboPrecedentProperty").value;
+    }
+  }
+
+  function updateTargetPrecedentActsTable() {
+    var url = "../ajax/land.registration.system.data.aspx";
+    url += "?commandName=getTargetPrecedentActsTableCmd";
+    url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+    url += "&resourceId=" + getSelectedResource();
+
+    //var html = invokeAjaxMethod(false, url, null);
+
+    invokeAjaxComboItemsLoader(url, getElement("cboTemporalId"));
+
+    //getElement('tblTargetPrecedentActsTable').outerHTML = html;
+  }
+
+  // Represents the resource that was selected using the search box. Returns null if no resource was selected.
+  function createAntecedentResource() {
+    return (getElement("cboPrecedentRecording").value == "-1");
+  }
+
+  function showTargetRecordingActSections() {
+    var selectedResource = getSelectedResource();
+    var createResource = createAntecedentResource();
+
+    var applyTargetRecording = (getElement("cboPropertyTypeSelector").value == "actAppliesToOtherRecordingAct" && 
+                                (selectedResource != null || createResource));
+
+    if (!applyTargetRecording) {
       getElement("divTargetPrecedentActSectionTitle").style.display = "none";
+      getElement("divTargetPrecedentActTable").style.display = "none";
+      getElement("divTargetPrecedentActSection").style.display = "none";
+      return;
+    }
+    
+    if (createResource) {   // Allows to add the recording act to cancel or modify
+      getElement("divTargetPrecedentActSectionTitle").style.display = "inline";
+      getElement("divTargetPrecedentActTable").style.display = "none";
+      getElement("divTargetPrecedentActSection").style.display = "inline";
+    } else {                // Show a table to select the recording act to cancel or modify
+      updateTargetPrecedentActsTable();
+      getElement("divTargetPrecedentActSectionTitle").style.display = "inline";
+      getElement("divTargetPrecedentActTable").style.display = "inline";
       getElement("divTargetPrecedentActSection").style.display = "none";
     }
   }
@@ -817,13 +927,17 @@
               getComboOptionText(getElement('cboQuickAddBisRecordingTag')) + "\n";
       sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
     }
-    if (getElement('cboPropertyTypeSelector').value == 'actAppliesToOtherRecordingAct') {
+    if (getElement('cboPropertyTypeSelector').value == 'actAppliesToOtherRecordingAct') {      
       sMsg += "Acto jurídico a cancelar o modificar:\n\n";
-      sMsg += "Acto involucrado:\t" + getComboOptionText(getElement('cboTargetAct')) + "\n";
-      sMsg += "Registrado en:\t" + getComboOptionText(getElement('cboTargetActPhysicalBook')) + "\n" +
-              "\t\tpartida " + getElement('txtTargetActPhysicalRecordingNo').value +
-              getComboOptionText(getElement('cboTargetActRecordingSubNumber')) +
-              getComboOptionText(getElement('cboTargetActBisRecordingTag')) + "\n\n";
+      if (getElement('cboTemporalId').value != '') {
+        sMsg += "Acto involucrado:\t" + getComboOptionText(getElement('cboTemporalId')) + "\n";
+      } else {
+        sMsg += "Acto involucrado:\t" + getComboOptionText(getElement('cboTargetAct')) + "\n";
+        sMsg += "Registrado en:\t" + getComboOptionText(getElement('cboTargetActPhysicalBook')) + "\n" +
+                "\t\tpartida " + getElement('txtTargetActPhysicalRecordingNo').value +
+                getComboOptionText(getElement('cboTargetActRecordingSubNumber')) +
+                getComboOptionText(getElement('cboTargetActBisRecordingTag')) + "\n\n";
+      }
     }
 
     sMsg += "¿Registro este acto jurídico en el documento";
@@ -945,8 +1059,13 @@
   }
 
   function targetSelectedFromActsGrid() {
+    if (getElement('cboTemporalId').value != '') {
+      alert('La cancelación de actos ya inscritos con el sistema no está disponible.');
+      return false;
+      //return true;
+    }
     return false;
-  }
+  } 
 
   function cleanPartitionDataFields() {
     getElement("cboPropertyPartitionType").value = '';
@@ -1136,6 +1255,9 @@
     qs += "&precedentPropertyId=" + getElement('cboPrecedentProperty').value;
 
     // target act values
+    
+    qs += "&targetRecordingActId=" + getElement('cboTemporalId').value;
+
     qs += "&targetActTypeId=" + getElement('cboTargetAct').value;
     qs += "&targetActPhysicalBookId=" + getElement('cboTargetActPhysicalBook').value;
     qs += "&targetActRecordingId=" + getElement('cboTargetActRecording').value;

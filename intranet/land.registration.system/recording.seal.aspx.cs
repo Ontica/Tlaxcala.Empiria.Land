@@ -121,17 +121,20 @@ namespace Empiria.Web.UI.FSM {
       const string act00 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre un " +
                            "testamento no inscrito.<br/>";
       const string act01 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
-                           "predio con folio único {PROPERTY.UID}.<br/>";
+                           "predio con folio real electrónico {PROPERTY.UID}.<br/>";
       const string act02 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
-                           "totalidad del predio con folio único {PROPERTY.UID}.<br/>";
-      const string act03a = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la fracción " +
-                           "<b>{PARTITION.NUMBER}</b> del predio {PARTITION.OF}, misma a la " +
-                           "que se le asignó el folio único {PROPERTY.UID}.<br/>";
+                           "totalidad del predio con folio real electrónico {PROPERTY.UID}.<br/>";
+      const string act03a = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
+                           "fracción <b>{PARTITION.NUMBER}</b> del predio {PARTITION.OF}, misma a la " +
+                           "que se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
       const string act03b = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el lote " +
                            "<b>{PARTITION.NUMBER}</b> del predio {PARTITION.OF}, mismo al que " +
-                           "se le asignó el folio único {PROPERTY.UID}.<br/>";
+                           "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
       const string act04 = "{INDEX}.- {CANCELATION.ACT} {CANCELED.ACT.RECORDING}, " +
-                           "sobre el predio con folio único {PROPERTY.UID}.<br/>";
+                           "sobre el predio con folio real electrónico {PROPERTY.UID}.<br/>";
+      const string actSC = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> de " +
+                           "la {PROPERTY.KIND} denominada <b>{ASSOCIATION.NAME}</b>, con folio único {PROPERTY.UID}.<br/>";
+
       string html = String.Empty;
 
       int index = 0;
@@ -144,7 +147,10 @@ namespace Empiria.Web.UI.FSM {
 
         if (recordingAct.RecordingActType.Id == 2752) {
           x = act00.Replace("{INDEX}", index.ToString());
-
+        } else if (recordingAct.RecordingActType.Id == 2347) {
+          x = actSC.Replace("{INDEX}", index.ToString());
+          x = x.Replace("{ASSOCIATION.NAME}", property.Name);
+          x = x.Replace("{PROPERTY.KIND}", property.PropertyKind);
         } else if (recordingAct.RecordingActType.RecordingRule.IsCancelation) {
           RecordingAct amendmentOf = recordingAct.AmendmentOf;
 

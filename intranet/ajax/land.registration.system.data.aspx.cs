@@ -28,12 +28,18 @@ namespace Empiria.Web.UI.Ajax {
 
     protected override string ImplementsCommandRequest(string commandName) {
       switch (commandName) {
+        case "getTargetPrecedentActsTableCmd":
+          return GetTargetPrecedentActsTableCommandHandler();
         case "getDomainTraslativeSectionsCmd":
           return DomainTraslativeSectionsCommandHandler();
         case "getRecordingActTypesEditingCategoriesCmd":
           return RecordingActTypesEditingCategoriesCommandHandler();
         case "getRecordingActRule":
           return GetRecordingActRuleCommandHandler();
+        case "getTargetRecordingActTypesCmd":
+          return GetTargetRecordingActTypesCommandHandler();
+        case "getTargetRecordingSectionsCmd":
+          return GetTargetRecordingSectionsCommandHandler();
         case "getRecordingBooksStringArrayCmd":
           return GetRecordingBooksStringArrayCommandHandler();
         case "getDomainBooksStringArrayCmd":
@@ -102,6 +108,40 @@ namespace Empiria.Web.UI.Ajax {
           throw new WebPresentationException(WebPresentationException.Msg.UnrecognizedCommandName,
                                              commandName);
       }
+    }
+
+    private string GetTargetPrecedentActsTableCommandHandler() {
+      int recordingActTypeId = GetCommandParameter<int>("recordingActTypeId");
+      int resourceId = GetCommandParameter<int>("resourceId");
+      var recordingActType = RecordingActType.Parse(recordingActTypeId);
+      var resource = Property.Parse(resourceId);
+      
+      var appliesTo = recordingActType.GetAppliesToRecordingActTypesList();
+
+      var list = resource.GetRecordingActsTract();
+
+      return HtmlSelectContent.GetComboAjaxHtml<RecordingAct>(list, "Id", 
+                                (x)=> x.RecordingActType.DisplayName + " " + x.Document.UID + " " + 
+                                      x.Document.AuthorizationTime + " " + x.AmendedBy.Id + " " + x.StatusName,
+                                "( Seleccionar el acto jurídico )");
+      //return "<tr id='tblTargetPrecedentActsTable' class='totalsRow' style='display:inline'><td>&nbsp;</td><td colspan='5'>Hello world</td></tr>";
+    }
+
+    private string GetTargetRecordingSectionsCommandHandler() {
+      var list = RecordingActTypeCategory.GetList("RecordingActTypesCategories.List");
+
+      return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "Name", "( Tipo de acto jurídico )");
+    }
+
+    private string GetTargetRecordingActTypesCommandHandler() {
+      int id = GetCommandParameter<int>("recordingActTypeId");
+      var recordingActType = RecordingActType.Parse(id);
+
+      var list = recordingActType.GetAppliesToRecordingActTypesList();
+
+      return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "DisplayName",
+                                      recordingActType.IsCancelationType ? "( Acto jurídico a cancelar )" :
+                                                                           "( Acto jurídico a modificar )");
     }
 
     private string RecordingActTypesEditingCategoriesCommandHandler() {
@@ -173,7 +213,7 @@ namespace Empiria.Web.UI.Ajax {
       } else if (counter == 1) {
         return html;
       } else {
-        return HtmlSelectContent.GetComboAjaxHtmlItem("undefinedRule", "ERR: *REGLA NO DEFINIDA* ");
+        return HtmlSelectContent.GetComboAjaxHtmlItem("undefinedRule", "**REGLA NO DEFINIDA**");
       }
     }
 
@@ -191,7 +231,7 @@ namespace Empiria.Web.UI.Ajax {
 
       if (recordingProperties.Count == 0) {
         html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "Sin predios asociados");
-      } else if (recordingProperties.Count >= 0) {
+      } else if (recordingProperties.Count >= 2) {
         html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar el predio )");
       }
       foreach (Property property in recordingProperties) {

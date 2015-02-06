@@ -38,14 +38,20 @@ namespace Empiria.Web.UI.LRS {
           availableSizeUnitId: command.GetParameter<int>("partitionAvailableSizeUnitId", -1)
       );
 
-      var targetActInfo = new RecordingActInfo(
-        recordingActTypeId: command.GetParameter<int>("targetActTypeId", -1),
-        physicalBookId: command.GetParameter<int>("targetActPhysicalBookId", -1),
-        recordingId: command.GetParameter<int>("targetActRecordingId", -1),
-        recordingNo: command.GetParameter<int>("targetRecordingNumber", -1),
-        recordingSubNo: command.GetParameter<string>("targetRecordingSubNumber", String.Empty),
-        recordingSuffixTag: command.GetParameter<string>("targetRecordingSuffixTag", String.Empty)
-      );
+      RecordingActInfo targetActInfo;
+
+      if (command.GetParameter<int>("targetRecordingActId", -1) != -1) {
+        targetActInfo = new RecordingActInfo(command.GetParameter<int>("targetRecordingActId"));
+      } else {
+        targetActInfo = new RecordingActInfo(
+          recordingActTypeId: command.GetParameter<int>("targetActTypeId", -1),
+          physicalBookId: command.GetParameter<int>("targetActPhysicalBookId", -1),
+          recordingId: command.GetParameter<int>("targetActRecordingId", -1),
+          recordingNo: command.GetParameter<int>("targetRecordingNumber", -1),
+          recordingSubNo: command.GetParameter<string>("targetRecordingSubNumber", String.Empty),
+          recordingSuffixTag: command.GetParameter<string>("targetRecordingSuffixTag", String.Empty)
+        );
+      }
 
       return new RecordingTask(
          transactionId: command.GetParameter<int>("transactionId", -1),

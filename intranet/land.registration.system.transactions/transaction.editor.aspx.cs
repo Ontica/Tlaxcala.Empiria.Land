@@ -177,6 +177,17 @@ namespace Empiria.Web.UI.LRS {
       return true;
     }
 
+    protected bool IsStorable() {
+      if (transaction.Status == TransactionStatus.Payment) {
+        return IsEditable();
+      }
+      if (transaction.Status == TransactionStatus.Control &&
+          ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ControlDesk")) {
+        return true;
+      }
+      return false;
+    }
+
     protected bool IsReadyForReception() {
       if (!CanReceiveTransaction()) {
         return false;

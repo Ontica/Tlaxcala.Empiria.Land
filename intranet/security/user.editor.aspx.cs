@@ -11,6 +11,7 @@
 using System;
 
 using Empiria.Presentation.Web;
+using Empiria.Security;
 
 namespace Empiria.Web.UI.Security {
 
@@ -18,7 +19,7 @@ namespace Empiria.Web.UI.Security {
 
     #region Fields
 
-    protected Empiria.Security.EmpiriaUser user = null;
+    protected EmpiriaUser user = null;
     protected string grdEntitiesContents = String.Empty;
     protected bool canEditEntitiesGroup = false;
     protected string onDeleteButtonAttrs = String.Empty;
@@ -39,21 +40,12 @@ namespace Empiria.Web.UI.Security {
     }
 
     private void Initialize() {
-      throw new NotImplementedException("OOJJOO");
+      int userId = int.Parse(Request.QueryString["id"]);
+      Assertion.Assert(userId != 0, "userId should be greater than zero.");
 
-
-      //int userId = int.Parse(Request.QueryString["id"]);
-      //if (userId == 0) {
-      //  user = new Empiria.Security.EmpiriaUser();
-      //} else {
-      //  user = Empiria.Security.EmpiriaUser.Parse(userId);
-      //}
-      //if (userId == 0) {
-      //  base.Title = "Agregar Usuario";
-      //} else {
-      //  base.Title = "Editor de Usuarios";
-      //}
-      //SetEditorButtons();
+      user = EmpiriaUser.Parse(userId);
+      base.Title = "Editor de Usuarios";
+      SetEditorButtons();
     }
 
     private void ExecuteCommand() {
@@ -63,14 +55,14 @@ namespace Empiria.Web.UI.Security {
       switch (commandName) {
         case "acceptChangesCmd":
           if (ValidateObject()) {
-            SaveObject();
+            ChangePassword();
             base.RefreshParent = true;
             base.CloseWindow = true;
           }
           break;
         case "applyChangesCmd":
           if (ValidateObject()) {
-            SaveObject();
+            ChangePassword();
             Response.Redirect(Request.Url.PathAndQuery.Replace("id=0", "id=" + user.Id), true);
           }
           break;
@@ -174,21 +166,18 @@ namespace Empiria.Web.UI.Security {
       return xhtml.Replace("{COLUMN.DATA}", columnData);
     }
 
-    private void SaveObject() {
-      throw new NotImplementedException();
+    private void ChangePassword() {
+      if (!ValidateObject()) {
+        return;
+      }
+      Assertion.Assert(base.User.Id == -3 || base.User.Id == 155 || base.User.Id == 156 ||
+                       base.User.Id == 394 || base.User.Id == 3878, "Only system managers can change passwords.");
 
-      // TODO Changed Dec 8th, 2014
+      var apiKey = "48ebbebb-3409-4c91-a8b9-59fc269cfdec-717ae95719b3bcd064f193af448aaf7e20f8c780a4bcbb0ca4f0edd937ecde5e";
+      string userName = txtUserName.Value;
+      string password = txtNewPassword.Value;
 
-      //Empiria.Security.IEmpiriaPrincipal principal = Empiria.ExecutionServer.CurrentPrincipal;
-
-      //bool isForAppend = user.IsNew;
-      //user.UserName = txtUserName.Value;
-      //user.UITheme = "default";
-      //if (txtNewPassword.Value.Length != 0) {
-      //  user.SetPassword(txtNewPassword.Value, user.UserName);
-      //}
-      //user.IsActive = chkIsActive.Checked;
-
+      EmpiriaUser.ChangePassword(apiKey, userName, password);
     }
 
     private void DeleteObject() {

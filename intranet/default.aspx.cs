@@ -67,6 +67,7 @@ namespace Empiria.Web.UI {
 
       password = Cryptographer.Encrypt(EncryptionMode.EntropyHashCode, password, userName);
       password = Cryptographer.Decrypt(password, userName);
+
       //password = Cryptographer.GetMD5HashCode(Cryptographer.GetMD5HashCode(password) + entropy);
 
       return this.Controller.Logon(clientAppKey, userName, password, entropy, 1);

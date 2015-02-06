@@ -12,7 +12,9 @@ using System;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 using Empiria.Contacts;
+using Empiria.DataTypes;
 using Empiria.Documents;
 using Empiria.Documents.IO;
 using Empiria.Land.Registration;
@@ -261,7 +263,7 @@ namespace Empiria.Web.UI.LRS {
       DateTime toDate = EmpiriaString.ToDate(GetCommandParameter("toDate"));
 
       RecordingBook recordingBook = RecordingBook.Parse(recordingBookId);
-      recordingBook.RecordingsControlTimePeriod = new TimePeriod(fromDate, toDate);
+      recordingBook.RecordingsControlTimePeriod = new TimeFrame(fromDate, toDate);
       recordingBook.Save();
 
       base.SetOKScriptMsg("Las fechas de control del libro fueron actualizadas correctamente.");
@@ -282,7 +284,7 @@ namespace Empiria.Web.UI.LRS {
       RecordingSection sectionType = RecordingSection.Parse(recordingSectionTypeId);
 
       directory.CreateRecordingBook(sectionType, imagesCapturedBy, imagesReviewedBy,
-                                    controlRecordingsCount, new TimePeriod(fromDate, toDate));
+                                    controlRecordingsCount, new TimeFrame(fromDate, toDate));
 
       base.SetOKScriptMsg("El libro registral digitalizado en el directorio " + directory.DisplayName + "\\nfue creado correctamente.");
     }

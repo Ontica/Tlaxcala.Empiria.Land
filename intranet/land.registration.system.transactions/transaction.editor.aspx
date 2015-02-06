@@ -53,7 +53,7 @@
             <input type="hidden" id="txtTransactionKey" runat="server" />
           </td>
           <td class="lastCell" valign="top">
-            <% if (base.IsEditable()) { %>
+            <% if (base.IsEditable() || base.IsStorable()) { %>
               <input id="cmdSaveTransaction" class="button" type="button" value="Crear la solicitud" onclick="doOperation('saveTransaction')" style="height:28px;width:110px" runat="server" />
               <br />
             <% } %>
