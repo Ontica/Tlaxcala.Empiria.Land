@@ -113,15 +113,12 @@
                     <td>
                       <select id="cboRecordingType" name="cboRecordingType" class="selectBox" style="width:136px" title="" onchange="return updateUserInterface(this);" runat="server">
                         <option value="">( Seleccionar )</option>
+                        <option value="2410" title="oNotaryPublicDeed">Escritura pública</option>
                         <option value="2414" title="oNotaryOfficialLetter">Oficio de notaría</option>
-                        <option value="2412" title="oJudgeOfficialLetter">Oficio de juzgado</option>
+                        <option value="2412" title="oJudgeOfficialLetter">Documento de juzgado</option>
+                        <option value="2413" title="oPrivateContract">Documento de terceros</option>
                         <option value="2411" title="oEjidalSystemTitle">Título de propiedad</option>
-                        <option value="2408" title="oUnknownDocumentType">No determinado</option>
                       </select>
-                      <!--
-                      <option value="2413" title="oPrivateContract">Contrato privado</option>
-                      <option value="2410" title="oNotaryPublicDeed">Escritura pública</option>
-                      <option value="2415" title="oThirdPartyOfficialLetter">Oficio de terceros</option> !-->
                     </td>
                     <td class="lastCell">&nbsp;</td>
                   </tr>

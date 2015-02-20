@@ -29,19 +29,10 @@
             </select>
           </td>
           <td>
-            <span id="divNewPropertyRecorderOfficeSection" style="display:none">
-              Distrito donde se encuentra:
-              <select id="cboNewPropertyRecorderOffice" class="selectBox" style="width:164px" onchange="return updateUI(this);">
-                <option value="">( Seleccionar ) </option>
-                <option value="101">Hidalgo</option>
-                <option value="102">Cuauhtémoc</option>
-                <option value="103">Juárez</option>
-                <option value="104">Lardizábal y Uribe</option>
-                <option value="105">Morelos</option>
-                <option value="106">Ocampo</option>
-                <option value="107">Xicohténcatl</option>
-                <option value="108">Zaragoza</option>
-              </select>
+            <span id="divResourceName" >
+              Nombre:
+              <input id="txtResourceName" type="text" class="textBox" style="width:344px;margin-right:0px" maxlength="255" />
+              <br/>
             </span>
             <span id="divPrecedentActSection" style="display:none">
             <span id="divPropertyPartitionSection" style="display:none">
@@ -53,9 +44,9 @@
                 <option value="partial" title="Partial">la Fracción</option>
                 <option value="partialUnknown" title="Partial">la Fracción sin número</option>
                 <option value="last" title="Last">la Última Fracción</option>
-                <option value="lastUnknown" title="Last">la Última Fracción sin número</option>
+                <option value="lastUnknown" title="Last">la Última Fracción sin número</option>               
               </select>
-              <!--<option value="full" title="Full">el Lote</option> !-->
+              <!-- <option value="full" title="Full">el Lote</option> !-->
               <span id="divPartitionPartXofYSection" style="display:none">        
                 Número:
                 <input id="txtPropertyPartitionNo" type="text" class="textBox"
@@ -88,20 +79,21 @@
                   <option value="624" title="hectáreas">ha</option>
                 </select>disponibles.
                  <br/>
-                  <span style="color:red">IMPORTANTE</span>: Las fracciones <u><b style="color:red">SIEMPRE</b> generan un <b style="color:red">nuevo folio real</b></u>.<br />
-                  Los notarios a veces escriben la palabra "fracción" en las escrituras como una forma<br />
-                  de identificar al predio, pero eso <u>NO necesariamente</u> significa que se esté indicando en la<br />
-                  escritura que se haga una segregación o desmembración del predio original.<br />
-                  También es posible que dicha fracción ya haya sido previamente registrada en partidas o al margen, <br />
-                  o que se le haya creado folio real con el sistema, o bien, puede ser que su antecedente ni siquiera <br />
-                  esté registrado. En cualquiera de estos casos <u><b>NO SE DEBERÍA CREAR</b> una fracción.</u><br />
-                  Si tiene dudas acerca de si debe o no crear la fracción, por favor dirígase al área<br />
-                  jurídica o de soporte. Gracias.<br />
-              </span>
+                <span style="color:red">IMPORTANTE</span>: Las fracciones <u><b style="color:red">SIEMPRE</b> 
+                generan un <b style="color:red">nuevo folio real</b></u>.<br />
+                Los notarios a veces escriben la palabra "fracción" en las escrituras como una forma<br />
+                de identificar al predio, pero eso <u>NO necesariamente</u> significa que se esté indicando en la<br />
+                escritura que se haga una segregación o desmembración del predio original.<br />
+                También es posible que dicha fracción ya haya sido previamente registrada en partidas o al margen, <br />
+                o que se le haya creado folio real con el sistema, o bien, puede ser que su antecedente ni siquiera <br />
+                esté registrado. En cualquiera de estos casos <u><b>NO SE DEBERÍA CREAR</b> una fracción.</u><br />
+                Si tiene dudas acerca de si debe o no crear la fracción, por favor dirígase al área<br />
+                jurídica o de soporte. Gracias.<br />
+                </span>
               <br />
             </span>
             Buscar por folio:
-            <input id="txtDocumentKey" class="textBox" disabled="disabled" type="text" maxlength="18" style="width:136px" />
+            <input id="txtDocumentKey" type="text" class="textBox" maxlength="18" style="width:136px" />
             <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px"
                   onclick="doRecordingActEditorOperation('lookupProperty')" />
             <a href='javascript:doRecordingActEditorOperation("refreshPrecedentRecordingCombos")' class="button">Buscarlo o agregarlo en libros físicos</a>
@@ -309,30 +301,12 @@
             Inscrito(a) en:
             <select id="cboTargetActSection" class="selectBox" style="width:267px" title=""
                     onchange="return updateUI(this);">
-              <option value="">( Seleccionar ) </option>
-              <option value="(RecorderOfficeId = 101) AND (RecordingSectionId = 1052)">Hidalgo Sección Segunda</option>
-              <option value="(RecorderOfficeId = 102) AND (RecordingSectionId = 1052)">Cuauhtémoc Sección Segunda</option>
-              <option value="(RecorderOfficeId = 103) AND (RecordingSectionId = 1052)">Juárez Sección Segunda</option>
-              <option value="(RecorderOfficeId = 104) AND (RecordingSectionId = 1052)">Lardizábal y Uribe Sección Segunda</option>
-              <option value="(RecorderOfficeId = 105) AND (RecordingSectionId = 1052)">Morelos Sección Segunda</option>
-              <option value="(RecorderOfficeId = 106) AND (RecordingSectionId = 1052)">Ocampo Sección Segunda</option>
-              <option value="(RecorderOfficeId = 107) AND (RecordingSectionId = 1052)">Xicohténcatl  Sección Segunda</option>
-              <option value="(RecorderOfficeId = 108) AND (RecordingSectionId = 1052)">Zaragoza Sección Segunda</option>
-              <option value=""></option>
-              <option value="(RecorderOfficeId = 101) AND (RecordingSectionId = 1055)">Hidalgo Sección Quinta</option>
-              <option value="(RecorderOfficeId = 102) AND (RecordingSectionId = 1055)">Cuauhtémoc Sección Quinta</option>
-              <option value="(RecorderOfficeId = 103) AND (RecordingSectionId = 1055)">Juárez Sección Quinta</option>
-              <option value="(RecorderOfficeId = 104) AND (RecordingSectionId = 1055)">Lardizábal y Uribe Sección Quinta</option>
-              <option value="(RecorderOfficeId = 105) AND (RecordingSectionId = 1055)">Morelos Sección Quinta</option>
-              <option value="(RecorderOfficeId = 106) AND (RecordingSectionId = 1055)">Ocampo Sección Quinta</option>
-              <option value="(RecorderOfficeId = 107) AND (RecordingSectionId = 1055)">Xicohténcatl Sección Quinta</option>
-              <option value="(RecorderOfficeId = 108) AND (RecordingSectionId = 1055)">Zaragoza Sección Quinta</option>
-
+              <option value="">( Seleccionar acto jurídico a cancelar o modificar ) </option>
             </select>
           </td>
           <td class="lastCell">&nbsp;</td>
         </tr>
-        <tr>
+        <tr id="divTargetActBookAndRecording" style="display:none">
           <td colspan="2"></td>
           <td>Volumen:
             <select id="cboTargetActPhysicalBook" class="selectBox" style="width:291px" title=""
@@ -514,6 +488,8 @@
     url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
 
     invokeAjaxComboItemsLoader(url, getElement('cboTargetAct'));
+
+    resetTargetActSectionCombo();
   }
 
   function updateUI(oControl) {
@@ -530,6 +506,7 @@
     } else if (oControl == getElement("cboRecordingActType")) {
       setRecordingRule();
       resetPropertyTypeSelectorCombo();
+      showTargetRecordingActSections();
     } else if (oControl == getElement("cboPropertyTypeSelector")) {
       showPrecedentRecordingSection();
     } else if (oControl == getElement("cboPropertyPartitionType")) {
@@ -551,8 +528,10 @@
       showTargetRecordingActSections();
     } else if (oControl == getElement("cboTargetAct")) {
       resetTargetActSectionCombo();
+      showTargetRecordingActSections();
     } else if (oControl == getElement("cboTargetActSection")) {
       resetTargetActPhysicalBooksCombo();
+      showTargetRecordingActSections();
     } else if (oControl == getElement("cboTargetActPhysicalBook")) {
       resetTargetActRecordingsCombo();
     } else if (oControl == getElement("cboTargetActRecording")) {
@@ -561,13 +540,27 @@
   }
 
   function resetTargetActSectionCombo() {
-   // alert("resetTargetActSectionCombo");
+    var url = "../ajax/land.registration.system.data.aspx";
+    url += "?commandName=getTargetActSectionsStringArrayCmd";
+    if (getElement("cboTargetAct").value.length != 0) {
+      url += "&recordingActTypeId=" + getElement('cboTargetAct').value;
+    } else {
+      url += "&recordingActTypeId=-1";
+    }
+    invokeAjaxComboItemsLoader(url, getElement('cboTargetActSection'));
+
+    resetTargetActPhysicalBooksCombo();
+  }
+
+  function isSelectedTargetActSection() {
+    return getElement('cboTargetActSection').value != '' &&
+           getElement('cboTargetActSection').value != 'annotation';
   }
 
   function resetTargetActPhysicalBooksCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getDomainBooksStringArrayCmd";
-    if (getElement("cboTargetActSection").value.length != 0) {
+    if (isSelectedTargetActSection()) {
       url += "&sectionFilter=" + getElement('cboTargetActSection').value;
     }
     invokeAjaxComboItemsLoader(url, getElement('cboTargetActPhysicalBook'));
@@ -693,7 +686,6 @@
       url += "&sectionFilter=" + getElement('cboPrecedentRecordingSection').value;
     }
     invokeAjaxComboItemsLoader(url, getElement('cboPrecedentRecordingBook'));
-
     resetPrecedentRecordingsCombo();
   }
 
@@ -763,13 +755,13 @@
       getElement("divPhysicalRecordingSelectorTitle").style.display = "inline";
       getElement("divPhysicalRecordingSelector").style.display = "inline";
       getElement("divPrecedentRecordingSection").style.display = "inline";
-      getElement("divNewPropertyRecorderOfficeSection").style.display = "none";
+      getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
     } else if (getElement("cboPropertyTypeSelector").value == "createProperty") {   // New properties
       getElement("divPrecedentActSection").style.display = "none";
       getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
       getElement("divPhysicalRecordingSelector").style.display = "none";
       getElement("divPrecedentRecordingSection").style.display = "none";
-      getElement("divNewPropertyRecorderOfficeSection").style.display = "inline";
+      getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
     } else if (getElement("cboPropertyTypeSelector").value == "searchProperty") {   // Search by property number
 
     } else if (getElement("cboPropertyTypeSelector").value == "actNotApplyToProperty") {   // Recording act doesn't apply to properties
@@ -777,24 +769,24 @@
       getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
       getElement("divPhysicalRecordingSelector").style.display = "none";
       getElement("divPrecedentRecordingSection").style.display = "none";
-      getElement("divNewPropertyRecorderOfficeSection").style.display = "none";
+      getElement("divResourceName").style.display = "none";
     } else if (getElement("cboPropertyTypeSelector").value == "actAppliesToOtherRecordingAct") {   // Recording act applies to another recording act
       getElement("divPrecedentActSection").style.display = "inline";
       getElement("divPhysicalRecordingSelectorTitle").style.display = "inline";
       getElement("divPhysicalRecordingSelector").style.display = "inline";
       getElement("divPrecedentRecordingSection").style.display = "inline";
-      getElement("divNewPropertyRecorderOfficeSection").style.display = "none";
+      getElement("divResourceName").style.display = "none";
     } else if (getElement("cboPropertyTypeSelector").value == "actAppliesOnlyToSection") {   // Recording act only needs a district
       getElement("divPrecedentActSection").style.display = "none";
       getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
       getElement("divPrecedentRecordingSection").style.display = "none";
-      getElement("divNewPropertyRecorderOfficeSection").style.display = "inline";
+      getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
     } else {
       getElement("divPrecedentActSection").style.display = "none";
       getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
       getElement("divPhysicalRecordingSelector").style.display = "none";
       getElement("divPrecedentRecordingSection").style.display = "none";
-      getElement("divNewPropertyRecorderOfficeSection").style.display = "none";
+      getElement("divResourceName").style.display = "none";
     }
     showTargetRecordingActSections();
   }
@@ -824,11 +816,9 @@
     url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
     url += "&resourceId=" + getSelectedResource();
 
-    //var html = invokeAjaxMethod(false, url, null);
+    var html = invokeAjaxMethod(false, url, null);
 
-    invokeAjaxComboItemsLoader(url, getElement("cboTemporalId"));
-
-    //getElement('tblTargetPrecedentActsTable').outerHTML = html;
+    getElement('tblTargetPrecedentActsTable').innerHTML = html;
   }
 
   // Represents the resource that was selected using the search box. Returns null if no resource was selected.
@@ -859,6 +849,11 @@
       getElement("divTargetPrecedentActSectionTitle").style.display = "inline";
       getElement("divTargetPrecedentActTable").style.display = "inline";
       getElement("divTargetPrecedentActSection").style.display = "none";
+    }
+    if (isSelectedTargetActSection()) {
+      getElement("divTargetActBookAndRecording").style.display = "inline";
+    } else {
+      getElement("divTargetActBookAndRecording").style.display = "none";
     }
   }
 
@@ -901,8 +896,7 @@
     sMsg += "Acto jurídico que se registrará:\n\n";
     sMsg += "Acto jurídico:\t" + getComboOptionText(getElement('cboRecordingActType')) + "\n";
     if (getElement('cboPrecedentRecording').value.length == 0) {
-      sMsg += "Predio:\t\t" + "Predio sin antecedente registral" + "\n";
-      sMsg += "Distrito:\t\t" + getComboOptionText(getElement('cboNewPropertyRecorderOffice')) + "\n\n";
+      sMsg += "Predio:\t\t" + "Predio sin antecedente registral" + "\n\n";
     } else if (getElement('cboPrecedentRecording').value != "-1") {
       if (oCurrentRecordingRule.AllowsPartitions) {
         sMsg += "\t\tSobre " + getComboOptionText(getElement('cboPropertyPartitionType'));
@@ -933,10 +927,7 @@
         sMsg += "Acto involucrado:\t" + getComboOptionText(getElement('cboTemporalId')) + "\n";
       } else {
         sMsg += "Acto involucrado:\t" + getComboOptionText(getElement('cboTargetAct')) + "\n";
-        sMsg += "Registrado en:\t" + getComboOptionText(getElement('cboTargetActPhysicalBook')) + "\n" +
-                "\t\tpartida " + getElement('txtTargetActPhysicalRecordingNo').value +
-                getComboOptionText(getElement('cboTargetActRecordingSubNumber')) +
-                getComboOptionText(getElement('cboTargetActBisRecordingTag')) + "\n\n";
+        sMsg += "Registrado en:\t" + getTargetActPhysicalRecordingText() + "\n\n";
       }
     }
 
@@ -947,6 +938,16 @@
     }
     sMsg += "?";
     return confirm(sMsg);
+  }
+
+  function getTargetActPhysicalRecordingText() {
+    if (getElement('cboTargetActSection').value == "annotation") {
+      return "Al margen de la partida";
+    }
+    return getComboOptionText(getElement('cboTargetActPhysicalBook')) + "\n" +
+                              "\t\tpartida " + getElement('txtTargetActPhysicalRecordingNo').value +
+                              getComboOptionText(getElement('cboTargetActRecordingSubNumber')) +
+                              getComboOptionText(getElement('cboTargetActBisRecordingTag'));
   }
 
   function validateRecordingAct() {
@@ -968,17 +969,10 @@
       getElement('cboPropertyTypeSelector').focus();
       return false;
     }
-    if (getElement('cboPropertyTypeSelector').value == 'actAppliesOnlyToSection') {
-      if (getElement('cboNewPropertyRecorderOffice').value.length == 0) {
-        alert("Necesito conocer el distrito donde se inscribirá el acto jurídico de " + recordingAct + ".");
-        getElement('cboNewPropertyRecorderOffice').focus();
-        return false;
-      }
-    }
-    if (getElement('cboPropertyTypeSelector').value == 'createProperty' &&
-        getElement('cboNewPropertyRecorderOffice').value.length == 0) {
-      alert("Necesito conocer el distrito judicial al que pertenece el predio que va a registrarse por primera vez (no tiene antecedente registral).");
-      getElement('cboNewPropertyRecorderOffice').focus();
+    if (oCurrentRecordingRule.AskForResourceName &&
+        getElement('txtResourceName').value.length == 0) {
+      alert("Necesito se proporcione el nombre de la asociación o sociedad civil.");
+      getElement('txtResourceName').focus();
       return false;
     }
 
@@ -993,14 +987,6 @@
 
     if (getElement('cboPropertyTypeSelector').value == 'selectProperty') {    // Select precedent property
       if (!validatePrecedentRecording()) {
-        return false;
-      }
-    }
-
-    if (getElement('cboPropertyTypeSelector').value == 'actAppliesOnlyToSection') {
-      if (getElement('cboNewPropertyRecorderOffice').value.length == 0) {
-        alert("Necesito conocer el distrito donde se inscribirá el acto jurídico de " + recordingAct + ".");
-        getElement('cboNewPropertyRecorderOffice').focus();
         return false;
       }
     }
@@ -1032,6 +1018,12 @@
       alert("Necesito se seleccione el distrito y sección del volumen donde está inscrito el acto jurídico que se va a cancelar o modificar.");
       getElement('cboTargetActSection').focus();
       return false;
+    }
+    if (getElement('cboTargetActSection').value == "annotation") {
+      getElement('cboTargetActPhysicalBook').value = '';
+      getElement('cboTargetActRecording').value = '';
+      getElement('txtTargetActPhysicalRecordingNo').value = '';
+      return true;
     }
     if (getElement('cboTargetActPhysicalBook').value.length == 0) {
       alert("Necesito se seleccione el volumen donde se encuentra inscrito el acto jurídico que se va a cancelar o modificar.");
@@ -1246,16 +1238,15 @@
     qs += "&recordingActTypeCategoryId=" + getElement('cboRecordingActTypeCategory').value;
     qs += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
     qs += "&propertyType=" + getElement('cboPropertyTypeSelector').value;
-    qs += "&recorderOfficeId=" + getElement('cboNewPropertyRecorderOffice').value;
     qs += "&precedentRecordingBookId=" + getElement('cboPrecedentRecordingBook').value;
     qs += "&precedentRecordingId=" + getElement('cboPrecedentRecording').value;
     qs += "&quickAddRecordingNumber=" + getElement('txtQuickAddRecordingNumber').value;
     qs += "&quickAddRecordingSubNumber=" + getElement('cboQuickAddRecordingSubNumber').value;
     qs += "&quickAddRecordingSuffixTag=" + getElement('cboQuickAddBisRecordingTag').value;
     qs += "&precedentPropertyId=" + getElement('cboPrecedentProperty').value;
+    qs += "&resourceName=" + getElement('txtResourceName').value;
 
     // target act values
-    
     qs += "&targetRecordingActId=" + getElement('cboTemporalId').value;
 
     qs += "&targetActTypeId=" + getElement('cboTargetAct').value;
@@ -1297,7 +1288,7 @@
     } else {
       qs += "&partitionAvailableSizeUnitId=-1";
     }
-    //alert(qs);
+   // alert(qs);
     return qs;
   }
 
@@ -1308,5 +1299,8 @@
 
   initializeRecordingActEditor();
 
+  addEvent(getElement('txtDocumentKey'), 'keypress', upperCaseKeyFilter);
+  addEvent(getElement('txtResourceName'), 'keypress', upperCaseKeyFilter);
+  
   /* ]]> */
 </script>

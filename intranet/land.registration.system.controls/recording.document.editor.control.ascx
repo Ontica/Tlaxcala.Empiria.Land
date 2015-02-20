@@ -40,7 +40,7 @@
   </tr>
 </table>
 <table id="oNotaryPublicDeed" class="editionTable" style="display:none;" runat="server">
-    <tr>
+  <tr>
     <td>Ciudad:</td>
     <td>
       <select id="cboNotaryDocIssuePlace" class="selectBox" style="width:220px" title="" runat="server" >
@@ -125,11 +125,6 @@
         <option value='777'>Sentencia de patrimonio familiar</option>
         <option value='771'>Sentencia de usucapión</option>
       </select>
-      <!--
-        <option value='768'>Adjudicación por juicio mercantil</option>
-        <option value='773'>Decreto</option>
-        <option value='775'>Programa de Desarrollo Municipal</option>
-      !-->
     </td>
     <td>
       Expediente: &nbsp;
@@ -163,55 +158,57 @@
     </td>
   </tr>
 </table>
-
-<table id="oThirdPartyOfficialLetter" class="editionTable" style="display:none;" runat="server">
-
-</table>
 <table id="oPrivateContract" class="editionTable" style="display:none;" runat="server">
   <tr>
     <td>
-      Tipo de contrato:
+      Tipo de documento:
     </td>
     <td>
-      <select id="cboPrivateDocSubtype" class="selectBox" style="width:160px" title="" runat="server">
+      <select id="cboPrivateDocSubtype" class="selectBox" style="width:192px" title="" runat="server">
         <option value=''>( Seleccionar )</option>
-        <option value='760'>Capitulación matrimonial</option>
+        <option value='785'>Aclaración (corrección)</option>
         <option value='761'>Contrato de arrendamiento</option>
+        <option value='770'>Embargo</option>
+        <option value='765'>Fianza</option>
+        <option value='780'>Inmovilización de predio</option>
+      </select>
+      <!--
+        <option value='760'>Capitulación matrimonial</option>
         <option value='762'>Contrato de comodato</option>
         <option value='764'>Contrato de crédito hipotecario</option>
         <option value='767'>Contrato de crédito prendario</option>
         <option value='766'>Contrato Infonavit</option>
         <option value='763'>Contrato traslativo de dominio</option>
-        <option value='765'>Fianza</option>
-      </select>
+      !-->
     </td>
     <td>
-      Núm de contrato:
-      <input id="txtPrivateDocNumber" type="text" class="textBox" style="width:102px" title="" maxlength="32"  runat="server" />
+      Expedido por:
     </td>
-    <td class="lastCell">
-      Fecha del contrato:
-      <input id='txtPrivateDocIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgPrivateDocIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtPrivateDocIssueDate.ClientID%>'), getElement('imgPrivateDocIssueDate'));" title="Despliega el calendario" alt="" />
+    <td colspan="3" class="lastCell">
+      <select id="cboPrivateDocIssuedBy" class="selectBox" style="width:312px" title="" runat="server">
+        <option value="">( Primero seleccionar el tipo de documento )</option>
+      </select>
     </td>
   </tr>
   <tr>
    <td>
-      Ciudad:
+      Expedido en:
     </td>
     <td>
-      <select id="cboPrivateDocIssuePlace" class="selectBox" style="width:160px" title="" runat="server">
-      </select>
+    <select id="cboPrivateDocIssuePlace" class="selectBox" style="width:192px" title="" runat="server">
+    </select>
     </td>
     <td>
-      Certificó:
-      <select id="cboPrivateDocMainWitnessPosition" class="selectBox" style="width:148px" title="" runat="server">
-      </select>
+      No. documento:
+    </td>
+    <td>
+      <input id="txtPrivateDocNumber" type="text" class="textBox" style="width:122px" title="" maxlength="32" runat="server" />
+      <input type="button" class="button" value="S/N" style="width:26px;height:24px;vertical-align:middle;margin-left:-8px" onclick="getElement('<%=txtPrivateDocNumber.ClientID%>').value='S/N'" />
     </td>
     <td class="lastCell">
-      C.
-      <select id="cboPrivateDocMainWitness" class="selectBox" style="width:244px" title="" runat="server">
-      </select>
+      Fecha:
+      <input id='txtPrivateDocIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
+      <img id='imgPrivateDocIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtPrivateDocIssueDate.ClientID%>'), getElement('imgPrivateDocIssueDate'));" title="Despliega el calendario" alt="" />
     </td>
   </tr>
 </table>
@@ -389,34 +386,28 @@
       alert("Requiero se proporcione el tipo de documento.");
       return false;
     }
-    if (getElement("<%=cboPrivateDocIssuePlace.ClientID%>").value.length == 0) {
-      alert("Requiero conocer la ciudad donde se celebró el contrato.");
+    if (getElement("<%=cboPrivateDocIssuedBy.ClientID%>").value.length == 0) {
+      alert("Necesito conocer la entidad emisora del documento o contrato.")
       return false;
     }
-    if (getElement("<%=txtPrivateDocIssueDate.ClientID%>").value.length != 0) {
-      if (!isDate(getElement('<%=txtPrivateDocIssueDate.ClientID%>'))) {
-        alert("No reconozco la fecha de celebración del contrato.");
-        return false;
-      }
-      if (!isValidDatePeriod(getElement('<%=txtPrivateDocIssueDate.ClientID%>').value, presentationDate)) {
-        alert("La fecha del contrato no puede ser posterior a la fecha de presentación de la inscripción.");
-        return false;
-      }
-    } else {
-      if (!confirm("No se ha proporcionado la fecha de celebración del contrato.\n\n¿Se desconoce la fecha del contrato?")) {
-        return false;
-      }
+    if (getElement("<%=cboPrivateDocIssuePlace.ClientID%>").value.length == 0) {
+      alert("Requiero conocer la ciudad donde se expidió el documento o se celebró el contrato.");
+      return false;
+    }
+    if (getElement("<%=txtPrivateDocIssueDate.ClientID%>").value.length == 0) {
+      alert("Necesito se proporcione la fecha del documento o contrato.");
+      return false;
+    }
+    if (!isDate(getElement('<%=txtPrivateDocIssueDate.ClientID%>'))) {
+      alert("No reconozco la fecha del documento o celebración del contrato.");
+      return false;
+    }
+    if (!isValidDatePeriod(getElement('<%=txtPrivateDocIssueDate.ClientID%>').value, presentationDate)) {
+      alert("La fecha del documento no puede ser posterior a la fecha de presentación de la inscripción.");
+      return false;
     }
     if (getElement("<%=txtPrivateDocNumber.ClientID%>").value.length == 0) {
-      alert("Necesito se proporcione el número de contrato.")
-      return false;
-    }
-    if (getElement("<%=cboPrivateDocMainWitnessPosition.ClientID%>").value.length == 0) {
-      alert("Requiero conocer el cargo público del funcionario público que certificó el contrato.")
-      return false;
-    }
-    if (getElement("<%=cboPrivateDocMainWitness.ClientID%>").value.length == 0) {
-      alert("Requiero se seleccione el nombre del funcionario público que certificó el contrato.")
+      alert("Necesito se proporcione el número de documento o contrato.")
       return false;
     }
     return true;
@@ -427,7 +418,6 @@
     getElement("<%=oNotaryPublicDeed.ClientID%>").style.display = 'none';
     getElement("<%=oEjidalSystemTitle.ClientID%>").style.display = 'none';
     getElement("<%=oJudgeOfficialLetter.ClientID%>").style.display = 'none';
-    getElement("<%=oThirdPartyOfficialLetter.ClientID%>").style.display = 'none';
     getElement("<%=oPrivateContract.ClientID%>").style.display = 'none';
 
     if (documentTypeTag.length != 0) {
@@ -440,7 +430,6 @@
     disableControls(getElement("<%=oNotaryPublicDeed.ClientID%>"), disabledFlag);
     disableControls(getElement("<%=oEjidalSystemTitle.ClientID%>"), disabledFlag);
     disableControls(getElement("<%=oJudgeOfficialLetter.ClientID%>"), disabledFlag);
-    disableControls(getElement("<%=oThirdPartyOfficialLetter.ClientID%>"), disabledFlag);
     disableControls(getElement("<%=oPrivateContract.ClientID%>"), disabledFlag);
   }
 
@@ -477,12 +466,10 @@
         url += "&judicialOfficeId=" + getElement('<%=cboJudicialDocIssueOffice.ClientID%>').value;
         invokeAjaxComboItemsLoader(url, getElement('<%=cboJudicialDocIssuedBy.ClientID%>'));
         return;
-      case "oPrivateContract.IssuePlace":
-      case "oPrivateContract.MainWitnessPosition":
-        url += "?commandName=getWitnessInPositionStringArrayCmd";
-        url += "&placeId=" + getElement('<%=cboPrivateDocIssuePlace.ClientID%>').value;
-        url += "&positionId=" + getElement('<%=cboPrivateDocMainWitnessPosition.ClientID%>').value;
-        invokeAjaxComboItemsLoader(url, getElement('<%=cboPrivateDocMainWitness.ClientID%>'));
+      case "oPrivateContract.DocumentSubtype":
+        url += "?commandName=getIssueEntitiesForDocumentTypeStringArrayCmd";
+        url += "&documentTypeId=" + getElement('<%=cboPrivateDocSubtype.ClientID%>').value;
+        invokeAjaxComboItemsLoader(url, getElement('<%=cboPrivateDocIssuedBy.ClientID%>'));
         return;
       default:
         alert("La opción de actualización del UI '" + sourceName + "' no ha sido definida en el programa.")
@@ -492,19 +479,19 @@
 
   addEvent(getElement('<%=cboNotaryOfficialLetterIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oNotaryOfficialLetterRecording.IssuePlace") } );
   addEvent(getElement('<%=cboNotaryOfficialLetterIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oNotaryOfficialLetterRecording.IssueOffice") } );
-
   addEvent(getElement('<%=cboNotaryDocIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oNotaryPublicDeed.IssuePlace") } );
   addEvent(getElement('<%=cboNotaryDocIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oNotaryPublicDeed.IssueOffice") } );
 
   addEvent(getElement('<%=cboJudicialDocIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oJudgeOfficialLetter.IssuePlace") } );
-  addEvent(getElement('<%=cboJudicialDocIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oJudgeOfficialLetter.IssueOffice") } );
-  addEvent(getElement('<%=cboPrivateDocIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPrivateContract.IssuePlace") } );
-  addEvent(getElement('<%=cboPrivateDocMainWitnessPosition.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPrivateContract.MainWitnessPosition") } );
+  addEvent(getElement('<%=cboJudicialDocIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oJudgeOfficialLetter.IssueOffice") } ); 
   addEvent(getElement('<%=txtJudicialDocBook.ClientID%>'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('<%=txtJudicialDocNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
 
   addEvent(getElement('<%=txtPropTitleDocNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('<%=txtPropTitleStartSheet.ClientID%>'), 'keypress', upperCaseKeyFilter);
 
+  addEvent(getElement('<%=cboPrivateDocSubtype.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPrivateContract.DocumentSubtype") } );
+  addEvent(getElement('<%=txtPrivateDocNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
+  
   /* ]]> */
 </script>

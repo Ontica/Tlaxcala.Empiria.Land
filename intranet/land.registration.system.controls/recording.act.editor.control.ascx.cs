@@ -60,7 +60,7 @@ namespace Empiria.Web.UI.LRS {
          recordingActTypeId: command.GetParameter<int>("recordingActTypeId"),
          propertyType: (PropertyRecordingType) Enum.Parse(typeof(PropertyRecordingType),
                                                           command.GetParameter<string>("propertyType")),
-         recorderOfficeId: command.GetParameter<int>("recorderOfficeId", -1),
+         resourceName: command.GetParameter<string>("resourceName", String.Empty),
          precedentRecordingBookId: command.GetParameter<int>("precedentRecordingBookId", -1),
          precedentRecordingId: command.GetParameter<int>("precedentRecordingId", -1),
          precedentResourceId: command.GetParameter<int>("precedentPropertyId", -1),

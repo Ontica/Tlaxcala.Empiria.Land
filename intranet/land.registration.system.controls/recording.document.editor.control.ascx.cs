@@ -33,11 +33,8 @@ namespace Empiria.Web.UI.LRS {
         case "ObjectType.RecordingDocument.JudgeOfficialLetter":
           FillJudgeOfficialLetter(documentType);
           break;
-        case "ObjectType.RecordingDocument.ThirdPartyOfficialLetter":
-          FillThirdPartyOfficialLetter(documentType);
-          break;
         case "ObjectType.RecordingDocument.PrivateContract":
-          FillPrivateContractDocument(documentType);
+          FillPrivateDocument(documentType);
           break;
         case "ObjectType.RecordingDocument.EjidalSystemTitle":
           FillEjidalSystemTitle(documentType);
@@ -56,7 +53,6 @@ namespace Empiria.Web.UI.LRS {
       oNotaryPublicDeed.Style["display"] = "none";
       oEjidalSystemTitle.Style["display"] = "none";
       oJudgeOfficialLetter.Style["display"] = "none";
-      oThirdPartyOfficialLetter.Style["display"] = "none";
       oPrivateContract.Style["display"] = "none";
       LoadMainCombos();
       switch (documentType.Name) {
@@ -72,13 +68,9 @@ namespace Empiria.Web.UI.LRS {
           oJudgeOfficialLetter.Style["display"] = "inline";
           LoadJudgeOfficialLetter();
           return;
-        case "ObjectType.RecordingDocument.ThirdPartyOfficialLetter":
-          oThirdPartyOfficialLetter.Style["display"] = "inline";
-          LoadThirdPartyOfficialLetter();
-          return;
         case "ObjectType.RecordingDocument.PrivateContract":
           oPrivateContract.Style["display"] = "inline";
-          LoadPrivateContractDocument();
+          LoadPrivateDocument();
           return;
         case "ObjectType.RecordingDocument.EjidalSystemTitle":
           oEjidalSystemTitle.Style["display"] = "inline";
@@ -88,15 +80,6 @@ namespace Empiria.Web.UI.LRS {
           return;
       }
     }
-
-    private void FillThirdPartyOfficialLetter(RecordingDocumentType documentType) {
-      throw new NotImplementedException();
-    }
-
-    private void LoadThirdPartyOfficialLetter() {
-      throw new NotImplementedException();
-    }
-
 
     private void LoadMainCombos() {
       RecordingBook book = RecordingBook.Empty;
@@ -122,11 +105,8 @@ namespace Empiria.Web.UI.LRS {
       HtmlSelectContent.LoadCombo(this.cboPropTitleIssueOffice, office.GetPropertyTitleOffices(),
                                   "Id", "Alias", "( Seleccionar )");
 
-      GeneralList listType = GeneralList.Parse("PrivateContract.WitnessPosition.List");
-      FixedList<TypeAssociationInfo> witnessRoles =
-                  listType.GetItems<TypeAssociationInfo>((x, y) => x.DisplayName.CompareTo(y.DisplayName));
-      HtmlSelectContent.LoadCombo(this.cboPrivateDocMainWitnessPosition, witnessRoles,
-                                  "Id", "DisplayName", "( Seleccionar )");
+      //HtmlSelectContent.LoadCombo(this.cboPrivateDocIssuedBy, JudicialOffice.Parse(document.IssuedBy.Id).GetJudges(),
+      //                            "Id", "FullName", "( Seleccionar entidad )");
     }
 
     private void LoadNotaryOfficialLetter() {
@@ -159,14 +139,10 @@ namespace Empiria.Web.UI.LRS {
                                   "Id", "Number", "( Seleccionar )");
       cboJudicialDocIssueOffice.Value = document.IssueOffice.Id.ToString();
 
-      //if (document.IssueOffice is JudicialOffice) {
       HtmlSelectContent.LoadCombo(this.cboJudicialDocIssuedBy, JudicialOffice.Parse(document.IssueOffice.Id).GetJudges(),
                                   "Id", "FamilyFullName", "( C. Juez )");
-      //HtmlSelectContent.LoadCombo(this.cboJudicialDocIssuedBy, ((JudicialOffice) document.IssueOffice).GetJudges(),
-      //                            "Id", "FamilyFullName", "( C. Juez )", String.Empty, "No consta");
-      //} else {
-      //  HtmlSelectContent.LoadCombo(this.cboJudicialDocIssuedBy, "( C. Juez )", String.Empty, "No consta");
-      //}
+
+
       cboJudicialDocIssuedBy.Value = document.IssuedBy.Id.ToString();
 
       txtJudicialDocBook.Value = document.ExpedientNo;
@@ -204,26 +180,17 @@ namespace Empiria.Web.UI.LRS {
       }
     }
 
-    private void LoadPrivateContractDocument() {
+    private void LoadPrivateDocument() {
       RecordingDocument document = base.Document;
+
+      HtmlSelectContent.LoadCombo(this.cboPrivateDocIssuedBy, document.Subtype.IssuedByEntities,
+                                  "Id", "FullName", "( Documento expedido por )");
 
       cboPrivateDocSubtype.Value = document.Subtype.Id.ToString();
       cboPrivateDocIssuePlace.Value = document.IssuePlace.Id.ToString();
+      cboPrivateDocIssuedBy.Value = document.IssuedBy.Id.ToString();
       txtPrivateDocNumber.Value = document.Number;
-
-      var roleType = RoleType.Parse(document.ExtensionData.MainWitnessPosition.Id);
-
-      cboPrivateDocMainWitnessPosition.Value = roleType.Id.ToString();
-
-      if (document.ExtensionData.MainWitnessPosition.Id == -1) {
-        cboPrivateDocMainWitness.Items.Clear();
-        cboPrivateDocMainWitness.Items.Add(new ListItem("No consta o no se puede determinar", "-2"));
-      } else {
-        FixedList<Person> peopleInRoleList = roleType.GetActors<Person>(document.IssuePlace);
-        HtmlSelectContent.LoadCombo(this.cboPrivateDocMainWitness, peopleInRoleList, "Id", "FamilyFullName",
-                                    "( Seleccionar al C. Funcionario Público )");
-      }
-      cboPrivateDocMainWitness.Value = document.ExtensionData.MainWitness.Id.ToString();
+   
       if (document.IssueDate != ExecutionServer.DateMinValue) {
         txtPrivateDocIssueDate.Value = document.IssueDate.ToString("dd/MMM/yyyy");
       } else {
@@ -298,16 +265,15 @@ namespace Empiria.Web.UI.LRS {
       }
     }
 
-    private void FillPrivateContractDocument(RecordingDocumentType documentType) {
+    private void FillPrivateDocument(RecordingDocumentType documentType) {
       RecordingDocument document = base.Document;
 
       document.ChangeDocumentType(documentType);
 
       document.Subtype = LRSDocumentType.Parse(int.Parse(cboPrivateDocSubtype.Value));
       document.IssuePlace = GeographicRegion.Parse(int.Parse(cboPrivateDocIssuePlace.Value));
+      document.IssuedBy = Contact.Parse(int.Parse(Request.Form[cboPrivateDocIssuedBy.Name]));
       document.Number = txtPrivateDocNumber.Value;
-      document.ExtensionData.MainWitnessPosition = RoleType.Parse(Request.Form[cboPrivateDocMainWitnessPosition.Name]);
-      document.ExtensionData.MainWitness = Contact.Parse(int.Parse(Request.Form[cboPrivateDocMainWitness.Name]));
       if (txtPrivateDocIssueDate.Value.Length != 0) {
         document.IssueDate = EmpiriaString.ToDate(txtPrivateDocIssueDate.Value);
       } else {

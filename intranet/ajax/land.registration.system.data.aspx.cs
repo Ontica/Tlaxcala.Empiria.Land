@@ -30,12 +30,15 @@ namespace Empiria.Web.UI.Ajax {
       switch (commandName) {
         case "getTargetPrecedentActsTableCmd":
           return GetTargetPrecedentActsTableCommandHandler();
+        case "getTargetActSectionsStringArrayCmd":
+          return TargetActSectionsCommandHandler();
         case "getDomainTraslativeSectionsCmd":
           return DomainTraslativeSectionsCommandHandler();
         case "getRecordingActTypesEditingCategoriesCmd":
           return RecordingActTypesEditingCategoriesCommandHandler();
         case "getRecordingActRule":
           return GetRecordingActRuleCommandHandler();
+          
         case "getTargetRecordingActTypesCmd":
           return GetTargetRecordingActTypesCommandHandler();
         case "getTargetRecordingSectionsCmd":
@@ -60,6 +63,8 @@ namespace Empiria.Web.UI.Ajax {
           return GetCadastralOfficeMunicipalitiesComboCommandHandler();
         //case "getDirectoryImageURL":
         //  return GetDirectoryImageUrlCommandHandler();
+        case "getIssueEntitiesForDocumentTypeStringArrayCmd":
+          return GetIssueEntitiesForDocumentTypeCommandHandler();
         case "getJudgesInJudicialOfficeStringArrayCmd":
           return GetJudgesInJudicialOfficeStringArrayCommandHandler();
         case "getJudicialOfficeInPlaceStringArrayCmd":
@@ -108,6 +113,38 @@ namespace Empiria.Web.UI.Ajax {
           throw new WebPresentationException(WebPresentationException.Msg.UnrecognizedCommandName,
                                              commandName);
       }
+    }
+
+    private string GetIssueEntitiesForDocumentTypeCommandHandler() {
+      int documentTypeId = GetCommandParameter<int>("documentTypeId");
+
+      var documentType = LRSDocumentType.Parse(documentTypeId);
+
+      return HtmlSelectContent.GetComboAjaxHtml(documentType.IssuedByEntities, 0,
+                                                "Id", "FullName", "( Documento expedido por )");
+    }
+
+    private string TargetActSectionsCommandHandler() {
+      int recordingActTypeId = GetCommandParameter<int>("recordingActTypeId");
+      var recordingActType = RecordingActType.Parse(recordingActTypeId);
+
+      var section = recordingActType.RecordingRule.RecordingSection;
+
+      string html =HtmlSelectContent.GetComboAjaxHtmlItem("", "( Seleccionar el distrito y sección )");
+      if (recordingActType.RecordingRule.IsAnnotation) {
+        html += "|" + HtmlSelectContent.GetComboAjaxHtmlItem("annotation", "Registrado al margen");
+      }
+      if (section != RecordingSection.Empty && section.Id == 1051) {
+        var list = GeneralList.Parse("LRSDomainTraslativeSection.Combo.List");
+        html += "|" + HtmlSelectContent.GetComboAjaxHtml(list.GetItems<NameValuePair>(), 0,
+                                                         "Value", "Name");
+
+      } else if (section != RecordingSection.Empty && section.Id == 1052) {
+        var list = GeneralList.Parse("LRSLimitationSection.Combo.List");
+        html += "|" + HtmlSelectContent.GetComboAjaxHtml(list.GetItems<NameValuePair>(), 0,
+                                                         "Value", "Name");
+      }
+      return html;
     }
 
     private string GetTargetPrecedentActsTableCommandHandler() {
@@ -183,6 +220,7 @@ namespace Empiria.Web.UI.Ajax {
       int counter = 0;
 
       switch (rule.AppliesTo) {
+        case RecordingRuleApplication.Association:
         case RecordingRuleApplication.Property:
         case RecordingRuleApplication.Structure:
           if (rule.PropertyRecordingStatus == PropertyRecordingStatus.Unregistered ||
@@ -202,6 +240,10 @@ namespace Empiria.Web.UI.Ajax {
           break;
         case RecordingRuleApplication.RecordingAct:
           html += HtmlSelectContent.GetComboAjaxHtmlItem("actAppliesToOtherRecordingAct", "Ya registrado");
+          counter++;
+          break;
+        case RecordingRuleApplication.Document:
+          html += HtmlSelectContent.GetComboAjaxHtmlItem("actAppliesToDocument", "No es aplicable a predios");
           counter++;
           break;
         default:
@@ -811,10 +853,10 @@ namespace Empiria.Web.UI.Ajax {
 
       Recording recording = Recording.Parse(recordingId);
       RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
-      Property property = recordingAct.GetPropertyEvent(Property.Parse(propertyId)).Property;
+      Resource resource = recordingAct.GetPropertyEvent(Property.Parse(propertyId)).Resource;
 
       LandRegistrationException exception = null;
-      exception = LRSValidator.ValidateDeleteRecordingActProperty(recordingAct, property);
+      exception = LRSValidator.ValidateDeleteRecordingActProperty(recordingAct, resource);
 
       if (exception != null) {
         return exception.Message;
@@ -906,7 +948,6 @@ namespace Empiria.Web.UI.Ajax {
          recordingActTypeId: GetCommandParameter<int>("recordingActTypeId"),
          propertyType: (PropertyRecordingType) Enum.Parse(typeof(PropertyRecordingType),
                                                           GetCommandParameter<string>("propertyType")),
-         recorderOfficeId: GetCommandParameter<int>("recorderOfficeId", -1),
          precedentRecordingBookId: GetCommandParameter<int>("precedentRecordingBookId", -1),
          precedentRecordingId: GetCommandParameter<int>("precedentRecordingId", -1),
          precedentResourceId: GetCommandParameter<int>("precedentPropertyId", -1),

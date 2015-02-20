@@ -45,8 +45,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mono.Security">
-      <HintPath>E:\empiria.assemblies\Mono.Security.dll</HintPath>
+    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\empiria.assemblies\Mono.Security.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data">
       <HintPath>E:\empiria.assemblies\MySql.Data.dll</HintPath>

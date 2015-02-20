@@ -118,10 +118,49 @@ namespace Empiria.Web.UI.FSM {
     }
 
     protected string GetRecordingActsText() {
-      const string act00 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre un " +
-                           "testamento no inscrito.<br/>";
+      string html = String.Empty;
+
+      int index = 0;
+      foreach (RecordingAct recordingAct in recordingActs) {
+        index++;
+
+        switch (recordingAct.RecordingActType.RecordingRule.AppliesTo) {
+          case RecordingRuleApplication.Property:
+          case RecordingRuleApplication.RecordingAct:
+          case RecordingRuleApplication.Structure:
+            Resource resource = recordingAct.TractIndex[0].Resource;
+            Assertion.Assert(resource is Property,
+                             "Type mistmatch parsing property with id = " + resource.Id);
+            html += this.GetPropertyActText(recordingAct, (Property) resource, index);
+            break;
+          case RecordingRuleApplication.Association:
+            resource = recordingAct.TractIndex[0].Resource;
+            Assertion.Assert(resource is Association,
+                             "Type mistmatch parsing resource with id = " + resource.Id);
+            html += this.GetAssociationActText(recordingAct,
+                                              (Association) resource, index);
+            break;
+          case RecordingRuleApplication.Document:
+            html += this.GetDocumentActText(recordingAct, index);
+            break;
+          default:
+            throw new NotImplementedException("Undefined rule for recording acts text.");
+        }
+      }
+      return html;
+    }
+
+    private string GetDocumentActText(RecordingAct recordingAct, int index) {
+      const string act00 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b><br/>";
+
+      string x = act00.Replace("{INDEX}", index.ToString());
+
+      return x.Replace("{RECORDING.ACT}", recordingAct.DisplayName);
+    }
+
+    private string GetPropertyActText(RecordingAct recordingAct, Property property, int index) {
       const string act01 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
-                           "predio con folio real electrónico {PROPERTY.UID}.<br/>";
+                            "predio con folio real electrónico {PROPERTY.UID}.<br/>";
       const string act02 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
                            "totalidad del predio con folio real electrónico {PROPERTY.UID}.<br/>";
       const string act03a = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
@@ -132,78 +171,102 @@ namespace Empiria.Web.UI.FSM {
                            "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
       const string act04 = "{INDEX}.- {CANCELATION.ACT} {CANCELED.ACT.RECORDING}, " +
                            "sobre el predio con folio real electrónico {PROPERTY.UID}.<br/>";
-      const string actSC = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> de " +
-                           "la {PROPERTY.KIND} denominada <b>{ASSOCIATION.NAME}</b>, con folio único {PROPERTY.UID}.<br/>";
 
-      string html = String.Empty;
+      string x = String.Empty;
 
-      int index = 0;
-      foreach (RecordingAct recordingAct in recordingActs) {
-        index++;
+      if (recordingAct.RecordingActType.RecordingRule.IsModification || 
+          recordingAct.RecordingActType.RecordingRule.IsCancelation) {
+        RecordingAct amendmentOf = recordingAct.AmendmentOf;
 
-        string x = String.Empty;
+        x = act04.Replace("{INDEX}", index.ToString());
 
-        var property = recordingAct.TractIndex[0].Property;
-
-        if (recordingAct.RecordingActType.Id == 2752) {
-          x = act00.Replace("{INDEX}", index.ToString());
-        } else if (recordingAct.RecordingActType.Id == 2347) {
-          x = actSC.Replace("{INDEX}", index.ToString());
-          x = x.Replace("{ASSOCIATION.NAME}", property.Name);
-          x = x.Replace("{PROPERTY.KIND}", property.PropertyKind);
-        } else if (recordingAct.RecordingActType.RecordingRule.IsCancelation) {
-          RecordingAct amendmentOf = recordingAct.AmendmentOf;
-
-          x = act04.Replace("{INDEX}", index.ToString());
-
-          if (amendmentOf.RecordingActType.FemaleGenre) {
-            x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>CANCELACIÓN DE LA " +
-                          amendmentOf.RecordingActType.DisplayName + "</b> registrada en");
-          } else {
-            x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>CANCELACIÓN DEL " +
-                          amendmentOf.RecordingActType.DisplayName + "</b> registrado en");
-          }
-          if (recordingAct.AmendmentOf.PhysicalRecording.IsEmptyInstance) {
-            x = x.Replace("{CANCELED.ACT.RECORDING}", " el documento electrónico " +
-                          "<b>" + recordingAct.AmendmentOf.Document.UID + "</b>");
-          } else {
-            x = x.Replace("{CANCELED.ACT.RECORDING}", " la " +
-                          recordingAct.AmendmentOf.PhysicalRecording.AsText);
-          }
-        } else if (!recordingAct.RecordingActType.RecordingRule.AllowsPartitions) {
-          x = act01.Replace("{INDEX}", index.ToString());
-        } else if (property.IsPartitionOf.IsEmptyInstance) {
-          x = act02.Replace("{INDEX}", index.ToString());
+        if (recordingAct.RecordingActType.RecordingRule.IsModification && amendmentOf.RecordingActType.FemaleGenre) {
+          x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>MODIFICACIÓN DE LA " +
+                        amendmentOf.RecordingActType.DisplayName + "</b> registrada");
+        } else if (recordingAct.RecordingActType.RecordingRule.IsModification && !amendmentOf.RecordingActType.FemaleGenre) {
+          x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>MODIFICACIÓN DEL " +
+                        amendmentOf.RecordingActType.DisplayName + "</b> registrado");
+        } else if (recordingAct.RecordingActType.RecordingRule.IsCancelation && amendmentOf.RecordingActType.FemaleGenre) {
+          x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>CANCELACIÓN DE LA " +
+                        amendmentOf.RecordingActType.DisplayName + "</b> registrada");
         } else {
-          var partitionAntecedent = property.IsPartitionOf.GetDomainAntecedent(recordingAct);
-          var ante = property.IsPartitionOf.GetAntecedent(recordingAct);
-          var isLotification = (ante.RecordingActType.Id == 2374) || (partitionAntecedent.RecordingActType.Id == 2374);
-          if (isLotification) {
-            x = act03b.Replace("{INDEX}", index.ToString());
-            x = x.Replace("{PARTITION.NUMBER}", property.PartitionNo);
-          } else {
-            x = act03a.Replace("{INDEX}", index.ToString());
-            x = x.Replace("{PARTITION.NUMBER}", property.PartitionNo +
-                         (property.IsPartitionOf.MergedInto.Equals(property) ? " y última" : String.Empty));
-          }
-          x = x.Replace("{PARTITION.OF}", "<u>" + property.IsPartitionOf.UID + "</u>" +
-                        (!partitionAntecedent.PhysicalRecording.IsEmptyInstance ?
-                        " con antecedente de inscripción en " + partitionAntecedent.PhysicalRecording.AsText : String.Empty));
+          x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>CANCELACIÓN DEL " +
+                        amendmentOf.RecordingActType.DisplayName + "</b> registrado");
         }
-        x = x.Replace("{RECORDING.ACT}", recordingAct.RecordingActType.DisplayName);
-
-        var antecedent = property.GetDomainAntecedent(recordingAct);
-        if (property.IsPartitionOf.IsEmptyInstance && antecedent.Equals(InformationAct.Empty)) {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> sin antecedente registral");
-        } else if (!antecedent.PhysicalRecording.IsEmptyInstance) {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>" +
-                        ", con antecedente de inscripción en " + antecedent.PhysicalRecording.AsText);
+        if (recordingAct.AmendmentOf.PhysicalRecording.IsEmptyInstance) {
+          x = x.Replace("{CANCELED.ACT.RECORDING}", " bajo el documento " +
+                        "<b>" + recordingAct.AmendmentOf.Document.UID + "</b>");
         } else {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>");
+          x = x.Replace("{CANCELED.ACT.RECORDING}", " en la " +
+                        recordingAct.AmendmentOf.PhysicalRecording.AsText);
         }
-        html += x;
+      } else if (!recordingAct.RecordingActType.RecordingRule.AllowsPartitions) {
+        x = act01.Replace("{INDEX}", index.ToString());
+      } else if (property.IsPartitionOf.IsEmptyInstance) {
+        x = act02.Replace("{INDEX}", index.ToString());
+      } else {
+        var partitionAntecedent = property.IsPartitionOf.GetDomainAntecedent(recordingAct);
+        var ante = property.IsPartitionOf.GetAntecedent(recordingAct);
+        var isLotification = (ante.RecordingActType.Id == 2374) || (partitionAntecedent.RecordingActType.Id == 2374);
+        if (isLotification) {
+          x = act03b.Replace("{INDEX}", index.ToString());
+          x = x.Replace("{PARTITION.NUMBER}", property.PartitionNo);
+        } else {
+          x = act03a.Replace("{INDEX}", index.ToString());
+          x = x.Replace("{PARTITION.NUMBER}", property.PartitionNo +
+                       (property.IsPartitionOf.MergedInto.Equals(property) ? " y última" : String.Empty));
+        }
+        x = x.Replace("{PARTITION.OF}", "<u>" + property.IsPartitionOf.UID + "</u>" +
+                      (!partitionAntecedent.PhysicalRecording.IsEmptyInstance ?
+                      " con antecedente de inscripción en " + partitionAntecedent.PhysicalRecording.AsText : String.Empty));
       }
-      return html;
+      x = x.Replace("{RECORDING.ACT}", recordingAct.RecordingActType.DisplayName);
+
+      var antecedent = property.GetDomainAntecedent(recordingAct);
+      if (property.IsPartitionOf.IsEmptyInstance && antecedent.Equals(InformationAct.Empty)) {
+        x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> sin antecedente registral");
+      } else if (!antecedent.PhysicalRecording.IsEmptyInstance) {
+        x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>" +
+                      ", con antecedente de inscripción en " + antecedent.PhysicalRecording.AsText);
+      } else {
+        x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>");
+      }
+      return x;
+    }
+
+    private string GetAssociationActText(RecordingAct recordingAct, Association association, int index) {
+      const string actSC0 = "{INDEX}.- <b style='text-transform:uppercase'>CONSTITUCIÓN</b> de la {PROPERTY.KIND} " +
+                            "denominada <b>{ASSOCIATION.NAME}</b>, misma a la que se le asignó el folio único <b>{PROPERTY.UID}</b>.<br/>";
+      const string actSC1 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> de " +
+                            "la {PROPERTY.KIND} denominada <b>{ASSOCIATION.NAME}</b>, con folio único <b>{PROPERTY.UID}</b> y " +
+                            "antecedente de inscripción en {ANTECEDENT}.<br/>";
+
+      var antecedent = association.GetDomainAntecedent(recordingAct);
+      string x = String.Empty;
+      if (!antecedent.PhysicalRecording.IsEmptyInstance) {
+        x = actSC1.Replace("{INDEX}", index.ToString());
+        x = x.Replace("{RECORDING.ACT}", recordingAct.DisplayName);
+        x = x.Replace("{ANTECEDENT}", antecedent.PhysicalRecording.AsText);
+      } else {
+        x = actSC0.Replace("{INDEX}", index.ToString());
+      }
+      x = x.Replace("{PROPERTY.UID}", association.UID);
+      x = x.Replace("{ASSOCIATION.NAME}", association.Name);
+      x = x.Replace("{PROPERTY.KIND}", GetAssociationType(association));
+      
+      return x;
+    }
+
+    private string GetAssociationType(Association association) {
+      if (association.Name.EndsWith("S.C.") || association.Name.EndsWith("SC")) {
+        return "sociedad civil";
+      } else if (association.Name.EndsWith("A.C.") || association.Name.EndsWith("AC")) {
+        return "asociación civil";
+      } else if (association.Name.EndsWith("A.R.") || association.Name.EndsWith("AR")) {
+        return "asociación religiosa";
+      } else {
+        return "sociedad";
+      }
     }
 
     protected string GetRecordingsTextZac() {

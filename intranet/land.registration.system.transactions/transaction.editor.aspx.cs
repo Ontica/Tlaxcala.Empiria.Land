@@ -315,12 +315,14 @@ namespace Empiria.Web.UI.LRS {
 
     private void SaveTransaction() {
       bool isNew = transaction.IsNew;
-
-      transaction.RecorderOffice = RecorderOffice.Parse(int.Parse(cboRecorderOffice.Value));
-      if (txtReceiptTotal.Value.Length != 0 && txtReceiptNumber.Value.Length != 0) {
+ 
+      if (transaction.Status == TransactionStatus.Payment &&
+          txtReceiptTotal.Value.Length != 0 && 
+          txtReceiptNumber.Value.Length != 0) {
         decimal total = decimal.Parse(txtReceiptTotal.Value);
         transaction.AddPayment(txtReceiptNumber.Value, total);
       }
+      transaction.RecorderOffice = RecorderOffice.Parse(int.Parse(cboRecorderOffice.Value));
       transaction.DocumentDescriptor = txtDocumentNumber.Value;
       transaction.DocumentType = LRSDocumentType.Parse(int.Parse(cboDocumentType.Value));
       transaction.RequestedBy = txtRequestedBy.Value.Replace("\'\'", "\"").Replace("\'", "¿");
