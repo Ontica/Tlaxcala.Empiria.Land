@@ -60,15 +60,21 @@
           </td>
         </tr>
         <tr valign="top" style="font-size:8pt">
-          <td style="white-space:nowrap"><b>Sello digital:  &nbsp; &nbsp;</b><br />&nbsp;</td>
-          <td><%=Empiria.EmpiriaString.DivideLongString(GetDigitalSeal(), 92, "&#8203;")%></td>
-        </tr>
-        <tr valign="top" style="font-size:8pt">
-          <td style="font-size:8pt;vertical-align:middle;white-space:nowrap"><%=GetRecordingOfficialsInitials()%></td>
+          <td><b>Sello digital:</b><br />
+          <%=Empiria.EmpiriaString.DivideLongString(GetDigitalSeal(), 78, "&#8203;")%>
+          </td>
           <td align="right">
             <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.Document.UID%>" />
             <br />
             <span><%=transaction.Document.UID%></span>
+          </td>
+        </tr>
+        <tr valign="top" style="font-size:8pt">
+          <td colspan="2">
+            <br />
+            Documento, antecedentes y actos jurídicos revisados y registrados por:<br />
+            <b><%=GetRecordingOfficialsNames()%>.</b> Rúbrica.
+          <!--<%=GetRecordingOfficialsInitials()%>!-->
           </td>
         </tr>
       </table>

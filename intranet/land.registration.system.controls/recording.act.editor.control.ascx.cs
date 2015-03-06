@@ -27,7 +27,7 @@ namespace Empiria.Web.UI.LRS {
     private RecordingTask ParseRecordingTask() {
       Command command = base.GetCurrentCommand();
 
-      var partition = new PropertyPartition(
+      var partition = new PropertyPartition(command.GetParameter<String>("cadastralKey", String.Empty),
           partitionType: (PropertyPartitionType) Enum.Parse(typeof(PropertyPartitionType),
                                                             command.GetParameter<string>("partitionType", "None")),
           partitionNo: command.GetParameter<int>("partitionNo", 0),
@@ -60,6 +60,7 @@ namespace Empiria.Web.UI.LRS {
          recordingActTypeId: command.GetParameter<int>("recordingActTypeId"),
          propertyType: (PropertyRecordingType) Enum.Parse(typeof(PropertyRecordingType),
                                                           command.GetParameter<string>("propertyType")),
+         cadastralKey: command.GetParameter<string>("cadastralKey", String.Empty),
          resourceName: command.GetParameter<string>("resourceName", String.Empty),
          precedentRecordingBookId: command.GetParameter<int>("precedentRecordingBookId", -1),
          precedentRecordingId: command.GetParameter<int>("precedentRecordingId", -1),

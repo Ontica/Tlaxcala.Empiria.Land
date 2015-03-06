@@ -9,7 +9,9 @@
 *																																																						 *
 **************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 2009-2015. **/
 using System;
+using System.Collections.Generic;
 
+using Empiria.Contacts;
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
 
@@ -160,15 +162,15 @@ namespace Empiria.Web.UI.FSM {
 
     private string GetPropertyActText(RecordingAct recordingAct, Property property, int index) {
       const string act01 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
-                            "predio con folio real electrónico {PROPERTY.UID}.<br/>";
+                           "predio con folio real electrónico {PROPERTY.UID}.<br/>";
       const string act02 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
                            "totalidad del predio con folio real electrónico {PROPERTY.UID}.<br/>";
       const string act03a = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
-                           "fracción <b>{PARTITION.NUMBER}</b> del predio {PARTITION.OF}, misma a la " +
-                           "que se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
-      const string act03b = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el lote " +
-                           "<b>{PARTITION.NUMBER}</b> del predio {PARTITION.OF}, mismo al que " +
-                           "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
+                            "fracción <b>{PARTITION.NUMBER}</b> del predio {PARTITION.OF}, misma a la " +
+                            "que se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
+      const string act03b = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
+                            "<b>{PARTITION.NUMBER}</b> del predio {PARTITION.OF}, mismo al que " +
+                            "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
       const string act04 = "{INDEX}.- {CANCELATION.ACT} {CANCELED.ACT.RECORDING}, " +
                            "sobre el predio con folio real electrónico {PROPERTY.UID}.<br/>";
 
@@ -208,6 +210,7 @@ namespace Empiria.Web.UI.FSM {
         var partitionAntecedent = property.IsPartitionOf.GetDomainAntecedent(recordingAct);
         var ante = property.IsPartitionOf.GetAntecedent(recordingAct);
         var isLotification = (ante.RecordingActType.Id == 2374) || (partitionAntecedent.RecordingActType.Id == 2374);
+        isLotification = property.PartitionNo.StartsWith("Lote");
         if (isLotification) {
           x = act03b.Replace("{INDEX}", index.ToString());
           x = x.Replace("{PARTITION.NUMBER}", property.PartitionNo);
@@ -224,12 +227,28 @@ namespace Empiria.Web.UI.FSM {
 
       var antecedent = property.GetDomainAntecedent(recordingAct);
       if (property.IsPartitionOf.IsEmptyInstance && antecedent.Equals(InformationAct.Empty)) {
-        x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> sin antecedente registral");
+        if (property.CadastralKey.Length != 0) {
+          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> y clave catastral <b>" + 
+                                          property.CadastralKey + "</b> sin antecedente registral");
+        } else {
+          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> sin antecedente registral");
+        }
       } else if (!antecedent.PhysicalRecording.IsEmptyInstance) {
-        x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>" +
-                      ", con antecedente de inscripción en " + antecedent.PhysicalRecording.AsText);
+        if (property.CadastralKey.Length != 0) {
+          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> y clave catastral <b>" +
+                        property.CadastralKey + "</b>, con antecedente de inscripción en " + 
+                        antecedent.PhysicalRecording.AsText);
+        } else {
+          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>" +
+                        ", con antecedente de inscripción en " + antecedent.PhysicalRecording.AsText);
+        }
       } else {
-        x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>");
+        if (property.CadastralKey.Length != 0) {
+          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> y que corresponde a la clave catastral " +
+                        "<b>" + property.CadastralKey + "</b>");
+        } else {
+          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>");
+        }
       }
       return x;
     }
@@ -238,17 +257,22 @@ namespace Empiria.Web.UI.FSM {
       const string actSC0 = "{INDEX}.- <b style='text-transform:uppercase'>CONSTITUCIÓN</b> de la {PROPERTY.KIND} " +
                             "denominada <b>{ASSOCIATION.NAME}</b>, misma a la que se le asignó el folio único <b>{PROPERTY.UID}</b>.<br/>";
       const string actSC1 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> de " +
+                            "la {PROPERTY.KIND} denominada <b>{ASSOCIATION.NAME}</b>, con folio único <b>{PROPERTY.UID}</b>.<br/>";
+      const string actSC2 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> de " +
                             "la {PROPERTY.KIND} denominada <b>{ASSOCIATION.NAME}</b>, con folio único <b>{PROPERTY.UID}</b> y " +
                             "antecedente de inscripción en {ANTECEDENT}.<br/>";
 
       var antecedent = association.GetDomainAntecedent(recordingAct);
       string x = String.Empty;
-      if (!antecedent.PhysicalRecording.IsEmptyInstance) {
+      if (antecedent.Equals(InformationAct.Empty)) {
+        x = actSC0.Replace("{INDEX}", index.ToString());
+      } else if (antecedent.PhysicalRecording.IsEmptyInstance) {
         x = actSC1.Replace("{INDEX}", index.ToString());
         x = x.Replace("{RECORDING.ACT}", recordingAct.DisplayName);
-        x = x.Replace("{ANTECEDENT}", antecedent.PhysicalRecording.AsText);
       } else {
-        x = actSC0.Replace("{INDEX}", index.ToString());
+        x = actSC2.Replace("{INDEX}", index.ToString());
+        x = x.Replace("{RECORDING.ACT}", recordingAct.DisplayName);
+        x = x.Replace("{ANTECEDENT}", antecedent.PhysicalRecording.AsText);
       }
       x = x.Replace("{PROPERTY.UID}", association.UID);
       x = x.Replace("{ASSOCIATION.NAME}", association.Name);
@@ -278,21 +302,52 @@ namespace Empiria.Web.UI.FSM {
 
       return String.Empty;
     }
+    
+    protected string GetRecordingOfficialsNames() {
+      string temp = String.Empty;
+      foreach (Contact official in this.GetRecordingOfficials()) {
+        if (temp.Length != 0) {
+          temp += ", ";
+        }
+        temp += official.FullName;
+      }
+      return temp;
+    }
+
+    protected string GetRecordingOfficialsPositions() {
+      int officialsCount = this.GetRecordingOfficials().Count;
+
+      if (officialsCount > 1) {
+        return "Responsables del registro";
+      } else if (officialsCount == 1) {
+        return "Responsable del registro";
+      } else {
+        return String.Empty;
+      }
+    }
 
     protected string GetRecordingOfficialsInitials() {
       string temp = String.Empty;
+      foreach (Contact official in this.GetRecordingOfficials()) {
+        if (temp.Length != 0) {
+          temp += " ";
+        }
+        temp += official.Nickname;
+      }
+      return temp.Length != 0 ? "* " + temp : String.Empty;
+    }
+
+    protected List<Contact> GetRecordingOfficials() {
+      var recordingOfficials = new List<Contact>();
+
+      string temp = String.Empty;
 
       for (int i = 0; i < recordingActs.Count; i++) {
-        string initials = recordingActs[i].RegisteredBy.Nickname;
-        if (initials.Length == 0) {
-          continue;
-        }
-        if (!temp.Contains(initials)) {
-          temp += initials + " ";
+        if (!recordingOfficials.Contains(recordingActs[i].RegisteredBy)) {
+          recordingOfficials.Add(recordingActs[i].RegisteredBy);
         }
       }
-      temp = temp.Trim().ToLowerInvariant();
-      return temp.Length != 0 ? "* " + temp : String.Empty;
+      return recordingOfficials;
     }
 
     protected string GetRecordingPlaceAndDate() {

@@ -295,7 +295,7 @@ namespace Empiria.Web.UI.LRS {
       if (recording.RecordingActs.Count != 0) {
         cboProperty.Items.Add(new ListItem("( Seleccionar )", ""));
       }
-      foreach (Property property in recording.GetProperties()) {
+      foreach (Property property in recording.GetResources()) {
         var item = new ListItem(property.UID, property.Id.ToString());
         cboProperty.Items.Add(item);
       }

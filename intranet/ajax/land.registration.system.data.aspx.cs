@@ -38,7 +38,8 @@ namespace Empiria.Web.UI.Ajax {
           return RecordingActTypesEditingCategoriesCommandHandler();
         case "getRecordingActRule":
           return GetRecordingActRuleCommandHandler();
-          
+        case "lookupResource":
+          return GetResourceCommandHandler();
         case "getTargetRecordingActTypesCmd":
           return GetTargetRecordingActTypesCommandHandler();
         case "getTargetRecordingSectionsCmd":
@@ -115,6 +116,18 @@ namespace Empiria.Web.UI.Ajax {
       }
     }
 
+    private string GetResourceCommandHandler() {
+      string resourceUID = GetCommandParameter<string>("resourceUID");
+
+      var resource = Resource.TryParseWithUID(resourceUID);
+
+      if (resource != null) {
+        return new JsonObject() { new JsonItem("Id", resource.Id) }.ToString();
+      } else {
+        return new JsonObject() { new JsonItem("Id", -1) }.ToString();
+      }
+    }
+
     private string GetIssueEntitiesForDocumentTypeCommandHandler() {
       int documentTypeId = GetCommandParameter<int>("documentTypeId");
 
@@ -150,6 +163,7 @@ namespace Empiria.Web.UI.Ajax {
     private string GetTargetPrecedentActsTableCommandHandler() {
       int recordingActTypeId = GetCommandParameter<int>("recordingActTypeId");
       int resourceId = GetCommandParameter<int>("resourceId");
+
       var recordingActType = RecordingActType.Parse(recordingActTypeId);
       var resource = Property.Parse(resourceId);
       
@@ -157,9 +171,9 @@ namespace Empiria.Web.UI.Ajax {
 
       var list = resource.GetRecordingActsTract();
 
-      return HtmlSelectContent.GetComboAjaxHtml<RecordingAct>(list, "Id", 
-                                (x)=> x.RecordingActType.DisplayName + " " + x.Document.UID + " " + 
-                                      x.Document.AuthorizationTime + " " + x.AmendedBy.Id + " " + x.StatusName,
+      return HtmlSelectContent.GetComboAjaxHtml<RecordingAct>(list.FindAll((x) => appliesTo.Contains(x.RecordingActType)),
+                                "Id", (x)=> x.RecordingActType.DisplayName + " " + x.Document.UID + " " + 
+                                       x.Document.AuthorizationTime + " " + x.AmendedBy.Id + " " + x.StatusName,
                                 "( Seleccionar el acto jurídico )");
       //return "<tr id='tblTargetPrecedentActsTable' class='totalsRow' style='display:inline'><td>&nbsp;</td><td colspan='5'>Hello world</td></tr>";
     }
@@ -269,21 +283,21 @@ namespace Empiria.Web.UI.Ajax {
       var recording = Recording.Parse(recordingId);
       string html = String.Empty;
 
-      var recordingProperties = recording.GetProperties();
+      var recordingResources = recording.GetResources();
 
-      if (recordingProperties.Count == 0) {
+      if (recordingResources.Count == 0) {
         html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "Sin predios asociados");
-      } else if (recordingProperties.Count >= 2) {
+      } else if (recordingResources.Count >= 2) {
         html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar el predio )");
       }
-      foreach (Property property in recordingProperties) {
-        if (html.Contains(property.UID)) {
+      foreach (Resource resource in recordingResources) {
+        if (html.Contains(resource.UID)) {
           continue;
         }
         if (html.Length != 0) {
           html += "|";
         }
-        html += HtmlSelectContent.GetComboAjaxHtmlItem(property.Id.ToString(), property.UID);
+        html += HtmlSelectContent.GetComboAjaxHtmlItem(resource.Id.ToString(), resource.UID);
       }
       return html;
     }
@@ -297,6 +311,7 @@ namespace Empiria.Web.UI.Ajax {
       var recordingBook = RecordingBook.Parse(recordingBookId);
 
       var recordings = recordingBook.GetRecordings();
+
       return HtmlSelectContent.GetComboAjaxHtml(recordings, 0, "Id", "Number",
                                                 recordings.Count == 0 ? "(Libro vacío)" : "(Seleccionar)",
                                                 (true || recordingBook.IsAvailableForManualEditing) ? "Crear nueva" : "",

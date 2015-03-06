@@ -12,11 +12,11 @@
             </select>
           </td>
           <td>
-            <select id="cboRecordingActType" class="selectBox" style="width:306px" title=""
+            <select id="cboRecordingActType" class="selectBox" style="width:316px" title=""
                     onchange="return updateUI(this);">
               <option value="">( Primero seleccionar el tipo de acto jurídico )</option>
             </select>
-            <input type="button" value="Agregar acto" class="button" style="width:78px;height:28px;vertical-align:middle"
+            <input type="button" value="Agregar el acto jurídico" class="button" style="width:125px;height:28px;vertical-align:middle"
                    onclick='doRecordingActEditorOperation("appendRecordingAct")' />
           </td>
           <td class="lastCell">&nbsp;</td>
@@ -29,7 +29,7 @@
             </select>
           </td>
           <td>
-            <span id="divResourceName" >
+            <span id="divResourceName" style="display:none">
               Nombre:
               <input id="txtResourceName" type="text" class="textBox" style="width:344px;margin-right:0px" maxlength="255" />
               <br/>
@@ -41,12 +41,12 @@
                       onchange="return updateUI(this);">
                 <option value="" title="None">( Seleccionar )</option>
                 <option value="whole" title="None">la Totalidad</option>
+                <option value="full" title="Full">el Lote</option>
                 <option value="partial" title="Partial">la Fracción</option>
                 <option value="partialUnknown" title="Partial">la Fracción sin número</option>
                 <option value="last" title="Last">la Última Fracción</option>
                 <option value="lastUnknown" title="Last">la Última Fracción sin número</option>               
               </select>
-              <!-- <option value="full" title="Full">el Lote</option> !-->
               <span id="divPartitionPartXofYSection" style="display:none">        
                 Número:
                 <input id="txtPropertyPartitionNo" type="text" class="textBox"
@@ -93,10 +93,19 @@
               <br />
             </span>
             Buscar por folio:
-            <input id="txtDocumentKey" type="text" class="textBox" maxlength="18" style="width:136px" />
+            <input id="txtLookupResource" type="text" class="textBox" maxlength="19" style="width:146px" />
             <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px"
-                  onclick="doRecordingActEditorOperation('lookupProperty')" />
+                  onclick="doRecordingActEditorOperation('lookupResource')" />
             <a href='javascript:doRecordingActEditorOperation("refreshPrecedentRecordingCombos")' class="button">Buscarlo o agregarlo en libros físicos</a>
+            <br />
+            </span>
+            <span id="divCadastralInfo" style="display:none">
+              Clave catastral:
+              <input id="txtCadastralKey" type="text" class="textBox" style="width:230px;margin-right:0px" maxlength="38" />
+              &nbsp;
+              <input type="button" value="Vincular" class="button" style="width:68px;height:24px;vertical-align:middle"
+                   onclick='doRecordingActEditorOperation("getCadastralInfo")' />
+              <br/>
             </span>
           </td>
           <td class="lastCell">&nbsp;</td>
@@ -413,8 +422,10 @@
     switch (command) {
       case 'appendRecordingAct':
         return appendRecordingAct();
-      case 'lookupProperty':
-        return lookupProperty();
+      case 'lookupResource':
+        return lookupResource();
+      case 'getCadastralInfo':
+        return getCadastralInfo();
       case 'showPrecedentRecording':
         return showPrecedentRecording();
       case 'showPrecedentProperty':
@@ -429,9 +440,44 @@
     }
   }
 
-  function lookupProperty() {
-    alert("La búsqueda de predios todavía no está disponible... Gracias por su comprensión.");
-    return false;
+  var olookupResource = null;
+  function lookupResource() {
+    var url = "../ajax/land.registration.system.data.aspx";
+    url += "?commandName=lookupResource";
+    url += "&resourceUID=" + getElement("txtLookupResource").value;
+
+    olookupResource = invokeAjaxGetJsonObject(url);
+
+    if (olookupResource.Id == -1) {
+      _selectedResource = null;
+      alert("No existe ningún predio con el folio proporcionado.");
+      return false;
+    } else {
+      _selectedResource = olookupResource.Id;
+      alert("Predio encontrado.");
+      getElement("divPrecedentRecordingSection").style.display = 'none';
+      return true;
+    }
+  }
+
+  function getCadastralInfo() {
+    var cadastralKey = getElement('txtCadastralKey').value;
+
+    if (cadastralKey == '') {
+      alert("Requiero se proporcione la clave catastral del predio.");
+      return;
+    }
+    if (cadastralKey != '29014000100800380010' &&
+        cadastralKey != '29013000102380400010' &&
+        cadastralKey != '29005000107340380010' &&
+        cadastralKey != '290520001001A0350010' &&
+        cadastralKey != '290050001001A0030010') {
+      alert("La clave catastral proporcionada no ha sido registrada en el sistema de catastro.");
+      return;
+    }
+    var url = "http://catastro.azurewebsites.net";
+
+    createNewWindow(url);
   }
 
   function appendRecordingAct() {
@@ -619,12 +665,14 @@
       case '':
       case 'whole':
         getElement('divPartitionPartXofYSection').style.display = 'none';
+        getElement("divCadastralInfo").style.display = "none";
         break;
       case 'partial':
         getElement('divPartitionPartXofYSection').style.display = 'inline';
         getElement('txtPropertyPartitionNo').disabled = false;
         getElement('txtPropertyTotalPartitions').disabled = true;
         getElement('txtPropertyTotalPartitions').value = '?';
+        getElement("divCadastralInfo").style.display = "inline";
         break;
       case 'partialUnknown':
         getElement('divPartitionPartXofYSection').style.display = 'inline';
@@ -632,11 +680,13 @@
         getElement('txtPropertyTotalPartitions').disabled = true;
         getElement('txtPropertyPartitionNo').value = '?';
         getElement('txtPropertyTotalPartitions').value = '?';
+        getElement("divCadastralInfo").style.display = "inline";
         break;
       case 'last':
         getElement('divPartitionPartXofYSection').style.display = 'inline';
         getElement('txtPropertyPartitionNo').disabled = false;
         getElement('txtPropertyTotalPartitions').disabled = true;
+        getElement("divCadastralInfo").style.display = "inline";
         break;
       case 'lastUnknown':
         getElement('divPartitionPartXofYSection').style.display = 'inline';
@@ -644,18 +694,19 @@
         getElement('txtPropertyTotalPartitions').disabled = true;
         getElement('txtPropertyPartitionNo').value = '?';
         getElement('txtPropertyTotalPartitions').value = '?';
+        getElement("divCadastralInfo").style.display = "inline";
         break;
       case 'full':
         getElement('divPartitionPartXofYSection').style.display = 'inline';
         getElement('txtPropertyPartitionNo').disabled = false;
         getElement('txtPropertyTotalPartitions').disabled = false;
+        getElement("divCadastralInfo").style.display = "inline";
         break;
     }
   }
 
   function showPrecedentPropertiesSection() {
     var selectedValue = getElement('cboPrecedentRecording').value;
-
     if (selectedValue != "-1") {
       resetPrecedentPropertiesCombo();
       getElement('divRecordingQuickAddSection').style.display = 'none';
@@ -756,12 +807,14 @@
       getElement("divPhysicalRecordingSelector").style.display = "inline";
       getElement("divPrecedentRecordingSection").style.display = "inline";
       getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
+      getElement("divCadastralInfo").style.display = "none";
     } else if (getElement("cboPropertyTypeSelector").value == "createProperty") {   // New properties
       getElement("divPrecedentActSection").style.display = "none";
       getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
       getElement("divPhysicalRecordingSelector").style.display = "none";
       getElement("divPrecedentRecordingSection").style.display = "none";
       getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
+      getElement("divCadastralInfo").style.display = oCurrentRecordingRule.AskForResourceName ? "none" : "inline";
     } else if (getElement("cboPropertyTypeSelector").value == "searchProperty") {   // Search by property number
 
     } else if (getElement("cboPropertyTypeSelector").value == "actNotApplyToProperty") {   // Recording act doesn't apply to properties
@@ -770,23 +823,27 @@
       getElement("divPhysicalRecordingSelector").style.display = "none";
       getElement("divPrecedentRecordingSection").style.display = "none";
       getElement("divResourceName").style.display = "none";
+      getElement("divCadastralInfo").style.display = "none";
     } else if (getElement("cboPropertyTypeSelector").value == "actAppliesToOtherRecordingAct") {   // Recording act applies to another recording act
       getElement("divPrecedentActSection").style.display = "inline";
       getElement("divPhysicalRecordingSelectorTitle").style.display = "inline";
       getElement("divPhysicalRecordingSelector").style.display = "inline";
       getElement("divPrecedentRecordingSection").style.display = "inline";
       getElement("divResourceName").style.display = "none";
+      getElement("divCadastralInfo").style.display = "none";
     } else if (getElement("cboPropertyTypeSelector").value == "actAppliesOnlyToSection") {   // Recording act only needs a district
       getElement("divPrecedentActSection").style.display = "none";
       getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
       getElement("divPrecedentRecordingSection").style.display = "none";
       getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
+      getElement("divCadastralInfo").style.display = "none";
     } else {
       getElement("divPrecedentActSection").style.display = "none";
       getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
       getElement("divPhysicalRecordingSelector").style.display = "none";
       getElement("divPrecedentRecordingSection").style.display = "none";
       getElement("divResourceName").style.display = "none";
+      getElement("divCadastralInfo").style.display = "none";
     }
     showTargetRecordingActSections();
   }
@@ -816,9 +873,10 @@
     url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
     url += "&resourceId=" + getSelectedResource();
 
-    var html = invokeAjaxMethod(false, url, null);
+    invokeAjaxComboItemsLoader(url, getElement("cboTemporalId"));
 
-    getElement('tblTargetPrecedentActsTable').innerHTML = html;
+    //var html = invokeAjaxMethod(false, url, null);
+    //getElement('tblTargetPrecedentActsTable').innerHTML = html;
   }
 
   // Represents the resource that was selected using the search box. Returns null if no resource was selected.
@@ -831,7 +889,8 @@
     var createResource = createAntecedentResource();
 
     var applyTargetRecording = (getElement("cboPropertyTypeSelector").value == "actAppliesToOtherRecordingAct" && 
-                                (selectedResource != null || createResource));
+                               (selectedResource != null || createResource));
+
 
     if (!applyTargetRecording) {
       getElement("divTargetPrecedentActSectionTitle").style.display = "none";
@@ -895,27 +954,16 @@
 
     sMsg += "Acto jurídico que se registrará:\n\n";
     sMsg += "Acto jurídico:\t" + getComboOptionText(getElement('cboRecordingActType')) + "\n";
-    if (getElement('cboPrecedentRecording').value.length == 0) {
-      sMsg += "Predio:\t\t" + "Predio sin antecedente registral" + "\n\n";
+    if (getSelectedResource() == null) {
+      sMsg += "Predio:\t\t" + "Predio sin antecedente registral" + "\n";
+      sMsg += "Clave catastral:\t" + getElement('txtCadastralKey').value + "\n\n";
     } else if (getElement('cboPrecedentRecording').value != "-1") {
-      if (oCurrentRecordingRule.AllowsPartitions) {
-        sMsg += "\t\tSobre " + getComboOptionText(getElement('cboPropertyPartitionType'));
-        if (getElement("txtPropertyPartitionNo").value.length != 0) {
-          sMsg += " número " + getElement("txtPropertyPartitionNo").value + " de " + getElement("txtPropertyTotalPartitions").value;
-        }
-        sMsg += "\n";
-      }
-      sMsg += "Predio:\t\t" + getComboOptionText(getElement('cboPrecedentProperty')) + "\n";
+      sMsg += getPartitionText();
+      sMsg += "Predio:\t\t" + getSelectedResourceText() + "\n";
       sMsg += "Antecedente en:\t" + "Partida " + getComboOptionText(getElement('cboPrecedentRecording')) + "\n";
       sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
     } else {
-      if (oCurrentRecordingRule.AllowsPartitions) {
-        sMsg += "\t\tSobre " + getComboOptionText(getElement('cboPropertyPartitionType'));
-        if (getElement("txtPropertyPartitionNo").value.length != 0) {
-          sMsg += " número " + getElement("txtPropertyPartitionNo").value + " de " + getElement("txtPropertyTotalPartitions").value;
-        }
-        sMsg += "\n\n";
-      }
+      sMsg += getPartitionText();
       sMsg += "Antecedente:\t" + "Crear folio único en partida " + getElement('txtQuickAddRecordingNumber').value +
               getComboOptionText(getElement('cboQuickAddRecordingSubNumber')) +
               getComboOptionText(getElement('cboQuickAddBisRecordingTag')) + "\n";
@@ -938,6 +986,29 @@
     }
     sMsg += "?";
     return confirm(sMsg);
+  }
+
+  function getPartitionText() {
+    var sMsg = '';
+    if (oCurrentRecordingRule.AllowsPartitions) {
+      sMsg += "\t\tSobre " + getComboOptionText(getElement('cboPropertyPartitionType'));
+      if (getElement("txtPropertyPartitionNo").value.length != 0) {
+        sMsg += " número " + getElement("txtPropertyPartitionNo").value + " de " + getElement("txtPropertyTotalPartitions").value;
+      }
+      sMsg += "\n\n";
+    }
+    return sMsg;
+  }
+
+  function getSelectedResourceText() {
+    if (getSelectedResource() != null) {
+      if (getElement('cboPrecedentProperty').value != '') {
+        return getComboOptionText(getElement('cboPrecedentProperty'));
+      } else {
+        return getElement('txtLookupResource').value;
+      }
+    }
+    return "Predio no reconocido";
   }
 
   function getTargetActPhysicalRecordingText() {
@@ -1052,9 +1123,9 @@
 
   function targetSelectedFromActsGrid() {
     if (getElement('cboTemporalId').value != '') {
-      alert('La cancelación de actos ya inscritos con el sistema no está disponible.');
-      return false;
-      //return true;
+      //alert('La cancelación de actos ya inscritos con el sistema no está disponible.');
+      //return false;
+      return true;
     }
     return false;
   } 
@@ -1070,6 +1141,9 @@
   }
 
   function validatePrecedentRecording() {
+    if (getSelectedResource() != null) {
+      return true;
+    }
     var recordingAct = getComboOptionText(getElement('cboRecordingActType'));
 
     if (getElement('cboPrecedentRecordingSection').value.length == 0) {
@@ -1238,12 +1312,17 @@
     qs += "&recordingActTypeCategoryId=" + getElement('cboRecordingActTypeCategory').value;
     qs += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
     qs += "&propertyType=" + getElement('cboPropertyTypeSelector').value;
+    qs += "&cadastralKey=" + getElement('txtCadastralKey').value;
     qs += "&precedentRecordingBookId=" + getElement('cboPrecedentRecordingBook').value;
     qs += "&precedentRecordingId=" + getElement('cboPrecedentRecording').value;
     qs += "&quickAddRecordingNumber=" + getElement('txtQuickAddRecordingNumber').value;
     qs += "&quickAddRecordingSubNumber=" + getElement('cboQuickAddRecordingSubNumber').value;
     qs += "&quickAddRecordingSuffixTag=" + getElement('cboQuickAddBisRecordingTag').value;
-    qs += "&precedentPropertyId=" + getElement('cboPrecedentProperty').value;
+    if (getSelectedResource() != null) {
+      qs += "&precedentPropertyId=" + getSelectedResource();
+    } else {
+      qs += "&precedentPropertyId=" + getElement('cboPrecedentProperty').value;
+    }
     qs += "&resourceName=" + getElement('txtResourceName').value;
 
     // target act values
@@ -1299,8 +1378,9 @@
 
   initializeRecordingActEditor();
 
-  addEvent(getElement('txtDocumentKey'), 'keypress', upperCaseKeyFilter);
+  addEvent(getElement('txtLookupResource'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('txtResourceName'), 'keypress', upperCaseKeyFilter);
   
+
   /* ]]> */
 </script>
