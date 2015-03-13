@@ -94,7 +94,7 @@ namespace Empiria.Web.UI.FSM {
     }
 
     protected string GetDocumentDescriptionText() {
-      if (transaction.Document.Notes.Length > 100) {
+      if (transaction.Document.Notes.Length > 30) {
         return "DESCRIPCIÓN:<br />" + transaction.Document.Notes + "<br /><br />";
       } else {
         return String.Empty;
@@ -166,10 +166,16 @@ namespace Empiria.Web.UI.FSM {
       const string act02 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
                            "totalidad del predio con folio real electrónico {PROPERTY.UID}.<br/>";
       const string act03a = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
-                            "fracción <b>{PARTITION.NUMBER}</b> del predio {PARTITION.OF}, misma a la " +
+                            "fracción <b>{PARTITION.NUMBER}</b> del predio con folio real {PARTITION.OF}, misma a la " +
                             "que se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
-      const string act03b = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
-                            "<b>{PARTITION.NUMBER}</b> del predio {PARTITION.OF}, mismo al que " +
+      const string act03Lot = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
+                            "<b>{PARTITION.NUMBER}</b> de la lotificación con folio real {PARTITION.OF}, mismo al que " +
+                            "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
+      const string act03Apartment = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
+                            "<b>{PARTITION.NUMBER}</b> del condominio con folio real {PARTITION.OF}, mismo a la que " +
+                            "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
+      const string act03House = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
+                            "<b>{PARTITION.NUMBER}</b> del fraccionamiento con folio real {PARTITION.OF}, misma a la que " +
                             "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
       const string act04 = "{INDEX}.- {CANCELATION.ACT} {CANCELED.ACT.RECORDING}, " +
                            "sobre el predio con folio real electrónico {PROPERTY.UID}.<br/>";
@@ -209,11 +215,26 @@ namespace Empiria.Web.UI.FSM {
       } else {
         var partitionAntecedent = property.IsPartitionOf.GetDomainAntecedent(recordingAct);
         var ante = property.IsPartitionOf.GetAntecedent(recordingAct);
-        var isLotification = (ante.RecordingActType.Id == 2374) || (partitionAntecedent.RecordingActType.Id == 2374);
-        isLotification = property.PartitionNo.StartsWith("Lote");
-        if (isLotification) {
-          x = act03b.Replace("{INDEX}", index.ToString());
+        //var isLotification = (ante.RecordingActType.Id == 2374) || (partitionAntecedent.RecordingActType.Id == 2374);
+        //isLotification = ;
+        if (property.PartitionNo.StartsWith("Lote")) {
+          x = act03Lot.Replace("{INDEX}", index.ToString());
           x = x.Replace("{PARTITION.NUMBER}", property.PartitionNo);
+          if (recordingAct.RecordingActType.IsDomainActType) {
+            x = x.Replace("sobre el", "del");
+          }
+        } else if (property.PartitionNo.StartsWith("Casa")) {
+          x = act03House.Replace("{INDEX}", index.ToString());
+          x = x.Replace("{PARTITION.NUMBER}", property.PartitionNo);
+          if (recordingAct.RecordingActType.IsDomainActType) {
+            x = x.Replace("sobre la", "de la");
+          }
+        } else if (property.PartitionNo.StartsWith("Departamento")) {
+          x = act03Apartment.Replace("{INDEX}", index.ToString());
+          x = x.Replace("{PARTITION.NUMBER}", property.PartitionNo);
+          if (recordingAct.RecordingActType.IsDomainActType) {
+            x = x.Replace("sobre el", "del");
+          }
         } else {
           x = act03a.Replace("{INDEX}", index.ToString());
           x = x.Replace("{PARTITION.NUMBER}", property.PartitionNo +
@@ -221,7 +242,7 @@ namespace Empiria.Web.UI.FSM {
         }
         x = x.Replace("{PARTITION.OF}", "<u>" + property.IsPartitionOf.UID + "</u>" +
                       (!partitionAntecedent.PhysicalRecording.IsEmptyInstance ?
-                      " con antecedente de inscripción en " + partitionAntecedent.PhysicalRecording.AsText : String.Empty));
+                      " y antecedente de inscripción en " + partitionAntecedent.PhysicalRecording.AsText : String.Empty));
       }
       x = x.Replace("{RECORDING.ACT}", recordingAct.RecordingActType.DisplayName);
 

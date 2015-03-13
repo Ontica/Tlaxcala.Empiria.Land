@@ -30,6 +30,8 @@ namespace Empiria.Web.UI.LRS {
       var partition = new PropertyPartition(command.GetParameter<String>("cadastralKey", String.Empty),
           partitionType: (PropertyPartitionType) Enum.Parse(typeof(PropertyPartitionType),
                                                             command.GetParameter<string>("partitionType", "None")),
+          partitionSubtype: (PropertyPartitionSubtype) Enum.Parse(typeof(PropertyPartitionSubtype),
+                                                            command.GetParameter<string>("partitionSubtype", "None")),
           partitionNo: command.GetParameter<int>("partitionNo", 0),
           totalPartitions: command.GetParameter<int>("totalPartitions", 0),
           partitionSize: command.GetParameter<Decimal>("partitionSize", 0m),

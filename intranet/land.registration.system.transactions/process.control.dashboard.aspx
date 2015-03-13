@@ -50,10 +50,6 @@
         <img src="../themes/default/buttons/search.gif" alt="" onclick="doOperation('loadData')" title="Ejecuta la búsqueda" />
         &nbsp; &nbsp; &nbsp; &nbsp;
         <a href="javascript:doOperation('removeFilters')">Quitar los filtros</a>
-        <% if (base.User.Id == -3) { %>
-          &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <a href="javascript:doOperation('updateTrack')">UT</a>
-        <% } %>
       </td>
      <td width="80%">&nbsp;</td>
     </tr>
@@ -154,6 +150,9 @@
           <option value='(WorkingTime >= 86400*40)'>>= 40 días</option>
           <option value='(WorkingTime >= 86400*50)'>>= 50 días</option>
         </select>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <a href="javascript:doOperation('showSearchRecordingsView')">
+                <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar la información registral</a>&nbsp; &nbsp; &nbsp;
       </td>
     </tr>
   </table>
@@ -205,8 +204,8 @@
       case 'removeFilters':
         removeFilters();
         return;
-      case 'updateTrack':
-        updateTrack();
+      case 'showSearchRecordingsView':
+        showSearchRecordingsView();
         return;
       case 'updateUserInterface':
         updateUserInterface(arguments[1]);
@@ -217,14 +216,14 @@
     }
   }
 
-  function executeWorkflowTask(workflowTaskName, objectId) {
-  	alert(workflowTaskName + " " + objectId);
+  function showSearchRecordingsView() {
+    var url = "../land.registration.system/search.data.aspx";
+
+    createNewWindow(url);
   }
 
-  function updateTrack() {
-    if (confirm("Actualizo el Track de eventos???")) {
-      sendPageCommand("updateTrack");
-    }
+  function executeWorkflowTask(workflowTaskName, objectId) {
+  	alert(workflowTaskName + " " + objectId);
   }
 
   function createLRSTransaction() {

@@ -72,9 +72,9 @@
         <tr valign="top" style="font-size:8pt">
           <td colspan="2">
             <br />
-            Documento, antecedentes y actos jurídicos revisados y registrados por:<br />
-            <b><%=GetRecordingOfficialsNames()%>.</b> Rúbrica.
-          <!--<%=GetRecordingOfficialsInitials()%>!-->
+          <!--  Documento, antecedentes y actos jurídicos revisados y registrados por:<br />
+            <b><%=GetRecordingOfficialsNames()%>.</b> Rúbrica.!-->
+          <%=GetRecordingOfficialsInitials()%>
           </td>
         </tr>
       </table>

@@ -40,12 +40,14 @@
               <select id="cboPropertyPartitionType" class="selectBox" style="width:188px" title=""
                       onchange="return updateUI(this);">
                 <option value="" title="None">( Seleccionar )</option>
-                <option value="whole" title="None">la Totalidad</option>
-                <option value="full" title="Full">el Lote</option>
-                <option value="partial" title="Partial">la Fracción</option>
-                <option value="partialUnknown" title="Partial">la Fracción sin número</option>
-                <option value="last" title="Last">la Última Fracción</option>
-                <option value="lastUnknown" title="Last">la Última Fracción sin número</option>               
+                <option value="Whole" title="None">la Totalidad</option>
+                <option value="Lot" title="Full">el Lote</option>
+                <option value="House" title="Full">la Casa</option>
+                <option value="Apartment" title="Full">el Departamento</option>
+                <option value="Partial" title="Partial">la Fracción</option>
+                <option value="PartialUnknown" title="Partial">la Fracción sin número</option>
+                <option value="Last" title="Last">la Última Fracción</option>
+                <option value="LastUnknown" title="Last">la Última Fracción sin número</option>   
               </select>
               <span id="divPartitionPartXofYSection" style="display:none">        
                 Número:
@@ -648,10 +650,10 @@
     var selectedValue = getElement("cboPropertyPartitionType").value;
 
     if (!isNumeric(getElement('txtPropertyPartitionNo'))) {
-      alert("No reconozco el número de lote o fracción proporcionado.");
+      alert("No reconozco el número de lote, fracción, caso o departamento proporcionado.");
       return;
     }
-    if (selectedValue == 'last') {
+    if (selectedValue == 'Last') {
       getElement('txtPropertyTotalPartitions').value = getElement('txtPropertyPartitionNo').value;
     }
   }
@@ -663,18 +665,18 @@
     getElement('txtPropertyTotalPartitions').value = '';
     switch (selectedValue) {
       case '':
-      case 'whole':
+      case 'Whole':
         getElement('divPartitionPartXofYSection').style.display = 'none';
         getElement("divCadastralInfo").style.display = "none";
         break;
-      case 'partial':
+      case 'Partial':
         getElement('divPartitionPartXofYSection').style.display = 'inline';
         getElement('txtPropertyPartitionNo').disabled = false;
         getElement('txtPropertyTotalPartitions').disabled = true;
         getElement('txtPropertyTotalPartitions').value = '?';
         getElement("divCadastralInfo").style.display = "inline";
         break;
-      case 'partialUnknown':
+      case 'PartialUnknown':
         getElement('divPartitionPartXofYSection').style.display = 'inline';
         getElement('txtPropertyPartitionNo').disabled = true;
         getElement('txtPropertyTotalPartitions').disabled = true;
@@ -682,13 +684,13 @@
         getElement('txtPropertyTotalPartitions').value = '?';
         getElement("divCadastralInfo").style.display = "inline";
         break;
-      case 'last':
+      case 'Last':
         getElement('divPartitionPartXofYSection').style.display = 'inline';
         getElement('txtPropertyPartitionNo').disabled = false;
         getElement('txtPropertyTotalPartitions').disabled = true;
         getElement("divCadastralInfo").style.display = "inline";
         break;
-      case 'lastUnknown':
+      case 'LastUnknown':
         getElement('divPartitionPartXofYSection').style.display = 'inline';
         getElement('txtPropertyPartitionNo').disabled = true;
         getElement('txtPropertyTotalPartitions').disabled = true;
@@ -696,7 +698,9 @@
         getElement('txtPropertyTotalPartitions').value = '?';
         getElement("divCadastralInfo").style.display = "inline";
         break;
-      case 'full':
+      case 'Lot':
+      case 'Apartment':
+      case 'House':
         getElement('divPartitionPartXofYSection').style.display = 'inline';
         getElement('txtPropertyPartitionNo').disabled = false;
         getElement('txtPropertyTotalPartitions').disabled = false;
@@ -1193,7 +1197,7 @@
       return false;
     }
 
-    if (getElement("cboPropertyPartitionType").value == "whole") {
+    if (getElement("cboPropertyPartitionType").value == "Whole") {
       cleanPartitionDataFields();
       return true;
     }
@@ -1211,9 +1215,11 @@
       getElement("txtPropertyTotalPartitions").value = '';
     }
 
-    if (getElement("cboPropertyPartitionType").value == "partial" ||
-        getElement("cboPropertyPartitionType").value == "last" ||
-        getElement("cboPropertyPartitionType").value == "full") {
+    if (getElement("cboPropertyPartitionType").value == "Partial" ||
+        getElement("cboPropertyPartitionType").value == "Last" ||
+        getElement("cboPropertyPartitionType").value == "Full" ||
+        getElement("cboPropertyPartitionType").value == "House" ||
+        getElement("cboPropertyPartitionType").value == "Apartment") {
       if (getElement("txtPropertyPartitionNo").value.length == 0) {
         alert("Necesito conocer el número de fracción (o lote) del antecedente a la que se le aplicará el acto de " + recordingAct + ".");
         getElement("txtPropertyPartitionNo").focus();
@@ -1225,8 +1231,8 @@
         return false;
       }
     }
-    if (getElement("cboPropertyPartitionType").value == "last" ||
-        getElement("cboPropertyPartitionType").value == "full") {
+    if (getElement("cboPropertyPartitionType").value == "Last" ||
+        getElement("cboPropertyPartitionType").value == "Full") {
       if (getElement("txtPropertyTotalPartitions").value.length == 0) {
         alert("Necesito conocer el número de fracciones o lotes totales que están inscritos en el antecedente.");
         getElement("txtPropertyTotalPartitions").focus();
@@ -1337,6 +1343,7 @@
 
     // partition values
     qs += "&partitionType=" + getComboSelectedOption('cboPropertyPartitionType').title;
+    qs += "&partitionSubtype=" + getComboSelectedOption('cboPropertyPartitionType').value;
     if (isNumeric(getElement("txtPropertyPartitionNo"))) {
       qs += "&partitionNo=" + getElement('txtPropertyPartitionNo').value;
     } else {

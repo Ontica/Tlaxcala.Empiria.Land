@@ -123,15 +123,23 @@
                 <%=RecordingActsGrid()%>
                 <tr class='totalsRow' style='display:<%=base.IsReadyToAppendRecordingActs() && base.RecordingActs.Count > 0 ? "inline" : "none"%>'>
                   <td>&nbsp;</td>
-                  <td colspan='5'>
+                  <td colspan='2'>
                     <a href="javascript:doOperation('showRecordingActEditor')">
                     <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />Registrar otro acto jurídico</a>
+                  </td>
+                  <td colspan='3' align="right">
+                    <a href="javascript:doOperation('showSearchRecordingsView')">
+                    <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar información registral</a>&nbsp; &nbsp; &nbsp;
                   </td>
                 </tr>
                 <tr class='totalsRow' style='display:<%=base.IsReadyForEdition() && base.RecordingActs.Count == 0 ? "inline" : "none"%>'>
                   <td>&nbsp;</td>
-                  <td colspan='5'>
+                  <td colspan='2'>
                     Todavía no se han agregado actos jurídicos al documento.
+                  </td>
+                  <td colspan='3' align="right">
+                    <a href="javascript:doOperation('showSearchRecordingsView')">
+                    <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar información registral</a>&nbsp; &nbsp; &nbsp;
                   </td>
                 </tr>
               </table>
@@ -185,6 +193,9 @@
         return;
       case 'viewGlobalRecordingSeal':
         viewGlobalRecordingSeal();
+        return;
+      case 'showSearchRecordingsView':
+        showSearchRecordingsView();
         return;
       case 'closeWindow':
         window.parent.execScript("doOperation('refreshRecording')");
@@ -272,6 +283,12 @@
     return true;
   }
 
+  function showSearchRecordingsView() {
+    var url = "../land.registration.system/search.data.aspx";
+
+    createNewWindow(url);
+  }
+
   function viewGlobalRecordingSeal() {
     <% if (transaction.IsEmptyInstance || transaction.Document.IsEmptyInstance) { %>
     alert("Primero requiero se ingresen los datos de la escritura o documento que se va a inscribir.");
@@ -286,7 +303,6 @@
 
     createNewWindow(url);
   }
-
 
   function updateUserInterface(oControl) {
     if (oControl == null) {
