@@ -166,13 +166,13 @@ namespace Empiria.Web.UI.Ajax {
 
       var recordingActType = RecordingActType.Parse(recordingActTypeId);
       var resource = Property.Parse(resourceId);
-      
+
       var appliesTo = recordingActType.GetAppliesToRecordingActTypesList();
 
       var list = resource.GetRecordingActsTract();
 
       return HtmlSelectContent.GetComboAjaxHtml<RecordingAct>(list.FindAll((x) => appliesTo.Contains(x.RecordingActType)),
-                                "Id", (x)=> x.RecordingActType.DisplayName + " " + x.Document.UID + " " + 
+                                "Id", (x)=> x.RecordingActType.DisplayName + " " + x.Document.UID + " " +
                                        x.Document.AuthorizationTime + " " + x.AmendedBy.Id + " " + x.StatusName,
                                 "( Seleccionar el acto jurídico )");
       //return "<tr id='tblTargetPrecedentActsTable' class='totalsRow' style='display:inline'><td>&nbsp;</td><td colspan='5'>Hello world</td></tr>";

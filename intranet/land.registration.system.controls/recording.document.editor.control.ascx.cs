@@ -190,7 +190,7 @@ namespace Empiria.Web.UI.LRS {
       cboPrivateDocIssuePlace.Value = document.IssuePlace.Id.ToString();
       cboPrivateDocIssuedBy.Value = document.IssuedBy.Id.ToString();
       txtPrivateDocNumber.Value = document.Number;
-   
+
       if (document.IssueDate != ExecutionServer.DateMinValue) {
         txtPrivateDocIssueDate.Value = document.IssueDate.ToString("dd/MMM/yyyy");
       } else {

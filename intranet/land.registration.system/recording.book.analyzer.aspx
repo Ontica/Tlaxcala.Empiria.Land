@@ -1074,10 +1074,6 @@
       showNotAllowedMessage();
       return false;
     <% } %>
-    <% if (recording.GetPropertiesAnnotationsList().Count > 0) { %>
-      alert("No puedo eliminar esta inscripción debido a que contiene anotaciones.");
-      return false;
-    <% } %>
     <% if (recording.RecordingActs.Count > 0) { %>
       alert("No puedo eliminar esta inscripción ya que contiene actos jurídicos.");
       return false;

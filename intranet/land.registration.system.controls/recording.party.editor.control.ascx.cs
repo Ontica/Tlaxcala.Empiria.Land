@@ -137,58 +137,21 @@ namespace Empiria.Web.UI.LRS {
 
     private Party FillOrganizationParty() {
       if (this.Party == null) {
-        this.Party = OrganizationParty.Create(Ontology.ObjectTypeInfo.Parse(int.Parse(cboPartyType.Value)));
+        this.Party = new OrganizationParty(txtOrgTaxIDNumber.Value, txtOrgName.Value);
       }
-      OrganizationParty org = (OrganizationParty) this.Party;
+      this.Party.Save();
 
-      org.FullName = txtOrgName.Value;
-      org.Nicknames = txtOrgNicknames.Value;
-      org.TaxIDNumber = txtOrgTaxIDNumber.Value;
-      org.Notes = txtOrgRegistryText.Value;
-      if (!String.IsNullOrEmpty(Request.Form[txtOrgRegistryDate.Name])) {
-        org.RegistryDate = EmpiriaString.ToDateTime(txtOrgRegistryDate.Value);
-      } else {
-        org.RegistryDate = ExecutionServer.DateMaxValue;
-      }
-      if (!String.IsNullOrEmpty(Request.Form[cboOrgRegistryLocation.Name])) {
-        org.RegistryLocation = GeographicRegion.Parse(int.Parse(Request.Form[cboOrgRegistryLocation.Name]));
-      } else {
-        org.RegistryLocation = GeographicRegion.Unknown;
-      }
-      org.Save();
-
-      return org;
+      return this.Party;
     }
 
     private Party FillHumanParty() {
       if (this.Party == null) {
-        this.Party = new HumanParty();
+        this.Party = new HumanParty(txtCURPNumber.Value, txtFirstName.Value,
+                                    txtFirstFamilyName.Value, txtSecondFamilyName.Value);
       }
-      HumanParty person = (HumanParty) this.Party;
+      this.Party.Save();
 
-      if (!String.IsNullOrEmpty(Request.Form[txtBornDate.Name])) {
-        person.RegistryDate = EmpiriaString.ToDateTime(txtBornDate.Value);
-      } else {
-        person.RegistryDate = ExecutionServer.DateMaxValue;
-      }
-      if (!String.IsNullOrEmpty(Request.Form[cboBornLocation.Name])) {
-        person.RegistryLocation = GeographicRegion.Parse(int.Parse(Request.Form[cboBornLocation.Name]));
-      } else {
-        person.RegistryLocation = GeographicRegion.Unknown;
-      }
-      person.CURPNumber = txtCURPNumber.Value;
-      person.FirstFamilyName = txtFirstFamilyName.Value;
-      person.FirstName = txtFirstName.Value;
-      person.MaritalFamilyName = txtMaritalFamilyName.Value;
-      person.Gender = (Contacts.Gender) Convert.ToChar(cboGender.Value);
-      person.IFENumber = txtIFENumber.Value;
-      person.Nicknames = txtNicknames.Value;
-      person.SecondFamilyName = txtSecondFamilyName.Value;
-      person.TaxIDNumber = txtTaxIDNumber.Value;
-
-      person.Save();
-
-      return person;
+      return this.Party;
     }
 
     private void UpdateRecordingActParty(RecordingActParty rap) {
@@ -219,23 +182,11 @@ namespace Empiria.Web.UI.LRS {
 
       cboPartyType.Value = person.GetEmpiriaType().Id.ToString();
 
-      if (person.RegistryDate != ExecutionServer.DateMaxValue) {
-        txtBornDate.Value = person.RegistryDate.ToString("dd/MMM/yyyy");
-      } else {
-        txtBornDate.Value = String.Empty;
-      }
-      txtFirstFamilyName.Value = person.FirstFamilyName;
+      txtBornDate.Value = String.Empty;
+      txtFirstFamilyName.Value = person.LastName;
       txtFirstName.Value = person.FirstName;
-      txtMaritalFamilyName.Value = person.MaritalFamilyName;
-      cboGender.Value = ((char) person.Gender).ToString();
-      txtIFENumber.Value = person.IFENumber;
-      txtCURPNumber.Value = person.CURPNumber;
-      txtTaxIDNumber.Value = person.TaxIDNumber;
-      txtNicknames.Value = person.Nicknames;
-      txtSecondFamilyName.Value = person.SecondFamilyName;
-
-      cboBornLocation.Items.Clear();
-      cboBornLocation.Items.Add(new ListItem(person.RegistryLocation.CompoundName, person.RegistryLocation.Id.ToString()));
+      txtCURPNumber.Value = person.UID;
+      txtSecondFamilyName.Value = person.LastName2;
 
       FixedList<RecordingActParty> list = RecordingActParty.GetList(this.RecordingAct.PhysicalRecording, this.Party);
       List<RecordingActParty> p = list.FindAll((x) => (x.Party.Equals(this.Party) && x.SecondaryParty.IsEmptyInstance) || x.SecondaryParty.Equals(this.Party));
@@ -263,17 +214,9 @@ namespace Empiria.Web.UI.LRS {
       OrganizationParty org = (OrganizationParty) this.Party;
 
       cboPartyType.Value = org.GetEmpiriaType().Id.ToString();
-      if (org.RegistryDate != ExecutionServer.DateMaxValue) {
-        txtOrgRegistryDate.Value = org.RegistryDate.ToString("dd/MMM/yyyy");
-      } else {
-        txtOrgRegistryDate.Value = String.Empty;
-      }
+      txtOrgRegistryDate.Value = String.Empty;
       txtOrgName.Value = org.FullName;
-      txtOrgNicknames.Value = org.Nicknames;
-      txtOrgRegistryText.Value = org.Notes;
-      txtOrgTaxIDNumber.Value = org.TaxIDNumber;
-
-      cboOrgRegistryLocation.Value = org.RegistryLocation.Id.ToString();
+      txtOrgTaxIDNumber.Value = org.UID;
       isLoaded = true;
     }
 

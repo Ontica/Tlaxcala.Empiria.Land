@@ -47,9 +47,9 @@
                 <option value="Partial" title="Partial">la Fracción</option>
                 <option value="PartialUnknown" title="Partial">la Fracción sin número</option>
                 <option value="Last" title="Last">la Última Fracción</option>
-                <option value="LastUnknown" title="Last">la Última Fracción sin número</option>   
+                <option value="LastUnknown" title="Last">la Última Fracción sin número</option>
               </select>
-              <span id="divPartitionPartXofYSection" style="display:none">        
+              <span id="divPartitionPartXofYSection" style="display:none">
                 Número:
                 <input id="txtPropertyPartitionNo" type="text" class="textBox"
                         style="width:24px;margin-right:0px" onblur="return setPropertyPartsTotal();"
@@ -81,7 +81,7 @@
                   <option value="624" title="hectáreas">ha</option>
                 </select>disponibles.
                  <br/>
-                <span style="color:red">IMPORTANTE</span>: Las fracciones <u><b style="color:red">SIEMPRE</b> 
+                <span style="color:red">IMPORTANTE</span>: Las fracciones <u><b style="color:red">SIEMPRE</b>
                 generan un <b style="color:red">nuevo folio real</b></u>.<br />
                 Los notarios a veces escriben la palabra "fracción" en las escrituras como una forma<br />
                 de identificar al predio, pero eso <u>NO necesariamente</u> significa que se esté indicando en la<br />
@@ -279,13 +279,20 @@
                   <td>Presentación</td>
                   <td>Registrado en</td>
                   <td>Estado</td>
-                </tr> 
+                </tr>
                 <tr id='tblTargetPrecedentActsTable' class='totalsRow' style='display:inline'>
                   <td>&nbsp;</td>
                   <td colspan='5'>
                     <select id="cboTemporalId" class="selectBox" style="width:600px" title="">
                       <option value="">( Actos jurídicos del predio )</option>
                     </select>
+                  </td>
+                </tr>
+                <tr class="totalsRow" style="display:none">
+                  <td>&nbsp;</td>
+                  <td colspan="5">
+                    <a href="javascript:doRecordingActEditorOperation('showTargetActEditor')">
+                    <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />El acto jurídico a cancelar o modificar no aparece en la lista</a>
                   </td>
                 </tr>
               </table>
@@ -432,6 +439,8 @@
         return showPrecedentRecording();
       case 'showPrecedentProperty':
         return showPrecedentProperty();
+      case 'showTargetActEditor':
+        return showTargetActEditor();
       default:
         alert("La operación '" + command + "' todavía no ha sido definida en el editor de actos jurídicos.");
         return;
@@ -457,7 +466,8 @@
     } else {
       _selectedResource = olookupResource.Id;
       alert("Predio encontrado.");
-      getElement("divPrecedentRecordingSection").style.display = 'none';
+      getElement("divPhysicalRecordingSelector").style.display = 'none';
+      showTargetRecordingActSections();
       return true;
     }
   }
@@ -524,7 +534,7 @@
     url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
 
     oCurrentRecordingRule = invokeAjaxGetJsonObject(url);
-    
+
     if (oCurrentRecordingRule.IsCancelation) {
       updateTargetRecordingActCombos();
     }
@@ -888,11 +898,17 @@
     return (getElement("cboPrecedentRecording").value == "-1");
   }
 
+  function showTargetActEditor() {
+    getElement("divTargetPrecedentActSectionTitle").style.display = "inline";
+    getElement("divTargetPrecedentActTable").style.display = "inline";
+    getElement("divTargetPrecedentActSection").style.display = "inline";
+  }
+
   function showTargetRecordingActSections() {
     var selectedResource = getSelectedResource();
     var createResource = createAntecedentResource();
 
-    var applyTargetRecording = (getElement("cboPropertyTypeSelector").value == "actAppliesToOtherRecordingAct" && 
+    var applyTargetRecording = (getElement("cboPropertyTypeSelector").value == "actAppliesToOtherRecordingAct" &&
                                (selectedResource != null || createResource));
 
 
@@ -902,7 +918,7 @@
       getElement("divTargetPrecedentActSection").style.display = "none";
       return;
     }
-    
+
     if (createResource) {   // Allows to add the recording act to cancel or modify
       getElement("divTargetPrecedentActSectionTitle").style.display = "inline";
       getElement("divTargetPrecedentActTable").style.display = "none";
@@ -911,7 +927,7 @@
       updateTargetPrecedentActsTable();
       getElement("divTargetPrecedentActSectionTitle").style.display = "inline";
       getElement("divTargetPrecedentActTable").style.display = "inline";
-      getElement("divTargetPrecedentActSection").style.display = "none";
+      getElement("divTargetPrecedentActSection").style.display = "inline";
     }
     if (isSelectedTargetActSection()) {
       getElement("divTargetActBookAndRecording").style.display = "inline";
@@ -973,7 +989,7 @@
               getComboOptionText(getElement('cboQuickAddBisRecordingTag')) + "\n";
       sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
     }
-    if (getElement('cboPropertyTypeSelector').value == 'actAppliesToOtherRecordingAct') {      
+    if (getElement('cboPropertyTypeSelector').value == 'actAppliesToOtherRecordingAct') {
       sMsg += "Acto jurídico a cancelar o modificar:\n\n";
       if (getElement('cboTemporalId').value != '') {
         sMsg += "Acto involucrado:\t" + getComboOptionText(getElement('cboTemporalId')) + "\n";
@@ -1132,8 +1148,7 @@
       return true;
     }
     return false;
-  } 
-
+  }
   function cleanPartitionDataFields() {
     getElement("cboPropertyPartitionType").value = '';
     getElement("txtPropertyPartitionNo").value = '';
@@ -1387,7 +1402,6 @@
 
   addEvent(getElement('txtLookupResource'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('txtResourceName'), 'keypress', upperCaseKeyFilter);
-  
 
   /* ]]> */
 </script>

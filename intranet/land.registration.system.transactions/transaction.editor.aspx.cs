@@ -315,9 +315,9 @@ namespace Empiria.Web.UI.LRS {
 
     private void SaveTransaction() {
       bool isNew = transaction.IsNew;
- 
+
       if (transaction.Status == TransactionStatus.Payment &&
-          txtReceiptTotal.Value.Length != 0 && 
+          txtReceiptTotal.Value.Length != 0 &&
           txtReceiptNumber.Value.Length != 0) {
         decimal total = decimal.Parse(txtReceiptTotal.Value);
         transaction.AddPayment(txtReceiptNumber.Value, total);

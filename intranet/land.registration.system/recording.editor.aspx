@@ -284,8 +284,8 @@
   }
 
   function showSearchRecordingsView() {
-    var url = "../land.registration.system/search.data.aspx";
-
+    //var url = "../land.registration.system/search.data.aspx";
+    var url = "http://192.168.1.22/anotaciones/Home.aspx";
     createNewWindow(url);
   }
 

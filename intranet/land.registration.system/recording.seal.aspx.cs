@@ -103,7 +103,7 @@ namespace Empiria.Web.UI.FSM {
 
     protected string GetDocumentHeaderText() {
       const string docMultiTlax = "Registrado con el número de documento electrónico <b>{DOCUMENT}</b>, " +
-                             "con los siguientes {COUNT} actos jurídicos:<br/><br/>";
+                                  "con los siguientes {COUNT} actos jurídicos:<br/><br/>";
       const string docOneTlax = "Registrado con el número de documento electrónico <b>{DOCUMENT}</b>, con el " +
                                 "siguiente acto jurídico:<br/><br/>";
       string html = String.Empty;
@@ -130,13 +130,13 @@ namespace Empiria.Web.UI.FSM {
           case RecordingRuleApplication.Property:
           case RecordingRuleApplication.RecordingAct:
           case RecordingRuleApplication.Structure:
-            Resource resource = recordingAct.TractIndex[0].Resource;
+            Resource resource = recordingAct.Targets[0].Resource;
             Assertion.Assert(resource is Property,
                              "Type mistmatch parsing property with id = " + resource.Id);
             html += this.GetPropertyActText(recordingAct, (Property) resource, index);
             break;
           case RecordingRuleApplication.Association:
-            resource = recordingAct.TractIndex[0].Resource;
+            resource = recordingAct.Targets[0].Resource;
             Assertion.Assert(resource is Association,
                              "Type mistmatch parsing resource with id = " + resource.Id);
             html += this.GetAssociationActText(recordingAct,
@@ -162,11 +162,11 @@ namespace Empiria.Web.UI.FSM {
 
     private string GetPropertyActText(RecordingAct recordingAct, Property property, int index) {
       const string act01 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
-                           "predio con folio real electrónico {PROPERTY.UID}.<br/>";
+                           "bien inmueble con folio real electrónico {PROPERTY.UID}.<br/>";
       const string act02 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
-                           "totalidad del predio con folio real electrónico {PROPERTY.UID}.<br/>";
+                           "totalidad del bien inmueble con folio real electrónico {PROPERTY.UID}.<br/>";
       const string act03a = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
-                            "fracción <b>{PARTITION.NUMBER}</b> del predio con folio real {PARTITION.OF}, misma a la " +
+                            "fracción <b>{PARTITION.NUMBER}</b> del bien inmueble con folio real {PARTITION.OF}, misma a la " +
                             "que se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
       const string act03Lot = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
                             "<b>{PARTITION.NUMBER}</b> de la lotificación con folio real {PARTITION.OF}, mismo al que " +
@@ -178,11 +178,11 @@ namespace Empiria.Web.UI.FSM {
                             "<b>{PARTITION.NUMBER}</b> del fraccionamiento con folio real {PARTITION.OF}, misma a la que " +
                             "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
       const string act04 = "{INDEX}.- {CANCELATION.ACT} {CANCELED.ACT.RECORDING}, " +
-                           "sobre el predio con folio real electrónico {PROPERTY.UID}.<br/>";
+                           "sobre el bien inmueble con folio real electrónico {PROPERTY.UID}.<br/>";
 
       string x = String.Empty;
 
-      if (recordingAct.RecordingActType.RecordingRule.IsModification || 
+      if (recordingAct.RecordingActType.RecordingRule.IsModification ||
           recordingAct.RecordingActType.RecordingRule.IsCancelation) {
         RecordingAct amendmentOf = recordingAct.AmendmentOf;
 
@@ -249,15 +249,15 @@ namespace Empiria.Web.UI.FSM {
       var antecedent = property.GetDomainAntecedent(recordingAct);
       if (property.IsPartitionOf.IsEmptyInstance && antecedent.Equals(InformationAct.Empty)) {
         if (property.CadastralKey.Length != 0) {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> y clave catastral <b>" + 
-                                          property.CadastralKey + "</b> sin antecedente registral");
+          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> (Clave catastral: <b>" +
+                                          property.CadastralKey + "</b>) sin antecedente registral");
         } else {
           x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> sin antecedente registral");
         }
       } else if (!antecedent.PhysicalRecording.IsEmptyInstance) {
         if (property.CadastralKey.Length != 0) {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> y clave catastral <b>" +
-                        property.CadastralKey + "</b>, con antecedente de inscripción en " + 
+          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> (Clave catastral: <b>" +
+                        property.CadastralKey + "</b>), con antecedente de inscripción en " +
                         antecedent.PhysicalRecording.AsText);
         } else {
           x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>" +
@@ -265,8 +265,8 @@ namespace Empiria.Web.UI.FSM {
         }
       } else {
         if (property.CadastralKey.Length != 0) {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> y que corresponde a la clave catastral " +
-                        "<b>" + property.CadastralKey + "</b>");
+          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>(Clave catastral: " +
+                        "<b>" + property.CadastralKey + "</b>)");
         } else {
           x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>");
         }
@@ -298,7 +298,7 @@ namespace Empiria.Web.UI.FSM {
       x = x.Replace("{PROPERTY.UID}", association.UID);
       x = x.Replace("{ASSOCIATION.NAME}", association.Name);
       x = x.Replace("{PROPERTY.KIND}", GetAssociationType(association));
-      
+
       return x;
     }
 
@@ -323,7 +323,7 @@ namespace Empiria.Web.UI.FSM {
 
       return String.Empty;
     }
-    
+
     protected string GetRecordingOfficialsNames() {
       string temp = String.Empty;
       foreach (Contact official in this.GetRecordingOfficials()) {

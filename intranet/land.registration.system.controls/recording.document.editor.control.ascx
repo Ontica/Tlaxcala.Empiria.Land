@@ -483,7 +483,7 @@
   addEvent(getElement('<%=cboNotaryDocIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oNotaryPublicDeed.IssueOffice") } );
 
   addEvent(getElement('<%=cboJudicialDocIssuePlace.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oJudgeOfficialLetter.IssuePlace") } );
-  addEvent(getElement('<%=cboJudicialDocIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oJudgeOfficialLetter.IssueOffice") } ); 
+  addEvent(getElement('<%=cboJudicialDocIssueOffice.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oJudgeOfficialLetter.IssueOffice") } );
   addEvent(getElement('<%=txtJudicialDocBook.ClientID%>'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('<%=txtJudicialDocNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
 
@@ -492,6 +492,6 @@
 
   addEvent(getElement('<%=cboPrivateDocSubtype.ClientID%>'), 'change', function() { <%=this.ClientID%>_updateControls("oPrivateContract.DocumentSubtype") } );
   addEvent(getElement('<%=txtPrivateDocNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
-  
+
   /* ]]> */
 </script>

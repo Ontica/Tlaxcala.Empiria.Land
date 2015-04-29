@@ -73,7 +73,7 @@ function setWorkplace() {
   resizeWorkplace();
   addEvent(window, 'resize', resizeWorkplace);
   setObjectEvents();
-  window.defaultStatus = ""; //"Sistema Empiria® 2014. Copyright © La Vía Óntica SC + Ontica LLC. 1994-2015.";
+  window.defaultStatus = ""; //"Sistema Empiria® 2015. Copyright © La Vía Óntica SC + Ontica LLC. 1994-2015.";
 }
 
 function hideControlDivisions() {

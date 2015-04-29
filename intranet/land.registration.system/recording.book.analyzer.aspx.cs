@@ -270,7 +270,7 @@ namespace Empiria.Web.UI.LRS {
       cboAnnotationCategory.Value = "0";
 
       gRecordingActs = LRSGridControls.GetBatchCaptureRecordingActsGrid(this.recording);
-      gAnnotationActs = LRSGridControls.GetRecordingAnnotationsGrid(this.recording);
+      gAnnotationActs = String.Empty;
       LoadRecordingActsPropertiesCombo();
       LoadAnotherPropertyRecorderOfficesCombo();
       LoadAnnotationsPropertiesCombo();
@@ -359,9 +359,6 @@ namespace Empiria.Web.UI.LRS {
       int recordingId = int.Parse(GetCommandParameter("id"));
 
       if (recordingId != recording.Id) {
-        return;
-      }
-      if (recording.GetPropertiesAnnotationsList().Count > 0) {
         return;
       }
       if (recording.RecordingActs.Count > 0) {
