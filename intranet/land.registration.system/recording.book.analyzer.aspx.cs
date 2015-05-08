@@ -333,13 +333,14 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void DeleteAnnotation() {
-      int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
-      int propertyId = int.Parse(GetCommandParameter("propertyId"));
+      throw new NotImplementedException();
+      //int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
+      //int propertyId = int.Parse(GetCommandParameter("propertyId"));
 
-      RecordingAct recordingAct = RecordingAct.Parse(recordingActId);
-      Property property = Property.Parse(propertyId);
+      //RecordingAct recordingAct = RecordingAct.Parse(recordingActId);
+      //Property property = Property.Parse(propertyId);
 
-      recordingAct.RemoveProperty(property);
+      //recordingAct.RemoveProperty(property);
     }
 
     private void DeleteImage() {
@@ -370,12 +371,14 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void DeleteRecordingActProperty() {
-      int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
-      int propertyId = int.Parse(GetCommandParameter("propertyId"));
+      throw new NotImplementedException();
 
-      RecordingAct recordingAct = this.recording.GetRecordingAct(recordingActId);
-      Property property = Property.Parse(propertyId);
-      recordingAct.RemoveProperty(property);
+      //int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
+      //int propertyId = int.Parse(GetCommandParameter("propertyId"));
+
+      //RecordingAct recordingAct = this.recording.GetRecordingAct(recordingActId);
+      //Property property = Property.Parse(propertyId);
+      //recordingAct.RemoveProperty(property);
     }
 
     private void ModifyRecordingActType() {
@@ -407,13 +410,15 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void AppendPropertyToAnnotation() {
-      int annotationId = int.Parse(GetCommandParameter("annotationId"));
-      int propertyId = int.Parse(cboAnnotationProperty.Value);
+      throw new NotImplementedException("OOJJOO");
 
-      RecordingAct annotation = RecordingAct.Parse(annotationId);
-      Property property = Property.Parse(propertyId);
+      //int annotationId = int.Parse(GetCommandParameter("annotationId"));
+      //int propertyId = int.Parse(cboAnnotationProperty.Value);
 
-      annotation.AttachResource(property);
+      //var annotation = InformationAct.Parse(annotationId);
+      //Property property = Property.Parse(propertyId);
+
+      //annotation.AttachProperty(property, ResourceRole.Informative);
     }
 
     private void AppendPropertyToRecordingAct() {

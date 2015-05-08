@@ -130,14 +130,16 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void FillPropertiesCombo() {
-      this.oAntecedentParties.Visible = false;
-      cboProperty.Items.Clear();
-      foreach(Property property in recordingAct.GetProperties()) {
-        if (!property.IsFirstRecordingAct(recordingAct)) {
-          this.oAntecedentParties.Visible = true;
-        }
-        cboProperty.Items.Add(new ListItem(property.UID, property.Id.ToString()));
-      }
+      throw new NotImplementedException();
+
+      //this.oAntecedentParties.Visible = false;
+      //cboProperty.Items.Clear();
+      //foreach(Property property in recordingAct.GetProperties()) {
+      //  if (!property.IsFirstRecordingAct(recordingAct)) {
+      //    this.oAntecedentParties.Visible = true;
+      //  }
+      //  cboProperty.Items.Add(new ListItem(property.UID, property.Id.ToString()));
+      //}
     }
 
     #endregion Private methods

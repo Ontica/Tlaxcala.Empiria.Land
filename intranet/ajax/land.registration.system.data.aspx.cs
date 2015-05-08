@@ -862,21 +862,23 @@ namespace Empiria.Web.UI.Ajax {
     }
 
     private string ValidateDeleteRecordingActPropertyCommandHandler() {
-      int recordingId = int.Parse(GetCommandParameter("recordingId", true));
-      int recordingActId = int.Parse(GetCommandParameter("recordingActId", true));
-      int propertyId = int.Parse(GetCommandParameter("propertyId", true));
+      throw new NotImplementedException();
 
-      Recording recording = Recording.Parse(recordingId);
-      RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
-      Resource resource = recordingAct.GetPropertyEvent(Property.Parse(propertyId)).Resource;
+      //int recordingId = int.Parse(GetCommandParameter("recordingId", true));
+      //int recordingActId = int.Parse(GetCommandParameter("recordingActId", true));
+      //int propertyId = int.Parse(GetCommandParameter("propertyId", true));
 
-      LandRegistrationException exception = null;
-      exception = LRSValidator.ValidateDeleteRecordingActProperty(recordingAct, resource);
+      //Recording recording = Recording.Parse(recordingId);
+      //RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
+      //Resource resource = recordingAct.GetPropertyEvent(Property.Parse(propertyId)).Resource;
 
-      if (exception != null) {
-        return exception.Message;
-      }
-      return String.Empty;
+      //LandRegistrationException exception = null;
+      //exception = LRSValidator.ValidateDeleteRecordingActProperty(recordingAct, resource);
+
+      //if (exception != null) {
+      //  return exception.Message;
+      //}
+      //return String.Empty;
     }
 
     private string ValidateNextTransactionStateCommandHandler() {

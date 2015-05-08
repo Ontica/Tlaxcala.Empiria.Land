@@ -130,13 +130,13 @@ namespace Empiria.Web.UI.FSM {
           case RecordingRuleApplication.Property:
           case RecordingRuleApplication.RecordingAct:
           case RecordingRuleApplication.Structure:
-            Resource resource = recordingAct.Targets[0].Resource;
+            Resource resource = ((ResourceTarget) recordingAct.Targets[0]).Resource;
             Assertion.Assert(resource is Property,
                              "Type mistmatch parsing property with id = " + resource.Id);
             html += this.GetPropertyActText(recordingAct, (Property) resource, index);
             break;
           case RecordingRuleApplication.Association:
-            resource = recordingAct.Targets[0].Resource;
+            resource = ((ResourceTarget) recordingAct.Targets[0]).Resource;
             Assertion.Assert(resource is Association,
                              "Type mistmatch parsing resource with id = " + resource.Id);
             html += this.GetAssociationActText(recordingAct,
