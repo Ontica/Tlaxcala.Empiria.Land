@@ -5,4 +5,5 @@ Empiria Land Tlaxcala Edition was special developed by La Vía Óntica SC for th
 
 * A) Empiria Land Extranet Web Site
 * B) Empiria Land Intranet Web Site
-* C) Empiria Land Web Services Application
+* C) Empiria Land Web API (HTTP/RESTful based)
+* D) Empiria Land Web Services (XML based)
