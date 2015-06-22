@@ -120,7 +120,7 @@
                   <td>Estado</td>
                   <td>¿Qué desea hacer?</td>
                 </tr>
-                <%=RecordingActsGrid()%>
+                <%=GetRecordingActsGrid()%>
                 <tr class='totalsRow' style='display:<%=base.IsReadyToAppendRecordingActs() && base.RecordingActs.Count > 0 ? "inline" : "none"%>'>
                   <td>&nbsp;</td>
                   <td colspan='2'>

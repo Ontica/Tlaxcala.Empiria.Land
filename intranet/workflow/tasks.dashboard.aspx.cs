@@ -3,7 +3,7 @@
 *	 Solution  : Empiria® Land                                    System   : Land Intranet Application         *
 *	 Namespace : Empiria.Web.UI.Workflow                          Assembly : Empiria.Land.Intranet.dll         *
 *	 Type      : TasksDashboard                                   Pattern  : Explorer Web Page                 *
-*	 Date      : 04/Jan/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*	 Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
 *																																																						 *
 *  Summary   : Multiview dashboard used for workflow task management.                                        *
 *																																																						 *

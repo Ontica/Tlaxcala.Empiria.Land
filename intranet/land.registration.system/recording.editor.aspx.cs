@@ -3,7 +3,7 @@
 *	 Solution  : Empiria® Land                                    System   : Land Intranet Application         *
 *	 Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Intranet.dll         *
 *	 Type      : ObjectSearcher                                   Pattern  : Explorer Web Page                 *
-*	 Date      : 04/Jan/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*	 Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
 *																																																						 *
 *  Summary   : Gets user credentials and redirects users to the workplace start page.                        *
 *																																																						 *
@@ -180,8 +180,8 @@ namespace Empiria.Web.UI.LRS {
       }
     }
 
-    protected string RecordingActsGrid() {
-      return LRSGridControls.GetRecordingActsGrid(this.transaction.Document);
+    protected string GetRecordingActsGrid() {
+      return RecordingActsGrid.Parse(this.transaction.Document);
     }
 
     private void SetMessageBox(string msg) {

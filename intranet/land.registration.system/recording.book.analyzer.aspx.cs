@@ -3,7 +3,7 @@
 *	 Solution  : Empiria® Land                                    System   : Land Intranet Application         *
 *	 Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Intranet.dll         *
 *	 Type      : ObjectSearcher                                   Pattern  : Explorer Web Page                 *
-*	 Date      : 04/Jan/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*	 Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
 *																																																						 *
 *  Summary   : Gets user credentials and redirects users to the workplace start page.                        *
 *																																																						 *
@@ -432,19 +432,23 @@ namespace Empiria.Web.UI.LRS {
     }
 
     private void UpwardRecordingAct() {
-      int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
+      throw new NotImplementedException("OOJJOO");
 
-      RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
+      //int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
 
-      recording.Document.UpwardRecordingAct(recordingAct);
+      //RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
+
+      //recording.Document.UpwardRecordingAct(recordingAct);
     }
 
     private void DownwardRecordingAct() {
-      int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
+      throw new NotImplementedException("OOJJOO");
 
-      RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
+      //int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
 
-      recording.Document.DownwardRecordingAct(recordingAct);
+      //RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
+
+      //recording.Document.DownwardRecordingAct(recordingAct);
     }
 
     private void RegisterAsNoLegibleRecording(bool appendMode) {

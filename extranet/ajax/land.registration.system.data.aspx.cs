@@ -3,7 +3,7 @@
 *	 Solution  : Empiria® Land                                    System   : Land Extranet Application         *
 *	 Namespace : Empiria.Web.UI.Ajax                              Assembly : Empiria.Land.Extranet.dll         *
 *	 Type      : LandRegistrationSystemData                       Pattern  : Ajax Services Web Page            *
-*	 Date      : 04/Jan/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*	 Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
 *																																																						 *
 *  Summary   : Gets Empiria control contents through Ajax invocation.                                        *
 *																																																						 *

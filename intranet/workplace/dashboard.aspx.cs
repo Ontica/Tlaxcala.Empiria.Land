@@ -3,7 +3,7 @@
 *	 Solution  : Empiria® Land                                    System   : Land Intranet Application         *
 *	 Namespace : Empiria.Web.UI.Workplace                         Assembly : Empiria.Land.Intranet.dll         *
 *	 Type      : Dashboard                                        Pattern  : Dashboard Web Page                *
-*	 Date      : 04/Jan/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*	 Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
 *																																																						 *
 *  Summary   : Web page that serves as a canvas for display DashboardItem type elements.                     *
 *																																																						 *

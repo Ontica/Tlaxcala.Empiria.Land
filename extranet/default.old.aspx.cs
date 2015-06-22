@@ -3,7 +3,7 @@
 *	 Solution  : Empiria® Land                                    System   : Land Extranet Application         *
 *	 Namespace : Empiria.Land.Extranet                            Assembly : Empiria.Land.Extranet.dll         *
 *	 Type      : OLDLogonPage 										                Pattern  : Logon Web Page                    *
-*	 Date      : 04/Jan/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*	 Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
 *																																																						 *
 *  Summary   : Gets user credentials and redirects users to the workplace start page.                        *
 *																																																						 *
