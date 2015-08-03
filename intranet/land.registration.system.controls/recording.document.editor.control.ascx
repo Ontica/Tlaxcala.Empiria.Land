@@ -168,6 +168,7 @@
         <option value=''>( Seleccionar )</option>
         <option value='785'>Aclaración (corrección)</option>
         <option value='761'>Contrato de arrendamiento</option>
+        <option value='762'>Contrato de comodato</option>
         <option value='770'>Embargo</option>
         <option value='765'>Fianza</option>
         <option value='780'>Inmovilización de predio</option>
