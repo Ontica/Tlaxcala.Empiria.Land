@@ -247,7 +247,7 @@ namespace Empiria.Web.UI.FSM {
       x = x.Replace("{RECORDING.ACT}", recordingAct.RecordingActType.DisplayName);
 
       var antecedent = property.GetDomainAntecedent(recordingAct);
-      if (property.IsPartitionOf.IsEmptyInstance && antecedent.Equals(InformationAct.Empty)) {
+      if (property.IsPartitionOf.IsEmptyInstance && antecedent.Equals(RecordingAct.Empty)) {
         if (property.CadastralKey.Length != 0) {
           x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> (Clave catastral: <b>" +
                                           property.CadastralKey + "</b>) sin antecedente registral");
@@ -285,7 +285,7 @@ namespace Empiria.Web.UI.FSM {
 
       var antecedent = association.GetDomainAntecedent(recordingAct);
       string x = String.Empty;
-      if (antecedent.Equals(InformationAct.Empty)) {
+      if (antecedent.Equals(RecordingAct.Empty)) {
         x = actSC0.Replace("{INDEX}", index.ToString());
       } else if (antecedent.PhysicalRecording.IsEmptyInstance) {
         x = actSC1.Replace("{INDEX}", index.ToString());
