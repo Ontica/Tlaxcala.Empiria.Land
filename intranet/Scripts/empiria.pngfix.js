@@ -1,12 +1,12 @@
-﻿/* Empiria® **************************************************************************************************
+﻿/* Empiria ***************************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria® Web																			System   : Javascript Core Library					 *
+*	 Solution  : Empiria Web																			System   : Javascript Core Library					 *
 *	 File      : /pngfix.js																				Pattern  : JavaScript Methods Library				 *
-*	 Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*  Version   : 2.0                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   : Correctly handle PNG transparency in Windows Internet Explorer 5.5 & 6.0											 *
 *																																																						 *
-**************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 1994-2015. **/
+********************************** Copyright(c) 1994-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 
 // region Public methods
 

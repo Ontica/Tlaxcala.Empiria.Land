@@ -1,13 +1,13 @@
-﻿/* Empiria® Land 2015 ****************************************************************************************
+﻿/* Empiria Land **********************************************************************************************
 *																																																						 *
-*  Solution  : Empiria® Land                                    System   : Land Intranet Application         *
+*  Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *  Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Intranet.dll         *
 *  Type      : RecordingDocumentFullEditorControl               Pattern  : User Control                      *
-*  Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*  Version   : 2.0                                              License  : Please read license.txt file      *
 *                                                                                                            *
 *  Summary   : User control that handles recorder document edition.                                          *
 *																																																						 *
-**************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 2009-2015. **/
+********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 using System.Web.UI.WebControls;
 using Empiria.Contacts;

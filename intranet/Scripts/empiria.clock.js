@@ -1,12 +1,12 @@
-﻿/* Empiria® **************************************************************************************************
+﻿/* Empiria ***************************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria® Web																			System   : Javascript Core Library					 *
+*	 Solution  : Empiria Web																			System   : Javascript Core Library					 *
 *	 File      : /clock.js																				Pattern  : JavaScript Methods Library				 *
-*	 Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*  Version   : 2.0                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   : Displays the client system date-time in an html item.                                         *
 *																																																						 *
-**************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 1994-2015. **/
+********************************** Copyright(c) 1994-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 
 // region Public methods
 

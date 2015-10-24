@@ -1,13 +1,13 @@
-﻿/* Empiria® Land 2015 ****************************************************************************************
+﻿/* Empiria Land **********************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria® Land                                    System   : Land Intranet Application         *
+*	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *	 Namespace : Empiria.Web.UI.Workplace                         Assembly : Empiria.Land.Intranet.dll         *
 *	 Type      : Dashboard                                        Pattern  : Dashboard Web Page                *
-*	 Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*  Version   : 2.0                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   : Web page that serves as a canvas for display DashboardItem type elements.                     *
 *																																																						 *
-**************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 1994-2015. **/
+********************************** Copyright(c) 1994-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
 using Empiria.Presentation.Web;

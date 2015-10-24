@@ -1,12 +1,12 @@
-﻿/* Empiria® **************************************************************************************************
+﻿/* Empiria ***************************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria® Web																			System   : Javascript Core Library					 *
+*	 Solution  : Empiria Web																			System   : Javascript Core Library					 *
 *	 File      : /workplace/master_page.js											  Pattern  : JavaScript Methods Library				 *
-*	 Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*  Version   : 2.0                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   : Contains methods for workplace master page interaction.																			 *
 *																																																						 *
-**************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 1994-2015. **/
+********************************** Copyright(c) 1994-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 
 // region Public methods	
 
@@ -73,7 +73,7 @@ function setWorkplace() {
   resizeWorkplace();
   addEvent(window, 'resize', resizeWorkplace);
   setObjectEvents();
-  window.defaultStatus = ""; //"Sistema Empiria® 2015. Copyright © La Vía Óntica SC + Ontica LLC. 1994-2015.";
+  window.defaultStatus = ""; //"Sistema Empiria 2015. Copyright(c) 1999-2015. La Vía Óntica SC, Ontica LLC and contributors.";
 }
 
 function hideControlDivisions() {

@@ -1,13 +1,13 @@
-﻿/* Empiria® Land 2015 ****************************************************************************************
+﻿/* Empiria Land **********************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria® Land                                    System   : Land Intranet Application         *
+*	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *	 Namespace : Empiria.Web.UI.Workflow                          Assembly : Empiria.Land.Intranet.dll         *
 *	 Type      : TasksDashboard                                   Pattern  : Explorer Web Page                 *
-*	 Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*  Version   : 2.0                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   : Multiview dashboard used for workflow task management.                                        *
 *																																																						 *
-**************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 2009-2015. **/
+********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 using System.Data;
 using System.Web.UI;
@@ -120,7 +120,7 @@ namespace Empiria.Web.UI.LRS {
         LoadCombos();
       }
       if (txtFromDate.Value == String.Empty) {
-        txtFromDate.Value = DateTime.Parse("01/Jun/2013").ToString("dd/MMM/yyyy");
+        txtFromDate.Value = DateTime.Parse("01/Jun/2015").ToString("dd/MMM/yyyy");
       }
       if (txtToDate.Value == String.Empty) {
         txtToDate.Value = DateTime.Today.ToString("dd/MMM/yyyy");

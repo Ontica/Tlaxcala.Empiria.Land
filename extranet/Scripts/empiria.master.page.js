@@ -1,12 +1,12 @@
-﻿/* Empiria® **************************************************************************************************
+﻿/* Empiria ***************************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria® Web																			System   : Javascript Core Library					 *
+*	 Solution  : Empiria Web																			System   : Javascript Core Library					 *
 *	 File      : /workplace/master_page.js											  Pattern  : JavaScript Methods Library				 *
 *	 Date      : 25/Jun/2013                                      Version  : 2.0  License: LICENSE.TXT file    *
 *																																																						 *
 *  Summary   : Contains methods for workplace master page interaction.																			 *
 *																																																						 *
-***************************************************** Copyright © La Vía Óntica SC & Ontica LLC. 1994-2013. **/
+********************************** Copyright(c) 1999-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 
 // region Global variables
 

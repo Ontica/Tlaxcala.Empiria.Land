@@ -1,12 +1,12 @@
-﻿/* Empiria® **************************************************************************************************
+﻿/* Empiria ***************************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria® Web																			System   : Javascript Core Library					 *
+*	 Solution  : Empiria Web																			System   : Javascript Core Library					 *
 *	 File      : /general.js																			Pattern  : JavaScript Methods Library				 *
 *	 Date      : 25/Jun/2013                                      Version  : 2.0  License: LICENSE.TXT file    *
 *																																																						 *
 *  Summary   : Contains general methods for web browser javascript clients.																	 *
 *																																																						 *
-***************************************************** Copyright © La Vía Óntica SC & Ontica LLC. 1994-2013. **/
+********************************** Copyright(c) 1999-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 var gbSended = false;
 var gsWaitScreenMessage = "";
 

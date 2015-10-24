@@ -1,13 +1,13 @@
-﻿/* Empiria® Land 2015 ****************************************************************************************
+﻿/* Empiria Land **********************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria® Land                                    System   : Land Extranet Application         *
+*	 Solution  : Empiria Land                                     System   : Land Extranet Application         *
 *	 Namespace : Empiria.Web.UI.Ajax                              Assembly : Empiria.Land.Extranet.dll         *
 *	 Type      : LandRegistrationSystemData                       Pattern  : Ajax Services Web Page            *
-*	 Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*  Version   : 2.0                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   : Gets Empiria control contents through Ajax invocation.                                        *
 *																																																						 *
-**************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 2009-2015. **/
+********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 using System.Collections.Generic;
 

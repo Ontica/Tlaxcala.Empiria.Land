@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -457,23 +458,23 @@
       <Project>{f518e007-2b16-4804-ba45-695ea098e1c0}</Project>
       <Name>Empiria.Kernel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\empiria\extended\Documents\Empiria.Documents.csproj">
+    <ProjectReference Include="..\..\..\..\empiria\extensions\Documents\Empiria.Documents.csproj">
       <Project>{2bd53d27-bd61-49fe-afe1-d68e21f58e9a}</Project>
       <Name>Empiria.Documents</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\empiria\extended\Geography\Empiria.Geography.csproj">
+    <ProjectReference Include="..\..\..\..\empiria\extensions\Geography\Empiria.Geography.csproj">
       <Project>{96267945-dbe1-4b2c-88e2-0ecdc5ca7669}</Project>
       <Name>Empiria.Geography</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\empiria\extended\Presentation.Web\Empiria.Presentation.Web.csproj">
+    <ProjectReference Include="..\..\..\..\empiria\extensions\Presentation.Web\Empiria.Presentation.Web.csproj">
       <Project>{0aeea12e-b4f7-4e12-a768-99bb82bd3fc9}</Project>
       <Name>Empiria.Presentation.Web</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\empiria\extended\Presentation\Empiria.Presentation.csproj">
+    <ProjectReference Include="..\..\..\..\empiria\extensions\Presentation\Empiria.Presentation.csproj">
       <Project>{2790ad3e-0ae4-4c94-83ba-96bc53185b19}</Project>
       <Name>Empiria.Presentation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\empiria\extended\WebServices\Empiria.WebServices.csproj">
+    <ProjectReference Include="..\..\..\..\empiria\extensions\WebServices\Empiria.WebServices.csproj">
       <Project>{29b783cb-dc89-4156-b61c-a889365bc93e}</Project>
       <Name>Empiria.WebServices</Name>
     </ProjectReference>

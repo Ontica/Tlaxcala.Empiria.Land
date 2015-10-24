@@ -1,13 +1,13 @@
-﻿/* Empiria® Land 2015 ****************************************************************************************
+﻿/* Empiria Land **********************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria® Land                                    System   : Land Extranet Application         *
+*	 Solution  : Empiria Land                                     System   : Land Extranet Application         *
 *	 Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Extranet.dll         *
 *	 Type      : ObjectSearcher                                   Pattern  : Explorer Web Page                 *
-*	 Date      : 25/Jun/2015                                      Version  : 2.0  License: LICENSE.TXT file    *
+*  Version   : 2.0                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   : Gets user credentials and redirects users to the workplace start page.                        *
 *																																																						 *
-**************************************************** Copyright © La Vía Óntica SC + Ontica LLC. 2009-2015. **/
+********************************** Copyright(c) 1999-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 using Empiria.Land.Registration;
 using Empiria.Presentation.Web;
