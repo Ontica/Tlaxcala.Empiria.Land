@@ -176,8 +176,9 @@ namespace Empiria.Web.UI.Security {
       var apiKey = "48ebbebb-3409-4c91-a8b9-59fc269cfdec-717ae95719b3bcd064f193af448aaf7e20f8c780a4bcbb0ca4f0edd937ecde5e";
       string userName = txtUserName.Value;
       string password = txtNewPassword.Value;
+      string email = txtEmail.Value;
 
-      EmpiriaUser.ChangePassword(apiKey, userName, password);
+      EmpiriaUser.ChangePassword(apiKey, userName, email, password);
     }
 
     private void DeleteObject() {
