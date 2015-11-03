@@ -9,11 +9,14 @@
 *																																																						 *
 ********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
+using System.Data;
 
 using Empiria.Contacts;
+using Empiria.Data;
 using Empiria.DataTypes;
 using Empiria.Presentation.Web;
 using Empiria.Presentation.Web.Content;
+
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
 using Empiria.Land.UI;
@@ -398,6 +401,56 @@ namespace Empiria.Web.UI.LRS {
       onloadScript = @"alert('Este trámite fue copiado correctamente.\n\nEl nuevo trámite es el " + copy.UID +
                      @".\n\nAl cerrar esta ventana se mostrará el nuevo trámite.');";
       onloadScript += "doOperation('goToTransaction', " + copy.Id.ToString() + ");";
+    }
+
+    protected string GetCertificates() {
+      const string template = "<tr class='{CLASS}'><td>{{CERTIFICATE-UID}}</td>" +
+                              "<td style='white-space:normal'>{{TYPE}}</td>" +
+                              "<td>{{PROPERTY-UID}}</td>" +
+                              "<td style='white-space:normal;width:25%'>{{OWNER-NAME}}</td>" +
+                              "<td>{{ISSUED-BY}}</td>" +
+                              "<td>{{ISSUE-TIME}}</td>" +
+                              "<td>{{STATUS}}</td>" +
+                              "<td style='width:25%'>{{OPTIONS-COMBO}}</td>" +
+                              "</tr>";
+
+      var view = this.ReadTransactionCertificates();
+
+      string html = String.Empty;
+      for (int i = 0; i < view.Count; i++) {
+        string temp = template;
+        temp = temp.Replace("{CLASS}", ((i % 2) == 0) ? "detailsItem" : "detailsOddItem");
+        temp = temp.Replace("{{TYPE}}", (string) view[i]["CertificateType"]);
+        temp = temp.Replace("{{PROPERTY-UID}}", (string) view[i]["PropertyUID"]);
+        temp = temp.Replace("{{OWNER-NAME}}", (string) view[i]["OwnerName"]);
+
+        var issueTime = (DateTime) view[i]["IssueTime"];
+        var status = Convert.ToChar((string) view[i]["CertificateStatus"]);
+        if (issueTime != ExecutionServer.DateMaxValue) {
+          temp = temp.Replace("{{ISSUED-BY}}", (string) view[i]["IssuedBy"]);
+          temp = temp.Replace("{{ISSUE-TIME}}", issueTime.ToString("dd/MMM/yyyy HH:mm"));
+          temp = temp.Replace("{{STATUS}}", status == 'C' ? "Cerrado" : "Eliminado");
+          temp = temp.Replace("{{OPTIONS-COMBO}}", "{{VIEW-LINK}} &nbsp; &nbsp; |  &nbsp; &nbsp; {{OPEN-LINK}}");
+          temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE-UID}}')\">Ver o imprimir</a>");
+          temp = temp.Replace("{{OPEN-LINK}}", "<a href=\"javascript:doOperation('openCertificate', '{{CERTIFICATE-UID}}')\">Abrir para edición</a>");
+        } else {
+          temp = temp.Replace("{{ISSUED-BY}}", "&nbsp;");
+          temp = temp.Replace("{{ISSUE-TIME}}", "No emitido");
+          temp = temp.Replace("{{STATUS}}", "Pendiente");
+          temp = temp.Replace("{{OPTIONS-COMBO}}", "{{EDIT-LINK}} &nbsp; &nbsp; | &nbsp; &nbsp; {{DELETE-LINK}} ");
+          temp = temp.Replace("{{EDIT-LINK}}", "<a href=\"javascript:doOperation('editCertificate', '{{CERTIFICATE-UID}}')\">Editar</a>");
+          temp = temp.Replace("{{DELETE-LINK}}", "<a href=\"javascript:doOperation('deleteCertificate', '{{CERTIFICATE-UID}}')\">Eliminar</a>");
+        }
+        temp = temp.Replace("{{CERTIFICATE-UID}}", (string) view[i]["CertificateUID"]);
+        html += temp;
+      }
+      return html;
+    }
+
+    private DataView ReadTransactionCertificates() {
+      var op = DataOperation.Parse("qryLRSCertificatesByTransaction", transaction.Id);
+
+      return DataReader.GetDataView(op);
     }
 
     protected string GetRecordingActs() {

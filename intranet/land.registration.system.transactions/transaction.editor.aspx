@@ -307,15 +307,26 @@
           <div style="overflow:auto;width:100%;">
             <table class="details" style="width:97%">
               <tr class="detailsHeader">
-                <td>#Certif</td>
+                <td>#Certificado</td>
                 <td>Tipo de certificado</td>
                 <td>Predio</td>
                 <td>Interesado</td>
                 <td>Elaborado por</td>
+                <td>Fecha</td>
                 <td>Estado</td>
-                <td width="40%">Observaciones</td>
+                <td width="40%">¿Qué debo hacer?</td>
               </tr>
+              <%=GetCertificates()%>
             </table>
+          </div>
+          <div style="text-align: right">
+            <% if (!transaction.IsNew) { %>
+              <br />
+              <input class="button" type="button" value="Crear nuevo certificado" onclick="doOperation('createNewCertificate')" style="height:28px;width:132px" />
+              &nbsp; &nbsp;
+              <input class="button" type="button" value="Refrescar" onclick="doOperation('refreshCertificates')" style="height:28px;width:92px" />
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <% } %>
           </div>
         </td>
       </tr>
@@ -428,6 +439,21 @@
       case "appendPayment":
         appendPayment();
         return;
+      case "createNewCertificate":
+        createNewCertificate();
+        return;
+      case "viewCertificate":
+        viewCertificate(arguments[1]);
+        return;
+      case "editCertificate":
+        editCertificate(arguments[1]);
+        return;
+      case "deleteCertificate":
+        deleteCertificate(arguments[1]);
+        return;
+      case "openCertificate":
+        openCertificate(arguments[1]);
+        return;
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
@@ -436,6 +462,46 @@
       sendPageCommand(command);
       gbSended = true;
     }
+  }
+
+  var gCertificatesServerURL = "http://intranet.empiria.land/certificates/";
+
+  function createNewCertificate() {
+    var url= "transactionUID=<%=transaction.UID%>&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
+
+    window.open(gCertificatesServerURL + "/certificados.html?" + url);
+  }
+
+  function viewCertificate(certificateUID) {
+    var url= "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
+             "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
+
+    window.open(gCertificatesServerURL + "/editar.html?" + url);
+  }
+
+  function editCertificate(certificateUID) {
+    var url= "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
+             "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
+
+    window.open(gCertificatesServerURL + "/editar.html?" + url);
+  }
+
+  function deleteCertificate(certificateUID) {
+    var url= "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
+             "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
+
+    alert("Eliminar certificados todavía no está disponible.");
+    return;
+    window.open(gCertificatesServerURL + "?" + url);
+  }
+
+  function openCertificate(certificateUID) {
+    var url= "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
+             "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
+
+    alert("Reabrir certificados todavía no está disponible.");
+    return;
+    window.open(gCertificatesServerURL + "?" + url);
   }
 
   function appendPayment() {

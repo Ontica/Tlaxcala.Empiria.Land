@@ -1,10 +1,10 @@
 ﻿/* Empiria Land **********************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria Land                                     System   : Land Web API                      *
-*  Assembly  : Empiria.Land.WebApi.dll                          Pattern  : Assembly Attributes File			     *
+*  Solution  : Empiria Land                                     System   : Land Web Services                 *
+*  Assembly  : Empiria.Land.WebServices.dll                     Pattern  : Assembly Attributes File			     *
 *  Version   : 2.0                                              License  : Please read license.txt file      *
 *																																																						 *
-*  Summary   : Empiria Land Web API services.											                                           *
+*  Summary   : Empiria Land Web API services (to be deprecated in future versions).                          *
 *																																																						 *
 ********************************** Copyright(c) 1999-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
@@ -14,8 +14,8 @@ using System.Runtime.InteropServices;
 /*************************************************************************************************************
 * Assembly configuration attributes.																																	       *
 *************************************************************************************************************/
-[assembly: AssemblyTitle("Empiria.Land.WebApi.dll")]
-[assembly: AssemblyDescription("Empiria Land Web API services")]
+[assembly: AssemblyTitle("Empiria.Land.WebServices.dll")]
+[assembly: AssemblyDescription("Empiria Land Web Services (to be deprecated in future versions)")]
 [assembly: AssemblyVersion("2.0.1023.0")]
 [assembly: AssemblyFileVersion("2.0.1023")]
 [assembly: AssemblyCompany("La Vía Óntica, S.C.")]
