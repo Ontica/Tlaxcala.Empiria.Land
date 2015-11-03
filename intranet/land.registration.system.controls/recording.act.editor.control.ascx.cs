@@ -24,6 +24,27 @@ namespace Empiria.Web.UI.LRS {
       return RecorderExpert.Execute(task);
     }
 
+    public new bool IsReadyForEdition() {
+      if (this.Transaction.IsEmptyInstance) {
+        return false;
+      }
+      if (this.Transaction.Document.IsEmptyInstance) {
+        return false;
+      }
+      if (!(ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
+            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Certificates"))) {
+        return false;
+      }
+      if (!(this.Transaction.Status == TransactionStatus.Recording ||
+            this.Transaction.Status == TransactionStatus.Elaboration)) {
+        return false;
+      }
+      if (this.Transaction.Document.Status != RecordableObjectStatus.Incomplete) {
+        return false;
+      }
+      return true;
+    }
+
     private RecordingTask ParseRecordingTask() {
       Command command = base.GetCurrentCommand();
 

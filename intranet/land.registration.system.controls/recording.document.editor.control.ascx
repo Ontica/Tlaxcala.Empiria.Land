@@ -172,6 +172,7 @@
         <option value='770'>Embargo</option>
         <option value='765'>Fianza</option>
         <option value='780'>Inmovilización de predio</option>
+        <option value='786'>Solicitud de folio real</option>
       </select>
       <!--
         <option value='760'>Capitulación matrimonial</option>

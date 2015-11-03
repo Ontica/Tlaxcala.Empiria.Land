@@ -119,7 +119,8 @@ namespace Empiria.Web.UI.LRS {
       if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register")) {
         return false;
       }
-      if (transaction.Status != TransactionStatus.Recording) {
+      if (!(transaction.Status == TransactionStatus.Recording ||
+            transaction.Status == TransactionStatus.Elaboration)) {
         return false;
       }
       if (transaction.Document.IsEmptyInstance) {
@@ -132,7 +133,25 @@ namespace Empiria.Web.UI.LRS {
     }
 
     protected bool IsReadyToAppendRecordingActs() {
-      return oRecordingActEditor.IsReadyForEdition();
+      if (this.transaction.IsEmptyInstance) {
+        return false;
+      }
+      if (this.transaction.Document.IsEmptyInstance) {
+        return false;
+      }
+      if (!(ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
+            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Certificates"))) {
+        return false;
+      }
+      if (!(this.transaction.Status == TransactionStatus.Recording ||
+            this.transaction.Status == TransactionStatus.Elaboration)) {
+        return false;
+      }
+      if (this.transaction.Document.Status != RecordableObjectStatus.Incomplete) {
+        return false;
+      }
+      return true;
+      //return oRecordingActEditor.IsReadyForEdition();
     }
 
     protected bool IsReadyForPrintFinalSeal() {

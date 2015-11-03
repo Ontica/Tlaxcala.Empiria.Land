@@ -1057,7 +1057,13 @@
       getElement('cboRecordingActType').focus();
       return false;
     }
-
+    <%  if (base.Transaction.Status == Empiria.Land.Registration.Transactions.TransactionStatus.Elaboration) { %>
+    if (getElement('cboRecordingActType').value != "2201") {
+        alert("En elaboración de certificados sólo es posible agregar el acto 'Asignación de folio real'.");
+        getElement('cboRecordingActType').focus();
+        return false;
+      }
+    <% } %>
     if (getElement('cboPropertyTypeSelector').value.length == 0) {
       alert("Requiero se proporcione la información del predio sobre el que se aplicará el acto jurídico " + recordingAct + ".");
       getElement('cboPropertyTypeSelector').focus();
