@@ -222,6 +222,8 @@
               <option value="/286">/286</option><option value="/287">/287</option><option value="/288">/288</option><option value="/289">/289</option><option value="/290">/290</option>
               <option value="/291">/291</option><option value="/292">/292</option><option value="/293">/293</option><option value="/294">/294</option><option value="/295">/295</option>
               <option value="/296">/296</option><option value="/297">/297</option><option value="/298">/298</option><option value="/299">/299</option><option value="/300">/300</option>
+	            <option value="/301">/301</option><option value="/302">/302</option><option value="/303">/303</option><option value="/304">/304</option><option value="/305">/305</option>
+              <option value="/450">/450</option>
             </select>
             <select id="cboQuickAddBisRecordingTag" class="selectBox" style="width:60px" title="">
               <option value=""></option>
@@ -403,6 +405,7 @@
               <option value="/286">/286</option><option value="/287">/287</option><option value="/288">/288</option><option value="/289">/289</option><option value="/290">/290</option>
               <option value="/291">/291</option><option value="/292">/292</option><option value="/293">/293</option><option value="/294">/294</option><option value="/295">/295</option>
               <option value="/296">/296</option><option value="/297">/297</option><option value="/298">/298</option><option value="/299">/299</option><option value="/300">/300</option>
+	            <option value="/301">/301</option><option value="/302">/302</option><option value="/303">/303</option><option value="/304">/304</option><option value="/305">/305</option>
             </select>
             <select id="cboTargetActBisRecordingTag" class="selectBox" style="width:60px" title="">
               <option value=""></option>

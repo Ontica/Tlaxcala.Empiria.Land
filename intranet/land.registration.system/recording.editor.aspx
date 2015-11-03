@@ -71,9 +71,9 @@
       <span id="spanRecordingDocumentEditor" runat="server"></span>
       <table class="editionTable">
         <tr>
-          <td>Descripción:<br /><br /><br /><br /><br /><br />&nbsp;</td>
+          <td>Descripción:<br /><br /><br /><br /><br /><br /><br /><br /><br />&nbsp;</td>
           <td colspan="2" class="lastCell">
-            <textarea id="txtObservations" name="txtObservations" class="textArea" style="width:658px" cols="320" rows="6" runat="server"></textarea>
+            <textarea id="txtObservations" name="txtObservations" class="textArea" style="width:698px" cols="348" rows="10" runat="server"></textarea>
           </td>
         </tr>
         <tr id="rowEditButtons" style="display:inline">
