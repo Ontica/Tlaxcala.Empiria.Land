@@ -214,7 +214,7 @@ namespace Empiria.Web.UI.FSM {
         x = act02.Replace("{INDEX}", index.ToString());
       } else {
         var partitionAntecedent = property.IsPartitionOf.GetDomainAntecedent(recordingAct);
-        var ante = property.IsPartitionOf.GetAntecedent(recordingAct);
+
         //var isLotification = (ante.RecordingActType.Id == 2374) || (partitionAntecedent.RecordingActType.Id == 2374);
         //isLotification = ;
         if (property.PartitionNo.StartsWith("Lote")) {
@@ -283,7 +283,7 @@ namespace Empiria.Web.UI.FSM {
                             "la {PROPERTY.KIND} denominada <b>{ASSOCIATION.NAME}</b>, con folio único <b>{PROPERTY.UID}</b> y " +
                             "antecedente de inscripción en {ANTECEDENT}.<br/>";
 
-      var antecedent = association.GetDomainAntecedent(recordingAct);
+      var antecedent = association.GetIncorporationAct();
       string x = String.Empty;
       if (antecedent.Equals(RecordingAct.Empty)) {
         x = actSC0.Replace("{INDEX}", index.ToString());

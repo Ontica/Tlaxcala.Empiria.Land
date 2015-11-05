@@ -33,7 +33,7 @@ namespace Empiria.Web.UI.LRS {
         this.Visible = false;
         return string.Empty;
       }
-      RecordingAct antecedent = property.GetAntecedent(baseRecordingAct);
+      RecordingAct antecedent = property.GetDomainAntecedent(baseRecordingAct);
 
       return LRSGridControls.GetRecordingActPartiesGrid(antecedent, true);
     }
