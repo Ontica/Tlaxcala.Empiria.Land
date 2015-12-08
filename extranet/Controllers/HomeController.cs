@@ -41,7 +41,7 @@ namespace Empiria.Land.Extranet.Controllers {
         PresentationTime = o.PresentationTime.ToString("dd/MMM/yyyy HH:mm:ss"),
         ClosingTime = o.ClosingTime.ToString("dd/MMM/yyyy HH:mm"),
         ReceiptTotal = o.Items.TotalFee.Total.ToString("C2"),
-        StatusName = LRSTransaction.StatusName(o.Status),
+        StatusName = LRSTransaction.GetStatusName(o.Status),
         DeliveryEstimatedDate = GetDeliveryEstimatedDate(o)
       };
       return base.Json(result, JsonRequestBehavior.AllowGet);

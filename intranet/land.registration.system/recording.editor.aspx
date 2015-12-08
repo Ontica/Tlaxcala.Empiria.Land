@@ -110,7 +110,7 @@
       <table class="editionTable">
         <tr>
           <td class="lastCell">
-            <div style="overflow:auto;width:780px;">
+            <div style="overflow:scroll;max-height:900px;width:780px;">
               <table class="details"style="width:99%">
                 <tr class="detailsHeader">
                   <td>#</td>
@@ -284,8 +284,8 @@
   }
 
   function showSearchRecordingsView() {
-    //var url = "../land.registration.system/search.data.aspx";
-    var url = "http://192.168.1.22/anotaciones/Home.aspx";
+    var url = "http://192.168.1.22/anotaciones/Home2015.aspx";
+
     createNewWindow(url);
   }
 

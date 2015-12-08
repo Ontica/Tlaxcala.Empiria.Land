@@ -1,12 +1,12 @@
-﻿/* Empiria Land **********************************************************************************************
-*																																																						 *
-*	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
-*	 Namespace : Empiria.Web.UI.Ajax                              Assembly : Empiria.Land.Intranet.dll         *
-*	 Type      : LandRegistrationSystemData                       Pattern  : Ajax Services Web Page            *
-*  Version   : 2.0                                              License  : Please read license.txt file      *
-*																																																						 *
-*  Summary   : Gets Empiria control contents through Ajax invocation.                                        *
-*																																																						 *
+﻿/* Empiria Land *********************************************************************************************
+*                                                                                                           *
+* Solution  : Empiria Land                                     System   : Land Intranet Application         *
+* Namespace : Empiria.Web.UI.Ajax                              Assembly : Empiria.Land.Intranet.dll         *
+* Type      : LandRegistrationSystemData                       Pattern  : Ajax Services Web Page            *
+* Version   : 2.0                                              License  : Please read license.txt file      *
+* 																																																					*
+* Summary   : Gets Empiria control contents through Ajax invocation.                                        *
+*																																																						*
 ********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
@@ -143,7 +143,7 @@ namespace Empiria.Web.UI.Ajax {
 
       var section = recordingActType.RecordingRule.RecordingSection;
 
-      string html =HtmlSelectContent.GetComboAjaxHtmlItem("", "( Seleccionar el distrito y sección )");
+      string html = HtmlSelectContent.GetComboAjaxHtmlItem("", "( Seleccionar el distrito y sección )");
       if (recordingActType.RecordingRule.IsAnnotation) {
         html += "|" + HtmlSelectContent.GetComboAjaxHtmlItem("annotation", "Registrado al margen");
       }
@@ -154,6 +154,10 @@ namespace Empiria.Web.UI.Ajax {
 
       } else if (section != RecordingSection.Empty && section.Id == 1052) {
         var list = GeneralList.Parse("LRSLimitationSection.Combo.List");
+        html += "|" + HtmlSelectContent.GetComboAjaxHtml(list.GetItems<NameValuePair>(), 0,
+                                                         "Value", "Name");
+      } else if (section != RecordingSection.Empty && section.Id == 1054) {
+        var list = GeneralList.Parse("LRSSectionFourth.Combo.List");
         html += "|" + HtmlSelectContent.GetComboAjaxHtml(list.GetItems<NameValuePair>(), 0,
                                                          "Value", "Name");
       }
@@ -172,7 +176,7 @@ namespace Empiria.Web.UI.Ajax {
       var list = resource.GetRecordingActsTract();
 
       return HtmlSelectContent.GetComboAjaxHtml<RecordingAct>(list.FindAll((x) => appliesTo.Contains(x.RecordingActType)),
-                                "Id", (x)=> x.RecordingActType.DisplayName + " " + x.Document.UID + " " +
+                                "Id", (x) => x.RecordingActType.DisplayName + " " + x.Document.UID + " " +
                                        x.Document.AuthorizationTime + " " + x.AmendedBy.Id + " " + x.StatusName,
                                 "( Seleccionar el acto jurídico )");
       //return "<tr id='tblTargetPrecedentActsTable' class='totalsRow' style='display:inline'><td>&nbsp;</td><td colspan='5'>Hello world</td></tr>";
@@ -290,6 +294,12 @@ namespace Empiria.Web.UI.Ajax {
       } else if (recordingResources.Count >= 2) {
         html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar el predio )");
       }
+      //if (recordingResources.Count == 0) {
+      //  html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "Sin predios asociados");
+      //} else {
+      //  html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar el predio )");
+      //  html += "|" + HtmlSelectContent.GetComboAjaxHtmlItem("0", "Crear otro predio en la partida " + recording.Number);
+      //}
       foreach (Resource resource in recordingResources) {
         if (html.Contains(resource.UID)) {
           continue;
@@ -429,7 +439,6 @@ namespace Empiria.Web.UI.Ajax {
       int partyTypeId = int.Parse(GetCommandParameter("partyTypeId", false, "0"));
       string partyFilter = GetCommandParameter("filterType", true);
       string keywords = GetCommandParameter("keywords", false, String.Empty);
-
 
       RecordingAct recordingAct = RecordingAct.Parse(recordingActId);
       PartyFilterType partyFilterType = (PartyFilterType) System.Enum.Parse(typeof(PartyFilterType), partyFilter);

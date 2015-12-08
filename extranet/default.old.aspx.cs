@@ -107,7 +107,7 @@ namespace Empiria.Land.Extranet {
         viewResultFlag = false;
         return;
       }
-      lblTransactionState.InnerText = LRSTransaction.StatusName(t.Status);
+      lblTransactionState.InnerText = LRSTransaction.GetStatusName(t.Status);
       if (t.Status == TransactionStatus.Delivered) {
         lblTransactionDelivery.InnerText = t.ClosingTime.ToString("dd/MMM/yyyy");
         isFinished = true;
