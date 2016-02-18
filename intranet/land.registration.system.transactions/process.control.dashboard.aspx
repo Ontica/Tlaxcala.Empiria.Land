@@ -19,7 +19,7 @@
       <td nowrap="nowrap">Trámite:</td>
       <td nowrap="nowrap">
 				<select id="cboProcessType" class="selectBox" style="width:176px" runat="server" onchange="doOperation('updateUserInterface', this);">
-          <option value=''>( Todos los trámites )</option><option value='700'>Inscripción de documentos</option><option value='702'>Expedición de certificados</option>
+          <option value=''>( Todos los trámites )</option><option value='699'>Avisos preventivos y definitivos</option><option value='700'>Inscripción de documentos</option><option value='702'>Expedición de certificados</option>
           <option value='707'>Procede</option><option value='704'>Trámite Comercio</option><option value='705'>Archivo General de Notarías</option><option value='706'>Oficialía de partes</option>
 				</select>
         <span style="display:<%=base.SelectedTabStrip != 5 ? "inline" : "none" %>">
@@ -89,6 +89,7 @@
 	        <option value="145">Oficialía de partes</option>
 	        <option value="147">Oficina del C. Director</option>
 	        <option value="154">Jurídico</option>
+          <option value="99">Mesa trámites CITyS</option>
 	        <option value=""> </option>
 	        <option value="139">Asoc civiles y créditos particulares (Rosario)</option>
           <option value="142">Avisos preventivos (Gregoria)</option>

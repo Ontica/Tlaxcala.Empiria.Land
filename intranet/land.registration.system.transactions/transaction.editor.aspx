@@ -93,6 +93,7 @@
 	            <option value="145">Oficialía de partes</option>
 	            <option value="147">Oficina del C. Director</option>
 	            <option value="154">Jurídico</option>
+              <option value="99">Mesa trámites CITyS</option>
 	            <option value=""> </option>
 	            <option value="139">Asoc civiles y créditos particulares (Rosario)</option>
               <option value="142">Avisos preventivos (Gregoria)</option>

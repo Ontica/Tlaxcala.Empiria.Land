@@ -394,7 +394,7 @@ namespace Empiria.Web.UI.FSM {
 
     protected string GetRecordingSignerName() {
       if (ExecutionServer.LicenseName == "Tlaxcala") {
-        return "Lic. Sergio Cuauhtémoc Lima López";
+        return "Mtro. Sergio Cuauhtémoc Lima López";
       } else {
         return "Lic. Teresa de Jesús Alvarado Ortiz";
       }

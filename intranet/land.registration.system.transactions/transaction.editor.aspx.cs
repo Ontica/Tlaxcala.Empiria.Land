@@ -459,7 +459,8 @@ namespace Empiria.Web.UI.LRS {
                               "<td align='right'>{REC.RIGHTS}</td>" +
                               "<td align='right'>{SHEETS}</td><td align='right'>{FOREIGN}</td>" +
                               "<td align='right'>{SUBTOTAL}</td><td align='right'>{DISCOUNT}</td><td align='right'><b>{TOTAL}</b></td>" +
-                              "<td><img src='../themes/default/buttons/trash.gif' alt='' onclick='return doOperation(\"deleteRecordingAct\", {ID})'</td></tr>";
+                              "{DELETE.CELL}";
+      const string deleteCell = "<td><img src='../themes/default/buttons/trash.gif' alt='' onclick='return doOperation(\"deleteRecordingAct\", {ID})'</td></tr>";
 
       const string footer = "<tr class='totalsRow'><td>&nbsp;</td><td colspan='2'>{MESSAGE}</td><td colspan='6' align='right'><b>Total:</b></td><td align='right'><b>{TOTAL}</b></td><td>&nbsp;</td></tr>";
       decimal total = 0;
@@ -479,6 +480,12 @@ namespace Empiria.Web.UI.LRS {
         temp = temp.Replace("{SUBTOTAL}", list[i].Fee.SubTotal.ToString("N2"));
         temp = temp.Replace("{DISCOUNT}", list[i].Fee.Discount.Amount.ToString("N2"));
         temp = temp.Replace("{TOTAL}", list[i].Fee.Total.ToString("C2"));
+
+        if (this.IsEditable()) {
+          temp = temp.Replace("{DELETE.CELL}", deleteCell);
+        } else {
+          temp = temp.Replace("{DELETE.CELL}", "&nbsp;");
+        }
         temp = temp.Replace("{ID}", list[i].Id.ToString());
 
         html += temp;
@@ -582,23 +589,18 @@ namespace Empiria.Web.UI.LRS {
       int treasuryCodeId = int.Parse(Request.Form[cboLawArticle.ClientID]);
       Money operationValue = Money.Parse(decimal.Parse(txtOperationValue.Value));
 
-      LRSTransactionItem act = this.transaction.AddItem(RecordingActType.Parse(recordingActTypeId),
-                                                        LRSLawArticle.Parse(treasuryCodeId), operationValue,
-                                                        Quantity.Parse(DataTypes.Unit.Empty, 1m), fee);
-
-      act.Save();
-      transaction.Save();
+      this.transaction.AddItem(RecordingActType.Parse(recordingActTypeId),
+                               LRSLawArticle.Parse(treasuryCodeId), operationValue,
+                               Quantity.Parse(DataTypes.Unit.Empty, 1m), fee);
     }
 
     private void AppendConcept(int conceptTypeId, int lawArticleId, decimal amount) {
       var fee = new LRSFee();
       fee.RecordingRights = amount;
 
-      LRSTransactionItem act = this.transaction.AddItem(RecordingActType.Parse(conceptTypeId),
+      this.transaction.AddItem(RecordingActType.Parse(conceptTypeId),
                                                         LRSLawArticle.Parse(lawArticleId), Money.Empty,
                                                         Quantity.Parse(DataTypes.Unit.Empty, 1m), fee);
-      act.Save();
-      transaction.Save();
     }
 
     private LRSFee ParseFee() {

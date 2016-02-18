@@ -2,7 +2,7 @@
   <%=((Empiria.Presentation.Web.MultiViewDashboard) this.Page).ViewTitle%>
   <tr>
     <th>
-			<a href="javascript:sendPageCommand('sortData', 'TransactionUID ASC')">trámite</a> /
+			<a href="javascript:sendPageCommand('sortData', 'TransactionUID ASC')">Trámite</a> /
 			<a href="javascript:sendPageCommand('sortData', 'DocumentUID DESC')">Documento</a> /
 			<a href="javascript:sendPageCommand('sortData', 'TransactionType DESC')">Tipo trámite</a> /
 			<a href="javascript:sendPageCommand('sortData', 'RecorderOffice DESC')">Distrito</a> /
