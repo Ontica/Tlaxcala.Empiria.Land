@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" EnableViewState="true" ViewStateMode="Disabled" EnableSessionState="true" MasterPageFile="~/workplace/dashboard.master" Inherits="Empiria.Web.UI.LRS.ProcessControlDashboard" CodeFile="process.control.dashboard.aspx.cs" %>
+﻿<%@ Page Language="C#" EnableViewState="true" ViewStateMode="Disabled" EnableSessionState="true" MasterPageFile="~/workplace/dashboard.master" Inherits="Empiria.Land.WebApp.ProcessControlDashboard" CodeFile="process.control.dashboard.aspx.cs" %>
 <asp:Content ID="dashboardItem" ContentPlaceHolderID="dashboardItemPlaceHolder" runat="Server" EnableViewState="true">
 <table id="tblDashboardMenu" class="tabStrip" style='display:<%=base.ShowTabStripMenu ? "inline" : "none"%>'>
   <tr>
@@ -218,9 +218,7 @@
   }
 
   function showSearchRecordingsView() {
-    var url = "http://192.168.1.22/anotaciones/Home2015.aspx";
-
-    createNewWindow(url);
+    createNewWindow("<%=base.GetLegacyDataViewerUrl()%>");
   }
 
   function executeWorkflowTask(workflowTaskName, objectId) {

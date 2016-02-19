@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Web.UI.LRS.RecordingPartyEditorControl" CodeFile="recording.party.editor.control.ascx.cs" %>
+﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Land.WebApp.RecordingPartyEditorControl" CodeFile="recording.party.editor.control.ascx.cs" %>
 <table id="tblPartySeacher" class="editionTable" style="margin-top:-12px;display:none;" runat="server">
   <tr>
     <td>

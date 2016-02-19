@@ -3,7 +3,7 @@
 using Empiria.Land.Registration;
 using Empiria.Land.UI;
 
-namespace Empiria.Web.UI.LRS {
+namespace Empiria.Land.WebApp {
 
   public partial class RecordingPartyViewerControl : System.Web.UI.UserControl {
 
@@ -44,4 +44,4 @@ namespace Empiria.Web.UI.LRS {
 
   } // class RecordingPartyViewerControl
 
-} // namespace Empiria.Web.UI.LRS
+} // namespace Empiria.Land.WebApp

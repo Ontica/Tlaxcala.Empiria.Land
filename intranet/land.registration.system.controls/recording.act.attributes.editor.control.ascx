@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Web.UI.LRS.RecordingActAttributesEditorControl" CodeFile="recording.act.attributes.editor.control.ascx.cs" %>
+﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Land.WebApp.RecordingActAttributesEditorControl" CodeFile="recording.act.attributes.editor.control.ascx.cs" %>
 <tr id="creditFieldsRow1" visible="false" runat="server">
   <td>
     Fecha del contrato:

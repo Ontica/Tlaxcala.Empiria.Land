@@ -122,6 +122,16 @@
       "type": "Data",
       "key": "DataTechnology.Default",
       "value": 1
+    },
+    {
+      "type": "Land.WebApp",
+      "key": "CertificatesSystem.Url",
+      "value": "http://intranet.empiria.land/certificates/"
+    },
+    {
+      "type": "Land.WebApp",
+      "key": "LegacyDataViewer.Url",
+      "value": "http://192.168.1.22/anotaciones/Home2015.aspx"
     }
   ]
 }

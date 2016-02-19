@@ -18,7 +18,7 @@ using Empiria.Land.UI;
 using Empiria.Presentation;
 using Empiria.Presentation.Web;
 
-namespace Empiria.Web.UI.LRSAnalytics {
+namespace Empiria.Land.WebApp {
 
   public partial class DailyHistoricRecordingDashboard : MultiViewDashboard {
 
@@ -130,4 +130,4 @@ namespace Empiria.Web.UI.LRSAnalytics {
 
   } // class DailyHistoricRecordingDashboard
 
-} // namespace Empiria.Web.UI.LRSAnalytics
+} // namespace Empiria.Land.WebApp

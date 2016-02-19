@@ -1,26 +1,20 @@
 ﻿/* Empiria Land **********************************************************************************************
 *																																																						 *
 *	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
-*	 Namespace : Empiria.Web.UI.LRS                               Assembly : Empiria.Land.Intranet.dll         *
+*	 Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
 *	 Type      : LRSSearchData                                    Pattern  : Editor Page                       *
 *  Version   : 2.0                                              License  : Please read license.txt file      *
-*																																																						 *
-*  Summary   : Land Registration System Transaction Editor.                                                  *
-*																																																						 *
+*                                                                                                            *
+*  Summary   :                                                                                               *
+*                                                                                                            *
 ********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
-using System.Collections.Generic;
-using System.Web.UI.WebControls;
 
-using Empiria.Contacts;
-using Empiria.DataTypes;
 using Empiria.Presentation.Web;
 using Empiria.Presentation.Web.Content;
-using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
-using Empiria.Land.UI;
 
-namespace Empiria.Web.UI.LRS {
+namespace Empiria.Land.WebApp {
 
   public partial class LRSSearchData : WebPage {
 
@@ -69,15 +63,13 @@ namespace Empiria.Web.UI.LRS {
       HtmlSelectContent.LoadCombo(this.cboManagementAgency, LRSTransaction.GetAgenciesList(),
                                   "Id", "Alias", "( Seleccionar notaría/agencia que tramita )");
 
-
       //txtOfficeNotes.Value = transaction.ExtensionData.OfficeNotes;
-
     }
 
     protected string GetTitle() {
       return "Consulta de información registral";
     }
 
-  } // class ObjectEditor
+  } // class LRSSearchData
 
-} // namespace Empiria.Web.UI.Editors
+} // namespace Empiria.Land.WebApp

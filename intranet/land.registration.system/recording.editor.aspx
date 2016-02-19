@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Web.UI.LRS.RecordingEditor" CodeFile="recording.editor.aspx.cs" %>
+﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.RecordingEditor" CodeFile="recording.editor.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="RecordingActAttributesEditorControl" src="../land.registration.system.controls/recording.act.attributes.editor.control.ascx" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyEditorControl" src="../land.registration.system.controls/recording.party.editor.control.ascx" %>
@@ -284,9 +284,7 @@
   }
 
   function showSearchRecordingsView() {
-    var url = "http://192.168.1.22/anotaciones/Home2015.aspx";
-
-    createNewWindow(url);
+    createNewWindow("<%=base.GetLegacyDataViewerUrl()%>");
   }
 
   function viewGlobalRecordingSeal() {

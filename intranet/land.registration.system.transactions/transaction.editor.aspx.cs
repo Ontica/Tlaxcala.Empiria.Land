@@ -21,7 +21,7 @@ using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
 using Empiria.Land.UI;
 
-namespace Empiria.Web.UI.LRS {
+namespace Empiria.Land.WebApp {
 
   public partial class LRSTransactionEditor : WebPage {
 
@@ -187,6 +187,10 @@ namespace Empiria.Web.UI.LRS {
         return true;
       }
       return false;
+    }
+
+    protected string GetCertificatesSystemUrl() {
+      return ConfigurationData.GetString("CertificatesSystem.Url");
     }
 
     protected bool IsReadyForReception() {
@@ -639,6 +643,6 @@ namespace Empiria.Web.UI.LRS {
       }
     }
 
-  } // class ObjectEditor
+  } // class TransactionEditor
 
-} // namespace Empiria.Web.UI.Editors
+} // namespace Empiria.Land.WebApp

@@ -1,18 +1,18 @@
 ﻿/* Empiria Land **********************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
-*	 Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Intranet.dll         *
-*	 Type      : ObjectSearcher                                   Pattern  : Explorer Web Page                 *
+*  Solution  : Empiria Land                                     System   : Land Intranet Application         *
+*  Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
+*  Type      : DirectoryImageViewer                             Pattern  : Explorer Web Page                 *
 *  Version   : 2.0                                              License  : Please read license.txt file      *
-*																																																						 *
+*                                                                                                            *
 *  Summary   : Gets user credentials and redirects users to the workplace start page.                        *
-*																																																						 *
+*                                                                                                            *
 ********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 using Empiria.Land.Registration;
 using Empiria.Presentation.Web;
 
-namespace Empiria.Web.UI.LRS {
+namespace Empiria.Land.WebApp {
 
   public partial class DirectoryImageViewer : WebPage {
 
@@ -140,4 +140,4 @@ namespace Empiria.Web.UI.LRS {
 
   } // class DirectoryImageViewer
 
-} // namespace Empiria.Web.UI.LRS
+} // namespace Empiria.Land.WebApp

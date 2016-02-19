@@ -1,4 +1,4 @@
-﻿<%@ Page language="c#" Inherits="Empiria.Web.UI.LRS.LRSTransactionEditor" EnableViewState="true" EnableSessionState="true" CodeFile="transaction.editor.aspx.cs" %>
+﻿<%@ Page language="c#" Inherits="Empiria.Land.WebApp.LRSTransactionEditor" EnableViewState="true" EnableSessionState="true" CodeFile="transaction.editor.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingActSelectorControl" src="../land.registration.system.controls/recording.act.selector.control.ascx" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -465,26 +465,26 @@
     }
   }
 
-  var gCertificatesServerURL = "http://intranet.empiria.land/certificates/";
+  var gCertificatesServerURL = "<%=base.GetCertificatesSystemUrl()%>";
 
   function createNewCertificate() {
     var url= "transactionUID=<%=transaction.UID%>&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
 
-    window.open(gCertificatesServerURL + "/certificados.html?" + url);
+    window.open(gCertificatesServerURL + "certificados.html?" + url);
   }
 
   function viewCertificate(certificateUID) {
     var url= "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
              "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
 
-    window.open(gCertificatesServerURL + "/editar.html?" + url);
+    window.open(gCertificatesServerURL + "editar.html?" + url);
   }
 
   function editCertificate(certificateUID) {
     var url= "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
              "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
 
-    window.open(gCertificatesServerURL + "/editar.html?" + url);
+    window.open(gCertificatesServerURL + "editar.html?" + url);
   }
 
   function deleteCertificate(certificateUID) {
@@ -493,7 +493,6 @@
 
     alert("Eliminar certificados todavía no está disponible.");
     return;
-    window.open(gCertificatesServerURL + "?" + url);
   }
 
   function openCertificate(certificateUID) {
@@ -502,7 +501,6 @@
 
     alert("Reabrir certificados todavía no está disponible.");
     return;
-    window.open(gCertificatesServerURL + "?" + url);
   }
 
   function appendPayment() {

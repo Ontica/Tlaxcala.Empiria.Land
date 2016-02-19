@@ -1,10 +1,10 @@
 ﻿/* Empiria Land **********************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
-*	 Namespace : Empiria.Web.UI.Workflow                          Assembly : Empiria.Land.Intranet.dll         *
-*	 Type      : TasksDashboard                                   Pattern  : Explorer Web Page                 *
+*  Solution  : Empiria Land                                     System   : Land Intranet Application         *
+*  Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
+*  Type      : TasksDashboard                                   Pattern  : Explorer Web Page                 *
 *  Version   : 2.0                                              License  : Please read license.txt file      *
-*																																																						 *
+*                                                                                                            *
 *  Summary   : Multiview dashboard used for workflow task management.                                        *
 *																																																						 *
 ********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
@@ -18,7 +18,7 @@ using Empiria.Land.Registration.Transactions;
 using Empiria.Presentation.Web;
 using Empiria.Presentation.Web.Content;
 
-namespace Empiria.Web.UI.LRS {
+namespace Empiria.Land.WebApp {
 
   public partial class ProcessControlDashboard : MultiViewDashboard {
 
@@ -139,6 +139,10 @@ namespace Empiria.Web.UI.LRS {
 
       HtmlSelectContent.LoadCombo(this.cboResponsible, view, "ResponsibleId", "Responsible",
                                   "( Todos los responsables )", String.Empty, String.Empty);
+    }
+
+    protected string GetLegacyDataViewerUrl() {
+      return ConfigurationData.GetString("LegacyDataViewer.Url");
     }
 
     protected sealed override void SetRepeaterTemplates() {
@@ -298,4 +302,4 @@ namespace Empiria.Web.UI.LRS {
 
   } // class ProcessControlDashboard
 
-} // namespace Empiria.Web.UI.LRS
+} // namespace Empiria.Land.WebApp

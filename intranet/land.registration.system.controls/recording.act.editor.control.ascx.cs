@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
 using Empiria.Land.UI;
-using Empiria.Presentation;
 using Empiria.Presentation.Web;
-using Empiria.Presentation.Web.Content;
 
-namespace Empiria.Web.UI.LRS {
+namespace Empiria.Land.WebApp {
 
   public partial class RecordingActEditorControl : RecordingActEditorControlBase {
 
@@ -98,4 +94,4 @@ namespace Empiria.Web.UI.LRS {
 
   } // class RecordingActEditorControl
 
-} // namespace Empiria.Web.UI.LRS
+} // namespace Empiria.Land.WebApp

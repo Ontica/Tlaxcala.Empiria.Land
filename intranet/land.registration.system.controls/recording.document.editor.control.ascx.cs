@@ -1,7 +1,7 @@
 ﻿/* Empiria Land **********************************************************************************************
 *																																																						 *
 *  Solution  : Empiria Land                                     System   : Land Intranet Application         *
-*  Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Intranet.dll         *
+*  Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
 *  Type      : RecordingDocumentFullEditorControl               Pattern  : User Control                      *
 *  Version   : 2.0                                              License  : Please read license.txt file      *
 *                                                                                                            *
@@ -18,7 +18,7 @@ using Empiria.Land.UI;
 using Empiria.Ontology;
 using Empiria.Presentation.Web.Content;
 
-namespace Empiria.Web.UI.LRS {
+namespace Empiria.Land.WebApp {
 
   public partial class RecordingDocumentFullEditorControl : LRSDocumentEditorControl {
 
@@ -299,4 +299,4 @@ namespace Empiria.Web.UI.LRS {
 
   } // class RecordingDocumentEditorControl
 
-} // namespace Empiria.Web.UI.LRS
+} // namespace Empiria.Land.WebApp

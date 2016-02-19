@@ -16,7 +16,7 @@ using Empiria.Contacts;
 using Empiria.Land.Registration.Data;
 using Empiria.Land.Registration.Transactions;
 
-namespace Empiria.Web.UI.FSM {
+namespace Empiria.Land.WebApp {
 
   public partial class TransactionReport : System.Web.UI.Page {
 

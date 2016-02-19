@@ -5,7 +5,7 @@ using Empiria.DataTypes;
 using Empiria.Geography;
 using Empiria.Land.Registration;
 
-namespace Empiria.Web.UI.LRS {
+namespace Empiria.Land.WebApp {
 
   public partial class RecordingActAttributesEditorControl : System.Web.UI.UserControl {
 
@@ -155,4 +155,4 @@ namespace Empiria.Web.UI.LRS {
 
   } // class RecordingActAttributesEditorControl
 
-} // namespace Empiria.Web.UI.LRS
+} // namespace Empiria.Land.WebApp

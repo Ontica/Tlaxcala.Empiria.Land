@@ -1,12 +1,12 @@
 ﻿/* Empiria Land **********************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
-*	 Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Intranet.dll         *
-*	 Type      : ObjectSearcher                                   Pattern  : Explorer Web Page                 *
+*  Solution  : Empiria Land                                     System   : Land Intranet Application         *
+*  Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
+*  Type      : RecordingSeal                                    Pattern  : Explorer Web Page                 *
 *  Version   : 2.0                                              License  : Please read license.txt file      *
 *																																																						 *
-*  Summary   : Gets user credentials and redirects users to the workplace start page.                        *
-*																																																						 *
+*  Summary   : Prints the recording seal for recordable documents.                                           *
+*                                                                                                            *
 ********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ using Empiria.Contacts;
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
 
-namespace Empiria.Web.UI.FSM {
+namespace Empiria.Land.WebApp {
 
   public partial class RecordingSeal : System.Web.UI.Page {
 
@@ -438,4 +438,4 @@ namespace Empiria.Web.UI.FSM {
 
   } // class RecordingSeal
 
-} // namespace Empiria.Web.UI.FSM
+} // namespace Empiria.Land.WebApp

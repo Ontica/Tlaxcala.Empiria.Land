@@ -1,10 +1,10 @@
 ﻿/* Empiria Land **********************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
-*	 Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Intranet.dll         *
-*	 Type      : ObjectSearcher                                   Pattern  : Explorer Web Page                 *
+*  Solution  : Empiria Land                                     System   : Land Intranet Application         *
+*  Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
+*  Type      : ObjectSearcher                                   Pattern  : Explorer Web Page                 *
 *  Version   : 2.0                                              License  : Please read license.txt file      *
-*																																																						 *
+*                                                                                                            *
 *  Summary   : Gets user credentials and redirects users to the workplace start page.                        *
 *																																																						 *
 ********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
@@ -12,7 +12,7 @@ using System;
 
 using Empiria.Land.Registration.Transactions;
 
-namespace Empiria.Web.UI.FSM {
+namespace Empiria.Land.WebApp {
 
   public partial class TransactionReceipt : System.Web.UI.Page {
 
@@ -238,4 +238,4 @@ namespace Empiria.Web.UI.FSM {
 
   } // class TransactionReceipt
 
-} // namespace Empiria.Web.UI.FSM
+} // namespace Empiria.Land.WebApp

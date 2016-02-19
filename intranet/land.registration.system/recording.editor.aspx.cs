@@ -1,25 +1,22 @@
 ﻿/* Empiria Land **********************************************************************************************
 *																																																						 *
-*	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
-*	 Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Intranet.dll         *
-*	 Type      : ObjectSearcher                                   Pattern  : Explorer Web Page                 *
+*  Solution  : Empiria Land                                     System   : Land Intranet Application         *
+*  Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
+*  Type      : RecordingEditor                                  Pattern  : Explorer Web Page                 *
 *  Version   : 2.0                                              License  : Please read license.txt file      *
-*																																																						 *
+*                                                                                                            *
 *  Summary   : Gets user credentials and redirects users to the workplace start page.                        *
-*																																																						 *
+*                                                                                                            *
 ********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
 using Empiria.Land.UI;
-using Empiria.Presentation;
 using Empiria.Presentation.Web;
-using Empiria.Presentation.Web.Content;
 
-namespace Empiria.Web.UI.LRS {
+namespace Empiria.Land.WebApp {
 
   public partial class RecordingEditor : WebPage {
 
@@ -68,6 +65,10 @@ namespace Empiria.Web.UI.LRS {
       txtObservations.Value = transaction.Document.Notes;
       cboSheetsCount.Value = transaction.Document.SheetsCount.ToString();
 
+    }
+
+    protected string GetLegacyDataViewerUrl() {
+      return ConfigurationData.GetString("LegacyDataViewer.Url");
     }
 
     #endregion Protected methods
@@ -213,6 +214,6 @@ namespace Empiria.Web.UI.LRS {
 
     #endregion Private methods
 
-  } // class PropertyEditor
+  } // class RecordingEditor
 
-} // namespace Empiria.Web.UI.LRS
+} // namespace Empiria.Land.WebApp

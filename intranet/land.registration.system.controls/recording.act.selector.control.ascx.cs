@@ -7,7 +7,7 @@ using Empiria.Land.UI;
 using Empiria.Presentation;
 using Empiria.Presentation.Web.Content;
 
-namespace Empiria.Web.UI.LRS {
+namespace Empiria.Land.WebApp {
 
   public partial class LRSRecordingActSelectorControl : System.Web.UI.UserControl {
 
@@ -132,4 +132,4 @@ namespace Empiria.Web.UI.LRS {
 
   } // class RecordingDocumentEditorControl
 
-} // namespace Empiria.Web.UI.LRS
+} // namespace Empiria.Land.WebApp

@@ -8,7 +8,7 @@ using Empiria.Geography;
 using Empiria.Land.Registration;
 using Empiria.Presentation.Web.Content;
 
-namespace Empiria.Web.UI.LRS {
+namespace Empiria.Land.WebApp {
 
   public partial class RecordingPartyEditorControl : System.Web.UI.UserControl {
 
@@ -399,4 +399,4 @@ namespace Empiria.Web.UI.LRS {
 
   } // class RecordingPartyEditorControl
 
-} // namespace Empiria.Web.UI.LRS
+} // namespace Empiria.Land.WebApp
