@@ -144,7 +144,7 @@ namespace Empiria.Web.UI.Ajax {
       var section = recordingActType.RecordingRule.RecordingSection;
 
       string html = HtmlSelectContent.GetComboAjaxHtmlItem("", "( Seleccionar el distrito y sección )");
-      if (recordingActType.RecordingRule.IsAnnotation) {
+      if (recordingActType.IsInformationActType) {
         html += "|" + HtmlSelectContent.GetComboAjaxHtmlItem("annotation", "Registrado al margen");
       }
       if (section != RecordingSection.Empty && section.Id == 1051) {
@@ -195,8 +195,8 @@ namespace Empiria.Web.UI.Ajax {
       var list = recordingActType.GetAppliesToRecordingActTypesList();
 
       return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "DisplayName",
-                                      recordingActType.IsCancelationType ? "( Acto jurídico a cancelar )" :
-                                                                           "( Acto jurídico a modificar )");
+                                      recordingActType.IsCancelationActType ? "( Acto jurídico a cancelar )" :
+                                                                             "( Acto jurídico a modificar )");
     }
 
     private string RecordingActTypesEditingCategoriesCommandHandler() {

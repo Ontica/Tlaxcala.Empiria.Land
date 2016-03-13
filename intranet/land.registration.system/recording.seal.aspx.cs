@@ -130,13 +130,13 @@ namespace Empiria.Land.WebApp {
           case RecordingRuleApplication.Property:
           case RecordingRuleApplication.RecordingAct:
           case RecordingRuleApplication.Structure:
-            Resource resource = ((ResourceTarget) recordingAct.Targets[0]).Resource;
+            Resource resource = recordingAct.TractIndex[0].Resource;
             Assertion.Assert(resource is Property,
                              "Type mistmatch parsing property with id = " + resource.Id);
             html += this.GetPropertyActText(recordingAct, (Property) resource, index);
             break;
           case RecordingRuleApplication.Association:
-            resource = ((ResourceTarget) recordingAct.Targets[0]).Resource;
+            resource = recordingAct.TractIndex[0].Resource;
             Assertion.Assert(resource is Association,
                              "Type mistmatch parsing resource with id = " + resource.Id);
             html += this.GetAssociationActText(recordingAct,
@@ -182,19 +182,19 @@ namespace Empiria.Land.WebApp {
 
       string x = String.Empty;
 
-      if (recordingAct.RecordingActType.RecordingRule.IsModification ||
-          recordingAct.RecordingActType.RecordingRule.IsCancelation) {
+      if (recordingAct.RecordingActType.IsModificationActType ||
+          recordingAct.RecordingActType.IsCancelationActType) {
         RecordingAct amendmentOf = recordingAct.AmendmentOf;
 
         x = act04.Replace("{INDEX}", index.ToString());
 
-        if (recordingAct.RecordingActType.RecordingRule.IsModification && amendmentOf.RecordingActType.FemaleGenre) {
+        if (recordingAct.RecordingActType.IsModificationActType && amendmentOf.RecordingActType.FemaleGenre) {
           x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>MODIFICACIÓN DE LA " +
                         amendmentOf.RecordingActType.DisplayName + "</b> registrada");
-        } else if (recordingAct.RecordingActType.RecordingRule.IsModification && !amendmentOf.RecordingActType.FemaleGenre) {
+        } else if (recordingAct.RecordingActType.IsModificationActType && !amendmentOf.RecordingActType.FemaleGenre) {
           x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>MODIFICACIÓN DEL " +
                         amendmentOf.RecordingActType.DisplayName + "</b> registrado");
-        } else if (recordingAct.RecordingActType.RecordingRule.IsCancelation && amendmentOf.RecordingActType.FemaleGenre) {
+        } else if (recordingAct.RecordingActType.IsCancelationActType && amendmentOf.RecordingActType.FemaleGenre) {
           x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>CANCELACIÓN DE LA " +
                         amendmentOf.RecordingActType.DisplayName + "</b> registrada");
         } else {

@@ -36,10 +36,12 @@ namespace Empiria.Land.WebApp {
     }
 
     private void LoadControls() {
-      oRecordingDocumentEditor = (LRSDocumentEditorControl) Page.LoadControl(LRSDocumentEditorControl.ControlVirtualPath);
+      oRecordingDocumentEditor = (LRSDocumentEditorControl)
+                                  Page.LoadControl(LRSDocumentEditorControl.ControlVirtualPath);
       spanRecordingDocumentEditor.Controls.Add(oRecordingDocumentEditor);
 
-      oRecordingActEditor = (RecordingActEditorControlBase) Page.LoadControl(RecordingActEditorControlBase.ControlVirtualPath);
+      oRecordingActEditor = (RecordingActEditorControlBase)
+                             Page.LoadControl(RecordingActEditorControlBase.ControlVirtualPath);
       spanRecordingActEditor.Controls.Add(oRecordingActEditor);
     }
 
