@@ -36,7 +36,7 @@
         <table cellpadding="0" cellspacing="0">
           <tr>
             <td id="divImageViewer" valign='top' style="position:relative;<%=base.DisplayImages() == false ? "display:none;" : String.Empty%>">
-              <div id="divImageContainer" style="overflow:auto;width:520px;height:540px;top:0px;">
+              <div id="divImageContainer" style="overflow:auto;width:520px;height:540px;top:0;">
                 <img id="imgCurrent" name="imgCurrent" src="<%=GetCurrentImagePath()%>" alt="" width="<%=GetCurrentImageWidth()%>" height="<%=GetCurrentImageHeight()%>" style="top:0px;" />
               </div>
               <table>
@@ -1262,8 +1262,7 @@
     url += "?commandName=validateRecordingSemanticsCmd";
     url += "&recordingBookId=<%=recordingBook.Id%>";
     url += "&recordingId=<%=recording.Id%>";
-    url += "&number=" + getElement("txtRecordingNumber").value;
-    url += "&bisSuffixNumber=" + getElement("cboBisRecordingNumber").value;
+    url += "&number=" + getElement("txtRecordingNumber").value + getElement("cboBisRecordingNumber").value;
     url += "&imageStartIndex=" + getElement("txtImageStartIndex").value;
     url += "&imageEndIndex=" + getElement("txtImageEndIndex").value;
     url += "&presentationTime=" + getElement("txtPresentationDate").value + " " + getElement("txtPresentationTime").value;
@@ -1960,7 +1959,7 @@
     }
     var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getRecordingIdCmd";
     ajaxURL += "&recordingBookId=<%=recordingBook.Id%>";	
-    ajaxURL += "&number=" + getElement("txtGoToRecording").value;
+    ajaxURL += "&recordingNumber=" + getElement("txtGoToRecording").value;
 
     var result = invokeAjaxMethod(false, ajaxURL, null);
     if (Number(result) != 0) {

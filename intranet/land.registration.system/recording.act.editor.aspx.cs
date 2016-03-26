@@ -89,7 +89,7 @@ namespace Empiria.Land.WebApp {
       oPartyEditorControl.SelectParty(partyId);
 
       this.oAntecedentParties.BaseRecordingAct = this.recordingAct;
-      this.oAntecedentParties.Property = Property.Parse(int.Parse(cboProperty.Value));
+      this.oAntecedentParties.Property = RealEstate.Parse(int.Parse(cboProperty.Value));
     }
 
     protected string GetRecordingActPartiesGrid() {
@@ -121,7 +121,7 @@ namespace Empiria.Land.WebApp {
       FillPropertiesCombo();
       if (this.recordingAct.RecordingActType.Name.StartsWith("ObjectType.RecordingAct.DomainAct")) {
         this.oAntecedentParties.BaseRecordingAct = this.recordingAct;
-        this.oAntecedentParties.Property = Property.Parse(int.Parse(cboProperty.Value));
+        this.oAntecedentParties.Property = RealEstate.Parse(int.Parse(cboProperty.Value));
       } else {
         this.oAntecedentParties.Visible = false;
       }

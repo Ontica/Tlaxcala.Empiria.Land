@@ -22,7 +22,7 @@ namespace Empiria.Land.WebApp {
 
     #region Fields
 
-    private Property property = null;
+    private RealEstate property = null;
     private RecordingAct recordingAct = null;
 
     #endregion Fields
@@ -137,7 +137,7 @@ namespace Empiria.Land.WebApp {
 
     private void Initialize() {
       recordingAct = RecordingAct.Parse(int.Parse(Request.QueryString["recordingActId"]));
-      property = Property.Parse(int.Parse(Request.QueryString["propertyId"]));
+      property = RealEstate.Parse(int.Parse(Request.QueryString["propertyId"]));
       //propertyEvent = recordingAct.GetPropertyEvent(property);
     }
 

@@ -36,7 +36,7 @@ namespace Empiria.Web.UI.Ajax {
           return DomainTraslativeSectionsCommandHandler();
         case "getRecordingActTypesEditingCategoriesCmd":
           return RecordingActTypesEditingCategoriesCommandHandler();
-        case "getRecordingActRule":
+        case "getRecordingActRuleCmd":
           return GetRecordingActRuleCommandHandler();
         case "lookupResource":
           return GetResourceCommandHandler();
@@ -169,7 +169,7 @@ namespace Empiria.Web.UI.Ajax {
       int resourceId = GetCommandParameter<int>("resourceId");
 
       var recordingActType = RecordingActType.Parse(recordingActTypeId);
-      var resource = Property.Parse(resourceId);
+      var resource = RealEstate.Parse(resourceId);
 
       var appliesTo = recordingActType.GetAppliesToRecordingActTypesList();
 
@@ -239,20 +239,41 @@ namespace Empiria.Web.UI.Ajax {
 
       switch (rule.AppliesTo) {
         case RecordingRuleApplication.Association:
-        case RecordingRuleApplication.Property:
-        case RecordingRuleApplication.Structure:
-          if (rule.PropertyRecordingStatus == PropertyRecordingStatus.Unregistered ||
-              rule.PropertyRecordingStatus == PropertyRecordingStatus.Both) {
-            html = HtmlSelectContent.GetComboAjaxHtmlItem("createProperty", "Sin antecedente registral");
+          if (rule.ResourceRecordingStatus == ResourceRecordingStatus.Unregistered ||
+              rule.ResourceRecordingStatus == ResourceRecordingStatus.Both) {
+            html = HtmlSelectContent.GetComboAjaxHtmlItem("createProperty", "Nueva Sociedad/Asociación");
             counter++;
           }
-          if (rule.AppliesTo == RecordingRuleApplication.Structure ||
-              rule.PropertyRecordingStatus == PropertyRecordingStatus.Registered ||
-              rule.PropertyRecordingStatus == PropertyRecordingStatus.Both) {
+          if (rule.ResourceRecordingStatus == ResourceRecordingStatus.Registered ||
+              rule.ResourceRecordingStatus == ResourceRecordingStatus.Both) {
             if (html.Length != 0) {
               html += "|";
             }
-            html += HtmlSelectContent.GetComboAjaxHtmlItem("selectProperty", "Ya registrado");
+            html += HtmlSelectContent.GetComboAjaxHtmlItem("selectProperty", "Sociedad/Asoc ya registrada");
+            counter++;
+          }
+          break;
+        case RecordingRuleApplication.RealEstate:
+        case RecordingRuleApplication.Structure:
+          if (rule.ResourceRecordingStatus == ResourceRecordingStatus.Unregistered ||
+              rule.ResourceRecordingStatus == ResourceRecordingStatus.Both) {
+            html = HtmlSelectContent.GetComboAjaxHtmlItem("createProperty", "Predio sin antecedente registral");
+            counter++;
+          }
+          if (rule.AppliesTo == RecordingRuleApplication.Structure ||
+              rule.ResourceRecordingStatus == ResourceRecordingStatus.Registered ||
+              rule.ResourceRecordingStatus == ResourceRecordingStatus.Both) {
+            if (html.Length != 0) {
+              html += "|";
+            }
+            html += HtmlSelectContent.GetComboAjaxHtmlItem("selectProperty", "Predio ya registrado");
+            counter++;
+          }
+          if (rule.AllowsPartitions) {
+            if (html.Length != 0) {
+              html += "|";
+            }
+            html += HtmlSelectContent.GetComboAjaxHtmlItem("createPartition", "Fracción de predio ya registrado");
             counter++;
           }
           break;
@@ -261,7 +282,7 @@ namespace Empiria.Web.UI.Ajax {
           counter++;
           break;
         case RecordingRuleApplication.Document:
-          html += HtmlSelectContent.GetComboAjaxHtmlItem("actAppliesToDocument", "No es aplicable a predios");
+          html += HtmlSelectContent.GetComboAjaxHtmlItem("actAppliesToDocument", "No aplica a predios o asoc");
           counter++;
           break;
         default:
@@ -720,12 +741,10 @@ namespace Empiria.Web.UI.Ajax {
 
     private string GetRecordingIdCommandHandler() {
       int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
-      string number = GetCommandParameter("number", true);
-      string subNumber = GetCommandParameter("subNumber", false, String.Empty);
-      string bisSuffixNumber = GetCommandParameter("bisSuffixNumber", false, String.Empty);
+      string recordingNumber = GetCommandParameter("recordingNumber", true);
 
       var recordingBook = RecordingBook.Parse(recordingBookId);
-      var recording = recordingBook.FindRecording(int.Parse(number), subNumber, bisSuffixNumber);
+      var recording = recordingBook.FindRecording(recordingNumber);
       if (recording != null) {
         return recording.Id.ToString();
       } else {
@@ -837,7 +856,7 @@ namespace Empiria.Web.UI.Ajax {
       RecordingBook recordingBook = RecordingBook.Parse(annotationBookId);
       RecordingActType annotationType = RecordingActType.Parse(annotationTypeId);
       Person authorizedBy = Person.Parse(authorizedById);
-      Property property = Property.Parse(propertyId);
+      RealEstate property = RealEstate.Parse(propertyId);
 
       LandRegistrationException exception = null;
       if (presentationTime != ExecutionServer.DateMinValue) {
@@ -916,9 +935,7 @@ namespace Empiria.Web.UI.Ajax {
     private string ValidateRecordingSemanticsCommandHandler() {
       int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
       int recordingId = int.Parse(GetCommandParameter("recordingId", true));
-      int number = int.Parse(GetCommandParameter("number", false));
-      string subNumber = GetCommandParameter("subNumber", false, String.Empty);
-      string bisSuffixNumber = GetCommandParameter("bisSuffixNumber", false, String.Empty);
+      string recordingNumber = GetCommandParameter("recordingNumber", String.Empty);
       int imageStartIndex = int.Parse(GetCommandParameter("imageStartIndex", false, "-1"));
       int imageEndIndex = int.Parse(GetCommandParameter("imageEndIndex", false, "-1"));
       DateTime presentationTime = EmpiriaString.ToDateTime(GetCommandParameter("presentationTime", false,
@@ -937,7 +954,7 @@ namespace Empiria.Web.UI.Ajax {
         recording = Recording.Empty;
       }
       LandRegistrationException exception = null;
-      exception = LRSValidator.ValidateRecordingNumber(recordingBook, recording, number, subNumber, bisSuffixNumber,
+      exception = LRSValidator.ValidateRecordingNumber(recordingBook, recording, recordingNumber, 
                                                        imageStartIndex, imageEndIndex);
       if (exception != null) {
         return exception.Message;
@@ -970,16 +987,13 @@ namespace Empiria.Web.UI.Ajax {
       var task = new RecordingTask(
          transactionId: GetCommandParameter<int>("transactionId", -1),
          documentId: GetCommandParameter<int>("documentId", -1),
-         recordingActTypeCategoryId: GetCommandParameter<int>("recordingActTypeCategoryId", -1),
          recordingActTypeId: GetCommandParameter<int>("recordingActTypeId"),
-         propertyType: (PropertyRecordingType) Enum.Parse(typeof(PropertyRecordingType),
+         recordingTaskType: (RecordingTaskType) Enum.Parse(typeof(RecordingTaskType),
                                                           GetCommandParameter<string>("propertyType")),
          precedentRecordingBookId: GetCommandParameter<int>("precedentRecordingBookId", -1),
          precedentRecordingId: GetCommandParameter<int>("precedentRecordingId", -1),
          precedentResourceId: GetCommandParameter<int>("precedentPropertyId", -1),
-         quickAddRecordingNumber: GetCommandParameter<int>("quickAddRecordingNumber", -1),
-         quickAddRecordingSubnumber: GetCommandParameter<string>("quickAddRecordingSubNumber", String.Empty),
-         quickAddRecordingSuffixTag: GetCommandParameter<string>("quickAddRecordingSuffixTag", String.Empty)
+         quickAddRecordingNumber: GetCommandParameter<string>("quickAddRecordingNumber", String.Empty)
       );
       return task;
     }

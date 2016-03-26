@@ -9,7 +9,7 @@ namespace Empiria.Land.WebApp {
 
     #region Fields
 
-    Property property = Property.Empty;
+    RealEstate property = RealEstate.Empty;
     RecordingAct baseRecordingAct = null;
 
     #endregion Fields
@@ -18,7 +18,7 @@ namespace Empiria.Land.WebApp {
 
     }
 
-    public Property Property {
+    public RealEstate Property {
       get { return property; }
       set { property = value; }
     }

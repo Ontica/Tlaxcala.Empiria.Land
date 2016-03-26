@@ -8,7 +8,7 @@
           <td>Tipo de acto:</td>
           <td>
             <select id="cboRecordingActTypeCategory" class="selectBox"
-                    style="width:192px" title="" onchange="return updateUI(this);">
+                    style="width:200px" title="" onchange="return updateUI(this);">
             </select>
           </td>
           <td>
@@ -22,88 +22,76 @@
           <td class="lastCell">&nbsp;</td>
         </tr>
         <tr id="divPropertyTypeSelector">
-          <td style="vertical-align:baseline">Del predio:</td>
+          <td style="vertical-align:baseline">Sobre:</td>
           <td style="vertical-align:top">
-            <select id="cboPropertyTypeSelector" class="selectBox" style="width:192px" onchange="return updateUI(this);">
+            <select id="cboPropertyTypeSelector" class="selectBox" style="width:200px" onchange="return updateUI(this);">
               <option value="">( Seleccionar )</option>
             </select>
           </td>
           <td>
-            <span id="divResourceName" style="display:none">
-              Nombre:
-              <input id="txtResourceName" type="text" class="textBox" style="width:344px;margin-right:0px" maxlength="255" />
-              <br/>
-            </span>
             <span id="divPrecedentActSection" style="display:none">
-            <span id="divPropertyPartitionSection" style="display:none">
-              Sobre:
-              <select id="cboPropertyPartitionType" class="selectBox" style="width:188px" title=""
-                      onchange="return updateUI(this);">
-                <option value="" title="None">( Seleccionar )</option>
-                <option value="Whole" title="None">la Totalidad</option>
-                <option value="Lot" title="Full">el Lote</option>
-                <option value="House" title="Full">la Casa</option>
-                <option value="Apartment" title="Full">el Departamento</option>
-                <option value="Partial" title="Partial">la Fracción</option>
-                <option value="PartialUnknown" title="Partial">la Fracción sin número</option>
-                <option value="Last" title="Last">la Última Fracción</option>
-                <option value="LastUnknown" title="Last">la Última Fracción sin número</option>
-              </select>
-              <span id="divPartitionPartXofYSection" style="display:none">
-                Número:
-                <input id="txtPropertyPartitionNo" type="text" class="textBox"
-                        style="width:24px;margin-right:0px" onblur="return setPropertyPartsTotal();"
-                        onkeypress="return integerKeyFilter(this);"
-                        maxlength="4" />
-                &nbsp; de:
-                <input id="txtPropertyTotalPartitions" type="text" class="textBox"
-                        style="width:24px;margin-right:0px" onkeypress="return integerKeyFilter(this);"
-                        maxlength="4" />
-                <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                Con superficie de:
-                <input id="txtPartitionSize" type="text" class="textBox"
-                  style="width:66px;margin-right:0px" onkeypress="return positiveKeyFilter(this);"
-                  title="" maxlength="12" /><select id="cboPartitionSizeUnit" class="selectBox"
-                  style="width:48px" onchange="return updateUI(this);">
-                  <option value="">( ? )</option>
-                  <option value="-2" title="No consta">N/C</option>
-                  <option value="621" title="metros cuadrados">m2</option>
-                  <option value="624" title="hectáreas">ha</option>
-                </select>
-                &nbsp;de:
-                <input id="txtPartitionAvailableSize" type="text" class="textBox"
-                  style="width:82px;margin-right:0px" onkeypress="return positiveKeyFilter(this);"
-                  maxlength="12" /><select id="cboPartitionAvailableSizeUnit" class="selectBox"
-                  style="width:48px" onchange="return updateUI(this);">
-                  <option value="">( ? )</option>
-                  <option value="-2" title="No consta">N/C</option>
-                  <option value="621" title="metros cuadrados">m2</option>
-                  <option value="624" title="hectáreas">ha</option>
-                </select>disponibles.
-                 <br/>
-                <span style="color:red">IMPORTANTE</span>: Las fracciones <u><b style="color:red">SIEMPRE</b>
-                generan un <b style="color:red">nuevo folio real</b></u>.<br />
-                Los notarios a veces escriben la palabra "fracción" en las escrituras como una forma<br />
-                de identificar al predio, pero eso <u>NO necesariamente</u> significa que se esté indicando en la<br />
-                escritura que se haga una segregación o desmembración del predio original.<br />
-                También es posible que dicha fracción ya haya sido previamente registrada en partidas o al margen, <br />
-                o que se le haya creado folio real con el sistema, o bien, puede ser que su antecedente ni siquiera <br />
-                esté registrado. En cualquiera de estos casos <u><b>NO SE DEBERÍA CREAR</b> una fracción.</u><br />
-                Si tiene dudas acerca de si debe o no crear la fracción, por favor dirígase al área<br />
-                jurídica o de soporte. Gracias.<br />
-                </span>
+              Buscar antecedente:        
+              <input id="txtLookupResource" type="text" class="textBox" maxlength="19" style="width:184px" />
+              <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px"
+                    onclick="doRecordingActEditorOperation('lookupResource')" />
+              <label><input type="checkbox" id="chkSelectPredecentInPhysicalBooks" onclick="return showPrecedentRecordingSection()"; />Seleccionar el antecedente vía libro/partida</label>
               <br />
             </span>
-            Buscar por folio:
-            <input id="txtLookupResource" type="text" class="textBox" maxlength="19" style="width:146px" />
-            <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px"
-                  onclick="doRecordingActEditorOperation('lookupResource')" />
-            <a href='javascript:doRecordingActEditorOperation("refreshPrecedentRecordingCombos")' class="button">Buscarlo o agregarlo en libros físicos</a>
+            <table id="divPhysicalRecordingSelector" class="editionTable" style="display:none;width:200px" >
+              <tr>
+                <td>Distrito:</td>
+                <td>
+                  <select id="cboPrecedentRecordingSection" class="selectBox" style="width:196px" title=""
+                          onchange="return updateUI(this);">
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>Volumen:</td>
+                <td>
+                    <select id="cboPrecedentRecordingBook" class="selectBox" style="width:300px" title=""
+                            onchange="return updateUI(this);">
+                      <option value="">( Primero seleccionar Distrito y sección )</option>
+                    </select>
+                </td>
+              </tr>
+              <tr>
+                <td>Partida:<br />&nbsp;</td>
+                <td>
+                    <select id="cboPrecedentRecording" class="selectBox" style="width:98px" title=""
+                            onchange="return updateUI(this);">
+                        <option value="">¿Libro?</option>
+                    </select>
+                      <span id="divPropertySelectorSection" style="display:none">
+                        Antecedente: &nbsp; &nbsp;
+                          <select id="cboPrecedentProperty" class="selectBox" style="width:300px" title="" onchange="return updateUI(this);">
+                            <option value="">¿Inscripción?</option>
+                          </select>
+                        </span>
+                        <span id="divRecordingQuickAddSection" style="display:none">
+                          Partida donde está registrado el antecedente:
+                          <input id="txtQuickAddRecordingNumber" type="text" class="textBox" style="width:52px;margin-right:0"
+                                  onkeypress="return integerKeyFilter(this);" title="" maxlength="9" />
+                          <select id="cboQuickAddBisRecordingTag" class="selectBox" style="width:60px" title="">
+                            <option value=""></option>
+                            <option value="-Bis">-Bis</option>
+                            <option value="-Bis1">-Bis1</option>
+                            <option value="-Bis2">-Bis2</option>
+                          </select>
+                        </span>
+                    <br />&nbsp;
+                </td>
+            </table>
             <br />
+            <span id="divResourceName" style="display:none">
+              Nombre:
+              <input id="txtResourceName" type="text" class="textBox" style="width:344px;margin-right:0" maxlength="255" />
+              <br/>
             </span>
+
             <span id="divCadastralInfo" style="display:none">
               Clave catastral:
-              <input id="txtCadastralKey" type="text" class="textBox" style="width:230px;margin-right:0px" maxlength="38" />
+              <input id="txtCadastralKey" type="text" class="textBox" style="width:230px;margin-right:0" maxlength="38" />
               &nbsp;
               <input type="button" value="Vincular" class="button" style="width:68px;height:24px;vertical-align:middle"
                    onclick='doRecordingActEditorOperation("getCadastralInfo")' />
@@ -115,157 +103,8 @@
       </table>
     </td>
   </tr>
-  <tr id="divPhysicalRecordingSelectorTitle" style="display:none"><td class="actionsSeparator">(2) Seleccionar el antecedente en libros</td></tr>
-  <tr id="divPhysicalRecordingSelector" style="display:none">
-    <td>
-      <table class="editionTable">
-        <tr id="divPrecedentRecordingSection" style="display:none">
-          <td>Predio<br />registrado en:</td>
-          <td>
-            <select id="cboPrecedentRecordingSection" class="selectBox" style="width:196px" title=""
-                    onchange="return updateUI(this);">
-            </select>
-          </td>
-          <td>Volumen:<br /></td>
-          <td>
-            <select id="cboPrecedentRecordingBook" class="selectBox" style="width:300px" title=""
-                    onchange="return updateUI(this);">
-                <option value="">( Primero seleccionar Distrito y sección )</option>
-            </select>
-          </td>
-          <td>Partida:</td>
-          <td>
-            <select id="cboPrecedentRecording" class="selectBox" style="width:98px" title=""
-                    onchange="return updateUI(this);">
-              <option value="">¿Libro?</option>
-            </select>
-            <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px"
-                  onclick="doRecordingActEditorOperation('showPrecedentRecording')" />
-          </td>
-          <td class="lastCell">&nbsp;</td>
-        </tr>
-        <tr>
-          <td colspan="2">&nbsp;</td>
-          <td colspan="4">
-            <span id="divPropertySelectorSection" style="display:none">
-              Predio: &nbsp; &nbsp;
-              <select id="cboPrecedentProperty" class="selectBox" style="width:300px" title="" onchange="return updateUI(this);">
-                <option value="">¿Inscripción?</option>
-              </select>
-              <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px"
-                    onclick="doRecordingActEditorOperation('displayProperty')" />
-            </span>
-            <span id="divRecordingQuickAddSection" style="display:none">
-            Partida donde está registrado el predio:
-            <input id="txtQuickAddRecordingNumber" type="text" class="textBox" style="width:32px;margin-right:0px"
-                    onkeypress="return integerKeyFilter(this);" title="" maxlength="5" />
-            <select id="cboQuickAddRecordingSubNumber" class="selectBox"
-                  style="width:52px;margin-right:0px" title="">
-              <option value=""></option>
-              <option value="/01">/01</option><option value="/02">/02</option><option value="/03">/03</option><option value="/04">/04</option><option value="/05">/05</option>
-              <option value="/06">/06</option><option value="/07">/07</option><option value="/08">/08</option><option value="/09">/09</option><option value="/10">/10</option>
-              <option value="/11">/11</option><option value="/12">/12</option><option value="/13">/13</option><option value="/14">/14</option><option value="/15">/15</option>
-              <option value="/16">/16</option><option value="/17">/17</option><option value="/18">/18</option><option value="/19">/19</option><option value="/20">/20</option>
-              <option value="/21">/21</option><option value="/22">/22</option><option value="/23">/23</option><option value="/24">/24</option><option value="/25">/25</option>
-              <option value="/26">/26</option><option value="/27">/27</option><option value="/28">/28</option><option value="/29">/29</option><option value="/30">/30</option>
-              <option value="/31">/31</option><option value="/32">/32</option><option value="/33">/33</option><option value="/34">/34</option><option value="/35">/35</option>
-              <option value="/36">/36</option><option value="/37">/37</option><option value="/38">/38</option><option value="/39">/39</option><option value="/40">/40</option>
-              <option value="/41">/41</option><option value="/42">/42</option><option value="/43">/43</option><option value="/44">/44</option><option value="/45">/45</option>
-              <option value="/46">/46</option><option value="/47">/47</option><option value="/48">/48</option><option value="/49">/49</option><option value="/50">/50</option>
-              <option value="/51">/51</option><option value="/52">/52</option><option value="/53">/53</option><option value="/54">/54</option><option value="/55">/55</option>
-              <option value="/56">/56</option><option value="/57">/57</option><option value="/58">/58</option><option value="/59">/59</option><option value="/60">/60</option>
-              <option value="/61">/61</option><option value="/62">/62</option><option value="/63">/63</option><option value="/64">/64</option><option value="/65">/65</option>
-              <option value="/66">/66</option><option value="/67">/67</option><option value="/68">/68</option><option value="/69">/69</option><option value="/70">/70</option>
-              <option value="/71">/71</option><option value="/72">/72</option><option value="/73">/73</option><option value="/74">/74</option><option value="/75">/75</option>
-              <option value="/76">/76</option><option value="/77">/77</option><option value="/78">/78</option><option value="/79">/79</option><option value="/80">/80</option>
-              <option value="/81">/81</option><option value="/82">/82</option><option value="/83">/83</option><option value="/84">/84</option><option value="/85">/85</option>
-              <option value="/86">/86</option><option value="/87">/87</option><option value="/88">/88</option><option value="/89">/89</option><option value="/90">/90</option>
-              <option value="/91">/91</option><option value="/92">/92</option><option value="/93">/93</option><option value="/94">/94</option><option value="/95">/95</option>
-              <option value="/96">/96</option><option value="/97">/97</option><option value="/98">/98</option><option value="/99">/99</option><option value="/100">/100</option>
-              <option value="/101">/101</option><option value="/102">/102</option><option value="/103">/103</option><option value="/104">/104</option><option value="/105">/105</option>
-              <option value="/106">/106</option><option value="/107">/107</option><option value="/108">/108</option><option value="/109">/109</option><option value="/110">/110</option>
-              <option value="/111">/111</option><option value="/112">/112</option><option value="/113">/113</option><option value="/114">/114</option><option value="/115">/115</option>
-              <option value="/116">/116</option><option value="/117">/117</option><option value="/118">/118</option><option value="/119">/119</option><option value="/120">/120</option>
-              <option value="/121">/121</option><option value="/122">/122</option><option value="/123">/123</option><option value="/124">/124</option><option value="/125">/125</option>
-              <option value="/126">/126</option><option value="/127">/127</option><option value="/128">/128</option><option value="/129">/129</option><option value="/130">/130</option>
-              <option value="/131">/131</option><option value="/132">/132</option><option value="/133">/133</option><option value="/134">/134</option><option value="/135">/135</option>
-              <option value="/136">/136</option><option value="/137">/137</option><option value="/138">/138</option><option value="/139">/139</option><option value="/140">/140</option>
-              <option value="/141">/141</option><option value="/142">/142</option><option value="/143">/143</option><option value="/144">/144</option><option value="/145">/145</option>
-              <option value="/146">/146</option><option value="/147">/147</option><option value="/148">/148</option><option value="/149">/149</option><option value="/150">/150</option>
-              <option value="/151">/151</option><option value="/152">/152</option><option value="/153">/153</option><option value="/154">/154</option><option value="/155">/155</option>
-              <option value="/156">/156</option><option value="/157">/157</option><option value="/158">/158</option><option value="/159">/159</option><option value="/160">/160</option>
-              <option value="/161">/161</option><option value="/162">/162</option><option value="/163">/163</option><option value="/164">/164</option><option value="/165">/165</option>
-              <option value="/166">/166</option><option value="/167">/167</option><option value="/168">/168</option><option value="/169">/169</option><option value="/170">/170</option>
-              <option value="/171">/171</option><option value="/172">/172</option><option value="/173">/173</option><option value="/174">/174</option><option value="/175">/175</option>
-              <option value="/176">/176</option><option value="/177">/177</option><option value="/178">/178</option><option value="/179">/179</option><option value="/180">/180</option>
-              <option value="/181">/181</option><option value="/182">/182</option><option value="/183">/183</option><option value="/184">/184</option><option value="/185">/185</option>
-              <option value="/186">/186</option><option value="/187">/187</option><option value="/188">/188</option><option value="/189">/189</option><option value="/190">/190</option>
-              <option value="/191">/191</option><option value="/192">/192</option><option value="/193">/193</option><option value="/194">/194</option><option value="/195">/195</option>
-              <option value="/196">/196</option><option value="/197">/197</option><option value="/198">/198</option><option value="/199">/199</option><option value="/200">/200</option>
-              <option value="/201">/201</option><option value="/202">/202</option><option value="/203">/203</option><option value="/204">/204</option><option value="/205">/205</option>
-              <option value="/206">/206</option><option value="/207">/207</option><option value="/208">/208</option><option value="/209">/209</option><option value="/210">/210</option>
-              <option value="/211">/211</option><option value="/212">/212</option><option value="/213">/213</option><option value="/214">/214</option><option value="/215">/215</option>
-              <option value="/216">/216</option><option value="/217">/217</option><option value="/218">/218</option><option value="/219">/219</option><option value="/220">/220</option>
-              <option value="/221">/221</option><option value="/222">/222</option><option value="/223">/223</option><option value="/224">/224</option><option value="/225">/225</option>
-              <option value="/226">/226</option><option value="/227">/227</option><option value="/228">/228</option><option value="/229">/229</option><option value="/230">/230</option>
-              <option value="/231">/231</option><option value="/232">/232</option><option value="/233">/233</option><option value="/234">/234</option><option value="/235">/235</option>
-              <option value="/236">/236</option><option value="/237">/237</option><option value="/238">/238</option><option value="/239">/239</option><option value="/240">/240</option>
-              <option value="/241">/241</option><option value="/242">/242</option><option value="/243">/243</option><option value="/244">/244</option><option value="/245">/245</option>
-              <option value="/246">/246</option><option value="/247">/247</option><option value="/248">/248</option><option value="/249">/249</option><option value="/250">/250</option>
-              <option value="/251">/251</option><option value="/252">/252</option><option value="/253">/253</option><option value="/254">/254</option><option value="/255">/255</option>
-              <option value="/256">/256</option><option value="/257">/257</option><option value="/258">/258</option><option value="/259">/259</option><option value="/260">/260</option>
-              <option value="/261">/261</option><option value="/262">/262</option><option value="/263">/263</option><option value="/264">/264</option><option value="/265">/265</option>
-              <option value="/266">/266</option><option value="/267">/267</option><option value="/268">/268</option><option value="/269">/269</option><option value="/270">/270</option>
-              <option value="/271">/271</option><option value="/272">/272</option><option value="/273">/273</option><option value="/274">/274</option><option value="/275">/275</option>
-              <option value="/276">/276</option><option value="/277">/277</option><option value="/278">/278</option><option value="/279">/279</option><option value="/280">/280</option>
-              <option value="/281">/281</option><option value="/282">/282</option><option value="/283">/283</option><option value="/284">/284</option><option value="/285">/285</option>
-              <option value="/286">/286</option><option value="/287">/287</option><option value="/288">/288</option><option value="/289">/289</option><option value="/290">/290</option>
-              <option value="/291">/291</option><option value="/292">/292</option><option value="/293">/293</option><option value="/294">/294</option><option value="/295">/295</option>
-              <option value="/296">/296</option><option value="/297">/297</option><option value="/298">/298</option><option value="/299">/299</option><option value="/300">/300</option>
-	            <option value="/301">/301</option><option value="/302">/302</option><option value="/303">/303</option><option value="/304">/304</option><option value="/305">/305</option>
-              <option value="/450">/450</option>
-            </select>
-            <select id="cboQuickAddBisRecordingTag" class="selectBox" style="width:60px" title="">
-              <option value=""></option>
-              <option value="-Bis">-Bis</option>
-              <option value="-Bis1">-Bis1</option>
-              <option value="-Bis2">-Bis2</option>
-            </select>
-            <br />
-            <span style="color:red">Acto origen del predio:</span>
-            <select id="Select1" class="selectBox" style="width:238px" title=""
-                    onchange="return updateUI(this);">
-              <option value="">( Acto que originó el antecedente )</option>
-              <option value="">Adjudicación</option>
-              <option value="">Compraventa</option>
-              <option value="">Decreto</option>
-              <option value="">Donación en pago</option>
-              <option value="">Donación simple y pura</option>
-              <option value="">Información Ad Perpetuam</option>
-              <option value="">Lotificación</option>
-              <option value="">Permuta</option>
-              <option value="">Sentencia de usucapión</option>
-              <option value="">Título de propiedad</option>
-              <option value="">Transmisión de propiedad</option>
-            </select>
-            <br />
-            <span style="color:red">Fecha de registro de la partida:</span>
-            <input id='txtPresentationDate' name='txtPresentationDate' type="text" class="textBox" style="width:66px;margin-right:0" onblur="formatAsDate(this)" title="" />
-            <img id='imgPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtPresentationDate'), getElement('imgPresentationDate'));" title="Despliega el calendario" alt="" />
-             <span style="color:red">Hora:</span>
-            <input id="txtPresentationTime" name="txtPresentationTime" type="text" class="textBox" style="width:40px;margin-right:2px" maxlength="5" title="" onkeypress='return hourKeyFilter(this);' />Hrs
-            <br />
-            <span style="color:red">* Próximamente</span>
-            </span>
-            <br />
-          </td>
-          <td class="lastCell">&nbsp;</td>
-        </tr>
-      </table>
-    </td>
-  </tr>
   <tr id="divTargetPrecedentActSectionTitle" style="display:none">
-    <td class="actionsSeparator">(3) Seleccionar el acto jurídico a cancelar o modificar</td>
+    <td class="actionsSeparator">(2) Seleccionar el acto jurídico a cancelar o modificar</td>
   </tr>
   <tr id="divTargetPrecedentActTable" style="display:none">
     <td>
@@ -341,72 +180,8 @@
             <span id="divTargetActRecordingQuickAddSection" style="display:inline">
             <br />
             Partida donde fue registrado el acto:
-            <input id="txtTargetActPhysicalRecordingNo" type="text" class="textBox" style="width:35px;margin-right:0px"
-                    onkeypress="return integerKeyFilter(this);" maxlength="5" />
-            <select id="cboTargetActRecordingSubNumber" class="selectBox" style="width:52px;margin-right:0px" title="">
-              <option value=""></option>
-              <option value="/01">/01</option><option value="/02">/02</option><option value="/03">/03</option><option value="/04">/04</option><option value="/05">/05</option>
-              <option value="/06">/06</option><option value="/07">/07</option><option value="/08">/08</option><option value="/09">/09</option><option value="/10">/10</option>
-              <option value="/11">/11</option><option value="/12">/12</option><option value="/13">/13</option><option value="/14">/14</option><option value="/15">/15</option>
-              <option value="/16">/16</option><option value="/17">/17</option><option value="/18">/18</option><option value="/19">/19</option><option value="/20">/20</option>
-              <option value="/21">/21</option><option value="/22">/22</option><option value="/23">/23</option><option value="/24">/24</option><option value="/25">/25</option>
-              <option value="/26">/26</option><option value="/27">/27</option><option value="/28">/28</option><option value="/29">/29</option><option value="/30">/30</option>
-              <option value="/31">/31</option><option value="/32">/32</option><option value="/33">/33</option><option value="/34">/34</option><option value="/35">/35</option>
-              <option value="/36">/36</option><option value="/37">/37</option><option value="/38">/38</option><option value="/39">/39</option><option value="/40">/40</option>
-              <option value="/41">/41</option><option value="/42">/42</option><option value="/43">/43</option><option value="/44">/44</option><option value="/45">/45</option>
-              <option value="/46">/46</option><option value="/47">/47</option><option value="/48">/48</option><option value="/49">/49</option><option value="/50">/50</option>
-              <option value="/51">/51</option><option value="/52">/52</option><option value="/53">/53</option><option value="/54">/54</option><option value="/55">/55</option>
-              <option value="/56">/56</option><option value="/57">/57</option><option value="/58">/58</option><option value="/59">/59</option><option value="/60">/60</option>
-              <option value="/61">/61</option><option value="/62">/62</option><option value="/63">/63</option><option value="/64">/64</option><option value="/65">/65</option>
-              <option value="/66">/66</option><option value="/67">/67</option><option value="/68">/68</option><option value="/69">/69</option><option value="/70">/70</option>
-              <option value="/71">/71</option><option value="/72">/72</option><option value="/73">/73</option><option value="/74">/74</option><option value="/75">/75</option>
-              <option value="/76">/76</option><option value="/77">/77</option><option value="/78">/78</option><option value="/79">/79</option><option value="/80">/80</option>
-              <option value="/81">/81</option><option value="/82">/82</option><option value="/83">/83</option><option value="/84">/84</option><option value="/85">/85</option>
-              <option value="/86">/86</option><option value="/87">/87</option><option value="/88">/88</option><option value="/89">/89</option><option value="/90">/90</option>
-              <option value="/91">/91</option><option value="/92">/92</option><option value="/93">/93</option><option value="/94">/94</option><option value="/95">/95</option>
-              <option value="/96">/96</option><option value="/97">/97</option><option value="/98">/98</option><option value="/99">/99</option><option value="/100">/100</option>
-              <option value="/101">/101</option><option value="/102">/102</option><option value="/103">/103</option><option value="/104">/104</option><option value="/105">/105</option>
-              <option value="/106">/106</option><option value="/107">/107</option><option value="/108">/108</option><option value="/109">/109</option><option value="/110">/110</option>
-              <option value="/111">/111</option><option value="/112">/112</option><option value="/113">/113</option><option value="/114">/114</option><option value="/115">/115</option>
-              <option value="/116">/116</option><option value="/117">/117</option><option value="/118">/118</option><option value="/119">/119</option><option value="/120">/120</option>
-              <option value="/121">/121</option><option value="/122">/122</option><option value="/123">/123</option><option value="/124">/124</option><option value="/125">/125</option>
-              <option value="/126">/126</option><option value="/127">/127</option><option value="/128">/128</option><option value="/129">/129</option><option value="/130">/130</option>
-              <option value="/131">/131</option><option value="/132">/132</option><option value="/133">/133</option><option value="/134">/134</option><option value="/135">/135</option>
-              <option value="/136">/136</option><option value="/137">/137</option><option value="/138">/138</option><option value="/139">/139</option><option value="/140">/140</option>
-              <option value="/141">/141</option><option value="/142">/142</option><option value="/143">/143</option><option value="/144">/144</option><option value="/145">/145</option>
-              <option value="/146">/146</option><option value="/147">/147</option><option value="/148">/148</option><option value="/149">/149</option><option value="/150">/150</option>
-              <option value="/151">/151</option><option value="/152">/152</option><option value="/153">/153</option><option value="/154">/154</option><option value="/155">/155</option>
-              <option value="/156">/156</option><option value="/157">/157</option><option value="/158">/158</option><option value="/159">/159</option><option value="/160">/160</option>
-              <option value="/161">/161</option><option value="/162">/162</option><option value="/163">/163</option><option value="/164">/164</option><option value="/165">/165</option>
-              <option value="/166">/166</option><option value="/167">/167</option><option value="/168">/168</option><option value="/169">/169</option><option value="/170">/170</option>
-              <option value="/171">/171</option><option value="/172">/172</option><option value="/173">/173</option><option value="/174">/174</option><option value="/175">/175</option>
-              <option value="/176">/176</option><option value="/177">/177</option><option value="/178">/178</option><option value="/179">/179</option><option value="/180">/180</option>
-              <option value="/181">/181</option><option value="/182">/182</option><option value="/183">/183</option><option value="/184">/184</option><option value="/185">/185</option>
-              <option value="/186">/186</option><option value="/187">/187</option><option value="/188">/188</option><option value="/189">/189</option><option value="/190">/190</option>
-              <option value="/191">/191</option><option value="/192">/192</option><option value="/193">/193</option><option value="/194">/194</option><option value="/195">/195</option>
-              <option value="/196">/196</option><option value="/197">/197</option><option value="/198">/198</option><option value="/199">/199</option><option value="/200">/200</option>
-              <option value="/201">/201</option><option value="/202">/202</option><option value="/203">/203</option><option value="/204">/204</option><option value="/205">/205</option>
-              <option value="/206">/206</option><option value="/207">/207</option><option value="/208">/208</option><option value="/209">/209</option><option value="/210">/210</option>
-              <option value="/211">/211</option><option value="/212">/212</option><option value="/213">/213</option><option value="/214">/214</option><option value="/215">/215</option>
-              <option value="/216">/216</option><option value="/217">/217</option><option value="/218">/218</option><option value="/219">/219</option><option value="/220">/220</option>
-              <option value="/221">/221</option><option value="/222">/222</option><option value="/223">/223</option><option value="/224">/224</option><option value="/225">/225</option>
-              <option value="/226">/226</option><option value="/227">/227</option><option value="/228">/228</option><option value="/229">/229</option><option value="/230">/230</option>
-              <option value="/231">/231</option><option value="/232">/232</option><option value="/233">/233</option><option value="/234">/234</option><option value="/235">/235</option>
-              <option value="/236">/236</option><option value="/237">/237</option><option value="/238">/238</option><option value="/239">/239</option><option value="/240">/240</option>
-              <option value="/241">/241</option><option value="/242">/242</option><option value="/243">/243</option><option value="/244">/244</option><option value="/245">/245</option>
-              <option value="/246">/246</option><option value="/247">/247</option><option value="/248">/248</option><option value="/249">/249</option><option value="/250">/250</option>
-              <option value="/251">/251</option><option value="/252">/252</option><option value="/253">/253</option><option value="/254">/254</option><option value="/255">/255</option>
-              <option value="/256">/256</option><option value="/257">/257</option><option value="/258">/258</option><option value="/259">/259</option><option value="/260">/260</option>
-              <option value="/261">/261</option><option value="/262">/262</option><option value="/263">/263</option><option value="/264">/264</option><option value="/265">/265</option>
-              <option value="/266">/266</option><option value="/267">/267</option><option value="/268">/268</option><option value="/269">/269</option><option value="/270">/270</option>
-              <option value="/271">/271</option><option value="/272">/272</option><option value="/273">/273</option><option value="/274">/274</option><option value="/275">/275</option>
-              <option value="/276">/276</option><option value="/277">/277</option><option value="/278">/278</option><option value="/279">/279</option><option value="/280">/280</option>
-              <option value="/281">/281</option><option value="/282">/282</option><option value="/283">/283</option><option value="/284">/284</option><option value="/285">/285</option>
-              <option value="/286">/286</option><option value="/287">/287</option><option value="/288">/288</option><option value="/289">/289</option><option value="/290">/290</option>
-              <option value="/291">/291</option><option value="/292">/292</option><option value="/293">/293</option><option value="/294">/294</option><option value="/295">/295</option>
-              <option value="/296">/296</option><option value="/297">/297</option><option value="/298">/298</option><option value="/299">/299</option><option value="/300">/300</option>
-	            <option value="/301">/301</option><option value="/302">/302</option><option value="/303">/303</option><option value="/304">/304</option><option value="/305">/305</option>
-            </select>
+            <input id="txtTargetActPhysicalRecordingNo" type="text" class="textBox" style="width:52px;margin-right:0"
+                   onkeypress="return integerKeyFilter(this);" maxlength="9" />
             <select id="cboTargetActBisRecordingTag" class="selectBox" style="width:60px" title="">
               <option value=""></option>
               <option value="-Bis">-Bis</option>
@@ -456,6 +231,11 @@
 
   var olookupResource = null;
   function lookupResource() {
+    if (getElement("txtLookupResource").value.length == 0) {
+      alert("Requiero se proporcione el folio real o número de documento para hacer la búsqueda");
+      return;
+    }
+
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=lookupResource";
     url += "&resourceUID=" + getElement("txtLookupResource").value;
@@ -490,9 +270,6 @@
       alert("La clave catastral proporcionada no ha sido registrada en el sistema de catastro.");
       return;
     }
-    var url = "http://catastro.azurewebsites.net";
-
-    createNewWindow(url);
   }
 
   function appendRecordingAct() {
@@ -531,9 +308,10 @@
   }
 
   var oCurrentRecordingRule = null;
+
   function setRecordingRule() {
     var url = "../ajax/land.registration.system.data.aspx";
-    url += "?commandName=getRecordingActRule";
+    url += "?commandName=getRecordingActRuleCmd";
     url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
 
     oCurrentRecordingRule = invokeAjaxGetJsonObject(url);
@@ -570,12 +348,6 @@
       showTargetRecordingActSections();
     } else if (oControl == getElement("cboPropertyTypeSelector")) {
       showPrecedentRecordingSection();
-    } else if (oControl == getElement("cboPropertyPartitionType")) {
-      updatePropertyFractionSection();
-    } else if (oControl == getElement("cboPartitionSizeUnit")) {
-      updateLotSizeControls(getElement("cboPartitionSizeUnit"), getElement("txtPartitionSize"));
-    } else if (oControl == getElement("cboPartitionAvailableSizeUnit")) {
-      updateLotSizeControls(getElement("cboPartitionAvailableSizeUnit"), getElement("txtPartitionAvailableSize"));
     } else if (oControl == getElement("cboPrecedentRecordingSection")) {
       resetPrecedentDomainBooksCombo();
     } else if (oControl == getElement("cboPrecedentRecordingBook")) {
@@ -643,83 +415,6 @@
 
   function resetTargetActsGrid() {
     //alert("resetTargetActsGrid");
-  }
-
-  function updateLotSizeControls(oUnitCombo, oSizeTextbox) {
-    if (oUnitCombo.value == '') {
-      oSizeTextbox.disabled = false;
-    } else if (oUnitCombo.value == -2) {
-      oSizeTextbox.value = 'No consta';
-      oSizeTextbox.disabled = true;
-    } else {
-      oSizeTextbox.disabled = false;
-    }
-    if (!oSizeTextbox.disabled && oSizeTextbox.value != '' && !isNumeric(oSizeTextbox)) {
-      oSizeTextbox.value = '';
-    }
-  }
-
-  function setPropertyPartsTotal() {
-    var selectedValue = getElement("cboPropertyPartitionType").value;
-
-    if (!isNumeric(getElement('txtPropertyPartitionNo'))) {
-      alert("No reconozco el número de lote, fracción, caso o departamento proporcionado.");
-      return;
-    }
-    if (selectedValue == 'Last') {
-      getElement('txtPropertyTotalPartitions').value = getElement('txtPropertyPartitionNo').value;
-    }
-  }
-
-  function updatePropertyFractionSection() {
-    var selectedValue = getElement("cboPropertyPartitionType").value;
-
-    getElement('txtPropertyPartitionNo').value = '';
-    getElement('txtPropertyTotalPartitions').value = '';
-    switch (selectedValue) {
-      case '':
-      case 'Whole':
-        getElement('divPartitionPartXofYSection').style.display = 'none';
-        getElement("divCadastralInfo").style.display = "none";
-        break;
-      case 'Partial':
-        getElement('divPartitionPartXofYSection').style.display = 'inline';
-        getElement('txtPropertyPartitionNo').disabled = false;
-        getElement('txtPropertyTotalPartitions').disabled = true;
-        getElement('txtPropertyTotalPartitions').value = '?';
-        getElement("divCadastralInfo").style.display = "inline";
-        break;
-      case 'PartialUnknown':
-        getElement('divPartitionPartXofYSection').style.display = 'inline';
-        getElement('txtPropertyPartitionNo').disabled = true;
-        getElement('txtPropertyTotalPartitions').disabled = true;
-        getElement('txtPropertyPartitionNo').value = '?';
-        getElement('txtPropertyTotalPartitions').value = '?';
-        getElement("divCadastralInfo").style.display = "inline";
-        break;
-      case 'Last':
-        getElement('divPartitionPartXofYSection').style.display = 'inline';
-        getElement('txtPropertyPartitionNo').disabled = false;
-        getElement('txtPropertyTotalPartitions').disabled = true;
-        getElement("divCadastralInfo").style.display = "inline";
-        break;
-      case 'LastUnknown':
-        getElement('divPartitionPartXofYSection').style.display = 'inline';
-        getElement('txtPropertyPartitionNo').disabled = true;
-        getElement('txtPropertyTotalPartitions').disabled = true;
-        getElement('txtPropertyPartitionNo').value = '?';
-        getElement('txtPropertyTotalPartitions').value = '?';
-        getElement("divCadastralInfo").style.display = "inline";
-        break;
-      case 'Lot':
-      case 'Apartment':
-      case 'House':
-        getElement('divPartitionPartXofYSection').style.display = 'inline';
-        getElement('txtPropertyPartitionNo').disabled = false;
-        getElement('txtPropertyTotalPartitions').disabled = false;
-        getElement("divCadastralInfo").style.display = "inline";
-        break;
-    }
   }
 
   function showPrecedentPropertiesSection() {
@@ -815,52 +510,54 @@
     return invokeAjaxValidator(ajaxURL);
   }
 
-  function showPrecedentRecordingSection() {
-    getElement("divPropertyPartitionSection").style.display = "none";
-    if (getElement("cboPropertyTypeSelector").value == "selectProperty") {          // Already registered
-      getElement("divPrecedentActSection").style.display = "inline";
-      getElement("divPropertyPartitionSection").style.display = oCurrentRecordingRule.AllowsPartitions ? "inline" : "none";
-      getElement("divPhysicalRecordingSelectorTitle").style.display = "inline";
-      getElement("divPhysicalRecordingSelector").style.display = "inline";
-      getElement("divPrecedentRecordingSection").style.display = "inline";
-      getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
-      getElement("divCadastralInfo").style.display = "none";
-    } else if (getElement("cboPropertyTypeSelector").value == "createProperty") {   // New properties
-      getElement("divPrecedentActSection").style.display = "none";
-      getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
-      getElement("divPhysicalRecordingSelector").style.display = "none";
-      getElement("divPrecedentRecordingSection").style.display = "none";
-      getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
-      getElement("divCadastralInfo").style.display = oCurrentRecordingRule.AskForResourceName ? "none" : "inline";
-    } else if (getElement("cboPropertyTypeSelector").value == "searchProperty") {   // Search by property number
+  function isCreateResourceTask() {
+    return getElement("cboPropertyTypeSelector").value == "createProperty";
+  }
 
-    } else if (getElement("cboPropertyTypeSelector").value == "actNotApplyToProperty") {   // Recording act doesn't apply to properties
-      getElement("divPrecedentActSection").style.display = "none";
-      getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
-      getElement("divPhysicalRecordingSelector").style.display = "none";
-      getElement("divPrecedentRecordingSection").style.display = "none";
-      getElement("divResourceName").style.display = "none";
-      getElement("divCadastralInfo").style.display = "none";
-    } else if (getElement("cboPropertyTypeSelector").value == "actAppliesToOtherRecordingAct") {   // Recording act applies to another recording act
-      getElement("divPrecedentActSection").style.display = "inline";
-      getElement("divPhysicalRecordingSelectorTitle").style.display = "inline";
-      getElement("divPhysicalRecordingSelector").style.display = "inline";
-      getElement("divPrecedentRecordingSection").style.display = "inline";
-      getElement("divResourceName").style.display = "none";
-      getElement("divCadastralInfo").style.display = "none";
-    } else if (getElement("cboPropertyTypeSelector").value == "actAppliesOnlyToSection") {   // Recording act only needs a district
-      getElement("divPrecedentActSection").style.display = "none";
-      getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
-      getElement("divPrecedentRecordingSection").style.display = "none";
-      getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
-      getElement("divCadastralInfo").style.display = "none";
-    } else {
-      getElement("divPrecedentActSection").style.display = "none";
-      getElement("divPhysicalRecordingSelectorTitle").style.display = "none";
-      getElement("divPhysicalRecordingSelector").style.display = "none";
-      getElement("divPrecedentRecordingSection").style.display = "none";
-      getElement("divResourceName").style.display = "none";
-      getElement("divCadastralInfo").style.display = "none";
+  function showPrecedentRecordingSection() {
+    switch (getElement("cboPropertyTypeSelector").value) {
+      case "selectProperty":                      // Already registered
+        getElement("divPhysicalRecordingSelector").style.display = getElement('chkSelectPredecentInPhysicalBooks').checked ? "inline" : "none";
+        getElement("divPrecedentActSection").style.display = "inline";
+        getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
+        getElement("divCadastralInfo").style.display = "none";
+        break;
+      case "createProperty":                    // New properties
+        getElement("divPhysicalRecordingSelector").style.display = "none";
+        getElement("divPrecedentActSection").style.display = "none";
+        getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
+        getElement("divCadastralInfo").style.display = oCurrentRecordingRule.AskForResourceName ? "none" : "inline";
+        break;
+      case "createPartition":                     // Already registered and create partition
+        getElement("divPhysicalRecordingSelector").style.display = getElement('chkSelectPredecentInPhysicalBooks').checked ? "inline" : "none";
+        getElement("divPrecedentActSection").style.display = "inline";
+        getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
+        getElement("divCadastralInfo").style.display = "inline";
+        break;
+      case "actNotApplyToProperty":             // Recording act doesn't apply to properties
+        getElement("divPhysicalRecordingSelector").style.display = "none";
+        getElement("divPrecedentActSection").style.display = "none";
+        getElement("divResourceName").style.display = "none";
+        getElement("divCadastralInfo").style.display = "none";
+        break;
+      case "actAppliesToOtherRecordingAct":    // Recording act applies to another recording act
+        getElement("divPhysicalRecordingSelector").style.display = getElement('chkSelectPredecentInPhysicalBooks').checked ? "inline" : "none";
+        getElement("divPrecedentActSection").style.display = "inline";
+        getElement("divResourceName").style.display = "none";
+        getElement("divCadastralInfo").style.display = "none";
+        break;
+      case "actAppliesOnlyToSection":         // Recording act only needs a district
+        getElement("divPhysicalRecordingSelector").style.display = "none";
+        getElement("divPrecedentActSection").style.display = "none";
+        getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
+        getElement("divCadastralInfo").style.display = "none";
+        break;
+      default:
+        getElement("divPhysicalRecordingSelector").style.display = "none";
+        getElement("divPrecedentActSection").style.display = "none";
+        getElement("divResourceName").style.display = "none";
+        getElement("divCadastralInfo").style.display = "none";
+        break;
     }
     showTargetRecordingActSections();
   }
@@ -977,19 +674,17 @@
 
     sMsg += "Acto jurídico que se registrará:\n\n";
     sMsg += "Acto jurídico:\t" + getComboOptionText(getElement('cboRecordingActType')) + "\n";
-    if (getSelectedResource() == null) {
+    if (isCreateResourceTask()) {
       sMsg += "Predio:\t\t" + "Predio sin antecedente registral" + "\n";
       sMsg += "Clave catastral:\t" + getElement('txtCadastralKey').value + "\n\n";
     } else if (getElement('cboPrecedentRecording').value != "-1") {
       sMsg += getPartitionText();
       sMsg += "Predio:\t\t" + getSelectedResourceText() + "\n";
-      sMsg += "Antecedente en:\t" + "Partida " + getComboOptionText(getElement('cboPrecedentRecording')) + "\n";
+      sMsg += "Antecedente en:\t" + "Partida " + getPhysicalRecordingNumber() + "\n";
       sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
     } else {
       sMsg += getPartitionText();
-      sMsg += "Antecedente:\t" + "Crear folio único en partida " + getElement('txtQuickAddRecordingNumber').value +
-              getComboOptionText(getElement('cboQuickAddRecordingSubNumber')) +
-              getComboOptionText(getElement('cboQuickAddBisRecordingTag')) + "\n";
+      sMsg += "Antecedente:\t" + "Crear folio real en partida " + getPhysicalRecordingNumber() + "\n";
       sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
     }
     if (getElement('cboPropertyTypeSelector').value == 'actAppliesToOtherRecordingAct') {
@@ -1003,21 +698,25 @@
     }
 
     sMsg += "¿Registro este acto jurídico en el documento";
-    if (oCurrentRecordingRule.AllowsPartitions && getElement('txtPropertyPartitionNo').value != '') {
-      sMsg += " y lo aplico a " + getComboOptionText(getElement('cboPropertyPartitionType')) +
-              " " + getElement('txtPropertyPartitionNo').value + " en el antecedente";
+    if (getElement('cboPropertyTypeSelector').value == 'createPartition') {
+      sMsg += " y lo aplico a UNA NUEVA FRACCIÓN del antecedente";
     }
     sMsg += "?";
     return confirm(sMsg);
   }
 
+  function getPhysicalRecordingNumber() {
+    if (getElement('cboPrecedentRecording').value != "-1") {
+      return getComboOptionText(getElement('cboPrecedentRecording'));
+    } else {
+      return getElement('txtQuickAddRecordingNumber').value + getComboOptionText(getElement('cboQuickAddBisRecordingTag'));
+    }    
+  }
+
   function getPartitionText() {
     var sMsg = '';
     if (oCurrentRecordingRule.AllowsPartitions) {
-      sMsg += "\t\tSobre " + getComboOptionText(getElement('cboPropertyPartitionType'));
-      if (getElement("txtPropertyPartitionNo").value.length != 0) {
-        sMsg += " número " + getElement("txtPropertyPartitionNo").value + " de " + getElement("txtPropertyTotalPartitions").value;
-      }
+      sMsg += "\t\tSobre UNA NUEVA FRACCIÓN";
       sMsg += "\n\n";
     }
     return sMsg;
@@ -1040,7 +739,6 @@
     }
     return getComboOptionText(getElement('cboTargetActPhysicalBook')) + "\n" +
                               "\t\tpartida " + getElement('txtTargetActPhysicalRecordingNo').value +
-                              getComboOptionText(getElement('cboTargetActRecordingSubNumber')) +
                               getComboOptionText(getElement('cboTargetActBisRecordingTag'));
   }
 
@@ -1074,15 +772,6 @@
       alert("Necesito se proporcione el nombre de la asociación o sociedad civil.");
       getElement('txtResourceName').focus();
       return false;
-    }
-
-    if (oCurrentRecordingRule.AllowsPartitions &&
-        getElement('cboPropertyTypeSelector').value != 'createProperty') {
-      if (!validateSubdivision()) {
-        return false;
-      }
-    } else {
-      cleanPartitionDataFields();
     }
 
     if (getElement('cboPropertyTypeSelector').value == 'selectProperty') {    // Select precedent property
@@ -1158,15 +847,6 @@
     }
     return false;
   }
-  function cleanPartitionDataFields() {
-    getElement("cboPropertyPartitionType").value = '';
-    getElement("txtPropertyPartitionNo").value = '';
-    getElement("txtPropertyTotalPartitions").value = '';
-    getElement("cboPartitionSizeUnit").value = '';
-    getElement("txtPartitionSize").value = '';
-    getElement("cboPartitionAvailableSizeUnit").value = '';
-    getElement("txtPartitionAvailableSize").value = '';
-  }
 
   function validatePrecedentRecording() {
     if (getSelectedResource() != null) {
@@ -1212,142 +892,16 @@
     return true;
   }
 
-  function validateSubdivision() {
-    var recordingAct = getComboOptionText(getElement('cboRecordingActType'));
-
-    if (getElement("cboPropertyPartitionType").value.length == 0) {
-      alert("Necesito conocer sobre qué parte del predio se aplicará el acto de " + recordingAct + ".");
-      getElement("cboPropertyPartitionType").focus();
-      return false;
-    }
-
-    if (getElement("cboPropertyPartitionType").value == "Whole") {
-      cleanPartitionDataFields();
-      return true;
-    }
-
-    if (!isNumeric(getElement("txtPropertyPartitionNo"))) {
-      getElement("txtPropertyPartitionNo").value = '';
-    }
-
-    if (getElement("txtPropertyPartitionNo").value != "?" &&
-        !isNumeric(getElement("txtPropertyPartitionNo"))) {
-      getElement("txtPropertyPartitionNo").value = '';
-    }
-    if (getElement("txtPropertyTotalPartitions").value != "?" &&
-        !isNumeric(getElement("txtPropertyTotalPartitions"))) {
-      getElement("txtPropertyTotalPartitions").value = '';
-    }
-
-    if (getElement("cboPropertyPartitionType").value == "Partial" ||
-        getElement("cboPropertyPartitionType").value == "Last" ||
-        getElement("cboPropertyPartitionType").value == "Full" ||
-        getElement("cboPropertyPartitionType").value == "House" ||
-        getElement("cboPropertyPartitionType").value == "Apartment") {
-      if (getElement("txtPropertyPartitionNo").value.length == 0) {
-        alert("Necesito conocer el número de fracción (o lote) del antecedente a la que se le aplicará el acto de " + recordingAct + ".");
-        getElement("txtPropertyPartitionNo").focus();
-        return false;
-      }
-      if (!isNumeric(getElement("txtPropertyPartitionNo"))) {
-        alert("No reconozco el número de fracción o lote proporcionado.");
-        getElement("txtPropertyPartitionNo").focus();
-        return false;
-      }
-    }
-    if (getElement("cboPropertyPartitionType").value == "Last" ||
-        getElement("cboPropertyPartitionType").value == "Full") {
-      if (getElement("txtPropertyTotalPartitions").value.length == 0) {
-        alert("Necesito conocer el número de fracciones o lotes totales que están inscritos en el antecedente.");
-        getElement("txtPropertyTotalPartitions").focus();
-        return false;
-      }
-      if (!isNumeric(getElement("txtPropertyTotalPartitions"))) {
-        alert("No reconozco el número de fracciones o lotes totales que están inscritos en el antecedente.");
-        getElement("txtPropertyTotalPartitions").focus();
-        return false;
-      }
-      if (convertToNumber(getElement("txtPropertyTotalPartitions").value) <
-          convertToNumber(getElement("txtPropertyPartitionNo").value)) {
-        alert("El número total de fracciones (o lotes) no puede ser menor al número de fracción o lote al que se aplicará el acto de " + recordingAct + ".");
-        getElement("txtPropertyPartitionNo").focus();
-        return false;
-      }
-      if (convertToNumber(getElement("txtPropertyTotalPartitions").value) < 2) {
-        alert("El número total de fracciones (o lotes) en que se divide un predio no puede ser menor a dos.");
-        getElement("txtPropertyTotalPartitions").focus();
-        return false;
-      }
-    }
-
-    if (getElement("cboPartitionSizeUnit").value == '') {
-      alert("Requiero conocer la unidad de medida de la superficie de la fracción.");
-      getElement("cboPartitionSizeUnit").focus();
-      return false;
-    }
-    if (getElement("cboPartitionSizeUnit").value != '-2') {
-      if (getElement("txtPartitionSize").value.length == 0) {
-        alert("Requiero se proporcione la superficie de la fracción.");
-        getElement("txtPartitionSize").focus();
-        return false;
-      }
-      if (!isNumeric(getElement("txtPartitionSize"))) {
-        alert("No reconozco la superficie de la fracción.");
-        getElement("txtPartitionSize").focus();
-        return false;
-      }
-      if (convertToNumber(getElement("txtPartitionSize").value) <= 0) {
-        alert("La superficie de la fracción debe ser mayor a cero.");
-        getElement("txtPartitionSize").focus();
-        return false;
-      }
-    }
-
-    if (getElement("cboPartitionAvailableSizeUnit").value == '') {
-      alert("Requiero conocer la superficie disponible del predio que se está fraccionando.");
-      getElement("cboPartitionAvailableSizeUnit").focus();
-      return false;
-    }
-    if (getElement("cboPartitionAvailableSizeUnit").value != '-2') {
-      if (getElement("txtPartitionAvailableSize").value.length == 0) {
-        alert("Requiero se proporcione la superficie disponible del predio que se está fraccionando.");
-        getElement("txtPartitionAvailableSize").focus();
-        return false;
-      }
-      if (!isNumeric(getElement("txtPartitionAvailableSize"))) {
-        alert("No reconozco la superficie disponible del predio que se está fraccionando.");
-        getElement("txtPartitionAvailableSize").focus();
-        return false;
-      }
-      if (convertToNumber(getElement("txtPartitionAvailableSize").value) <= 0) {
-        alert("La superficie disponible del predio que se está fraccionando debe ser mayor a cero.");
-        getElement("txtPartitionAvailableSize").focus();
-        return false;
-      }
-    }
-    if (isNumeric(getElement("txtPartitionSize")) &&
-        isNumeric(getElement("txtPartitionAvailableSize"))) {
-      if (convertToNumber(getElement("txtPartitionAvailableSize").value) < convertToNumber(getElement("txtPartitionSize").value)) {
-        alert("La superficie disponible del predio no puede ser menor a la superficie de la fracción.");
-        getElement("txtPartitionSize").focus();
-        return false;
-      }
-    }
-    return true;
-  }
-
   function getRecordingActQueryString() {
     var qs = "transactionId=<%=base.Transaction.Id%>";
     qs += "&documentId=<%=base.Document.Id%>\n";
-    qs += "&recordingActTypeCategoryId=" + getElement('cboRecordingActTypeCategory').value;
     qs += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
     qs += "&propertyType=" + getElement('cboPropertyTypeSelector').value;
     qs += "&cadastralKey=" + getElement('txtCadastralKey').value;
     qs += "&precedentRecordingBookId=" + getElement('cboPrecedentRecordingBook').value;
     qs += "&precedentRecordingId=" + getElement('cboPrecedentRecording').value;
-    qs += "&quickAddRecordingNumber=" + getElement('txtQuickAddRecordingNumber').value;
-    qs += "&quickAddRecordingSubNumber=" + getElement('cboQuickAddRecordingSubNumber').value;
-    qs += "&quickAddRecordingSuffixTag=" + getElement('cboQuickAddBisRecordingTag').value;
+    qs += "&quickAddRecordingNumber=" + getElement('txtQuickAddRecordingNumber').value +
+                                        getElement('cboQuickAddBisRecordingTag').value;
     if (getSelectedResource() != null) {
       qs += "&precedentPropertyId=" + getSelectedResource();
     } else {
@@ -1361,44 +915,9 @@
     qs += "&targetActTypeId=" + getElement('cboTargetAct').value;
     qs += "&targetActPhysicalBookId=" + getElement('cboTargetActPhysicalBook').value;
     qs += "&targetActRecordingId=" + getElement('cboTargetActRecording').value;
-    qs += "&targetRecordingNumber=" + getElement('txtTargetActPhysicalRecordingNo').value;
-    qs += "&targetRecordingSubNumber=" + getElement('cboTargetActRecordingSubNumber').value;
-    qs += "&targetRecordingSuffixTag=" + getElement('cboTargetActBisRecordingTag').value;
+    qs += "&targetRecordingNumber=" + getElement('txtTargetActPhysicalRecordingNo').value +
+                                      getElement('cboTargetActBisRecordingTag').value;
 
-    // partition values
-    qs += "&partitionType=" + getComboSelectedOption('cboPropertyPartitionType').title;
-    qs += "&partitionSubtype=" + getComboSelectedOption('cboPropertyPartitionType').value;
-    if (isNumeric(getElement("txtPropertyPartitionNo"))) {
-      qs += "&partitionNo=" + getElement('txtPropertyPartitionNo').value;
-    } else {
-      qs += "&partitionNo=0";
-    }
-    if (isNumeric(getElement("txtPropertyTotalPartitions"))) {
-      qs += "&totalPartitions=" + getElement('txtPropertyTotalPartitions').value;
-    } else {
-      qs += "&totalPartitions=0";
-    }
-    if (isNumeric(getElement("txtPartitionSize"))) {
-      qs += "&partitionSize=" + getElement('txtPartitionSize').value;
-    } else {
-      qs += "&partitionSize=0";
-    }
-    if (isNumeric(getElement("cboPartitionSizeUnit"))) {
-      qs += "&partitionSizeUnitId=" + getElement('cboPartitionSizeUnit').value;
-    } else {
-      qs += "&partitionSizeUnitId=-1";
-    }
-    if (isNumeric(getElement("txtPartitionAvailableSize"))) {
-      qs += "&partitionAvailableSize=" + getElement('txtPartitionAvailableSize').value;
-    } else {
-      qs += "&partitionAvailableSize=0";
-    }
-    if (isNumeric(getElement("cboPartitionAvailableSizeUnit"))) {
-      qs += "&partitionAvailableSizeUnitId=" + getElement('cboPartitionAvailableSizeUnit').value;
-    } else {
-      qs += "&partitionAvailableSizeUnitId=-1";
-    }
-   // alert(qs);
     return qs;
   }
 
@@ -1411,6 +930,7 @@
 
   addEvent(getElement('txtLookupResource'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('txtResourceName'), 'keypress', upperCaseKeyFilter);
-
+  addEvent(getElement('txtCadastralKey'), 'keypress', upperCaseKeyFilter);
+  
   /* ]]> */
 </script>

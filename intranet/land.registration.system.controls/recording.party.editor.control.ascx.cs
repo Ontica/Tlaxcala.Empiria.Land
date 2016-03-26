@@ -239,7 +239,7 @@ namespace Empiria.Land.WebApp {
 
     private void LoadAdditionalRoleCombo() {
       System.Data.DataTable table =
-          Land.Registration.Data.PropertyData.GetSecondaryParties(this.Party, this.RecordingAct);
+          Land.Registration.Data.ResourceData.GetSecondaryParties(this.Party, this.RecordingAct);
 
       cboAdditionalRole.Items.Clear();
       if (table.Rows.Count > 0) {

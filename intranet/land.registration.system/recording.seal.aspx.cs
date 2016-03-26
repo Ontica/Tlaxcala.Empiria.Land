@@ -127,18 +127,18 @@ namespace Empiria.Land.WebApp {
         index++;
 
         switch (recordingAct.RecordingActType.RecordingRule.AppliesTo) {
-          case RecordingRuleApplication.Property:
+          case RecordingRuleApplication.RealEstate:
           case RecordingRuleApplication.RecordingAct:
           case RecordingRuleApplication.Structure:
             Resource resource = recordingAct.TractIndex[0].Resource;
-            Assertion.Assert(resource is Property,
-                             "Type mistmatch parsing property with id = " + resource.Id);
-            html += this.GetPropertyActText(recordingAct, (Property) resource, index);
+            Assertion.Assert(resource is RealEstate,
+                             "Type mistmatch parsing real estate with id {0}", resource.Id);
+            html += this.GetPropertyActText(recordingAct, (RealEstate) resource, index);
             break;
           case RecordingRuleApplication.Association:
             resource = recordingAct.TractIndex[0].Resource;
             Assertion.Assert(resource is Association,
-                             "Type mistmatch parsing resource with id = " + resource.Id);
+                             "Type mistmatch parsing association with id {0}", resource.Id);
             html += this.GetAssociationActText(recordingAct,
                                               (Association) resource, index);
             break;
@@ -160,7 +160,7 @@ namespace Empiria.Land.WebApp {
       return x.Replace("{RECORDING.ACT}", recordingAct.DisplayName);
     }
 
-    private string GetPropertyActText(RecordingAct recordingAct, Property property, int index) {
+    private string GetPropertyActText(RecordingAct recordingAct, RealEstate property, int index) {
       const string act01 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
                            "bien inmueble con folio real electrónico {PROPERTY.UID}.<br/>";
       const string act02 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
