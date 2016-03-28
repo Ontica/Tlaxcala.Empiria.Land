@@ -3,11 +3,11 @@
 *  Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *  Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
 *  Type      : RecordingBookAnalyzer                            Pattern  : Explorer Web Page                 *
-*  Version   : 2.0                                              License  : Please read license.txt file      *
+*  Version   : 2.1                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   :                                                                                               *
 *                                                                                                            *
-********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;

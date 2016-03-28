@@ -1436,7 +1436,6 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
     url += "&recordingActTypeCategoryId=" + getElement("cboRecordingActTypeCategory").value;
-    url += "&filtered=true";
 
     invokeAjaxComboItemsLoader(url, getElement("cboRecordingActType"));
   }

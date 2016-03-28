@@ -3,11 +3,11 @@
 *	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *	 Namespace : Empiria.Web.UI.Workplace                         Assembly : Empiria.Land.Intranet.dll         *
 *	 Type      : DashboardMasterPage										          Pattern  : Master Web Page                   *
-*  Version   : 2.0                                              License  : Please read license.txt file      *
+*  Version   : 2.1                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   : Master page for dashboard items.                                                              *
 *																																																						 *
-********************************** Copyright(c) 1994-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 1994-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 
 using Empiria.Presentation.Web;
 using Empiria.Presentation.Web.Content;

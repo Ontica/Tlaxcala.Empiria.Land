@@ -6,7 +6,7 @@
 *																																																						 *
 *  Summary   : Contains methods for workplace master page interaction.																			 *
 *																																																						 *
-********************************** Copyright(c) 1999-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 1999-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 
 // region Public methods	
 
@@ -73,7 +73,7 @@ function setWorkplace() {
   resizeWorkplace();
   addEvent(window, 'resize', resizeWorkplace);
   setObjectEvents();
-  window.defaultStatus = ""; //"Sistema Empiria 2013. Copyright(c) 1999-2015. La Vía Óntica SC, Ontica LLC and contributors.";
+  window.defaultStatus = ""; //"Sistema Empiria 2013. Copyright(c) 1999-2016. La Vía Óntica SC, Ontica LLC and contributors.";
 }
 
 function hideControlDivisions() {

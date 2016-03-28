@@ -3,11 +3,11 @@
 *	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *	 Namespace : Empiria.Web.UI.Workplace                         Assembly : Empiria.Land.Intranet.dll         *
 *	 Type      : CommandProcessor                                 Pattern  : Command Proccesor Page            *
-*  Version   : 2.0                                              License  : Please read license.txt file      *
+*  Version   : 2.1                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   : Process a HTTP GET command.                                                                   *
 *																																																						 *
-********************************** Copyright(c) 1994-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 1994-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
 using Empiria.Presentation;

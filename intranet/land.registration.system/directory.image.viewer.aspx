@@ -144,7 +144,7 @@
     resizeWorkplace2();
     addEvent(window, 'resize', resizeWorkplace2);
     setObjectEvents();
-    window.defaultStatus = ""; //"Sistema Empiria 2015. Copyright(c) 1999-2015. La Vía Óntica SC, Ontica LLC and contributors.";
+    window.defaultStatus = ""; //"Sistema Empiria 2016. Copyright(c) 1999-2016. La Vía Óntica SC, Ontica LLC and contributors.";
   }
 
   function resizeWorkplace2() {

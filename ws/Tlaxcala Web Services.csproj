@@ -107,6 +107,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="land.registration.system\payment.services.asmx" />
+    <Content Include="LICENSE.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -164,6 +165,9 @@
       <Project>{81492947-b902-4ee9-b506-f9ddad9cf06a}</Project>
       <Name>Empiria.Land.WebServices</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.md" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

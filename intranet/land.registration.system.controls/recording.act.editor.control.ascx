@@ -30,7 +30,7 @@
           </td>
           <td>
             <span id="divPrecedentActSection" style="display:none">
-              Buscar antecedente:        
+              Buscar antecedente:
               <input id="txtLookupResource" type="text" class="textBox" maxlength="19" style="width:184px" />
               <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px"
                     onclick="doRecordingActEditorOperation('lookupResource')" />
@@ -71,7 +71,7 @@
                         <span id="divRecordingQuickAddSection" style="display:none">
                           Partida donde está registrado el antecedente:
                           <input id="txtQuickAddRecordingNumber" type="text" class="textBox" style="width:52px;margin-right:0"
-                                  onkeypress="return integerKeyFilter(this);" title="" maxlength="9" />
+                                  onkeypress="return recordingNumberKeyFilter(this);" title="" maxlength="9" />
                           <select id="cboQuickAddBisRecordingTag" class="selectBox" style="width:60px" title="">
                             <option value=""></option>
                             <option value="-Bis">-Bis</option>
@@ -181,7 +181,7 @@
             <br />
             Partida donde fue registrado el acto:
             <input id="txtTargetActPhysicalRecordingNo" type="text" class="textBox" style="width:52px;margin-right:0"
-                   onkeypress="return integerKeyFilter(this);" maxlength="9" />
+                   onkeypress="return recordingNumberKeyFilter(this);" maxlength="9" />
             <select id="cboTargetActBisRecordingTag" class="selectBox" style="width:60px" title="">
               <option value=""></option>
               <option value="-Bis">-Bis</option>
@@ -262,6 +262,8 @@
       alert("Requiero se proporcione la clave catastral del predio.");
       return;
     }
+    alert("Desafortunadamente no tenemos conexión con el sistema de catastro.");
+    return;
     if (cadastralKey != '29014000100800380010' &&
         cadastralKey != '29013000102380400010' &&
         cadastralKey != '29005000107340380010' &&
@@ -496,7 +498,6 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
     url += "&recordingActTypeCategoryId=" + getElement('cboRecordingActTypeCategory').value;
-    url += "&filtered=true";
 
     invokeAjaxComboItemsLoader(url, getElement("cboRecordingActType"));
     resetPropertyTypeSelectorCombo();
@@ -529,6 +530,7 @@
         getElement("divCadastralInfo").style.display = oCurrentRecordingRule.AskForResourceName ? "none" : "inline";
         break;
       case "createPartition":                     // Already registered and create partition
+        alert("La creación de FRACCIONES está deshabilitada. En breve será restablecido este servicio.")
         getElement("divPhysicalRecordingSelector").style.display = getElement('chkSelectPredecentInPhysicalBooks').checked ? "inline" : "none";
         getElement("divPrecedentActSection").style.display = "inline";
         getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
@@ -710,7 +712,7 @@
       return getComboOptionText(getElement('cboPrecedentRecording'));
     } else {
       return getElement('txtQuickAddRecordingNumber').value + getComboOptionText(getElement('cboQuickAddBisRecordingTag'));
-    }    
+    }
   }
 
   function getPartitionText() {
@@ -830,13 +832,34 @@
         getElement('txtTargetActPhysicalRecordingNo').focus();
         return false;
       }
-      if (!isNumeric(getElement('txtTargetActPhysicalRecordingNo'))) {
-        alert("El número de partida donde está inscrito el acto que se va a cancelar o modificar tiene un formato que no reconozco.\nDebería ser un número.");
+      if (!isValidRecordingNumber(getElement('txtTargetActPhysicalRecordingNo').value)) {
+        alert("El número de partida donde está inscrito el acto que se va a cancelar o modificar " +
+              "tiene un formato que no reconozco.\nEjemplos de formatos válidos son: 123 o 234 o 123/4 o 34/345.");
         getElement('txtTargetActPhysicalRecordingNo').focus();
         return false;
       }
     }
     return true;
+  }
+
+  function isValidRecordingNumber(recordingNumber) {
+    if (isNumericValue(recordingNumber)) {
+      return true;
+    }
+    var pattern = "^[0-9]+\/[0-9]+$";
+    var regex = new RegExp(pattern);
+
+    return regex.test(recordingNumber);
+  }
+
+  function recordingNumberKeyFilter(oEvent) {
+    var keyCode = getKeyCode(oEvent);
+
+    if (isNumericKeyCode(keyCode) || keyCode == 47) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   function targetSelectedFromActsGrid() {
@@ -877,7 +900,7 @@
     }
     if (getElement('cboPrecedentRecording').value == "-1" &&
         getElement('txtQuickAddRecordingNumber').value.length != 0 &&
-        !isNumeric(getElement('txtQuickAddRecordingNumber'))) {
+        !isValidRecordingNumber(getElement('txtQuickAddRecordingNumber').value)) {
       alert("El número de partida tiene un formato que no reconozco.\nDebería ser un número.");
       getElement('txtQuickAddRecordingNumber').focus();
       return false;
@@ -931,6 +954,6 @@
   addEvent(getElement('txtLookupResource'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('txtResourceName'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('txtCadastralKey'), 'keypress', upperCaseKeyFilter);
-  
+
   /* ]]> */
 </script>

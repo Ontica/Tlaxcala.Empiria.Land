@@ -6,7 +6,7 @@
 *																																																						 *
 *  Summary   : Contains general methods for web browser javascript clients.																	 *
 *																																																						 *
-********************************** Copyright(c) 1999-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 1999-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 var gbSended = false;
 var gsWaitScreenMessage = "";
 

@@ -3,11 +3,11 @@
 *  Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *  Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
 *  Type      : RecordingSeal                                    Pattern  : Explorer Web Page                 *
-*  Version   : 2.0                                              License  : Please read license.txt file      *
+*  Version   : 2.1                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   : Prints the recording seal for recordable documents.                                           *
 *                                                                                                            *
-********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 using System.Collections.Generic;
 
@@ -142,7 +142,7 @@ namespace Empiria.Land.WebApp {
             html += this.GetAssociationActText(recordingAct,
                                               (Association) resource, index);
             break;
-          case RecordingRuleApplication.Document:
+          case RecordingRuleApplication.NoProperty:
             html += this.GetDocumentActText(recordingAct, index);
             break;
           default:

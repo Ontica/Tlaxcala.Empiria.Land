@@ -234,6 +234,7 @@
     <Content Include="kendo\kendo.default.min.css" />
     <Content Include="kendo\textures\glass.png" />
     <Content Include="kendo\textures\highlight.png" />
+    <Content Include="LICENSE.txt" />
     <Content Include="Scripts\empiria.jquery.js" />
     <Content Include="Scripts\empiria.ajax.js" />
     <Content Include="Scripts\empiria.calendar.js" />
@@ -243,6 +244,7 @@
     <Content Include="Scripts\empiria.pngfix.js" />
     <Content Include="Scripts\empiria.secondary.master.page.js" />
     <Content Include="Scripts\empiria.validation.js" />
+    <Content Include="README.md" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />

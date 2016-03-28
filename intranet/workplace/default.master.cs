@@ -3,11 +3,11 @@
 *	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *	 Namespace : Empiria.Web.UI.Workplace                         Assembly : Empiria.Land.Intranet.dll         *
 *	 Type      : DefaultMasterPage										            Pattern  : Master Web Page                   *
-*  Version   : 2.0                                              License  : Please read license.txt file      *
+*  Version   : 2.1                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   : Gets user credentials and redirects users to the workplace start page.                        *
 *																																																						 *
-********************************** Copyright(c) 1994-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 1994-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
 using Empiria.Presentation.Web;

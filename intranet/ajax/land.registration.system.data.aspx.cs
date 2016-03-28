@@ -3,11 +3,11 @@
 * Solution  : Empiria Land                                     System   : Land Intranet Application         *
 * Namespace : Empiria.Web.UI.Ajax                              Assembly : Empiria.Land.Intranet.dll         *
 * Type      : LandRegistrationSystemData                       Pattern  : Ajax Services Web Page            *
-* Version   : 2.0                                              License  : Please read license.txt file      *
+* Version   : 2.1                                              License  : Please read license.txt file      *
 * 																																																					*
 * Summary   : Gets Empiria control contents through Ajax invocation.                                        *
 *																																																						*
-********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
 using Empiria.DataTypes;
@@ -237,6 +237,9 @@ namespace Empiria.Web.UI.Ajax {
       string html = String.Empty;
       int counter = 0;
 
+      if (!rule.IsActive) {
+        return HtmlSelectContent.GetComboAjaxHtmlItem("undefinedRule", "**REGLA NO DEFINIDA**");
+      }
       switch (rule.AppliesTo) {
         case RecordingRuleApplication.Association:
           if (rule.ResourceRecordingStatus == ResourceRecordingStatus.Unregistered ||
@@ -281,7 +284,7 @@ namespace Empiria.Web.UI.Ajax {
           html += HtmlSelectContent.GetComboAjaxHtmlItem("actAppliesToOtherRecordingAct", "Ya registrado");
           counter++;
           break;
-        case RecordingRuleApplication.Document:
+        case RecordingRuleApplication.NoProperty:
           html += HtmlSelectContent.GetComboAjaxHtmlItem("actAppliesToDocument", "No aplica a predios o asoc");
           counter++;
           break;
@@ -318,7 +321,8 @@ namespace Empiria.Web.UI.Ajax {
       //if (recordingResources.Count == 0) {
       //  html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "Sin predios asociados");
       //} else {
-      //  html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar el predio )");
+      //  html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar el predio )");
+
       //  html += "|" + HtmlSelectContent.GetComboAjaxHtmlItem("0", "Crear otro predio en la partida " + recording.Number);
       //}
       foreach (Resource resource in recordingResources) {
@@ -800,18 +804,13 @@ namespace Empiria.Web.UI.Ajax {
 
     private string GetRecordingTypesStringArrayCommandHandler() {
       int recordingActTypeCategoryId = int.Parse(GetCommandParameter("recordingActTypeCategoryId", false, "0"));
-      bool filtered = base.GetCommandParameter<bool>("filtered", false);
 
       string items = String.Empty;
       if (recordingActTypeCategoryId != 0) {
         RecordingActTypeCategory recordingActTypeCategory = RecordingActTypeCategory.Parse(recordingActTypeCategoryId);
 
-        FixedList<RecordingActType> list = null;
-        if (filtered) {
-          list = recordingActTypeCategory.RecordingActTypes.FindAll((x) => x.RecordingRule.IsActive).ToFixedList();
-        } else {
-          list = recordingActTypeCategory.RecordingActTypes;
-        }
+        FixedList<RecordingActType> list = recordingActTypeCategory.RecordingActTypes;
+
         return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "DisplayName",
                                                   "( ¿Qué acto jurídico se agregará al documento? )");
       } else {
@@ -954,7 +953,7 @@ namespace Empiria.Web.UI.Ajax {
         recording = Recording.Empty;
       }
       LandRegistrationException exception = null;
-      exception = LRSValidator.ValidateRecordingNumber(recordingBook, recording, recordingNumber, 
+      exception = LRSValidator.ValidateRecordingNumber(recordingBook, recording, recordingNumber,
                                                        imageStartIndex, imageEndIndex);
       if (exception != null) {
         return exception.Message;

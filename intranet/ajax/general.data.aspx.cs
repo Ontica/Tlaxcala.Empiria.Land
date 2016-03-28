@@ -3,11 +3,11 @@
 *	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *	 Namespace : Empiria.Web.UI.Ajax                              Assembly : Empiria.Land.Intranet.dll         *
 *	 Type      : LandRegistrationSystemData                       Pattern  : Ajax Services Web Page            *
-*  Version   : 2.0                                              License  : Please read license.txt file      *
+*  Version   : 2.1                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   : Gets Empiria control contents through Ajax invocation.                                        *
 *																																																						 *
-********************************** Copyright(c) 1994-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 1994-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
 using Empiria.Presentation.Web;

@@ -6,7 +6,7 @@
 *																																																						 *
 *  Summary   : Displays the client system date-time in an html item.                                         *
 *																																																						 *
-********************************** Copyright(c) 1999-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 1999-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 
 // region Public methods
 

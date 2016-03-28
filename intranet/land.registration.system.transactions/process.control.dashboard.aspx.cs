@@ -3,11 +3,11 @@
 *  Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *  Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
 *  Type      : TasksDashboard                                   Pattern  : Explorer Web Page                 *
-*  Version   : 2.0                                              License  : Please read license.txt file      *
+*  Version   : 2.1                                              License  : Please read license.txt file      *
 *                                                                                                            *
 *  Summary   : Multiview dashboard used for workflow task management.                                        *
 *																																																						 *
-********************************** Copyright(c) 2009-2015. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 using System.Data;
 using System.Web.UI;
@@ -120,7 +120,7 @@ namespace Empiria.Land.WebApp {
         LoadCombos();
       }
       if (txtFromDate.Value == String.Empty) {
-        txtFromDate.Value = DateTime.Parse("01/Jun/2015").ToString("dd/MMM/yyyy");
+        txtFromDate.Value = DateTime.Parse("01/Jan/2016").ToString("dd/MMM/yyyy");
       }
       if (txtToDate.Value == String.Empty) {
         txtToDate.Value = DateTime.Today.ToString("dd/MMM/yyyy");

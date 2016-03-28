@@ -440,7 +440,7 @@
     getElement('<%=cboDate.ClientID%>').value = '';
     getElement('<%=cboSearch.ClientID%>').value = '';
     getElement('<%=txtSearchExpression.ClientID%>').value = '';
-    getElement('<%=txtFromDate.ClientID%>').value = '01/jul/2015';
+    getElement('<%=txtFromDate.ClientID%>').value = '01/ene/2016';
     getElement('<%=txtToDate.ClientID%>').value = '<%=DateTime.Today.ToString("dd/MMM/yyyy")%>';
     getElement('<%=cboRecorderOffice.ClientID%>').value = '';
     getElement('<%=cboStatus.ClientID%>').value = '';
