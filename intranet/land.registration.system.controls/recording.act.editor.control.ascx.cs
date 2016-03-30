@@ -9,7 +9,7 @@ namespace Empiria.Land.WebApp {
 
   public partial class RecordingActEditorControl : RecordingActEditorControlBase {
 
-    public override RecordingAct CreateRecordingAct() {
+    public override RecordingAct[] CreateRecordingActs() {
       Assertion.Assert(base.Transaction != null && !base.Transaction.IsEmptyInstance,
                        "Transaction cannot be null or an empty instance.");
       Assertion.Assert(base.Transaction.Document != null && !base.Transaction.Document.IsEmptyInstance,
@@ -44,7 +44,12 @@ namespace Empiria.Land.WebApp {
     private RecordingTask ParseRecordingTask() {
       Command command = base.GetCurrentCommand();
 
-      RecordingActInfo targetActInfo;
+      RecordingActInfo targetActInfo = null;
+
+
+      RecordingTaskType taskType =
+                (RecordingTaskType) Enum.Parse(typeof(RecordingTaskType),
+                                               command.GetParameter<string>("recordingTaskType"));
 
       if (command.GetParameter<int>("targetRecordingActId", -1) != -1) {
         targetActInfo = new RecordingActInfo(command.GetParameter<int>("targetRecordingActId"));
@@ -57,19 +62,28 @@ namespace Empiria.Land.WebApp {
         );
       }
 
+      RealEstatePartition partitionInfo = null;
+      if (taskType == RecordingTaskType.createPartition) {
+        partitionInfo =
+              new RealEstatePartition(command.GetParameter<string>("partitionType"),
+                                      command.GetParameter<string>("partitionNo"),
+                                      command.GetParameter<string>("partitionRepeatUntilNo", String.Empty));
+      }
+
       return new RecordingTask(
          transactionId: command.GetParameter<int>("transactionId", -1),
          documentId: command.GetParameter<int>("documentId", -1),
          recordingActTypeId: command.GetParameter<int>("recordingActTypeId"),
          recordingTaskType: (RecordingTaskType) Enum.Parse(typeof(RecordingTaskType),
-                                                      command.GetParameter<string>("propertyType")),
+                                                      command.GetParameter<string>("recordingTaskType")),
          cadastralKey: command.GetParameter<string>("cadastralKey", String.Empty),
          resourceName: command.GetParameter<string>("resourceName", String.Empty),
          precedentRecordingBookId: command.GetParameter<int>("precedentRecordingBookId", -1),
          precedentRecordingId: command.GetParameter<int>("precedentRecordingId", -1),
          precedentResourceId: command.GetParameter<int>("precedentPropertyId", -1),
          quickAddRecordingNumber: command.GetParameter<string>("quickAddRecordingNumber", String.Empty),
-         targetActInfo: targetActInfo
+         targetActInfo: targetActInfo,
+         partition: partitionInfo
       );
     }
 

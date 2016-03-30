@@ -24,7 +24,7 @@
         <tr id="divPropertyTypeSelector">
           <td style="vertical-align:baseline">Sobre:</td>
           <td style="vertical-align:top">
-            <select id="cboPropertyTypeSelector" class="selectBox" style="width:200px" onchange="return updateUI(this);">
+            <select id="cboRecordingTaskType" class="selectBox" style="width:200px" onchange="return updateUI(this);">
               <option value="">( Seleccionar )</option>
             </select>
           </td>
@@ -101,6 +101,44 @@
           <td class="lastCell">&nbsp;</td>
         </tr>
       </table>
+    </td>
+  </tr>
+  <tr id="divPartitionSectionTitle" style="display:none">
+    <td class="actionsSeparator">(2) Información sobre la fracción que se va a crear a partir del antecedente
+    </td>
+  </tr>
+  <tr id="divPartitionSectionContent" style="display:none">
+    <td>
+        <table class="editionTable">
+          <tr>
+            <td>Tipo de fracción:</td>
+            <td>
+              <select id="cboPropertyPartitionType" class="selectBox" style="width:146px" title=""
+                      onchange="return updateUI(this);">
+                <option value="">( Seleccionar )</option>
+                <option value="Bodega">Bodega</option>
+                <option value="Casa">Casa</option>
+                <option value="Departamento">Departamento</option>
+                <option value="Estacionamiento">Estacionamiento</option>
+                <option value="Fracción">Fracción</option>
+                <option value="Local comercial">Local comercial</option>
+                <option value="Lote">Lote</option>
+              </select>
+            </td>
+            <td>Número:</td>
+            <td><input id="txtPartitionNo" type="text" class="textBox" style="width:66px;margin-right:0" maxlength="10" /></td>
+            <td class="lastCell">
+              <label><input id="chkNoNumberPartition" type="checkbox" onclick="updatePartitionControls();" />Sin número</label>
+              <label><input id="chkGeneratePartitionRank" type="checkbox" onclick="updatePartitionControls()" />Generar un rango</label>
+            </td>
+          </tr>
+          <tr id="divRepeatPartitionUntilRow" style="display:none">
+            <td colspan="2">&nbsp;</td>
+            <td>Número final:</td>
+            <td><input id="txtRepeatPartitionUntil" type="text" class="textBox" style="width:66px;margin-right:0" maxlength="4" /></td>
+            <td class="lastCell">&nbsp;</td>
+          </tr>
+        </table>
     </td>
   </tr>
   <tr id="divTargetPrecedentActSectionTitle" style="display:none">
@@ -255,27 +293,37 @@
     }
   }
 
+  function updatePartitionControls() {
+    if (getElement("chkNoNumberPartition").checked) {
+      getElement("txtPartitionNo").value = "";
+      getElement("txtPartitionNo").disabled = true;
+      getElement("chkGeneratePartitionRank").checked = false;
+      getElement("chkGeneratePartitionRank").disabled = true;
+      getElement("txtRepeatPartitionUntil").value = "";
+    } else {
+      getElement("txtPartitionNo").disabled = false;
+      getElement("chkGeneratePartitionRank").disabled = false;
+    }
+    if (getElement("chkGeneratePartitionRank").checked) {
+      getElement("divRepeatPartitionUntilRow").style.display = "inline";
+    } else {
+      getElement("divRepeatPartitionUntilRow").style.display = "none";
+    }
+  }
+
   function getCadastralInfo() {
     var cadastralKey = getElement('txtCadastralKey').value;
 
     if (cadastralKey == '') {
       alert("Requiero se proporcione la clave catastral del predio.");
       return;
-    }
-    alert("Desafortunadamente no tenemos conexión con el sistema de catastro.");
-    return;
-    if (cadastralKey != '29014000100800380010' &&
-        cadastralKey != '29013000102380400010' &&
-        cadastralKey != '29005000107340380010' &&
-        cadastralKey != '290520001001A0350010' &&
-        cadastralKey != '290050001001A0030010') {
-      alert("La clave catastral proporcionada no ha sido registrada en el sistema de catastro.");
-      return;
+    } else {
+      alert("Desafortunadamente no tenemos conexión con el sistema de catastro.");
     }
   }
 
   function appendRecordingAct() {
-    if (!assertBookRecording()) {
+    if (!assertAppendRecordingActIsPossible()) {
       return false;
     }
     if (!validateRecordingAct()) {
@@ -293,7 +341,7 @@
     sendPageCommand("appendRecordingAct", qs);
   }
 
-  function assertBookRecording() {
+  function assertAppendRecordingActIsPossible() {
     <% if (base.Transaction.IsEmptyInstance) { %>
     alert("Este control no está ligado a un trámite válido.");
     return false;
@@ -338,7 +386,7 @@
       return;
     }
     if (oControl == getElement("cboRecordingActTypeCategory")) {
-      if (!assertBookRecording()) {
+      if (!assertAppendRecordingActIsPossible()) {
         getElement("cboRecordingActTypeCategory").value = '';
         return;
       }
@@ -348,7 +396,7 @@
       setRecordingRule();
       resetPropertyTypeSelectorCombo();
       showTargetRecordingActSections();
-    } else if (oControl == getElement("cboPropertyTypeSelector")) {
+    } else if (oControl == getElement("cboRecordingTaskType")) {
       showPrecedentRecordingSection();
     } else if (oControl == getElement("cboPrecedentRecordingSection")) {
       resetPrecedentDomainBooksCombo();
@@ -476,7 +524,7 @@
     url += "?commandName=getPropertyTypeSelectorComboCmd";
     url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
 
-    invokeAjaxComboItemsLoader(url, getElement("cboPropertyTypeSelector"));
+    invokeAjaxComboItemsLoader(url, getElement("cboRecordingTaskType"));
     showPrecedentRecordingSection();
   }
 
@@ -512,53 +560,44 @@
   }
 
   function isCreateResourceTask() {
-    return getElement("cboPropertyTypeSelector").value == "createProperty";
+    return getElement("cboRecordingTaskType").value == "createProperty";
   }
 
   function showPrecedentRecordingSection() {
-    switch (getElement("cboPropertyTypeSelector").value) {
+    getElement("divPhysicalRecordingSelector").style.display = "none";
+    getElement("divPrecedentActSection").style.display = "none";
+    getElement("divPartitionSectionTitle").style.display = "none";
+    getElement("divPartitionSectionContent").style.display = "none";
+    getElement("divResourceName").style.display = "none";
+    getElement("divCadastralInfo").style.display = "none";
+    switch (getElement("cboRecordingTaskType").value) {
       case "selectProperty":                      // Already registered
         getElement("divPhysicalRecordingSelector").style.display = getElement('chkSelectPredecentInPhysicalBooks').checked ? "inline" : "none";
         getElement("divPrecedentActSection").style.display = "inline";
         getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
-        getElement("divCadastralInfo").style.display = "none";
         break;
       case "createProperty":                    // New properties
-        getElement("divPhysicalRecordingSelector").style.display = "none";
-        getElement("divPrecedentActSection").style.display = "none";
         getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
         getElement("divCadastralInfo").style.display = oCurrentRecordingRule.AskForResourceName ? "none" : "inline";
         break;
       case "createPartition":                     // Already registered and create partition
-        alert("La creación de FRACCIONES está deshabilitada. En breve será restablecido este servicio.")
         getElement("divPhysicalRecordingSelector").style.display = getElement('chkSelectPredecentInPhysicalBooks').checked ? "inline" : "none";
         getElement("divPrecedentActSection").style.display = "inline";
+        getElement("divPartitionSectionTitle").style.display = "inline";
+        getElement("divPartitionSectionContent").style.display = "inline";
         getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
         getElement("divCadastralInfo").style.display = "inline";
         break;
       case "actNotApplyToProperty":             // Recording act doesn't apply to properties
-        getElement("divPhysicalRecordingSelector").style.display = "none";
-        getElement("divPrecedentActSection").style.display = "none";
-        getElement("divResourceName").style.display = "none";
-        getElement("divCadastralInfo").style.display = "none";
         break;
       case "actAppliesToOtherRecordingAct":    // Recording act applies to another recording act
         getElement("divPhysicalRecordingSelector").style.display = getElement('chkSelectPredecentInPhysicalBooks').checked ? "inline" : "none";
         getElement("divPrecedentActSection").style.display = "inline";
-        getElement("divResourceName").style.display = "none";
-        getElement("divCadastralInfo").style.display = "none";
         break;
       case "actAppliesOnlyToSection":         // Recording act only needs a district
-        getElement("divPhysicalRecordingSelector").style.display = "none";
-        getElement("divPrecedentActSection").style.display = "none";
         getElement("divResourceName").style.display = oCurrentRecordingRule.AskForResourceName ? "inline" : "none";
-        getElement("divCadastralInfo").style.display = "none";
         break;
       default:
-        getElement("divPhysicalRecordingSelector").style.display = "none";
-        getElement("divPrecedentActSection").style.display = "none";
-        getElement("divResourceName").style.display = "none";
-        getElement("divCadastralInfo").style.display = "none";
         break;
     }
     showTargetRecordingActSections();
@@ -610,7 +649,7 @@
     var selectedResource = getSelectedResource();
     var createResource = createAntecedentResource();
 
-    var applyTargetRecording = (getElement("cboPropertyTypeSelector").value == "actAppliesToOtherRecordingAct" &&
+    var applyTargetRecording = (getElement("cboRecordingTaskType").value == "actAppliesToOtherRecordingAct" &&
                                (selectedResource != null || createResource));
 
 
@@ -668,7 +707,7 @@
   }
 
   function showConfirmFormCreateRecordingAct() {
-    var sMsg = "Agregar un acto jurídico al documento:\n\n";
+    var sMsg = "Agregar el acto jurídico al documento:\n\n";
 
     sMsg += 'Documento:\t<%=base.Transaction.Document.UID%>\n';
     sMsg += 'Trámite:\t\t<%=base.Transaction.UID%>\n';
@@ -679,7 +718,13 @@
     if (isCreateResourceTask()) {
       sMsg += "Predio:\t\t" + "Predio sin antecedente registral" + "\n";
       sMsg += "Clave catastral:\t" + getElement('txtCadastralKey').value + "\n\n";
-    } else if (getElement('cboPrecedentRecording').value != "-1") {
+    } else if (getElement('cboPrecedentRecording').value.length == 0) {
+      sMsg += getPartitionText();
+      sMsg += "Predio:\t\t" + getSelectedResourceText() + "\n\n";
+
+    } else if (getElement('cboPrecedentRecording').value.length != 0 &&
+               getElement('cboPrecedentRecording').value != "-1") {
+      alert(getElement('cboPrecedentRecording').value);
       sMsg += getPartitionText();
       sMsg += "Predio:\t\t" + getSelectedResourceText() + "\n";
       sMsg += "Antecedente en:\t" + "Partida " + getPhysicalRecordingNumber() + "\n";
@@ -689,7 +734,7 @@
       sMsg += "Antecedente:\t" + "Crear folio real en partida " + getPhysicalRecordingNumber() + "\n";
       sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
     }
-    if (getElement('cboPropertyTypeSelector').value == 'actAppliesToOtherRecordingAct') {
+    if (getElement('cboRecordingTaskType').value == 'actAppliesToOtherRecordingAct') {
       sMsg += "Acto jurídico a cancelar o modificar:\n\n";
       if (getElement('cboTemporalId').value != '') {
         sMsg += "Acto involucrado:\t" + getComboOptionText(getElement('cboTemporalId')) + "\n";
@@ -700,7 +745,7 @@
     }
 
     sMsg += "¿Registro este acto jurídico en el documento";
-    if (getElement('cboPropertyTypeSelector').value == 'createPartition') {
+    if (getElement('cboRecordingTaskType').value == 'createPartition') {
       sMsg += " y lo aplico a UNA NUEVA FRACCIÓN del antecedente";
     }
     sMsg += "?";
@@ -717,9 +762,20 @@
 
   function getPartitionText() {
     var sMsg = '';
-    if (oCurrentRecordingRule.AllowsPartitions) {
-      sMsg += "\t\tSobre UNA NUEVA FRACCIÓN";
-      sMsg += "\n\n";
+    if (getElement('cboRecordingTaskType').value != 'createPartition') {
+      return '';
+    }
+    sMsg += "\t\tSobre " + getElement('cboPropertyPartitionType').value;
+    if (getElement('chkNoNumberPartition').checked) {
+      sMsg += " sin número";
+    } else {
+      sMsg += " No. " + getElement('txtPartitionNo').value;
+    }
+    if (getElement('chkGeneratePartitionRank').checked) {
+      sMsg += " al No. " + getElement('txtRepeatPartitionUntil').value + "\n";
+      sMsg += "\t\tlos cuales son NUEVAS FRACCIONES del\n";
+    } else {
+      sMsg += "\n\t\tel cual es UNA NUEVA FRACCIÓN del\n";
     }
     return sMsg;
   }
@@ -764,9 +820,9 @@
         return false;
       }
     <% } %>
-    if (getElement('cboPropertyTypeSelector').value.length == 0) {
-      alert("Requiero se proporcione la información del predio sobre el que se aplicará el acto jurídico " + recordingAct + ".");
-      getElement('cboPropertyTypeSelector').focus();
+    if (getElement('cboRecordingTaskType').value.length == 0) {
+      alert("Requiero se proporcione la información del predio o recurso sobre el que se aplicará el acto jurídico " + recordingAct + ".");
+      getElement('cboRecordingTaskType').focus();
       return false;
     }
     if (oCurrentRecordingRule.AskForResourceName &&
@@ -776,23 +832,55 @@
       return false;
     }
 
-    if (getElement('cboPropertyTypeSelector').value == 'selectProperty') {    // Select precedent property
-      if (!validatePrecedentRecording()) {
-        return false;
-      }
-    }
-
-    if (getElement('cboPropertyTypeSelector').value == 'actAppliesToOtherRecordingAct') {
-      if (!validatePrecedentRecording()) {
-        return false;
-      }
-      if (!validateTargetAct()) {
-        return false;
-      }
+    switch (getElement('cboRecordingTaskType').value) {
+      case 'selectProperty':
+        if (!validateResourceIsSelected()) {
+          return false;
+        }
+        break;
+      case 'createPartition':
+        if (!validateResourceIsSelected()) {
+          return false;
+        }
+        if (!validatePartition()) {
+          return false;
+        }
+        break;
+      case 'actAppliesToOtherRecordingAct':
+        if (!validateResourceIsSelected()) {
+          return false;
+        }
+        if (!validateTargetAct()) {
+          return false;
+        }
+        break;
+      default:
+        break;
     }
     return true;
   }
 
+  function validatePartition() {
+    if (getElement('cboPropertyPartitionType').value.length == 0) {
+      alert("Necesito conocer el tipo de fracción que se desea crear.");
+      getElement('cboPropertyPartitionType').focus();
+      return false;
+    }
+    if (!getElement('chkNoNumberPartition').checked &&
+         getElement('txtPartitionNo').value.length == 0) {
+      alert("Necesito conocer el número de " + getElement('cboPropertyPartitionType').value + ".");
+      getElement('txtPartitionNo').focus();
+      return false;
+    }
+    if (getElement('chkGeneratePartitionRank').checked &&
+        getElement('txtRepeatPartitionUntil').value.length == 0) {
+      alert("Necesito conocer el número de " + getElement('cboPropertyPartitionType').value +
+            " donde termina el rango que se desea generar.");
+      getElement('txtRepeatPartitionUntil').focus();
+      return false;
+    }
+    return true;
+  }
 
   function validateTargetAct() {
     if (targetSelectedFromActsGrid()) {
@@ -871,7 +959,7 @@
     return false;
   }
 
-  function validatePrecedentRecording() {
+  function validateResourceIsSelected() {
     if (getSelectedResource() != null) {
       return true;
     }
@@ -919,7 +1007,7 @@
     var qs = "transactionId=<%=base.Transaction.Id%>";
     qs += "&documentId=<%=base.Document.Id%>\n";
     qs += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
-    qs += "&propertyType=" + getElement('cboPropertyTypeSelector').value;
+    qs += "&recordingTaskType=" + getElement('cboRecordingTaskType').value;
     qs += "&cadastralKey=" + getElement('txtCadastralKey').value;
     qs += "&precedentRecordingBookId=" + getElement('cboPrecedentRecordingBook').value;
     qs += "&precedentRecordingId=" + getElement('cboPrecedentRecording').value;
@@ -931,6 +1019,15 @@
       qs += "&precedentPropertyId=" + getElement('cboPrecedentProperty').value;
     }
     qs += "&resourceName=" + getElement('txtResourceName').value;
+
+    // Partition data
+    if (getElement('cboRecordingTaskType').value == "createPartition") {
+      qs += "&partitionType=" + getElement('cboPropertyPartitionType').value;
+      qs += "&partitionNo=" + (getElement('chkNoNumberPartition').checked ?
+                                          'sin número' : getElement('txtPartitionNo').value);
+      qs += "&partitionRepeatUntilNo=" + (getElement('chkGeneratePartitionRank').checked ?
+                                                     getElement('txtRepeatPartitionUntil').value : "");
+    }
 
     // target act values
     qs += "&targetRecordingActId=" + getElement('cboTemporalId').value;
@@ -954,6 +1051,8 @@
   addEvent(getElement('txtLookupResource'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('txtResourceName'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('txtCadastralKey'), 'keypress', upperCaseKeyFilter);
+  addEvent(getElement('txtPartitionNo'), 'keypress', upperCaseKeyFilter);
+  addEvent(getElement('txtRepeatPartitionUntil'), 'keypress', upperCaseKeyFilter);
 
   /* ]]> */
 </script>

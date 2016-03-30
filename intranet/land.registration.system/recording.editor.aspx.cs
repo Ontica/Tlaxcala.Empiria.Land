@@ -84,7 +84,7 @@ namespace Empiria.Land.WebApp {
           SetRefreshPageScript();
           return;
         case "appendRecordingAct":
-          oRecordingActEditor.CreateRecordingAct();
+          oRecordingActEditor.CreateRecordingActs();
           SetRefreshPageScript();
           return;
         case "deleteRecordingAct":
