@@ -18,7 +18,7 @@
   <script type="text/javascript" src="../scripts/empiria.validation.js"></script>
   <script type="text/javascript" src="../scripts/empiria.calendar.js"></script>	
 </head>
-<body style="background-color:#fafafa; top:0px; margin:0px; margin-top:-14px; margin-left:-6px;">
+<body style="background-color:#fafafa; top:0; margin:0; margin-top:-14px; margin-left:-6px;">
 <form name="aspnetForm" method="post" id="aspnetForm" runat="server">
 <div id="divContentAlwaysVisible">
 <table id="tabStripItemView_0" style="display:inline;">
@@ -111,13 +111,12 @@
         <tr>
           <td class="lastCell">
             <div style="overflow:scroll;max-height:900px;width:780px;">
-              <table class="details"style="width:99%">
+              <table class="details"style="width:97%">
                 <tr class="detailsHeader">
                   <td>#</td>
                   <td>Acto jurídico</td>
                   <td>Predio / Recurso</td>
-                  <td>Registrado en</td>
-                  <td>Estado</td>
+                  <td style='width:300px'>Antecedente registrado en</td>
                   <td>¿Qué desea hacer?</td>
                 </tr>
                 <%=GetRecordingActsGrid()%>
@@ -158,7 +157,7 @@
 </table>
 </div>
 </form>
-<iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top:0px"
+<iframe id="ifraCalendar" style="z-index:99;left:0;visibility:hidden;position:relative;top:0"
     marginheight="0" marginwidth="0" frameborder="0" scrolling="no" src="../user.controls/calendar.aspx" width="100%">
 </iframe>
 </body>

@@ -239,6 +239,7 @@ namespace Empiria.Land.WebApp {
           x = act03a.Replace("{INDEX}", index.ToString());
           x = x.Replace("{PARTITION.NUMBER}", property.PartitionNo +
                        (property.IsPartitionOf.MergedInto.Equals(property) ? " y última" : String.Empty));
+          x = x.Replace("fracción <b>Fracción", "<b>Fracción");
         }
         x = x.Replace("{PARTITION.OF}", "<u>" + property.IsPartitionOf.UID + "</u>" +
                       (!partitionAntecedent.PhysicalRecording.IsEmptyInstance ?

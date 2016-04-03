@@ -174,14 +174,6 @@
         <option value='780'>Inmovilización de predio</option>
         <option value='786'>Solicitud de folio real</option>
       </select>
-      <!--
-        <option value='760'>Capitulación matrimonial</option>
-        <option value='762'>Contrato de comodato</option>
-        <option value='764'>Contrato de crédito hipotecario</option>
-        <option value='767'>Contrato de crédito prendario</option>
-        <option value='766'>Contrato Infonavit</option>
-        <option value='763'>Contrato traslativo de dominio</option>
-      !-->
     </td>
     <td>
       Expedido por:

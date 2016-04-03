@@ -57,7 +57,7 @@ namespace Empiria.Land.WebApp {
         targetActInfo = new RecordingActInfo(
           recordingActTypeId: command.GetParameter<int>("targetActTypeId", -1),
           physicalBookId: command.GetParameter<int>("targetActPhysicalBookId", -1),
-          recordingId: command.GetParameter<int>("targetActRecordingId", -1),
+          physicalRecordingId: command.GetParameter<int>("targetActRecordingId", -1),
           recordingNumber: command.GetParameter<string>("targetRecordingNumber", String.Empty)
         );
       }

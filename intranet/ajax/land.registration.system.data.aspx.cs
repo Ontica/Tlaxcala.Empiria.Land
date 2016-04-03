@@ -144,7 +144,7 @@ namespace Empiria.Web.UI.Ajax {
       var section = recordingActType.RecordingRule.RecordingSection;
 
       string html = HtmlSelectContent.GetComboAjaxHtmlItem("", "( Seleccionar el distrito y sección )");
-      if (recordingActType.IsInformationActType) {
+      if (recordingActType.IsInformationActType || section.IsEmptyInstance) {
         html += "|" + HtmlSelectContent.GetComboAjaxHtmlItem("annotation", "Registrado al margen");
       }
       if (section != RecordingSection.Empty && section.Id == 1051) {
