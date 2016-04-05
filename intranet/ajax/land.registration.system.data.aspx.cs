@@ -290,7 +290,6 @@ namespace Empiria.Web.UI.Ajax {
           break;
         default:
           break;
-          // actNotApplyToProperty  // actAppliesOnlyToSection  // undefinedRule
       }
       if (counter > 1) {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( ¿A qué predio se aplicará? )") + "|" + html;

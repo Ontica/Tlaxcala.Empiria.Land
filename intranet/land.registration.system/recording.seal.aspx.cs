@@ -59,12 +59,6 @@ namespace Empiria.Land.WebApp {
       }
     }
 
-    protected bool ShowAllRecordings {
-      get {
-        return (int.Parse(Request.QueryString["id"]) == -1);
-      }
-    }
-
     protected string GetPaymentText() {
       const string t = "Derechos por <b>{AMOUNT}</b> según recibo <b>{RECEIPT}</b> expedido por " +
                        "la Secretaría de Finanzas del Estado, que se archiva.";
@@ -76,8 +70,8 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetPrelationText() {
-      const string t = "Presentado para su examen y registro en	{CITY}, el <b>{DATE} a las {TIME} horas</b>, " +
-                       "bajo el número de trámite <b>{NUMBER}</b> - Conste";
+      const string t = "Documento presentado para su examen y registro el <b>{DATE} a las {TIME} horas</b>, " +
+                       "bajo el número de trámite <b>{NUMBER}</b>, y para el cual se {COUNT}";
 
       DateTime presentationTime = transaction.LastReentryTime == ExecutionServer.DateMaxValue ?
                                           transaction.PresentationTime : transaction.LastReentryTime;
@@ -85,10 +79,14 @@ namespace Empiria.Land.WebApp {
       string x = t.Replace("{DATE}", presentationTime.ToString(@"dd \de MMMM \de yyyy"));
       x = x.Replace("{TIME}", presentationTime.ToString("HH:mm:ss"));
       x = x.Replace("{NUMBER}", transaction.UID);
-      if (ExecutionServer.LicenseName == "Tlaxcala") {
-        x = x.Replace("{CITY}", "Tlaxcala de Xicohténcatl, Tlaxcala");
+      if (this.recordingActs.Count > 1) {
+        x = x.Replace("{COUNT}", "registraron los siguientes " + this.recordingActs.Count.ToString() +
+                      " (" + EmpiriaString.SpeechInteger(this.recordingActs.Count).ToLower() + ") " +
+                      "actos jurídicos:");
+      } else if (this.recordingActs.Count == 1) {
+        x = x.Replace("{COUNT}", "registró el siguiente acto jurídico:");
       } else {
-        x = x.Replace("{CITY}", "Zacatecas, Zacatecas");
+
       }
       return x;
     }
@@ -99,24 +97,6 @@ namespace Empiria.Land.WebApp {
       } else {
         return String.Empty;
       }
-    }
-
-    protected string GetDocumentHeaderText() {
-      const string docMultiTlax = "Registrado con el número de documento electrónico <b>{DOCUMENT}</b>, " +
-                                  "con los siguientes {COUNT} actos jurídicos:<br/><br/>";
-      const string docOneTlax = "Registrado con el número de documento electrónico <b>{DOCUMENT}</b>, con el " +
-                                "siguiente acto jurídico:<br/><br/>";
-      string html = String.Empty;
-      if (this.recordingActs.Count > 1) {
-        html = docMultiTlax.Replace("{DOCUMENT}", transaction.Document.UID);
-        html = html.Replace("{COUNT}", this.recordingActs.Count.ToString() +
-                            " (" + EmpiriaString.SpeechInteger(this.recordingActs.Count).ToLower() + ")");
-      } else if (this.recordingActs.Count == 1) {
-        html = docOneTlax.Replace("{DOCUMENT}", transaction.Document.UID);
-      } else if (this.recordingActs.Count == 0) {
-        throw new Exception("Document doesn't have recordings.");
-      }
-      return html;
     }
 
     protected string GetRecordingActsText() {

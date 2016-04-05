@@ -1,76 +1,67 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.RecordingSeal" CodeFile="recording.seal.aspx.cs" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
   <title>&nbsp;</title>
   <meta http-equiv="Expires" content="-1" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <link href="../themes/default/css/to.printer.css" type="text/css" rel="stylesheet" />
-  <style type="text/css">
-    body {
-      font-size: 11pt;
-      font-family: Arial, Heveltica, sans-serif;
-      <%=GetLeftMargin()%>
-    }
-    table {
-      font-size: 11pt;
-      font-family: Arial, Heveltica, sans-serif;
-    }
-  </style>
+  <link href="../themes/default/css/official.document.css" type="text/css" rel="stylesheet" />
   </head>
-  <body topmargin="0" >
-    <form id="frmEditor" method="post" runat="server">
-      <table cellspacing="0" cellpadding="0" width="100%">
-        <tr valign="top">
-          <td colspan="2" align="center">
-            <table width="75%">
-              <tr>
-                <td align="left" valign="bottom"><img src="../themes/default/customer/seal.logo.left.png" height="68pt" style="margin-bottom:16pt" alt="" title="" /></td>
-                <td><img src="../themes/default/bullets/pixel.gif" height="<%=GetUpperMarginPoints()%>pt" width="98%" alt="" title="" /></td>
-                <td align="right" valign="bottom"><img src="../themes/default/customer/seal.logo.right.png" height="68pt" style="margin-bottom:16pt" alt="" title="" /></td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr valign="top">
-          <td colspan="2">
-            <%=GetPrelationText()%>
-            <br /><br />
-            <span>
-              <%=base.GetDocumentHeaderText()%>
-              <%=base.GetRecordingActsText()%>
-            </span>
-            <br /><br />
-            <p align="justify" style="font-size:small">
-              <%=GetDocumentDescriptionText()%>
-            </p>
-            <%=GetPaymentText()%>
-            <br /><br />
-            <%=GetRecordingPlaceAndDate()%>
-            <br />&nbsp;
-          </td>
-        </tr>
+  <body>
+    <table>
+      <tr>
+        <td>
+          <img class="logo" src="../themes/default/customer/government.seal.png" style="height:128pt" alt="" title="" />
+        </td>
+        <td style="text-align:center;width:95%">
+	        <h3>DIRECCIÓN DE NOTARÍAS Y REGISTROS PÚBLICOS</h3>
+          <h4>GOBIERNO DEL ESTADO DE TLAXCALA</h4>
+          <h2>SELLO REGISTRAL</h2>
+          <h5><%=transaction.Document.UID%></h5>
+        </td>
+      </tr>
+    </table>
+    <div class="certificate-text">
+      <p>
+        <%=GetPrelationText()%>
+      </p>
+      <p>
+        <%=base.GetRecordingActsText()%>
+      </p>
+      <p style="text-align:justify;font-size:8pt">
+        <%=GetDocumentDescriptionText()%>
+      </p>
+      <p>
+        <%=GetPaymentText()%>
+      </p>
+      <p>
+        <%=GetRecordingPlaceAndDate()%>
+      </p>
+    </div>
+    <div class="footNotes">
+      <table >
         <tr>
-          <td align="center" colspan="2">	
-            <br /><br /><br /><br /><br /><br />
+          <td colspan="3" style="text-align:center;font-size:11pt" >
+            <br /><br />
             <b><%=GetRecordingSignerName()%></b>
             <br />
             <%=GetRecordingSignerPosition()%>
             <br />&nbsp;
           </td>
         </tr>
-        <tr valign="top" style="font-size:8pt">
+        <tr>
           <td><b>Sello digital:</b><br />
-          <%=Empiria.EmpiriaString.DivideLongString(GetDigitalSeal(), 78, "&#8203;")%>
+          <%=Empiria.EmpiriaString.DivideLongString(GetDigitalSeal(), 64, "&#8203;")%>
           </td>
-          <td align="right">
+          <td style="text-wrap:none">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
+          <td>
             <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.Document.UID%>" />
             <br />
             <span><%=transaction.Document.UID%></span>
           </td>
         </tr>
-        <tr valign="top" style="font-size:8pt">
-          <td colspan="2">
+        <tr>
+          <td colspan="3">
             <br />
           <!--  Documento, antecedentes y actos jurídicos revisados y registrados por:<br />
             <b><%=GetRecordingOfficialsNames()%>.</b> Rúbrica.!-->
@@ -78,6 +69,6 @@
           </td>
         </tr>
       </table>
-    </form>
+    </div>
   </body>
 </html>

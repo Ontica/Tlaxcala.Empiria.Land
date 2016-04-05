@@ -110,38 +110,41 @@
       <table class="editionTable">
         <tr>
           <td class="lastCell">
-            <div style="overflow:scroll;max-height:900px;width:780px;">
-              <table class="details"style="width:97%">
+            <div style="overflow:auto;max-height:480px;width:860px;">
+              <table class="details" style="width:97%">
                 <tr class="detailsHeader">
                   <td>#</td>
-                  <td>Acto jurídico</td>
-                  <td>Predio / Recurso</td>
-                  <td style='width:300px'>Antecedente registrado en</td>
+                  <td style='width:160px'>Acto jurídico</td>
+                  <td style='width:240px'>Predio / Recurso</td>
+                  <td style='width:360px'>Antecedente registrado en</td>
                   <td>¿Qué desea hacer?</td>
                 </tr>
                 <%=GetRecordingActsGrid()%>
-                <tr class='totalsRow' style='display:<%=base.IsReadyToAppendRecordingActs() && base.RecordingActs.Count > 0 ? "inline" : "none"%>'>
-                  <td>&nbsp;</td>
-                  <td colspan='2'>
-                    <a href="javascript:doOperation('showRecordingActEditor')">
-                    <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />Registrar otro acto jurídico</a>
-                  </td>
-                  <td colspan='3' align="right">
-                    <a href="javascript:doOperation('showSearchRecordingsView')">
-                    <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar información registral</a>&nbsp; &nbsp; &nbsp;
-                  </td>
-                </tr>
                 <tr class='totalsRow' style='display:<%=base.IsReadyForEdition() && base.RecordingActs.Count == 0 ? "inline" : "none"%>'>
                   <td>&nbsp;</td>
                   <td colspan='2'>
                     Todavía no se han agregado actos jurídicos al documento.
                   </td>
                   <td colspan='3' align="right">
-                    <a href="javascript:doOperation('showSearchRecordingsView')">
-                    <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar información registral</a>&nbsp; &nbsp; &nbsp;
+
+                    <span style="width:50%">
+
+                    </span>
                   </td>
                 </tr>
               </table>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="totalsRow lastCell" style='width:860px;display:<%=base.IsReadyToAppendRecordingActs() && base.RecordingActs.Count > 0 ? "inline" : "none"%>'>
+            <div style="width:50%;float:left">
+                <a href="javascript:doOperation('showRecordingActEditor')">
+                <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />Registrar otro acto jurídico</a>
+            </div>
+            <div style="width:50%;text-align:right;">
+              <a href="javascript:doOperation('showSearchRecordingsView')">
+              <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar la información registral</a>&nbsp; &nbsp; &nbsp;
             </div>
           </td>
         </tr>

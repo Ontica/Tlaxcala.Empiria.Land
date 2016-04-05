@@ -18,7 +18,7 @@
 					      <table>
 						      <tr>
 							      <td>
-								      <img src="../themes/default/customer/customer.reports.logo.png" alt="" title="" />
+								      <img src="../themes/default/customer/government.seal.png" style="height:68px" alt="" title="" />
 							      </td>
 						      </tr>
 					      </table>
