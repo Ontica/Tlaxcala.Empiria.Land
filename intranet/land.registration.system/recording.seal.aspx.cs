@@ -398,23 +398,6 @@ namespace Empiria.Land.WebApp {
       return Empiria.Security.Cryptographer.CreateDigitalSign(s + "eSign");
     }
 
-    protected string GetUpperMarginPoints() {
-      decimal centimeters = 5.0m;
-      if (ExecutionServer.LicenseName == "Tlaxcala") {
-        return (28.3464657m).ToString("G4");
-      } else {
-        return (centimeters * 28.3464657m).ToString("G4");
-      }
-    }
-
-    protected string GetLeftMargin() {
-      if (ExecutionServer.LicenseName == "Tlaxcala") {
-        return "padding-left:1.7cm;padding-right:1cm";
-      } else {
-        return String.Empty;
-      }
-    }
-
     #endregion Private methods
 
   } // class RecordingSeal

@@ -211,10 +211,37 @@
       case 'updateUserInterface':
         updateUserInterface(arguments[1]);
         return;
+      case 'generateImagingControlID':
+        generateImagingControlID(arguments[1], arguments[2]);
+        return;
+      case 'viewDocumentImaging':
+        viewDocumentImaging(arguments[1]);
+        return;
       default:
         alert('La operación solicitada todavía no ha sido definida en el programa.');
         return;
     }
+  }
+
+  function generateImagingControlID(transactionId, documentId) {
+    var sMsg = "Generar número de control documental\n\n";
+
+    sMsg += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
+    sMsg += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
+    sMsg += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+
+    sMsg += "¿Desea generar el número de control documental para el trámite indicado?";
+
+    if (confirm(sMsg)) {
+      var qs = "id=" + documentId;
+      sendPageCommand("generateImagingControlID", qs);
+    }
+  }
+
+  function viewDocumentImaging(documentId) {
+    var url = "../land.registration.system/document.imaging.control.slip.aspx?id=" + documentId;
+
+    createNewWindow(url);
   }
 
   function showSearchRecordingsView() {

@@ -6,7 +6,8 @@
 			<a href="javascript:sendPageCommand('sortData', 'DocumentUID DESC')">Documento</a> /
 			<a href="javascript:sendPageCommand('sortData', 'TransactionType DESC')">Tipo trámite</a> /
 			<a href="javascript:sendPageCommand('sortData', 'RecorderOffice DESC')">Distrito</a> /
-			<a href="javascript:sendPageCommand('sortData', 'TransactionStatusName DESC')">Estado</a>
+			<a href="javascript:sendPageCommand('sortData', 'TransactionStatusName DESC')">Estado</a> /
+			<a href="javascript:sendPageCommand('sortData', 'ImagingControlID DESC')">Acervo</a>
 		</th>
     <th>
 			<a href="javascript:sendPageCommand('sortData', 'RequestedBy ASC')">Nombre</a> /

@@ -6,7 +6,13 @@
 <tr class="<%# ((int) DataBinder.Eval(Container, "ItemIndex") % 2 == 0 ? String.Empty  : "oddDataRow") %>" onmouseover="dataGridRowSelect(this, true);" onmouseout="dataGridRowSelect(this, false);">
 	<td style="width:20%">
 		<table class="ghostTable">
-			<tr><td rowspan="5"><a href="javascript:doOperation('editTransaction', <%#DataBinder.Eval(Container, "DataItem.TransactionId")%>)"><img src="../themes/default/app.icons/documents.gif" alt='' title="Abre el trámite" style='margin-right:20px' /></a></td>
+			<tr><td rowspan="5">
+            <a href="javascript:doOperation('editTransaction', <%#DataBinder.Eval(Container, "DataItem.TransactionId")%>)">
+                <img src="../themes/default/app.icons/documents.gif" alt='' title="Abre el trámite" style='margin-right:20px' /></a>
+                <br />
+            <a href="javascript:doOperation('viewDocumentImaging', <%#DataBinder.Eval(Container, "DataItem.DocumentId")%>)" class="boldItem">
+              <%#DataBinder.Eval(Container, "DataItem.ImagingControlID")%></a>
+			    </td>
 		      <td colspan="2" style='height:22px'><a id="ancTransactionKey<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>" class="detailsLinkTitle" href="javascript:doOperation('editTransaction', <%#DataBinder.Eval(Container, "DataItem.TransactionId")%>)" title="Abre el trámite"><%#DataBinder.Eval(Container, "DataItem.TransactionUID")%></a>
           &nbsp;&nbsp;
           Documento: <a class="detailsLinkTitle" href="javascript:doOperation('showDocument', <%#DataBinder.Eval(Container, "DataItem.DocumentId")%>)" title="Muestra el documento"><%#DataBinder.Eval(Container, "DataItem.DocumentUID")%></a></td></tr>
@@ -22,6 +28,11 @@
       <tr><td style="width:20px">Instrumento:&nbsp;</td><td width="90%"><span id="ancInstrument<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>" class='boldItem'><%#((string)DataBinder.Eval(Container, "DataItem.DocumentDescriptor")).Length == 0 ? "No proporcionado" : DataBinder.Eval(Container, "DataItem.DocumentDescriptor") %></span></td></tr>
       <tr><td style="width:20px">Derechos:&nbsp;</td><td><span class='boldItem'><%#((decimal)DataBinder.Eval(Container, "DataItem.PaymentsTotal")).ToString("C2")%></span> &nbsp;&nbsp;R: <%#DataBinder.Eval(Container, "DataItem.ReceiptNo")%></td></tr>
 			<tr><td style="width:20px">Presentación:&nbsp;</td><td><span class='boldItem'><%#((DateTime)DataBinder.Eval(Container, "DataItem.PresentationTime")) == Empiria.ExecutionServer.DateMaxValue ? "No presentado" : ((DateTime)DataBinder.Eval(Container, "DataItem.PresentationTime")).ToString("dd/MMM/yyyy HH:mm:ss")%></span></td></tr>
+      <tr><td colspan="2">
+            <input class="button" type='button' value="Generar carátula y número de control" onclick="javascript:doOperation('generateImagingControlID', <%#DataBinder.Eval(Container, "DataItem.TransactionId")%>, <%#DataBinder.Eval(Container, "DataItem.DocumentId")%>)"
+                   style="width:200px;display:<%# (Convert.ToChar(DataBinder.Eval(Container, "DataItem.TransactionStatus")) == 'A') && (string) DataBinder.Eval(Container, "DataItem.ImagingControlID") == "" ? "inline" : "none" %>"  />
+          </td>
+      </tr>
     </table>
   </td>
 	<td style="white-space:nowrap;width:40%">

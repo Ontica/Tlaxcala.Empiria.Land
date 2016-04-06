@@ -60,6 +60,10 @@ namespace Empiria.Land.WebApp {
         case "updateUserInterface":
           base.LoadRepeater();
           return true;
+        case "generateImagingControlID":
+          GenerateImagingControlID();
+          base.LoadRepeater();
+          return true;
         default:
           return false;
       }
@@ -202,6 +206,16 @@ namespace Empiria.Land.WebApp {
       base.SetOKScriptMsg();
       txtSearchExpression.Value = "";
       txtSearchExpression.Focus();
+    }
+
+    private void GenerateImagingControlID() {
+      int documentId = int.Parse(GetCommandParameter("id"));
+
+      var document = Registration.RecordingDocument.Parse(documentId);
+      document.GenerateImagingControlID();
+
+      var onEndLoadScript = String.Format("doOperation('viewDocumentImaging', {0});", documentId);
+      base.Master.AppendEndLoadScript(onEndLoadScript);
     }
 
     private void ReceiveLRSTransaction() {

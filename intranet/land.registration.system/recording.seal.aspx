@@ -11,7 +11,7 @@
     <table>
       <tr>
         <td>
-          <img class="logo" src="../themes/default/customer/government.seal.png" style="height:128pt" alt="" title="" />
+          <img class="logo" src="../themes/default/customer/government.seal.png" style="height:84pt" alt="" title="" />
         </td>
         <td style="text-align:center;width:95%">
 	        <h3>DIRECCIÓN DE NOTARÍAS Y REGISTROS PÚBLICOS</h3>
@@ -28,7 +28,7 @@
       <p>
         <%=base.GetRecordingActsText()%>
       </p>
-      <p style="text-align:justify;font-size:8pt">
+      <p style="text-align:justify;font-size:10pt">
         <%=GetDocumentDescriptionText()%>
       </p>
       <p>
