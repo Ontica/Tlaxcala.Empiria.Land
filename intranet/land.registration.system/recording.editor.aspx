@@ -92,7 +92,8 @@
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
-            <input id='cmdPrintRecordingCover' type="button" value="Imprimir carátula" class="button" style="width:112px;height:28px;top:8px" onclick='doOperation("doPrintRecordingCover")' title='Imprimir la carátula' />
+            <input id='cmdShowImagingControlSlip' type="button" value="Imprimir carátula" class="button" style="width:112px;height:28px;top:8px" onclick='doOperation("showImagingControlSlip")' title='Imprimir la carátula' />
+            <input id='cmdGenerateImagingControlID' type="button" value="Generar número de control" class="button" style="width:148px;height:28px;top:8px" onclick='doOperation("generateImagingControlID")' title='Generar número de control' />
             &nbsp; &nbsp;
             <input id='cmdPrintFinalSeal' type="button" value="Imprimir sello electrónico" class="button" style="width:132px;height:28px;top:8px" onclick='doOperation("viewGlobalRecordingSeal")' title='Imprime el sello que va en la escritura que se entrega al interesado' />
           </td>
@@ -202,6 +203,12 @@
       case 'closeWindow':
         window.parent.execScript("doOperation('refreshRecording')");
         return;
+      case 'generateImagingControlID':
+        generateImagingControlID();
+        return;
+      case 'showImagingControlSlip':
+        showImagingControlSlip();
+        return;
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
@@ -210,6 +217,16 @@
       sendPageCommand(command);
       gbSended = true;
     }
+  }
+
+  function generateImagingControlID() {
+    sendPageCommand('generateImagingControlID');
+  }
+
+  function showImagingControlSlip() {
+    var url = "./document.imaging.control.slip.aspx?id=<%=transaction.Document.Id%>";
+
+    createNewWindow(url);
   }
 
   function showRecordingActEditor() {
@@ -319,10 +336,17 @@
     <% if (!IsReadyForEdition()) { %>
     protectRecordingEditor(true);
     <% } %>
-    getElement("cmdPrintRecordingCover").disabled = true;
+    getElement("cmdShowImagingControlSlip").style.display = "none";
+    getElement("cmdGenerateImagingControlID").style.display = "none";
+
     getElement("cmdPrintFinalSeal").disabled = true;
-    <% if (IsReadyForPrintRecordingCover()) { %>
-    getElement("cmdPrintRecordingCover").disabled = false;
+    <% if (base.IsReadyForGenerateImagingControlID()) { %>
+    getElement("cmdGenerateImagingControlID").style.display = "inline";
+    getElement("cmdGenerateImagingControlID").disabled = false;
+    <% } %>
+    <% if (this.transaction.Document.ImagingControlID.Length != 0) { %>
+    getElement("cmdShowImagingControlSlip").style.display = "inline";
+    getElement("cmdShowImagingControlSlip").disabled = false;
     <% } %>
     <% if (IsReadyForPrintFinalSeal()) { %>
     getElement("cmdPrintFinalSeal").disabled = false;

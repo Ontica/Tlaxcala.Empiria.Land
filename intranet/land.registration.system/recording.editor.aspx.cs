@@ -91,12 +91,21 @@ namespace Empiria.Land.WebApp {
           DeleteRecordingAct();
           SetRefreshPageScript();
           return;
+        case "generateImagingControlID":
+          GenerateImagingControlID();
+          return;
         case "redirectMe":
           Response.Redirect("recording.editor.aspx?transactionId=" + transaction.Id.ToString(), true);
           return;
         default:
           throw new NotImplementedException(base.CommandName);
       }
+    }
+
+    private void GenerateImagingControlID() {
+      transaction.Document.GenerateImagingControlID();
+
+      SetMessageBox("Se generó el número de control para este documento.");
     }
 
     private void DeleteRecordingAct() {
@@ -154,7 +163,6 @@ namespace Empiria.Land.WebApp {
         return false;
       }
       return true;
-      //return oRecordingActEditor.IsReadyForEdition();
     }
 
     protected bool IsReadyForPrintFinalSeal() {
@@ -164,14 +172,35 @@ namespace Empiria.Land.WebApp {
       if (this.transaction.Document.RecordingActs.Count == 0) {
         return false;
       }
-      if (Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
-          !Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSigner")) {
+      if (ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
+          !ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSigner")) {
         return true;
       }
       return false;
     }
 
-    protected bool IsReadyForPrintRecordingCover() {
+    protected bool IsReadyForGenerateImagingControlID() {
+      if (transaction.IsEmptyInstance || transaction.Document.IsEmptyInstance) {
+        return false;
+      }
+      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSafeguard")) {
+        return false;
+      }
+      if (transaction.Document.ImagingControlID.Length != 0) {
+        return false;
+      }
+      if (transaction.Document.RecordingActs.Count == 0) {
+        return false;
+      }
+      if (!LRSTransaction.IsSafeguardable(transaction.TransactionType, transaction.DocumentType)) {
+        return false;
+      }
+
+      if (transaction.Status == TransactionStatus.Safeguard ||
+          transaction.Status == TransactionStatus.ToDeliver ||
+          transaction.Status == TransactionStatus.Delivered) {
+        return true;
+      }
       return false;
     }
 
