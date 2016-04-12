@@ -913,7 +913,7 @@ namespace Empiria.Web.UI.Ajax {
 
       LRSTransaction transaction = LRSTransaction.Parse(transactionId);
 
-      return transaction.ValidateStatusChange(nextStatus);
+      return transaction.Workflow.ValidateStatusChange(nextStatus);
     }
 
     private string ValidateRecordingActAsCompleteCommandHandler() {

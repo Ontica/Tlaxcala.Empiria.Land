@@ -129,7 +129,7 @@ namespace Empiria.Land.WebApp {
       if (!IsEditable()) {
         return false;
       }
-      if (transaction.IsEmptyItemsTransaction) {
+      if (transaction.Workflow.IsEmptyItemsTransaction) {
         return false;
       }
       return true;
@@ -139,17 +139,17 @@ namespace Empiria.Land.WebApp {
       if (transaction.IsNew || transaction.IsEmptyInstance) {
         return false;
       }
-      if (transaction.Status == TransactionStatus.Payment) {
+      if (transaction.Workflow.CurrentStatus == TransactionStatus.Payment) {
         return false;
       }
-      if (transaction.IsEmptyItemsTransaction) {
+      if (transaction.Workflow.IsEmptyItemsTransaction) {
         return false;
       }
       return true;
     }
 
     protected bool CanReceivePayment() {
-      if (transaction.Status != TransactionStatus.Payment) {
+      if (transaction.Workflow.CurrentStatus != TransactionStatus.Payment) {
         return false;
       }
       if (transaction.Items.Count == 0) {
@@ -159,7 +159,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool CanReceiveTransaction() {
-      if (transaction.Status != TransactionStatus.Payment) {
+      if (transaction.Workflow.CurrentStatus != TransactionStatus.Payment) {
         return false;
       }
       return ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReceiveTransaction");
@@ -169,7 +169,7 @@ namespace Empiria.Land.WebApp {
       if (transaction.DocumentType.Id == 734) {
         return true;
       }
-      if (transaction.Status != TransactionStatus.Payment) {
+      if (transaction.Workflow.CurrentStatus != TransactionStatus.Payment) {
         return false;
       }
       if (transaction.Payments.Count > 0) {
@@ -179,10 +179,10 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool IsStorable() {
-      if (transaction.Status == TransactionStatus.Payment) {
+      if (transaction.Workflow.CurrentStatus == TransactionStatus.Payment) {
         return IsEditable();
       }
-      if (transaction.Status == TransactionStatus.Control &&
+      if (transaction.Workflow.CurrentStatus == TransactionStatus.Control &&
           ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ControlDesk")) {
         return true;
       }
@@ -197,7 +197,7 @@ namespace Empiria.Land.WebApp {
       if (!CanReceiveTransaction()) {
         return false;
       }
-      if (transaction.IsEmptyItemsTransaction) {
+      if (transaction.Workflow.IsEmptyItemsTransaction) {
         return true;
       }
       return transaction.Payments.Count > 0;
@@ -268,15 +268,15 @@ namespace Empiria.Land.WebApp {
     }
 
     private void UndeleteTransaction() {
-      transaction.Undelete();
+      transaction.Workflow.Undelete();
     }
 
     protected bool ShowPrintPaymentOrderButton {
       get {
-        if (this.transaction.IsEmptyItemsTransaction) {
+        if (this.transaction.Workflow.IsEmptyItemsTransaction) {
           return false;
         }
-        if (this.transaction.Status == TransactionStatus.Payment) {
+        if (transaction.Workflow.CurrentStatus == TransactionStatus.Payment) {
           return true;
         }
         if (this.transaction.TransactionType.Id == 706) {
@@ -288,7 +288,7 @@ namespace Empiria.Land.WebApp {
 
     protected bool ShowTransactionVoucher {
       get {
-        if (this.transaction.Status != TransactionStatus.Payment) {
+        if (transaction.Workflow.CurrentStatus != TransactionStatus.Payment) {
           return true;
         }
         if (this.transaction.TransactionType.Id == 706) {
@@ -321,7 +321,7 @@ namespace Empiria.Land.WebApp {
     private void SaveTransaction() {
       bool isNew = transaction.IsNew;
 
-      if (transaction.Status == TransactionStatus.Payment &&
+      if (transaction.Workflow.CurrentStatus == TransactionStatus.Payment &&
           txtReceiptTotal.Value.Length != 0 &&
           txtReceiptNumber.Value.Length != 0) {
         decimal total = decimal.Parse(txtReceiptTotal.Value);
@@ -385,15 +385,15 @@ namespace Empiria.Land.WebApp {
 
     private void SaveAndReceiveTransaction() {
       SaveTransaction();
-      string s = transaction.ValidateStatusChange(TransactionStatus.Received);
+      string s = transaction.Workflow.ValidateStatusChange(TransactionStatus.Received);
 
-      transaction.Receive(String.Empty);
+      transaction.Workflow.Receive(String.Empty);
 
       onloadScript = "alert('Este trámite fue recibido satistactoriamente.');doOperation('redirectThis')";
     }
 
     private void ReentryTransaction() {
-      transaction.DoReentry("Trámite reingresado");
+      transaction.Workflow.DoReentry("Trámite reingresado");
 
       onloadScript = "alert('Este trámite fue reingresado correctamente.');doOperation('redirectThis')";
     }
@@ -499,7 +499,7 @@ namespace Empiria.Land.WebApp {
       string message = "&nbsp;";
       if (this.IsEditable() && this.transaction.Items.Count > 0) {
         message = "<a href=\"javascript:doOperation('showConceptsEditor')\">Agregar más conceptos</a>";
-      } else if (transaction.IsEmptyItemsTransaction) {
+      } else if (transaction.Workflow.IsEmptyItemsTransaction) {
         message = "Este trámite no lleva conceptos";
       } else if (!this.IsEditable()) {
         if (this.transaction.Items.Count == 0) {
@@ -521,7 +521,7 @@ namespace Empiria.Land.WebApp {
 
       const string footer = "<tr class='detailsSuperHeader' valign='middle'><td colspan='5' style='height:28px'>&nbsp;&nbsp;{NEXT.STATUS}</td><td  align='right'><b>{WORK.TOTAL.TIME}</b></td><td>&nbsp;</td><td>&nbsp;&nbsp;&nbsp;Duración total: <b>{TOTAL.TIME}</b></td></tr>";
 
-      LRSTransactionTaskList taskList = this.transaction.Tasks;
+      LRSTransactionTaskList taskList = this.transaction.Workflow.Tasks;
 
       string html = String.Empty;
       double subTotalWorkTimeSeconds = 0.0d;
@@ -529,7 +529,7 @@ namespace Empiria.Land.WebApp {
       double workTimeSeconds = 0.0d;
       double elapsedTimeSeconds = 0.0d;
 
-      LRSTransactionTask task = null;
+      LRSWorkflowTask task = null;
       bool hasReentries = false;
       for (int i = 0; i < taskList.Count; i++) {
         string temp = String.Empty;

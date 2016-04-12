@@ -83,7 +83,7 @@ namespace Empiria.Land.WebApp {
             filter += " AND ";
           }
           filter += "(TransactionStatus NOT IN ('D','L'))";
-          return TransactionData.GetLRSResponsibleTransactionInbox(me, TrackStatus.Pending, filter, sort);
+          return WorkflowData.GetLRSResponsibleTransactionInbox(me, TrackStatus.Pending, filter, sort);
         } else {
           if (filter.Length != 0) {
             filter += " AND ";
@@ -92,17 +92,17 @@ namespace Empiria.Land.WebApp {
           return TransactionData.GetLRSTransactionsForUI(filter, sort);
         }
       } else if (base.SelectedTabStrip == 1) {
-        return TransactionData.GetLRSResponsibleTransactionInbox(me, TrackStatus.OnDelivery, filter, sort);
+        return WorkflowData.GetLRSResponsibleTransactionInbox(me, TrackStatus.OnDelivery, filter, sort);
       } else if (base.SelectedTabStrip == 2) {
         // CORRECT THIS
-        return TransactionData.GetLRSResponsibleTransactionInbox(me, TrackStatus.Closed, filter, sort);
+        return WorkflowData.GetLRSResponsibleTransactionInbox(me, TrackStatus.Closed, filter, sort);
       } else if (base.SelectedTabStrip == 3) {
         if (filter.Length != 0) {
           filter += " AND ";
         }
         filter += "NextTransactionStatus NOT IN ('R','C','Q','H')";
         if (!String.IsNullOrWhiteSpace(selectedComboFromValue)) {
-          return TransactionData.GetLRSResponsibleTransactionInbox(Contact.Parse(int.Parse(selectedComboFromValue)), TrackStatus.OnDelivery, filter, sort);
+          return WorkflowData.GetLRSResponsibleTransactionInbox(Contact.Parse(int.Parse(selectedComboFromValue)), TrackStatus.OnDelivery, filter, sort);
         }
       } else if (base.SelectedTabStrip == 4) {
         if (filter.Length != 0) {
@@ -136,10 +136,10 @@ namespace Empiria.Land.WebApp {
     }
 
     private void LoadCombos() {
-      FixedList<Contact> list = TransactionData.GetContactsWithOutboxDocuments();
+      FixedList<Contact> list = WorkflowData.GetContactsWithOutboxDocuments();
       HtmlSelectContent.LoadCombo(this.cboFrom, list, "Id", "Alias",
                                   "( ¿Quién le está entregando? )", String.Empty, String.Empty);
-      DataView view = TransactionData.GetContactsWithActiveTransactions();
+      DataView view = WorkflowData.GetContactsWithActiveTransactions();
 
       HtmlSelectContent.LoadCombo(this.cboResponsible, view, "ResponsibleId", "Responsible",
                                   "( Todos los responsables )", String.Empty, String.Empty);
@@ -196,12 +196,12 @@ namespace Empiria.Land.WebApp {
       TransactionStatus status = (TransactionStatus) Convert.ToChar(GetCommandParameter("state"));
       string note = GetCommandParameter("notes", false);
 
-      string s = transaction.ValidateStatusChange(status);
+      string s = transaction.Workflow.ValidateStatusChange(status);
       if (!String.IsNullOrWhiteSpace(s)) {
         base.SetOKScriptMsg(s);
         return;
       }
-      transaction.SetNextStatus(status, Person.Empty, note);
+      transaction.Workflow.SetNextStatus(status, Person.Empty, note);
 
       base.SetOKScriptMsg();
       txtSearchExpression.Value = "";
@@ -224,12 +224,12 @@ namespace Empiria.Land.WebApp {
 
       LRSTransaction transaction = LRSTransaction.Parse(transactionId);
 
-      string s = transaction.ValidateStatusChange(TransactionStatus.Received);
+      string s = transaction.Workflow.ValidateStatusChange(TransactionStatus.Received);
       if (!String.IsNullOrWhiteSpace(s)) {
         base.SetOKScriptMsg(s);
         return;
       }
-      transaction.Receive(notes);
+      transaction.Workflow.Receive(notes);
 
       base.SetOKScriptMsg();
       txtSearchExpression.Value = "";
@@ -241,7 +241,7 @@ namespace Empiria.Land.WebApp {
       string notes = GetCommandParameter("notes", false);
 
       LRSTransaction transaction = LRSTransaction.Parse(transactionId);
-      transaction.Take(notes);
+      transaction.Workflow.Take(notes);
 
       base.SetOKScriptMsg();
       txtSearchExpression.Value = "";
@@ -252,7 +252,7 @@ namespace Empiria.Land.WebApp {
       int transactionId = int.Parse(GetCommandParameter("id"));
 
       LRSTransaction transaction = LRSTransaction.Parse(transactionId);
-      transaction.ReturnToMe();
+      transaction.Workflow.ReturnToMe();
 
       base.SetOKScriptMsg();
       txtSearchExpression.Value = "";

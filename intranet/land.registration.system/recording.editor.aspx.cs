@@ -131,8 +131,8 @@ namespace Empiria.Land.WebApp {
       if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register")) {
         return false;
       }
-      if (!(transaction.Status == TransactionStatus.Recording ||
-            transaction.Status == TransactionStatus.Elaboration)) {
+      if (!(transaction.Workflow.CurrentStatus == TransactionStatus.Recording ||
+            transaction.Workflow.CurrentStatus == TransactionStatus.Elaboration)) {
         return false;
       }
       if (transaction.Document.IsEmptyInstance) {
@@ -155,8 +155,8 @@ namespace Empiria.Land.WebApp {
             ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Certificates"))) {
         return false;
       }
-      if (!(this.transaction.Status == TransactionStatus.Recording ||
-            this.transaction.Status == TransactionStatus.Elaboration)) {
+      if (!(this.transaction.Workflow.CurrentStatus == TransactionStatus.Recording ||
+            this.transaction.Workflow.CurrentStatus == TransactionStatus.Elaboration)) {
         return false;
       }
       if (this.transaction.Document.Status != RecordableObjectStatus.Incomplete) {
@@ -192,13 +192,13 @@ namespace Empiria.Land.WebApp {
       if (transaction.Document.RecordingActs.Count == 0) {
         return false;
       }
-      if (!LRSTransaction.IsSafeguardable(transaction.TransactionType, transaction.DocumentType)) {
+      if (!LRSWorkflow.IsSafeguardable(transaction.TransactionType, transaction.DocumentType)) {
         return false;
       }
 
-      if (transaction.Status == TransactionStatus.Safeguard ||
-          transaction.Status == TransactionStatus.ToDeliver ||
-          transaction.Status == TransactionStatus.Delivered) {
+      if (transaction.Workflow.CurrentStatus == TransactionStatus.Safeguard ||
+          transaction.Workflow.CurrentStatus == TransactionStatus.ToDeliver ||
+          transaction.Workflow.CurrentStatus == TransactionStatus.Delivered) {
         return true;
       }
       return false;
