@@ -16,7 +16,7 @@
         <td style="text-align:center;width:95%">
 	        <h3>DIRECCIÓN DE NOTARÍAS Y REGISTROS PÚBLICOS</h3>
           <h4>GOBIERNO DEL ESTADO DE TLAXCALA</h4>
-          <h2>SELLO REGISTRAL</h2>
+          <h2 style="padding-top:0">SELLO REGISTRAL</h2>
           <h5><%=transaction.Document.UID%></h5>
         </td>
       </tr>
@@ -28,7 +28,7 @@
       <p>
         <%=base.GetRecordingActsText()%>
       </p>
-      <p style="text-align:justify;font-size:10pt">
+      <p style="text-align:justify;font-size:9pt">
         <%=GetDocumentDescriptionText()%>
       </p>
       <p>
@@ -41,7 +41,7 @@
     <div class="footNotes">
       <table >
         <tr>
-          <td colspan="3" style="text-align:center;font-size:11pt" >
+          <td colspan="3" style="text-align:center;font-size:10pt" >
             <br /><br />
             <b><%=GetRecordingSignerName()%></b>
             <br />
@@ -51,21 +51,15 @@
         </tr>
         <tr>
           <td><b>Sello digital:</b><br />
-          <%=Empiria.EmpiriaString.DivideLongString(GetDigitalSeal(), 64, "&#8203;")%>
+            <%=Empiria.EmpiriaString.DivideLongString(GetDigitalSeal(), 64, "&#8203;")%>
+            <br />
+            <%=GetRecordingOfficialsInitials()%>
           </td>
           <td style="text-wrap:none">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
           <td>
             <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.Document.UID%>" />
             <br />
             <span><%=transaction.Document.UID%></span>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <br />
-          <!--  Documento, antecedentes y actos jurídicos revisados y registrados por:<br />
-            <b><%=GetRecordingOfficialsNames()%>.</b> Rúbrica.!-->
-          <%=GetRecordingOfficialsInitials()%>
           </td>
         </tr>
       </table>

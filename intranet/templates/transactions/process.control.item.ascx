@@ -25,9 +25,13 @@
 	<td style="white-space:nowrap;width:30%">
 		<table class="ghostTable">
       <tr><td style="width:100%; white-space:normal" colspan="2"><span id="ancRequestedBy<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>" class='boldItem' style="width:100%; white-space:normal"><%#DataBinder.Eval(Container, "DataItem.RequestedBy")%></span></td></tr>
-      <tr><td style="width:20px">Instrumento:&nbsp;</td><td width="90%"><span id="ancInstrument<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>" class='boldItem'><%#((string)DataBinder.Eval(Container, "DataItem.DocumentDescriptor")).Length == 0 ? "No proporcionado" : DataBinder.Eval(Container, "DataItem.DocumentDescriptor") %></span></td></tr>
+      <tr><td style="width:20px">Instrumento:&nbsp;</td><td width="90%"><span id="ancInstrument<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>" class='boldItem' style="white-space:normal"><%#((string)DataBinder.Eval(Container, "DataItem.DocumentDescriptor")).Length == 0 ? "No proporcionado" : DataBinder.Eval(Container, "DataItem.DocumentDescriptor") %></span></td></tr>
       <tr><td style="width:20px">Derechos:&nbsp;</td><td><span class='boldItem'><%#((decimal)DataBinder.Eval(Container, "DataItem.PaymentsTotal")).ToString("C2")%></span> &nbsp;&nbsp;R: <%#DataBinder.Eval(Container, "DataItem.ReceiptNo")%></td></tr>
-			<tr><td style="width:20px">Presentación:&nbsp;</td><td><span class='boldItem'><%#((DateTime)DataBinder.Eval(Container, "DataItem.PresentationTime")) == Empiria.ExecutionServer.DateMaxValue ? "No presentado" : ((DateTime)DataBinder.Eval(Container, "DataItem.PresentationTime")).ToString("dd/MMM/yyyy HH:mm:ss")%></span></td></tr>
+			<tr><td style="width:20px">Presentación:&nbsp;</td>
+        <td><span class='boldItem'><%#((DateTime)DataBinder.Eval(Container, "DataItem.PresentationTime")) == Empiria.ExecutionServer.DateMaxValue ? "No presentado" : ((DateTime)DataBinder.Eval(Container, "DataItem.PresentationTime")).ToString("dd/MMM/yyyy HH:mm")%></span>
+        &nbsp; <%#((DateTime)DataBinder.Eval(Container, "DataItem.AuthorizationTime")) == Empiria.ExecutionServer.DateMinValue ? "" : "Reg: <span class='boldItem'>" + ((DateTime)DataBinder.Eval(Container, "DataItem.AuthorizationTime")).ToString("dd/MMM/yyyy") + "</span>" %>
+        </td>
+			</tr>
       <tr><td colspan="2">
             <input class="button" type='button' value="Generar carátula y número de control" onclick="javascript:doOperation('generateImagingControlID', <%#DataBinder.Eval(Container, "DataItem.TransactionId")%>, <%#DataBinder.Eval(Container, "DataItem.DocumentId")%>)"
                    style="width:200px;display:<%# (Convert.ToChar(DataBinder.Eval(Container, "DataItem.TransactionStatus")) == 'A') && (string) DataBinder.Eval(Container, "DataItem.ImagingControlID") == "" ? "inline" : "none" %>"  />

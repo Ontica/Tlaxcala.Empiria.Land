@@ -15,7 +15,8 @@
 		  <a href="javascript:sendPageCommand('sortData', 'DocumentDescriptor ASC')">Instrumento</a> /
 			<a href="javascript:sendPageCommand('sortData', 'ReceiptTotal ASC')">Derechos</a> /
 			<a href="javascript:sendPageCommand('sortData', 'ReceiptNo DESC')">Recibo</a> /
-			<a href="javascript:sendPageCommand('sortData', 'PresentationTime ASC')">Presentación</a>
+			<a href="javascript:sendPageCommand('sortData', 'PresentationTime ASC')">Presentación</a> /
+			<a href="javascript:sendPageCommand('sortData', 'AuthorizationTime ASC')">Registro</a>
     </th>
     <th>¿Qué debo hacer con el trámite?</th>
   </tr>

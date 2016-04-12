@@ -34,11 +34,12 @@
       </td>
       <td nowrap="nowrap">Buscar:</td>
 			<td nowrap="nowrap">
-        <select id="cboSearch" name="cboSearch" class="selectBox" style="width:130px" runat="server">
+        <select id="cboSearch" name="cboSearch" class="selectBox" style="width:152px" runat="server">
           <option value="">Todos los campos</option>
           <option value="TransactionUID">Número de trámite</option>
           <option value="DocumentUID">Número de documento</option>
           <option value="ReceiptNo">Número de boleta</option>
+          <option value="ImagingControlID">No de control de acervo</option>
           <option value="DocumentDescriptor">Instrumento</option>
         </select>
       </td>
@@ -59,6 +60,7 @@
         <select id="cboDate" name="cboDate" class="selectBox" onchange="doOperation('updateUserInterface', this);" style="width:98px" runat="server">
           <option value="">No filtrar</option>
           <option value="PresentationTime">Presentación</option>
+          <option value="AuthorizationTime">Registro</option>
           <option value="LastDeliveryTime">Entrega</option>
         </select>
         Del:
@@ -73,7 +75,7 @@
         Distrito:
       </td>
       <td nowrap="nowrap" colspan="4">
-        <select id="cboRecorderOffice" name="cboRecorderOffice" class="selectBox" onchange="doOperation('updateUserInterface', this);" style="width:130px" runat="server">
+        <select id="cboRecorderOffice" name="cboRecorderOffice" class="selectBox" onchange="doOperation('updateUserInterface', this);" style="width:152px" runat="server">
 				  <option value="">( Todos )</option>
 	        <option value="-1">No determinado</option>
     	    <option value="101">Hidalgo</option>
@@ -117,6 +119,8 @@
           <option value="(TrackStatus <> 'C' AND TransactionStatus NOT IN('X','Y','D','L','H','Q','C'))">Trámites en proceso</option>
           <option value="(TrackStatus = 'C' AND TransactionStatus <> 'X')">Trámites concluidos</option>
           <option value="(LastReentryTime <> '2078-12-31' AND TrackStatus <> 'C' AND TransactionStatus <> 'X')">Reingresos en proceso</option>
+          <option value="(ImagingControlID <> '')">Con Núm de control documental</option>
+          <option value="(ImagingControlID = '' AND TransactionStatus IN ('A','D','C'))">Sin Núm de control documental</option>
           <option value="">- - - - - - - - - - - - - - - - - - - - -</option>
           <option value="(TransactionStatus = 'Y')">Calificación</option>
           <option value="(TransactionStatus = 'K')">En mesa de control</option>

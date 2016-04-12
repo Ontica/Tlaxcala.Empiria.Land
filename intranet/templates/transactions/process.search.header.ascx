@@ -14,7 +14,8 @@
 			<a href="javascript:sendPageCommand('sortData', 'DocumentNumber DESC')">Instrumento</a> /
 			<a href="javascript:sendPageCommand('sortData', 'ReceiptTotal DESC')">Derechos</a> /
 			<a href="javascript:sendPageCommand('sortData', 'ReceiptNumber DESC')">Recibo</a> /
-			<a href="javascript:sendPageCommand('sortData', 'PresentationTime DESC')">Present</a>
+			<a href="javascript:sendPageCommand('sortData', 'PresentationTime DESC')">Present</a> /
+			<a href="javascript:sendPageCommand('sortData', 'AuthorizationTime ASC')">Registro</a>
     </th>
     <th>
 			<a href="javascript:sendPageCommand('sortData', 'Agency ASC')">Trámitó</a> /

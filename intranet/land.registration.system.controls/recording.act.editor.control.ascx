@@ -366,7 +366,7 @@
 
     oCurrentRecordingRule = invokeAjaxGetJsonObject(url);
 
-    if (oCurrentRecordingRule.IsCancelation) {
+    if (oCurrentRecordingRule.IsCancelation || oCurrentRecordingRule.IsModification) {
       updateTargetRecordingActCombos();
     }
   }
