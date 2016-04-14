@@ -44,7 +44,7 @@
 		Nuevo estado:
 		<select id="cboOperation<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>" class="selectBox" style="width:220px" title="">
 			<option value=''>( Seleccionar )</option>
-      <%#LRSHtmlSelectControls.GetTransactionNewStatusComboItems((int) DataBinder.Eval(Container, "DataItem.TransactionTypeId"), (int) DataBinder.Eval(Container, "DataItem.DocumentTypeId"), (TransactionStatus) Convert.ToChar(DataBinder.Eval(Container, "DataItem.TransactionStatus")))%>
+      <%#LRSHtmlSelectControls.GetTransactionNewStatusComboItems((int) DataBinder.Eval(Container, "DataItem.TransactionTypeId"), (int) DataBinder.Eval(Container, "DataItem.DocumentTypeId"), (LRSTransactionStatus) Convert.ToChar(DataBinder.Eval(Container, "DataItem.TransactionStatus")))%>
     </select><img class='comboExecuteImage' src="../themes/default/buttons/next.gif" alt=""  title="Ejecuta la operación seleccionada" onclick="doTransactionOperation(<%# DataBinder.Eval(Container, "DataItem.TransactionId")%>)"/>
    <br />
 	 <textarea id="txtNotes<%# DataBinder.Eval(Container, "DataItem.TransactionId")%>" class="textArea" rows="2" cols="72" style="width:288px"></textarea>

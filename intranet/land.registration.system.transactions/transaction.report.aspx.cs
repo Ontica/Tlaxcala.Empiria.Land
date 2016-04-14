@@ -43,7 +43,7 @@ namespace Empiria.Land.WebApp {
 
       string filter = "TransactionStatus = 'L'";
       string sort = "PresentationTime, TransactionKey";
-      returnedView = WorkflowData.GetLRSResponsibleTransactionInbox(me, TrackStatus.OnDelivery, filter, sort);
+      returnedView = WorkflowData.GetResponsibleWorkflowInbox(me, WorkflowTaskStatus.OnDelivery, filter, sort);
 
       hasReturnItems = (returnedView.Count != 0);
     }
@@ -73,7 +73,7 @@ namespace Empiria.Land.WebApp {
 
       string filter = "TransactionStatus = 'D'";
       string sort = "PresentationTime, TransactionKey";
-      DataView view = WorkflowData.GetLRSResponsibleTransactionInbox(me, TrackStatus.OnDelivery, filter, sort);
+      DataView view = WorkflowData.GetResponsibleWorkflowInbox(me, WorkflowTaskStatus.OnDelivery, filter, sort);
       const string template = "<tr width='24px' style='vertical-align:top'><td>{NUMBER}</td><td style='white-space:nowrap'>{TRAMITE}</td>" +
                               "<td style='white-space:nowrap'>{TIPO}</td>" +
                               "<td style='width:40%;white-space:normal'>{INTERESADO}</td>" +

@@ -83,7 +83,7 @@ namespace Empiria.Land.WebApp {
             filter += " AND ";
           }
           filter += "(TransactionStatus NOT IN ('D','L'))";
-          return WorkflowData.GetLRSResponsibleTransactionInbox(me, TrackStatus.Pending, filter, sort);
+          return WorkflowData.GetResponsibleWorkflowInbox(me, WorkflowTaskStatus.Pending, filter, sort);
         } else {
           if (filter.Length != 0) {
             filter += " AND ";
@@ -92,17 +92,17 @@ namespace Empiria.Land.WebApp {
           return TransactionData.GetLRSTransactionsForUI(filter, sort);
         }
       } else if (base.SelectedTabStrip == 1) {
-        return WorkflowData.GetLRSResponsibleTransactionInbox(me, TrackStatus.OnDelivery, filter, sort);
+        return WorkflowData.GetResponsibleWorkflowInbox(me, WorkflowTaskStatus.OnDelivery, filter, sort);
       } else if (base.SelectedTabStrip == 2) {
         // CORRECT THIS
-        return WorkflowData.GetLRSResponsibleTransactionInbox(me, TrackStatus.Closed, filter, sort);
+        return WorkflowData.GetResponsibleWorkflowInbox(me, WorkflowTaskStatus.Closed, filter, sort);
       } else if (base.SelectedTabStrip == 3) {
         if (filter.Length != 0) {
           filter += " AND ";
         }
         filter += "NextTransactionStatus NOT IN ('R','C','Q','H')";
         if (!String.IsNullOrWhiteSpace(selectedComboFromValue)) {
-          return WorkflowData.GetLRSResponsibleTransactionInbox(Contact.Parse(int.Parse(selectedComboFromValue)), TrackStatus.OnDelivery, filter, sort);
+          return WorkflowData.GetResponsibleWorkflowInbox(Contact.Parse(int.Parse(selectedComboFromValue)), WorkflowTaskStatus.OnDelivery, filter, sort);
         }
       } else if (base.SelectedTabStrip == 4) {
         if (filter.Length != 0) {
@@ -136,10 +136,10 @@ namespace Empiria.Land.WebApp {
     }
 
     private void LoadCombos() {
-      FixedList<Contact> list = WorkflowData.GetContactsWithOutboxDocuments();
+      FixedList<Contact> list = WorkflowData.GetContactsWithWorkflowOutboxTasks();
       HtmlSelectContent.LoadCombo(this.cboFrom, list, "Id", "Alias",
                                   "( ¿Quién le está entregando? )", String.Empty, String.Empty);
-      DataView view = WorkflowData.GetContactsWithActiveTransactions();
+      DataView view = WorkflowData.GetWorkflowActiveTasksTotals();
 
       HtmlSelectContent.LoadCombo(this.cboResponsible, view, "ResponsibleId", "Responsible",
                                   "( Todos los responsables )", String.Empty, String.Empty);
@@ -193,10 +193,10 @@ namespace Empiria.Land.WebApp {
 
     private void ChangeTransactionStatus() {
       LRSTransaction transaction = LRSTransaction.Parse(int.Parse(GetCommandParameter("id")));
-      TransactionStatus status = (TransactionStatus) Convert.ToChar(GetCommandParameter("state"));
+      LRSTransactionStatus status = (LRSTransactionStatus) Convert.ToChar(GetCommandParameter("state"));
       string note = GetCommandParameter("notes", false);
 
-      string s = transaction.Workflow.ValidateStatusChange(status);
+      string s = LRSWorkflowRules.ValidateStatusChange(transaction, status);
       if (!String.IsNullOrWhiteSpace(s)) {
         base.SetOKScriptMsg(s);
         return;
@@ -224,7 +224,8 @@ namespace Empiria.Land.WebApp {
 
       LRSTransaction transaction = LRSTransaction.Parse(transactionId);
 
-      string s = transaction.Workflow.ValidateStatusChange(TransactionStatus.Received);
+      string s = LRSWorkflowRules.ValidateStatusChange(transaction, LRSTransactionStatus.Received);
+
       if (!String.IsNullOrWhiteSpace(s)) {
         base.SetOKScriptMsg(s);
         return;

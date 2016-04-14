@@ -31,8 +31,8 @@ namespace Empiria.Land.WebApp {
             ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Certificates"))) {
         return false;
       }
-      if (!(this.Transaction.Workflow.CurrentStatus == TransactionStatus.Recording ||
-            this.Transaction.Workflow.CurrentStatus == TransactionStatus.Elaboration)) {
+      if (!(this.Transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording ||
+            this.Transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration)) {
         return false;
       }
       if (this.Transaction.Document.Status != RecordableObjectStatus.Incomplete) {

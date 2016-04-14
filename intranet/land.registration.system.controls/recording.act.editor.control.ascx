@@ -813,7 +813,7 @@
       getElement('cboRecordingActType').focus();
       return false;
     }
-    <%  if (base.Transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.TransactionStatus.Elaboration) { %>
+    <%  if (base.Transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Elaboration) { %>
     if (getElement('cboRecordingActType').value != "2201") {
         alert("En elaboración de certificados sólo es posible agregar el acto 'Asignación de folio real'.");
         getElement('cboRecordingActType').focus();

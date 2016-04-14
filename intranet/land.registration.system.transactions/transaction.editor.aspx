@@ -276,7 +276,7 @@
             <% if (base.IsReadyForReception()) { %>
             <input id="cmdSaveAndReceive" class="button" type="button" value="Recibir trámite" onclick="doOperation('saveAndReceive')" style="height:30px;width:100px" runat="server" />
             <% } %>
-            <% if (transaction.Workflow.ReadyForReentry) { %>
+            <% if (transaction.Workflow.IsReadyForReentry) { %>
             <input class="button" type="button" value="Reingresar trámite" onclick="doOperation('reentryTransaction')" style="height:30px;width:100px" runat="server" />
             <% } %>
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -356,7 +356,7 @@
         </div>
         <br />
         <br />
-        <% if (transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.TransactionStatus.Deleted) { %>
+        <% if (transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Deleted) { %>
         <input id="cmdUndelete" class="button" type="button" value="Reactivar" onclick="doOperation('undelete')" style="height:28px;width:110px" runat="server" />
         <% } %>
       </td>

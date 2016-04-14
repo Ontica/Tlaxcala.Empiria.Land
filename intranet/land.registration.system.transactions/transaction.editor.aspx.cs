@@ -139,7 +139,7 @@ namespace Empiria.Land.WebApp {
       if (transaction.IsNew || transaction.IsEmptyInstance) {
         return false;
       }
-      if (transaction.Workflow.CurrentStatus == TransactionStatus.Payment) {
+      if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Payment) {
         return false;
       }
       if (transaction.Workflow.IsEmptyItemsTransaction) {
@@ -149,7 +149,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool CanReceivePayment() {
-      if (transaction.Workflow.CurrentStatus != TransactionStatus.Payment) {
+      if (transaction.Workflow.CurrentStatus != LRSTransactionStatus.Payment) {
         return false;
       }
       if (transaction.Items.Count == 0) {
@@ -159,7 +159,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool CanReceiveTransaction() {
-      if (transaction.Workflow.CurrentStatus != TransactionStatus.Payment) {
+      if (transaction.Workflow.CurrentStatus != LRSTransactionStatus.Payment) {
         return false;
       }
       return ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReceiveTransaction");
@@ -169,7 +169,7 @@ namespace Empiria.Land.WebApp {
       if (transaction.DocumentType.Id == 734) {
         return true;
       }
-      if (transaction.Workflow.CurrentStatus != TransactionStatus.Payment) {
+      if (transaction.Workflow.CurrentStatus != LRSTransactionStatus.Payment) {
         return false;
       }
       if (transaction.Payments.Count > 0) {
@@ -179,10 +179,10 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool IsStorable() {
-      if (transaction.Workflow.CurrentStatus == TransactionStatus.Payment) {
+      if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Payment) {
         return IsEditable();
       }
-      if (transaction.Workflow.CurrentStatus == TransactionStatus.Control &&
+      if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Control &&
           ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ControlDesk")) {
         return true;
       }
@@ -276,7 +276,7 @@ namespace Empiria.Land.WebApp {
         if (this.transaction.Workflow.IsEmptyItemsTransaction) {
           return false;
         }
-        if (transaction.Workflow.CurrentStatus == TransactionStatus.Payment) {
+        if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Payment) {
           return true;
         }
         if (this.transaction.TransactionType.Id == 706) {
@@ -288,7 +288,7 @@ namespace Empiria.Land.WebApp {
 
     protected bool ShowTransactionVoucher {
       get {
-        if (transaction.Workflow.CurrentStatus != TransactionStatus.Payment) {
+        if (transaction.Workflow.CurrentStatus != LRSTransactionStatus.Payment) {
           return true;
         }
         if (this.transaction.TransactionType.Id == 706) {
@@ -321,7 +321,7 @@ namespace Empiria.Land.WebApp {
     private void SaveTransaction() {
       bool isNew = transaction.IsNew;
 
-      if (transaction.Workflow.CurrentStatus == TransactionStatus.Payment &&
+      if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Payment &&
           txtReceiptTotal.Value.Length != 0 &&
           txtReceiptNumber.Value.Length != 0) {
         decimal total = decimal.Parse(txtReceiptTotal.Value);
@@ -385,7 +385,8 @@ namespace Empiria.Land.WebApp {
 
     private void SaveAndReceiveTransaction() {
       SaveTransaction();
-      string s = transaction.Workflow.ValidateStatusChange(TransactionStatus.Received);
+
+      string s = LRSWorkflowRules.ValidateStatusChange(transaction, LRSTransactionStatus.Received);
 
       transaction.Workflow.Receive(String.Empty);
 
@@ -521,7 +522,7 @@ namespace Empiria.Land.WebApp {
 
       const string footer = "<tr class='detailsSuperHeader' valign='middle'><td colspan='5' style='height:28px'>&nbsp;&nbsp;{NEXT.STATUS}</td><td  align='right'><b>{WORK.TOTAL.TIME}</b></td><td>&nbsp;</td><td>&nbsp;&nbsp;&nbsp;Duración total: <b>{TOTAL.TIME}</b></td></tr>";
 
-      LRSTransactionTaskList taskList = this.transaction.Workflow.Tasks;
+      LRSWorkflowTaskList taskList = this.transaction.Workflow.Tasks;
 
       string html = String.Empty;
       double subTotalWorkTimeSeconds = 0.0d;
@@ -534,7 +535,7 @@ namespace Empiria.Land.WebApp {
       for (int i = 0; i < taskList.Count; i++) {
         string temp = String.Empty;
         task = taskList[i];
-        if (task.CurrentStatus == TransactionStatus.Reentry) {
+        if (task.CurrentStatus == LRSTransactionStatus.Reentry) {
           temp = subTotalTemplate.Replace("{WORK.TOTAL.TIME}", EmpiriaString.TimeSpanString(subTotalWorkTimeSeconds));
           temp = temp.Replace("{TOTAL.TIME}", EmpiriaString.TimeSpanString(subTotalElapsedTimeSeconds));
           subTotalWorkTimeSeconds = 0.0d;
@@ -543,7 +544,7 @@ namespace Empiria.Land.WebApp {
           html += temp;
         }
 
-        temp = template.Replace("{CURRENT.STATUS}", task.CurrentStatus == TransactionStatus.Reentry ?
+        temp = template.Replace("{CURRENT.STATUS}", task.CurrentStatus == LRSTransactionStatus.Reentry ?
                                                     "<b>" + task.CurrentStatusName + "</b>" : task.CurrentStatusName);
 
         temp = temp.Replace("{CLASS}", ((i % 2) == 0) ? "detailsItem" : "detailsOddItem");
@@ -580,7 +581,7 @@ namespace Empiria.Land.WebApp {
       }
       html += footer.Replace("{WORK.TOTAL.TIME}", EmpiriaString.TimeSpanString(workTimeSeconds));
       html = html.Replace("{TOTAL.TIME}", EmpiriaString.TimeSpanString(elapsedTimeSeconds));
-      html = html.Replace("{NEXT.STATUS}", (task != null && task.Status == TrackStatus.OnDelivery) ?
+      html = html.Replace("{NEXT.STATUS}", (task != null && task.Status == WorkflowTaskStatus.OnDelivery) ?
                                                       "Próximo estado: &nbsp;<b>" + task.NextStatusName + "</b>" : String.Empty);
 
       return html;

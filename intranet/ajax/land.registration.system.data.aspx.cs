@@ -909,11 +909,11 @@ namespace Empiria.Web.UI.Ajax {
 
     private string ValidateNextTransactionStateCommandHandler() {
       int transactionId = int.Parse(GetCommandParameter("transactionId", true));
-      TransactionStatus nextStatus = (TransactionStatus) char.Parse(GetCommandParameter("newState", true));
+      LRSTransactionStatus nextStatus = (LRSTransactionStatus) char.Parse(GetCommandParameter("newState", true));
 
       LRSTransaction transaction = LRSTransaction.Parse(transactionId);
 
-      return transaction.Workflow.ValidateStatusChange(nextStatus);
+      return LRSWorkflowRules.ValidateStatusChange(transaction, nextStatus);
     }
 
     private string ValidateRecordingActAsCompleteCommandHandler() {

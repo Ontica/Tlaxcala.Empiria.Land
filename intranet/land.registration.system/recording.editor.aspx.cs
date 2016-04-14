@@ -131,8 +131,8 @@ namespace Empiria.Land.WebApp {
       if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register")) {
         return false;
       }
-      if (!(transaction.Workflow.CurrentStatus == TransactionStatus.Recording ||
-            transaction.Workflow.CurrentStatus == TransactionStatus.Elaboration)) {
+      if (!(transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording ||
+            transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration)) {
         return false;
       }
       if (transaction.Document.IsEmptyInstance) {
@@ -155,8 +155,8 @@ namespace Empiria.Land.WebApp {
             ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Certificates"))) {
         return false;
       }
-      if (!(this.transaction.Workflow.CurrentStatus == TransactionStatus.Recording ||
-            this.transaction.Workflow.CurrentStatus == TransactionStatus.Elaboration)) {
+      if (!(this.transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording ||
+            this.transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration)) {
         return false;
       }
       if (this.transaction.Document.Status != RecordableObjectStatus.Incomplete) {
@@ -180,28 +180,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool IsReadyForGenerateImagingControlID() {
-      if (transaction.IsEmptyInstance || transaction.Document.IsEmptyInstance) {
-        return false;
-      }
-      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSafeguard")) {
-        return false;
-      }
-      if (transaction.Document.ImagingControlID.Length != 0) {
-        return false;
-      }
-      if (transaction.Document.RecordingActs.Count == 0) {
-        return false;
-      }
-      if (!LRSWorkflow.IsSafeguardable(transaction.TransactionType, transaction.DocumentType)) {
-        return false;
-      }
-
-      if (transaction.Workflow.CurrentStatus == TransactionStatus.Safeguard ||
-          transaction.Workflow.CurrentStatus == TransactionStatus.ToDeliver ||
-          transaction.Workflow.CurrentStatus == TransactionStatus.Delivered) {
-        return true;
-      }
-      return false;
+      return LRSWorkflowRules.IsReadyForGenerateImagingControlID(transaction);
     }
 
     private void SaveDocument() {
