@@ -12,6 +12,7 @@ using System;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 using Empiria.Contacts;
 using Empiria.Land.Registration.Data;
 using Empiria.Land.Registration.Transactions;
@@ -27,9 +28,9 @@ namespace Empiria.Land.WebApp {
     private string selectedComboFromValue = String.Empty;
 
     protected void Page_Init(object sender, EventArgs e) {
-      cboFrom.ViewStateMode = System.Web.UI.ViewStateMode.Enabled;
+      cboFrom.ViewStateMode = ViewStateMode.Enabled;
       cboFrom.EnableViewState = true;
-      cboResponsible.ViewStateMode = System.Web.UI.ViewStateMode.Enabled;
+      cboResponsible.ViewStateMode = ViewStateMode.Enabled;
       cboResponsible.EnableViewState = true;
 
       selectedComboFromValue = String.IsNullOrEmpty(Request.Form[cboFrom.UniqueID]) ? String.Empty : Request.Form[cboFrom.UniqueID];
@@ -111,7 +112,7 @@ namespace Empiria.Land.WebApp {
         filter += "(TransactionStatus IN ('D','L'))";
         return TransactionData.GetLRSTransactionsForUI(filter, sort);
       } else if (base.SelectedTabStrip == 5) {
-        // CORRECT THIS
+        // ToDo: CORRECT THIS
         return TransactionData.GetLRSTransactionsForUI(filter, sort);
       } else if (base.SelectedTabStrip == 6) {
         return TransactionData.GetLRSTransactionsForUI(filter, sort);

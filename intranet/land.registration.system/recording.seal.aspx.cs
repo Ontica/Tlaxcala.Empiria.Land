@@ -106,6 +106,11 @@ namespace Empiria.Land.WebApp {
       foreach (RecordingAct recordingAct in recordingActs) {
         index++;
 
+        if (recordingAct.RecordingActType.IsAmendmentActType) {
+          html += this.GetAmendmentActText(recordingAct, index);
+          continue;
+        }
+
         switch (recordingAct.RecordingActType.RecordingRule.AppliesTo) {
           case RecordingRuleApplication.RealEstate:
           case RecordingRuleApplication.RecordingAct:
@@ -130,6 +135,54 @@ namespace Empiria.Land.WebApp {
         }
       }
       return html;
+    }
+
+    private string GetAmendmentActText(RecordingAct recordingAct, int index) {
+      const string template = "{INDEX}.- <b style='text-transform:uppercase'>{AMENDMENT.ACT}" +
+                              "{AMENDMENT.ACT.RECORDING}, {RESOURCE.DATA}.<br/>";
+
+      string x = template.Replace("{INDEX}", index.ToString());
+
+      RecordingAct amendmentOf = recordingAct.AmendmentOf;
+      if (!recordingAct.RecordingActType.RecordingRule.UseDynamicActNaming) {
+        x = x.Replace("{AMENDMENT.ACT}", recordingAct.DisplayName + "</b>");
+      } else {
+        if (recordingAct.RecordingActType.IsCancelationActType) {
+          x = x.Replace("{AMENDMENT.ACT}", "CANCELACIÓN {AMENDMENT.ACT}");
+        } else if (recordingAct.RecordingActType.IsModificationActType) {
+          x = x.Replace("{AMENDMENT.ACT}", "MODIFICACIÓN {AMENDMENT.ACT}");
+        }
+        if (recordingAct.RecordingActType.FemaleGenre) {
+          x = x.Replace("{AMENDMENT.ACT}", "DE LA " + amendmentOf.RecordingActType.DisplayName + "</b> inscrita");
+        } else {
+          x = x.Replace("{AMENDMENT.ACT}", "DEL " + amendmentOf.RecordingActType.DisplayName + "</b> inscrito");
+        }
+      }
+      if (amendmentOf.IsEmptyInstance) {
+        x = x.Replace("{AMENDMENT.ACT.RECORDING}", String.Empty);
+      } else if (amendmentOf.PhysicalRecording.IsEmptyInstance) {
+        x = x.Replace("{AMENDMENT.ACT.RECORDING}", " bajo el documento " +
+                      "<b>" + amendmentOf.Document.UID + "</b>");
+      } else {
+        x = x.Replace("{AMENDMENT.ACT.RECORDING}", " en la " +
+                      amendmentOf.PhysicalRecording.AsText);
+      }
+
+      Resource resource = recordingAct.TractIndex[0].Resource;
+      if (resource is RealEstate) {
+        var antecedent = ((RealEstate) resource).GetDomainAntecedent(recordingAct);
+
+        x = x.Replace("{RESOURCE.DATA}", "sobre el bien inmueble con folio real electrónico " +
+                      GetRealEstateText((RealEstate) resource, antecedent));
+      } else if (resource is Association) {
+        x = x.Replace("{RESOURCE.DATA}", "sobre la sociedad o asociación denominada '" +
+                      ((Association) resource).Name) + "' con folio único <b>" + resource.UID + "</b>";
+      } else if (resource is NoPropertyResource) {
+        x = x.Replace("{RESOURCE.DATA}", "con identificador de inscripción <b>" + resource.UID + "</b>");
+      } else {
+        throw Assertion.AssertNoReachThisCode("Unknown rule for resources with type {0}.", resource.GetType());
+      }
+      return x;
     }
 
     private string GetDocumentActText(RecordingAct recordingAct, int index) {
@@ -157,38 +210,10 @@ namespace Empiria.Land.WebApp {
       const string act03House = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
                             "<b>{PARTITION.NUMBER}</b> del fraccionamiento con folio real {PARTITION.OF}, misma a la que " +
                             "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
-      const string act04 = "{INDEX}.- {CANCELATION.ACT} {CANCELED.ACT.RECORDING}, " +
-                           "sobre el bien inmueble con folio real electrónico {PROPERTY.UID}.<br/>";
 
       string x = String.Empty;
 
-      if (recordingAct.RecordingActType.IsModificationActType ||
-          recordingAct.RecordingActType.IsCancelationActType) {
-        RecordingAct amendmentOf = recordingAct.AmendmentOf;
-
-        x = act04.Replace("{INDEX}", index.ToString());
-
-        if (recordingAct.RecordingActType.IsModificationActType && amendmentOf.RecordingActType.FemaleGenre) {
-          x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>MODIFICACIÓN DE LA " +
-                        amendmentOf.RecordingActType.DisplayName + "</b> registrada");
-        } else if (recordingAct.RecordingActType.IsModificationActType && !amendmentOf.RecordingActType.FemaleGenre) {
-          x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>MODIFICACIÓN DEL " +
-                        amendmentOf.RecordingActType.DisplayName + "</b> registrado");
-        } else if (recordingAct.RecordingActType.IsCancelationActType && amendmentOf.RecordingActType.FemaleGenre) {
-          x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>CANCELACIÓN DE LA " +
-                        amendmentOf.RecordingActType.DisplayName + "</b> registrada");
-        } else {
-          x = x.Replace("{CANCELATION.ACT}", "<b style='text-transform:uppercase'>CANCELACIÓN DEL " +
-                        amendmentOf.RecordingActType.DisplayName + "</b> registrado");
-        }
-        if (recordingAct.AmendmentOf.PhysicalRecording.IsEmptyInstance) {
-          x = x.Replace("{CANCELED.ACT.RECORDING}", " bajo el documento " +
-                        "<b>" + recordingAct.AmendmentOf.Document.UID + "</b>");
-        } else {
-          x = x.Replace("{CANCELED.ACT.RECORDING}", " en la " +
-                        recordingAct.AmendmentOf.PhysicalRecording.AsText);
-        }
-      } else if (!recordingAct.RecordingActType.RecordingRule.AllowsPartitions) {
+      if (!recordingAct.RecordingActType.RecordingRule.AllowsPartitions) {
         x = act01.Replace("{INDEX}", index.ToString());
       } else if (property.IsPartitionOf.IsEmptyInstance) {
         x = act02.Replace("{INDEX}", index.ToString());
@@ -228,29 +253,25 @@ namespace Empiria.Land.WebApp {
       x = x.Replace("{RECORDING.ACT}", recordingAct.RecordingActType.DisplayName);
 
       var antecedent = property.GetDomainAntecedent(recordingAct);
+
+      x = x.Replace("{PROPERTY.UID}", GetRealEstateText(property, antecedent));
+
+      return x;
+    }
+
+    private string GetRealEstateText(RealEstate property, RecordingAct antecedent) {
+      string x = "<b>" + property.UID + "</b>";
+
+      if (property.CadastralKey.Length != 0) {
+        x += " (Clave catastral: <b>" + property.CadastralKey + "</b>)";
+      }
+
       if (property.IsPartitionOf.IsEmptyInstance && antecedent.Equals(RecordingAct.Empty)) {
-        if (property.CadastralKey.Length != 0) {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> (Clave catastral: <b>" +
-                                          property.CadastralKey + "</b>) sin antecedente registral");
-        } else {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> sin antecedente registral");
-        }
+        x += " sin antecedente registral";
       } else if (!antecedent.PhysicalRecording.IsEmptyInstance) {
-        if (property.CadastralKey.Length != 0) {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b> (Clave catastral: <b>" +
-                        property.CadastralKey + "</b>), con antecedente de inscripción en " +
-                        antecedent.PhysicalRecording.AsText);
-        } else {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>" +
-                        ", con antecedente de inscripción en " + antecedent.PhysicalRecording.AsText);
-        }
+        x += ", con antecedente de inscripción en " + antecedent.PhysicalRecording.AsText;
       } else {
-        if (property.CadastralKey.Length != 0) {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>(Clave catastral: " +
-                        "<b>" + property.CadastralKey + "</b>)");
-        } else {
-          x = x.Replace("{PROPERTY.UID}", "<b>" + property.UID + "</b>");
-        }
+        // no-op
       }
       return x;
     }
@@ -293,16 +314,6 @@ namespace Empiria.Land.WebApp {
       } else {
         return "sociedad";
       }
-    }
-
-    protected string GetRecordingsTextZac() {
-      //const string docMultiZac = "Registrado bajo los siguientes {COUNT} actos jurídicos:<br/><br/>";
-      //const string docOneZac = "Registrado bajo la siguiente inscripción:<br/><br/>";
-
-      //const string t1Zac = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inscripción <b>{NUMBER}</b> del <b>{VOL}</b> <b>{SECTION}</b> del " +
-      //               "<b>Distrito Judicial de {DISTRICT}</b>.<br/>";
-
-      return String.Empty;
     }
 
     protected string GetRecordingOfficialsNames() {

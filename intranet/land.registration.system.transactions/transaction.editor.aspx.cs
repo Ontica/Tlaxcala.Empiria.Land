@@ -453,6 +453,10 @@ namespace Empiria.Land.WebApp {
     }
 
     private DataView ReadTransactionCertificates() {
+      if (transaction.IsNew) {
+        return new DataView();
+      }
+
       var op = DataOperation.Parse("qryLRSCertificatesByTransaction", transaction.Id);
 
       return DataReader.GetDataView(op);
