@@ -150,9 +150,14 @@ namespace Empiria.Land.WebApp {
         if (recordingAct.RecordingActType.IsCancelationActType) {
           x = x.Replace("{AMENDMENT.ACT}", "CANCELACIÓN {AMENDMENT.ACT}");
         } else if (recordingAct.RecordingActType.IsModificationActType) {
-          x = x.Replace("{AMENDMENT.ACT}", "MODIFICACIÓN {AMENDMENT.ACT}");
+          if (recordingAct.RecordingActType.Id != 2702) {
+            x = x.Replace("{AMENDMENT.ACT}", "MODIFICACIÓN {AMENDMENT.ACT}");
+          } else {
+            x = x.Replace("{AMENDMENT.ACT}", "REVERSIÓN DE PROPIEDAD {AMENDMENT.ACT}");
+          }
+
         }
-        if (recordingAct.RecordingActType.FemaleGenre) {
+        if (amendmentOf.RecordingActType.FemaleGenre) {
           x = x.Replace("{AMENDMENT.ACT}", "DE LA " + amendmentOf.RecordingActType.DisplayName + "</b> inscrita");
         } else {
           x = x.Replace("{AMENDMENT.ACT}", "DEL " + amendmentOf.RecordingActType.DisplayName + "</b> inscrito");
@@ -277,43 +282,35 @@ namespace Empiria.Land.WebApp {
     }
 
     private string GetAssociationActText(RecordingAct recordingAct, Association association, int index) {
-      const string actSC0 = "{INDEX}.- <b style='text-transform:uppercase'>CONSTITUCIÓN</b> de la {PROPERTY.KIND} " +
-                            "denominada <b>{ASSOCIATION.NAME}</b>, misma a la que se le asignó el folio único <b>{PROPERTY.UID}</b>.<br/>";
+      const string actSC0 = "{INDEX}.- <b style='text-transform:uppercase'>CONSTITUCIÓN</b> de la {ASSOCIATION.KIND} " +
+                            "denominada <b>{ASSOCIATION.NAME}</b>, misma a la que se le asignó el folio único <b>{ASSOCIATION.UID}</b>.<br/>";
       const string actSC1 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> de " +
-                            "la {PROPERTY.KIND} denominada <b>{ASSOCIATION.NAME}</b>, con folio único <b>{PROPERTY.UID}</b>.<br/>";
+                            "la {ASSOCIATION.KIND} denominada <b>{ASSOCIATION.NAME}</b>, con folio único <b>{ASSOCIATION.UID}</b>.<br/>";
       const string actSC2 = "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> de " +
-                            "la {PROPERTY.KIND} denominada <b>{ASSOCIATION.NAME}</b>, con folio único <b>{PROPERTY.UID}</b> y " +
+                            "la {ASSOCIATION.KIND} denominada <b>{ASSOCIATION.NAME}</b>, con folio único <b>{ASSOCIATION.UID}</b> y " +
                             "antecedente de inscripción en {ANTECEDENT}.<br/>";
 
-      var antecedent = association.GetIncorporationAct();
+      RecordingAct incorporationAct = association.GetIncorporationAct();
+
       string x = String.Empty;
-      if (antecedent.Equals(RecordingAct.Empty)) {
+      if (recordingAct.Equals(incorporationAct)) {
         x = actSC0.Replace("{INDEX}", index.ToString());
-      } else if (antecedent.PhysicalRecording.IsEmptyInstance) {
+
+      } else if (incorporationAct.PhysicalRecording.IsEmptyInstance) {
         x = actSC1.Replace("{INDEX}", index.ToString());
         x = x.Replace("{RECORDING.ACT}", recordingAct.DisplayName);
-      } else {
+
+      } else if (!incorporationAct.PhysicalRecording.IsEmptyInstance) {
         x = actSC2.Replace("{INDEX}", index.ToString());
         x = x.Replace("{RECORDING.ACT}", recordingAct.DisplayName);
-        x = x.Replace("{ANTECEDENT}", antecedent.PhysicalRecording.AsText);
+        x = x.Replace("{ANTECEDENT}", incorporationAct.PhysicalRecording.AsText);
       }
-      x = x.Replace("{PROPERTY.UID}", association.UID);
+
+      x = x.Replace("{ASSOCIATION.UID}", association.UID);
       x = x.Replace("{ASSOCIATION.NAME}", association.Name);
-      x = x.Replace("{PROPERTY.KIND}", GetAssociationType(association));
+      x = x.Replace("{ASSOCIATION.KIND}", association.GetAssociationTypeName());
 
       return x;
-    }
-
-    private string GetAssociationType(Association association) {
-      if (association.Name.EndsWith("S.C.") || association.Name.EndsWith("SC")) {
-        return "sociedad civil";
-      } else if (association.Name.EndsWith("A.C.") || association.Name.EndsWith("AC")) {
-        return "asociación civil";
-      } else if (association.Name.EndsWith("A.R.") || association.Name.EndsWith("AR")) {
-        return "asociación religiosa";
-      } else {
-        return "sociedad";
-      }
     }
 
     protected string GetRecordingOfficialsNames() {
