@@ -20,7 +20,7 @@
         <td style="text-align:right;vertical-align:top;width:40%">
           <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.UID%>" />
           <br />
-          Trámite: <%=transaction.UID%>
+          Trámite: <%=transaction.UID%> <%=transaction.LastReentryTime < DateTime.Now ? "&nbsp; <b>(Reingreso)</b>" : "" %>
         </td>
       </tr>
       <tr><td colspan="2"><h2 style="padding-top:0;">CONTROL DEL ACERVO DOCUMENTAL</h2></td></tr>

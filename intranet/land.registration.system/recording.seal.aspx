@@ -59,7 +59,7 @@
           <td>
             <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.Document.UID%>" />
             <br />
-            <span><%=transaction.Document.UID%></span>
+            <span><%=transaction.Document.UID%> <%=transaction.LastReentryTime < DateTime.Now ? "&nbsp; <b>(Reingreso)</b>" : "" %></span>
           </td>
         </tr>
       </table>
