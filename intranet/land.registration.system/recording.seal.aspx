@@ -17,7 +17,7 @@
 	        <h3>DIRECCIÓN DE NOTARÍAS Y REGISTROS PÚBLICOS</h3>
           <h4>GOBIERNO DEL ESTADO DE TLAXCALA</h4>
           <h2 style="padding-top:0">SELLO REGISTRAL</h2>
-          <h5><%=transaction.Document.UID%></h5>
+          <h5><%=document.UID%></h5>
         </td>
       </tr>
     </table>
@@ -57,9 +57,9 @@
           </td>
           <td style="text-wrap:none">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
           <td>
-            <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.Document.UID%>" />
+            <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=document.UID%>" />
             <br />
-            <span><%=transaction.Document.UID%> <%=transaction.LastReentryTime < DateTime.Now ? "&nbsp; <b>(Reingreso)</b>" : "" %></span>
+            <span><%=document.UID%> <%=transaction.IsReentry ? "&nbsp; <b>(Reingreso)</b>" : "" %></span>
           </td>
         </tr>
       </table>
