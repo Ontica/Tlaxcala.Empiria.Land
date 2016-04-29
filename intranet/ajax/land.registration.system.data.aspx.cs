@@ -160,6 +160,10 @@ namespace Empiria.Web.UI.Ajax {
         var list = GeneralList.Parse("LRSSectionFourth.Combo.List");
         html += "|" + HtmlSelectContent.GetComboAjaxHtml(list.GetItems<NameValuePair>(), 0,
                                                          "Value", "Name");
+      } else if (section != RecordingSection.Empty && section.Id == 1055) {
+        var list = GeneralList.Parse("LRSLimitationSection.Combo.List");
+        html += "|" + HtmlSelectContent.GetComboAjaxHtml(list.GetItems<NameValuePair>(), 0,
+                                                         "Value", "Name");
       }
       return html;
     }

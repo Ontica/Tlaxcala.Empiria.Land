@@ -92,11 +92,14 @@ namespace Empiria.Land.WebApp {
           filter += "((ResponsibleId = " + User.Id.ToString() + ") OR (TransactionStatus = 'Y')) AND (TrackStatus = 'P') AND (TransactionStatus NOT IN ('D','L'))";
           return TransactionData.GetLRSTransactionsForUI(filter, sort);
         }
+
       } else if (base.SelectedTabStrip == 1) {
         return WorkflowData.GetResponsibleWorkflowInbox(me, WorkflowTaskStatus.OnDelivery, filter, sort);
+
       } else if (base.SelectedTabStrip == 2) {
         // CORRECT THIS
         return WorkflowData.GetResponsibleWorkflowInbox(me, WorkflowTaskStatus.Closed, filter, sort);
+
       } else if (base.SelectedTabStrip == 3) {
         if (filter.Length != 0) {
           filter += " AND ";
@@ -105,17 +108,21 @@ namespace Empiria.Land.WebApp {
         if (!String.IsNullOrWhiteSpace(selectedComboFromValue)) {
           return WorkflowData.GetResponsibleWorkflowInbox(Contact.Parse(int.Parse(selectedComboFromValue)), WorkflowTaskStatus.OnDelivery, filter, sort);
         }
+
       } else if (base.SelectedTabStrip == 4) {
         if (filter.Length != 0) {
           filter += " AND ";
         }
         filter += "(TransactionStatus IN ('D','L'))";
         return TransactionData.GetLRSTransactionsForUI(filter, sort);
+
       } else if (base.SelectedTabStrip == 5) {
         // ToDo: CORRECT THIS
         return TransactionData.GetLRSTransactionsForUI(filter, sort);
+
       } else if (base.SelectedTabStrip == 6) {
-        return TransactionData.GetLRSTransactionsForUI(filter, sort);
+        return TransactionData.GetLRSTransactionsForUI(filter, "PresentationTime DESC");
+
       }
       return new DataView();
     }
@@ -157,38 +164,46 @@ namespace Empiria.Land.WebApp {
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.control.item.ascx");
         base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = true;
+
       } else if (base.SelectedTabStrip == 1) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.control.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.delivery.item.ascx");
         base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = true;
+
       } else if (base.SelectedTabStrip == 2) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.control.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.close.item.ascx");
         base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = true;
+
       } else if (base.SelectedTabStrip == 3) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.control.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.receive.item.ascx");
         base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = true;
+
       } else if (base.SelectedTabStrip == 4) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.control.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.control.item.ascx");
         base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = false;
+
       } else if (base.SelectedTabStrip == 5) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.search.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.search.item.ascx");
         base.ViewColumnsCount = 5;
         base.LoadInboxesInQuickMode = false;
+
       } else if (base.SelectedTabStrip == 6) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.search.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.search.item.ascx");
         base.ViewColumnsCount = 5;
         base.LoadInboxesInQuickMode = false;
+
       } else {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/empty.header.ascx");
+
       }
     }
 
@@ -204,7 +219,12 @@ namespace Empiria.Land.WebApp {
       }
       transaction.Workflow.SetNextStatus(status, Person.Empty, note);
 
-      base.SetOKScriptMsg();
+      // Don't show status for users in Vetanilla de entregas and
+      // next status was delivered or returned.
+      if (status != LRSTransactionStatus.Delivered &&
+          status != LRSTransactionStatus.Returned && base.SelectedTabStrip != 5) {
+        base.SetOKScriptMsg();
+      }
       txtSearchExpression.Value = "";
       txtSearchExpression.Focus();
     }

@@ -394,9 +394,13 @@ namespace Empiria.Land.WebApp {
     }
 
     private void ReentryTransaction() {
-      transaction.Workflow.DoReentry("Trámite reingresado");
-
-      onloadScript = "alert('Este trámite fue reingresado correctamente.');doOperation('redirectThis')";
+      int graceDaysForReentry = 90;
+      if (transaction.LastDeliveryTime.AddDays(graceDaysForReentry) > DateTime.Now) {
+        transaction.Workflow.DoReentry("Trámite reingresado");
+        onloadScript = "alert('Este trámite fue reingresado correctamente.');doOperation('redirectThis')";
+      } else {
+        onloadScript = "alert('No es posible reingresar trámites después de 90 días de entregados.');doOperation('redirectThis')";
+      }
     }
 
     private void CopyTransaction() {

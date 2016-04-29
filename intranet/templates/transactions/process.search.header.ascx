@@ -22,7 +22,7 @@
 			<a href="javascript:sendPageCommand('sortData', 'WorkingTime DESC')">Tiempo</a> /
 			<a href="javascript:sendPageCommand('sortData', 'TotalTime DESC')">Dur</a> /
 			<a href="javascript:sendPageCommand('sortData', 'ComplexityIndex DESC')">Cj</a> /
-      			<a href="javascript:sendPageCommand('sortData', 'LastReentryTime DESC')">F.Reing</a>
+      <a href="javascript:sendPageCommand('sortData', 'LastReentryTime DESC')">F.Reing</a>
     </th>
     <th>
 			<a href="javascript:sendPageCommand('sortData', 'ToContact ASC')">Lo tiene</a> /
