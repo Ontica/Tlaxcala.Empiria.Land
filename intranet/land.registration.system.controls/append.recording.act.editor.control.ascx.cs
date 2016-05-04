@@ -7,7 +7,7 @@ using Empiria.Presentation.Web;
 
 namespace Empiria.Land.WebApp {
 
-  public partial class RecordingActEditorControl : RecordingActEditorControlBase {
+  public partial class AppendRecordingActEditorControl : AppendRecordingActEditorControlBase {
 
     public override RecordingAct[] CreateRecordingActs() {
       Assertion.Assert(base.Transaction != null && !base.Transaction.IsEmptyInstance,
@@ -87,6 +87,6 @@ namespace Empiria.Land.WebApp {
       );
     }
 
-  } // class RecordingActEditorControl
+  } // class AppendRecordingActEditorControl
 
 } // namespace Empiria.Land.WebApp

@@ -23,7 +23,7 @@ namespace Empiria.Land.WebApp {
     #region Fields
 
     protected LRSDocumentEditorControl oRecordingDocumentEditor = null;
-    protected RecordingActEditorControlBase oRecordingActEditor = null;
+    protected AppendRecordingActEditorControlBase oRecordingActEditor = null;
     protected LRSTransaction transaction = null;
     protected string OnLoadScript = String.Empty;
 
@@ -40,8 +40,8 @@ namespace Empiria.Land.WebApp {
                                   Page.LoadControl(LRSDocumentEditorControl.ControlVirtualPath);
       spanRecordingDocumentEditor.Controls.Add(oRecordingDocumentEditor);
 
-      oRecordingActEditor = (RecordingActEditorControlBase)
-                             Page.LoadControl(RecordingActEditorControlBase.ControlVirtualPath);
+      oRecordingActEditor = (AppendRecordingActEditorControlBase)
+                             Page.LoadControl(AppendRecordingActEditorControlBase.ControlVirtualPath);
       spanRecordingActEditor.Controls.Add(oRecordingActEditor);
     }
 
@@ -66,7 +66,6 @@ namespace Empiria.Land.WebApp {
       cboRecordingType.Value = transaction.Document.DocumentType.Id.ToString();
       txtObservations.Value = transaction.Document.Notes;
       cboSheetsCount.Value = transaction.Document.SheetsCount.ToString();
-
     }
 
     protected string GetLegacyDataViewerUrl() {

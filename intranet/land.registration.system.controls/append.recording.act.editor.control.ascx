@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Land.WebApp.RecordingActEditorControl" CodeFile="recording.act.editor.control.ascx.cs" %>
+﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Land.WebApp.AppendRecordingActEditorControl" CodeFile="append.recording.act.editor.control.ascx.cs" %>
 <table class="editionTable">
   <tr id="divRecordingActTypeSelectorTitle"><td class="actionsSeparator">(1) Seleccionar el tipo de acto jurídico</td></tr>
   <tr>

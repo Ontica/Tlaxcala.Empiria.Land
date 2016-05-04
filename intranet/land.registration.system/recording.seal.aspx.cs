@@ -124,15 +124,10 @@ namespace Empiria.Land.WebApp {
           case RecordingRuleApplication.RealEstate:
           case RecordingRuleApplication.RecordingAct:
           case RecordingRuleApplication.Structure:
-            Resource resource = recordingAct.TractIndex[0].Resource;
-
-            Assertion.Assert(resource is RealEstate,
-                             "Type mismatch parsing real estate with id {0}", resource.Id);
-            html += this.GetRealEstateActText(recordingAct, (RealEstate) resource, index);
+            html += this.GetRealEstateActText(recordingAct.TractIndex[0], index);
             break;
-
           case RecordingRuleApplication.Association:
-            resource = recordingAct.TractIndex[0].Resource;
+            var resource = recordingAct.TractIndex[0].Resource;
             Assertion.Assert(resource is Association,
                              "Type mismatch parsing association with id {0}", resource.Id);
             html += this.GetAssociationActText(recordingAct, (Association) resource, index);
@@ -288,42 +283,45 @@ namespace Empiria.Land.WebApp {
       return x.Replace("{RECORDING.ACT}", recordingAct.DisplayName);
     }
 
-    private string GetRealEstateActText(RecordingAct recordingAct, RealEstate property, int index) {
-      const string notAllowPartitions =
+    private string GetRealEstateActText(TractItem tractItem, int index) {
+      const string overTheWhole =
             "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
             "bien inmueble con folio real electrónico {PROPERTY.UID}.<br/>";
 
-      const string overTheWhole =
-              "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
-              "totalidad del bien inmueble con folio real electrónico {PROPERTY.UID}.<br/>";
+      Assertion.Assert(tractItem.Resource is RealEstate,
+                       "Type mismatch parsing real estate with id {0}", tractItem.Resource.Id);
+
+      RecordingAct recordingAct = tractItem.RecordingAct;
+      RealEstate property = (RealEstate) tractItem.Resource;
 
       string x = String.Empty;
 
-      if (!recordingAct.RecordingActType.RecordingRule.AllowsPartitions) {
-        x = notAllowPartitions.Replace("{INDEX}", index.ToString());
-
-      } else if (property.IsPartitionOf.IsEmptyInstance) {
-        x = overTheWhole.Replace("{INDEX}", index.ToString());
-
-      } else if (!property.IsPartitionOf.IsEmptyInstance &&
-                (property.IsFirstAct(recordingAct) || property.IsFirstDomainAct(recordingAct))) {
+      if (!property.IsPartitionOf.IsEmptyInstance &&
+           property.IsInTheRankOfTheFirstDomainAct(recordingAct)) {
         x = this.GetRealEstateActTextOverNewPartition(recordingAct, property, index);
 
-      } else if (!property.IsPartitionOf.IsEmptyInstance) {
-        x = overTheWhole.Replace("{INDEX}", index.ToString());
-
       } else {
-        throw Assertion.AssertNoReachThisCode();
+        x = overTheWhole.Replace("{INDEX}", index.ToString());
 
       }
 
-      x = x.Replace("{RECORDING.ACT}", recordingAct.RecordingActType.DisplayName);
+      x = x.Replace("{RECORDING.ACT}", this.GetRecordingActDisplayName(tractItem));
 
       var antecedent = property.GetDomainAntecedent(recordingAct);
       x = x.Replace("{PROPERTY.UID}",
                     this.GetRealEstateTextWithAntecedentAndCadastralKey(property, antecedent));
 
       return x;
+    }
+
+    private string GetRecordingActDisplayName(TractItem tractItem) {
+      var temp = tractItem.RecordingAct.RecordingActType.DisplayName;
+
+      if (tractItem.RecordingActPercentage != decimal.One) {
+        return temp + " del " + (tractItem.RecordingActPercentage * 100).ToString("N2") + " por ciento";
+      } else {
+        return temp;
+      }
     }
 
     private string GetRealEstateActTextOverNewPartition(RecordingAct recordingAct,
@@ -409,23 +407,27 @@ namespace Empiria.Land.WebApp {
     }
 
     private string GetRealEstateTextWithAntecedentAndCadastralKey(RealEstate property,
-                                                                  RecordingAct antecedent) {
+                                                                  RecordingAct domainAntecedent) {
       string x = "<b>" + property.UID + "</b>";
 
       if (property.CadastralKey.Length != 0) {
         x += " (Clave catastral: <b>" + property.CadastralKey + "</b>)";
       }
 
-      if (property.IsPartitionOf.IsEmptyInstance && antecedent.Equals(RecordingAct.Empty)) {
+      if (property.IsPartitionOf.IsEmptyInstance && domainAntecedent.Equals(RecordingAct.Empty)) {
         x += " sin antecedente registral";
-      } else if (!property.IsPartitionOf.IsEmptyInstance && antecedent.Equals(RecordingAct.Empty)) {
+      } else if (!property.IsPartitionOf.IsEmptyInstance && domainAntecedent.Equals(RecordingAct.Empty)) {
 
-      } else if (!antecedent.PhysicalRecording.IsEmptyInstance) {
-        x += ", con antecedente de inscripción en " + antecedent.PhysicalRecording.AsText;
+      } else if (!domainAntecedent.PhysicalRecording.IsEmptyInstance) {
+        x += ", con antecedente de inscripción en " + domainAntecedent.PhysicalRecording.AsText;
+      } else if (!(domainAntecedent is DomainAct)) {   // TODO: this is very strange, is a special case
+        x += String.Format(" el {0} bajo el número de documento electrónico {1}",
+                   domainAntecedent.Document.AuthorizationTime.ToString(@"dd \de MMMM \de yyyy"),
+                   domainAntecedent.Document.UID);
       } else {
         x += String.Format(", con antecedente inscrito el {0} bajo el número de documento electrónico {1}",
-                           antecedent.RegistrationTime.ToString(@"dd \de MMMM \de yyyy"),
-                           antecedent.Document.UID);
+                           domainAntecedent.Document.AuthorizationTime.ToString(@"dd \de MMMM \de yyyy"),
+                           domainAntecedent.Document.UID);
       }
       return x;
     }
