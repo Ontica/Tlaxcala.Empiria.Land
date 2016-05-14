@@ -9,10 +9,11 @@
 *                                                                                                            *
 ********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
+using System.Web.UI.WebControls;
 
+using Empiria.Presentation.Web;
 using Empiria.Land.Registration;
 using Empiria.Land.UI;
-using Empiria.Presentation.Web;
 
 namespace Empiria.Land.WebApp {
 
@@ -49,15 +50,15 @@ namespace Empiria.Land.WebApp {
           SaveRecordingActAsComplete();
           Response.Redirect("recording.act.editor.aspx?id=" + recordingAct.Id.ToString(), true);
           return;
-        case "saveParty":
-          SaveParty();
-          return;
         case "selectParty":
           SelectParty();
           return;
         case "appendParty":
           AppendParty();
           Response.Redirect("recording.act.editor.aspx?id=" + recordingAct.Id.ToString(), true);
+          return;
+        case "saveParty":
+          SaveParty();
           return;
         case "deleteParty":
           DeleteParty();
@@ -109,9 +110,11 @@ namespace Empiria.Land.WebApp {
     private void Initialize() {
       recordingAct = RecordingAct.Parse(int.Parse(Request.QueryString["id"]));
       oRecordingActAttributes.RecordingAct = this.recordingAct;
-      oPartyEditorControl.RecordingAct = this.recordingAct;
 
-      this.oAntecedentParties.BaseRecordingAct = this.recordingAct;
+      oPartyEditorControl.RecordingAct = this.recordingAct;
+      oPartyEditorControl.LoadEditor();
+
+      oAntecedentParties.BaseRecordingAct = this.recordingAct;
     }
 
     private void LoadControls() {
@@ -120,26 +123,24 @@ namespace Empiria.Land.WebApp {
       cboStatus.Value = ((char) recordingAct.Status).ToString();
       FillPropertiesCombo();
       if (this.recordingAct.RecordingActType.Name.StartsWith("ObjectType.RecordingAct.DomainAct")) {
-        this.oAntecedentParties.BaseRecordingAct = this.recordingAct;
-        this.oAntecedentParties.Property = RealEstate.Parse(int.Parse(cboProperty.Value));
+        //this.oAntecedentParties.BaseRecordingAct = this.recordingAct;
+        //this.oAntecedentParties.Property = RealEstate.Parse(int.Parse(cboProperty.Value));
       } else {
         this.oAntecedentParties.Visible = false;
       }
-      oPartyEditorControl.LoadEditor();
-      oRecordingActAttributes.LoadRecordingAct();
+      //oPartyEditorControl.LoadEditor();
+      //oRecordingActAttributes.LoadRecordingAct();
     }
 
     private void FillPropertiesCombo() {
-      throw new NotImplementedException();
-
-      //this.oAntecedentParties.Visible = false;
-      //cboProperty.Items.Clear();
-      //foreach(Property property in recordingAct.GetProperties()) {
-      //  if (!property.IsFirstRecordingAct(recordingAct)) {
-      //    this.oAntecedentParties.Visible = true;
-      //  }
-      //  cboProperty.Items.Add(new ListItem(property.UID, property.Id.ToString()));
-      //}
+      this.oAntecedentParties.Visible = false;
+      cboProperty.Items.Clear();
+      foreach (var tractItem in recordingAct.TractIndex) {
+        if (!tractItem.Resource.IsFirstRecordingAct(recordingAct)) {
+          this.oAntecedentParties.Visible = true;
+        }
+        cboProperty.Items.Add(new ListItem(tractItem.Resource.UID, tractItem.Resource.Id.ToString()));
+      }
     }
 
     #endregion Private methods

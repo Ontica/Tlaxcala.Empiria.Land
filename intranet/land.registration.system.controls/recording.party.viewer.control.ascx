@@ -1,8 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Land.WebApp.RecordingPartyViewerControl" CodeFile="recording.party.viewer.control.ascx.cs" %>
 <tr>
-  <td class="subTitle">Propietarios anteriores del predio <%=Property.UID%></td>
-</tr>
-  <tr>
   <td>
     <table class="editionTable">
     <tr>

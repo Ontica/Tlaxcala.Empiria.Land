@@ -16,101 +16,116 @@
 <script type="text/javascript" src="../scripts/empiria.general.js"></script>
 <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
 <script type="text/javascript" src="../scripts/empiria.validation.js"></script>
-<script type="text/javascript" src="../scripts/empiria.calendar.js"></script>	
 </head>
 <body style="background-color:#fafafa; top:0; margin:0; margin-top:-14px; margin-left:-6px;">
 <form name="aspnetForm" method="post" id="aspnetForm" runat="server">
-<div id="divContent">
-<table id="tabStripItemView_0" style="display:inline;">
-  <tr>
-    <td class="subTitle">Información del acto jurídico</td>
-  </tr>
-  <tr>
-    <td>
-      <table id="tblRecordingActEditor" class="editionTable">
+<div id="divCanvas">
+  <div id="divHeader">
+    <span class="appTitle" style="margin-top">
+      Editor de actos jurídicos
+    </span>
+    <span class="appTitle rightItem">
+      <img src="../themes/default/buttons/close.button.png" height="22px" onclick="doOperation('closeWindow')" alt="Cerrar" />
+    </span>
+	</div>  <!-- divHeader !-->
+	<div id="divBody">
+
+    <div id="divContent">
+
+      <table id="tabStripItemView_0" style="display:inline;">
         <tr>
-          <td>Acto jurídico:</td>
-          <td class="lastCell" colspan="5">
-            <input id="txtRecordingActName" type="text" class="textBox" maxlength="4" style="width:280px;margin-right:0" readonly="readonly" runat="server" />
-            &nbsp; &nbsp;
-            Aplica a:
-            <select id="cboProperty" class="selectBox" style="width:154px" title="" runat="server">
-            </select>
-          </td>
+          <td class="subTitle">Información del acto jurídico</td>
         </tr>
         <tr>
-          <td class='lastCell' colspan='6'>
-           <empiriaControl:RecordingActAttributesEditorControl ID="oRecordingActAttributes" runat="server" Visible="true" />
-          </td>
-        </tr>
-        <tr>
-          <td style="vertical-align:text-top">Observaciones:</td>
-          <td class="lastCell" colspan="5">
-            <textarea id="txtObservations" cols="320" rows="2" style="width:500px" class="textArea" runat="server"></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td>Estado del acto:</td>
-          <td class="lastCell" colspan="5">
-            <select id="cboStatus" class="selectBox" style="width:122px;margin-top:-8px;" title="" onchange="return updateUserInterface(this);" runat="server">
-              <option value="">( Seleccionar )</option>
-              <option value="L">No legible</option>
-              <option value="P">Pendiente</option>
-              <option value="I">En proceso</option>
-              <option value="R">Registrado</option>
-            </select>
-            <img src="../themes/default/textures/pixel.gif" height="1px" width="60px" alt="" />
-            <input id="btnEditRecordingAct" type="button" value="Editar este acto jurídico" class="button" tabindex="-1" style="width:140px" onclick="doOperation('onclick_btnEditRecordingAct')" />
-            <img src="../themes/default/textures/pixel.gif" height="1px" width="48px" alt="" />
-            <input id="btnExitSaveRecordingAct" type="button" value="Salir de este editor" class="button" tabindex="-1" style="width:110px" onclick="doOperation('onclick_btnExitSaveRecordingAct')" />
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td class="subTitle">Personas físicas y morales involucradas en el acto jurídico</td>
-  </tr>
-  <tr>
-    <td>
-      <table class="editionTable">
-      <tr>
-        <td colspan="8" class="lastCell">
-          <div style="overflow:auto;width:620px;">
-            <table class="details" style="width:99%">
-              <tr class="detailsHeader">
-                <td width="90%">Nombre</td>
-                <td>F. Nac / RFC</td>
-                <td>Participa como</td>
-                <td>Titularidad</td>
-                <td>&nbsp;</td>
+          <td>
+            <table id="tblRecordingActEditor" class="editionTable">
+              <tr>
+                <td>Acto jurídico:</td>
+                <td class="lastCell" colspan="5">
+                  <input id="txtRecordingActName" type="text" class="textBox" maxlength="4" style="width:280px;margin-right:0" readonly="readonly" runat="server" />
+                  &nbsp; &nbsp;
+                  Aplica a:
+                  <select id="cboProperty" class="selectBox" style="width:154px" title="" runat="server">
+                  </select>
+                </td>
               </tr>
-              <%=GetRecordingActPartiesGrid()%>
-              <% if (base.recordingAct.Status != Empiria.Land.Registration.RecordableObjectStatus.Registered) { %>
-              <tr class="selectedItem">
-                <td><a href="javascript:doOperation('showRecordingActPartyEditor')">Agregar una persona u organización a este acto jurídico</a></td>
-                <td colspan="5" align="right"><a href="javascript:doOperation('saveRecordingActAsComplete')">Toda la información está completa</a></td>
+              <tr>
+                <td class='lastCell' colspan='6'>
+                  <empiriaControl:RecordingActAttributesEditorControl ID="oRecordingActAttributes" runat="server" Visible="true" />
+                </td>
               </tr>
-              <% } %>
+              <tr>
+                <td style="vertical-align:text-top">Observaciones:</td>
+                <td class="lastCell" colspan="5">
+                  <textarea id="txtObservations" cols="320" rows="2" style="width:500px" class="textArea" runat="server"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td>Estado del acto:</td>
+                <td class="lastCell" colspan="5">
+                  <select id="cboStatus" class="selectBox" style="width:122px;margin-top:-8px;" title="" onchange="return updateUserInterface(this);" runat="server">
+                    <option value="">( Seleccionar )</option>
+                    <option value="L">No legible</option>
+                    <option value="P">Pendiente</option>
+                    <option value="I">En proceso</option>
+                    <option value="R">Registrado</option>
+                  </select>
+                  <img src="../themes/default/textures/pixel.gif" height="1px" width="60px" alt="" />
+                  <input id="btnEditRecordingAct" type="button" value="Editar este acto jurídico" class="button" tabindex="-1" style="width:140px" onclick="doOperation('onclick_btnEditRecordingAct')" />
+                  <img src="../themes/default/textures/pixel.gif" height="1px" width="48px" alt="" />
+                  <input id="btnExitSaveRecordingAct" type="button" value="Salir de este editor" class="button" tabindex="-1" style="width:110px" onclick="doOperation('onclick_btnExitSaveRecordingAct')" />
+                </td>
+              </tr>
             </table>
-          </div>
-        </td>
-      </tr>
-     </table>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <empiriaControl:LRSRecordingPartyEditorControl ID="oPartyEditorControl" runat="server" />
-    </td>
-  </tr>
-  <empiriaControl:LRSRecordingPartyViewerControl ID="oAntecedentParties" runat="server" />
-</table>
-</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="subTitle">Personas físicas y morales involucradas en el acto jurídico</td>
+        </tr>
+        <tr>
+          <td>
+            <table class="editionTable">
+            <tr>
+              <td colspan="8" class="lastCell">
+                <div style="overflow:auto;width:620px;">
+                  <table class="details" style="width:99%">
+                    <tr class="detailsHeader">
+                      <td width="90%">Nombre</td>
+                      <td>F. Nac / RFC</td>
+                      <td>Participa como</td>
+                      <td>Titularidad</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <%=GetRecordingActPartiesGrid()%>
+                    <% if (base.recordingAct.Status != Empiria.Land.Registration.RecordableObjectStatus.Registered) { %>
+                    <tr class="selectedItem">
+                      <td><a href="javascript:doOperation('showRecordingActPartyEditor')">Agregar una persona u organización a este acto jurídico</a></td>
+                      <td colspan="5" align="right"><a href="javascript:doOperation('saveRecordingActAsComplete')">Toda la información está completa</a></td>
+                    </tr>
+                    <% } %>
+                  </table>
+                </div>
+              </td>
+            </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <empiriaControl:LRSRecordingPartyEditorControl ID="oPartyEditorControl" runat="server" />
+          </td>
+        </tr>
+        <tr>
+          <td class="subTitle">Propietarios anteriores del predio</td>
+        </tr>
+        <empiriaControl:LRSRecordingPartyViewerControl ID="oAntecedentParties" runat="server" />
+        </table>
+
+    </div> <!-- divContent !-->
+
+  </div> <!-- divBody !-->
+</div> <!-- divCanvas !-->
 </form>
-<iframe id="ifraCalendar" style="z-index:99;left:0;visibility:hidden;position:relative;top:0"
-    marginheight="0" marginwidth="0" frameborder="0" scrolling="no" src="../user.controls/calendar.aspx" width="100%">
-</iframe>
 </body>
 <script type="text/javascript">
 

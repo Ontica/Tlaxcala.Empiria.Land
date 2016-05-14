@@ -291,7 +291,7 @@
     <table id="tabStripItemView_1" class="editionTable" style="display:none">
       <tr>
         <td class="lastCell">
-          <iframe id="ifraRecordingEditor" style="z-index:99;left:0px;top:0px;"
+          <iframe id="ifraRecordingEditor" style="z-index:99;left:0;top:0;"
                   marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
                   src="../workplace/empty.page.aspx" width="90%" height="4000px" visible="true" >
           </iframe>

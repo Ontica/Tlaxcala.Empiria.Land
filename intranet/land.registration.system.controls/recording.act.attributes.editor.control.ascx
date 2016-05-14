@@ -67,7 +67,7 @@
       <option value="602" title="Unidades de inversión">UDIS</option>
       <option value="-2" title="No consta">N/C</option>
     </select>
-    <% if (base.DisplayOperationAmount) { %>
+    <% if (base.DisplayOperationAmount ||  true) { %>
     Importe de la operación:
     <input id="txtOperationAmount" type="text" class="textBox" style="width:90px;" onblur='this_formatAsNumber(this, 4);'
               onkeypress="return positiveKeyFilter(this);" title="" maxlength="18" runat="server" />

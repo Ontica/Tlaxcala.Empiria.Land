@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web.UI.WebControls;
 
 using Empiria.DataTypes;
-using Empiria.Geography;
 using Empiria.Land.Registration;
+using Empiria.Land.Registration.Data;
 using Empiria.Presentation.Web.Content;
 
 namespace Empiria.Land.WebApp {
@@ -45,20 +45,7 @@ namespace Empiria.Land.WebApp {
     }
 
     private void LoadMainCombos() {
-      HtmlSelectContent.LoadCombo(this.cboOccupation, Occupation.GetList(), "Id", "Name",
-                                  "( Seleccionar )", String.Empty, "No consta");
-
-      HtmlSelectContent.LoadCombo(this.cboMarriageStatus, MarriageStatus.GetList(), "Id", "Name",
-                                  "( ? )", String.Empty, "No consta");
-
-      HtmlSelectContent.LoadCombo(cboBornLocation, "( Seleccionar lugar de nacimiento )",
-                                  String.Empty, GeographicRegion.Unknown.Name);
-
-      HtmlSelectContent.LoadCombo(cboAddressPlace, "( Seleccionar lugar de residencia )",
-                                  String.Empty, GeographicRegion.Unknown.Name);
-
-      FixedList<RecordingActParty> parties = RecordingActParty.GetInvolvedDomainParties(this.recordingAct);
-
+      FixedList<RecordingActParty> parties = PartyData.GetInvolvedDomainParties(this.recordingAct);
       LoadRolesCombo(parties);
       LoadFirstPartyInRoleCombo(parties);
     }
@@ -78,14 +65,14 @@ namespace Empiria.Land.WebApp {
         }
       }
 
-      parties = RecordingActParty.GetSecondaryPartiesList(this.recordingAct);
+      parties = PartyData.GetSecondaryPartiesList(this.recordingAct);
 
-      parties.Sort((x, y) => x.SecondaryParty.FullName.CompareTo(y.SecondaryParty.FullName));
+      parties.Sort((x, y) => x.PartyOf.FullName.CompareTo(y.PartyOf.FullName));
       foreach (RecordingActParty item in parties) {
-        if (item.SecondaryParty.Equals(this.party)) {
+        if (item.PartyOf.Equals(this.party)) {
           continue;
         }
-        ListItem listItem = new ListItem(item.SecondaryParty.FullName, item.SecondaryParty.Id.ToString());
+        ListItem listItem = new ListItem(item.PartyOf.FullName, item.PartyOf.Id.ToString());
         if (!cboFirstPartyInRole.Items.Contains(listItem)) {
           cboFirstPartyInRole.Items.Add(listItem);
         }
@@ -115,13 +102,13 @@ namespace Empiria.Land.WebApp {
     private void LoadRolesCombo(FixedList<RecordingActParty> parties) {
       this.cboRole.Items.Clear();
 
-      if (parties.Count == 0 || parties.Count((x) => x.OwnershipMode == OwnershipMode.Owner) == 0) {
+      if (parties.Count == 0 || parties.Count((x) => x.ZOwnershipMode == OwnershipMode.Owner) == 0) {
         HtmlSelectContent.LoadCombo(this.cboRole, this.recordingAct.RecordingActType.GetRoles(), "Id", "Name", "( Seleccionar rol )");
       } else {
         HtmlSelectContent.LoadCombo(this.cboRole, "( Seleccionar rol )", String.Empty, String.Empty);
       }
 
-      List<RecordingActParty> bareOwnersList = parties.FindAll((x) => x.OwnershipMode == OwnershipMode.Bare);
+      List<RecordingActParty> bareOwnersList = parties.FindAll((x) => x.ZOwnershipMode == OwnershipMode.Bare);
       if (bareOwnersList.Count != 0) {
         this.cboRole.Items.Add(new ListItem(DomainActPartyRole.Usufructuary.Name, DomainActPartyRole.Usufructuary.Id.ToString()));
         HtmlSelectContent.LoadCombo<RecordingActParty>(cboUsufructuaryOf, bareOwnersList, (x) => x.Party.Id.ToString(),
@@ -132,12 +119,13 @@ namespace Empiria.Land.WebApp {
       }
 
       this.cboRole.Items.Add(new ListItem("( Secundarios )", String.Empty));
-      HtmlSelectContent.AppendToCombo(this.cboRole, PartiesRole.GetList(), "Id", "Name");
+      HtmlSelectContent.AppendToCombo(this.cboRole, SecondaryPartyRole.GetList(), "Id", "Name");
     }
 
     private Party FillOrganizationParty() {
       if (this.Party == null) {
-        this.Party = new OrganizationParty(txtOrgTaxIDNumber.Value, txtOrgName.Value);
+        this.Party = new OrganizationParty(txtOrgName.Value);
+        //this.Party.UID = txtOrgTaxIDNumber.Value;
       }
       this.Party.Save();
 
@@ -146,8 +134,8 @@ namespace Empiria.Land.WebApp {
 
     private Party FillHumanParty() {
       if (this.Party == null) {
-        this.Party = new HumanParty(txtCURPNumber.Value, txtFirstName.Value,
-                                    txtFirstFamilyName.Value, txtSecondFamilyName.Value);
+        this.Party = new HumanParty(txtPersonFullName.Value);
+        //this.Party.UID = txtIDNumber.Value;
       }
       this.Party.Save();
 
@@ -156,22 +144,13 @@ namespace Empiria.Land.WebApp {
 
     private void UpdateRecordingActParty(RecordingActParty rap) {
       rap.Notes = txtNotes.Value;
-      rap.PartyAddress = txtAddress.Value;
-      if (!String.IsNullOrEmpty(Request.Form[cboAddressPlace.Name])) {
-        rap.PartyAddressPlace = GeographicRegion.Parse(int.Parse(Request.Form[cboAddressPlace.Name]));
-      } else {
-        rap.PartyAddressPlace = GeographicRegion.Unknown;
-      }
-      rap.PartyMarriageStatus = MarriageStatus.Parse(int.Parse(cboMarriageStatus.Value));
-      rap.PartyOccupation = Occupation.Parse(int.Parse(cboOccupation.Value));
-
       rap.Save();
     }
 
     private void FillHumanPartyOnRecording() {
-      FixedList<RecordingActParty> list = RecordingActParty.GetList(this.RecordingAct.PhysicalRecording, this.Party);
+      FixedList<RecordingActParty> list = PartyData.GetRecordingPartyList(this.RecordingAct.Document, this.Party);
       foreach (RecordingActParty rap in list) {
-        if ((rap.Party.Equals(this.Party) && rap.SecondaryParty.IsEmptyInstance) || rap.SecondaryParty.Equals(this.Party)) {
+        if ((rap.Party.Equals(this.Party) && rap.PartyOf.IsEmptyInstance) || rap.PartyOf.Equals(this.Party)) {
           UpdateRecordingActParty(rap);
         }
       }
@@ -183,30 +162,8 @@ namespace Empiria.Land.WebApp {
       cboPartyType.Value = person.GetEmpiriaType().Id.ToString();
 
       txtBornDate.Value = String.Empty;
-      txtFirstFamilyName.Value = person.LastName;
-      txtFirstName.Value = person.FirstName;
-      txtCURPNumber.Value = person.UID;
-      txtSecondFamilyName.Value = person.LastName2;
-
-      FixedList<RecordingActParty> list = RecordingActParty.GetList(this.RecordingAct.PhysicalRecording, this.Party);
-      List<RecordingActParty> p = list.FindAll((x) => (x.Party.Equals(this.Party) && x.SecondaryParty.IsEmptyInstance) || x.SecondaryParty.Equals(this.Party));
-
-      RecordingActParty lastParty = null;
-      if (p.Count != 0) {
-        lastParty = p[0];
-      } else {
-        lastParty = person.GetLastRecordingActParty(this.recordingAct.Document.PresentationTime);
-      }
-      if (lastParty == null) {
-        isLoaded = true;
-        return;
-      }
-      txtAddress.Value = lastParty.PartyAddress;
-      cboAddressPlace.Items.Clear();
-      cboAddressPlace.Items.Add(new ListItem(lastParty.PartyAddressPlace.CompoundName, lastParty.PartyAddressPlace.Id.ToString()));
-      cboOccupation.Value = lastParty.PartyOccupation.Id.ToString();
-      cboMarriageStatus.Value = lastParty.PartyMarriageStatus.Id.ToString();
-
+      txtPersonFullName.Value = person.FullName;
+      txtIDNumber.Value = person.UID;
       isLoaded = true;
     }
 
@@ -214,7 +171,6 @@ namespace Empiria.Land.WebApp {
       OrganizationParty org = (OrganizationParty) this.Party;
 
       cboPartyType.Value = org.GetEmpiriaType().Id.ToString();
-      txtOrgRegistryDate.Value = String.Empty;
       txtOrgName.Value = org.FullName;
       txtOrgTaxIDNumber.Value = org.UID;
       isLoaded = true;
@@ -222,7 +178,7 @@ namespace Empiria.Land.WebApp {
 
     public void SelectParty(int partyId) {
       this.Party = Party.Parse(partyId);
-      if (this.Party.GetEmpiriaType().Id == 2433) {
+      if (this.Party.GetEmpiriaType().Id == 2435) {
         LoadHumanParty();
       } else {
         LoadOrganizationParty();
@@ -230,33 +186,36 @@ namespace Empiria.Land.WebApp {
       cboParty.Items.Clear();
       cboParty.Items.Add(new ListItem(this.Party.ExtendedName, this.Party.Id.ToString()));
 
-      FixedList<RecordingActParty> parties = RecordingActParty.GetInvolvedDomainParties(this.recordingAct);
+      FixedList<RecordingActParty> parties = PartyData.GetInvolvedDomainParties(this.recordingAct);
 
       LoadRolesCombo(parties);
       LoadFirstPartyInRoleCombo(parties);
-      LoadAdditionalRoleCombo();
+      LoadAdditionalRoleCombo(parties);
     }
 
-    private void LoadAdditionalRoleCombo() {
-      System.Data.DataTable table =
-          Land.Registration.Data.ResourceData.GetSecondaryParties(this.Party, this.RecordingAct);
-
+    private void LoadAdditionalRoleCombo(FixedList<RecordingActParty> list) {
       cboAdditionalRole.Items.Clear();
-      if (table.Rows.Count > 0) {
+
+      if (list.Count > 0) {
         cboAdditionalRole.Items.Add(new ListItem("( Existen uno o más roles adicionales )", String.Empty));
       }
-      for (int i = 0; i < table.Rows.Count; i++) {
-        System.Data.DataRow row = table.Rows[i];
-        string id = ((int) table.Rows[i]["PartyId"]).ToString() + "|" + ((int) table.Rows[i]["SecondaryPartyRoleId"]).ToString();
-        string text = (string) row["SecondaryPartyRole"] + ": " + (string) row["PartyFullName"];
+      foreach(var item in list) {
+        string id = item.Party.Id.ToString() + "|" + item.PartyRole.Id.ToString();
+        string text = item.PartyRole.Name + ": " + item.Party.FullName;
 
         cboAdditionalRole.Items.Add(new ListItem(text, id));
       }
     }
 
+    private void FillPartyData(RecordingActParty rap) {
+      if (this.party is HumanParty) {
+        rap.Notes = txtNotes.Value;
+      }
+    }
+
     public void SaveParty(int partyId) {
       this.Party = Party.Parse(partyId);
-      if (this.Party.GetEmpiriaType().Id == 2433) {
+      if (this.Party.GetEmpiriaType().Id == 2435) {
         this.Party = FillHumanParty();
         if (IsPartyInRecordingAct) {
           FillHumanPartyOnRecording();
@@ -271,7 +230,7 @@ namespace Empiria.Land.WebApp {
       if (String.IsNullOrWhiteSpace(selectedParty)) {
         //this.party = FillNewParty();
       } else if (selectedParty == "appendParty") {
-        if (cboPartyType.Value == "2433") {
+        if (cboPartyType.Value == "2435") {
           this.party = FillHumanParty();
         } else {
           this.party = FillOrganizationParty();
@@ -283,47 +242,24 @@ namespace Empiria.Land.WebApp {
     }
 
     private void SaveRecordingActParty() {
-      if (int.Parse(cboRole.Value) >= 1230) {
+      string selectedRole = Request.Form[cboRole.Name];
+
+      if (int.Parse(selectedRole) >= 1230) {
         SaveSecondaryRoleParty();
-      } else if (int.Parse(cboRole.Value) == DomainActPartyRole.Usufructuary.Id) {
+      } else if (int.Parse(selectedRole) == DomainActPartyRole.Usufructuary.Id) {
         SaveUsufructuaryRoleParty();
       } else {
         SaveDomainRoleParty();
       }
       SaveAdditionalRole();
-
-    }
-
-    private void FillPartyData(RecordingActParty rap) {
-      if (this.party is HumanParty) {
-        rap.Notes = txtNotes.Value;
-        rap.PartyAddress = txtAddress.Value;
-        if (!String.IsNullOrEmpty(Request.Form[cboAddressPlace.Name])) {
-          rap.PartyAddressPlace = GeographicRegion.Parse(int.Parse(Request.Form[cboAddressPlace.Name]));
-        } else {
-          rap.PartyAddressPlace = GeographicRegion.Unknown;
-        }
-        if (!String.IsNullOrEmpty(Request.Form[cboMarriageStatus.Name])) {
-          rap.PartyMarriageStatus = MarriageStatus.Parse(int.Parse(Request.Form[cboMarriageStatus.Name]));
-        } else {
-          rap.PartyMarriageStatus = MarriageStatus.Unknown;
-        }
-        if (!String.IsNullOrEmpty(Request.Form[cboOccupation.Name])) {
-          rap.PartyOccupation = Occupation.Parse(int.Parse(Request.Form[cboOccupation.Name]));
-        } else {
-          rap.PartyOccupation = Occupation.Unknown;
-        }
-      }
     }
 
     private void SaveDomainRoleParty() {
-      RecordingActParty rap = RecordingActParty.Create(this.RecordingAct, this.party);
+      var role = (DomainActPartyRole) BasePartyRole.Parse(int.Parse(Request.Form[cboRole.Name]));
 
-      rap.PartyRole = DomainActPartyRole.Parse(int.Parse(cboRole.Value));
-      rap.SecondaryPartyRole = PartiesRole.Empty;
-      rap.SecondaryParty = HumanParty.Parse(-1);
+      RecordingActParty rap = RecordingActParty.Create(this.RecordingAct, this.party, role);
 
-      rap.OwnershipMode = (OwnershipMode) Convert.ToChar(cboOwnership.Value.Substring(0, 1));
+      rap.ZOwnershipMode = (OwnershipMode) Convert.ToChar(cboOwnership.Value.Substring(0, 1));
       if (txtOwnershipPartAmount.Value.Length == 0) {
         txtOwnershipPartAmount.Value = "1.00";
       }
@@ -339,13 +275,12 @@ namespace Empiria.Land.WebApp {
       if (cboFirstPartyInRole.Value == "multiselect") {
         selectedParties = hdnMultiPartiesInRole.Value.Split('|');
       } else {
-        selectedParties = new string[] { cboFirstPartyInRole.Value };
+        selectedParties = new string[] { Request.Form[cboFirstPartyInRole.Name] };
       }
       foreach (string selectedParty in selectedParties) {
-        RecordingActParty rap = RecordingActParty.Create(this.RecordingAct, Party.Parse(int.Parse(selectedParty)));
-        rap.PartyRole = DomainActPartyRole.Empty;
-        rap.SecondaryPartyRole = PartiesRole.Parse(int.Parse(cboRole.Value));
-        rap.SecondaryParty = this.party;
+        var role = (SecondaryPartyRole) BasePartyRole.Parse(int.Parse(Request.Form[cboRole.Name]));
+        var rap = RecordingActParty.Create(this.RecordingAct,
+                                           this.party, role, Party.Parse(int.Parse(selectedParty)));
 
         FillPartyData(rap);
 
@@ -360,11 +295,10 @@ namespace Empiria.Land.WebApp {
       int partyId = int.Parse(cboAdditionalRole.Value.Split('|')[0]);
       int roleId = int.Parse(cboAdditionalRole.Value.Split('|')[1]);
 
-      RecordingActParty rap = RecordingActParty.Create(this.RecordingAct, this.party);
-      rap.PartyRole = DomainActPartyRole.Empty;
-      rap.SecondaryPartyRole = PartiesRole.Parse(roleId);
-      rap.SecondaryParty = Party.Parse(partyId);
+      var role = (SecondaryPartyRole) BasePartyRole.Parse(roleId);
 
+      var rap = RecordingActParty.Create(this.RecordingAct, this.party,
+                                         role, Party.Parse(partyId));
       rap.Save();
     }
 
@@ -376,21 +310,20 @@ namespace Empiria.Land.WebApp {
         selectedParties = new string[] { cboUsufructuaryOf.Value };
       }
       foreach (string selectedParty in selectedParties) {
-        RecordingActParty rap = RecordingActParty.Create(this.RecordingAct, this.party);
-        rap.UsufructMode = (UsufructMode) Convert.ToChar(cboUsufruct.Value.Substring(0, 1));
-        if (txtUsufructPartAmount.Value.Length == 0) {
-          txtUsufructPartAmount.Value = "1.00";
-        }
-        rap.OwnershipPart = Quantity.Parse(DataTypes.Unit.Parse(cboUsufructPartUnit.Value),
-                                           decimal.Parse(txtUsufructPartAmount.Value));
-        rap.UsufructTerm = txtUsufructEndCondition.Value;
-        rap.PartyRole = DomainActPartyRole.Usufructuary;
-        rap.SecondaryPartyRole = PartiesRole.Empty;
-        rap.SecondaryParty = Party.Parse(int.Parse(selectedParty));
+        //var rap = RecordingActParty.Create(this.RecordingAct, this.party,
+        //                                   DomainActPartyRole.Usufructuary,
+        //                                   Party.Parse(int.Parse(selectedParty)));
+        //rap.UsufructMode = (UsufructMode) Convert.ToChar(cboUsufruct.Value.Substring(0, 1));
+        //if (txtUsufructPartAmount.Value.Length == 0) {
+        //  txtUsufructPartAmount.Value = "1.00";
+        //}
+        //rap.OwnershipPart = Quantity.Parse(DataTypes.Unit.Parse(cboUsufructPartUnit.Value),
+        //                                   decimal.Parse(txtUsufructPartAmount.Value));
+        //rap.UsufructTerm = txtUsufructEndCondition.Value;
 
-        FillPartyData(rap);
+        //FillPartyData(rap);
 
-        rap.Save();
+        //rap.Save();
       }
 
     }

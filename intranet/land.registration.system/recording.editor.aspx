@@ -161,6 +161,8 @@
 </table>
 </div>
 </form>
+<div><span id="span" runat="server"></span></div>
+<iframe id="divRecordingActEditorWindow" name="divRecordingActEditorWindow" src='' width="790px" height="600px" style="display:none"></iframe>
 <iframe id="ifraCalendar" style="z-index:99;left:0;visibility:hidden;position:relative;top:0"
     marginheight="0" marginwidth="0" frameborder="0" scrolling="no" src="../user.controls/calendar.aspx" width="100%">
 </iframe>
@@ -174,6 +176,8 @@
       return;
     }
     switch (command) {
+      case 'refreshRecording':
+        return closeModalWindow(document.all.divRecordingActEditorWindow);
       case 'showRecordingActEditor':
         return showRecordingActEditor();
       case 'deleteRecordingAct':
@@ -184,12 +188,12 @@
       case 'saveDocument':
         return saveDocument();
       case 'editRecordingAct':
-        alert('Operación deshabilitada temporalmente... Gracias por su comprensión.');
-        return;
-        return editRecordingAct(arguments[1], arguments[2]);
+        //alert("Esta operación está en pruebas, por lo que todavía no está disponible.");
+        //return;
+        return editRecordingAct(arguments[1]);
       case 'editProperty':
-        alert('Operación deshabilitada temporalmente... Gracias por su comprensión.');
-        return;
+        //alert('Operación deshabilitada temporalmente... Gracias por su comprensión.');
+        //return;
         return editProperty(arguments[1], arguments[2]);
       case 'viewRecordingSeal':
         viewRecordingSeal(arguments[1]);
@@ -217,6 +221,37 @@
       sendPageCommand(command);
       gbSended = true;
     }
+  }
+
+  function editRecordingAct(recordingActId) {
+    var url    = "recording.act.editor.aspx?id=" + recordingActId;
+    var width  = 680;
+    var height = 700;
+    var iFrameContainer = document.all.divRecordingActEditorWindow;
+    openModalWindow(iFrameContainer, url, width, height);
+  }
+
+  function closeModalWindow(iFrame) {
+    iFrame.style.visibility = "hidden";
+    iFrame.style.display    = "none";
+    iFrame.contentWindow.location.replace("");
+  }
+
+  function openModalWindow(iFrame, url, width, height) {
+    iFrame.width  = width;
+    iFrame.height = height;
+    iFrame.contentWindow.location.replace(url);
+
+    var x = (document.body.clientWidth - iFrame.width) / 2;
+
+    iFrame.contentWindow.moveTo(x, 20);
+    iFrame.style.position = 'fixed';
+    iFrame.style.visibility = 'visible';
+    iFrame.style.display = 'inline';
+    iFrame.style.zIndex = 900;
+    iFrame.style.border = "4px solid #5a5a5a"
+    iFrame.focus();
+    return false;
   }
 
   function generateImagingControlID() {
@@ -267,13 +302,6 @@
   function editProperty(recordingActId, propertyId) {
     var url = "../land.registration.system/property.editor.aspx?" +
               "recordingActId=" + recordingActId + "&propertyId=" + propertyId;
-
-    createNewWindow(url);
-  }
-
-  function editRecordingAct(bookId, recordingId) {
-    var url = "../land.registration.system/recording.book.analyzer.aspx?bookId=" +
-              bookId + "&id=" + recordingId;
 
     createNewWindow(url);
   }

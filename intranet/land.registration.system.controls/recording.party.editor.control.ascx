@@ -6,22 +6,22 @@
         <tr>
           <td style="width:125px">Buscar:</td>
           <td class="lastCell">
-            <input id='txtSearchParty' type="text" class="textBox" style="width:212px;margin-right:0px;" maxlength="64" onkeypress="this_onSearchTextBoxKeyFilter(this)" runat="server" />
+            <input id='txtSearchParty' type="text" class="textBox" style="width:212px;margin-right:0;" maxlength="64" onkeypress="this_onSearchTextBoxKeyFilter(this)" runat="server" />
             &nbsp;
             <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-4px" onclick="this_searchParties()" />
             <select id="cboPartyType" class="selectBox" style="width:118px" title="" onchange="return this_updateUserInterface(this);" runat="server">
               <option value="0">( Todas )</option>
-              <option value="2433">Personas</option>
+              <option value="2435">Personas</option>
               <option value="2436">Organizaciones</option>
               <option value="2438">» Empresas/Asoc</option>
               <option value="2437">» Sector público</option>
               <option value="2439">» Inst. Financiera</option>
             </select>
-            Traer:
+            Filtrar:
             <select id="cboPartyFilter" class="selectBox" style="width:138px" title="" onchange="return this_updateUserInterface(this);" runat="server">
               <option value="ByKeywords">Según búsqueda</option>
-              <option value="OnInscription">De esta inscripción</option>
-              <option value="OnRecordingBook">De este libro</option>
+              <option value="ResourceRelated">Relativas al predio</option>
+              <option value="LastRecorded">Últimas registradas</option>
             </select>
           </td>
         </tr>
@@ -40,79 +40,31 @@
 </table>
 <table id="tblHumanPartyEditor" class="editionTable" style="display:none;margin-top:-12px" runat='server'>
   <tr>
-    <td>Nombre(s):</td>
+    <td>Nombre completo:</td>
     <td class="lastCell" colspan="5">
-      <input id='txtFirstName' type="text" class="textBox" style="width: 200px;margin-right:0px;" maxlength="64" runat='server' />
-      &nbsp;&nbsp;&nbsp;Apellido paterno:&nbsp;
-      <input id='txtFirstFamilyName' type="text" class="textBox" style="width:202px;margin-right:0px;" maxlength="64" runat='server' />
+      <input id='txtPersonFullName' type="text" class="textBox" style="width: 438px;margin-right:0;" maxlength="255" runat='server' />
     </td>
   </tr>
   <tr>
-    <td>Apellido materno:</td>
+    <td>Fecha de Nac:</td>
     <td class="lastCell" colspan="5">
-      <input id='txtSecondFamilyName' type="text" class="textBox" style="width: 200px;margin-right:0px;" maxlength="64" runat='server' />
-      &nbsp; &nbsp;Apellido conyugal:
-      <input id='txtMaritalFamilyName' type="text" class="textBox" style="width: 200px;margin-right:0px;" maxlength="64" runat='server' />
-    </td>
-  </tr>
-  <tr>
-    <td>Conocido(a) como:</td>
-    <td class="lastCell" colspan="5">
-      <input id='txtNicknames' type="text" class="textBox" style="width: 507px;margin-right:0px;" maxlength="64" runat='server' />
-    </td>
-  </tr>
-  <tr>
-    <td>Ocupación:</td>
-    <td class="lastCell" colspan="5">
-      <select id="cboOccupation" class="selectBox" style="width:142px" title="" runat="server">
-      </select>
-      Edo civil:
-      <select id="cboMarriageStatus" class="selectBox" style="width:80px" title="" runat="server">
-      </select>
-     Sexo:
-      <select id="cboGender" class="selectBox" style="width:40px" runat='server'>
-        <option value="" title="">?</option>
-        <option value="F">F</option>
-        <option value="M">M</option>
-        <option value="U">N/D</option>
-      </select>
-      Fecha Nac:
       <input id='txtBornDate' type="text" class="textBox" style="width:64px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgBornDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtBornDate.ClientID%>'), getElement('imgBornDate'));" style="margin-left:-6px" title="Despliega el calendario" alt="" />
-    </td>
-  </tr>
-  <tr>
-    <td>Originario(a) de:</td>
-    <td class="lastCell" colspan="5">
-      <input id='txtSearchBornLocation' type="text" class="textBox" style="width:110px;" title="" />
-      <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-4px" onclick="this_searchBornLocations()" />
-      <select id="cboBornLocation" class="selectBox" style="width:365px" title="" runat="server">
+      (d/m/a) &nbsp; &nbsp; &nbsp; &nbsp;
+      Identificación:
+      <select id="cboIDNumberType" class="selectBox" style="width:64px" title="" runat="server">
+        <option value="">( ? )</option>
+        <option value="CURP">CURP</option>
+        <option value="RFC">RFC</option>
+        <option value="IFE">IFE</option>
+        <option value="None">Ninguna</option>
       </select>
+      <input id='txtIDNumber' type="text" class="textBox" style="width: 142px;margin-right:0;" maxlength="20" runat='server' />
     </td>
   </tr>
   <tr>
-    <td>Lugar de residencia:</td>
-    <td class="lastCell" colspan="5">
-      <input id='txtSearchAddressPlace' type="text" class="textBox" style="width:110px;" title="" />
-      <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-4px" onclick="this_searchAddressPlace()" />
-      <select id="cboAddressPlace" class="selectBox" style="width:365px" title="" runat="server">
-      </select>
-    </td>
-  </tr>
-  <tr>
-    <td style="vertical-align:text-top">Domicilio:</td>
-    <td colspan="5">
-      <textarea id="txtAddress" cols="320" rows="2" style="width:508px" class="textArea" runat="server"></textarea>
-    </td>
-  </tr>
-  <tr>
-    <td>CURP:</td>
-    <td class="lastCell separator" colspan="5">
-      <input id='txtCURPNumber' type="text" class="textBox" style="width: 142px;margin-right:0px;" maxlength="20" runat='server' />
-      &nbsp; &nbsp; RFC:
-      <input id='txtTaxIDNumber' type="text" class="textBox" style="width: 110px;margin-right:0px;" maxlength="16" runat='server' />
-      &nbsp; &nbsp; &nbsp; &nbsp;IFE:
-      <input id='txtIFENumber' type="text" class="textBox" style="width: 154px;margin-right:0px;" maxlength="29" runat='server' />
+    <td>Otra información:<br />&nbsp;</td>
+    <td class="lastCell">
+      <textarea id="txtPersonNotes" cols="310" rows="2" style="width:490px" class="textArea" runat="server"></textarea>
     </td>
   </tr>
 </table>
@@ -124,62 +76,15 @@
     </td>
   </tr>
   <tr>
-    <td>Conocida(o) como:</td>
+    <td>RFC:</td>
     <td class="lastCell">
-      <input id='txtOrgNicknames' type="text" class="textBox" style="width: 340px;margin-right:0px;" maxlength="64" runat='server' />
-      &nbsp;RFC:
-      <input id='txtOrgTaxIDNumber' type="text" class="textBox" style="width: 110px;margin-right:0px;" maxlength="15" runat='server' />
+      <input id='txtOrgTaxIDNumber' type="text" class="textBox" style="width: 110px;margin-right:0;" maxlength="15" runat='server' />
     </td>
   </tr>
   <tr>
-    <td>Datos de registro:<br />&nbsp;</td>
+    <td>Otra información:<br />&nbsp;</td>
     <td class="lastCell">
-      <textarea id="txtOrgRegistryText" cols="310" rows="2" style="width:490px" class="textArea" runat="server"></textarea>
-    </td>
-  </tr>
-  <tr>
-    <td>Fecha de registro:</td>
-    <td class="lastCell separator">
-      <input id='txtOrgRegistryDate' type="text" class="textBox" style="width:64px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgOrgRegistryDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtOrgRegistryDate.ClientID%>'), getElement('imgOrgRegistryDate'));" style="margin-left:-6px" title="Despliega el calendario" alt="" />
-      <img src="../themes/default/textures/pixel.gif" height="1px" width="124px" alt="" />
-      Lugar de registro:
-      <select id="cboOrgRegistryLocation" class="selectBox" style="width:165px" title="" onchange="return updateUserInterface();" runat="server">
-        <option value=''>( Seleccionar )</option>
-        <option value='-2'>No consta</option>
-        <option value='501'>Aguascalientes</option>
-        <option value='502'>Baja California</option>
-        <option value='503'>Baja California Sur</option>
-        <option value='504'>Campeche</option>
-        <option value='505'>Chiapas</option>
-        <option value='506'>Chihuahua</option>
-        <option value='507'>Coahuila</option>
-        <option value='508'>Colima</option>
-        <option value='509'>Distrito Federal</option>
-        <option value='510'>Durango</option>
-        <option value='511'>Guanajuato</option>
-        <option value='512'>Guerrero</option>
-        <option value='513'>Hidalgo</option>
-        <option value='514'>Jalisco</option>
-        <option value='515'>México</option>
-        <option value='516'>Michoacán</option>
-        <option value='517'>Morelos</option>
-        <option value='518'>Nayarit</option>
-        <option value='519'>Nuevo León</option>
-        <option value='520'>Oaxaca</option>
-        <option value='521'>Puebla</option>
-        <option value='522'>Querétaro</option>
-        <option value='523'>Quintana Roo</option>
-        <option value='524'>San Luis Potosí</option>
-        <option value='525'>Sinaloa</option>
-        <option value='526'>Sonora</option>
-        <option value='527'>Tabasco</option>
-        <option value='528'>Tamaulipas</option>
-        <option value='529'>Tlaxcala</option>
-        <option value='530'>Veracruz</option>
-        <option value='531'>Yucatán</option>
-        <option value='532'>Zacatecas</option>
-      </select>
+      <textarea id="txtOrgRegistryNotes" cols="310" rows="2" style="width:490px" class="textArea" runat="server"></textarea>
     </td>
   </tr>
 </table>
@@ -210,7 +115,7 @@
               <select id="cboOwnershipPartUnit" class="selectBox" style="width:87px" disabled='disabled' title="" onchange="return this_updateUserInterface(this);" runat='server'>
                 <option value="">( U de M )</option>
                 <option value="Unit.Full" title="Todo">Todo</option>
-                <option value="Unit.Undivided" title="Proindiviso">Proindiviso</option>
+                <option value="Unit.Undivided" title="Pro-indiviso">Pro-indiviso</option>
                 <option value="Unit.Percentage" title="Porcentaje">Porcentaje</option>
                 <option value="AreaUnit.SquareMeters" title="Metros cuadrados">M2</option>
                 <option value="AreaUnit.Hectarea" title="Hectáreas">Hectáreas</option>
@@ -293,18 +198,13 @@
 /* <![CDATA[ */
 
   function this_setPartyControlsForEdition(clickSource) {
-    var disabledFlag = !getElement('<%=txtFirstName.ClientID%>').readOnly;
+    var disabledFlag = !getElement('<%=txtPersonFullName.ClientID%>').readOnly;
     var sMsg = "";
     if (clickSource && disabledFlag) {
       if (this_isPersonPartySelected()) {
         if (!<%=this.ClientID%>_validatePersonParty()) {
           return false;
         }
-        <% if (base.IsPartyInRecordingAct) { %>
-          if (!<%=this.ClientID%>_validatePersonPartyOnRecordingAct()) {
-            return false;
-          }
-        <% } %>
         sMsg = "Esta operación modificará todos los actos jurídicos donde la persona\n";
         sMsg += "esté referenciada.\n\n";
         sMsg += "¿Guardo los cambios efectuados a la información de la persona?\n";
@@ -329,33 +229,11 @@
       getElement('cmdEditParty').value = "Guardar";
     }
 
-    getElement('<%=txtFirstName.ClientID%>').readOnly = disabledFlag;
-    getElement('<%=txtFirstFamilyName.ClientID%>').readOnly = disabledFlag;
-    getElement('<%=txtSecondFamilyName.ClientID%>').readOnly = disabledFlag;
-    getElement('<%=txtMaritalFamilyName.ClientID%>').readOnly = disabledFlag;
-    getElement('<%=txtNicknames.ClientID%>').readOnly = disabledFlag;
-    getElement('<%=cboGender.ClientID%>').disabled = disabledFlag;
-    getElement('<%=txtBornDate.ClientID%>').readOnly = disabledFlag;
-    getElement('txtSearchBornLocation').readOnly = disabledFlag;
-    getElement('<%=cboBornLocation.ClientID%>').disabled = disabledFlag;
-    getElement('<%=txtCURPNumber.ClientID%>').readOnly = disabledFlag;
-    getElement('<%=txtTaxIDNumber.ClientID%>').readOnly = disabledFlag;
-    getElement('<%=txtIFENumber.ClientID%>').readOnly = disabledFlag;
-
-
-//    getElement('<%=cboOccupation.ClientID%>').disabled = !disabledFlag;
-//    getElement('<%=cboMarriageStatus.ClientID%>').disabled = !disabledFlag;
-//    getElement('txtSearchAddressPlace').readOnly = !disabledFlag;
-//    getElement('<%=cboAddressPlace.ClientID%>').disabled = !disabledFlag;
-//    getElement('<%=txtAddress.ClientID%>').readOnly = !disabledFlag;
-
+    getElement('<%=txtPersonFullName.ClientID%>').readOnly = disabledFlag;
+    getElement('<%=txtIDNumber.ClientID%>').readOnly = disabledFlag;
 
     getElement('<%=txtOrgName.ClientID%>').readOnly = disabledFlag;
-    getElement('<%=txtOrgNicknames.ClientID%>').readOnly = disabledFlag;
     getElement('<%=txtOrgTaxIDNumber.ClientID%>').readOnly = disabledFlag;
-    getElement('<%=txtOrgRegistryText.ClientID%>').readOnly = disabledFlag;
-    getElement('<%=txtOrgRegistryDate.ClientID%>').readOnly = disabledFlag;
-    getElement('<%=cboOrgRegistryLocation.ClientID%>').disabled = disabledFlag;
   }
 
   function this_searchParties() {
@@ -380,24 +258,6 @@
 
     invokeAjaxComboItemsLoader(url, getElement('<%=cboParty.ClientID%>'));
     this_displayEditor();
-  }
-
-  function this_searchAddressPlace() {
-    var url = "../ajax/geographic.data.aspx";
-    url += "?commandName=getRegionsStringArrayCmd";
-    url += "&header=( Seleccionar lugar de residencia )";
-    url += "&keywords=" + getElement("txtSearchAddressPlace").value;
-
-    invokeAjaxComboItemsLoader(url, getElement("<%=cboAddressPlace.ClientID%>"));
-  }
-
-  function this_searchBornLocations() {
-    var url = "../ajax/geographic.data.aspx";
-    url += "?commandName=getRegionsStringArrayCmd";
-    url += "&header=( Seleccionar lugar de nacimiento )";
-    url += "&keywords=" + getElement("txtSearchBornLocation").value;
-
-    invokeAjaxComboItemsLoader(url, getElement("<%=cboBornLocation.ClientID%>"));
   }
 
   function this_updateRoleUserInterface() {
@@ -575,16 +435,8 @@
   }
 
   function <%=this.ClientID%>_validatePersonParty() {
-    if (getElement('<%=txtFirstFamilyName.ClientID%>').value.length == 0) {
-      alert("Requiero se proporcione el apellido paterno de la persona.");
-      return false;
-    }
-    if (getElement('<%=txtFirstName.ClientID%>').value.length == 0) {
-      alert("Requiero se proporcione el nombre o nombres de la persona.");
-      return false;
-    }
-    if (getElement('<%=cboGender.ClientID%>').value.length == 0) {
-      alert("Requiero se proporcione el sexo de la persona.");
+    if (getElement('<%=txtPersonFullName.ClientID%>').value.length == 0) {
+      alert("Requiero se proporcione el nombre completo de la persona.");
       return false;
     }
     if (getElement('<%=txtBornDate.ClientID%>').value.length == 0) {
@@ -595,58 +447,12 @@
       alert("No reconozco la fecha de nacimiento de la persona.");
       return false;
     }
-    if (getElement('<%=cboBornLocation.ClientID%>').value.length == 0) {
-      alert("Requiero se seleccione el lugar de nacimiento de la persona.");
-      return false;
-    }
-    return true;
-  }
-
-  function <%=this.ClientID%>_validatePersonPartyOnRecordingAct() {
-    if (getElement('<%=cboOccupation.ClientID%>').value.length == 0) {
-      alert("Requiero se seleccione la ocupación de la persona.");
-      return false;
-    }
-    if (getElement('<%=cboMarriageStatus.ClientID%>').value.length == 0) {
-      alert("Requiero se seleccione el estado civil de la persona.");
-      return false;
-    }
-    if (getElement('<%=cboAddressPlace.ClientID%>').value.length == 0) {
-      alert("Requiero se seleccione el lugar de residencia de la persona.");
-      return false;
-    }
-    if (getElement('<%=txtAddress.ClientID%>').value.length == 0) {
-      if (!confirm("No se proporcionó el domicilio de la persona.\n\n¿El domicilio no consta?")) {
-        return false;
-      } else {
-        getElement('<%=txtAddress.ClientID%>').value = "No consta";
-      }
-    }
     return true;
   }
 
   function <%=this.ClientID%>_validateOrganizationParty() {
     if (getElement('<%=txtOrgName.ClientID%>').value.length == 0) {
       alert("Requiero se proporcione el nombre o razón social de la organización.");
-      return false;
-    }
-    if (getElement('<%=txtOrgRegistryText.ClientID%>').value.length == 0) {
-      if (!confirm("No se proporcionaron los datos del registro de la organización.\n\n¿La información de registro de la organización no consta?")) {
-        return false;
-      }
-    }
-    if (getElement('<%=txtOrgRegistryDate.ClientID%>').value.length == 0) {
-      if (!confirm("No se proporcionó la fecha de registro de la organización.\n\n¿La fecha de registro no consta?")) {
-        return false;
-      }
-    } else {
-      if (!isDate(getElement('<%=txtOrgRegistryDate.ClientID%>'))) {
-        alert("No reconozco la fecha de registro de la organización.");
-        return false;
-      }
-    }
-    if (getElement('<%=cboOrgRegistryLocation.ClientID%>').value.length == 0) {
-      alert("Requiero se seleccione el lugar de registro de la organización.");
       return false;
     }
     return true;
@@ -656,9 +462,6 @@
     if (getElement('<%=cboParty.ClientID%>').value == "appendParty") {
       if (this_isPersonPartySelected()) {
         if (!<%=this.ClientID%>_validatePersonParty()) {
-          return false;
-        }
-        if (!<%=this.ClientID%>_validatePersonPartyOnRecordingAct()) {
           return false;
         }
       } else {
@@ -799,9 +602,7 @@
 
   function this_getPersonName() {
     if (getElement('<%=cboParty.ClientID%>').value.length == 0 || getElement('<%=cboParty.ClientID%>').value == "appendParty") {
-      return getElement('<%=txtFirstName.ClientID%>').value + " " +
-             getElement('<%=txtFirstFamilyName.ClientID%>').value + " " +
-             getElement('<%=txtSecondFamilyName.ClientID%>').value;
+      return getElement('<%=txtPersonFullName.ClientID%>').value;
     } else {
       return getComboOptionText(getElement('<%=cboParty.ClientID%>'));
     }
@@ -824,7 +625,7 @@
   }
 
   function this_isPersonPartySelected() {
-    return (getElement('<%=cboPartyType.ClientID%>').value == '2433');
+    return (getElement('<%=cboPartyType.ClientID%>').value == '2435');
   }
 
   function this_displayEditor() {
@@ -852,30 +653,13 @@
   }
 
   function this_cleanEditor() {
-    getElement('<%=txtFirstName.ClientID%>').value = '';
-    getElement('<%=txtFirstFamilyName.ClientID%>').value = '';
-    getElement('<%=txtSecondFamilyName.ClientID%>').value = '';
-    getElement('<%=txtMaritalFamilyName.ClientID%>').value = '';
-    getElement('<%=txtNicknames.ClientID%>').value = '';
-    getElement('<%=cboOccupation.ClientID%>').value = '';
-    getElement('<%=cboMarriageStatus.ClientID%>').value = '';
-    getElement('<%=cboGender.ClientID%>').value = '';
+    getElement('<%=txtPersonFullName.ClientID%>').value = '';
     getElement('<%=txtBornDate.ClientID%>').value = '';
-    getElement('txtSearchBornLocation').value = '';
-    getElement('<%=cboBornLocation.ClientID%>').value = '';
-    getElement('txtSearchAddressPlace').value = '';
-    getElement('<%=cboAddressPlace.ClientID%>').value = '';
-    getElement('<%=txtAddress.ClientID%>').value = '';
-    getElement('<%=txtCURPNumber.ClientID%>').value = '';
-    getElement('<%=txtTaxIDNumber.ClientID%>').value = '';
-    getElement('<%=txtIFENumber.ClientID%>').value = '';
+    getElement('<%=txtIDNumber.ClientID%>').value = '';
+
 
     getElement('<%=txtOrgName.ClientID%>').value = '';
-    getElement('<%=txtOrgNicknames.ClientID%>').value = '';
     getElement('<%=txtOrgTaxIDNumber.ClientID%>').value = '';
-    getElement('<%=txtOrgRegistryText.ClientID%>').value = '';
-    getElement('<%=txtOrgRegistryDate.ClientID%>').value = '';
-    getElement('<%=cboOrgRegistryLocation.ClientID%>').value = '';
   }
 
   function this_onSearchTextBoxKeyFilter() {
@@ -892,9 +676,10 @@
     }
   }
 
-  addEvent(getElement('<%=txtCURPNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
-  addEvent(getElement('<%=txtTaxIDNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
-  addEvent(getElement('<%=txtIFENumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
+  addEvent(getElement('<%=txtIDNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
+  addEvent(getElement('<%=txtPersonFullName.ClientID%>'), 'keypress', upperCaseKeyFilter);
+  addEvent(getElement('<%=txtOrgName.ClientID%>'), 'keypress', upperCaseKeyFilter);
+  addEvent(getElement('<%=txtOrgTaxIDNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
 
   <% if (base.isLoaded) { %>
     <%=tblPartySeacher.ClientID%>.style.display = "inline";

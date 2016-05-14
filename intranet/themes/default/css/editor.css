@@ -527,8 +527,15 @@ table.ghostTable, div.dataTableContainer .ghostTable, div.dataTableContainer .gh
 table.editionTable .ghostTable, table.editionTable .ghostTable td {
   border: none;
   border-collapse: collapse;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   vertical-align: top;
   height: 18px;
+}
+a.pending-edition, a.pending-edition:link, a.pending-edition:visited, a.pending-edition:active {
+  color:brown;
+  text-decoration: none;
+}
+a.pending-edition:hover {
+  text-decoration: underline;
 }
