@@ -91,7 +91,7 @@
                   <table class="details" style="width:99%">
                     <tr class="detailsHeader">
                       <td width="90%">Nombre</td>
-                      <td>F. Nac / RFC</td>
+                      <td>F. Nac / ID</td>
                       <td>Participa como</td>
                       <td>Titularidad</td>
                       <td>&nbsp;</td>
@@ -115,9 +115,11 @@
             <empiriaControl:LRSRecordingPartyEditorControl ID="oPartyEditorControl" runat="server" />
           </td>
         </tr>
+        <% if (oAntecedentParties.Visible) { %>
         <tr>
           <td class="subTitle">Propietarios anteriores del predio</td>
         </tr>
+        <% } %>
         <empiriaControl:LRSRecordingPartyViewerControl ID="oAntecedentParties" runat="server" />
         </table>
 
@@ -291,6 +293,82 @@
       }
     }
   }
+
+
+  function window_onload() {
+    setWorkplace2();
+    setPageTitle();
+  }
+
+  function setWorkplace2() {
+    resizeWorkplace2();
+    addEvent(window, 'resize', resizeWorkplace2);
+    setObjectEvents();
+    window.defaultStatus = '';
+  }
+
+  function resizeWorkplace2() {
+    var divBody = getElement('divBody');
+    var divHeader = getElement('divHeader');
+    var divContent = getElement('divContent');
+    //var divImageContainer = getElement('divImageContainer');
+
+    var height = document.documentElement.offsetHeight - divHeader.offsetHeight - 0;
+    var width = document.documentElement.offsetWidth;
+    if (height > 78) {
+      divBody.style.height = height;
+      divContent.style.height = height - 18;
+      //divImageContainer.style.height = height - 78;
+    }
+    if (width > 28) {
+      divContent.style.width = width - 28;
+    }
+    //if (((width - 700) - 38) > 700) {
+    //  divImageContainer.style.width = (width - 700) - 38;
+    //} else {
+    //  divImageContainer.style.width = 672;
+    //}
+  }
+
+  function window_onresize() {
+    //ifraItemEditor_onresize();
+    window_onscroll();
+  }
+
+  function window_onscroll() {
+    //var documentHeight = getElement("divDocumentViewer").offsetHeight;
+    //var scrollHeight = getElement("divContent").scrollTop;
+    ////var oBody = getElement("divDocumentViewer");
+    ////getElement('divImageViewer').style.top = Math.min(scrollHeight, documentHeight - scrollHeight) + "px";
+
+    //var newHeight = Math.min(documentHeight - scrollHeight, scrollHeight);
+
+    //if (newHeight <= 0) {
+    //  getElement('divImageViewer').style.top = 0;
+    //} else {
+    //  getElement('divImageViewer').style.top = newHeight;
+    //}
+  }
+
+  //function ifraItemEditor_onresize() {
+  //  var oFrame = getElement("ifraItemEditor");
+  //  var oBody = oFrame.document.body;
+
+  //  //var newHeight = oBody.scrollHeight + (oBody.offsetHeight - oBody.clientHeight);
+  //  var newHeight = oBody.scrollHeight + oBody.clientHeight;
+
+  //  if (newHeight <= 800) {
+  //    oFrame.style.height = 800;
+  //  } else {
+  //    oFrame.style.height = newHeight;
+  //  }
+  //  //oFrame.style.width = oBody.scrollWidth + (oBody.offsetWidth - oBody.clientWidth);
+  //}
+
+  addEvent(window, 'load', window_onload);
+  addEvent(window, 'resize', window_onresize);
+  addEvent(getElement('divContent'), 'scroll', window_onscroll);
+  //addEvent(getElement("ifraItemEditor"), 'resize', ifraItemEditor_onresize);
 
   var gbRecordingActEditorDisabled = true;
   disableRecordingActEditor(true);

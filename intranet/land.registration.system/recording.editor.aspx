@@ -162,7 +162,7 @@
 </div>
 </form>
 <div><span id="span" runat="server"></span></div>
-<iframe id="divRecordingActEditorWindow" name="divRecordingActEditorWindow" src='' width="790px" height="600px" style="display:none"></iframe>
+<iframe id="divRecordingActEditorWindow" name="divRecordingActEditorWindow" src='../workplace/empty.page.aspx' width="820px" height="600px" style="display:none" scrolling="no"></iframe>
 <iframe id="ifraCalendar" style="z-index:99;left:0;visibility:hidden;position:relative;top:0"
     marginheight="0" marginwidth="0" frameborder="0" scrolling="no" src="../user.controls/calendar.aspx" width="100%">
 </iframe>
@@ -225,8 +225,8 @@
 
   function editRecordingAct(recordingActId) {
     var url    = "recording.act.editor.aspx?id=" + recordingActId;
-    var width  = 680;
-    var height = 700;
+    var width  = 740;
+    var height = 720;
     var iFrameContainer = document.all.divRecordingActEditorWindow;
     openModalWindow(iFrameContainer, url, width, height);
   }
@@ -234,7 +234,7 @@
   function closeModalWindow(iFrame) {
     iFrame.style.visibility = "hidden";
     iFrame.style.display    = "none";
-    iFrame.contentWindow.location.replace("");
+    iFrame.contentWindow.location.replace("../workplace/empty.page.aspx");
   }
 
   function openModalWindow(iFrame, url, width, height) {
