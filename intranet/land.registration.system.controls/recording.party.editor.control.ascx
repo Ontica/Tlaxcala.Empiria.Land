@@ -18,7 +18,8 @@
               <option value="2439">» Inst. Financiera</option>
             </select>
             Filtrar:
-            <select id="cboPartyFilter" class="selectBox" style="width:138px" title="" onchange="return this_updateUserInterface(this);" runat="server">
+            <!--onchange="return this_updateUserInterface(this);" !-->
+            <select id="cboPartyFilter" class="selectBox" style="width:138px" title="" runat="server">
               <option value="ByKeywords">Según búsqueda</option>
               <option value="ResourceRelated">Relativas al predio</option>
               <option value="LastRecorded">Últimas registradas</option>
@@ -31,7 +32,7 @@
             <select id="cboParty" class="selectBox" style="width:474px" title="" onchange="return this_updateUserInterface(this);" runat="server">
               <option value="">( No se ha efectuado ninguna búsqueda de personas u organizaciones )</option>
             </select>
-            <input id="cmdEditParty" type="button" value="Editar" class="button" tabindex="-1" style="width:64px; vertical-align:middle " onclick="return this_setPartyControlsForEdition(true)" />
+            <input id="cmdEditParty" type="button" value="Editar" disabled="disabled" class="button" tabindex="-1" style="width:64px; vertical-align:middle " onclick="return this_setPartyControlsForEdition(true)" />
           </td>
         </tr>
       </table>
@@ -49,16 +50,16 @@
     <td>Fecha de Nac:</td>
     <td class="lastCell" colspan="5">
       <input id='txtBornDate' type="text" class="textBox" style="width:64px;" onblur="formatAsDate(this)" title="" runat="server" />
-      (d/m/a) &nbsp; &nbsp; &nbsp; &nbsp;
+      (d/m/a) &nbsp; &nbsp;
       Identificación:
-      <select id="cboIDNumberType" class="selectBox" style="width:64px" title="" runat="server">
+      <select id="cboIDNumberType" class="selectBox" style="width:74px" title="" runat="server">
         <option value="">( ? )</option>
         <option value="CURP">CURP</option>
         <option value="RFC">RFC</option>
         <option value="IFE">IFE</option>
         <option value="None">Ninguna</option>
       </select>
-      <input id='txtIDNumber' type="text" class="textBox" style="width: 142px;margin-right:0;" maxlength="20" runat='server' />
+      <input id='txtIDNumber' type="text" class="textBox" style="width: 144px;margin-right:0;" maxlength="20" runat='server' />
     </td>
   </tr>
   <tr>
@@ -103,16 +104,8 @@
               Primero seleccionar un rol de la lista de la izquierda
             </div>
             <div id="divDomainRole" style="display:none;">
-              Titularidad:
-              <select id="cboOwnership" class="selectBox" style="width:122px" title="" onchange="return this_updateUserInterface(this);" runat="server">
-                <option value="">( Seleccionar )</option>
-                <option value="Owner">Universal</option>
-                <option value="Coowner">Compartida</option>
-                <option value="Bare">Nuda</option>
-              </select>
-              Parte:
-              <input id='txtOwnershipPartAmount' class="textBox" style="width:58px;" onkeypress="return positiveKeyFilter(this);" title="" runat='server' />
-              <select id="cboOwnershipPartUnit" class="selectBox" style="width:87px" disabled='disabled' title="" onchange="return this_updateUserInterface(this);" runat='server'>
+              Sobre:
+              <select id="cboOwnershipPartUnit" class="selectBox" style="width:94px" title="" onchange="return this_updateUserInterface(this);" runat='server'>
                 <option value="">( U de M )</option>
                 <option value="Unit.Full" title="Todo">Todo</option>
                 <option value="Unit.Undivided" title="Pro-indiviso">Pro-indiviso</option>
@@ -120,6 +113,8 @@
                 <option value="AreaUnit.SquareMeters" title="Metros cuadrados">M2</option>
                 <option value="AreaUnit.Hectarea" title="Hectáreas">Hectáreas</option>
               </select>
+              Cantidad:
+              <input id='txtOwnershipPartAmount' class="textBox" style="width:58px;" onkeypress="return positiveKeyFilter(this);" title="" runat='server' />
             </div>
             <div id="divUsufructuaryRole" style="display:none;">
               De la nuda de:&nbsp;
@@ -173,12 +168,6 @@
                   <%=GetMultiselectListItems(cboFirstPartyInRole, "chkFirstPartyInRole")%>
                 </table>
               </div>
-            </div>
-            <div id="divAdditionalRole" style="display:none;">
-              Más:
-              <select id="cboAdditionalRole" class="selectBox" style="width:365px" title="" runat="server">
-
-              </select><br />
             </div>
           </td>
         </tr>
@@ -305,14 +294,8 @@
       this_searchParties();
     } else if (oControl == getElement('<%=cboRole.ClientID%>')) {
       this_updateRoleUserInterface();
-    } else if (oControl == getElement('<%=cboOwnership.ClientID%>')) {
-      this_updateDomainRoleUserInterface();
     } else if (oControl == getElement('<%=cboOwnershipPartUnit.ClientID%>')) {
       this_updateDomainRoleUserInterface();
-    } else if (oControl == getElement('<%=cboUsufruct.ClientID%>')) {
-      this_updateUsufructRoleUserInterface();
-    } else if (oControl == getElement('<%=cboUsufructPartUnit.ClientID%>')) {
-      this_updateUsufructPartUnitUserInterface();
     } else if (oControl == getElement('<%=cboFirstPartyInRole.ClientID%>')) {
       this_displayMultiselectItems(oControl, lstFirstPartyInRole);
     } else if (oControl == getElement('<%=cboUsufructuaryOf.ClientID%>')) {
@@ -326,35 +309,11 @@
     } else {
       oMultiSelectControl.style.display = "none";
     }
-
-    if (getElement('<%=cboAdditionalRole.ClientID%>').options.length != 0) {
-      getElement("divAdditionalRole").style.display = "inline";
-    } else {
-      getElement("divAdditionalRole").style.display = "none";
-    }
   }
 
   function this_updateDomainRoleUserInterface() {
-    var domainType = getElement('<%=cboOwnership.ClientID%>').value;
     var domainPartUnit = getElement('<%=cboOwnershipPartUnit.ClientID%>').value;
-    switch (domainType) {
-      case "Owner":
-        getElement('<%=cboOwnershipPartUnit.ClientID%>').value = "Unit.Full";
-        getElement('<%=cboOwnershipPartUnit.ClientID%>').disabled = true;
-        getElement('<%=txtOwnershipPartAmount.ClientID%>').value = "";
-        getElement('<%=txtOwnershipPartAmount.ClientID%>').disabled = true;
-        return;
-      case "Coowner":
-        if (domainPartUnit == "Unit.Full") {
-          getElement('<%=cboOwnershipPartUnit.ClientID%>').value = "";
-        }
-        getElement('<%=cboOwnershipPartUnit.ClientID%>').disabled = false;
-        getElement('<%=txtOwnershipPartAmount.ClientID%>').disabled = false;
-        break;
-      case "Bare":
-        getElement('<%=cboOwnershipPartUnit.ClientID%>').disabled = false;
-        break;
-    }
+
     if (domainPartUnit == "Unit.Full" || domainPartUnit == "Unit.Undivided" || domainPartUnit == '') {
       getElement('<%=txtOwnershipPartAmount.ClientID%>').value = "";
       getElement('<%=txtOwnershipPartAmount.ClientID%>').disabled = true;
@@ -363,70 +322,11 @@
     }
   }
 
-  function this_updateUsufructRoleUserInterface() {
-    switch (getElement('<%=cboUsufruct.ClientID%>').value) {
-      case 'LifeTime':
-        getElement('divUsufructCondition').style.display = 'none';
-        getElement('<%=cboUsufructTimeUnit.ClientID%>').style.display = 'none';
-        getElement('imgUsufructEndDate').style.display = 'none';
-        getElement('<%=txtUsufructEndCondition.ClientID%>').value = '';
-        break;
-      case 'Time':
-        getElement('divUsufructCondition').style.display = 'inline';
-        getElement('<%=cboUsufructTimeUnit.ClientID%>').style.display = 'inline';
-        getElement('imgUsufructEndDate').style.display = 'none';
-        getElement('<%=txtUsufructEndCondition.ClientID%>').style.width = '74px';
-        getElement('<%=txtUsufructEndCondition.ClientID%>').value = '';
-        break;
-      case 'Date':
-        getElement('divUsufructCondition').style.display = 'inline';
-        getElement('<%=cboUsufructTimeUnit.ClientID%>').style.display = 'none';
-        getElement('imgUsufructEndDate').style.display = 'inline';
-        getElement('<%=txtUsufructEndCondition.ClientID%>').style.width = '74px';
-        getElement('<%=txtUsufructEndCondition.ClientID%>').value = '';
-        break;
-      case 'Payment':
-        getElement('divUsufructCondition').style.display = 'none';
-        getElement('<%=cboUsufructTimeUnit.ClientID%>').style.display = 'none';
-        getElement('imgUsufructEndDate').style.display = 'none';
-        getElement('<%=txtUsufructEndCondition.ClientID%>').value = '';
-        break;
-      case 'Condition':
-        getElement('divUsufructCondition').style.display = 'inline';
-        getElement('<%=cboUsufructTimeUnit.ClientID%>').style.display = 'none';
-        getElement('imgUsufructEndDate').style.display = 'none';
-        getElement('<%=txtUsufructEndCondition.ClientID%>').style.width = '290px';
-        getElement('<%=txtUsufructEndCondition.ClientID%>').value = '';
-        break;
-    }
-  }
-
-  function this_updateUsufructPartUnitUserInterface() {
-    var usufructPartUnit = getElement('<%=cboUsufructPartUnit.ClientID%>').value;
-    if (usufructPartUnit == "Unit.Full" || usufructPartUnit == "Unit.Undivided" || usufructPartUnit == '') {
-      getElement('<%=txtUsufructPartAmount.ClientID%>').value = "";
-      getElement('<%=txtUsufructPartAmount.ClientID%>').disabled = true;
-    } else {
-      getElement('<%=txtUsufructPartAmount.ClientID%>').disabled = false;
-    }
-  }
-
-  function this_formatUsufructEndCondition() {
-    if (getElement('<%=txtUsufructEndCondition.ClientID%>').value.length == 0) {
-      return;
-    }
-    if (getElement('<%=cboUsufruct.ClientID%>').value == 'Date') {
-      formatAsDate(getElement('<%=txtUsufructEndCondition.ClientID%>'));
-    }
-  }
-
   function this_selectedRoleType() {
     var selectedRole = getElement('<%=cboRole.ClientID%>').value;
 
     if (selectedRole == '') {
       return "NullRole";
-    } else if (selectedRole == '1202') {
-      return "UsufructuaryRole";
     } else if (selectedRole >= '1230') {
       return "SecondaryRole";
     } else {
@@ -478,8 +378,8 @@
         return false;
       case 'DomainRole':
         return this_domainRole_validate();
-      case 'UsufructuaryRole':
-        return this_usufructuraryRole_validate();
+      //case 'UsufructuaryRole':
+      //  return this_usufructuraryRole_validate();
       case 'SecondaryRole':
         return this_secondaryRole_validate();
       default:
@@ -576,25 +476,18 @@
   }
 
   function this_domainRole_validate() {
-    var domainType = getElement('<%=cboOwnership.ClientID%>').value;
     var domainPartUnit = getElement('<%=cboOwnershipPartUnit.ClientID%>').value;
     var domainPart = getElement('<%=txtOwnershipPartAmount.ClientID%>').value;
 
-    if (domainType.length == 0) {
-      alert("Requiero conocer el dominio que sobre el predio o predios tendrá " + this_getPersonName());
-      return false;
-    }
     if (getElement('<%=cboOwnershipPartUnit.ClientID%>').value.length == 0) {
-      alert("Requiero conocer la unidad de medida de la parte de la que es " + getComboOptionText(getElement('<%=cboOwnership.ClientID%>')) + " " + this_getPersonName());
+      alert("Requiero conocer la unidad de medida de la propiedad o dominio de " + this_getPersonName());
       return false;
     }
     if (domainPartUnit != "Unit.Full" && domainPartUnit != "Unit.Undivided" && domainPart.length == 0) {
-      alert("Requiero conocer la parte de la que es " + getComboOptionText(getElement('<%=cboOwnership.ClientID%>')) + " " + this_getPersonName());
+      alert("Requiero conocer la parte de la que es propietario o tiene el dominio " + this_getPersonName());
       return false;
     }
-    if (confirm("¿Agrego a " + this_getPersonName() + " como " +
-                getComboOptionText(getElement('<%=cboOwnership.ClientID%>')) + " en este acto jurídico?")) {
-      getElement('<%=cboOwnershipPartUnit.ClientID%>').disabled = false;
+    if (confirm("¿Agrego a " + this_getPersonName() + " a este acto jurídico?")) {
       return true;
     }
     return false;
@@ -676,6 +569,7 @@
     }
   }
 
+  addEvent(getElement('<%=txtSearchParty.ClientID%>'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('<%=txtIDNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('<%=txtPersonFullName.ClientID%>'), 'keypress', upperCaseKeyFilter);
   addEvent(getElement('<%=txtOrgName.ClientID%>'), 'keypress', upperCaseKeyFilter);

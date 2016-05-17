@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls;
 
@@ -102,17 +101,11 @@ namespace Empiria.Land.WebApp {
     private void LoadRolesCombo(FixedList<RecordingActParty> parties) {
       this.cboRole.Items.Clear();
 
-      if (parties.Count == 0 || parties.Count((x) => x.ZOwnershipMode == OwnershipMode.Owner) == 0) {
-        HtmlSelectContent.LoadCombo(this.cboRole, this.recordingAct.RecordingActType.GetRoles(), "Id", "Name", "( Seleccionar rol )");
-      } else {
-        HtmlSelectContent.LoadCombo(this.cboRole, "( Seleccionar rol )", String.Empty, String.Empty);
-      }
+      HtmlSelectContent.LoadCombo(this.cboRole, this.recordingAct.RecordingActType.GetRoles(), "Id", "Name", "( Seleccionar rol )");
 
-      List<RecordingActParty> bareOwnersList = parties.FindAll((x) => x.ZOwnershipMode == OwnershipMode.Bare);
-      if (bareOwnersList.Count != 0) {
-        this.cboRole.Items.Add(new ListItem(DomainActPartyRole.Usufructuary.Name, DomainActPartyRole.Usufructuary.Id.ToString()));
-        HtmlSelectContent.LoadCombo<RecordingActParty>(cboUsufructuaryOf, bareOwnersList, (x) => x.Party.Id.ToString(),
-                                                       (x) => x.Party.FullName, "( Seleccionar al nudo propietario )");
+      if (parties.Count != 0) {
+        HtmlSelectContent.LoadCombo<Party>(cboUsufructuaryOf, parties.Select((x) => x.Party), (x) => x.Id.ToString(),
+                                           (x) => x.FullName, "( Seleccionar al nudo propietario )");
         if (cboUsufructuaryOf.Items.Count > 2) {
           cboUsufructuaryOf.Items.Add(new ListItem("( Selección múltiple )", "multiselect"));
         }
@@ -124,7 +117,7 @@ namespace Empiria.Land.WebApp {
 
     private Party FillOrganizationParty() {
       if (this.Party == null) {
-        this.Party = new OrganizationParty(txtOrgName.Value);
+        this.Party = new OrganizationParty(int.Parse(cboPartyType.Value), txtOrgName.Value);
         //this.Party.UID = txtOrgTaxIDNumber.Value;
       }
       this.Party.Save();
@@ -190,21 +183,6 @@ namespace Empiria.Land.WebApp {
 
       LoadRolesCombo(parties);
       LoadFirstPartyInRoleCombo(parties);
-      LoadAdditionalRoleCombo(parties);
-    }
-
-    private void LoadAdditionalRoleCombo(FixedList<RecordingActParty> list) {
-      cboAdditionalRole.Items.Clear();
-
-      if (list.Count > 0) {
-        cboAdditionalRole.Items.Add(new ListItem("( Existen uno o más roles adicionales )", String.Empty));
-      }
-      foreach(var item in list) {
-        string id = item.Party.Id.ToString() + "|" + item.PartyRole.Id.ToString();
-        string text = item.PartyRole.Name + ": " + item.Party.FullName;
-
-        cboAdditionalRole.Items.Add(new ListItem(text, id));
-      }
     }
 
     private void FillPartyData(RecordingActParty rap) {
@@ -244,14 +222,12 @@ namespace Empiria.Land.WebApp {
     private void SaveRecordingActParty() {
       string selectedRole = Request.Form[cboRole.Name];
 
-      if (int.Parse(selectedRole) >= 1230) {
-        SaveSecondaryRoleParty();
-      } else if (int.Parse(selectedRole) == DomainActPartyRole.Usufructuary.Id) {
-        SaveUsufructuaryRoleParty();
-      } else {
+      var role = BasePartyRole.Parse(int.Parse(selectedRole));
+      if (role is DomainActPartyRole) {
         SaveDomainRoleParty();
+      } else {
+        SaveSecondaryRoleParty();
       }
-      SaveAdditionalRole();
     }
 
     private void SaveDomainRoleParty() {
@@ -259,7 +235,6 @@ namespace Empiria.Land.WebApp {
 
       RecordingActParty rap = RecordingActParty.Create(this.RecordingAct, this.party, role);
 
-      rap.ZOwnershipMode = (OwnershipMode) Convert.ToChar(cboOwnership.Value.Substring(0, 1));
       if (txtOwnershipPartAmount.Value.Length == 0) {
         txtOwnershipPartAmount.Value = "1.00";
       }
@@ -272,8 +247,8 @@ namespace Empiria.Land.WebApp {
 
     private void SaveSecondaryRoleParty() {
       string[] selectedParties = null;
-      if (cboFirstPartyInRole.Value == "multiselect") {
-        selectedParties = hdnMultiPartiesInRole.Value.Split('|');
+      if (Request.Form[cboFirstPartyInRole.Name] == "multiselect") {
+        selectedParties = Request.Form[hdnMultiPartiesInRole.Name].Split('|');
       } else {
         selectedParties = new string[] { Request.Form[cboFirstPartyInRole.Name] };
       }
@@ -286,46 +261,6 @@ namespace Empiria.Land.WebApp {
 
         rap.Save();
       }
-    }
-
-    private void SaveAdditionalRole() {
-      if (cboAdditionalRole.Value.Length == 0) {
-        return;
-      }
-      int partyId = int.Parse(cboAdditionalRole.Value.Split('|')[0]);
-      int roleId = int.Parse(cboAdditionalRole.Value.Split('|')[1]);
-
-      var role = (SecondaryPartyRole) BasePartyRole.Parse(roleId);
-
-      var rap = RecordingActParty.Create(this.RecordingAct, this.party,
-                                         role, Party.Parse(partyId));
-      rap.Save();
-    }
-
-    private void SaveUsufructuaryRoleParty() {
-      string[] selectedParties = null;
-      if (cboUsufructuaryOf.Value == "multiselect") {
-        selectedParties = hdnMultiPartiesInRole.Value.Split('|');
-      } else {
-        selectedParties = new string[] { cboUsufructuaryOf.Value };
-      }
-      foreach (string selectedParty in selectedParties) {
-        //var rap = RecordingActParty.Create(this.RecordingAct, this.party,
-        //                                   DomainActPartyRole.Usufructuary,
-        //                                   Party.Parse(int.Parse(selectedParty)));
-        //rap.UsufructMode = (UsufructMode) Convert.ToChar(cboUsufruct.Value.Substring(0, 1));
-        //if (txtUsufructPartAmount.Value.Length == 0) {
-        //  txtUsufructPartAmount.Value = "1.00";
-        //}
-        //rap.OwnershipPart = Quantity.Parse(DataTypes.Unit.Parse(cboUsufructPartUnit.Value),
-        //                                   decimal.Parse(txtUsufructPartAmount.Value));
-        //rap.UsufructTerm = txtUsufructEndCondition.Value;
-
-        //FillPartyData(rap);
-
-        //rap.Save();
-      }
-
     }
 
     #endregion Public methods

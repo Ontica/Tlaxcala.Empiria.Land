@@ -193,5 +193,6 @@
   <% if (base.DisplayCreditFields) { %>
     addEvent(getElement('<%=txtContractNumber.ClientID%>'), 'keypress', upperCaseKeyFilter);
   <% } %>
+
 /* ]]> */
 </script>

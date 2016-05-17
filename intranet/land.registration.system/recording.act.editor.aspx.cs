@@ -118,7 +118,7 @@ namespace Empiria.Land.WebApp {
     }
 
     private void LoadControls() {
-      txtRecordingActName.Value = "(" + recordingAct.Index.ToString("00") + ") " + recordingAct.RecordingActType.DisplayName;
+      txtRecordingActName.Value = "(" + recordingAct.Index.ToString("00") + ") " + recordingAct.DisplayName;
       txtObservations.Value = recordingAct.Notes;
       cboStatus.Value = ((char) recordingAct.Status).ToString();
       FillPropertiesCombo();
