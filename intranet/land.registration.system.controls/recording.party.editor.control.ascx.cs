@@ -98,16 +98,22 @@ namespace Empiria.Land.WebApp {
       return html;
     }
 
-    private void LoadRolesCombo(FixedList<RecordingActParty> parties) {
+    private void LoadRolesCombo(FixedList<RecordingActParty> domainParties) {
       this.cboRole.Items.Clear();
 
       HtmlSelectContent.LoadCombo(this.cboRole, this.recordingAct.RecordingActType.GetRoles(), "Id", "Name", "( Seleccionar rol )");
 
-      if (parties.Count != 0) {
-        HtmlSelectContent.LoadCombo<Party>(cboUsufructuaryOf, parties.Select((x) => x.Party), (x) => x.Id.ToString(),
+      if (domainParties.Count != 0) {
+        HtmlSelectContent.LoadCombo<Party>(cboUsufructuaryOf, domainParties.Select((x) => x.Party), (x) => x.Id.ToString(),
                                            (x) => x.FullName, "( Seleccionar al nudo propietario )");
         if (cboUsufructuaryOf.Items.Count > 2) {
           cboUsufructuaryOf.Items.Add(new ListItem("( Selección múltiple )", "multiselect"));
+        }
+      }
+
+      if (!this.RecordingAct.RecordingActType.IsDomainActType) {
+        if (domainParties.Count((x) => !x.RecordingAct.Document.Equals(this.recordingAct.Document)) == 0) {
+          this.cboRole.Items.Add(new ListItem("Propietario actual", "1199"));
         }
       }
 
