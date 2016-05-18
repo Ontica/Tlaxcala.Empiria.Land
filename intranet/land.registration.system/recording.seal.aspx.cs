@@ -234,7 +234,7 @@ namespace Empiria.Land.WebApp {
 
       Resource resource = recordingAct.TractIndex[0].Resource;
       if (resource is RealEstate) {
-        var antecedent = ((RealEstate) resource).GetDomainAntecedent(recordingAct);
+        var antecedent = ((RealEstate) resource).GetRecordingAntecedent(recordingAct);
 
         x = x.Replace("{RESOURCE.DATA}", "sobre el bien inmueble con folio real electrónico " +
                       this.GetRealEstateTextWithAntecedentAndCadastralKey((RealEstate) resource, antecedent));
@@ -284,30 +284,31 @@ namespace Empiria.Land.WebApp {
     }
 
     private string GetRealEstateActText(TractItem tractItem, int index) {
-      const string overTheWhole =
-            "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
-            "bien inmueble con folio real electrónico {PROPERTY.UID}.<br/>";
-
       Assertion.Assert(tractItem.Resource is RealEstate,
                        "Type mismatch parsing real estate with id {0}", tractItem.Resource.Id);
 
       RecordingAct recordingAct = tractItem.RecordingAct;
       RealEstate property = (RealEstate) tractItem.Resource;
 
-      string x = String.Empty;
-
       if (!property.IsPartitionOf.IsEmptyInstance &&
            property.IsInTheRankOfTheFirstDomainAct(recordingAct)) {
-        x = this.GetRealEstateActTextOverNewPartition(recordingAct, property, index);
-
+        return this.GetRealEstateActTextOverNewPartition(recordingAct, property, index);
       } else {
-        x = overTheWhole.Replace("{INDEX}", index.ToString());
-
+        return this.GetRealEstateActOverTheWhole(tractItem, property, index);
       }
+    }
 
+    private string GetRealEstateActOverTheWhole(TractItem tractItem, RealEstate property, int index) {
+      const string overTheWhole =
+          "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
+          "bien inmueble con folio real electrónico {PROPERTY.UID}.<br/>";
+
+      string x = String.Empty;
+
+      x = overTheWhole.Replace("{INDEX}", index.ToString());
       x = x.Replace("{RECORDING.ACT}", this.GetRecordingActDisplayName(tractItem));
 
-      var antecedent = property.GetDomainAntecedent(recordingAct);
+      var antecedent = property.GetRecordingAntecedent(tractItem.RecordingAct);
       x = x.Replace("{PROPERTY.UID}",
                     this.GetRealEstateTextWithAntecedentAndCadastralKey(property, antecedent));
 
@@ -398,22 +399,34 @@ namespace Empiria.Land.WebApp {
 
       }
 
-      var parentAntecedent = newPartition.IsPartitionOf.GetDomainAntecedent(recordingAct);
+      var parentAntecedent =
+              newPartition.IsPartitionOf.GetRecordingAntecedent(recordingAct.Document.PresentationTime);
 
-      x = x.Replace("{PARTITION.OF}", "<u>" + newPartition.IsPartitionOf.UID + "</u>" +
-                    (!parentAntecedent.PhysicalRecording.IsEmptyInstance ?
-                    " y antecedente de inscripción en " + parentAntecedent.PhysicalRecording.AsText : String.Empty));
+      if (!parentAntecedent.PhysicalRecording.IsEmptyInstance) {
+        x = x.Replace("{PARTITION.OF}", "<u>" + newPartition.IsPartitionOf.UID + "</u> " +
+                      "y antecedente de inscripción en " + parentAntecedent.PhysicalRecording.AsText);
+      } else {
+        x = x.Replace("{PARTITION.OF}", String.Empty);
+      }
+
+      x = x.Replace("{RECORDING.ACT}", GetRecordingActDisplayName(recordingAct.TractIndex[0]));
+      x = x.Replace("{PROPERTY.UID}", this.GetRealEstateTextWithCadastralKey(newPartition));
+
       return x;
     }
 
-    private string GetRealEstateTextWithAntecedentAndCadastralKey(RealEstate property,
-                                                                  RecordingAct domainAntecedent) {
+    private string GetRealEstateTextWithCadastralKey(RealEstate property) {
       string x = "<b>" + property.UID + "</b>";
 
       if (property.CadastralKey.Length != 0) {
         x += " (Clave catastral: <b>" + property.CadastralKey + "</b>)";
       }
+      return x;
+    }
 
+    private string GetRealEstateTextWithAntecedentAndCadastralKey(RealEstate property,
+                                                                  RecordingAct domainAntecedent) {
+      string x = GetRealEstateTextWithCadastralKey(property);
       if (property.IsPartitionOf.IsEmptyInstance && domainAntecedent.Equals(RecordingAct.Empty)) {
         x += " sin antecedente registral";
       } else if (!property.IsPartitionOf.IsEmptyInstance && domainAntecedent.Equals(RecordingAct.Empty)) {
