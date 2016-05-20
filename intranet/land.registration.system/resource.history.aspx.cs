@@ -83,7 +83,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetHistoryGrid() {
-      FixedList<TractItem> history = resource.GetTractIndex();
+      FixedList<RecordingAct> resourceTract = resource.GetRecordingActsTract();
 
       const string template =
           "<tr class='{{CLASS}}'>" +
@@ -105,8 +105,8 @@ namespace Empiria.Land.WebApp {
       //"</tr>";
 
       string grid = String.Empty;
-      for (int i = history.Count - 1; 0 <= i; i--) {
-        var recordingAct = history[i].RecordingAct;
+      for (int i = resourceTract.Count - 1; 0 <= i; i--) {
+        var recordingAct = resourceTract[i];
 
         string row = template.Replace("{{CLASS}}", (i % 2 == 0) ? "detailsItem" : "detailsOddItem");
 
@@ -134,8 +134,28 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{RECORDED.BY}}", recordingAct.RegisteredBy.Nickname);
 
         grid += row;
+
+
+        if (recordingAct.ResourceRole == ResourceRole.Partitioned) {
+          row = GetCreatedAsPartitionedResourceRow(recordingAct);
+          grid += row;
+        }
       }
       return grid;
+    }
+
+    private string GetCreatedAsPartitionedResourceRow(RecordingAct recordingAct) {
+      const string template =
+        "<tr class='detailsItem'>" +
+          "<td>&nbsp;</td>" +
+          "<td colspan=5>{{RECORDING.ACT}}</td>" +
+        "</tr>";
+
+      RealEstate resource = (RealEstate) recordingAct.Resource;
+
+      return template.Replace("{{RECORDING.ACT}}",
+            "Creado como <b>" + resource.PartitionNo + "</b> del predio " +
+            recordingAct.RelatedResource.UID);
     }
 
     private void SetMessageBox(string msg) {

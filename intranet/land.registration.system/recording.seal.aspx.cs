@@ -124,10 +124,10 @@ namespace Empiria.Land.WebApp {
           case RecordingRuleApplication.RealEstate:
           case RecordingRuleApplication.RecordingAct:
           case RecordingRuleApplication.Structure:
-            html += this.GetRealEstateActText(recordingAct.TractIndex[0], index);
+            html += this.GetRealEstateActText(recordingAct, index);
             break;
           case RecordingRuleApplication.Association:
-            var resource = recordingAct.TractIndex[0].Resource;
+            var resource = recordingAct.Resource;
             Assertion.Assert(resource is Association,
                              "Type mismatch parsing association with id {0}", resource.Id);
             html += this.GetAssociationActText(recordingAct, (Association) resource, index);
@@ -232,7 +232,7 @@ namespace Empiria.Land.WebApp {
         }
       }
 
-      Resource resource = recordingAct.TractIndex[0].Resource;
+      Resource resource = recordingAct.Resource;
       if (resource is RealEstate) {
         var antecedent = ((RealEstate) resource).GetRecordingAntecedent(recordingAct);
 
@@ -283,22 +283,21 @@ namespace Empiria.Land.WebApp {
       return x.Replace("{RECORDING.ACT}", recordingAct.DisplayName);
     }
 
-    private string GetRealEstateActText(TractItem tractItem, int index) {
-      Assertion.Assert(tractItem.Resource is RealEstate,
-                       "Type mismatch parsing real estate with id {0}", tractItem.Resource.Id);
+    private string GetRealEstateActText(RecordingAct recordingAct, int index) {
+      Assertion.Assert(recordingAct.Resource is RealEstate,
+                       "Type mismatch parsing real estate with id {0}", recordingAct.Resource.Id);
 
-      RecordingAct recordingAct = tractItem.RecordingAct;
-      RealEstate property = (RealEstate) tractItem.Resource;
+      RealEstate property = (RealEstate) recordingAct.Resource;
 
       if (!property.IsPartitionOf.IsEmptyInstance &&
            property.IsInTheRankOfTheFirstDomainAct(recordingAct)) {
         return this.GetRealEstateActTextOverNewPartition(recordingAct, property, index);
       } else {
-        return this.GetRealEstateActOverTheWhole(tractItem, property, index);
+        return this.GetRealEstateActOverTheWhole(recordingAct, index);
       }
     }
 
-    private string GetRealEstateActOverTheWhole(TractItem tractItem, RealEstate property, int index) {
+    private string GetRealEstateActOverTheWhole(RecordingAct recordingAct, int index) {
       const string overTheWhole =
           "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
           "bien inmueble con folio real electrónico {PROPERTY.UID}.<br/>";
@@ -306,20 +305,21 @@ namespace Empiria.Land.WebApp {
       string x = String.Empty;
 
       x = overTheWhole.Replace("{INDEX}", index.ToString());
-      x = x.Replace("{RECORDING.ACT}", this.GetRecordingActDisplayName(tractItem));
+      x = x.Replace("{RECORDING.ACT}", this.GetRecordingActDisplayName(recordingAct));
 
-      var antecedent = property.GetRecordingAntecedent(tractItem.RecordingAct);
+      var antecedent = recordingAct.Resource.GetRecordingAntecedent(recordingAct);
       x = x.Replace("{PROPERTY.UID}",
-                    this.GetRealEstateTextWithAntecedentAndCadastralKey(property, antecedent));
+                    this.GetRealEstateTextWithAntecedentAndCadastralKey((RealEstate) recordingAct.Resource,
+                                                                        antecedent));
 
       return x;
     }
 
-    private string GetRecordingActDisplayName(TractItem tractItem) {
-      var temp = tractItem.RecordingAct.RecordingActType.DisplayName;
+    private string GetRecordingActDisplayName(RecordingAct recordingAct) {
+      var temp = recordingAct.RecordingActType.DisplayName;
 
-      if (tractItem.RecordingActPercentage != decimal.One) {
-        return temp + " del " + (tractItem.RecordingActPercentage * 100).ToString("N2") + " por ciento";
+      if (recordingAct.Percentage != decimal.One) {
+        return temp + " del " + (recordingAct.Percentage * 100).ToString("N2") + " por ciento";
       } else {
         return temp;
       }
@@ -409,7 +409,7 @@ namespace Empiria.Land.WebApp {
         x = x.Replace("{PARTITION.OF}", "<u>" + newPartition.IsPartitionOf.UID + "</u>");
       }
 
-      x = x.Replace("{RECORDING.ACT}", GetRecordingActDisplayName(recordingAct.TractIndex[0]));
+      x = x.Replace("{RECORDING.ACT}", GetRecordingActDisplayName(recordingAct));
       x = x.Replace("{PROPERTY.UID}", this.GetRealEstateTextWithCadastralKey(newPartition));
 
       return x;

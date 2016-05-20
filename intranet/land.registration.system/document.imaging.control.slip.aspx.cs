@@ -48,8 +48,7 @@ namespace Empiria.Land.WebApp {
         if (temp.Length != 0) {
           temp += "; ";
         }
-        temp += recordingAct.DisplayName + " sobre " +
-                recordingAct.TractIndex[0].Resource.UID;
+        temp += recordingAct.DisplayName + " sobre " + recordingAct.Resource.UID;
       }
       return EmpiriaString.TrimIfLongThan(temp, 800);
     }

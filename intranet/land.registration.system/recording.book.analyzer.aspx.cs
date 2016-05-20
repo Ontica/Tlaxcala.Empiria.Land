@@ -295,8 +295,9 @@ namespace Empiria.Land.WebApp {
       if (recording.RecordingActs.Count != 0) {
         cboProperty.Items.Add(new ListItem("( Seleccionar )", ""));
       }
-      foreach (RealEstate property in recording.GetResources()) {
-        var item = new ListItem(property.UID, property.Id.ToString());
+      foreach (var recordingAct in recording.Document.RecordingActs) {
+
+        var item = new ListItem(recordingAct.Resource.UID, recordingAct.Resource.Id.ToString());
         cboProperty.Items.Add(item);
       }
       cboProperty.Items.Add(new ListItem("Crear un nuevo folio", "0"));

@@ -135,12 +135,12 @@ namespace Empiria.Land.WebApp {
     private void FillPropertiesCombo() {
       this.oAntecedentParties.Visible = false;
       cboProperty.Items.Clear();
-      foreach (var tractItem in recordingAct.TractIndex) {
-        if (!tractItem.Resource.IsFirstRecordingAct(recordingAct)) {
-          this.oAntecedentParties.Visible = true;
-        }
-        cboProperty.Items.Add(new ListItem(tractItem.Resource.UID, tractItem.Resource.Id.ToString()));
+
+      if (!recordingAct.Resource.IsFirstRecordingAct(recordingAct)) {
+        this.oAntecedentParties.Visible = true;
       }
+      cboProperty.Items.Add(new ListItem(recordingAct.Resource.UID,
+                                         recordingAct.Resource.Id.ToString()));
     }
 
     #endregion Private methods
