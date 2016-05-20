@@ -142,7 +142,7 @@ namespace Empiria.Land.WebApp {
     }
 
     private void LoadControls() {
-      LRSHtmlSelectControls.LoadPropertyTypesCombo(this.cboPropertyType, ComboControlUseMode.ObjectCreation, property.PropertyKind);
+      //LRSHtmlSelectControls.LoadPropertyTypesCombo(this.cboPropertyType, ComboControlUseMode.ObjectCreation, property.PropertyKind);
 
       RecorderOffice selectedRecorderOffice = recordingAct.PhysicalRecording.RecordingBook.RecorderOffice;
 
@@ -225,7 +225,7 @@ namespace Empiria.Land.WebApp {
       txtCadastralNumber.Value = property.CadastralData.CadastralCode;
       txtTractNumber.Value = property.UID;
       txtStatus.Value = property.StatusName;
-      cboPropertyType.Value = property.PropertyKind.Value;
+      cboPropertyType.Value = property.PropertyKind;
       txtPropertyCommonName.Value = property.Name;
       txtAntecendent.Value = property.AntecedentNotes;
       txtObservations.Value = property.Notes;

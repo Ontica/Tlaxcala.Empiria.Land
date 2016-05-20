@@ -11,6 +11,7 @@
 using System;
 using Empiria.Land.Registration;
 using Empiria.Presentation.Web;
+using Empiria.Documents;
 
 namespace Empiria.Land.WebApp {
 
@@ -18,7 +19,7 @@ namespace Empiria.Land.WebApp {
 
     #region Fields
 
-    protected RecordBookDirectory directory = null;
+    protected ImagingFolder directory = null;
 
     protected string pageTitle = "Title";
     protected int currentImagePosition = 0;
@@ -90,11 +91,13 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetCurrentImagePath() {
-      return directory.GetImageURL(currentImagePosition);
+      throw new NotImplementedException();
+
+      //return directory.GetImageURL(currentImagePosition);
     }
 
     private void Initialize() {
-      directory = RecordBookDirectory.Empty;
+      //directory = RecordBookDirectory.Empty;
       if (!String.IsNullOrEmpty(Request.QueryString["id"])) {
         throw new NotImplementedException();
 
@@ -103,8 +106,8 @@ namespace Empiria.Land.WebApp {
         //pageTitle = book.FullName;
 
       } else if (!String.IsNullOrEmpty(Request.QueryString["directoryId"])) {
-        directory = RecordBookDirectory.Parse(int.Parse(Request.QueryString["directoryId"]));
-        pageTitle = "Directorio " + directory.DisplayName;
+        //directory = RecordBookDirectory.Parse(int.Parse(Request.QueryString["directoryId"]));
+        pageTitle = "Directorio " + directory.Name;
       }
 
       if (!String.IsNullOrEmpty(Request.QueryString["image"])) {

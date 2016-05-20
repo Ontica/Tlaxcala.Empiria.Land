@@ -406,7 +406,7 @@ namespace Empiria.Land.WebApp {
         x = x.Replace("{PARTITION.OF}", "<u>" + newPartition.IsPartitionOf.UID + "</u> " +
                       "y antecedente de inscripción en " + parentAntecedent.PhysicalRecording.AsText);
       } else {
-        x = x.Replace("{PARTITION.OF}", String.Empty);
+        x = x.Replace("{PARTITION.OF}", "<u>" + newPartition.IsPartitionOf.UID + "</u>");
       }
 
       x = x.Replace("{RECORDING.ACT}", GetRecordingActDisplayName(recordingAct.TractIndex[0]));

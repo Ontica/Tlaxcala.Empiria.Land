@@ -19,9 +19,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
     <ProjectGuid>{ba6efa0e-7fa1-49e6-9fde-a97519dce51b}</ProjectGuid>
     <SourceWebPhysicalPath>$(MSBuildThisFileDirectory)</SourceWebPhysicalPath>
     <SourceWebVirtualPath>/intranet</SourceWebVirtualPath>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <SourceWebProject>http://localhost:4834</SourceWebProject>
-    <SourceWebMetabasePath>/IISExpress/7.5/LM/W3SVC/14/ROOT</SourceWebMetabasePath>
+    <SourceWebMetabasePath>/IISExpress/7.5/LM/W3SVC/4/ROOT</SourceWebMetabasePath>
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -53,10 +53,6 @@ Copyright (C) Microsoft Corporation. All rights reserved.
     <ProjectReference Include="..\..\..\..\empiria\core\Kernel\Empiria.Kernel.csproj">
       <Project>{F518E007-2B16-4804-BA45-695EA098E1C0}</Project>
       <Name>Empiria.Kernel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\empiria\core\Messaging\Empiria.Messaging.csproj">
-      <Project>{C653959D-E6F2-40C6-BF0D-A05BED14DF17}</Project>
-      <Name>Empiria.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\empiria\extensions\Documents\Empiria.Documents.csproj">
       <Project>{2BD53D27-BD61-49FE-AFE1-D68E21F58E9A}</Project>

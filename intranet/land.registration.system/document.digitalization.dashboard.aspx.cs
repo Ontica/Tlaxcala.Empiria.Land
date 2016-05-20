@@ -278,15 +278,15 @@ namespace Empiria.Land.WebApp {
       DateTime toDate = EmpiriaString.ToDate(GetCommandParameter("toDate"));
       int controlRecordingsCount = int.Parse(GetCommandParameter("controlRecordingsCount"));
 
-      RecordBookDirectory directory = RecordBookDirectory.Parse(directoryId);
+      var directory = ImagingFolder.Parse(directoryId);
       Contact imagesCapturedBy = Contact.Parse(capturedById);
       Contact imagesReviewedBy = Contact.Parse(reviewedById);
       RecordingSection sectionType = RecordingSection.Parse(recordingSectionTypeId);
 
-      directory.CreateRecordingBook(sectionType, imagesCapturedBy, imagesReviewedBy,
-                                    controlRecordingsCount, new TimeFrame(fromDate, toDate));
+      //directory.CreateRecordingBook(sectionType, imagesCapturedBy, imagesReviewedBy,
+      //                              controlRecordingsCount, new TimeFrame(fromDate, toDate));
 
-      base.SetOKScriptMsg("El libro registral digitalizado en el directorio " + directory.DisplayName + "\\nfue creado correctamente.");
+      base.SetOKScriptMsg("El libro registral fue creado correctamente.");
     }
 
     private void DeleteDirectory() {

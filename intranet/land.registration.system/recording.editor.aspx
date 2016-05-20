@@ -187,14 +187,17 @@
         return deleteBookRecording(arguments[1]);
       case 'saveDocument':
         return saveDocument();
+
       case 'editRecordingAct':
-        //alert("Esta operación está en pruebas, por lo que todavía no está disponible.");
+        //alert("Esta funcionalidad está en fase de pruebas y por el momento no es posible ejecutarla. Gracias.");
         //return;
         return editRecordingAct(arguments[1]);
-      case 'editProperty':
-        //alert('Operación deshabilitada temporalmente... Gracias por su comprensión.');
+
+      case 'editResource':
+        //alert("Esta funcionalidad está en fase de pruebas y por el momento no es posible ejecutarla. Gracias.");
         //return;
-        return editProperty(arguments[1], arguments[2]);
+        return editResource(arguments[1], arguments[2]);
+
       case 'viewRecordingSeal':
         viewRecordingSeal(arguments[1]);
         return;
@@ -299,9 +302,9 @@
     disableControls(getElement("divDocumentData"), disabledFlag);
   }
 
-  function editProperty(recordingActId, propertyId) {
-    var url = "../land.registration.system/property.editor.aspx?" +
-              "recordingActId=" + recordingActId + "&propertyId=" + propertyId;
+  function editResource(resourceId, recordingActId) {
+    var url = "../land.registration.system/by.resource.analyzer.aspx?" +
+              "resourceId=" + resourceId + "&recordingActId=" + recordingActId;
 
     createNewWindow(url);
   }
