@@ -4,6 +4,7 @@
   font-kerning: none;
   text-align: justify;
   font-size: 10pt;
+  max-width:780px;
 }
 
 h2 {

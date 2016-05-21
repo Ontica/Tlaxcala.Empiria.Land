@@ -21,8 +21,9 @@ namespace Empiria.Land.WebApp {
 
     #region Fields
 
-    protected LRSTransaction transaction = null;
     protected RecordingDocument document = null;
+    protected LRSTransaction transaction = null;
+
     private FixedList<RecordingAct> recordingActs = null;
 
     #endregion Fields
@@ -30,8 +31,17 @@ namespace Empiria.Land.WebApp {
     #region Constructors and parsers
 
     protected void Page_Load(object sender, EventArgs e) {
-      transaction = LRSTransaction.Parse(int.Parse(Request.QueryString["transactionId"]));
-      document = transaction.Document;
+      int documentId = int.Parse(Request.QueryString["id"]);
+      int transactionId = int.Parse(Request.QueryString["transactionId"]);
+
+      if (documentId != -1) {
+        document = RecordingDocument.Parse(documentId);
+        transaction = document.GetTransaction();
+      } else {
+        transaction = LRSTransaction.Parse(transactionId);
+        document = transaction.Document;
+      }
+
       recordingActs = document.RecordingActs;
       Assertion.Assert(recordingActs.Count > 0, "Document does not has recording acts.");
     }
@@ -42,6 +52,9 @@ namespace Empiria.Land.WebApp {
 
 
     protected string GetDigitalSeal() {
+      if (document.IsHistoricDocument && document.Status != RecordableObjectStatus.Closed) {
+        return AsWarning("El documento está incompleto, y por ello no tiene sello registral.");
+      }
       string s = "||" + transaction.UID + "|" + document.UID;
       for (int i = 0; i < recordingActs.Count; i++) {
         s += "|" + recordingActs[i].Id.ToString();
@@ -61,12 +74,17 @@ namespace Empiria.Land.WebApp {
     protected string GetDocumentDescriptionText() {
       if (document.Notes.Length > 30) {
         return "DESCRIPCIÓN:<br />" + document.Notes + "<br /><br />";
+      } else if (document.IsHistoricDocument) {
+        return "* PARTIDA HISTÓRICA SIN DESCRIPCIÓN *";
       } else {
         return "* SIN DESCRIPCIÓN *";
       }
     }
 
     protected string GetPaymentText() {
+      if (document.IsHistoricDocument) {
+        return String.Empty;
+      }
       const string t = "Derechos por <b>{AMOUNT}</b> según recibo <b>{RECEIPT}</b> expedido por " +
                        "la Secretaría de Finanzas del Estado, que se archiva.";
 
@@ -77,13 +95,21 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetPrelationText() {
+      if (document.IsHistoricDocument) {
+        return PrelationTextForHistoricDocuments();
+      } else {
+        return PrelationTextForDocumentsWithTransaction();
+      }
+    }
+
+    private string PrelationTextForDocumentsWithTransaction() {
       const string template =
-          "Documento presentado para su examen y registro {REENTRY_TEXT} el <b>{DATE} a las {TIME} horas</b>, " +
-          "bajo el número de trámite <b>{NUMBER}</b>, y para el cual se {COUNT}";
+           "Documento presentado para su examen y registro {REENTRY_TEXT} el <b>{DATE} a las {TIME} horas</b>, " +
+           "bajo el número de trámite <b>{NUMBER}</b>, y para el cual se {COUNT}";
 
       DateTime presentationTime = transaction.IsReentry ? transaction.LastReentryTime : transaction.PresentationTime;
 
-      string x = template.Replace("{DATE}", presentationTime.ToString(@"dd \de MMMM \de yyyy"));
+      string x = template.Replace("{DATE}", GetDateAsText(presentationTime));
 
       x = x.Replace("{TIME}", presentationTime.ToString("HH:mm:ss"));
       x = x.Replace("{NUMBER}", transaction.UID);
@@ -102,6 +128,10 @@ namespace Empiria.Land.WebApp {
 
       }
       return x;
+    }
+
+    private string PrelationTextForHistoricDocuments() {
+      return "<h3>" + this.recordingActs[0].PhysicalRecording.AsText + "</h3>";
     }
 
     protected string GetRecordingActsText() {
@@ -138,8 +168,22 @@ namespace Empiria.Land.WebApp {
             html += this.GetNoPropertyActText(recordingAct, index);
             break;
 
-          default:
-            throw new NotImplementedException("Undefined rule for recording acts text.");
+          case RecordingRuleApplication.Undefined:
+            if (recordingAct.Resource is RealEstate) {
+              html += this.GetRealEstateActText(recordingAct, index);
+              break;
+            } else if (recordingAct.Resource is Association) {
+              html += this.GetAssociationActText(recordingAct, (Association) recordingAct.Resource, index);
+              break;
+            } else if (recordingAct.Resource is NoPropertyResource) {
+              html += this.GetNoPropertyActText(recordingAct, index);
+              break;
+            } else {
+              throw Assertion.AssertNoReachThisCode();
+            }
+         default:
+            throw new NotImplementedException("Undefined rule for recording acts text " +
+                                              recordingAct.RecordingActType.RecordingRule.AppliesTo);
         }
       }
       return html;
@@ -175,9 +219,17 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetRecordingPlaceAndDate() {
+      if (document.IsHistoricDocument) {
+        return PlaceAndDateTextForHistoricDocuments();
+      } else {
+        return PlaceAndDateTextForDocumentsWithTransaction();
+      }
+    }
+
+    private string PlaceAndDateTextForDocumentsWithTransaction() {
       const string t = "Registrado en {CITY}, a las {TIME} horas del {DATE}. Doy Fe.";
 
-      string x = t.Replace("{DATE}", document.AuthorizationTime.ToString(@"dd \de MMMM \de yyyy"));
+      string x = t.Replace("{DATE}", GetDateAsText(document.AuthorizationTime));
       x = x.Replace("{TIME}", document.AuthorizationTime.ToString(@"HH:mm"));
       if (ExecutionServer.LicenseName == "Tlaxcala") {
         x = x.Replace("{CITY}", "Tlaxcala de Xicohténcatl, Tlaxcala");
@@ -187,7 +239,33 @@ namespace Empiria.Land.WebApp {
       return x;
     }
 
+    private string PlaceAndDateTextForHistoricDocuments() {
+      const string template =
+            "De acuerdo a lo que consta en libros físicos y en documentos históricos:<br/>" +
+            "Fecha de presentación: <b>{PRESENTATION.DATE}</b>. " +
+            "Fecha de registro: <b>{AUTHORIZATION.DATE}</b>.<br/><br/>" +
+            "Fecha de la captura histórica: <b>{RECORDING.DATE}<b>.<br/>";
+
+      string x = template.Replace("{PRESENTATION.DATE}", GetDateAsText(document.PresentationTime));
+      x = x.Replace("{AUTHORIZATION.DATE}", GetDateAsText(document.AuthorizationTime));
+      x = x.Replace("{RECORDING.DATE}", GetDateAsText(document.PostingTime));
+
+      return x;
+    }
+
+    private string GetDateAsText(DateTime date) {
+      if (date == ExecutionServer.DateMinValue || date == ExecutionServer.DateMaxValue) {
+        return "No consta";
+      } else {
+        return date.ToString(@"dd \de MMMM \de yyyy");
+      }
+    }
+
+
     protected string GetRecordingSignerName() {
+      if (document.IsHistoricDocument) {
+        return String.Empty;
+      }
       if (ExecutionServer.LicenseName == "Tlaxcala") {
         return "Mtro. Sergio Cuauhtémoc Lima López";
       } else {
@@ -196,6 +274,9 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetRecordingSignerPosition() {
+      if (document.IsHistoricDocument) {
+        return String.Empty;
+      }
       if (ExecutionServer.LicenseName == "Tlaxcala") {
         return "Director de Notarías y Registros Públicos";
       } else {
@@ -234,10 +315,8 @@ namespace Empiria.Land.WebApp {
 
       Resource resource = recordingAct.Resource;
       if (resource is RealEstate) {
-        var antecedent = ((RealEstate) resource).GetRecordingAntecedent(recordingAct);
-
         x = x.Replace("{RESOURCE.DATA}", "sobre el bien inmueble con folio real electrónico " +
-                      this.GetRealEstateTextWithAntecedentAndCadastralKey((RealEstate) resource, antecedent));
+                      this.GetRealEstateTextWithAntecedentAndCadastralKey(recordingAct));
       } else if (resource is Association) {
         x = x.Replace("{RESOURCE.DATA}", "sobre la sociedad o asociación denominada '" +
                       ((Association) resource).Name) + "' con folio único <b>" + resource.UID + "</b>";
@@ -309,8 +388,7 @@ namespace Empiria.Land.WebApp {
 
       var antecedent = recordingAct.Resource.GetRecordingAntecedent(recordingAct);
       x = x.Replace("{PROPERTY.UID}",
-                    this.GetRealEstateTextWithAntecedentAndCadastralKey((RealEstate) recordingAct.Resource,
-                                                                        antecedent));
+                    this.GetRealEstateTextWithAntecedentAndCadastralKey(recordingAct));
 
       return x;
     }
@@ -424,8 +502,10 @@ namespace Empiria.Land.WebApp {
       return x;
     }
 
-    private string GetRealEstateTextWithAntecedentAndCadastralKey(RealEstate property,
-                                                                  RecordingAct domainAntecedent) {
+    private string GetRealEstateTextWithAntecedentAndCadastralKey(RecordingAct recordingAct) {
+      var domainAntecedent = recordingAct.Resource.GetRecordingAntecedent(recordingAct);
+      var property = (RealEstate) recordingAct.Resource;
+
       string x = GetRealEstateTextWithCadastralKey(property);
       if (property.IsPartitionOf.IsEmptyInstance && domainAntecedent.Equals(RecordingAct.Empty)) {
         x += " sin antecedente registral";
@@ -433,13 +513,15 @@ namespace Empiria.Land.WebApp {
 
       } else if (!domainAntecedent.PhysicalRecording.IsEmptyInstance) {
         x += ", con antecedente de inscripción en " + domainAntecedent.PhysicalRecording.AsText;
+      } else if (domainAntecedent.Document.Equals(recordingAct.Document)) {
+        x += ", registrado más arriba";
       } else if (!(domainAntecedent is DomainAct)) {   // TODO: this is very strange, is a special case
         x += String.Format(" el {0} bajo el número de documento electrónico {1}",
-                   domainAntecedent.Document.AuthorizationTime.ToString(@"dd \de MMMM \de yyyy"),
-                   domainAntecedent.Document.UID);
+                           this.GetDateAsText(domainAntecedent.Document.AuthorizationTime),
+                           domainAntecedent.Document.UID);
       } else {
         x += String.Format(", con antecedente inscrito el {0} bajo el número de documento electrónico {1}",
-                           domainAntecedent.Document.AuthorizationTime.ToString(@"dd \de MMMM \de yyyy"),
+                           this.GetDateAsText(domainAntecedent.Document.AuthorizationTime),
                            domainAntecedent.Document.UID);
       }
       return x;
@@ -488,6 +570,11 @@ namespace Empiria.Land.WebApp {
 
       return x;
     }
+
+    private string AsWarning(string text) {
+      return "<span style='color:red;'><strong>*****" + text + "*****</strong></span>";
+    }
+
     #endregion Private methods
 
   } // class RecordingSeal
