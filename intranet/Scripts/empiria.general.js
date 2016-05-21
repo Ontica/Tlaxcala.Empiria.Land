@@ -539,7 +539,26 @@ function onMouseOutTabStripCommandHandler(tabStrip) {
   tabStrip.className = "tabOff";
 }
 
-function createNewWindow(commandPage) {
+function openInWindow(oWindow, url) {
+  var options = "status=yes,scrollbars=yes,fullscreen=no,location=no,menubar=no,resizable=yes,height=780px,width=900px";
+
+  if (oWindow == null || oWindow.closed) {
+    oWindow = window.open(url, "_blank", options);
+  } else {
+    oWindow.focus();
+    oWindow.navigate(url);
+  }
+  return oWindow;
+}
+
+function closeWindow(oWindow) {
+  if (oWindow == null || oWindow.closed) {
+    return;
+  }
+  oWindow.close();
+}
+
+function createNewWindow(url) {
   var oViewer = null;
   var openExclusive = false;
   //var options = getWindowFeatures(viewName);
@@ -553,10 +572,10 @@ function createNewWindow(commandPage) {
 //	  oViewer = getExclusiveWindow(pageName);
 //  }
   if (oViewer == null || oViewer.closed) {
-    oViewer = window.open(commandPage, "_blank", options);
+    oViewer = window.open(url, "_blank", options);
   } else {
     oViewer.focus();
-    oViewer.navigate(commandPage);
+    oViewer.navigate(url);
   }
 }
 

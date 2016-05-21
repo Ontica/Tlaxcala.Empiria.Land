@@ -169,6 +169,9 @@
 </body>
 <script type="text/javascript">
 
+  var gResourceEditorWindow = null;
+  var gRecordingSealsAndSlipsWindow = null;
+
   function doOperation(command) {
     var success = false;
 
@@ -187,11 +190,6 @@
         return deleteBookRecording(arguments[1]);
       case 'saveDocument':
         return saveDocument();
-
-      case 'editRecordingAct':
-        //alert("Esta funcionalidad está en fase de pruebas y por el momento no es posible ejecutarla. Gracias.");
-        //return;
-        return editRecordingAct(arguments[1]);
 
       case 'editResource':
         //alert("Esta funcionalidad está en fase de pruebas y por el momento no es posible ejecutarla. Gracias.");
@@ -254,6 +252,7 @@
     iFrame.style.zIndex = 900;
     iFrame.style.border = "4px solid #5a5a5a"
     iFrame.focus();
+
     return false;
   }
 
@@ -264,7 +263,7 @@
   function showImagingControlSlip() {
     var url = "./document.imaging.control.slip.aspx?id=<%=transaction.Document.Id%>";
 
-    createNewWindow(url);
+    gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url);
   }
 
   function showRecordingActEditor() {
@@ -303,10 +302,17 @@
   }
 
   function editResource(resourceId, recordingActId) {
+    if (resourceId == null || resourceId.length == 0) {
+      alert("Requiero se seleccione el predio a consultar.");
+      return;
+    }
+    if (recordingActId == null || recordingActId.length == 0) {
+      recordingActId = -1;
+    }
     var url = "../land.registration.system/by.resource.analyzer.aspx?" +
               "resourceId=" + resourceId + "&recordingActId=" + recordingActId;
 
-    createNewWindow(url);
+    gResourceEditorWindow = openInWindow(gResourceEditorWindow, url);
   }
 
   function saveDocument() {
@@ -343,13 +349,14 @@
     return;
     <% } %>
     var url = "../land.registration.system/recording.seal.aspx?transactionId=<%=transaction.Id%>&id=-1";
-    createNewWindow(url);
+
+    gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url);
   }
 
   function viewRecordingSeal(recordingId) {
     var url = "../land.registration.system/recording.seal.aspx?transactionId=<%=transaction.Id%>&id=" + recordingId;
 
-    createNewWindow(url);
+    gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url);
   }
 
   function updateUserInterface(oControl) {
@@ -384,7 +391,13 @@
     <% } %>
   }
 
+  function window_onunload() {
+    closeWindow(gResourceEditorWindow);
+    closeWindow(gRecordingSealsAndSlipsWindow);
+  }
+
   addEvent(window, 'load', window_onload);
+  addEvent(window, 'unload', window_onunload);
 
 </script>
 </html>

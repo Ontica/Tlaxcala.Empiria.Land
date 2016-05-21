@@ -372,6 +372,11 @@
   <script type="text/javascript">
   /* <![CDATA[ */
 
+  var gCertificatesServerURL = "<%=base.GetCertificatesSystemUrl()%>";
+
+  var gTransactionSlipsWindow = null;
+  var gCertificatesWindow = null;
+
   function doPageCommand(commandName, commandArguments) {
     switch (commandName) {
       default:
@@ -465,40 +470,35 @@
     }
   }
 
-  var gCertificatesServerURL = "<%=base.GetCertificatesSystemUrl()%>";
-
   function createNewCertificate() {
-    var url= "transactionUID=<%=transaction.UID%>&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
+    var url = gCertificatesServerURL + "certificados.html?" +
+             "transactionUID=<%=transaction.UID%>&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
 
-    window.open(gCertificatesServerURL + "certificados.html?" + url);
+    gCertificatesWindow = openInWindow(gCertificatesWindow, url);
   }
 
   function viewCertificate(certificateUID) {
-    var url= "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
+    var url = gCertificatesServerURL + "editar.html?" +
+             "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
              "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
 
-    window.open(gCertificatesServerURL + "editar.html?" + url);
+    gCertificatesWindow = openInWindow(gCertificatesWindow, url);
   }
 
   function editCertificate(certificateUID) {
-    var url= "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
-             "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
+    var url = gCertificatesServerURL + "editar.html?" +
+              "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
+              "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
 
-    window.open(gCertificatesServerURL + "editar.html?" + url);
+    gCertificatesWindow = openInWindow(gCertificatesWindow, url);
   }
 
   function deleteCertificate(certificateUID) {
-    var url= "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
-             "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
-
     alert("Eliminar certificados todavía no está disponible.");
     return;
   }
 
   function openCertificate(certificateUID) {
-    var url= "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
-             "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
-
     alert("Reabrir certificados todavía no está disponible.");
     return;
   }
@@ -566,19 +566,20 @@
   }
 
   function createNew() {
+    window_onunload();
     window.location.replace("transaction.editor.aspx?id=0&typeId=<%=base.transaction.TransactionType.Id%>");
   }
 
   function printOrderPayment() {
     var url = "payment.receipt.aspx?id=<%=base.transaction.Id%>";
 
-    createNewWindow(url);
+    gTransactionSlipsWindow = openInWindow(gTransactionSlipsWindow, url);
   }
 
   function printTransactionReceipt() {
     var url = "transaction.receipt.aspx?id=<%=base.transaction.Id%>";
 
-    createNewWindow(url);
+    gTransactionSlipsWindow = openInWindow(gTransactionSlipsWindow, url);
   }
 
   function saveTransaction() {
@@ -833,7 +834,13 @@
     window_onscroll();
   }
 
+  function window_onunload() {
+    closeWindow(gTransactionSlipsWindow);
+    closeWindow(gCertificatesWindow);
+  }
+
   addEvent(window, 'load', window_onload);
+  addEvent(window, 'unload', window_onunload);
   addEvent(window, 'resize', window_onresize);
   addEvent(getElement("ifraRecordingEditor"), 'resize', ifraRecordingEditor_onresize);
   addEvent(getElement("txtRequestedBy"), 'keypress', upperCaseKeyFilter);
