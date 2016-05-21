@@ -10,10 +10,27 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
-  <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
-  <script type="text/javascript" src="../scripts/empiria.general.js"></script>
-  <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
-  <script type="text/javascript" src="../scripts/empiria.validation.js"></script>
+<script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
+<script type="text/javascript" src="../scripts/empiria.general.js"></script>
+<script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
+<script type="text/javascript" src="../scripts/empiria.validation.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script type="text/javascript">
+    function loadContent() {
+      var url = "../recording.seal.aspx?transactionId=371443&id=-1";
+
+     // url = "./xml.bill.aspx";
+
+     // url = "./xml.bill.aspx";
+     // url = "../themes/default/images/test.pdf";
+
+     // url = "../themes/default/images/woman.nophoto.jpg";
+
+     // $("#divImageContainer").load(url);
+
+    }
+
+</script>
 </head>
 <body>
 <form name="aspnetForm" method="post" id="aspnetForm" runat="server">
@@ -36,8 +53,22 @@
           <tr>
             <td id="divImageViewer" valign='top' style="position:relative;<%=base.DisplayImages() == false ? "display:none;" : String.Empty%>">
               <div id="divImageContainer" style="overflow:auto;width:520px;height:540px;top:0;">
-                <img id="imgCurrent" name="imgCurrent" src="<%=GetCurrentImagePath()%>" alt="" width="<%=GetCurrentImageWidth()%>" height="<%=GetCurrentImageHeight()%>" style="top:0;" />
-              </div>
+                <%--<div id="divDocument" style="max-width:780px;align-items:center"></div>--%>
+
+<!--            <img id="imgCurrent" name="imgCurrent" src="<%=GetCurrentImagePath()%>" alt="" width="<%=GetCurrentImageWidth()%>" height="<%=GetCurrentImageHeight()%>" style="top:0;" /> !-->
+
+           <!-- <object id="imgCurrent" width="<%=GetCurrentImageWidth()%>" height="<%=GetCurrentImageHeight()%>" data="../themes/default/images/test.pdf"></object> !-->
+             <!--   <iframe marginheight="0" marginwidth="0" id="imgCurrent" width="<%=GetCurrentImageWidth()%>" height="<%=GetCurrentImageHeight()%>" src="../recording.seal.aspx?transactionId=371443&id=-1"></iframe> !-->
+
+<%--                  <object type="application/pdf" data="../themes/default/images/test.pdf" style="width:100%; height:100%">
+                    <p>backup content</p>
+                  </object>--%>
+
+                  <object id="documentViewer" type="text/html" data="./recording.seal.aspx?transactionId=-1&id=<%=recordingAct.Document.Id%>" style="width:100%; height:100%">
+                    <p>backup content</p>
+                  </object>
+
+                </div>
               <table>
                 <tr>
                   <td nowrap='nowrap'>Ver:</td>
@@ -81,7 +112,7 @@
                   <td id="tabStripItem_0" class="tabOn" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Información del acto jurídico</td>
                   <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Información del predio</td>
                   <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Historia del predio</td>
-                  <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Estructura del predio</td>
+                  <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Acervo registral</td>
                   <td class="lastCell"><a id="top" /></td>
                 </tr>
               </table>
@@ -124,7 +155,7 @@
                 <td class="lastCell">
                   <iframe id="ifraPropertyStructure" style="z-index:99;left:0;top:0;" width="670px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true"
-                          src="./resource.structure.aspx?resourceId=<%=resource.Id%>&id=<%=recordingAct.Id%>">
+                          src="./global.search.aspx?resourceId=<%=resource.Id%>&id=<%=recordingAct.Id%>">
                   </iframe>
                 </td>
               </tr>
@@ -163,6 +194,24 @@
       return;
     }
     switch (command) {
+      case 'onSelectDocument':
+        var newURL = "./recording.seal.aspx?transactionId=-1&id=" + arguments[1];
+
+        getElement("documentViewer").setAttribute('data', newURL);
+        var clone = getElement("documentViewer").cloneNode(true);
+        var parent = getElement("documentViewer").parentNode;
+        parent.removeChild(getElement("documentViewer"));
+        parent.appendChild(clone);
+
+        //var newObject = '<object id="documentViewer" type="text/html" data="' + newURL + ' style="width:100%; height:100%"></object>';
+
+
+        //getElement("documentViewer").style.display = "none";
+        //getElement("documentViewer").style.display = "block";
+        //alert(newURL);
+        //alert("hello");
+        return;
+
       case 'gotoImage':
         gotoImage();
         return;
@@ -273,8 +322,8 @@
 
   function setPageTitle() {
     var s = String();
-    setInnerText(getElement("spanPageTitle"), 'Predio: <%=resource.UID%>');
-    setInnerText(getElement("spanCurrentImage"), "Documento: <%=recordingAct.Document.UID%>");
+    setInnerText(getElement("spanPageTitle"), "Documento: <%=recordingAct.Document.UID%>");
+    setInnerText(getElement("spanCurrentImage"), "Predio: <%=resource.UID%>");
   }
 
   function getCurrentImage() {
@@ -387,10 +436,10 @@
   }
 
   function resizeAllFrames() {
-    resizeFrame(getElement("ifraPropertyEditor"));
-    resizeFrame(getElement("ifraRecordingActEditor"));
-    resizeFrame(getElement("ifraPropertyHistory"));
-    resizeFrame(getElement("ifraPropertyStructure"));
+    resizeFrame(null, getElement("ifraPropertyEditor"));
+    resizeFrame(null, getElement("ifraRecordingActEditor"));
+    resizeFrame(null, getElement("ifraPropertyHistory"));
+    resizeFrame(null, getElement("ifraPropertyStructure"));
   }
 
   function window_onscroll() {
@@ -408,11 +457,11 @@
     }
   }
 
-  function resizeFrame() {
+  function resizeFrame(e) {
     var oFrame = null;
 
-    if (arguments.length == 1) {
-      oFrame = arguments[0];
+    if (arguments.length == 2) {
+      oFrame = arguments[1];
     } else {
       oFrame = window.event.srcElement;
     }
@@ -438,6 +487,9 @@
   addEvent(getElement("ifraRecordingActEditor"), 'resize', resizeFrame);
   addEvent(getElement("ifraPropertyHistory"), 'resize', resizeFrame);
   addEvent(getElement("ifraPropertyStructure"), 'resize', resizeFrame);
+
+
+  loadContent();
 
   /* ]]> */
   </script>

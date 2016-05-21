@@ -12,7 +12,6 @@ using System;
 using System.Web.UI;
 
 using Empiria.Land.Registration;
-using Empiria.Land.Registration.Transactions;
 using Empiria.Land.UI;
 using Empiria.Presentation.Web;
 
@@ -83,15 +82,17 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetHistoryGrid() {
-      FixedList<RecordingAct> resourceTract = resource.GetRecordingActsTract();
+      FixedList<RecordingAct> resourceTract = resource.GetFullRecordingActsTract();
 
       const string template =
           "<tr class='{{CLASS}}'>" +
-            "<td>{{RECORDING.DATE}}</td>" +
-            "<td>{{RECORDING.ACT}}</td>" +
-            "<td style='white-space:{{WHITE-SPACE}};'>{{DOCUMENT.OR.RECORDING}}</td>" +
-            "<td>{{TRANSACTION}}</td>" +
             "<td>{{PRESENTATION.DATE}}</td>" +
+            "<td style='white-space:normal'>{{RECORDING.ACT}}</td>" +
+            "<td style='white-space:normal;'>{{PARTITION}}</td>" +
+            "<td style='white-space:{{WHITE-SPACE}};'>" +
+              "<a href='javascript:doOperation(\"onSelectDocument\", {{DOCUMENT.ID}}, {{RECORDING.ACT.ID}});'>" +
+                  "{{DOCUMENT.OR.RECORDING}}</a>" +
+              "<br>{{TRANSACTION}}</td>" +
             "<td>{{RECORDED.BY}}</td>" +
           "</tr>";
 
@@ -111,51 +112,55 @@ namespace Empiria.Land.WebApp {
         string row = template.Replace("{{CLASS}}", (i % 2 == 0) ? "detailsItem" : "detailsOddItem");
 
         row = row.Replace("{{RECORDING.ACT}}", recordingAct.DisplayName);
-
+        row = row.Replace("{{PARTITION}}", this.GetPartitionOrAntecedentCell(recordingAct));
         if (!recordingAct.PhysicalRecording.IsEmptyInstance) {
           row = row.Replace("{{DOCUMENT.OR.RECORDING}}", recordingAct.PhysicalRecording.AsText);
-          row = row.Replace("{{TRANSACTION}}", "No aplica");
+          row = row.Replace("{{TRANSACTION}}", "&nbsp;");
           row = row.Replace("{{WHITE-SPACE}}", "normal");
         } else {
           row = row.Replace("{{DOCUMENT.OR.RECORDING}}", recordingAct.Document.UID);
-          row = row.Replace("{{TRANSACTION}}", recordingAct.Document.GetTransaction().UID);
+          row = row.Replace("{{TRANSACTION}}", "Trámite:" + recordingAct.Document.GetTransaction().UID);
           row = row.Replace("{{WHITE-SPACE}}", "nowrap");
         }
 
-        if (recordingAct.Document.PresentationTime != ExecutionServer.DateMinValue) {
-          row = row.Replace("{{RECORDING.DATE}}",
-                            recordingAct.Document.AuthorizationTime.ToString("dd/MMM/yyyy"));
-          row = row.Replace("{{PRESENTATION.DATE}}",
-                  recordingAct.Document.PresentationTime.ToString("dd/MMM/yyyy"));
-        } else {
-          row = row.Replace("{{RECORDING.DATE}}", "No determinada");
-          row = row.Replace("{{PRESENTATION.DATE}}", "No determinada");
-        }
+        row = row.Replace("{{PRESENTATION.DATE}}", GetDateAsText(recordingAct.Document.PresentationTime));
         row = row.Replace("{{RECORDED.BY}}", recordingAct.RegisteredBy.Nickname);
 
+        row = row.Replace("{{DOCUMENT.ID}}", recordingAct.Document.Id.ToString());
+        row = row.Replace("{{RECORDING.ACT.ID}}", recordingAct.Id.ToString());
+
         grid += row;
-
-
-        if (recordingAct.ResourceRole == ResourceRole.Partitioned) {
-          row = GetCreatedAsPartitionedResourceRow(recordingAct);
-          grid += row;
-        }
       }
       return grid;
     }
 
-    private string GetCreatedAsPartitionedResourceRow(RecordingAct recordingAct) {
-      const string template =
-        "<tr class='detailsItem'>" +
-          "<td>&nbsp;</td>" +
-          "<td colspan=5>{{RECORDING.ACT}}</td>" +
-        "</tr>";
+    private string GetPartitionOrAntecedentCell(RecordingAct recordingAct) {
+      if (Resource.IsCreationalRole(recordingAct.ResourceRole)) {
 
-      RealEstate resource = (RealEstate) recordingAct.Resource;
+        var realEstate = (RealEstate) recordingAct.Resource;
 
-      return template.Replace("{{RECORDING.ACT}}",
-            "Creado como <b>" + resource.PartitionNo + "</b> del predio " +
-            recordingAct.RelatedResource.UID);
+        if (recordingAct.ResourceRole == ResourceRole.Created) {
+          return "Sin antecedente registral";
+        } else if (realEstate.Equals(this.resource)) {
+          return "Creado como <b>" + realEstate.PartitionNo +
+                 "</b> del predio " + NoWrap(recordingAct.RelatedResource.UID);
+        } else {
+          return "Sobre <b>" + realEstate.PartitionNo + "</b> con folio real " + NoWrap(realEstate.UID);
+        }
+      }
+      return "&nbsp;";
+    }
+
+    private string GetDateAsText(DateTime date) {
+      if (date == ExecutionServer.DateMinValue || date == ExecutionServer.DateMaxValue) {
+        return "No consta";
+      } else {
+        return date.ToString(@"dd/MMM/yyyy");
+      }
+    }
+
+    private string NoWrap(string text) {
+      return "<span style='white-space:nowrap;'>" + text + "</span>";
     }
 
     private void SetMessageBox(string msg) {

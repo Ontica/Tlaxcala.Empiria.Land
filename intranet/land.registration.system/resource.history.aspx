@@ -33,11 +33,10 @@
             <div style="overflow:auto;max-height:880px;">
               <table class="details" style="width:95%">
                 <tr class="detailsHeader">
-                  <td>F. Registro</td>
+                  <td>Presentado el</td>
                   <td style='width:160px'>Acto jurídico</td>
+                  <td style='white-space:nowrap'>Antecedente / Fracción</td>
                   <td style='width:200px'>Registrado en</td>
-                  <td style='width:160px'>Trámite</td>
-                  <td style='width:160px'>F. Present</td>
                   <td style='width:160px'>Registró</td>
                 </tr>
                 <%=GetHistoryGrid()%>
@@ -45,18 +44,20 @@
             </div>
           </td>
         </tr>
+        <% if (resource.AllowHistoricChanges()) { %>
         <tr>
           <td class="totalsRow lastCell" style="display:inline">
-            <div style="width:50%;float:left">
+            <div style="width:60%;float:left">
                 <a href="javascript:doOperation('showRecordingActEditor')">
                 <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />Agregar un acto jurídico a la historia</a>
             </div>
-            <div style="width:50%;text-align:right;">
+            <div style="text-align:right;">
               <a href="javascript:doOperation('showSearchRecordingsView')">
               <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar la información registral</a>&nbsp; &nbsp; &nbsp;
             </div>
           </td>
         </tr>
+        <% } %>
       </table>
     </td>
   </tr>
@@ -83,6 +84,9 @@
       return;
     }
     switch (command) {
+      case 'onSelectDocument':
+        onSelectDocument(arguments[1], arguments[2]);
+        return;
        case 'closeWindow':
         window.parent.execScript("doOperation('refreshRecording')");
         return;
@@ -94,6 +98,10 @@
       sendPageCommand(command);
       gbSended = true;
     }
+  }
+
+  function onSelectDocument(documentId, recordingActId) {
+    window.parent.execScript("doOperation('onSelectDocument', " + documentId + ", " + recordingActId + ")");
   }
 
   function updateUserInterface(oControl) {

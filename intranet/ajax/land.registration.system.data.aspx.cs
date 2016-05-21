@@ -305,35 +305,33 @@ namespace Empiria.Web.UI.Ajax {
     }
 
     private string GetRecordingPropertiesStringArrayCommandHandler() {
-      throw new NotImplementedException();
+      int recordingId = int.Parse(GetCommandParameter("recordingId", false, "0"));
+      int recordingActTypeId = GetCommandParameter<int>("recordingActTypeId", 0);
 
-      //int recordingId = int.Parse(GetCommandParameter("recordingId", false, "0"));
-      //int recordingActTypeId = GetCommandParameter<int>("recordingActTypeId", 0);
+      if (recordingId == 0) {
+        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar partida )");
+      }
+      var recording = Recording.Parse(recordingId);
+      string html = String.Empty;
 
-      //if (recordingId == 0) {
-      //  return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar partida )");
-      //}
-      //var recording = Recording.Parse(recordingId);
-      //string html = String.Empty;
+      var recordingResources = recording.GetResources();
 
-      //var recordingResources = recording.GetResources();
+      if (recordingResources.Count == 0) {
+        html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "Sin predios asociados");
+      } else if (recordingResources.Count >= 2) {
+        html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar el predio )");
+      }
 
-      //if (recordingResources.Count == 0) {
-      //  html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "Sin predios asociados");
-      //} else if (recordingResources.Count >= 2) {
-      //  html = HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar el predio )");
-      //}
-
-      //foreach (Resource resource in recordingResources) {
-      //  if (html.Contains(resource.UID)) {
-      //    continue;
-      //  }
-      //  if (html.Length != 0) {
-      //    html += "|";
-      //  }
-      //  html += HtmlSelectContent.GetComboAjaxHtmlItem(resource.Id.ToString(), resource.UID);
-      //}
-      //return html;
+      foreach (Resource resource in recordingResources) {
+        if (html.Contains(resource.UID)) {
+          continue;
+        }
+        if (html.Length != 0) {
+          html += "|";
+        }
+        html += HtmlSelectContent.GetComboAjaxHtmlItem(resource.Id.ToString(), resource.UID);
+      }
+      return html;
     }
 
     private string GetRecordingNumbersStringArrayCommandHandler() {

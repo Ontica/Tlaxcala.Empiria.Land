@@ -75,7 +75,9 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetCurrentImagePath() {
-      return "../3214/234/234/2345/empty.aspx";
+      return "../themes/default/images/woman.nophoto.jpg";
+
+      //return "";
 
       //return recordingBook.ImagingFilesFolder.GetImageURL(currentImagePosition);
     }
@@ -117,7 +119,13 @@ namespace Empiria.Land.WebApp {
 
     private void Initialize() {
       resource = Resource.Parse(int.Parse(Request.QueryString["resourceId"]));
-      recordingAct = RecordingAct.Parse(int.Parse(Request.QueryString["recordingActId"]));
+
+      int recordingActId = int.Parse(Request.QueryString["recordingActId"]);
+      if (recordingActId != -1) {
+        recordingAct = RecordingAct.Parse(recordingActId);
+      } else {
+        recordingAct = resource.LastRecordingAct;
+      }
     }
 
     protected string GetCurrentImageHeight() {

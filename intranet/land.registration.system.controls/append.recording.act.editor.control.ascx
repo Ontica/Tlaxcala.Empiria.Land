@@ -64,9 +64,10 @@
                     </select>
                       <span id="divPropertySelectorSection" style="display:none">
                         Antecedente: &nbsp; &nbsp;
-                          <select id="cboPrecedentProperty" class="selectBox" style="width:300px" title="" onchange="return updateUI(this);">
+                          <select id="cboPrecedentProperty" class="selectBox" style="width:200px" title="" onchange="return updateUI(this);">
                             <option value="">¿Inscripción?</option>
                           </select>
+                          <a href="javascript:doOperation('editResource', getElement('cboPrecedentProperty').value)">Consultar historia</a>
                         </span>
                         <span id="divRecordingQuickAddSection" style="display:none">
                           Partida donde está registrado el antecedente:
