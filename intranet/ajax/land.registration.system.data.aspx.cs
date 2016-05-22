@@ -981,7 +981,6 @@ namespace Empiria.Web.UI.Ajax {
 
     private RecordingTask ParseRecordingTaskParameters() {
       var task = new RecordingTask(
-         transactionId: GetCommandParameter<int>("transactionId", -1),
          documentId: GetCommandParameter<int>("documentId", -1),
          recordingActTypeId: GetCommandParameter<int>("recordingActTypeId"),
          recordingTaskType: (RecordingTaskType) Enum.Parse(typeof(RecordingTaskType),

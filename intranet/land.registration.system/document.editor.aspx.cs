@@ -2,10 +2,10 @@
 *																																																						 *
 *  Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *  Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
-*  Type      : RecordingEditor                                  Pattern  : Explorer Web Page                 *
+*  Type      : DocumentEditor                                   Pattern  : Explorer Web Page                 *
 *  Version   : 2.1                                              License  : Please read license.txt file      *
 *                                                                                                            *
-*  Summary   : Gets user credentials and redirects users to the workplace start page.                        *
+*  Summary   : Allows the edition of documents and their recording acts.                                     *
 *                                                                                                            *
 ********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
@@ -18,13 +18,14 @@ using Empiria.Presentation.Web;
 
 namespace Empiria.Land.WebApp {
 
-  public partial class RecordingEditor : WebPage {
+  public partial class DocumentEditor : WebPage {
 
     #region Fields
 
     protected LRSDocumentEditorControl oRecordingDocumentEditor = null;
     protected AppendRecordingActEditorControlBase oRecordingActEditor = null;
-    protected LRSTransaction transaction = null;
+
+    protected RecordingDocument document = null;
     protected string OnLoadScript = String.Empty;
 
     #endregion Fields
@@ -47,8 +48,8 @@ namespace Empiria.Land.WebApp {
 
     protected void Page_Load(object sender, EventArgs e) {
       Initialize();
-      oRecordingDocumentEditor.LoadRecordingDocument(transaction.Document);
-      oRecordingActEditor.Initialize(transaction.Document);
+      oRecordingDocumentEditor.LoadRecordingDocument(document);
+      oRecordingActEditor.Initialize(document);
       if (!IsPostBack) {
         LoadEditor();
       } else {
@@ -58,14 +59,14 @@ namespace Empiria.Land.WebApp {
 
     protected FixedList<RecordingAct> RecordingActs {
       get {
-        return transaction.Document.RecordingActs;
+        return document.RecordingActs;
       }
     }
 
     private void LoadEditor() {
-      cboRecordingType.Value = transaction.Document.DocumentType.Id.ToString();
-      txtObservations.Value = transaction.Document.Notes;
-      cboSheetsCount.Value = transaction.Document.SheetsCount.ToString();
+      cboRecordingType.Value = document.DocumentType.Id.ToString();
+      txtObservations.Value = document.Notes;
+      cboSheetsCount.Value = document.SheetsCount.ToString();
     }
 
     protected string GetLegacyDataViewerUrl() {
@@ -90,21 +91,12 @@ namespace Empiria.Land.WebApp {
           DeleteRecordingAct();
           SetRefreshPageScript();
           return;
-        case "generateImagingControlID":
-          GenerateImagingControlID();
-          return;
         case "redirectMe":
-          Response.Redirect("recording.editor.aspx?transactionId=" + transaction.Id.ToString(), true);
+          Response.Redirect("document.editor.aspx?documentId=" + document.Id.ToString(), true);
           return;
         default:
           throw new NotImplementedException(base.CommandName);
       }
-    }
-
-    private void GenerateImagingControlID() {
-      transaction.Document.GenerateImagingControlID();
-
-      SetMessageBox("Se generó el número de control para este documento.");
     }
 
     private void DeleteRecordingAct() {
@@ -124,99 +116,80 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool IsReadyForEdition() {
-      if (transaction.IsEmptyInstance) {
-        return false;
-      }
       if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register")) {
         return false;
       }
-      if (!(transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording ||
+      if (document.IsEmptyInstance) {
+        return true;
+      }
+      if (document.Status != RecordableObjectStatus.Incomplete) {
+        return false;
+      }
+      var transaction = document.GetTransaction();
+
+      if (transaction.IsEmptyInstance) {
+        return true;
+      } else if (!(transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording ||
             transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration)) {
         return false;
       }
-      if (transaction.Document.IsEmptyInstance) {
-        return true;
-      }
-      if (transaction.Document.Status != RecordableObjectStatus.Incomplete) {
-        return false;
-      }
+
       return true;
     }
 
     protected bool IsReadyToAppendRecordingActs() {
-      if (this.transaction.IsEmptyInstance) {
-        return false;
-      }
-      if (this.transaction.Document.IsEmptyInstance) {
+      if (document.IsEmptyInstance) {
         return false;
       }
       if (!(ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
             ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Certificates"))) {
         return false;
       }
-      if (!(this.transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording ||
-            this.transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration)) {
+      if (document.Status != RecordableObjectStatus.Incomplete) {
         return false;
       }
-      if (this.transaction.Document.Status != RecordableObjectStatus.Incomplete) {
+      var transaction = document.GetTransaction();
+
+      if (transaction.IsEmptyInstance) {
+        return true;
+      } else if (!(transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording ||
+                   transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration)) {
         return false;
       }
       return true;
-    }
-
-    protected bool IsReadyForPrintFinalSeal() {
-      if (transaction.IsEmptyInstance || transaction.Document.IsEmptyInstance) {
-        return false;
-      }
-      if (this.transaction.Document.RecordingActs.Count == 0) {
-        return false;
-      }
-      if (ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
-          !ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSigner")) {
-        return true;
-      }
-      return false;
-    }
-
-    protected bool IsReadyForGenerateImagingControlID() {
-      return LRSWorkflowRules.IsReadyForGenerateImagingControlID(transaction);
     }
 
     private void SaveDocument() {
       RecordingDocumentType documentType = RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value));
       RecordingDocument document = oRecordingDocumentEditor.FillRecordingDocument(documentType);
 
-      Assertion.Assert(transaction != null && !transaction.IsEmptyInstance,
-                       "Transaction can't be null or an empty instance.");
       Assertion.Assert(document != null && !document.IsEmptyInstance,
                        "Recording document can't be null or an empty instance.");
 
       document.Notes = txtObservations.Value;
       document.SheetsCount = int.Parse(cboSheetsCount.Value);
 
-      if (document.IsNew) {
-        transaction.AttachDocument(document);
-      } else {
-        document.Save();
-      }
+      document.Save();
 
       oRecordingDocumentEditor.LoadRecordingDocument(document);
-      Assertion.Assert(!transaction.Document.IsEmptyInstance && !transaction.Document.IsNew,
+      Assertion.Assert(!document.IsEmptyInstance && !document.IsNew,
                        "Recording document after transaction attachment can't be null or an empty instance.");
-      SetMessageBox("El documento " + transaction.Document.UID + " se guardó correctamente.");
+      SetMessageBox("El documento " + document.UID + " se guardó correctamente.");
     }
 
     private void Initialize() {
-      int transactionId = int.Parse(Request.QueryString["transactionId"]);
-      if (transactionId != 0) {
-        transaction = LRSTransaction.Parse(transactionId);
+      int documentId = int.Parse(Request.QueryString["documentId"]);
+      int selectedRecordingActId = int.Parse(Request.QueryString["selectedRecordingActId"] ?? "-1");
+
+      if (documentId != 0) {
+        this.document = RecordingDocument.Parse(documentId);
       } else {
-        transaction = LRSTransaction.Empty;
+        this.document = RecordingDocument.Empty;
       }
     }
 
     protected string GetRecordingActsGrid() {
-      return RecordingActsGrid.Parse(this.transaction.Document);
+      return RecordingActsGrid.Parse(this.document);
     }
 
     private void SetMessageBox(string msg) {
@@ -229,6 +202,6 @@ namespace Empiria.Land.WebApp {
 
     #endregion Private methods
 
-  } // class RecordingEditor
+  } // class DocumentEditor
 
 } // namespace Empiria.Land.WebApp

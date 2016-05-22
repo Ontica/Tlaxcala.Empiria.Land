@@ -343,11 +343,11 @@
   }
 
   function assertAppendRecordingActIsPossible() {
-    <% if (base.Transaction.IsEmptyInstance) { %>
+    <% if (!base.IsHistoricEdition && base.Transaction.IsEmptyInstance) { %>
     alert("Este control no está ligado a un trámite válido.");
     return false;
     <% } %>
-    <% if (base.Transaction.Document.IsEmptyInstance) { %>
+    <% if (base.Document.IsEmptyInstance) { %>
     alert("Primero requiero se ingresen los datos de la escritura o documento que se va a inscribir.");
     return false;
     <% } %>
@@ -710,9 +710,13 @@
   function showConfirmFormCreateRecordingAct() {
     var sMsg = "Agregar el acto jurídico al documento:\n\n";
 
-    sMsg += 'Documento:\t<%=base.Transaction.Document.UID%>\n';
-    sMsg += 'Trámite:\t\t<%=base.Transaction.UID%>\n';
-    sMsg += 'Interesado(s):\t<%=Empiria.EmpiriaString.FormatForScripting(base.Transaction.RequestedBy)%>\n\n';
+    sMsg += 'Documento:\t<%=base.Document.UID%>\n';
+    <% if (!this.IsHistoricEdition) { %>
+      sMsg += 'Trámite:\t\t<%=base.Transaction.UID%>\n';
+      sMsg += 'Interesado(s):\t<%=Empiria.EmpiriaString.FormatForScripting(base.Transaction.RequestedBy)%>\n\n';
+    <% } else { %>
+      sMsg += 'Partida:\t\t<%=base.HistoricRecording.AsText%>\n';
+    <% } %>
 
     sMsg += "Acto jurídico que se registrará:\n\n";
     sMsg += "Acto jurídico:\t" + getComboOptionText(getElement('cboRecordingActType')) + "\n";
@@ -814,7 +818,8 @@
       getElement('cboRecordingActType').focus();
       return false;
     }
-    <%  if (base.Transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Elaboration) { %>
+    <%  if (!base.IsHistoricEdition &&
+            base.Transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Elaboration) { %>
     if (getElement('cboRecordingActType').value != "2201") {
         alert("En elaboración de certificados sólo es posible agregar el acto 'Asignación de folio real'.");
         getElement('cboRecordingActType').focus();

@@ -10,35 +10,9 @@ namespace Empiria.Land.WebApp {
   public partial class AppendRecordingActEditorControl : AppendRecordingActEditorControlBase {
 
     public override RecordingAct[] CreateRecordingActs() {
-      Assertion.Assert(base.Transaction != null && !base.Transaction.IsEmptyInstance,
-                       "Transaction cannot be null or an empty instance.");
-      Assertion.Assert(base.Transaction.Document != null && !base.Transaction.Document.IsEmptyInstance,
-                       "Document cannot be an empty instance.");
-
       RecordingTask task = this.ParseRecordingTask();
 
       return RecorderExpert.Execute(task);
-    }
-
-    public new bool IsReadyForEdition() {
-      if (this.Transaction.IsEmptyInstance) {
-        return false;
-      }
-      if (this.Transaction.Document.IsEmptyInstance) {
-        return false;
-      }
-      if (!(ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
-            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Certificates"))) {
-        return false;
-      }
-      if (!(this.Transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording ||
-            this.Transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration)) {
-        return false;
-      }
-      if (this.Transaction.Document.Status != RecordableObjectStatus.Incomplete) {
-        return false;
-      }
-      return true;
     }
 
     private RecordingTask ParseRecordingTask() {
@@ -71,7 +45,6 @@ namespace Empiria.Land.WebApp {
       }
 
       return new RecordingTask(
-         transactionId: command.GetParameter<int>("transactionId", -1),
          documentId: command.GetParameter<int>("documentId", -1),
          recordingActTypeId: command.GetParameter<int>("recordingActTypeId"),
          recordingTaskType: (RecordingTaskType) Enum.Parse(typeof(RecordingTaskType),
