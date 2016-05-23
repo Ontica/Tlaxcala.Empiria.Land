@@ -44,27 +44,7 @@
             </div>
           </td>
         </tr>
-        <% if (resource.AllowHistoricChanges()) { %>
-        <tr>
-          <td class="totalsRow lastCell" style="display:inline">
-            <div style="width:60%;float:left">
-                <a href="javascript:doOperation('showRecordingActEditor')">
-                <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />Agregar un acto jurídico a la historia</a>
-            </div>
-            <div style="text-align:right;">
-              <a href="javascript:doOperation('showSearchRecordingsView')">
-              <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar la información registral</a>&nbsp; &nbsp; &nbsp;
-            </div>
-          </td>
-        </tr>
-        <% } %>
       </table>
-    </td>
-  </tr>
-  <tr>
-    <td id="divRecordingActEditor" style="left:16px;display:none">
-    <span id="spanRecordingActEditor" runat="server"></span>
-
     </td>
   </tr>
 </table>
@@ -87,6 +67,9 @@
       case 'onSelectDocument':
         onSelectDocument(arguments[1], arguments[2]);
         return;
+      case 'onSelectRecordingAct':
+        onSelectRecordingAct(arguments[1], arguments[2]);
+        return;
        case 'closeWindow':
         window.parent.execScript("doOperation('refreshRecording')");
         return;
@@ -104,13 +87,8 @@
     window.parent.execScript("doOperation('onSelectDocument', " + documentId + ", " + recordingActId + ")");
   }
 
-  function updateUserInterface(oControl) {
-    if (oControl == null) {
-      return;
-    }
-    if (oControl == getElement("cboRecordingType")) {
-      return;
-    }
+  function onSelectRecordingAct(documentId, recordingActId) {
+    window.parent.execScript("doOperation('onSelectRecordingAct', " + documentId + ", " + recordingActId + ")");
   }
 
   function window_onload() {

@@ -263,7 +263,7 @@
   function showImagingControlSlip() {
     var url = "./document.imaging.control.slip.aspx?id=<%=transaction.Document.Id%>";
 
-    gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url);
+    gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url, false);
   }
 
   function showRecordingActEditor() {
@@ -312,7 +312,7 @@
     var url = "../land.registration.system/by.resource.analyzer.aspx?" +
               "resourceId=" + resourceId + "&recordingActId=" + recordingActId;
 
-    gResourceEditorWindow = openInWindow(gResourceEditorWindow, url);
+    gResourceEditorWindow = openInWindow(gResourceEditorWindow, url, true);
   }
 
   function saveDocument() {
@@ -350,13 +350,13 @@
     <% } %>
     var url = "../land.registration.system/recording.seal.aspx?transactionId=<%=transaction.Id%>&id=-1";
 
-    gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url);
+    gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url, false);
   }
 
   function viewRecordingSeal(recordingId) {
     var url = "../land.registration.system/recording.seal.aspx?transactionId=<%=transaction.Id%>&id=" + recordingId;
 
-    gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url);
+    gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url, false);
   }
 
   function updateUserInterface(oControl) {

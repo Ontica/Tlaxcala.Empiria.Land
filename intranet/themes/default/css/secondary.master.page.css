@@ -59,11 +59,11 @@ td.tabHover {
   cursor: pointer;
 }
 td.tabDisabled {
-  background-color: #e6e6e6;
-  border-right: white 1pt solid;
+  background-color: #a0a0a0;
+  border-right: #606060 1pt solid;
   text-align:center;
   white-space: nowrap;
-  color: #c8c8c8;
+  color: #d8d8d8;
 }
 img {
   cursor: pointer;

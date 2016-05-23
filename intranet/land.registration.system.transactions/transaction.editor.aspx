@@ -374,9 +374,6 @@
 
   var gCertificatesServerURL = "<%=base.GetCertificatesSystemUrl()%>";
 
-  var gTransactionSlipsWindow = null;
-  var gCertificatesWindow = null;
-
   function doPageCommand(commandName, commandArguments) {
     switch (commandName) {
       default:
@@ -474,7 +471,7 @@
     var url = gCertificatesServerURL + "certificados.html?" +
              "transactionUID=<%=transaction.UID%>&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
 
-    gCertificatesWindow = openInWindow(gCertificatesWindow, url);
+    createNewWindow(url);
   }
 
   function viewCertificate(certificateUID) {
@@ -482,7 +479,7 @@
              "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
              "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
 
-    gCertificatesWindow = openInWindow(gCertificatesWindow, url);
+    createNewWindow(url);
   }
 
   function editCertificate(certificateUID) {
@@ -490,7 +487,7 @@
               "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
               "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
 
-    gCertificatesWindow = openInWindow(gCertificatesWindow, url);
+    createNewWindow(url);
   }
 
   function deleteCertificate(certificateUID) {
@@ -566,20 +563,20 @@
   }
 
   function createNew() {
-    window_onunload();
+    //window_onunload();
     window.location.replace("transaction.editor.aspx?id=0&typeId=<%=base.transaction.TransactionType.Id%>");
   }
 
   function printOrderPayment() {
     var url = "payment.receipt.aspx?id=<%=base.transaction.Id%>";
 
-    gTransactionSlipsWindow = openInWindow(gTransactionSlipsWindow, url);
+    createNewWindow(url);
   }
 
   function printTransactionReceipt() {
     var url = "transaction.receipt.aspx?id=<%=base.transaction.Id%>";
 
-    gTransactionSlipsWindow = openInWindow(gTransactionSlipsWindow, url);
+    createNewWindow(url);
   }
 
   function saveTransaction() {
@@ -834,13 +831,7 @@
     window_onscroll();
   }
 
-  function window_onunload() {
-    closeWindow(gTransactionSlipsWindow);
-    closeWindow(gCertificatesWindow);
-  }
-
   addEvent(window, 'load', window_onload);
-  addEvent(window, 'unload', window_onunload);
   addEvent(window, 'resize', window_onresize);
   addEvent(getElement("ifraRecordingEditor"), 'resize', ifraRecordingEditor_onresize);
   addEvent(getElement("txtRequestedBy"), 'keypress', upperCaseKeyFilter);

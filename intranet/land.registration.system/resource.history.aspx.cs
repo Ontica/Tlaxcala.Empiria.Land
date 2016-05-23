@@ -63,13 +63,6 @@ namespace Empiria.Land.WebApp {
 
     private void ExecuteCommand() {
       switch (base.CommandName) {
-        case "appendRecordingAct":
-          oRecordingActEditor.CreateRecordingActs();
-          SetRefreshPageScript();
-          return;
-        case "redirectMe":
-          Response.Redirect("recording.history.aspx?resourceId=" + resource.Id.ToString(), true);
-          return;
         default:
           throw new NotImplementedException(base.CommandName);
       }
@@ -96,15 +89,6 @@ namespace Empiria.Land.WebApp {
             "<td>{{RECORDED.BY}}</td>" +
           "</tr>";
 
-      //"<td style='white-space:normal'>" +
-      //  "<a href='javascript:doOperation(\"editRecordingAct\", {{ID}});'>" +
-      //    "{{RECORDING.ACT.URL}}</a></td>" +
-      //"<td style='white-space:normal'>" +
-      //  "<a href='javascript:doOperation(\"editRecordingAct\", {{ID}});'>" +
-      //    "{{RECORDING.DOCUMENT}}</a></td>" +
-      //"<td style='white-space:nowrap'>{{TRANSACTION.UID}}</a></td>" +
-      //"</tr>";
-
       string grid = String.Empty;
       for (int i = resourceTract.Count - 1; 0 <= i; i--) {
         var recordingAct = resourceTract[i];
@@ -115,7 +99,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{PARTITION}}", this.GetPartitionOrAntecedentCell(recordingAct));
         if (!recordingAct.PhysicalRecording.IsEmptyInstance) {
           row = row.Replace("{{DOCUMENT.OR.RECORDING}}", recordingAct.PhysicalRecording.AsText);
-          row = row.Replace("{{TRANSACTION}}", "&nbsp;");
+          row = row.Replace("{{TRANSACTION}}", this.OnSelectDocumentButton(recordingAct));
           row = row.Replace("{{WHITE-SPACE}}", "normal");
         } else {
           row = row.Replace("{{DOCUMENT.OR.RECORDING}}", recordingAct.Document.UID);
@@ -132,6 +116,20 @@ namespace Empiria.Land.WebApp {
         grid += row;
       }
       return grid;
+    }
+
+    private string OnSelectDocumentButton(RecordingAct recordingAct) {
+
+      return String.Empty;
+
+      //const string template =
+      //    "<a href='javascript:doOperation(\"onSelectRecordingAct\", {{DOCUMENT.ID}}, {{RECORDING.ACT.ID}});'>" +
+      //        "Editar este acto</a>";
+
+      //string x = template.Replace("{{DOCUMENT.ID}}", recordingAct.Document.Id.ToString());
+      //x = x.Replace("{{RECORDING.ACT.ID}}}", recordingAct.Id.ToString());
+
+      //return x;
     }
 
     private string GetPartitionOrAntecedentCell(RecordingAct recordingAct) {
@@ -161,14 +159,6 @@ namespace Empiria.Land.WebApp {
 
     private string NoWrap(string text) {
       return "<span style='white-space:nowrap;'>" + text + "</span>";
-    }
-
-    private void SetMessageBox(string msg) {
-      OnLoadScript += "alert('" + msg + "');";
-    }
-
-    private void SetRefreshPageScript() {
-      OnLoadScript += "sendPageCommand('redirectMe');";
     }
 
     #endregion Private methods

@@ -539,14 +539,24 @@ function onMouseOutTabStripCommandHandler(tabStrip) {
   tabStrip.className = "tabOff";
 }
 
-function openInWindow(oWindow, url) {
-  var options = "status=yes,scrollbars=yes,fullscreen=no,location=no,menubar=no,resizable=yes,height=780px,width=900px";
+function openInWindow(oWindow, url, fullWindow) {
+
+  var options = "";
+
+  if (fullWindow != null && fullWindow === true) {
+    options = "status=yes,scrollbars=yes,fullscreen=yes,location=no,menubar=no,resizable=yes";
+  } else {
+    options = "status=yes,scrollbars=yes,fullscreen=no,location=no,menubar=no,resizable=yes," +
+              "height=780px,width=900px";
+  }
+
 
   if (oWindow == null || oWindow.closed) {
     oWindow = window.open(url, "_blank", options);
   } else {
     oWindow.focus();
-    oWindow.navigate(url);
+    oWindow.document.location = url;
+    //oWindow.navigate(url);
   }
   return oWindow;
 }

@@ -53,7 +53,7 @@ namespace Empiria.Land.WebApp {
 
     protected string GetDigitalSeal() {
       if (document.IsHistoricDocument && document.Status != RecordableObjectStatus.Closed) {
-        return AsWarning("El documento está incompleto, y por ello no tiene sello registral.");
+        return AsWarning("El documento está incompleto por lo que no tiene sello digital.");
       }
       string s = "||" + transaction.UID + "|" + document.UID;
       for (int i = 0; i < recordingActs.Count; i++) {
@@ -514,7 +514,7 @@ namespace Empiria.Land.WebApp {
       } else if (!domainAntecedent.PhysicalRecording.IsEmptyInstance) {
         x += ", con antecedente de inscripción en " + domainAntecedent.PhysicalRecording.AsText;
       } else if (domainAntecedent.Document.Equals(recordingAct.Document)) {
-        x += ", registrado más arriba";
+        x += ", registrado en este documento.";
       } else if (!(domainAntecedent is DomainAct)) {   // TODO: this is very strange, is a special case
         x += String.Format(" el {0} bajo el número de documento electrónico {1}",
                            this.GetDateAsText(domainAntecedent.Document.AuthorizationTime),
