@@ -53,11 +53,16 @@ function notSpaceKeyFilter(oEvent) {
 
 function alphaNumericKeyFilter(oEvent) {
   var keyCode = getKeyCode(oEvent);
-  if (arguments.length == 2 && arguments[1] == true) {
+  if (arguments.length >= 2 && arguments[1] == true) {
     convertToUpperCaseKeyCode(oEvent, keyCode);
   }
   if (isLetterKeyCode(keyCode) || isNumericKeyCode(keyCode) || isSpecialKeyCode(keyCode)) {
     return true;
+  } else if ((keyCode == 13)) {   // enter key
+    if (arguments.length == 3 && arguments[2] != null) {
+      arguments[2]();  // callback method
+    }
+    return false;      // prevents default form submit
   } else {
     return false;
   }

@@ -96,7 +96,7 @@
                   <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Acto jurídico</td>
                   <td id="tabStripItem_2" class="tabDisabled" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Predio</td>
                   <td id="tabStripItem_3" class="tabOn" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Historia del predio</td>
-                  <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Acervo registral</td>
+                  <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Consultar el acervo</td>
                   <td class="lastCell">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a id="top" /></td>
                 </tr>
               </table>
@@ -144,7 +144,7 @@
             <table id="tabStripItemView_4" class="editionTable" style="display:none;">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraSearchData" style="z-index:99;left:0;top:0;" width="720px"
+                  <iframe id="ifraSearchInfo" style="z-index:99;left:0;top:0;" width="720px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true">
                   </iframe>
                 </td>
@@ -237,20 +237,15 @@
     parent.appendChild(clone);
   }
 
-
-
   function loadContent() {
-
     doOperation('onSelectDocument', '<%=recordingAct.Document.Id%>');
     getElement('ifraPropertyHistory').src = 'resource.history.aspx?resourceId=<%=resource.Id%>&id=<%=recordingAct.Id%>';
-
- //   getElement('ifraDocumentEditor').src = 'document.editor.aspx?documentId=<%=recordingAct.Document.Id%>&selectedRecordingActId=<%=recordingAct.Id%>';
+    getElement('ifraSearchInfo').src = 'document.search.aspx?resourceId=<%=resource.Id%>&id=<%=recordingAct.Id%>';
     getElement('ifraRecordingActEditor').src = 'recording.act.editor.aspx?propertyId=<%=resource.Id%>&id=<%=recordingAct.Id%>';
- //   getElement('ifraPropertyEditor').src = 'property.editor.aspx?propertyId=<%=resource.Id%>&recordingActId=<%=recordingAct.Id%>';
-
-    getElement('ifraSearchData').src = 'global.search.aspx?resourceId=<%=resource.Id%>&id=<%=recordingAct.Id%>';
-
+    // getElement('ifraDocumentEditor').src = 'document.editor.aspx?documentId=<%=recordingAct.Document.Id%>&selectedRecordingActId=<%=recordingAct.Id%>';
+    // getElement('ifraPropertyEditor').src = 'property.editor.aspx?propertyId=<%=resource.Id%>&recordingActId=<%=recordingAct.Id%>';
   }
+
 
 
   function showRecordingImages(recordingId) {
@@ -459,7 +454,7 @@
     resizeFrame(null, getElement("ifraPropertyEditor"));
     resizeFrame(null, getElement("ifraRecordingActEditor"));
     resizeFrame(null, getElement("ifraPropertyHistory"));
-    resizeFrame(null, getElement("ifraSearchData"));
+    resizeFrame(null, getElement("ifraSearchInfo"));
 
   }
 
@@ -508,7 +503,7 @@
   addEvent(getElement("ifraPropertyEditor"), 'resize', resizeFrame);
   addEvent(getElement("ifraRecordingActEditor"), 'resize', resizeFrame);
   addEvent(getElement("ifraPropertyHistory"), 'resize', resizeFrame);
-  addEvent(getElement("ifraSearchData"), 'resize', resizeFrame);
+  addEvent(getElement("ifraSearchInfo"), 'resize', resizeFrame);
 
   /* ]]> */
   </script>

@@ -9,11 +9,11 @@
 *                                                                                                            *
 ********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
-using System.Web.UI;
+
+using Empiria.Presentation.Web;
 
 using Empiria.Land.Registration;
 using Empiria.Land.UI;
-using Empiria.Presentation.Web;
 
 namespace Empiria.Land.WebApp {
 
@@ -23,7 +23,6 @@ namespace Empiria.Land.WebApp {
 
     protected Resource resource = null;
 
-    protected AppendRecordingActEditorControlBase oRecordingActEditor = null;
     protected string OnLoadScript = String.Empty;
 
     #endregion Fields
@@ -35,9 +34,7 @@ namespace Empiria.Land.WebApp {
     }
 
     private void LoadControls() {
-      oRecordingActEditor = (AppendRecordingActEditorControlBase)
-                             Page.LoadControl(AppendRecordingActEditorControlBase.ControlVirtualPath);
-      //spanRecordingActEditor.Controls.Add(oRecordingActEditor);
+
     }
 
     protected void Page_Load(object sender, EventArgs e) {
@@ -53,10 +50,6 @@ namespace Empiria.Land.WebApp {
 
     }
 
-    protected string GetLegacyDataViewerUrl() {
-      return ConfigurationData.GetString("LegacyDataViewer.Url");
-    }
-
     #endregion Protected methods
 
     #region Private methods
@@ -70,95 +63,10 @@ namespace Empiria.Land.WebApp {
 
     private void Initialize() {
       resource = Resource.Parse(int.Parse(Request.QueryString["resourceId"]));
-
-      //oRecordingActEditor.Initialize(transaction, transaction.Document);
     }
 
     protected string GetHistoryGrid() {
-      FixedList<RecordingAct> resourceTract = resource.GetFullRecordingActsTract();
-
-      const string template =
-          "<tr class='{{CLASS}}'>" +
-            "<td>{{PRESENTATION.DATE}}</td>" +
-            "<td style='white-space:normal'>{{RECORDING.ACT}}</td>" +
-            "<td style='white-space:normal;'>{{PARTITION}}</td>" +
-            "<td style='white-space:{{WHITE-SPACE}};'>" +
-              "<a href='javascript:doOperation(\"onSelectDocument\", {{DOCUMENT.ID}}, {{RECORDING.ACT.ID}});'>" +
-                  "{{DOCUMENT.OR.RECORDING}}</a>" +
-              "<br>{{TRANSACTION}}</td>" +
-            "<td>{{RECORDED.BY}}</td>" +
-          "</tr>";
-
-      string grid = String.Empty;
-      for (int i = resourceTract.Count - 1; 0 <= i; i--) {
-        var recordingAct = resourceTract[i];
-
-        string row = template.Replace("{{CLASS}}", (i % 2 == 0) ? "detailsItem" : "detailsOddItem");
-
-        row = row.Replace("{{RECORDING.ACT}}", recordingAct.DisplayName);
-        row = row.Replace("{{PARTITION}}", this.GetPartitionOrAntecedentCell(recordingAct));
-        if (!recordingAct.PhysicalRecording.IsEmptyInstance) {
-          row = row.Replace("{{DOCUMENT.OR.RECORDING}}", recordingAct.PhysicalRecording.AsText);
-          row = row.Replace("{{TRANSACTION}}", this.OnSelectDocumentButton(recordingAct));
-          row = row.Replace("{{WHITE-SPACE}}", "normal");
-        } else {
-          row = row.Replace("{{DOCUMENT.OR.RECORDING}}", recordingAct.Document.UID);
-          row = row.Replace("{{TRANSACTION}}", "Trámite:" + recordingAct.Document.GetTransaction().UID);
-          row = row.Replace("{{WHITE-SPACE}}", "nowrap");
-        }
-
-        row = row.Replace("{{PRESENTATION.DATE}}", GetDateAsText(recordingAct.Document.PresentationTime));
-        row = row.Replace("{{RECORDED.BY}}", recordingAct.RegisteredBy.Nickname);
-
-        row = row.Replace("{{DOCUMENT.ID}}", recordingAct.Document.Id.ToString());
-        row = row.Replace("{{RECORDING.ACT.ID}}", recordingAct.Id.ToString());
-
-        grid += row;
-      }
-      return grid;
-    }
-
-    private string OnSelectDocumentButton(RecordingAct recordingAct) {
-
-      return String.Empty;
-
-      //const string template =
-      //    "<a href='javascript:doOperation(\"onSelectRecordingAct\", {{DOCUMENT.ID}}, {{RECORDING.ACT.ID}});'>" +
-      //        "Editar este acto</a>";
-
-      //string x = template.Replace("{{DOCUMENT.ID}}", recordingAct.Document.Id.ToString());
-      //x = x.Replace("{{RECORDING.ACT.ID}}}", recordingAct.Id.ToString());
-
-      //return x;
-    }
-
-    private string GetPartitionOrAntecedentCell(RecordingAct recordingAct) {
-      if (Resource.IsCreationalRole(recordingAct.ResourceRole)) {
-
-        var realEstate = (RealEstate) recordingAct.Resource;
-
-        if (recordingAct.ResourceRole == ResourceRole.Created) {
-          return "Sin antecedente registral";
-        } else if (realEstate.Equals(this.resource)) {
-          return "Creado como <b>" + realEstate.PartitionNo +
-                 "</b> del predio " + NoWrap(recordingAct.RelatedResource.UID);
-        } else {
-          return "Sobre <b>" + realEstate.PartitionNo + "</b> con folio real " + NoWrap(realEstate.UID);
-        }
-      }
-      return "&nbsp;";
-    }
-
-    private string GetDateAsText(DateTime date) {
-      if (date == ExecutionServer.DateMinValue || date == ExecutionServer.DateMaxValue) {
-        return "No consta";
-      } else {
-        return date.ToString(@"dd/MMM/yyyy");
-      }
-    }
-
-    private string NoWrap(string text) {
-      return "<span style='white-space:nowrap;'>" + text + "</span>";
+      return ResourceHistoryGrid.Parse(this.resource);
     }
 
     #endregion Private methods

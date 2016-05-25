@@ -60,18 +60,8 @@ namespace Empiria.Land.WebApp {
       if (base.SelectedTabStrip == 0) {
         return RecordingBooksData.GetVolumeRecordingBooks(selectedRecorderOffice, RecordingBookStatus.Revision,
                                                           GetRecordingBooksFilter(), "BookNo DESC, BookAsText ASC");
-      } else if (base.SelectedTabStrip == 1) {
-        if (txtSearchExpression.Value.Length != 0) {
-          return IndexesData.FindByParty(selectedRecorderOffice, DateTime.MinValue, DateTime.MaxValue, txtSearchExpression.Value);
-        } else {
-          return new DataView();
-        }
       } else {
-        if (txtSearchExpression.Value.Length != 0) {
-          return IndexesData.FindByProperty(selectedRecorderOffice, DateTime.MinValue, DateTime.MaxValue, txtSearchExpression.Value);
-        } else {
-          return new DataView();
-        }
+        return new DataView();
       }
     }
 

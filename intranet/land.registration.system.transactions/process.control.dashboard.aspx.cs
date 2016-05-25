@@ -106,7 +106,8 @@ namespace Empiria.Land.WebApp {
         }
         filter += "NextTransactionStatus NOT IN ('R','C','Q','H')";
         if (!String.IsNullOrWhiteSpace(selectedComboFromValue)) {
-          return WorkflowData.GetResponsibleWorkflowInbox(Contact.Parse(int.Parse(selectedComboFromValue)), WorkflowTaskStatus.OnDelivery, filter, sort);
+          return WorkflowData.GetResponsibleWorkflowInbox(Contact.Parse(int.Parse(selectedComboFromValue)),
+                                                          WorkflowTaskStatus.OnDelivery, filter, sort);
         }
 
       } else if (base.SelectedTabStrip == 4) {

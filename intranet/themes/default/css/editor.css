@@ -214,6 +214,21 @@ table.details .detailsTotals td {
   font-family: Tahoma, Verdana;
   height: 24px;
 }
+table.details .detailsTitle td {
+  background-color: #6a7f6a;
+  border: none;
+  text-align: left;
+  color: #ffffff;
+  font-family: Tahoma, Verdana;
+  font-weight: normal;
+  height: 26px;
+  margin: 0px;
+  padding: 2px 4px 2px 8px;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  z-index: 15;
+}
 table.details .detailsSubHeader td {
   background-color: #d0d0d0;
   color: #191958;

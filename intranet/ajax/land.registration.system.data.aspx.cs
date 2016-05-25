@@ -28,6 +28,10 @@ namespace Empiria.Web.UI.Ajax {
 
     protected override string ImplementsCommandRequest(string commandName) {
       switch (commandName) {
+
+        case "getResourceHistoryGridCmd":
+          return GetResourceHistoryGridCommandHandler();
+
         case "getTargetPrecedentActsTableCmd":
           return GetTargetPrecedentActsTableCommandHandler();
         case "getTargetActSectionsStringArrayCmd":
@@ -114,6 +118,14 @@ namespace Empiria.Web.UI.Ajax {
           throw new WebPresentationException(WebPresentationException.Msg.UnrecognizedCommandName,
                                              commandName);
       }
+    }
+
+    private string GetResourceHistoryGridCommandHandler() {
+      int resourceId = GetCommandParameter<int>("resourceId");
+
+      var resource = Resource.Parse(resourceId);
+
+      return ResourceHistoryGrid.Parse(resource);
     }
 
     private string GetResourceCommandHandler() {
@@ -450,7 +462,6 @@ namespace Empiria.Web.UI.Ajax {
       rawData += document.IssuePlace.Id.ToString() + "|";
       rawData += document.IssueDate.ToString("dd/MMM/yyyy") + "|";
       rawData += document.Number + "|";
-      rawData += document.ExtensionData.MainWitnessPosition.Id.ToString() + "|";
       rawData += document.ExtensionData.MainWitness.Id.ToString();
 
       return rawData;
