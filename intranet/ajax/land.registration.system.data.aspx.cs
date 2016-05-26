@@ -29,9 +29,6 @@ namespace Empiria.Web.UI.Ajax {
     protected override string ImplementsCommandRequest(string commandName) {
       switch (commandName) {
 
-        case "getResourceHistoryGridCmd":
-          return GetResourceHistoryGridCommandHandler();
-
         case "getTargetPrecedentActsTableCmd":
           return GetTargetPrecedentActsTableCommandHandler();
         case "getTargetActSectionsStringArrayCmd":
@@ -118,14 +115,6 @@ namespace Empiria.Web.UI.Ajax {
           throw new WebPresentationException(WebPresentationException.Msg.UnrecognizedCommandName,
                                              commandName);
       }
-    }
-
-    private string GetResourceHistoryGridCommandHandler() {
-      int resourceId = GetCommandParameter<int>("resourceId");
-
-      var resource = Resource.Parse(resourceId);
-
-      return ResourceHistoryGrid.Parse(resource);
     }
 
     private string GetResourceCommandHandler() {

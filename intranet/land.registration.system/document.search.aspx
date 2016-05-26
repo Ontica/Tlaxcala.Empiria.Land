@@ -30,12 +30,13 @@
           <td colspan="4" class="lastCell">
             <select id="cboSearchBy" name="cboSearchBy" class="selectBox" style="width:134px" runat='server'>
               <option value="resource">Folios reales</option>
+              <option value="recordingBook">Libros registrales</option>
             </select>
             <!--
               <option value="document">Documentos</option>
               <option value="certificates">Certificados</option>
               <option value=""></option>
-              <option value="recordingBook">Libros registrales</option>
+
               <option value="party">Índice de personas</option>
               <option value=""></option>
               <option value="transaction">Trámites</option>
@@ -104,6 +105,9 @@
       case 'onSelectResource':
         onSelectResource(arguments[1]);
         return;
+      case 'onSelectRecordingBook':
+        onSelectRecordingBook(arguments[1]);
+        return;
       case 'onSelectDocument':
         onSelectDocument(arguments[1], arguments[2]);
         return;
@@ -140,6 +144,10 @@
 
   }
 
+  function onSelectRecordingBook(recordingBookId) {
+    displayPhysicalRecordingsWithRecordingActsGrid(recordingBookId);
+  }
+
   function onSelectDocument(documentId, recordingActId) {
     window.parent.execScript("doOperation('onSelectDocument', " + documentId + ", " + recordingActId + ")");
   }
@@ -150,19 +158,32 @@
 
   // #region HTML Content loaders
 
+  function displayPhysicalRecordingsWithRecordingActsGrid(recordingBookId) {
+    var url = "../ajax/land.ui.controls.aspx";
+    url += "?commandName=getPhysicalRecordingsWithRecordingActsGridCmd";
+    url += "&recordingBookId=" + recordingBookId;
+
+    var physicalRecordingsGridHTML = invokeAjaxMethod(false, url, null);
+
+    updateSelectedItemViewer(physicalRecordingsGridHTML);
+  }
+
   function displayResourceHistoryGrid(resourceId) {
-    var url = "../ajax/land.registration.system.data.aspx";
+    var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getResourceHistoryGridCmd";
     url += "&resourceId=" + resourceId;
 
-    var resourceHisoryGridHTML = invokeAjaxMethod(false, url, null);
+    var resourceHistoryGridHTML = invokeAjaxMethod(false, url, null);
 
-    resourceHisoryGridHTML =
-      "<table id='selectedItemViewer' class='details' style='width:95%'>" +
-          resourceHisoryGridHTML +
-      "</table>";
+    updateSelectedItemViewer(resourceHistoryGridHTML);
+  }
 
-    getElement('selectedItemViewer').innerHTML = resourceHisoryGridHTML;
+  function updateSelectedItemViewer(innerContent) {
+    var html = "<table id='selectedItemViewer' class='details' style='width:95%'>" +
+                  innerContent +
+               "</table>";
+
+    getElement('selectedItemViewer').innerHTML = html;
   }
 
   // #endregion HTML Content loaders
