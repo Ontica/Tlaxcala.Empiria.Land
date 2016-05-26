@@ -194,11 +194,13 @@ namespace Empiria.Land.WebApp {
       document.Notes = txtObservations.Value;
       document.SheetsCount = int.Parse(cboSheetsCount.Value);
 
-      if (document.IsNew) {
-        transaction.AttachDocument(document);
-      } else {
-        document.Save();
-      }
+      //if (document.IsNew) {
+      //  transaction.AttachDocument(document);
+      //} else {
+      //  document.Save();
+      //}
+
+      transaction.AttachDocument(document);
 
       oRecordingDocumentEditor.LoadRecordingDocument(document);
       Assertion.Assert(!transaction.Document.IsEmptyInstance && !transaction.Document.IsNew,
