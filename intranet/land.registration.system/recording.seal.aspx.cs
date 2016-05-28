@@ -43,7 +43,6 @@ namespace Empiria.Land.WebApp {
       }
 
       recordingActs = document.RecordingActs;
-      Assertion.Assert(recordingActs.Count > 0, "Document does not has recording acts.");
     }
 
     #endregion Constructors and parsers
@@ -105,7 +104,7 @@ namespace Empiria.Land.WebApp {
     private string PrelationTextForDocumentsWithTransaction() {
       const string template =
            "Documento presentado para su examen y registro {REENTRY_TEXT} el <b>{DATE} a las {TIME} horas</b>, " +
-           "bajo el número de trámite <b>{NUMBER}</b>, y para el cual se {COUNT}";
+           "bajo el número de trámite <b>{NUMBER}</b>, y para el cual {COUNT}";
 
       DateTime presentationTime = transaction.IsReentry ? transaction.LastReentryTime : transaction.PresentationTime;
 
@@ -116,16 +115,15 @@ namespace Empiria.Land.WebApp {
       x = x.Replace("{REENTRY_TEXT}", transaction.IsReentry ? "(como reingreso)" : String.Empty);
 
       if (this.recordingActs.Count > 1) {
-        x = x.Replace("{COUNT}", "registraron los siguientes " + this.recordingActs.Count.ToString() +
+        x = x.Replace("{COUNT}", "se registraron los siguientes " + this.recordingActs.Count.ToString() +
                       " (" + EmpiriaString.SpeechInteger(this.recordingActs.Count).ToLower() + ") " +
                       "actos jurídicos:");
 
       } else if (this.recordingActs.Count == 1) {
-        x = x.Replace("{COUNT}", "registró el siguiente acto jurídico:");
+        x = x.Replace("{COUNT}", "se registró el siguiente acto jurídico:");
 
       } else {
-        throw Assertion.AssertNoReachThisCode();
-
+        x = x.Replace("{COUNT}", AsWarning("<u>NO SE HAN REGISTRADO</u> actos jurídicos."));
       }
       return x;
     }

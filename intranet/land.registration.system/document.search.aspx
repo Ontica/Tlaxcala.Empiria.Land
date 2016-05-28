@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.DocumentSearch" CodeFile="document.search.aspx.cs" %>
+<%@ Register tagprefix="empiriaControl" tagname="ModalWindow" src="../land.registration.system.controls/modal.window.ascx" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
@@ -30,18 +31,16 @@
           <td colspan="4" class="lastCell">
             <select id="cboSearchBy" name="cboSearchBy" class="selectBox" style="width:134px" runat='server'>
               <option value="resource">Folios reales</option>
-              <option value="recordingBook">Libros registrales</option>
-            </select>
-            <!--
               <option value="document">Documentos</option>
-              <option value="certificates">Certificados</option>
-              <option value=""></option>
-
+              <option value="certificate">Certificados</option>
               <option value="party">Índice de personas</option>
+              <option value=""></option>
+              <option value="recordingBook">Libros registrales</option>
+              <option value="physicalRecording">Partidas</option>
               <option value=""></option>
               <option value="transaction">Trámites</option>
               <option value="imagingControl">No. control acervo</option>
-            -->
+            </select>
             <input id='txtSearchBox' name='txtSearchBox' type="text" onkeypress="return alphaNumericKeyFilter(event, true, searchDataCallback);"
                    class="textBox" style="width:240px" runat='server' title="" />
             <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda"
@@ -61,9 +60,7 @@
         <tr>
           <td class="lastCell">
             <div style="overflow:auto;max-height:260px;">
-              <table class="details" style="width:95%">
-                <%=GetSearchResultsGrid()%>
-              </table>
+              <%=GetSearchResultsGrid()%>
             </div>
           </td>
         </tr>
@@ -88,6 +85,7 @@
 
 </table>
 </div>
+<empiriaControl:ModalWindow id="oModalWindow" runat="server" width="820px" height="600px" />
 </form>
 </body>
 <script type="text/javascript">
@@ -114,6 +112,16 @@
       case 'onSelectRecordingAct':
         onSelectRecordingAct(arguments[1], arguments[2]);
         return;
+      case 'displayResourcePopupWindow':
+        displayResourcePopupWindow(arguments[1]);
+        return;
+        //case 'refreshRecording':
+        //  return closeModalWindow(document.all.divRecordingActEditorWindow);
+
+        //case 'closeWindow':
+        //  window.parent.execScript("doOperation('refreshRecording')");
+        //  return;
+
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
@@ -122,6 +130,12 @@
       sendPageCommand(command);
       gbSended = true;
     }
+  }
+
+  function displayResourcePopupWindow(resourceId) {
+    var html = getResourceHistoryGridHtml(resourceId);
+
+    <%=oModalWindow.ClientID%>_show("Historia del predio", html);
   }
 
   function searchData() {
@@ -169,21 +183,21 @@
   }
 
   function displayResourceHistoryGrid(resourceId) {
+    var html = getResourceHistoryGridHtml(resourceId);
+
+    updateSelectedItemViewer(html);
+  }
+
+  function getResourceHistoryGridHtml(resourceId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getResourceHistoryGridCmd";
     url += "&resourceId=" + resourceId;
 
-    var resourceHistoryGridHTML = invokeAjaxMethod(false, url, null);
-
-    updateSelectedItemViewer(resourceHistoryGridHTML);
+    return invokeAjaxMethod(false, url, null);
   }
 
   function updateSelectedItemViewer(innerContent) {
-    var html = "<table id='selectedItemViewer' class='details' style='width:95%'>" +
-                  innerContent +
-               "</table>";
-
-    getElement('selectedItemViewer').innerHTML = html;
+    getElement('selectedItemViewer').innerHTML = innerContent;
   }
 
   // #endregion HTML Content loaders

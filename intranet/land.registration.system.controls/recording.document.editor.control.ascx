@@ -167,9 +167,11 @@
       <select id="cboPrivateDocSubtype" class="selectBox" style="width:192px" title="" runat="server">
         <option value=''>( Seleccionar )</option>
         <option value='785'>Aclaración (corrección)</option>
+        <option value='789'>Crédito</option>
         <option value='761'>Contrato de arrendamiento</option>
         <option value='762'>Contrato de comodato</option>
         <option value='770'>Embargo</option>
+        <option value='788'>Expediente administrativo</option>
         <option value='765'>Fianza</option>
         <option value='780'>Inmovilización de predio</option>
         <option value='786'>Solicitud de folio real</option>

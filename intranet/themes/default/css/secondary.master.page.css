@@ -2,8 +2,8 @@
   color: #fcfcfc;
   font-family: Arial, Sans-serif;
   font-size: 8pt;
-  padding: 0px  0px 0px 0px;
-  margin: 0px 0px 0px 0px;
+  padding: 0;
+  margin: 0;
   overflow: hidden;
   height: 100%;
   border: none;
@@ -20,8 +20,8 @@ a:hover {
   text-decoration: none;
 }
 .tabStrip {
-  padding: 0px 0px 0px 0px;
-  margin: 0px 0px 14px 0px;
+  padding: 0;
+  margin: 0 0 14px 0;
   white-space: nowrap;
   border-bottom: #900000 4pt solid;
   border-collapse: collapse;
@@ -42,7 +42,6 @@ td.tabOn {
 }
 td.tabOff {
   background-color: #7F7F7F;
-  text-align: center;
   white-space: nowrap;
   color: #ffffff;
   cursor: pointer;
@@ -80,17 +79,35 @@ img.logo {
   z-index: 100;
 }
 #divCanvas {
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
+  margin: 0;
+  padding: 0;
   background-image: url(../customer/main.menu.png);	
 }
-#divHeader
-{
+#divHeader {
   background-color: #3F4B3F;
   color: white;
   height: 48px;
   overflow: hidden;
-  padding: 2px 4pt 0pt 8pt;
+  padding: 2px 4pt 0 8pt;
+}
+#divBody {
+  background-color: #fbfbfb;
+  color: inherit;
+  padding: 0;
+  margin: 0;
+  top: 0;
+  position: relative;	
+}
+#divContent {
+  background-color: inherit;
+  color: #3c3c3c;
+  font-family: Tahoma, Verdana, Serif;
+  font-size: 8pt;	
+  margin: 2px 0 2px 0;
+  padding: 12px 12px 0 12px;
+  position: absolute;
+  float: left;
+  overflow: auto;
 }
 span.appTitle {
   background: transparent;
@@ -111,33 +128,13 @@ tr.detailsSuperFooter {
   color: #eeeeee;
   height: 8px;
 }
-
-#divBody {
-  background-color: #fbfbfb;
-  color: inherit;
-  padding: 0px 0px 0px 0px;
-  margin: 0px 0px 0px 0px;
-  top: 0px;
-  position: relative;	
-}
-#divContent {
-  background-color: inherit;
-  color: #3c3c3c;
-  font-family: Tahoma, Verdana, Serif;
-  font-size: 8pt;	
-  margin: 2px 0px 2px 0px;
-  padding: 12px 12px 0px 12px;
-  position: absolute;
-  float: left;
-  overflow: auto;
-}
 #divContentAlwaysVisible {
   background-color: inherit;
   color: #3c3c3c;
   font-family: Tahoma, Verdana, Serif;
   font-size: 8pt;	
-  margin: 2px 0px 2px 0px;
-  padding: 12px 12px 0px 12px;
+  margin: 2px 0 2px 0;
+  padding: 12px 12px 012px;
   position: absolute;
   float: left;
   overflow:visible;
@@ -148,7 +145,7 @@ tr.detailsSuperFooter {
   font-family: Tahoma, Verdana, Serif;
   font-size: 8pt;
   margin: 2px 2px 2px 2px;
-  padding: 12px 12px 0px 12px;
+  padding: 12px 12px 0 12px;
   position: absolute;
   float: right;
   height: 98%;
@@ -164,7 +161,7 @@ div.contentTitle {
   font-size: 14pt;
   font-weight: normal;
   font-family: Arial, Sans-Serif;
-  padding: 8px 0px 2px 0px;
+  padding: 8px 0 2px 0;
   border-bottom: #d2b48c 1px solid;	
 }
 div.contentHint {
@@ -172,7 +169,7 @@ div.contentHint {
   color: #afafaf;
   font-size: 8pt;	
   font-family: Arial, Sans-Serif;
-  padding: 2px 0px 16px 2px;
+  padding: 2px 0 16px 2px;
 }
 #divWait {
   background-color: inherit;
@@ -192,8 +189,8 @@ div.contentHint {
   float: none;
   font-family: Tahoma, Verdana, Sans-Serif;
   height: 28px;
-  padding: 6px 24px 0px 24px;
-  margin: 0px;
+  padding: 6px 24px 0 24px;
+  margin: 0;
 }
 div.leftItem, span.leftItem {
   float: left;
@@ -223,3 +220,50 @@ span.rightItem img {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color:#f6f6f6;
 }
+
+/* region Modal Window Styles */
+
+.modalWindow {
+  background-color: #fafafa;
+  position: fixed;
+  visibility: visible;
+  display: inline;
+  z-index: 900;
+  border: 1pt solid #cacaca;
+}
+
+.modalHeader {
+  background-color: #3F4B3F;
+  color: white;
+  height: 24px;
+  padding: 4pt 0 0 10pt;
+  font-size: 10pt;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.modalCloseIcon {
+  right: 2pt;
+  height: 24px;
+  position:absolute;
+}
+
+.modalBody {
+  color: inherit;
+}
+
+.modalContent {
+  color: #3c3c3c;
+  font-family: Tahoma, Verdana, Serif;
+  font-size: 8pt;	
+  margin: 2px 0 2px 0;
+  padding: 12px 12px 0 12px;
+  overflow: auto;
+}
+
+/*.opaq {
+  opacity: 0.3;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+  filter: alpha(opacity = 30);
+}*/
+
+/* endregion Modal Window Styles */

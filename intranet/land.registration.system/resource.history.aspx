@@ -23,9 +23,7 @@
         <tr>
           <td class="lastCell">
             <div style="overflow:auto;max-height:880px;">
-              <table class="details" style="width:95%">
-                <%=GetHistoryGrid()%>
-              </table>
+              <%=GetHistoryGrid()%>
             </div>
           </td>
         </tr>

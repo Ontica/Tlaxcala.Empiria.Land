@@ -162,7 +162,6 @@
 </div>
 </form>
 <div><span id="span" runat="server"></span></div>
-<iframe id="divRecordingActEditorWindow" name="divRecordingActEditorWindow" src='../workplace/empty.page.aspx' width="820px" height="600px" style="display:none" scrolling="no"></iframe>
 <iframe id="ifraCalendar" style="z-index:99;left:0;visibility:hidden;position:relative;top:0"
     marginheight="0" marginwidth="0" frameborder="0" scrolling="no" src="../user.controls/calendar.aspx" width="100%">
 </iframe>
@@ -179,8 +178,6 @@
       return;
     }
     switch (command) {
-      case 'refreshRecording':
-        return closeModalWindow(document.all.divRecordingActEditorWindow);
       case 'showRecordingActEditor':
         return showRecordingActEditor();
       case 'deleteRecordingAct':
@@ -192,8 +189,6 @@
         return saveDocument();
 
       case 'editResource':
-        //alert("Esta funcionalidad está en fase de pruebas y por el momento no es posible ejecutarla. Gracias.");
-        //return;
         return editResource(arguments[1], arguments[2]);
 
       case 'viewRecordingSeal':
@@ -204,9 +199,6 @@
         return;
       case 'showSearchRecordingsView':
         showSearchRecordingsView();
-        return;
-      case 'closeWindow':
-        window.parent.execScript("doOperation('refreshRecording')");
         return;
       case 'generateImagingControlID':
         generateImagingControlID();
@@ -222,38 +214,6 @@
       sendPageCommand(command);
       gbSended = true;
     }
-  }
-
-  function editRecordingAct(recordingActId) {
-    var url    = "recording.act.editor.aspx?id=" + recordingActId;
-    var width  = 740;
-    var height = 720;
-    var iFrameContainer = document.all.divRecordingActEditorWindow;
-    openModalWindow(iFrameContainer, url, width, height);
-  }
-
-  function closeModalWindow(iFrame) {
-    iFrame.style.visibility = "hidden";
-    iFrame.style.display    = "none";
-    iFrame.contentWindow.location.replace("../workplace/empty.page.aspx");
-  }
-
-  function openModalWindow(iFrame, url, width, height) {
-    iFrame.width  = width;
-    iFrame.height = height;
-    iFrame.contentWindow.location.replace(url);
-
-    var x = (document.body.clientWidth - iFrame.width) / 2;
-
-    iFrame.contentWindow.moveTo(x, 20);
-    iFrame.style.position = 'fixed';
-    iFrame.style.visibility = 'visible';
-    iFrame.style.display = 'inline';
-    iFrame.style.zIndex = 900;
-    iFrame.style.border = "4px solid #5a5a5a"
-    iFrame.focus();
-
-    return false;
   }
 
   function generateImagingControlID() {
@@ -276,7 +236,8 @@
 
   function deleteRecordingAct(recordingActId) {
     <% if (!IsReadyForEdition()) { %>
-      alert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, o no cuenta con los permisos necesarios para efectuar esta operación.");
+      alert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, " +
+            "o no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
     if (confirm("¿Elimino el acto jurídico seleccionado?")) {
@@ -287,7 +248,8 @@
 
   function deleteBookRecording(recordingId) {
     <% if (!IsReadyForEdition()) { %>
-      alert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, o no cuenta con los permisos necesarios para efectuar esta operación.");
+      alert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, " +
+            "o no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
     if (confirm("¿Elimino el registro de la partida seleccionada?")) {
@@ -321,7 +283,8 @@
     return;
     <% } %>
     <% if (!IsReadyForEdition()) { %>
-    alert("No es posible modificar este documento debido a que no está en un estado válido para ello, o bien, no cuenta con los permisos necesarios para efectuar esta operación.");
+    alert("No es posible modificar este documento debido a que no está en un estado válido para ello, o bien, " +
+          "no cuenta con los permisos necesarios para efectuar esta operación.");
     return false;
     <% } %>
     if (getElement('cboRecordingType').value.length == 0) {

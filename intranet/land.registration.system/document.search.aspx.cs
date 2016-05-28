@@ -88,12 +88,16 @@ namespace Empiria.Land.WebApp {
           LoadRecordingDocumentsGrid(SearchService.Documents(keywords));
           return;
 
-        case "certificates":
+        case "certificate":
           LoadCertificatesGrid(SearchService.Certificates(keywords));
           return;
 
         case "recordingBook":
           LoadRecordingBooksGrid(SearchService.RecordingBooks(keywords));
+          return;
+
+        case "physicalRecording":
+          LoadPhysicalRecordingsGrid(SearchService.PhysicalRecordings(keywords));
           return;
 
         case "party":
@@ -126,8 +130,9 @@ namespace Empiria.Land.WebApp {
 
         html += row;
       }
-      _searchResultsGrid = html;
+      _searchResultsGrid = TableWrapper(html);
     }
+
 
     private void LoadImagingControlIDsGrid(FixedList<RecordingDocument> documents) {
       string html = ReadHeaderTemplate(typeof(RecordingDocument));
@@ -142,8 +147,9 @@ namespace Empiria.Land.WebApp {
 
         html += row;
       }
-      _searchResultsGrid = html;
+      _searchResultsGrid = TableWrapper(html);
     }
+
 
     private void LoadPartiesGrid(FixedList<RecordingActParty> parties) {
       string html = ReadHeaderTemplate(typeof(RecordingDocument));
@@ -158,8 +164,26 @@ namespace Empiria.Land.WebApp {
 
         html += row;
       }
-      _searchResultsGrid = html;
+      _searchResultsGrid = TableWrapper(html);
     }
+
+
+    private void LoadPhysicalRecordingsGrid(FixedList<Recording> physicalRecordings) {
+      string html = ReadHeaderTemplate(typeof(RecordingDocument));
+
+      for (int i = 0; i < physicalRecordings.Count; i++) {
+        var item = physicalRecordings[i];
+
+        string row = ReadRowTemplate(typeof(RecordingDocument), i);
+        row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectPhysicalRecording");
+        row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
+        row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.AsText);
+
+        html += row;
+      }
+      _searchResultsGrid = TableWrapper(html);
+    }
+
 
     private void LoadRecordingBooksGrid(FixedList<RecordingBook> books) {
       string html = ReadHeaderTemplate(typeof(RecordingDocument));
@@ -174,8 +198,9 @@ namespace Empiria.Land.WebApp {
 
         html += row;
       }
-      _searchResultsGrid = html;
+      _searchResultsGrid = TableWrapper(html);
     }
+
 
     private void LoadRecordingDocumentsGrid(FixedList<RecordingDocument> documents) {
       string html = ReadHeaderTemplate(typeof(RecordingDocument));
@@ -190,7 +215,7 @@ namespace Empiria.Land.WebApp {
 
         html += row;
       }
-      _searchResultsGrid = html;
+      _searchResultsGrid = TableWrapper(html);
     }
 
 
@@ -207,7 +232,7 @@ namespace Empiria.Land.WebApp {
 
         html += row;
       }
-      _searchResultsGrid = html;
+      _searchResultsGrid = TableWrapper(html);
     }
 
     private void LoadTransactionsGrid(FixedList<LRSTransaction> transactions) {
@@ -223,7 +248,7 @@ namespace Empiria.Land.WebApp {
 
         html += row;
       }
-      _searchResultsGrid = html;
+      _searchResultsGrid = TableWrapper(html);
     }
 
     #endregion Private methods
@@ -253,6 +278,10 @@ namespace Empiria.Land.WebApp {
     static private string ReadRowTemplate(Type type, int rowIndex) {
       return ReadRowTemplate(type).Replace("{{CLASS}}",
                                           (rowIndex % 2 == 0) ? "detailsItem" : "detailsOddItem");
+    }
+
+    static private string TableWrapper(string html) {
+      return "<table class='details' style='width:96%'>" + html + "</table>";
     }
 
     #endregion Auxiliar methods

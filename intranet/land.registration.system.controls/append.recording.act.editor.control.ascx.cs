@@ -1,7 +1,6 @@
 ﻿using System;
 
 using Empiria.Land.Registration;
-using Empiria.Land.Registration.Transactions;
 using Empiria.Land.UI;
 using Empiria.Presentation.Web;
 
