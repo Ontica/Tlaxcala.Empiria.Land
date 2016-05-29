@@ -378,8 +378,8 @@ div.dataTableContainer table {
   line-height: 14pt;
   font: 8pt Arial, Helvetica;
   font-weight: normal;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
+  margin: 0;
+  padding: 0;
   position: relative;
   width: 98%;
   z-index: 0;
@@ -393,7 +393,7 @@ div.dataTableContainer table th
   font-family: Tahoma, Verdana;
   font-weight: normal;
   height: 26px;
-  margin: 0px;
+  margin: 0;
   padding: 2px 4px 2px 8px;
   position: relative;
   white-space: nowrap;
@@ -421,8 +421,8 @@ div.dataTableContainer thead a:hover
 }
 div.dataTableContainer .titleDataRow th {
   background-color: #7693ad;
-  margin: 0px 2px 0px 2px;
-  padding: 2px 4px 0px 4px;
+  margin: 0 2px 0 2px;
+  padding: 2px 4px 0 4px;
   vertical-align: middle;
   font: bold 8pt Tahoma, Verdana;
   white-space: nowrap;
@@ -431,8 +431,8 @@ div.dataTableContainer .titleDataRow th {
 }
 div.dataTableContainer .optionsDataRow th {
   background-color: #7693ad;
-  margin: 0px 2px 0px 2px;
-  padding: 2px 4px 0px 4px;
+  margin: 0 2px 0 2px;
+  padding: 2px 4px 0 4px;
   vertical-align: middle;
   font: bold 8pt Tahoma, Verdana;
   white-space: nowrap;

@@ -190,6 +190,10 @@
       case 'onSelectRecordingAct':
         onSelectRecordingAct(arguments[1], arguments[2]);
         return;
+      case 'onSelectCertificate':
+        onSelectCertificate(arguments[1]);
+        return;
+
       case 'gotoImage':
         gotoImage();
         return;
@@ -223,6 +227,18 @@
 
   function onSelectRecordingAct(documentId, recordingActId) {
     window.document.location.href = "by.resource.analyzer.aspx?resourceId=-1&recordingActId=" + recordingActId;
+  }
+
+  function onSelectCertificate(certificateId) {
+    var newURL = "./certificate.aspx?certificateId=" + certificateId;
+
+    var clone = getElement("documentViewer").cloneNode(true);
+    clone.setAttribute('data', newURL);
+
+    var parent = getElement("documentViewer").parentNode;
+
+    parent.removeChild(getElement("documentViewer"));
+    parent.appendChild(clone);
   }
 
   function displayDocumentImage(documentId) {

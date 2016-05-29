@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.ResourceHistory" CodeFile="resource.history.aspx.cs" %>
+<%@ Register tagprefix="empiriaControl" tagname="ModalWindow" src="../land.registration.system.controls/modal.window.ascx" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
@@ -32,6 +33,7 @@
   </tr>
 </table>
 </div>
+<empiriaControl:ModalWindow id="oModalWindow" runat="server" width="820px" height="600px" />
 </form>
 <div><span id="span" runat="server"></span></div>
 </body>
@@ -47,8 +49,14 @@
       case 'onSelectDocument':
         onSelectDocument(arguments[1], arguments[2]);
         return;
+      case 'onSelectCertificate':
+        onSelectCertificate(arguments[1]);
+        return;
       case 'onSelectRecordingAct':
         onSelectRecordingAct(arguments[1], arguments[2]);
+        return;
+      case 'displayResourcePopupWindow':
+        displayResourcePopupWindow(arguments[1]);
         return;
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
@@ -64,8 +72,26 @@
     window.parent.execScript("doOperation('onSelectDocument', " + documentId + ", " + recordingActId + ")");
   }
 
+  function onSelectCertificate(certificateId) {
+    window.parent.execScript("doOperation('onSelectCertificate', " + certificateId + ")");
+  }
+
   function onSelectRecordingAct(documentId, recordingActId) {
     window.parent.execScript("doOperation('onSelectRecordingAct', " + documentId + ", " + recordingActId + ")");
+  }
+
+  function displayResourcePopupWindow(resourceId) {
+    var html = getResourceHistoryGridHtml(resourceId);
+
+    <%=oModalWindow.ClientID%>_show("Historia del predio", html);
+  }
+
+  function getResourceHistoryGridHtml(resourceId) {
+    var url = "../ajax/land.ui.controls.aspx";
+    url += "?commandName=getResourceHistoryGridCmd";
+    url += "&resourceId=" + resourceId;
+
+    return invokeAjaxMethod(false, url, null);
   }
 
   function window_onload() {
