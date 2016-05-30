@@ -33,14 +33,15 @@
               <option value="resource">Folios reales</option>
               <option value="document">Documentos</option>
               <option value="certificate">Certificados</option>
-              <option value="party">Índice de personas</option>
               <option value=""></option>
               <option value="recordingBook">Libros registrales</option>
               <option value="physicalRecording">Partidas</option>
               <option value=""></option>
-              <option value="transaction">Trámites</option>
               <option value="imagingControl">No. control acervo</option>
             </select>
+<!--
+//<option value="transaction">Trámites</option>
+!-->
             <input id='txtSearchBox' name='txtSearchBox' type="text" onkeypress="return alphaNumericKeyFilter(event, true, searchDataCallback);"
                    class="textBox" style="width:240px" runat='server' title="" />
             <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda"
@@ -108,6 +109,9 @@
       case 'onSelectDocument':
         onSelectDocument(arguments[1], arguments[2]);
         return;
+      case 'onSelectDocumentFromSearchGrid':
+        onSelectDocumentFromSearchGrid(arguments[1]);
+        return;
       case 'onSelectRecordingAct':
         onSelectRecordingAct(arguments[1], arguments[2]);
         return;
@@ -161,11 +165,16 @@
   }
 
   function onSelectRecordingBook(recordingBookId) {
-    displayPhysicalRecordingsWithRecordingActsGrid(recordingBookId);
+    displayBookPhysicalRecordingsWithRecordingActsGrid(recordingBookId);
   }
 
   function onSelectDocument(documentId, recordingActId) {
     window.parent.execScript("doOperation('onSelectDocument', " + documentId + ", " + recordingActId + ")");
+  }
+
+  function onSelectDocumentFromSearchGrid(documentId) {
+    displayDocumentRecordingActsGrid(documentId);
+    window.parent.execScript("doOperation('onSelectDocument', " + documentId + ")");
   }
 
   function onSelectRecordingAct(documentId, recordingActId) {
@@ -177,7 +186,17 @@
   }
   // #region HTML Content loaders
 
-  function displayPhysicalRecordingsWithRecordingActsGrid(recordingBookId) {
+  function displayDocumentRecordingActsGrid(documentId) {
+    var url = "../ajax/land.ui.controls.aspx";
+    url += "?commandName=getDocumentRecordingActsGridCmd";
+    url += "&documentId=" + documentId;
+
+    var gridHTML = invokeAjaxMethod(false, url, null);
+
+    updateSelectedItemViewer(gridHTML);
+  }
+
+  function displayBookPhysicalRecordingsWithRecordingActsGrid(recordingBookId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getPhysicalRecordingsWithRecordingActsGridCmd";
     url += "&recordingBookId=" + recordingBookId;

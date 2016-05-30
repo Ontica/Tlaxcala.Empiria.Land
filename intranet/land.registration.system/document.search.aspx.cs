@@ -135,7 +135,7 @@ namespace Empiria.Land.WebApp {
         var item = documents[i];
 
         string row = ReadRowTemplate(typeof(RecordingDocument), i);
-        row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectDocument");
+        row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectDocumentFromSearchGrid");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.ImagingControlID);
 
@@ -169,8 +169,8 @@ namespace Empiria.Land.WebApp {
         var item = physicalRecordings[i];
 
         string row = ReadRowTemplate(typeof(Recording), i);
-        row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectPhysicalRecording");
-        row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
+        row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectDocumentFromSearchGrid");
+        row = row.Replace("{{ITEM.ID}}", item.Document.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.AsText);
 
         html += row;
@@ -203,7 +203,7 @@ namespace Empiria.Land.WebApp {
         var item = documents[i];
 
         string row = ReadRowTemplate(typeof(RecordingDocument), i);
-        row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectDocument");
+        row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectDocumentFromSearchGrid");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.UID);
 

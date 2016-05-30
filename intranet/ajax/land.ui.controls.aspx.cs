@@ -24,8 +24,12 @@ namespace Empiria.Web.UI.Ajax {
         case "getResourceHistoryGridCmd":
           return GetResourceHistoryGrid();
 
+        case "getDocumentRecordingActsGridCmd":
+          return GetDocumentRecordingActsGrid();
+
         case "getPhysicalRecordingsWithRecordingActsGridCmd":
           return GetPhysicalRecordingsWithRecordingActsGrid();
+
 
         default:
           throw new WebPresentationException(WebPresentationException.Msg.UnrecognizedCommandName,
@@ -35,12 +39,12 @@ namespace Empiria.Web.UI.Ajax {
 
     #region Private command handlers
 
-    private string GetResourceHistoryGrid() {
-      int resourceId = GetCommandParameter<int>("resourceId");
+    private string GetDocumentRecordingActsGrid() {
+      int documentId = GetCommandParameter<int>("documentId");
 
-      var resource = Resource.Parse(resourceId);
+      var document = RecordingDocument.Parse(documentId);
 
-      return ResourceHistoryGrid.Parse(resource);
+      return DocumentRecordingActsGrid.Parse(document);
     }
 
     private string GetPhysicalRecordingsWithRecordingActsGrid() {
@@ -49,6 +53,14 @@ namespace Empiria.Web.UI.Ajax {
       var recordingBook = RecordingBook.Parse(recordingBookId);
 
       return PhysicalRecordingsWithRecordingActsGrid.Parse(recordingBook);
+    }
+
+    private string GetResourceHistoryGrid() {
+      int resourceId = GetCommandParameter<int>("resourceId");
+
+      var resource = Resource.Parse(resourceId);
+
+      return ResourceHistoryGrid.Parse(resource);
     }
 
     #endregion Private command handlers
