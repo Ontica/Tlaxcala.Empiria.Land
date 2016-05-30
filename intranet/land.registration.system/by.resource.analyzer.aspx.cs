@@ -15,6 +15,14 @@ using Empiria.Presentation.Web;
 
 namespace Empiria.Land.WebApp {
 
+  public enum TabStrip {
+    DocumentEditor = 0,
+    RecordingActEditor = 1,
+    ResourceEditor = 2,
+    ResourceHistory = 3,
+    GlobalSearch = 4,
+  }
+
   public partial class ByResourceAnalyzer : WebPage {
 
     #region Fields
@@ -67,7 +75,19 @@ namespace Empiria.Land.WebApp {
 
     #endregion Constructors and parsers
 
-    #region Private methods
+    #region Public methods
+
+    protected bool IsRecordingActSelected {
+      get {
+        return (!recordingAct.IsEmptyInstance);
+      }
+    }
+
+    protected bool IsResourceSelected {
+      get {
+        return (!resource.IsEmptyInstance);
+      }
+    }
 
     protected bool DisplayImages() {
       return true;
@@ -118,13 +138,21 @@ namespace Empiria.Land.WebApp {
     }
 
     private void Initialize() {
-      resource = Resource.Parse(int.Parse(Request.QueryString["resourceId"]));
-
-      int recordingActId = int.Parse(Request.QueryString["recordingActId"]);
-      if (recordingActId != -1) {
-        recordingAct = RecordingAct.Parse(recordingActId);
+      if (!String.IsNullOrEmpty(Request.QueryString["resourceId"])) {
+        resource = Resource.Parse(int.Parse(Request.QueryString["resourceId"]));
       } else {
-        recordingAct = resource.LastRecordingAct;
+        resource = RealEstate.Empty;
+      }
+
+      if (!String.IsNullOrEmpty(Request.QueryString["recordingActId"])) {
+        int recordingActId = int.Parse(Request.QueryString["recordingActId"]);
+        if (recordingActId != -1) {
+          recordingAct = RecordingAct.Parse(recordingActId);
+        } else {
+          recordingAct = resource.LastRecordingAct;
+        }
+      } else {
+        recordingAct = RecordingAct.Empty;
       }
     }
 
@@ -136,7 +164,68 @@ namespace Empiria.Land.WebApp {
       return currentImageWidth.ToString() + "em";
     }
 
-    #endregion Private methods
+    protected string TabStripClass(TabStrip tabStrip) {
+      switch (tabStrip) {
+        case TabStrip.DocumentEditor:
+          return "tabDisabled";
+
+        case TabStrip.GlobalSearch:
+          return this.IsResourceSelected ? "tabOff" : "tabOn";
+
+        case TabStrip.RecordingActEditor:
+          return this.IsRecordingActSelected ? "tabOff" : "tabDisabled";
+
+        case TabStrip.ResourceEditor:
+          return "tabDisabled";
+
+        case TabStrip.ResourceHistory:
+          return this.IsResourceSelected ? "tabOn" : "tabDisabled";
+
+        default:
+          throw Assertion.AssertNoReachThisCode();
+      }
+    }
+
+    protected string TabStripDisplayView(TabStrip tabStrip) {
+      if (tabStrip == TabStrip.GlobalSearch && !this.IsResourceSelected) {
+        return "display:inline";
+      }
+      if (tabStrip == TabStrip.ResourceHistory && this.IsResourceSelected) {
+        return "display:inline";
+      }
+      return "display:none";
+    }
+
+    protected string TabStripSource(TabStrip tabStrip) {
+      string source = String.Empty;
+
+      switch (tabStrip) {
+        case TabStrip.DocumentEditor:
+          source = "document.editor.aspx?documentId={{DOCUMENT.ID}}&selectedRecordingActId={{RECORDING.ACT.ID}}>";
+          break;
+        case TabStrip.GlobalSearch:
+          source = "document.search.aspx?resourceId={{RESOURCE.ID}}&id={{RECORDING.ACT.ID}}";
+          break;
+        case TabStrip.RecordingActEditor:
+          source = "recording.act.editor.aspx?propertyId={{RESOURCE.ID}}&id={{RECORDING.ACT.ID}}";
+          break;
+        case TabStrip.ResourceEditor:
+          source = "property.editor.aspx?propertyId={{RESOURCE.ID}}&recordingActId={{RECORDING.ACT.ID}}";
+          break;
+        case TabStrip.ResourceHistory:
+          source = "resource.history.aspx?resourceId={{RESOURCE.ID}}&id={{RECORDING.ACT.ID}}";
+          break;
+        default:
+            throw Assertion.AssertNoReachThisCode();
+      }
+      source = source.Replace("{{RECORDING.ACT.ID}}", this.recordingAct.Id.ToString());
+      source = source.Replace("{{DOCUMENT.ID}}", this.recordingAct.Document.Id.ToString());
+      source = source.Replace("{{RESOURCE.ID}}", this.resource.Id.ToString());
+
+      return source;
+    }
+
+    #endregion Public methods
 
   } // class ByResourceAnalyzer
 

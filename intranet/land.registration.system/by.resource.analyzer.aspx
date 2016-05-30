@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.ByResourceAnalyzer" CodeFile="by.resource.analyzer.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Import Namespace="Empiria.Land.Registration" %>
+<%@ Import Namespace="Empiria.Land.WebApp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
@@ -92,16 +93,16 @@
             <td id="divDocumentViewer" valign="top" style="width:720px;">
               <table class="tabStrip">
                 <tr>
-                  <td id="tabStripItem_0" class="tabDisabled" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Editar documento</td>
-                  <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Acto jurídico</td>
-                  <td id="tabStripItem_2" class="tabDisabled" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Predio</td>
-                  <td id="tabStripItem_3" class="tabOn" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Historia del predio</td>
-                  <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Consultar el acervo</td>
+                  <td id="tabStripItem_0" class="<%=TabStripClass(TabStrip.DocumentEditor)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Editar documento</td>
+                  <td id="tabStripItem_1" class="<%=TabStripClass(TabStrip.RecordingActEditor)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Acto jurídico</td>
+                  <td id="tabStripItem_2" class="<%=TabStripClass(TabStrip.ResourceEditor)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Predio</td>
+                  <td id="tabStripItem_3" class="<%=TabStripClass(TabStrip.ResourceHistory)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Historia del predio</td>
+                  <td id="tabStripItem_4" class="<%=TabStripClass(TabStrip.GlobalSearch)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Consultar el acervo</td>
                   <td class="lastCell">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a id="top" /></td>
                 </tr>
               </table>
 
-            <table id="tabStripItemView_0" class="editionTable" style="display:none;">
+            <table id="tabStripItemView_0" class="editionTable" style="<%=TabStripDisplayView(TabStrip.DocumentEditor)%>">
               <tr>
                 <td class="lastCell">
                   <iframe id="ifraDocumentEditor" style="z-index:99;left:0;top:0;" width="720px"
@@ -111,7 +112,7 @@
               </tr>
             </table> <!-- tabStripItemView_0 !-->
 
-             <table id="tabStripItemView_1" class="editionTable" style="display:none;">
+             <table id="tabStripItemView_1" class="editionTable" style="<%=TabStripDisplayView(TabStrip.RecordingActEditor)%>">
               <tr>
                 <td class="lastCell">
                   <iframe id="ifraRecordingActEditor" style="z-index:99;left:0;top:0;" width="720px"
@@ -121,7 +122,7 @@
               </tr>
             </table> <!-- tabStripItemView_1 !-->
 
-            <table id="tabStripItemView_2" class="editionTable" style="display:none;">
+            <table id="tabStripItemView_2" class="editionTable" style="<%=TabStripDisplayView(TabStrip.ResourceEditor)%>">
               <tr>
                 <td class="lastCell">
                   <iframe id="ifraPropertyEditor" style="z-index:99;left:0;top:0;" width="720px"
@@ -131,7 +132,7 @@
               </tr>
             </table>  <!-- tabStripItemView_2 !-->
 
-            <table id="tabStripItemView_3" class="editionTable" style="display:inline;">
+            <table id="tabStripItemView_3" class="editionTable" style="<%=TabStripDisplayView(TabStrip.ResourceHistory)%>">
               <tr>
                 <td class="lastCell">
                   <iframe id="ifraPropertyHistory" style="z-index:99;left:0;top:0;" width="720px"
@@ -141,7 +142,7 @@
               </tr>
             </table> <!-- tabStripItemView_3 !-->
 
-            <table id="tabStripItemView_4" class="editionTable" style="display:none;">
+            <table id="tabStripItemView_4" class="editionTable" style="<%=TabStripDisplayView(TabStrip.GlobalSearch)%>">
               <tr>
                 <td class="lastCell">
                   <iframe id="ifraSearchInfo" style="z-index:99;left:0;top:0;" width="720px"
@@ -254,12 +255,16 @@
   }
 
   function loadContent() {
-    doOperation('onSelectDocument', '<%=recordingAct.Document.Id%>');
-    getElement('ifraPropertyHistory').src = 'resource.history.aspx?resourceId=<%=resource.Id%>&id=<%=recordingAct.Id%>';
-    getElement('ifraSearchInfo').src = 'document.search.aspx?resourceId=<%=resource.Id%>&id=<%=recordingAct.Id%>';
-    getElement('ifraRecordingActEditor').src = 'recording.act.editor.aspx?propertyId=<%=resource.Id%>&id=<%=recordingAct.Id%>';
-    // getElement('ifraDocumentEditor').src = 'document.editor.aspx?documentId=<%=recordingAct.Document.Id%>&selectedRecordingActId=<%=recordingAct.Id%>';
-    // getElement('ifraPropertyEditor').src = 'property.editor.aspx?propertyId=<%=resource.Id%>&recordingActId=<%=recordingAct.Id%>';
+
+    <% if (base.IsRecordingActSelected) { %>
+      doOperation('onSelectDocument', '<%=recordingAct.Document.Id%>');
+    <% } %>
+
+    getElement('ifraPropertyHistory').src = '<%=TabStripSource(TabStrip.ResourceHistory)%>';
+    getElement('ifraSearchInfo').src = '<%=TabStripSource(TabStrip.GlobalSearch)%>';
+    getElement('ifraRecordingActEditor').src = '<%=TabStripSource(TabStrip.RecordingActEditor)%>';
+    // getElement('ifraDocumentEditor').src = '<%=TabStripSource(TabStrip.DocumentEditor)%>';
+    // getElement('ifraPropertyEditor').src = '<%=TabStripSource(TabStrip.ResourceEditor)%>';
   }
 
 
@@ -348,10 +353,14 @@
   }
 
   function setPageTitle() {
-
+    <% if (base.IsRecordingActSelected) { %>
     getElement("spanPageTitle").innerHTML = "Documento: <%=recordingAct.Document.UID%><br/>"+
                                             "Acto jurídico: <%=recordingAct.DisplayName%> [<%=recordingAct.Index + 1%>]";
-    setInnerText(getElement("spanCurrentImage"), "Predio: <%=resource.UID%>");
+    getElement("spanCurrentImage").innerText = "Predio: <%=resource.UID%>";
+    <% } else { %>
+    getElement("spanPageTitle").innerHTML = "Consulta del acervo registral"
+    getElement("spanCurrentImage").innerText = "";
+    <% } %>
   }
 
   function getCurrentImage() {
@@ -503,8 +512,8 @@
     //var newHeight = oBody.scrollHeight + (oBody.offsetHeight - oBody.clientHeight);
     var newHeight = oBody.scrollHeight + oBody.clientHeight;
 
-    if (newHeight <= 800) {
-      oFrame.style.height = 800;
+    if (newHeight <= 700) {
+      oFrame.style.height = 700;
     } else {
       oFrame.style.height = newHeight;
     }

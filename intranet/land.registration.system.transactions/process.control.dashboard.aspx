@@ -155,9 +155,11 @@
           <option value='(WorkingTime >= 86400*40)'>>= 40 días</option>
           <option value='(WorkingTime >= 86400*50)'>>= 50 días</option>
         </select>
-        &nbsp; &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp;
+        <a href="javascript:doOperation('showUniversalSearcher')">
+                <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar el acervo</a>&nbsp; &nbsp; &nbsp;
         <a href="javascript:doOperation('showSearchRecordingsView')">
-                <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar la información registral</a>&nbsp; &nbsp; &nbsp;
+                <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Información registral (anterior)</a>&nbsp; &nbsp; &nbsp;
       </td>
     </tr>
   </table>
@@ -209,6 +211,9 @@
       case 'removeFilters':
         removeFilters();
         return;
+      case 'showUniversalSearcher':
+        showUniversalSearcher();
+        return;
       case 'showSearchRecordingsView':
         showSearchRecordingsView();
         return;
@@ -250,6 +255,13 @@
 
   function showSearchRecordingsView() {
     createNewWindow("<%=base.GetLegacyDataViewerUrl()%>");
+  }
+
+  var oUniversalSearcherWindow = null;
+
+  function showUniversalSearcher() {
+    oUniversalSearcherWindow = openInWindow(oUniversalSearcherWindow,
+                                           '../land.registration.system/by.resource.analyzer.aspx', true);
   }
 
   function executeWorkflowTask(workflowTaskName, objectId) {
