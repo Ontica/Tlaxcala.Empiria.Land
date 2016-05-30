@@ -48,7 +48,6 @@
           </td>
         </tr>
       </table>
-
     </td>
   </tr>
   <!-- #endregion Search box !-->
@@ -59,7 +58,7 @@
       <table class="editionTable">
         <tr>
           <td class="lastCell">
-            <div style="overflow:auto;max-height:260px;">
+            <div style="overflow:auto;max-height:<%=GetGridMaxHeight()%>;">
               <%=GetSearchResultsGrid()%>
             </div>
           </td>
@@ -111,6 +110,9 @@
         return;
       case 'onSelectRecordingAct':
         onSelectRecordingAct(arguments[1], arguments[2]);
+        return;
+      case 'onSelectCertificate':
+        onSelectCertificate(arguments[1]);
         return;
       case 'displayResourcePopupWindow':
         displayResourcePopupWindow(arguments[1]);
@@ -170,6 +172,9 @@
     window.parent.execScript("doOperation('onSelectRecordingAct', " + documentId + ", " + recordingActId + ")");
   }
 
+  function onSelectCertificate(certificateId) {
+    window.parent.execScript("doOperation('onSelectCertificate', " + certificateId + ")");
+  }
   // #region HTML Content loaders
 
   function displayPhysicalRecordingsWithRecordingActsGrid(recordingBookId) {

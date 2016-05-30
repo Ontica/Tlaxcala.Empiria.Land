@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.WebApp.ModalWindowControl" CodeFile="modal.window.ascx.cs" %>
-<div id='<%=this.ClientID%>_Window' class="modalWindow" style="height:600px;width:600px;display:none">
+<div id='<%=this.ClientID%>_Window' class="modalWindow" style="height:500px;width:600px;display:none">
   <div class="modalHeader">
     <span id='<%=this.ClientID%>_Title'>Historia del predio XXXX</span>
 
@@ -9,7 +9,7 @@
 	</div>  <!-- divHeader !-->
 	<div class="modalBody">
 
-    <div id='<%=this.ClientID%>_Content' class="modalContent" style="overflow:auto;max-height:880px;">
+    <div id='<%=this.ClientID%>_Content' class="modalContent" style="overflow:auto;max-height:520px;">
       <!-- Contenido !-->
     </div>
   </div>

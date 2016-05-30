@@ -15,6 +15,7 @@ using Empiria.Presentation.Web;
 using Empiria.Land.Certification;
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
+using Empiria.Land.UI;
 
 namespace Empiria.Land.WebApp {
 
@@ -25,6 +26,7 @@ namespace Empiria.Land.WebApp {
     private Resource _resource = null;
 
     private string _searchResultsGrid = "";
+    private string _searchResultsGridMaxHeight = "260px";
 
     protected string OnLoadScript = String.Empty;
 
@@ -55,6 +57,10 @@ namespace Empiria.Land.WebApp {
 
     protected string GetSearchResultsGrid() {
       return this._searchResultsGrid;
+    }
+
+    protected string GetGridMaxHeight() {
+      return _searchResultsGridMaxHeight;
     }
 
     #endregion Protected methods
@@ -118,21 +124,9 @@ namespace Empiria.Land.WebApp {
     }
 
     private void LoadCertificatesGrid(FixedList<Certificate> certificates) {
-      string html = ReadHeaderTemplate(typeof(RecordingDocument));
-
-      for (int i = 0; i < certificates.Count; i++) {
-        var item = certificates[i];
-
-        string row = ReadRowTemplate(typeof(RecordingDocument), i);
-        row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectCertificate");
-        row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
-        row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.UID);
-
-        html += row;
-      }
-      _searchResultsGrid = TableWrapper(html);
+      _searchResultsGrid = CertificatesGrid.Parse(certificates);
+      _searchResultsGridMaxHeight = "600px";
     }
-
 
     private void LoadImagingControlIDsGrid(FixedList<RecordingDocument> documents) {
       string html = ReadHeaderTemplate(typeof(RecordingDocument));
@@ -152,7 +146,7 @@ namespace Empiria.Land.WebApp {
 
 
     private void LoadPartiesGrid(FixedList<RecordingActParty> parties) {
-      string html = ReadHeaderTemplate(typeof(RecordingDocument));
+      string html = ReadHeaderTemplate(typeof(RecordingActParty));
 
       for (int i = 0; i < parties.Count; i++) {
         var item = parties[i];
@@ -169,12 +163,12 @@ namespace Empiria.Land.WebApp {
 
 
     private void LoadPhysicalRecordingsGrid(FixedList<Recording> physicalRecordings) {
-      string html = ReadHeaderTemplate(typeof(RecordingDocument));
+      string html = ReadHeaderTemplate(typeof(Recording));
 
       for (int i = 0; i < physicalRecordings.Count; i++) {
         var item = physicalRecordings[i];
 
-        string row = ReadRowTemplate(typeof(RecordingDocument), i);
+        string row = ReadRowTemplate(typeof(Recording), i);
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectPhysicalRecording");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.AsText);
@@ -186,12 +180,12 @@ namespace Empiria.Land.WebApp {
 
 
     private void LoadRecordingBooksGrid(FixedList<RecordingBook> books) {
-      string html = ReadHeaderTemplate(typeof(RecordingDocument));
+      string html = ReadHeaderTemplate(typeof(RecordingBook));
 
       for (int i = 0; i < books.Count; i++) {
         var item = books[i];
 
-        string row = ReadRowTemplate(typeof(RecordingDocument), i);
+        string row = ReadRowTemplate(typeof(RecordingBook), i);
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectRecordingBook");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.AsText);
@@ -225,7 +219,7 @@ namespace Empiria.Land.WebApp {
       for (int i = 0; i < resources.Count; i++) {
         var item = resources[i];
 
-        string row = ReadRowTemplate(typeof(RecordingDocument), i);
+        string row = ReadRowTemplate(typeof(Resource), i);
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectResource");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.UID);
@@ -235,13 +229,14 @@ namespace Empiria.Land.WebApp {
       _searchResultsGrid = TableWrapper(html);
     }
 
+
     private void LoadTransactionsGrid(FixedList<LRSTransaction> transactions) {
-      string html = ReadHeaderTemplate(typeof(RecordingDocument));
+      string html = ReadHeaderTemplate(typeof(LRSTransaction));
 
       for (int i = 0; i < transactions.Count; i++) {
         var item = transactions[i];
 
-        string row = ReadRowTemplate(typeof(RecordingDocument), i);
+        string row = ReadRowTemplate(typeof(LRSTransaction), i);
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectTransaction");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.UID);
