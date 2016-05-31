@@ -11,6 +11,7 @@
 using System;
 
 using Empiria.Land.Registration;
+using Empiria.Land.Registration.Transactions;
 using Empiria.Land.UI;
 using Empiria.Presentation.Web;
 
@@ -32,6 +33,9 @@ namespace Empiria.Web.UI.Ajax {
 
         case "getPartyRecordingActsGridCmd":
           return GetPartyRecordingActsGrid();
+
+        case "getTransactionDocumentAndCertificatesGridCmd":
+          return GetTransactionDocumentAndCertificatesGrid();
 
         default:
           throw new WebPresentationException(WebPresentationException.Msg.UnrecognizedCommandName,
@@ -71,6 +75,14 @@ namespace Empiria.Web.UI.Ajax {
       var resource = Resource.Parse(resourceId);
 
       return ResourceHistoryGrid.Parse(resource);
+    }
+
+    private string GetTransactionDocumentAndCertificatesGrid() {
+      int transactionId = GetCommandParameter<int>("transactionId");
+
+      var transaction = LRSTransaction.Parse(transactionId);
+
+      return TransactionDocumentAndCertificatesGrid.Parse(transaction);
     }
 
     #endregion Private command handlers

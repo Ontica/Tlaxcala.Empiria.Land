@@ -195,7 +195,7 @@
   }
 
   function onSelectTransaction(transactionId) {
-    //window.parent.execScript("doOperation('onSelectCertificate', " + certificateId + ")");
+    displayTransactionDocumentAndCertificatesGrid(transactionId);
   }
 
   // #region HTML Content loaders
@@ -224,6 +224,16 @@
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getPartyRecordingActsGridCmd";
     url += "&partyId=" + partyId;
+
+    var gridHtml = invokeAjaxMethod(false, url, null);
+
+    updateSelectedItemViewer(gridHtml);
+  }
+
+  function displayTransactionDocumentAndCertificatesGrid(transactionId) {
+    var url = "../ajax/land.ui.controls.aspx";
+    url += "?commandName=getTransactionDocumentAndCertificatesGridCmd";
+    url += "&transactionId=" + transactionId;
 
     var gridHtml = invokeAjaxMethod(false, url, null);
 
