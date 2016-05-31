@@ -47,16 +47,14 @@
     </td>
   </tr>
   <tr>
-    <td>Fecha de Nac:</td>
+    <td>Identificación</td>
     <td class="lastCell" colspan="5">
-      <input id='txtBornDate' type="text" class="textBox" style="width:64px;" onblur="formatAsDate(this)" title="" runat="server" />
-      (d/m/a) &nbsp; &nbsp;
-      Identificación:
-      <select id="cboIDNumberType" class="selectBox" style="width:74px" title="" runat="server">
+      <select id="cboIDNumberType" class="selectBox" style="width:80px" title="" onchange="return this_updateUserInterface(this);" runat="server">
         <option value="">( ? )</option>
         <option value="CURP">CURP</option>
         <option value="RFC">RFC</option>
         <option value="IFE">IFE</option>
+        <option value="Pasaporte">Pasaporte</option>
         <option value="None">Ninguna</option>
       </select>
       <input id='txtIDNumber' type="text" class="textBox" style="width: 144px;margin-right:0;" maxlength="20" runat='server' />
@@ -85,7 +83,7 @@
   <tr>
     <td>Otra información:<br />&nbsp;</td>
     <td class="lastCell">
-      <textarea id="txtOrgRegistryNotes" cols="310" rows="2" style="width:490px" class="textArea" runat="server"></textarea>
+      <textarea id="txtOrgNotes" cols="310" rows="2" style="width:490px" class="textArea" runat="server"></textarea>
     </td>
   </tr>
 </table>
@@ -187,7 +185,12 @@
 /* <![CDATA[ */
 
   function this_setPartyControlsForEdition(clickSource) {
-    var disabledFlag = !getElement('<%=txtPersonFullName.ClientID%>').readOnly;
+    <% if (base.isLoaded) { %>
+      var disabledFlag = true;
+    <% } else { %>
+      var disabledFlag = false;
+    <% } %>
+
     var sMsg = "";
     if (clickSource && disabledFlag) {
       if (this_isPersonPartySelected()) {
@@ -217,12 +220,18 @@
     } else {
       getElement('cmdEditParty').value = "Guardar";
     }
+    disabledPartyControls(disabledFlag);
+  }
 
+  function disabledPartyControls(disabledFlag) {
     getElement('<%=txtPersonFullName.ClientID%>').readOnly = disabledFlag;
     getElement('<%=txtIDNumber.ClientID%>').readOnly = disabledFlag;
+    getElement('<%=cboIDNumberType.ClientID%>').disabled = disabledFlag;
+    getElement('<%=txtPersonNotes.ClientID%>').readOnly = disabledFlag;
 
     getElement('<%=txtOrgName.ClientID%>').readOnly = disabledFlag;
     getElement('<%=txtOrgTaxIDNumber.ClientID%>').readOnly = disabledFlag;
+    getElement('<%=txtOrgNotes.ClientID%>').readOnly = disabledFlag;
   }
 
   function this_searchParties() {
@@ -247,6 +256,15 @@
 
     invokeAjaxComboItemsLoader(url, getElement('<%=cboParty.ClientID%>'));
     this_displayEditor();
+  }
+
+  function this_updatePersonEditor() {
+    if (getElement('<%=cboIDNumberType.ClientID%>').value == 'None') {
+      getElement('<%=txtIDNumber.ClientID%>').value = '';
+      getElement('<%=txtIDNumber.ClientID%>').disabled = true;
+    } else {
+      getElement('<%=txtIDNumber.ClientID%>').disabled = false;
+    }
   }
 
   function this_updateRoleUserInterface() {
@@ -288,6 +306,8 @@
     }
     if (oControl == getElement('<%=cboParty.ClientID%>')) {
       this_displayEditor();
+    } else if (oControl == getElement('<%=cboIDNumberType.ClientID%>')) {
+      this_updatePersonEditor();
     } else if (oControl == getElement('<%=cboPartyType.ClientID%>')) {
       this_searchParties();
     } else if (oControl == getElement('<%=cboPartyFilter.ClientID%>')) {
@@ -339,13 +359,15 @@
       alert("Requiero se proporcione el nombre completo de la persona.");
       return false;
     }
-    if (getElement('<%=txtBornDate.ClientID%>').value.length == 0) {
-      if (!confirm("No se proporcionó la fecha de nacimiento de la persona.\n\n¿La fecha de nacimiento no consta?")) {
+    if (getElement('<%=cboIDNumberType.ClientID%>').value.length == 0) {
+      alert("Necesito se seleccione el tipo de identificación de la persona.");
+      return false;
+    }
+    if (getElement('<%=cboIDNumberType.ClientID%>').value != 'None') {
+      if (getElement('<%=txtIDNumber.ClientID%>').value.length == 0) {
+        alert("Necesito se proporcione el número de identificación.");
         return false;
       }
-    } else if (!isDate(getElement('<%=txtBornDate.ClientID%>'))) {
-      alert("No reconozco la fecha de nacimiento de la persona.");
-      return false;
     }
     return true;
   }
@@ -540,14 +562,16 @@
         <%=tblOrganizationPartyEditor.ClientID%>.style.display = "inline";
       }
       <%=tblPartyRoleEditor.ClientID%>.style.display = "inline";
+      disabledPartyControls(false);
     } else if (getElement('<%=cboParty.ClientID%>').value.length != 0) {
       doOperation('selectParty', getElement('<%=cboParty.ClientID%>').value);
+      disabledPartyControls(true);
     }
   }
 
   function this_cleanEditor() {
     getElement('<%=txtPersonFullName.ClientID%>').value = '';
-    getElement('<%=txtBornDate.ClientID%>').value = '';
+    getElement('<%=cboIDNumberType.ClientID%>').value = '';
     getElement('<%=txtIDNumber.ClientID%>').value = '';
 
 

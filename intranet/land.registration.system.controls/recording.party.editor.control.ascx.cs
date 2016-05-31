@@ -123,8 +123,10 @@ namespace Empiria.Land.WebApp {
 
     private Party FillOrganizationParty() {
       if (this.Party == null) {
-        this.Party = new OrganizationParty(int.Parse(cboPartyType.Value), txtOrgName.Value);
-        //this.Party.UID = txtOrgTaxIDNumber.Value;
+        this.Party = new OrganizationParty(int.Parse(cboPartyType.Value), txtOrgName.Value,
+                                           txtOrgTaxIDNumber.Value,
+                                           txtOrgTaxIDNumber.Value != "" ? "RFC" : "None");
+        this.Party.Notes = txtOrgNotes.Value;
       }
       this.Party.Save();
 
@@ -133,8 +135,8 @@ namespace Empiria.Land.WebApp {
 
     private Party FillHumanParty() {
       if (this.Party == null) {
-        this.Party = new HumanParty(txtPersonFullName.Value);
-        //this.Party.UID = txtIDNumber.Value;
+        this.Party = new HumanParty(txtPersonFullName.Value, txtIDNumber.Value, cboIDNumberType.Value);
+        this.Party.Notes = txtPersonNotes.Value;
       }
       this.Party.Save();
 
@@ -160,9 +162,10 @@ namespace Empiria.Land.WebApp {
 
       cboPartyType.Value = person.GetEmpiriaType().Id.ToString();
 
-      txtBornDate.Value = String.Empty;
       txtPersonFullName.Value = person.FullName;
       txtIDNumber.Value = person.UID;
+      cboIDNumberType.Value = person.UIDType;
+      txtPersonNotes.Value = person.Notes;
       isLoaded = true;
     }
 
@@ -172,6 +175,7 @@ namespace Empiria.Land.WebApp {
       cboPartyType.Value = org.GetEmpiriaType().Id.ToString();
       txtOrgName.Value = org.FullName;
       txtOrgTaxIDNumber.Value = org.UID;
+      txtOrgNotes.Value = org.Notes;
       isLoaded = true;
     }
 
