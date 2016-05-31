@@ -9,6 +9,7 @@
 *                                                                                                            *
 ********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
+using System.Linq;
 
 using Empiria.Presentation.Web;
 
@@ -145,16 +146,19 @@ namespace Empiria.Land.WebApp {
     }
 
 
-    private void LoadPartiesGrid(FixedList<RecordingActParty> parties) {
-      string html = ReadHeaderTemplate(typeof(RecordingActParty));
+    private void LoadPartiesGrid(FixedList<RecordingActParty> recordingActParties) {
+      string html = ReadHeaderTemplate(typeof(Party));
+
+      //Gets unique parties (Party) from the recording acts parties
+      var parties = recordingActParties.Select((x) => x.Party).Distinct().ToList();
 
       for (int i = 0; i < parties.Count; i++) {
         var item = parties[i];
 
-        string row = ReadRowTemplate(typeof(RecordingActParty), i);
+        string row = ReadRowTemplate(typeof(Party), i);
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectParty");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
-        row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.Party.FullName);
+        row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.ExtendedName);
 
         html += row;
       }
@@ -262,7 +266,7 @@ namespace Empiria.Land.WebApp {
     static private string ReadRowTemplate(Type type) {
       const string template =
         "<tr class='{{CLASS}}'>" +
-        "<td>" +
+        "<td style='white-space:normal'>" +
           "<a href='javascript:doOperation(\"{{ON.SELECT.OPERATION}}\", {{ITEM.ID}});'>" +
           "{{ITEM.DISPLAY.TEXT}}</a>" +
         "</td></tr>";

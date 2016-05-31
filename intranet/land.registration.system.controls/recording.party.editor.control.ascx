@@ -516,7 +516,8 @@
   }
 
   function this_getPersonName() {
-    if (getElement('<%=cboParty.ClientID%>').value.length == 0 || getElement('<%=cboParty.ClientID%>').value == "appendParty") {
+    if (getElement('<%=cboParty.ClientID%>').value.length == 0 ||
+        getElement('<%=cboParty.ClientID%>').value == "appendParty") {
       return getElement('<%=txtPersonFullName.ClientID%>').value;
     } else {
       return getComboOptionText(getElement('<%=cboParty.ClientID%>'));

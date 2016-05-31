@@ -30,6 +30,8 @@ namespace Empiria.Web.UI.Ajax {
         case "getPhysicalRecordingsWithRecordingActsGridCmd":
           return GetPhysicalRecordingsWithRecordingActsGrid();
 
+        case "getPartyRecordingActsGridCmd":
+          return GetPartyRecordingActsGrid();
 
         default:
           throw new WebPresentationException(WebPresentationException.Msg.UnrecognizedCommandName,
@@ -45,6 +47,14 @@ namespace Empiria.Web.UI.Ajax {
       var document = RecordingDocument.Parse(documentId);
 
       return DocumentRecordingActsGrid.Parse(document);
+    }
+
+    private string GetPartyRecordingActsGrid() {
+      int partyId = GetCommandParameter<int>("partyId");
+
+      var party = Party.Parse(partyId);
+
+      return PartyRecordingActsGrid.Parse(party);
     }
 
     private string GetPhysicalRecordingsWithRecordingActsGrid() {

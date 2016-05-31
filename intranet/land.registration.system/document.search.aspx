@@ -33,15 +33,14 @@
               <option value="resource">Folios reales</option>
               <option value="document">Documentos</option>
               <option value="certificate">Certificados</option>
+              <option value="party">Indice de personas</option>
               <option value=""></option>
               <option value="recordingBook">Libros registrales</option>
               <option value="physicalRecording">Partidas</option>
               <option value=""></option>
+              <option value="transaction">Trámites</option>
               <option value="imagingControl">No. control acervo</option>
             </select>
-<!--
-//<option value="transaction">Trámites</option>
-!-->
             <input id='txtSearchBox' name='txtSearchBox' type="text" onkeypress="return alphaNumericKeyFilter(event, true, searchDataCallback);"
                    class="textBox" style="width:240px" runat='server' title="" />
             <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda"
@@ -118,6 +117,12 @@
       case 'onSelectCertificate':
         onSelectCertificate(arguments[1]);
         return;
+      case 'onSelectParty':
+        onSelectParty(arguments[1]);
+        return;
+      case 'onSelectTransaction':
+        onSelectTransaction(arguments[1]);
+        return;
       case 'displayResourcePopupWindow':
         displayResourcePopupWindow(arguments[1]);
         return;
@@ -184,6 +189,15 @@
   function onSelectCertificate(certificateId) {
     window.parent.execScript("doOperation('onSelectCertificate', " + certificateId + ")");
   }
+
+  function onSelectParty(partyId) {
+    displayPartyRecordingActsGrid(partyId);
+  }
+
+  function onSelectTransaction(transactionId) {
+    //window.parent.execScript("doOperation('onSelectCertificate', " + certificateId + ")");
+  }
+
   // #region HTML Content loaders
 
   function displayDocumentRecordingActsGrid(documentId) {
@@ -191,9 +205,9 @@
     url += "?commandName=getDocumentRecordingActsGridCmd";
     url += "&documentId=" + documentId;
 
-    var gridHTML = invokeAjaxMethod(false, url, null);
+    var gridHtml = invokeAjaxMethod(false, url, null);
 
-    updateSelectedItemViewer(gridHTML);
+    updateSelectedItemViewer(gridHtml);
   }
 
   function displayBookPhysicalRecordingsWithRecordingActsGrid(recordingBookId) {
@@ -201,9 +215,19 @@
     url += "?commandName=getPhysicalRecordingsWithRecordingActsGridCmd";
     url += "&recordingBookId=" + recordingBookId;
 
-    var physicalRecordingsGridHTML = invokeAjaxMethod(false, url, null);
+    var gridHtml = invokeAjaxMethod(false, url, null);
 
-    updateSelectedItemViewer(physicalRecordingsGridHTML);
+    updateSelectedItemViewer(gridHtml);
+  }
+
+  function displayPartyRecordingActsGrid(partyId) {
+    var url = "../ajax/land.ui.controls.aspx";
+    url += "?commandName=getPartyRecordingActsGridCmd";
+    url += "&partyId=" + partyId;
+
+    var gridHtml = invokeAjaxMethod(false, url, null);
+
+    updateSelectedItemViewer(gridHtml);
   }
 
   function displayResourceHistoryGrid(resourceId) {
