@@ -17,7 +17,7 @@ namespace Empiria.Land.WebApp {
     private RecordingTask ParseRecordingTask() {
       Command command = base.GetCurrentCommand();
 
-      RecordingActInfo targetActInfo = null;
+      RecordingActInfoDTO targetActInfo = null;
 
 
       RecordingTaskType taskType =
@@ -25,9 +25,9 @@ namespace Empiria.Land.WebApp {
                                                command.GetParameter<string>("recordingTaskType"));
 
       if (command.GetParameter<int>("targetRecordingActId", -1) != -1) {
-        targetActInfo = new RecordingActInfo(command.GetParameter<int>("targetRecordingActId"));
+        targetActInfo = new RecordingActInfoDTO(command.GetParameter<int>("targetRecordingActId"));
       } else {
-        targetActInfo = new RecordingActInfo(
+        targetActInfo = new RecordingActInfoDTO(
           recordingActTypeId: command.GetParameter<int>("targetActTypeId", -1),
           physicalBookId: command.GetParameter<int>("targetActPhysicalBookId", -1),
           physicalRecordingId: command.GetParameter<int>("targetActRecordingId", -1),
@@ -35,10 +35,10 @@ namespace Empiria.Land.WebApp {
         );
       }
 
-      RealEstatePartition partitionInfo = null;
+      RealEstatePartitionDTO partitionInfo = null;
       if (taskType == RecordingTaskType.createPartition) {
         partitionInfo =
-              new RealEstatePartition(command.GetParameter<string>("partitionType"),
+              new RealEstatePartitionDTO(command.GetParameter<string>("partitionType"),
                                       command.GetParameter<string>("partitionNo"),
                                       command.GetParameter<string>("partitionRepeatUntilNo", String.Empty));
       }
