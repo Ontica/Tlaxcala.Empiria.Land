@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" ViewStateMode="Disabled" EnableSessionState="true" MasterPageFile="~/workplace/dashboard.master" Inherits="Empiria.Land.WebApp.ProcessControlDashboard" CodeFile="process.control.dashboard.aspx.cs" %>
+<%@ Import Namespace="Empiria.Land.WebApp" %>
 <asp:Content ID="dashboardItem" ContentPlaceHolderID="dashboardItemPlaceHolder" runat="Server" EnableViewState="true">
 <table id="tblDashboardMenu" class="tabStrip" style='display:<%=base.ShowTabStripMenu ? "inline" : "none"%>'>
   <tr>
@@ -8,7 +9,8 @@
     <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 3);" title="">Recibir documentos</td>
     <td id="tabStripItem_4"  style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk") ? "inline" : "none"%>' class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Ventanilla de entregas</td>
     <td id="tabStripItem_5" style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ControlDesk") ? "inline" : "none"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 5);" title="">Mesa de control</td>
-    <td id="tabStripItem_6" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 6);" title="">Buscar trámites</td>
+    <td id="tabStripItem_6" style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DigitalizationDesk") ? "inline" : "none"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 6);" title="">Mesa de digitalización</td>
+    <td id="tabStripItem_7" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 7);" title="">Buscar trámites</td>
     <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
     <td><input id="currentTabStripItem" name="currentTabStripItem" type="hidden" /></td>
   </tr>
@@ -22,11 +24,11 @@
           <option value=''>( Todos los trámites )</option><option value='699'>Avisos preventivos y definitivos</option><option value='700'>Inscripción de documentos</option><option value='702'>Expedición de certificados</option>
           <option value='707'>Procede</option><option value='704'>Trámite Comercio</option><option value='705'>Archivo General de Notarías</option><option value='706'>Oficialía de partes</option>
 				</select>
-        <span style="display:<%=base.SelectedTabStrip != 5 ? "inline" : "none" %>">
+        <span style="display:<%=!base.IsTabStripSelected(TabStrip.MesaDeControl) ? "inline" : "none" %>">
           <a href="javascript:doOperation('createLRSTransaction')"><img src="../themes/default/buttons/go.button.png" alt=""
            title="Registra un nuevo trámite ante la Oficina del Registro Público de la Propiedad" />Registrar nuevo trámite</a>
         </span>
-        <span style="display:<%=base.SelectedTabStrip == 5 ? "inline" : "none" %>">
+        <span style="display:<%=base.IsTabStripSelected(TabStrip.MesaDeControl) ? "inline" : "none" %>">
 				  <select id="cboResponsible" class="selectBox" style="width:168px" runat="server" onchange="doOperation('updateUserInterface', this);">
             <option value="">( Todos los responsables )</option>
 				  </select>
@@ -106,13 +108,13 @@
 	        <option value="133">Sección 4ta</option>
 	        <option value="136">Sección 5ta</option>
         </select>
-        <span style="display:<%=base.SelectedTabStrip == 3 ? "inline" : "none" %>">
+        <span style="display:<%=base.IsTabStripSelected(TabStrip.RecibirDocumentos) ? "inline" : "none" %>">
            Origen:
            <select id="cboFrom" name="cboFrom" class="selectBox" onchange="doOperation('updateUserInterface', this);" style="width:200px" runat="server">
             <option value="">( ¿Quién le está entregando? )</option>
           </select>
         </span>
-        <span style="display:<%=base.SelectedTabStrip != 3 ? "inline" : "none" %>">
+        <span style="display:<%=!base.IsTabStripSelected(TabStrip.RecibirDocumentos) ? "inline" : "none" %>">
          Estado:
          <select id="cboStatus" name="cboStatus" class="selectBox" onchange="doOperation('updateUserInterface', this);" style="width:170px" runat="server">
           <option value="(TransactionStatus <> 'X')">( Todos los no eliminados )</option>

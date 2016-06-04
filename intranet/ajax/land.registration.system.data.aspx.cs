@@ -155,6 +155,7 @@ namespace Empiria.Web.UI.Ajax {
 
       } else if (section != RecordingSection.Empty && section.Id == 1052) {
         var list = GeneralList.Parse("LRSLimitationSection.Combo.List");
+        html += "|" + HtmlSelectContent.GetComboAjaxHtmlItem("annotation", "Registrado al margen");
         html += "|" + HtmlSelectContent.GetComboAjaxHtml(list.GetItems<NameValuePair>(), 0,
                                                          "Value", "Name");
       } else if (section != RecordingSection.Empty && section.Id == 1054) {

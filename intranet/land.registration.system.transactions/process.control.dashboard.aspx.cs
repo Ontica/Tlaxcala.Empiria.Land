@@ -21,6 +21,20 @@ using Empiria.Presentation.Web.Content;
 
 namespace Empiria.Land.WebApp {
 
+  #region
+  internal enum TabStrip {
+     MisTramitesPendientes = 0,
+     DocumentosPorEntregar = 1,
+     MiTrabajoRealizado = 2,
+     RecibirDocumentos = 3,
+     VentanillaDeEntregas = 4,
+     MesaDeControl = 5,
+     MesaDeDigitalizacion = 6,
+     BuscarTramites = 7,
+  }
+
+  #endregion
+
   public partial class ProcessControlDashboard : MultiViewDashboard {
 
     #region Protected methods
@@ -74,11 +88,15 @@ namespace Empiria.Land.WebApp {
 
     }
 
+    internal bool IsTabStripSelected(TabStrip tabStrip) {
+      return (base.SelectedTabStrip == (int) tabStrip);
+    }
+
     protected sealed override DataView LoadDataSource() {
       Contact me = Contact.Parse(ExecutionServer.CurrentUserId);
       string filter = GetFilter();
       string sort = String.Empty;
-      if (base.SelectedTabStrip == 0) {
+      if (IsTabStripSelected(TabStrip.MisTramitesPendientes)) {
         if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReceiveTransaction")) {
           if (filter.Length != 0) {
             filter += " AND ";
@@ -93,35 +111,37 @@ namespace Empiria.Land.WebApp {
           return TransactionData.GetLRSTransactionsForUI(filter, sort);
         }
 
-      } else if (base.SelectedTabStrip == 1) {
+      } else if (IsTabStripSelected(TabStrip.DocumentosPorEntregar)) {
         return WorkflowData.GetResponsibleWorkflowInbox(me, WorkflowTaskStatus.OnDelivery, filter, sort);
 
-      } else if (base.SelectedTabStrip == 2) {
-        // CORRECT THIS
+      } else if (IsTabStripSelected(TabStrip.MiTrabajoRealizado)) {
         return WorkflowData.GetResponsibleWorkflowInbox(me, WorkflowTaskStatus.Closed, filter, sort);
 
-      } else if (base.SelectedTabStrip == 3) {
+      } else if (IsTabStripSelected(TabStrip.RecibirDocumentos)) {
         if (filter.Length != 0) {
           filter += " AND ";
         }
-        filter += "NextTransactionStatus NOT IN ('R','C','Q','H')";
+        filter += "NextTransactionStatus NOT IN ('R','C','Q')";  // ,'H'
         if (!String.IsNullOrWhiteSpace(selectedComboFromValue)) {
           return WorkflowData.GetResponsibleWorkflowInbox(Contact.Parse(int.Parse(selectedComboFromValue)),
                                                           WorkflowTaskStatus.OnDelivery, filter, sort);
         }
 
-      } else if (base.SelectedTabStrip == 4) {
+      } else if (IsTabStripSelected(TabStrip.VentanillaDeEntregas)) {
         if (filter.Length != 0) {
           filter += " AND ";
         }
         filter += "(TransactionStatus IN ('D','L'))";
         return TransactionData.GetLRSTransactionsForUI(filter, sort);
 
-      } else if (base.SelectedTabStrip == 5) {
-        // ToDo: CORRECT THIS
+      } else if (IsTabStripSelected(TabStrip.MesaDeControl)) {      // Mesa de control
+        if (filter.Length != 0) {
+          filter += " AND ";
+        }
+        filter += "(TransactionStatus IN ('H'))";
         return TransactionData.GetLRSTransactionsForUI(filter, sort);
 
-      } else if (base.SelectedTabStrip == 6) {
+      } else if (IsTabStripSelected(TabStrip.BuscarTramites)) {
         return TransactionData.GetLRSTransactionsForUI(filter, "PresentationTime DESC");
 
       }
@@ -129,9 +149,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected sealed override void LoadPageControls() {
-      if (!IsPostBack) {
-        LoadCombos();
-      }
+      LoadCombos();
       if (txtFromDate.Value == String.Empty) {
         txtFromDate.Value = DateTime.Parse("01/Jan/2016").ToString("dd/MMM/yyyy");
       }
@@ -145,13 +163,21 @@ namespace Empiria.Land.WebApp {
     }
 
     private void LoadCombos() {
-      FixedList<Contact> list = WorkflowData.GetContactsWithWorkflowOutboxTasks();
-      HtmlSelectContent.LoadCombo(this.cboFrom, list, "Id", "Alias",
-                                  "( ¿Quién le está entregando? )", String.Empty, String.Empty);
-      DataView view = WorkflowData.GetWorkflowActiveTasksTotals();
+      if (IsTabStripSelected(TabStrip.RecibirDocumentos) && this.cboFrom.Items.Count <= 1) {
+        FixedList<Contact> list = WorkflowData.GetContactsWithWorkflowOutboxTasks();
+        HtmlSelectContent.LoadCombo(this.cboFrom, list, "Id", "Alias",
+                                    "( ¿Quién le está entregando? )", String.Empty, String.Empty);
+        //cboFrom.Items.Insert(1, new ListItem("Mesa de control", "(TransactionStatus = 'K')"));
+        //cboFrom.Items.Insert(2, new ListItem("Mesa de digitalización", "(TransactionStatus = 'A')"));
+        //cboFrom.Items.Insert(3, new ListItem("Ventanilla de entregas", "(TransactionStatus IN ('L', 'D')"));
+        //cboFrom.Items.Insert(4, String.Empty);
+      }
+      if (IsTabStripSelected(TabStrip.MesaDeControl) && this.cboResponsible.Items.Count <= 1) {
+        DataView view = WorkflowData.GetWorkflowActiveTasksTotals();
 
-      HtmlSelectContent.LoadCombo(this.cboResponsible, view, "ResponsibleId", "Responsible",
-                                  "( Todos los responsables )", String.Empty, String.Empty);
+        HtmlSelectContent.LoadCombo(this.cboResponsible, view, "ResponsibleId", "Responsible",
+                                    "( Todos los responsables )", String.Empty, String.Empty);
+      }
     }
 
     protected string GetLegacyDataViewerUrl() {
@@ -159,44 +185,44 @@ namespace Empiria.Land.WebApp {
     }
 
     protected sealed override void SetRepeaterTemplates() {
-      if (base.SelectedTabStrip == 0) {
+      if (IsTabStripSelected(TabStrip.MisTramitesPendientes)) {
         Func<DataRowView, string> Id = (x => Convert.ToString(x["ResponsibleId"]));
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.control.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.control.item.ascx");
         base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = true;
 
-      } else if (base.SelectedTabStrip == 1) {
+      } else if (IsTabStripSelected(TabStrip.DocumentosPorEntregar)) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.control.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.delivery.item.ascx");
         base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = true;
 
-      } else if (base.SelectedTabStrip == 2) {
+      } else if (IsTabStripSelected(TabStrip.MiTrabajoRealizado)) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.control.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.close.item.ascx");
         base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = true;
 
-      } else if (base.SelectedTabStrip == 3) {
+      } else if (IsTabStripSelected(TabStrip.RecibirDocumentos)) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.control.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.receive.item.ascx");
         base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = true;
 
-      } else if (base.SelectedTabStrip == 4) {
+      } else if (IsTabStripSelected(TabStrip.VentanillaDeEntregas)) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.control.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.control.item.ascx");
         base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = false;
 
-      } else if (base.SelectedTabStrip == 5) {
-        itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.search.header.ascx");
-        itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.search.item.ascx");
-        base.ViewColumnsCount = 5;
+      } else if (IsTabStripSelected(TabStrip.MesaDeControl)) {
+        itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/control.desk.header.ascx");
+        itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/control.desk.item.ascx");
+        base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = false;
 
-      } else if (base.SelectedTabStrip == 6) {
+      } else if (IsTabStripSelected(TabStrip.BuscarTramites)) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.search.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.search.item.ascx");
         base.ViewColumnsCount = 5;
@@ -223,7 +249,7 @@ namespace Empiria.Land.WebApp {
       // Don't show status for users in Vetanilla de entregas and
       // next status was delivered or returned.
       if (status != LRSTransactionStatus.Delivered &&
-          status != LRSTransactionStatus.Returned && base.SelectedTabStrip != 5) {
+          status != LRSTransactionStatus.Returned && !IsTabStripSelected(TabStrip.VentanillaDeEntregas)) {
         base.SetOKScriptMsg();
       }
       txtSearchExpression.Value = "";
@@ -287,7 +313,10 @@ namespace Empiria.Land.WebApp {
       if (cboProcessType.Value.Length != 0) {
         filter = "(TransactionTypeId = " + cboProcessType.Value + ")";
       }
-      if (cboStatus.Value.Length != 0 && base.SelectedTabStrip != 3 && base.SelectedTabStrip != 4) {
+      if (cboStatus.Value.Length != 0 &&
+          !IsTabStripSelected(TabStrip.RecibirDocumentos) &&
+          !IsTabStripSelected(TabStrip.VentanillaDeEntregas) &&
+          !IsTabStripSelected(TabStrip.MesaDeControl)) {
         if (filter.Length != 0) {
           filter += " AND ";
         }
@@ -299,7 +328,7 @@ namespace Empiria.Land.WebApp {
         }
         filter += "(RecorderOfficeId = " + cboRecorderOffice.Value + ")";
       }
-      if (cboResponsible.Value.Length != 0 && base.SelectedTabStrip == 5) {
+      if (cboResponsible.Value.Length != 0 && IsTabStripSelected(TabStrip.MesaDeControl)) {
         if (filter.Length != 0) {
           filter += " AND ";
         }
