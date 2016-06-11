@@ -425,11 +425,11 @@
       temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
       temp += "¿Se va a devolver el trámite al interesado?";
     } else if (newState == "H") {
-      temp = "Finalizar este trámite\n\n";
+      temp = "Archivar este trámite\n\n";
       temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
       temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
       temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
-      temp += "¿Marco este trámite como finalizado? (Ya no se prodrá hacerle cambios)";
+      temp += "¿Marco este trámite como archivado? (Ya no será posible hacerle cambios)";
     } else if (newState == "X") {
       temp = "Eliminar este trámite\n\n";
       temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";

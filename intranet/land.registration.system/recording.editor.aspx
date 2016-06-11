@@ -123,14 +123,8 @@
                 <%=GetRecordingActsGrid()%>
                 <tr class='totalsRow' style='display:<%=base.IsReadyForEdition() && base.RecordingActs.Count == 0 ? "inline" : "none"%>'>
                   <td>&nbsp;</td>
-                  <td colspan='2'>
+                  <td colspan='4'>
                     Todavía no se han agregado actos jurídicos al documento.
-                  </td>
-                  <td colspan='3' align="right">
-
-                    <span style="width:50%">
-
-                    </span>
                   </td>
                 </tr>
               </table>

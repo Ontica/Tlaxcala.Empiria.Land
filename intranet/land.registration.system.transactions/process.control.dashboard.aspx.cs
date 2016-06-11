@@ -95,7 +95,7 @@ namespace Empiria.Land.WebApp {
     protected sealed override DataView LoadDataSource() {
       Contact me = Contact.Parse(ExecutionServer.CurrentUserId);
       string filter = GetFilter();
-      string sort = String.Empty;
+      const string sort = "";
       if (IsTabStripSelected(TabStrip.MisTramitesPendientes)) {
         if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReceiveTransaction")) {
           if (filter.Length != 0) {
@@ -135,10 +135,10 @@ namespace Empiria.Land.WebApp {
         return TransactionData.GetLRSTransactionsForUI(filter, sort);
 
       } else if (IsTabStripSelected(TabStrip.MesaDeControl)) {      // Mesa de control
-        if (filter.Length != 0) {
-          filter += " AND ";
-        }
-        filter += "(TransactionStatus IN ('H'))";
+        //if (filter.Length != 0) {
+        //  filter += " AND ";
+        //}
+        //filter += "(TransactionStatus IN ('H'))";
         return TransactionData.GetLRSTransactionsForUI(filter, sort);
 
       } else if (IsTabStripSelected(TabStrip.BuscarTramites)) {
@@ -167,10 +167,10 @@ namespace Empiria.Land.WebApp {
         FixedList<Contact> list = WorkflowData.GetContactsWithWorkflowOutboxTasks();
         HtmlSelectContent.LoadCombo(this.cboFrom, list, "Id", "Alias",
                                     "( ¿Quién le está entregando? )", String.Empty, String.Empty);
-        //cboFrom.Items.Insert(1, new ListItem("Mesa de control", "(TransactionStatus = 'K')"));
-        //cboFrom.Items.Insert(2, new ListItem("Mesa de digitalización", "(TransactionStatus = 'A')"));
-        //cboFrom.Items.Insert(3, new ListItem("Ventanilla de entregas", "(TransactionStatus IN ('L', 'D')"));
-        //cboFrom.Items.Insert(4, String.Empty);
+        cboFrom.Items.Insert(1, new ListItem("Mesa de control", "(TransactionStatus = 'K')"));
+        cboFrom.Items.Insert(2, new ListItem("Mesa de digitalización", "(TransactionStatus = 'A')"));
+        cboFrom.Items.Insert(3, new ListItem("Ventanilla de entregas", "(TransactionStatus IN ('L', 'D')"));
+        cboFrom.Items.Insert(4, String.Empty);
       }
       if (IsTabStripSelected(TabStrip.MesaDeControl) && this.cboResponsible.Items.Count <= 1) {
         DataView view = WorkflowData.GetWorkflowActiveTasksTotals();
@@ -315,8 +315,7 @@ namespace Empiria.Land.WebApp {
       }
       if (cboStatus.Value.Length != 0 &&
           !IsTabStripSelected(TabStrip.RecibirDocumentos) &&
-          !IsTabStripSelected(TabStrip.VentanillaDeEntregas) &&
-          !IsTabStripSelected(TabStrip.MesaDeControl)) {
+          !IsTabStripSelected(TabStrip.VentanillaDeEntregas)) {
         if (filter.Length != 0) {
           filter += " AND ";
         }

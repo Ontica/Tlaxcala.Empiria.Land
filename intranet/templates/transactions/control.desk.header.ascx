@@ -18,6 +18,11 @@
 			<a href="javascript:sendPageCommand('sortData', 'PresentationTime ASC')">Presentación</a> /
 			<a href="javascript:sendPageCommand('sortData', 'AuthorizationTime ASC')">Registro</a>
     </th>
+    <th>
+			<a href="javascript:sendPageCommand('sortData', 'ToContact ASC')">Lo tiene</a> /
+			<a href="javascript:sendPageCommand('sortData', 'TrackTime DESC')">Recibido</a> /
+			<a href="javascript:sendPageCommand('sortData', 'FromContact DESC')">Entregó</a>
+    </th>
     <th>¿Qué debo hacer con el trámite?</th>
   </tr>
 </thead>

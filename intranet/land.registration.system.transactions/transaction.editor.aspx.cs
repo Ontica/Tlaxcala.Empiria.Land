@@ -128,20 +128,7 @@ namespace Empiria.Land.WebApp {
       if (!IsEditable()) {
         return false;
       }
-      if (transaction.Workflow.IsEmptyItemsTransaction) {
-        return false;
-      }
-      return true;
-    }
-
-    protected bool ShowDocumentsEditor() {
-      if (transaction.IsNew || transaction.IsEmptyInstance) {
-        return false;
-      }
-      if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Payment) {
-        return false;
-      }
-      if (transaction.Workflow.IsEmptyItemsTransaction) {
+      if (LRSWorkflowRules.IsEmptyItemsTransaction(transaction)) {
         return false;
       }
       return true;
@@ -165,9 +152,6 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool IsEditable() {
-      if (transaction.DocumentType.Id == 734) {
-        return true;
-      }
       if (transaction.Workflow.CurrentStatus != LRSTransactionStatus.Payment) {
         return false;
       }
@@ -268,6 +252,16 @@ namespace Empiria.Land.WebApp {
 
     private void UndeleteTransaction() {
       transaction.Workflow.Undelete();
+    }
+
+    protected bool ShowDocumentsEditor() {
+      if (transaction.IsNew || transaction.IsEmptyInstance) {
+        return false;
+      }
+      if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Payment) {
+        return false;
+      }
+      return true;
     }
 
     protected bool ShowPrintPaymentOrderButton {
