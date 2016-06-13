@@ -39,7 +39,8 @@
 		<table class="ghostTable">
       <tr><td colspan="2"><b>Último movimiento:</b></td></tr>
       <tr><td>Estado actual:&nbsp;</td><td><span id='ancStatus<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>' class='boldItem'><%#DataBinder.Eval(Container, "DataItem.CurrentTransactionStatusName")%></span>&nbsp;&nbsp;&nbsp;</td></tr>
-      <tr><td style="width:48px;" nowrap="nowrap">Lo tiene:&nbsp;</td><td width="90%"><span class='boldItem'><%# Convert.ToChar(DataBinder.Eval(Container, "DataItem.CurrentTransactionStatus")) == 'H' ? "Archivo" : (Convert.ToChar(DataBinder.Eval(Container, "DataItem.CurrentTransactionStatus")) == 'Y' || ((int) DataBinder.Eval(Container, "DataItem.NextContactId") == -6) ? "Interesado" : DataBinder.Eval(Container, "DataItem.Responsible"))%></span></td></tr>
+      <tr><td style="width:48px;" nowrap="nowrap">Lo tiene:&nbsp;</td><td width="90%">
+          <span id='ancResponsible<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>' class='boldItem'><%# Convert.ToChar(DataBinder.Eval(Container, "DataItem.CurrentTransactionStatus")) == 'H' ? "Archivo" : (Convert.ToChar(DataBinder.Eval(Container, "DataItem.CurrentTransactionStatus")) == 'Y' || ((int) DataBinder.Eval(Container, "DataItem.NextContactId") == -6) ? "Interesado" : DataBinder.Eval(Container, "DataItem.Responsible"))%></span></td></tr>
       <tr><td style="width:20px">Desde:&nbsp;</td><td><span class='boldItem'><%#((DateTime)DataBinder.Eval(Container, "DataItem.CheckInTime")).ToString("dd/MMM/yyyy HH:mm")%></span></td></tr>
       <tr><td style="width:20px">Entregó:&nbsp;</td><td><span class='boldItem'><%# Convert.ToChar(DataBinder.Eval(Container, "DataItem.CurrentTransactionStatus")) == 'Y' || ((int) DataBinder.Eval(Container, "DataItem.NextContactId") == -6) ? DataBinder.Eval(Container, "DataItem.Responsible") : DataBinder.Eval(Container, "DataItem.AssignedBy")%></span></td></tr>
     </table>
@@ -50,7 +51,7 @@
 		<select id="cboOperation<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>" class="selectBox" style="width:220px" title="">
 			<option value=''>( Seleccionar )</option>
       <%#LRSHtmlSelectControls.GetControlDeskTransactionNewStatusComboItems((int) DataBinder.Eval(Container, "DataItem.TransactionTypeId"), (int) DataBinder.Eval(Container, "DataItem.DocumentTypeId"), (LRSTransactionStatus) Convert.ToChar(DataBinder.Eval(Container, "DataItem.CurrentTransactionStatus")), (LRSTransactionStatus) Convert.ToChar(DataBinder.Eval(Container, "DataItem.NextTransactionStatus")))%>
-    </select><img class='comboExecuteImage' src="../themes/default/buttons/next.gif" alt=""  title="Ejecuta la operación seleccionada" onclick="doTransactionOperation(<%# DataBinder.Eval(Container, "DataItem.TransactionId")%>)"/>
+    </select><img class='comboExecuteImage' src="../themes/default/buttons/next.gif" alt=""  title="Ejecuta la operación seleccionada" onclick="doOperation('doControlDeskOperation', <%# DataBinder.Eval(Container, "DataItem.TransactionId")%>)"/>
    <br />
 	 <textarea id="txtNotes<%# DataBinder.Eval(Container, "DataItem.TransactionId")%>" class="textArea" rows="2" cols="72" style="width:288px"></textarea>
 	</td>

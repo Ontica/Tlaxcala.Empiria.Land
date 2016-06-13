@@ -56,6 +56,10 @@ namespace Empiria.Land.WebApp {
 
     protected sealed override bool ExecutePageCommand() {
       switch (base.CommandName) {
+        case "executeControlDeskOperation":
+          ExecuteControlDeskOperation();
+          base.LoadRepeater();
+          return true;
         case "receiveLRSTransaction":
           ReceiveLRSTransaction();
           base.LoadRepeater();
@@ -280,6 +284,30 @@ namespace Empiria.Land.WebApp {
       }
       transaction.Workflow.Receive(notes);
 
+      base.SetOKScriptMsg();
+      txtSearchExpression.Value = "";
+      txtSearchExpression.Focus();
+    }
+
+
+    private void ExecuteControlDeskOperation() {
+      int transactionId = int.Parse(GetCommandParameter("id"));
+      string operation = GetCommandParameter("operation");
+      string notes = GetCommandParameter("notes", false);
+
+      LRSTransaction transaction = LRSTransaction.Parse(transactionId);
+
+      switch (operation) {
+        case "ReturnToControlDesk":
+          transaction.Workflow.ReturnToMe();
+          break;
+        case "ReceiveInControlDesk":
+          transaction.Workflow.Take(notes);
+          break;
+        case "PullToControlDesk":
+          transaction.Workflow.PullToControlDesk(notes);
+          break;
+      }
       base.SetOKScriptMsg();
       txtSearchExpression.Value = "";
       txtSearchExpression.Focus();

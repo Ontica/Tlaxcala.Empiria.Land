@@ -183,6 +183,9 @@
       case 'createObject':
         createObject();
         return;
+      case 'doControlDeskOperation':
+        doControlDeskOperation(arguments[1]);
+        return;
       case 'createLRSTransaction':
         createLRSTransaction();
         return;
@@ -375,6 +378,76 @@
 		ajaxURL += "&transactionId=" + transactionId + "&newState=" + newState;
 
 		return invokeAjaxValidator(ajaxURL);
+	}
+
+	function doControlDeskOperation(transactionId) {
+	  var operation = getElement("cboOperation" + transactionId).value;
+	  var temp = "";
+
+	  switch (operation) {
+	    case "ReturnToControlDesk":
+	      temp = "Dejar pendiente el 'siguiente estado' de este trámite.\n\n";
+	      temp += "Este trámite ya tiene asignado el siguiente estado.\n\n" +
+                "Después de esta operación el trámite seguirá en mesa de control " +
+                "pero el siguiente estado quedará pendiente de asignar.\n\n";
+	      temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
+	      temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
+	      temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n";
+	      temp += "Sig. estado:  " + getInnerText('ancNextStatus' + transactionId) + "\n\n";
+	      temp += "¿Dejo pendiente el siguiente estado de este trámite?";
+	      break;
+	    case "ReceiveInControlDesk":
+	      var responsible = getInnerText('ancResponsible' + transactionId);
+	      temp = "Recibir el trámite en la mesa de control.\n\n";
+	      temp += "Este trámite se recibirá en la mesa de control.\n\n" +
+                "Se supone que " + responsible  + " le está entregando físicamente los documentos de dicho trámite, " +
+                "de lo contrario no debería ejecutar esta operación.\n\n";
+	      temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
+	      temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
+	      temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+	      temp += "¿Recibir el trámite en mesa de control?";
+	      break;
+	    case "PullToControlDesk":
+	      var responsible = getInnerText('ancResponsible' + transactionId);
+	      temp = "Traer el trámite a la mesa de control.\n\n";
+	      temp += "Este trámite se traerá a la mesa de control.\n\n" +
+                "Se supone que " + responsible + " NO está laborando y que dejó este trámite en su bandeja de trabajo.\n\n" +
+                "Quien ejecuta esta operación debe tener físicamente los documentos de dicho trámite, " +
+                "y asegurarse que " + responsible + " NO está en la oficina, " +
+                "de lo contrario no debería ejecutar esta operación.\n\n";
+	      temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
+	      temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
+	      temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n";
+	      temp += "Fuera de la oficina:  " + responsible + "\n\n";
+	      temp += "¿Recibir el trámite de la persona que NO está laborando?";
+	      break;
+	    case "Unarchive":
+	      temp = "Desarchivar este trámite.\n\n" +
+	             "Este trámite se encuentra archivado.\n\n" +
+	             "Si tiene permisos, en el editor de trámites debe existir una opción para desarchivarlo.\n\n";
+	      alert(temp);
+	      return;
+	    case "Nothing":
+	      temp = "Por ahora no hay nada qué hacer con este trámite.\n\n" +
+               "El trámite se encuentra en un estado que no permite enviarlo " +
+               "o recibirlo en la mesa de control.";
+	      alert(temp);
+	      return;
+	    case "Undefined":
+	      temp = "Operación del tipo 'Undefined' en la mesa de control.\n\n" +
+               "Esto representa un problema de programación en las reglas del sistema.\n\n" +
+               "Favor de avisar esta situación a soporte lo antes posible.";
+	      alert(temp);
+	      return;
+	    default:
+	      return doTransactionOperation(transactionId);
+	  }
+	  if (confirm(temp)) {
+	    var qs = "id=" + transactionId;
+	    qs += "|operation=" + operation;
+	    qs += "|notes=" + getElement("txtNotes" + transactionId).value;
+	    sendPageCommand("executeControlDeskOperation", qs);
+	  }
 	}
 
   function doTransactionOperation(transactionId) {

@@ -65,6 +65,9 @@ namespace Empiria.Land.WebApp {
         case "reentryTransaction":
           ReentryTransaction();
           return;
+        case "unarchiveTransaction":
+          UnarchiveTransaction();
+          return;
         case "copyTransaction":
           CopyTransaction();
           return;
@@ -149,6 +152,13 @@ namespace Empiria.Land.WebApp {
         return false;
       }
       return ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReceiveTransaction");
+    }
+
+    protected bool CanUnarchiveTransaction() {
+      if (transaction.Workflow.CurrentStatus != LRSTransactionStatus.Archived) {
+        return false;
+      }
+      return ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReentryByFails");
     }
 
     protected bool IsEditable() {
@@ -393,6 +403,16 @@ namespace Empiria.Land.WebApp {
         onloadScript = "alert('Este trámite fue reingresado correctamente.');doOperation('redirectThis')";
       } else {
         onloadScript = "alert('No es posible reingresar trámites después de 90 días de entregados.');doOperation('redirectThis')";
+      }
+    }
+
+    private void UnarchiveTransaction() {
+      int graceDaysForReentry = 90;
+      if (transaction.LastDeliveryTime.AddDays(graceDaysForReentry) > DateTime.Now) {
+        transaction.Workflow.Unarchive("Trámite desarchivado");
+        onloadScript = "alert('Este trámite fue desarchivado correctamente.');doOperation('redirectThis')";
+      } else {
+        onloadScript = "alert('No es posible desarchivar trámites después de 90 días de archivados.');doOperation('redirectThis')";
       }
     }
 

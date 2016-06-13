@@ -127,7 +127,29 @@ namespace Empiria.Land.WebApp {
       if (transaction.IsEmptyInstance) {
         return false;
       }
-      return LRSWorkflowRules.IsTransactionDocumentReadyForEdition(transaction);
+
+      if (transaction.IsEmptyInstance) {
+        return false;
+      }
+      if (!(ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
+            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Certificates") ||
+            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Juridic"))) {
+        return false;
+      }
+      if (!(transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording ||
+            transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration ||
+            transaction.Workflow.CurrentStatus == LRSTransactionStatus.Juridic)) {
+        return false;
+      }
+      if (transaction.Document.IsEmptyInstance) {
+        return true;
+      }
+      if (transaction.Document.Status != RecordableObjectStatus.Incomplete) {
+        return false;
+      }
+      return true;
+
+      //return LRSWorkflowRules.IsTransactionDocumentReadyForEdition(transaction);
     }
 
     protected bool IsReadyToAppendRecordingActs() {
@@ -147,9 +169,9 @@ namespace Empiria.Land.WebApp {
       if (this.transaction.Document.RecordingActs.Count == 0) {
         return false;
       }
-      if (!(ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
-            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSigner") ||
-            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Juridic"))) {
+      if (ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
+          ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSigner") ||
+          ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Juridic")) {
         return true;
       }
       return false;
