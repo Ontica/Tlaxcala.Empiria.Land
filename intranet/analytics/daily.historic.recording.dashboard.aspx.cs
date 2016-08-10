@@ -55,21 +55,21 @@ namespace Empiria.Land.WebApp {
     }
 
     protected sealed override DataView LoadDataSource() {
-      if ((base.SelectedTabStrip == 0) && (cboView.Value == "DayByDayProgressAnalysis")) {
-        if (ExecutionServer.CurrentPrincipal.IsInRole("BatchCapture.Supervisor")) {
-          return AnalyticsData.RecorderOfficesStats();
-        }
-        //} else if ((base.SelectedTabStrip == 0) && (cboView.Value == "DayByDayProgressAnalysis")) {
-        //return RecordingBooksData.GetVolumeRecordingBooks(RecordingBookStatus.Assigned, String.Empty, "BookAsText");
-      } else if ((base.SelectedTabStrip == 0) && (cboView.Value == "ProductivityByAnalyst")) {
-        if (ExecutionServer.CurrentPrincipal.IsInRole("BatchCapture.Supervisor")) {
-          return AnalyticsData.PerformanceByAnalyst(selectedRecorderOffice, EmpiriaString.ToDate(txtFromDate.Value),
-                                                    EmpiriaString.ToDateTimeMax(txtToDate.Value));
-        }
-      } else if ((base.SelectedTabStrip == 0) && (cboView.Value == "RecordingActTypeAnalysis")) {
-        return AnalyticsData.RecordingActTypeIncidence(selectedRecorderOffice, EmpiriaString.ToDate(txtFromDate.Value),
-                                                       EmpiriaString.ToDateTimeMax(txtToDate.Value));
-      }
+      //if ((base.SelectedTabStrip == 0) && (cboView.Value == "DayByDayProgressAnalysis")) {
+      //  if (ExecutionServer.CurrentPrincipal.IsInRole("BatchCapture.Supervisor")) {
+      //    return AnalyticsData.RecorderOfficesStats();
+      //  }
+      //} else if ((base.SelectedTabStrip == 0) && (cboView.Value == "DayByDayProgressAnalysis")) {
+      //  return RecordingBooksData.GetVolumeRecordingBooks(RecordingBookStatus.Assigned, String.Empty, "BookAsText");
+      //} else if ((base.SelectedTabStrip == 0) && (cboView.Value == "ProductivityByAnalyst")) {
+      //  if (ExecutionServer.CurrentPrincipal.IsInRole("BatchCapture.Supervisor")) {
+      //    return AnalyticsData.PerformanceByAnalyst(selectedRecorderOffice, EmpiriaString.ToDate(txtFromDate.Value),
+      //                                              EmpiriaString.ToDateTimeMax(txtToDate.Value));
+      //  }
+      //} else if ((base.SelectedTabStrip == 0) && (cboView.Value == "RecordingActTypeAnalysis")) {
+      //  return AnalyticsData.RecordingActTypeIncidence(selectedRecorderOffice, EmpiriaString.ToDate(txtFromDate.Value),
+      //                                                 EmpiriaString.ToDateTimeMax(txtToDate.Value));
+      //}
       return new DataView();
     }
 

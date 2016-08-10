@@ -75,8 +75,8 @@ namespace Empiria.Web.UI.Ajax {
           return GetNotaryOfficesInPlaceStringArrayCommandHandler();
         case "getNotariesInNotaryOfficeStringArrayCmd":
           return GetNotariesInNotaryOfficeStringArrayCommandHandler();
-        case "getOverlappingRecordingsCountCmd":
-          return GetOverlappingRecordingsCountCommandHandler();
+        //case "getOverlappingRecordingsCountCmd":
+        //  return GetOverlappingRecordingsCountCommandHandler();
         case "getRecordingIdCmd":
           return GetRecordingIdCommandHandler();
         //case "getRecordingBookImageCountCmd":
@@ -724,22 +724,22 @@ namespace Empiria.Web.UI.Ajax {
                                                 String.Empty, "No consta o no se puede determinar");
     }
 
-    private string GetOverlappingRecordingsCountCommandHandler() {
-      int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
-      int recordingId = int.Parse(GetCommandParameter("recordingId", true));
-      int imageStartIndex = int.Parse(GetCommandParameter("imageStartIndex", true));
-      int imageEndIndex = int.Parse(GetCommandParameter("imageEndIndex", true));
+    //private string GetOverlappingRecordingsCountCommandHandler() {
+    //  int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
+    //  int recordingId = int.Parse(GetCommandParameter("recordingId", true));
+    //  int imageStartIndex = int.Parse(GetCommandParameter("imageStartIndex", true));
+    //  int imageEndIndex = int.Parse(GetCommandParameter("imageEndIndex", true));
 
-      RecordingBook recordingBook = RecordingBook.Parse(recordingBookId);
-      Recording recording = null;
-      if (recordingId != 0) {
-        recording = Recording.Parse(recordingId);
-      } else {
-        recording = Recording.Empty;
-      }
-      return LRSValidator.GetOverlappingRecordingsCount(recordingBook, recording,
-                                                        imageStartIndex, imageEndIndex).ToString();
-    }
+    //  RecordingBook recordingBook = RecordingBook.Parse(recordingBookId);
+    //  Recording recording = null;
+    //  if (recordingId != 0) {
+    //    recording = Recording.Parse(recordingId);
+    //  } else {
+    //    recording = Recording.Empty;
+    //  }
+    //  return LRSValidator.GetOverlappingRecordingsCount(recordingBook, recording,
+    //                                                    imageStartIndex, imageEndIndex).ToString();
+    //}
 
     private string GetRecordingIdCommandHandler() {
       int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
