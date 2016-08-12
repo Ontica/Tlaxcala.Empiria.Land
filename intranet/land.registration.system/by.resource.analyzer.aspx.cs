@@ -177,6 +177,7 @@ namespace Empiria.Land.WebApp {
 
         case TabStrip.ResourceEditor:
           return "tabDisabled";
+          //return this.IsResourceSelected ? "tabOn" : "tabOff";
 
         case TabStrip.ResourceHistory:
           return this.IsResourceSelected ? "tabOn" : "tabDisabled";

@@ -35,7 +35,6 @@
 </div>
 <empiriaControl:ModalWindow id="oModalWindow" runat="server" width="820px" height="600px" />
 </form>
-<div><span id="span" runat="server"></span></div>
 </body>
 <script type="text/javascript">
 

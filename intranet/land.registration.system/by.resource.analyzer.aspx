@@ -255,7 +255,6 @@
   }
 
   function loadContent() {
-
     <% if (base.IsRecordingActSelected) { %>
       doOperation('onSelectDocument', '<%=recordingAct.Document.Id%>');
     <% } %>
@@ -264,10 +263,8 @@
     getElement('ifraSearchInfo').src = '<%=TabStripSource(TabStrip.GlobalSearch)%>';
     getElement('ifraRecordingActEditor').src = '<%=TabStripSource(TabStrip.RecordingActEditor)%>';
     // getElement('ifraDocumentEditor').src = '<%=TabStripSource(TabStrip.DocumentEditor)%>';
-    // getElement('ifraPropertyEditor').src = '<%=TabStripSource(TabStrip.ResourceEditor)%>';
+    getElement('ifraPropertyEditor').src = '<%=TabStripSource(TabStrip.ResourceEditor)%>';
   }
-
-
 
   function showRecordingImages(recordingId) {
     getElement("cboRecordingBookSelector").value = recordingId;

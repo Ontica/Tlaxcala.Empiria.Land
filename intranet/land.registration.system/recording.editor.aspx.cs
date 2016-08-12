@@ -171,6 +171,7 @@ namespace Empiria.Land.WebApp {
       }
       if (ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
           ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSigner") ||
+          ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.QualityControl") ||
           ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Juridic")) {
         return true;
       }
