@@ -53,6 +53,12 @@
         <img src="../themes/default/buttons/search.gif" alt="" onclick="doOperation('loadData')" title="Ejecuta la búsqueda" />
         &nbsp; &nbsp; &nbsp; &nbsp;
         <a href="javascript:doOperation('removeFilters')">Quitar los filtros</a>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <%  if (base.IsTabStripSelected(TabStrip.MesaDeDigitalizacion) &&
+                Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DigitalizationDesk")) { %>
+        <a href="javascript:doOperation('processDocumentImages')">
+        <img src="../themes/default/bullets/scribble_doc_sm.gif" alt="" title="" style="margin-right:8px" />Procesar imágenes</a>&nbsp; &nbsp; &nbsp;
+        <% } %>
       </td>
      <td width="80%">&nbsp;</td>
     </tr>
@@ -230,6 +236,9 @@
         return;
       case 'viewDocumentImaging':
         viewDocumentImaging(arguments[1]);
+        return;
+      case 'processDocumentImages':
+        processsDocumentImages();
         return;
       default:
         alert('La operación solicitada todavía no ha sido definida en el programa.');
@@ -531,6 +540,17 @@
 
     if (confirm(sMsg)) {
       sendPageCommand("returnDocumentToMe", "id=" + transactionId);
+    }
+  }
+
+  function processsDocumentImages() {
+    var sMsg = "Esta operación procesará las imágenes pendientes de incorporar en el sistema.\n\n";
+
+    sMsg += "Dependiendo del número de imágenes, el proceso puede tardar varios minutos, incluso horas.\n\n";
+    sMsg += "¿Proceso las imágenes pendientes?";
+
+    if (confirm(sMsg)) {
+      sendPageCommand("processsDocumentImages");
     }
   }
 

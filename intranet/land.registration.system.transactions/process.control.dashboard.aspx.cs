@@ -16,6 +16,7 @@ using System.Web.UI.WebControls;
 using Empiria.Contacts;
 using Empiria.Land.Registration.Data;
 using Empiria.Land.Registration.Transactions;
+using Empiria.Land.Documentation;
 using Empiria.Presentation.Web;
 using Empiria.Presentation.Web.Content;
 
@@ -81,6 +82,10 @@ namespace Empiria.Land.WebApp {
           return true;
         case "generateImagingControlID":
           GenerateImagingControlID();
+          base.LoadRepeater();
+          return true;
+        case "processsDocumentImages":
+          ProcessDocumentImages();
           base.LoadRepeater();
           return true;
         default:
@@ -270,6 +275,23 @@ namespace Empiria.Land.WebApp {
       base.Master.AppendEndLoadScript(onEndLoadScript);
     }
 
+    private void ProcessDocumentImages() {
+      var imageProcessingEngine = ImageProcessingEngine.GetInstance();
+
+      if (imageProcessingEngine.IsRunning) {
+        base.SetOKScriptMsg("El procesamiento de imágenes ya se está ejecutando.\\n\\n" +
+                            "En breve estarán listos los resultados.");
+        txtSearchExpression.Value = "";
+        txtSearchExpression.Focus();
+        return;
+      }
+      imageProcessingEngine.Start();
+      base.SetOKScriptMsg("El procesamiento de imágenes se ha iniciado.\\n\\n" +
+                          "Más tarde estarán los resultados.");
+      txtSearchExpression.Value = "";
+      txtSearchExpression.Focus();
+    }
+
     private void ReceiveLRSTransaction() {
       int transactionId = int.Parse(GetCommandParameter("id"));
       string notes = GetCommandParameter("notes", false);
@@ -331,7 +353,7 @@ namespace Empiria.Land.WebApp {
       LRSTransaction transaction = LRSTransaction.Parse(transactionId);
       transaction.Workflow.ReturnToMe();
 
-      base.SetOKScriptMsg();
+      base.SetOKScriptMsg("");
       txtSearchExpression.Value = "";
       txtSearchExpression.Focus();
     }
