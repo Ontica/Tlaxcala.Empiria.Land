@@ -123,6 +123,9 @@
       case 'onSelectTransaction':
         onSelectTransaction(arguments[1]);
         return;
+      case 'onSelectImageSet':
+        onSelectImageSet(arguments[1]);
+        return;
       case 'displayResourcePopupWindow':
         displayResourcePopupWindow(arguments[1]);
         return;
@@ -141,6 +144,10 @@
       sendPageCommand(command);
       gbSended = true;
     }
+  }
+
+  function onSelectImageSet(imageSetId) {
+    window.parent.execScript("doOperation('onSelectImageSet', " + imageSetId + ")");
   }
 
   function displayResourcePopupWindow(resourceId) {

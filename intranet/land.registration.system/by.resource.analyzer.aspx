@@ -194,6 +194,9 @@
       case 'onSelectCertificate':
         onSelectCertificate(arguments[1]);
         return;
+      case 'onSelectImageSet':
+        onSelectImageSet(arguments[1]);
+        return;
 
       case 'gotoImage':
         gotoImage();
@@ -220,6 +223,10 @@
       sendPageCommand(command);
       gbSended = true;
     }
+  }
+
+  function onSelectImageSet(imageSetId) {
+    alert("onSelectImageSet " + imageSetId);
   }
 
   function onSelectDocument(documentId) {
