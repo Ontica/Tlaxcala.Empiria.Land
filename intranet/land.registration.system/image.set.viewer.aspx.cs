@@ -9,23 +9,21 @@
 *                                                                                                            *
 ********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
-using Empiria.Land.Registration;
+
 using Empiria.Presentation.Web;
-using Empiria.Documents;
+using Empiria.Land.Documentation;
 
 namespace Empiria.Land.WebApp {
 
-  public partial class DirectoryImageViewer : WebPage {
+  public partial class ImageSetViewer : WebPage {
 
     #region Fields
 
-    protected ImagingFolder directory = null;
+    protected DocumentImageSet documentImageSet = null;
 
     protected string pageTitle = "Title";
     protected int currentImagePosition = 0;
-
-    protected int currentImageWidth = 254;
-    protected int currentImageHeight = 189;
+    protected int currentImageWidth = 0;
 
     #endregion Fields
 
@@ -50,16 +48,12 @@ namespace Empiria.Land.WebApp {
         case "gotoImage":
           MoveToImage(txtGoToImage.Value);
           return;
-        default:
-          throw new NotImplementedException(base.CommandName);
+        // default:
+        // throw new NotImplementedException(base.CommandName);
       }
     }
 
     #endregion Constructors and parsers
-
-    #region Public properties
-
-    #endregion Public properties
 
     #region Private methods
 
@@ -72,10 +66,10 @@ namespace Empiria.Land.WebApp {
           currentImagePosition = Math.Max(currentImagePosition - 1, 0);
           break;
         case "Next":
-          currentImagePosition = Math.Min(currentImagePosition + 1, directory.FilesCount - 1);
+          currentImagePosition = Math.Min(currentImagePosition + 1, documentImageSet.FilesCount - 1);
           break;
         case "Last":
-          currentImagePosition = directory.FilesCount - 1;
+          currentImagePosition = documentImageSet.FilesCount - 1;
           break;
         default:
           currentImagePosition = int.Parse(position) - 1;
@@ -86,53 +80,28 @@ namespace Empiria.Land.WebApp {
     private void SetImageZoom() {
       decimal zoomFactor = decimal.Parse(cboZoomLevel.Value);
 
-      currentImageWidth = Convert.ToInt32(Math.Round(1336m * zoomFactor, 0));
-      currentImageHeight = Convert.ToInt32(Math.Round(994m * zoomFactor, 0));
+      currentImageWidth = Convert.ToInt32(Math.Round(800m * zoomFactor, 0));
     }
 
     protected string GetCurrentImagePath() {
-      throw new NotImplementedException();
-
-      //return directory.GetImageURL(currentImagePosition);
+      return ".." + this.documentImageSet.UrlRelativePath +
+                    this.documentImageSet.ImagesNamesArray[currentImagePosition];
     }
 
     private void Initialize() {
-      //directory = RecordBookDirectory.Empty;
-      if (!String.IsNullOrEmpty(Request.QueryString["id"])) {
-        throw new NotImplementedException();
+      int id = int.Parse(Request.QueryString["id"]);
 
-        //RecordingBook book = RecordingBook.Parse(int.Parse(Request.QueryString["id"]));
-        //directory = book.ImagingFilesFolder;
-        //pageTitle = book.FullName;
-
-      } else if (!String.IsNullOrEmpty(Request.QueryString["directoryId"])) {
-        //directory = RecordBookDirectory.Parse(int.Parse(Request.QueryString["directoryId"]));
-        pageTitle = "Directorio " + directory.Name;
-      }
-
-      if (!String.IsNullOrEmpty(Request.QueryString["image"])) {
-        currentImagePosition = int.Parse(Request.QueryString["image"]);
-      }
-      if (IsPostBack && !String.IsNullOrEmpty(hdnCurrentImagePosition.Value)) {
-        currentImagePosition = int.Parse(hdnCurrentImagePosition.Value);
-      }
-      if (!IsPostBack && !String.IsNullOrEmpty(Request.QueryString["gotoImage"])) {
-        currentImagePosition = int.Parse(Request.QueryString["gotoImage"]) - 1;
-      }
-      if (!IsPostBack && !String.IsNullOrEmpty(Request.QueryString["goLast"]) && bool.Parse(Request.QueryString["goLast"])) {
-        currentImagePosition = directory.FilesCount - 1;
-      } else if (!IsPostBack && !String.IsNullOrEmpty(Request.QueryString["goLast"]) && !bool.Parse(Request.QueryString["goLast"])) {
-        currentImagePosition = 0;
+      this.documentImageSet = DocumentImageSet.Parse(id);
+      pageTitle = this.documentImageSet.Document.UID;
+      if (documentImageSet.DocumentImageType == DocumentImageType.Appendix) {
+        pageTitle += " (Anexo)";
       }
 
       if (!IsPostBack) {
         cboZoomLevel.Value = "1.00";
+        currentImagePosition = 0;
       }
       SetImageZoom();
-    }
-
-    protected string GetCurrentImageHeight() {
-      return currentImageHeight.ToString() + "em";
     }
 
     protected string GetCurrentImageWidth() {
@@ -141,6 +110,6 @@ namespace Empiria.Land.WebApp {
 
     #endregion Private methods
 
-  } // class DirectoryImageViewer
+  } // class ImageSetViewer
 
 } // namespace Empiria.Land.WebApp

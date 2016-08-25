@@ -20,14 +20,13 @@
 <form name="aspnetForm" method="post" id="aspnetForm" runat="server">
   <div>
     <input type="hidden" name="hdnPageCommand" id="hdnPageCommand" runat="server" />
-    <input type="hidden" name="hdnCurrentImagePosition" id="hdnCurrentImagePosition" runat="server" />
   </div>
   <div id="divCanvas">
     <div id="divHeader" style="height:90px">
       <span id="spanPageTitle" class="appTitle">
         &nbsp;
       </span>
-      <span id="spanCurrentImage" class="rightItem appTitle" style="margin-right:8px">
+      <span id="spanPageRightTitle" class="rightItem appTitle" style="margin-right:8px">
         &nbsp;
       </span>
     </div> <!--divHeader!-->
@@ -35,59 +34,12 @@
       <div id="divContent">
         <table cellpadding="0" cellspacing="0">
           <tr>
-            <td id="divImageViewer" valign='top' style="position:relative;<%=base.DisplayImages() == false ? "display:none;" : String.Empty%>">
+            <td id="divImageViewer" valign='top' style="position:relative;">
               <div id="divImageContainer" style="overflow:auto;width:520px;height:540px;top:0;">
-                <%--<div id="divDocument" style="max-width:780px;align-items:center"></div>--%>
-
-<!--            <img id="imgCurrent" name="imgCurrent" src="<%=GetCurrentImagePath()%>" alt="" width="<%=GetCurrentImageWidth()%>" height="<%=GetCurrentImageHeight()%>" style="top:0;" /> !-->
-
-           <!-- <object id="imgCurrent" width="<%=GetCurrentImageWidth()%>" height="<%=GetCurrentImageHeight()%>" data="../themes/default/images/test.pdf"></object> !-->
-             <!--   <iframe marginheight="0" marginwidth="0" id="imgCurrent" width="<%=GetCurrentImageWidth()%>" height="<%=GetCurrentImageHeight()%>" src="../recording.seal.aspx?transactionId=371443&id=-1"></iframe> !-->
-
-<%--                  <object type="application/pdf" data="../themes/default/images/test.pdf" style="width:100%; height:100%">
-                    <p>backup content</p>
-                  </object>--%>
-
                   <object id="documentViewer" type="text/html" style="width:100%; height:100%;">
                     <p>visor de documentos</p>
                   </object>
-
                 </div>
-              <table>
-                <tr>
-                  <td nowrap='nowrap'>Ver:</td>
-                  <td nowrap='nowrap'>
-                    <select id="cboRecordingBookSelector" class="selectBox" style="width:124px" onchange="showRecordingImages(this.value);" title="" runat="server">										
-                    </select>
-                  </td>
-                  <td nowrap='nowrap'>
-                    Ir a la imagen: <input id="txtGoToImage" name="txtGoToImage" type="text" class="textBox" maxlength="4" style="width:35px;margin-right:0" onkeypress="return integerKeyFilter(this);" runat="server" />
-                  </td>
-                  <td nowrap='nowrap'><img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('gotoImage')" title="Ejecuta la búsqueda" /></td>
-                  <td width='40%'>&nbsp;</td>
-                  <td><img src='../themes/default/buttons/first.gif' onclick='doOperation("moveToImage", "first");' title='Muestra la primera imagen' alt='' /></td>
-                  <td><img src='../themes/default/buttons/previous.gif' onclick='doOperation("moveToImage", "previous");' title='Muestra la imagen anterior' alt='' /></td>
-                  <td><img src='../themes/default/buttons/next.gif' onclick='doOperation("moveToImage", "next");' title='Muestra la siguiente imagen' alt='' /></td>
-                  <td><img src='../themes/default/buttons/last.gif' onclick='doOperation("moveToImage", "last");' title='Muestra la última imagen' alt='' /></td>
-                  <td width='10px' nowrap='nowrap'>&nbsp;</td>
-                  <td align="right" style="width:40%" nowrap='nowrap'>
-                    Zoom:
-                    <select id="cboZoomLevel" name="cboZoomLevel" class="selectBox" style="width:56px" title="" onchange="return doOperation('zoomImage')" runat="server">
-                      <option value="0.50">50%</option>
-                      <option value="0.75">75%</option>
-                      <option value="1.00">100%</option>
-                      <option value="1.25">125%</option>
-                      <option value="1.50">150%</option>
-                      <option value="1.75">175%</option>
-                      <option value="2.00">200%</option>
-                      <option value="2.50">250%</option>
-                      <option value="3.00">300%</option>
-                      <option value="3.50">350%</option>
-                      <option value="4.00">400%</option>
-                    </select>
-                  </td>
-                </tr>
-              </table>
             </td>
             <td><img src="../themes/default/textures/pixel.gif" height="1px" width="12px" alt="" /></td>
             <td id="divDocumentViewer" valign="top" style="width:720px;">
@@ -198,14 +150,6 @@
         onSelectImageSet(arguments[1]);
         return;
 
-      case 'gotoImage':
-        gotoImage();
-        return;
-      case 'moveToImage':
-        moveToImage(arguments[1]);
-        return;
-      case 'zoomImage':
-        return doZoom();
       case 'refresh':
         sendPageCommand(command);
         return;
@@ -226,7 +170,7 @@
   }
 
   function onSelectImageSet(imageSetId) {
-    alert("onSelectImageSet " + imageSetId);
+    displayImageSet(imageSetId);
   }
 
   function onSelectDocument(documentId) {
@@ -261,6 +205,18 @@
     parent.appendChild(clone);
   }
 
+  function displayImageSet(imageSetId) {
+    var newURL = "./image.set.viewer.aspx?id=" + imageSetId;
+
+    var clone = getElement("documentViewer").cloneNode(true);
+    clone.setAttribute('data', newURL);
+
+    var parent = getElement("documentViewer").parentNode;
+
+    parent.removeChild(getElement("documentViewer"));
+    parent.appendChild(clone);
+  }
+
   function loadContent() {
     <% if (base.IsRecordingActSelected) { %>
       doOperation('onSelectDocument', '<%=recordingAct.Document.Id%>');
@@ -271,24 +227,6 @@
     getElement('ifraRecordingActEditor').src = '<%=TabStripSource(TabStrip.RecordingActEditor)%>';
     // getElement('ifraDocumentEditor').src = '<%=TabStripSource(TabStrip.DocumentEditor)%>';
     getElement('ifraPropertyEditor').src = '<%=TabStripSource(TabStrip.ResourceEditor)%>';
-  }
-
-  function showRecordingImages(recordingId) {
-    getElement("cboRecordingBookSelector").value = recordingId;
-    if (getElement("cboRecordingBookSelector").selectedIndex == 0) {
-      getElement("hdnCurrentImagePosition").value = <%=currentImagePosition%>;
-      if (existsElement("cboImageOperation")) {
-        getElement("cboImageOperation").disabled = false;
-      }
-    } else if (getElement("cboRecordingBookSelector").value.length != 0) {
-      getElement("hdnCurrentImagePosition").value = -1;
-      if (existsElement("cboImageOperation")) {
-        getElement("cboImageOperation").disabled = true;
-      }
-    } else if (getElement("cboRecordingBookSelector").value.length == 0) {
-      return;
-    }
-    moveToImage("refresh");
   }
 
   function updateUserInterface(oControl) {
@@ -306,133 +244,15 @@
     }
   }
 
-  function moveToImage(position) {
-    return;
-
-    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getDirectoryImageURL";
-    var newPosition = 0;
-    switch (position) {
-      case "first":
-        ajaxURL += "&position=" + position;
-        newPosition = 0;
-        break;
-      case "previous":
-        ajaxURL += "&position=" + position;
-        newPosition = Math.max(Number(getElement("hdnCurrentImagePosition").value) - 1, 0);
-        break;
-      case "next":
-        ajaxURL += "&position=" + position;
-        newPosition = Math.min(Number(getElement("hdnCurrentImagePosition").value) + 1, getImageCount() - 1);
-        break;
-      case "last":
-        ajaxURL += "&position=" + position;
-        newPosition = getImageCount() - 1;
-        break;
-      case "refresh":
-        ajaxURL += "&position=" + position;
-        newPosition = getRecordingStartImageIndex() - 1;
-        break;
-      default:
-        alert("No reconozco la posición de la imagen que se desea desplegar.");
-        return;
-    }
-    ajaxURL += "&currentPosition=" + getElement("hdnCurrentImagePosition").value;
-
-    var result = invokeAjaxMethod(false, ajaxURL, null);
-    getElement("imgCurrent").src = result;
-    getElement("hdnCurrentImagePosition").value = newPosition;
-    setPageTitle();
-  }
-
-  function doZoom() {
-    return;
-
-    var oImage = getElement("imgCurrent");
-
-    var width = 1336;
-    var height = 994;
-    var zoomLevel = Number(getElement('cboZoomLevel').value);
-    oImage.setAttribute('width', Number(width) * zoomLevel);
-    oImage.setAttribute('height', Number(height) * zoomLevel);
-  }
-
   function setPageTitle() {
     <% if (base.IsRecordingActSelected) { %>
     getElement("spanPageTitle").innerHTML = "Documento: <%=recordingAct.Document.UID%><br/>"+
                                             "Acto jurídico: <%=recordingAct.DisplayName%> [<%=recordingAct.Index + 1%>]";
-    getElement("spanCurrentImage").innerText = "Predio: <%=resource.UID%>";
+    getElement("spanPageRightTitle").innerText = "Predio: <%=resource.UID%>";
     <% } else { %>
     getElement("spanPageTitle").innerHTML = "Consulta del acervo registral"
-    getElement("spanCurrentImage").innerText = "";
+    getElement("spanPageRightTitle").innerText = "";
     <% } %>
-  }
-
-  function getCurrentImage() {
-    return Number(Number(getElement("hdnCurrentImagePosition").value) + 1);
-  }
-
-  function getImageCount() {
-    return 0;
-
-    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getRecordingBookImageCountCmd";
-
-    if (getElement('cboRecordingBookSelector').value.substring(0,1) == "&") {
-      ajaxURL += getElement('cboRecordingBookSelector').value;
-    } else {
-      ajaxURL += "&imagingItemId=" + getElement('cboRecordingBookSelector').value;
-    }
-
-    var result = invokeAjaxMethod(false, ajaxURL, null);
-
-    return Number(result);
-  }
-
-  function getRecordingStartImageIndex() {
-    if (getElement('cboRecordingBookSelector').value.length == 0) {
-      return 1;
-    }
-    if (getElement('cboRecordingBookSelector').value.substring(0, 1) == "&") {
-      return 1;
-    } else {
-      var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getRecordingStartImageIndexCmd";
-      ajaxURL += "&recordingId=" + getElement('cboRecordingBookSelector').value;
-
-      var result = invokeAjaxMethod(false, ajaxURL, null);
-
-      return Number(result);
-    }
-  }
-
-  function gotoImage() {
-    if (getElement("txtGoToImage").value.length == 0) {
-      alert("Necesito conocer el número de imagen que se desea visualizar.");
-      return false;
-    }
-    if (!isNumeric(getElement("txtGoToImage"))) {
-      alert("No reconozco el número de imagen proporcionado.");
-      return false;
-    }
-    if (Number(getElement("txtGoToImage").value) <= 0) {
-      alert("El número de imagen que se desea visualizar debe ser positivo.");
-      return false;
-    }
-    var imageCount = getImageCount();
-    if (Number(getElement("txtGoToImage").value) > imageCount) {
-      alert("El libro seleccionado sólo contiene " + imageCount + " imágenes.");
-      return false;
-    }
-
-    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getDirectoryImageURL";
-    var newPosition = Number(getElement("txtGoToImage").value) -  1;
-    ajaxURL += "&position=" + newPosition;
-    ajaxURL += "&imagingItemId=-1";
-    ajaxURL += "&currentPosition=" + getElement("hdnCurrentImagePosition").value;
-    var result = invokeAjaxMethod(false, ajaxURL, null);
-    getElement("imgCurrent").src = result;
-    getElement("hdnCurrentImagePosition").value = newPosition;
-    setPageTitle();
-
-    return true;
   }
 
   function window_onload() {
@@ -458,10 +278,10 @@
     var height = document.documentElement.offsetHeight - divHeader.offsetHeight - 0;
     var width = document.documentElement.offsetWidth;
 
-    if (height > 78) {
+    if (height > 40) {
       divBody.style.height = height;
       divContent.style.height = height - 18;
-      divImageContainer.style.height = height - 78;
+      divImageContainer.style.height = height - 40;
     }
     if (width > 28) {
       divContent.style.width = width - 28;
@@ -490,8 +310,6 @@
   function window_onscroll() {
     var documentHeight = getElement("divDocumentViewer").offsetHeight;
     var scrollHeight = getElement("divContent").scrollTop;
-    //var oBody = getElement("divDocumentViewer");
-    //getElement('divImageViewer').style.top = Math.min(scrollHeight, documentHeight - scrollHeight) + "px";
 
     var newHeight = Math.min(documentHeight - scrollHeight, scrollHeight);
 
@@ -513,7 +331,6 @@
 
     var oBody = oFrame.document.body;
 
-    //var newHeight = oBody.scrollHeight + (oBody.offsetHeight - oBody.clientHeight);
     var newHeight = oBody.scrollHeight + oBody.clientHeight;
 
     if (newHeight <= 700) {
@@ -521,7 +338,6 @@
     } else {
       oFrame.style.height = newHeight;
     }
-    //oFrame.style.width = oBody.scrollWidth + (oBody.offsetWidth - oBody.clientWidth);
   }
 
   addEvent(window, 'load', window_onload);

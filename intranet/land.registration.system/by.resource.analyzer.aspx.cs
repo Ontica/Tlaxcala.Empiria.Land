@@ -30,10 +30,6 @@ namespace Empiria.Land.WebApp {
     protected Resource resource = null;
     protected RecordingAct recordingAct = null;
 
-    protected int currentImagePosition = 0;
-    protected int currentImageWidth = 1336;
-    protected int currentImageHeight = 994;
-
     #endregion Fields
 
     #region Constructors and parsers
@@ -53,7 +49,6 @@ namespace Empiria.Land.WebApp {
       } else {
         LoadControls();
       }
-      hdnCurrentImagePosition.Value = currentImagePosition.ToString();
     }
 
     private void LoadControls() {
@@ -62,9 +57,6 @@ namespace Empiria.Land.WebApp {
 
     private void DoCommand() {
       switch (base.CommandName) {
-        case "gotoImage":
-          MoveToImage(txtGoToImage.Value);
-          return;
         case "refresh":
           RefreshPage();
           return;
@@ -89,52 +81,9 @@ namespace Empiria.Land.WebApp {
       }
     }
 
-    protected bool DisplayImages() {
-      return true;
-      //return !recordingBook.ImagingFilesFolder.IsEmptyInstance;
-    }
-
-    protected string GetCurrentImagePath() {
-      return "../themes/default/images/woman.nophoto.jpg";
-
-      //return "";
-
-      //return recordingBook.ImagingFilesFolder.GetImageURL(currentImagePosition);
-    }
-
-    private void MoveToImage(string position) {
-      switch (position) {
-        case "First":
-          currentImagePosition = 0;
-          break;
-        case "Previous":
-          currentImagePosition = Math.Max(currentImagePosition - 1, 0);
-          break;
-        case "Next":
-          throw new NotImplementedException();
-
-          //currentImagePosition = Math.Min(currentImagePosition + 1, recordingBook.ImagingFilesFolder.FilesCount - 1);
-          //break;
-        case "Last":
-          throw new NotImplementedException();
-          //currentImagePosition = recordingBook.ImagingFilesFolder.FilesCount - 1;
-          //break;
-        default:
-          currentImagePosition = int.Parse(position) - 1;
-          break;
-      }
-    }
-
     private void RefreshPage() {
       Response.Redirect("by.resource.analyzer.aspx?resourceId=" + resource.Id.ToString() +
-                        "&recordingActId=" + recordingAct.Id.ToString() + "&image=" + hdnCurrentImagePosition.Value, true);
-    }
-
-    private void SetImageZoom() {
-      decimal zoomFactor = decimal.Parse(cboZoomLevel.Value);
-
-      currentImageWidth = Convert.ToInt32(Math.Round(1336m * zoomFactor, 0));
-      currentImageHeight = Convert.ToInt32(Math.Round(994m * zoomFactor, 0));
+                        "&recordingActId=" + recordingAct.Id.ToString(), true);
     }
 
     private void Initialize() {
@@ -154,14 +103,6 @@ namespace Empiria.Land.WebApp {
       } else {
         recordingAct = RecordingAct.Empty;
       }
-    }
-
-    protected string GetCurrentImageHeight() {
-      return currentImageHeight.ToString() + "em";
-    }
-
-    protected string GetCurrentImageWidth() {
-      return currentImageWidth.ToString() + "em";
     }
 
     protected string TabStripClass(TabStrip tabStrip) {

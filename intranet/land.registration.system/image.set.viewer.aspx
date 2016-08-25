@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.DirectoryImageViewer" CodeFile="directory.image.viewer.aspx.cs" %>
+﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.ImageSetViewer" CodeFile="image.set.viewer.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
@@ -11,9 +11,8 @@
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
   <script type="text/javascript" src="../scripts/empiria.validation.js"></script>
-  <script type="text/javascript" src="../scripts/empiria.calendar.js"></script>
   <script type="text/javascript">
-  /* <![CDATA[ */	
+  /* <![CDATA[ */
 
   function doPageCommand(commandName, commandArguments) {
     switch (commandName) {
@@ -45,7 +44,7 @@
         return;
       case 'moveToImage':
         moveToImage(arguments[1]);
-        return;				
+        return;
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
@@ -66,70 +65,69 @@
       return false;
     }
     if (Number(getElement("txtGoToImage").value) <= 0) {
-      alert("El número de imagen que se desea visualizar debe ser positivo.");
+      alert("El número de imagen que se desea visualizar debe ser mayor a cero.");
       return false;
     }
-    if (Number(getElement("txtGoToImage").value) > bookImageCount()) {
-      alert("Este libro sólo contiene " + bookImageCount() + " imágenes.");
+    if (Number(getElement("txtGoToImage").value) > imageCount()) {
+      alert("Sólo existen " + imageCount() + " imágenes.");
       return false;
     }
+    var newIndex = Number(getElement("txtGoToImage").value) - 1;
 
-    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getDirectoryImageURL";
-    var newPosition = Number(getElement("txtGoToImage").value) -  1;
-    ajaxURL += "&position=" + newPosition;
-    ajaxURL += "&directoryId=<%=directory.Id%>";
-    ajaxURL += "&currentPosition=" + getElement("hdnCurrentImagePosition").value;
+    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getImageSetImageURL";
+    ajaxURL += "&imageSetId=<%=documentImageSet.Id%>";
+    ajaxURL += "&index=" + newIndex;
+
     var result = invokeAjaxMethod(false, ajaxURL, null);
-    getElement("imgCurrent").src = result;
-    getElement("hdnCurrentImagePosition").value = newPosition;
+
+    getElement("imgCurrent").src = ".." + result;
+    getElement("hdnCurrentImagePosition").value = newIndex;
     setPageTitle();
+
     return true;
   }
 
   function moveToImage(position) {
-    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getDirectoryImageURL";
-    var newPosition = 0;
+    var newIndex = 0;
     switch (position) {
       case "first":
-        ajaxURL += "&position=" + position;
-        newPosition = 0;
+        newIndex = 0;
         break;
       case "previous":
-        ajaxURL += "&position=" + position;
-        newPosition = Math.max(Number(getElement("hdnCurrentImagePosition").value) - 1, 0);
-        break;					
+        newIndex = Math.max(Number(getElement("hdnCurrentImagePosition").value) - 1, 0);
+        break;
       case "next":
-        ajaxURL += "&position=" + position;
-        newPosition = Math.min(Number(getElement("hdnCurrentImagePosition").value) + 1, <%=directory.FilesCount - 1%>);
+        newIndex = Math.min(Number(getElement("hdnCurrentImagePosition").value) + 1, imageCount() - 1);
         break;
       case "last":
-        ajaxURL += "&position=" + position;
-        newPosition = <%=directory.FilesCount%> - 1;
+        newIndex = imageCount() - 1;
         break;
       default:
         alert("No reconozco la posición de la imagen que se desea desplegar.");
         return;
     }
-    ajaxURL += "&directoryId=<%=directory.Id%>";
-    ajaxURL += "&currentPosition=" + getElement("hdnCurrentImagePosition").value;
+
+    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getImageSetImageURL";
+    ajaxURL += "&imageSetId=<%=documentImageSet.Id%>";
+    ajaxURL += "&index=" + newIndex;
+
     var result = invokeAjaxMethod(false, ajaxURL, null);
-    getElement("imgCurrent").src = result;
-    getElement("hdnCurrentImagePosition").value = newPosition;
+
+    getElement("imgCurrent").src = ".." + result;
+    getElement("hdnCurrentImagePosition").value = newIndex;
     setPageTitle();
   }
 
   function doZoom() {
     var oImage = getElement("imgCurrent");
 
-    var width = 1336;
-    var height = 994;
+    var width = 800;
     var zoomLevel = Number(getElement('cboZoomLevel').value);
     oImage.setAttribute('width', Number(width) * zoomLevel);
-    oImage.setAttribute('height', Number(height) * zoomLevel);
   }
 
   function setPageTitle() {
-    var imageXOfY = Number(Number(getElement("hdnCurrentImagePosition").value) + 1) + " de <%=directory.FilesCount.ToString()%>";
+    var imageXOfY = Number(Number(getElement("hdnCurrentImagePosition").value) + 1) + " de " + imageCount();
     setInnerText(getElement("spanPageTitle"), "<%=pageTitle%>");
     setInnerText(getElement("spanCurrentImage"), "Imagen " + imageXOfY);
   }
@@ -169,24 +167,24 @@
     }
   }
 
-  function bookImageCount() {
-    return <%=directory.FilesCount.ToString()%>;
+  function imageCount() {
+    return <%=documentImageSet.FilesCount.ToString()%>;
   }
 
   function window_onscroll() {
     fixDataTableItems(getElement('divObjectExplorer'));
   }
 
-  addEvent(window, 'load', window_onload);	
-  //addEvent(document, 'keypress', upperCaseKeyFilter);
+  addEvent(window, 'load', window_onload);
+
   /* ]]> */
-  </script>	
+  </script>
 </head>
-<body>
+<body oncontextmenu="return false">
 <form name="aspnetForm" method="post" id="aspnetForm" runat="server">
   <div>
     <input type="hidden" name="hdnPageCommand" id="hdnPageCommand" runat="server" />
-    <input type="hidden" name="hdnCurrentImagePosition" id="hdnCurrentImagePosition" runat="server" />		
+    <input type="hidden" name="hdnCurrentImagePosition" id="hdnCurrentImagePosition" runat="server" />
   </div>
   <div id="divCanvas">
     <div id="divHeader">
@@ -202,19 +200,18 @@
         <table cellpadding="0" cellspacing="0">
           <tr>
             <td valign="top">
-              <div id="divImageContainer" style="overflow:auto;width:450px;height:540px">
-                <img id="imgCurrent" name="imgCurrent" src="<%=GetCurrentImagePath()%>" alt="" width="<%=GetCurrentImageWidth()%>" height="<%=GetCurrentImageHeight()%>" />
-              </div>
               <table>
-                <tr>
-                  <td nowrap='nowrap'>Ir a la imagen: <input id="txtGoToImage" name="txtGoToImage" type="text" class="textBox" maxlength="3" style="width:28px;margin-right:0px" onkeypress="return integerKeyFilter(this);" runat="server" /></td>
-                  <td nowrap='nowrap'><img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('gotoImage')" title="Ejecuta la búsqueda" /></td>
-                  <td width='80px' nowrap='nowrap'>&nbsp;</td>
+                <tr valign="top">
+                  <td nowrap='nowrap'>
+                    Ir a la imagen: <input id="txtGoToImage" name="txtGoToImage" type="text" class="textBox" maxlength="3"
+                                     style="width:28px;margin-right:0px" onkeypress="return integerKeyFilter(this);" runat="server" /><img
+                                      src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('gotoImage')" title="Ejecuta la búsqueda" /></td>
+                  <td width='40%' nowrap='nowrap'>&nbsp;</td>
                   <td><img src='../themes/default/buttons/first.gif' onclick='doOperation("moveToImage", "first");' title='Muestra la primera imagen' alt='' /></td>
                   <td><img src='../themes/default/buttons/previous.gif' onclick='doOperation("moveToImage", "previous");' title='Muestra la imagen anterior' alt='' /></td>
                   <td><img src='../themes/default/buttons/next.gif' onclick='doOperation("moveToImage", "next");' title='Muestra la siguiente imagen' alt='' /></td>
                   <td><img src='../themes/default/buttons/last.gif' onclick='doOperation("moveToImage", "last");' title='Muestra la última imagen' alt='' /></td>
-                  <td width='80px' nowrap='nowrap'>&nbsp;</td>
+                  <td width='40%' nowrap='nowrap'>&nbsp;</td>
                   <td align="right" style="width:100%">
                     Zoom:
                     <select id="cboZoomLevel" name="cboZoomLevel" class="selectBox" style="width:56px" title="" onchange="return doOperation('zoomImage')" runat="server">
@@ -233,15 +230,15 @@
                   </td>
                 </tr>
               </table>
+              <div id="divImageContainer" style="overflow:auto;width:450px;height:540px">
+                <img id="imgCurrent" name="imgCurrent" src="<%=GetCurrentImagePath()%>" alt="" width="<%=GetCurrentImageWidth()%>" />
+              </div>
             </td>
           </tr>
         </table>
-      </div> <!--divContent!-->		
+      </div> <!--divContent!-->
     </div> <!-- end divBody !-->
   </div> <!-- end divCanvas !-->
 </form>
-<iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top:0px"
-    marginheight="0"  marginwidth="0" frameborder="0" scrolling="no" src="../user.controls/calendar.aspx" width="100%">
-</iframe>
 </body>
 </html>
