@@ -15,7 +15,7 @@ using Empiria.Contacts;
 using Empiria.Geography;
 using Empiria.Json;
 
-using Empiria.Land.Documentation;
+using Empiria.Documents;
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
 using Empiria.Land.UI;
@@ -625,7 +625,8 @@ namespace Empiria.Web.UI.Ajax {
     private string GetImageSetImageURLCommandHandler() {
       int imageSetId = int.Parse(GetCommandParameter("imageSetId", true));
       int index = int.Parse(GetCommandParameter("index", true));
-      var imageSet = DocumentImageSet.Parse(imageSetId);
+
+      var imageSet = ImageSet.Parse(imageSetId);
 
       return imageSet.UrlRelativePath + imageSet.ImagesNamesArray[index];
     }

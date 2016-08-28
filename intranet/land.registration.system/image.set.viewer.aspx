@@ -75,7 +75,7 @@
     var newIndex = Number(getElement("txtGoToImage").value) - 1;
 
     var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getImageSetImageURL";
-    ajaxURL += "&imageSetId=<%=documentImageSet.Id%>";
+    ajaxURL += "&imageSetId=<%=imageSet.Id%>";
     ajaxURL += "&index=" + newIndex;
 
     var result = invokeAjaxMethod(false, ajaxURL, null);
@@ -108,7 +108,7 @@
     }
 
     var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getImageSetImageURL";
-    ajaxURL += "&imageSetId=<%=documentImageSet.Id%>";
+    ajaxURL += "&imageSetId=<%=imageSet.Id%>";
     ajaxURL += "&index=" + newIndex;
 
     var result = invokeAjaxMethod(false, ajaxURL, null);
@@ -121,7 +121,7 @@
   function doZoom() {
     var oImage = getElement("imgCurrent");
 
-    var width = 800;
+    var width = <%=defaultImageWidth%>;
     var zoomLevel = Number(getElement('cboZoomLevel').value);
     oImage.setAttribute('width', Number(width) * zoomLevel);
   }
@@ -150,7 +150,6 @@
     var divHeader = getElement('divHeader');
     var divContent = getElement('divContent');
     var divImageContainer = getElement('divImageContainer');
-    //var divBottomToolbar = getElement('divBottomToolbar');
 
     var height = document.documentElement.offsetHeight - divHeader.offsetHeight - 0;
     var width = document.documentElement.offsetWidth;
@@ -168,7 +167,7 @@
   }
 
   function imageCount() {
-    return <%=documentImageSet.FilesCount.ToString()%>;
+    return <%=imageSet.FilesCount.ToString()%>;
   }
 
   function window_onscroll() {

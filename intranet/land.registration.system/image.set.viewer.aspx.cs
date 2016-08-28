@@ -10,7 +10,9 @@
 ********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
+using Empiria.Documents;
 using Empiria.Presentation.Web;
+
 using Empiria.Land.Documentation;
 
 namespace Empiria.Land.WebApp {
@@ -19,10 +21,11 @@ namespace Empiria.Land.WebApp {
 
     #region Fields
 
-    protected DocumentImageSet documentImageSet = null;
+    protected ImageSet imageSet = null;
 
     protected string pageTitle = "Title";
     protected int currentImagePosition = 0;
+    protected decimal defaultImageWidth = 800m;
     protected int currentImageWidth = 0;
 
     #endregion Fields
@@ -53,6 +56,11 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+    protected string GetCurrentImagePath() {
+      return ".." + this.imageSet.UrlRelativePath +
+                    this.imageSet.ImagesNamesArray[currentImagePosition];
+    }
+
     #endregion Constructors and parsers
 
     #region Private methods
@@ -66,10 +74,10 @@ namespace Empiria.Land.WebApp {
           currentImagePosition = Math.Max(currentImagePosition - 1, 0);
           break;
         case "Next":
-          currentImagePosition = Math.Min(currentImagePosition + 1, documentImageSet.FilesCount - 1);
+          currentImagePosition = Math.Min(currentImagePosition + 1, imageSet.FilesCount - 1);
           break;
         case "Last":
-          currentImagePosition = documentImageSet.FilesCount - 1;
+          currentImagePosition = imageSet.FilesCount - 1;
           break;
         default:
           currentImagePosition = int.Parse(position) - 1;
@@ -77,31 +85,42 @@ namespace Empiria.Land.WebApp {
       }
     }
 
-    private void SetImageZoom() {
-      decimal zoomFactor = decimal.Parse(cboZoomLevel.Value);
-
-      currentImageWidth = Convert.ToInt32(Math.Round(800m * zoomFactor, 0));
-    }
-
-    protected string GetCurrentImagePath() {
-      return ".." + this.documentImageSet.UrlRelativePath +
-                    this.documentImageSet.ImagesNamesArray[currentImagePosition];
-    }
-
     private void Initialize() {
       int id = int.Parse(Request.QueryString["id"]);
 
-      this.documentImageSet = DocumentImageSet.Parse(id);
-      pageTitle = this.documentImageSet.Document.UID;
-      if (documentImageSet.DocumentImageType == DocumentImageType.Appendix) {
-        pageTitle += " (Anexo)";
-      }
+      this.imageSet = ImageSet.Parse(id);
+      SetPageTitle();
 
       if (!IsPostBack) {
         cboZoomLevel.Value = "1.00";
         currentImagePosition = 0;
       }
       SetImageZoom();
+    }
+
+    private void SetImageZoom() {
+      decimal zoomFactor = decimal.Parse(cboZoomLevel.Value);
+
+      if (imageSet is DocumentImageSet) {
+        this.defaultImageWidth = 800m;
+      } else if (imageSet is RecordingBookImageSet) {
+        this.defaultImageWidth = 1380m;
+      }
+      currentImageWidth = Convert.ToInt32(Math.Round(defaultImageWidth * zoomFactor, 0));
+    }
+
+    private void SetPageTitle() {
+      if (imageSet is DocumentImageSet) {
+        var documentImageSet = (DocumentImageSet) imageSet;
+        pageTitle = documentImageSet.Document.UID;
+        if (documentImageSet.DocumentImageType == DocumentImageType.Appendix) {
+          pageTitle += " (Anexos)";
+        }
+      } else if (imageSet is RecordingBookImageSet) {
+        var recordingImageSet = (RecordingBookImageSet) imageSet;
+
+        pageTitle = recordingImageSet.RecordingBook.AsText;
+      }
     }
 
     protected string GetCurrentImageWidth() {
