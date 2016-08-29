@@ -183,6 +183,7 @@
       case 'showSearchRecordingsView':
         showSearchRecordingsView();
         return;
+
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
@@ -192,6 +193,7 @@
       gbSended = true;
     }
   }
+
 
   function showRecordingActEditor() {
     if (divRecordingActEditor.style.display == 'none') {

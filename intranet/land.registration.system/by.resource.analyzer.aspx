@@ -149,6 +149,9 @@
       case 'onSelectImageSet':
         onSelectImageSet(arguments[1]);
         return;
+      case 'onShowImageInFullScreen':
+        onShowImageInFullScreen();
+        return;
 
       case 'refresh':
         sendPageCommand(command);
@@ -167,6 +170,10 @@
       sendPageCommand(command);
       gbSended = true;
     }
+  }
+
+  function onShowImageInFullScreen() {
+    alert("onShowImageInFullScreen");
   }
 
   function onSelectImageSet(imageSetId) {
@@ -304,7 +311,6 @@
     resizeFrame(null, getElement("ifraRecordingActEditor"));
     resizeFrame(null, getElement("ifraPropertyHistory"));
     resizeFrame(null, getElement("ifraSearchInfo"));
-
   }
 
   function window_onscroll() {

@@ -53,6 +53,9 @@
                             onchange="return updateUI(this);">
                       <option value="">( Primero seleccionar Distrito y sección )</option>
                     </select>
+                  &nbsp;&nbsp;
+                  <a href="javascript:doOperation('displayRecordingBookImageSet', 'cboPrecedentRecordingBook')">
+                    <img src='../themes/default/bullets/book.gif' />Consultar imágenes</a>
                 </td>
               </tr>
               <tr>
@@ -227,7 +230,9 @@
               <option value="-Bis1">-Bis1</option>
               <option value="-Bis2">-Bis2</option>
             </select>
-            <- CUIDADO: <u>No</u> se refiere al número de fracción
+              <a href="javascript:doOperation('displayRecordingBookImageSet', 'cboTargetActPhysicalBook')">
+                 <img src='../themes/default/bullets/book.gif' />Consultar imágenes</a>
+
             </span>
           </td>
           <td class="lastCell">&nbsp;</td>

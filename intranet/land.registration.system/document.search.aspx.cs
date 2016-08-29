@@ -139,6 +139,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectDocumentFromSearchGrid");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.ImagingControlID);
+        row = row.Replace("{{IMAGING.LINKS}}", HtmlFormatters.GetImagingLinks(item));
 
         html += row;
       }
@@ -159,6 +160,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectParty");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.ExtendedName);
+        row = row.Replace("{{IMAGING.LINKS}}", "&nbsp;");
 
         html += row;
       }
@@ -176,6 +178,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectDocumentFromSearchGrid");
         row = row.Replace("{{ITEM.ID}}", item.Document.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.AsText);
+        row = row.Replace("{{IMAGING.LINKS}}", HtmlFormatters.GetImagingLinks(item.RecordingBook));
 
         html += row;
       }
@@ -193,6 +196,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectRecordingBook");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.AsText);
+        row = row.Replace("{{IMAGING.LINKS}}", HtmlFormatters.GetImagingLinks(item));
 
         html += row;
       }
@@ -210,6 +214,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectDocumentFromSearchGrid");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.UID);
+        row = row.Replace("{{IMAGING.LINKS}}", HtmlFormatters.GetImagingLinks(item));
 
         html += row;
       }
@@ -227,6 +232,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectResource");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.UID);
+        row = row.Replace("{{IMAGING.LINKS}}", "&nbsp;");
 
         html += row;
       }
@@ -244,6 +250,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectTransaction");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.UID);
+        row = row.Replace("{{IMAGING.LINKS}}", "&nbsp;");
 
         html += row;
       }
@@ -257,7 +264,7 @@ namespace Empiria.Land.WebApp {
     static private string ReadHeaderTemplate(Type type) {
       const string template =
           "<tr class='detailsHeader'>" +
-            "<td>Resultado de la búsqueda</td>" +
+            "<td colspan='2'>Resultado de la búsqueda</td>" +
           "</tr>";
 
       return template;
@@ -269,6 +276,7 @@ namespace Empiria.Land.WebApp {
         "<td style='white-space:normal'>" +
           "<a href='javascript:doOperation(\"{{ON.SELECT.OPERATION}}\", {{ITEM.ID}});'>" +
           "{{ITEM.DISPLAY.TEXT}}</a>" +
+        "<td style='white-space:nowrap'>{{IMAGING.LINKS}}</td>" +
         "</td></tr>";
 
       return template;

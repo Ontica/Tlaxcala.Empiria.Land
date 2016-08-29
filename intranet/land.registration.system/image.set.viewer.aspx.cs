@@ -14,6 +14,7 @@ using Empiria.Documents;
 using Empiria.Presentation.Web;
 
 using Empiria.Land.Documentation;
+using Empiria.Land.Registration;
 
 namespace Empiria.Land.WebApp {
 
@@ -57,8 +58,12 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetCurrentImagePath() {
-      return ".." + this.imageSet.UrlRelativePath +
-                    this.imageSet.ImagesNamesArray[currentImagePosition];
+      if (!this.imageSet.IsEmptyInstance) {
+        return ".." + this.imageSet.UrlRelativePath +
+                      this.imageSet.ImagesNamesArray[currentImagePosition];
+      } else {
+        return "";
+      }
     }
 
     #endregion Constructors and parsers
@@ -86,7 +91,17 @@ namespace Empiria.Land.WebApp {
     }
 
     private void Initialize() {
-      int id = int.Parse(Request.QueryString["id"]);
+      int id = 0;
+
+      if (!String.IsNullOrWhiteSpace(Request.QueryString["recordingBookId"])) {
+        var recordingBook = RecordingBook.Parse(int.Parse(Request.QueryString["recordingBookId"]));
+        id = recordingBook.ImageSetId;
+      } else if (!String.IsNullOrWhiteSpace(Request.QueryString["recordingDocumentId"])) {
+        var document = RecordingDocument.Parse(int.Parse(Request.QueryString["recordingDocumentId"]));
+        id = document.ImageSetId;
+      } else {
+        id = int.Parse(Request.QueryString["id"]);
+      }
 
       this.imageSet = ImageSet.Parse(id);
       SetPageTitle();

@@ -31,6 +31,8 @@ namespace Empiria.Web.UI.Ajax {
       switch (commandName) {
         case "getImageSetImageURL":
           return GetImageSetImageURLCommandHandler();
+        case "getRecordingBookImageSetId":
+          return GetRecordingBookImageSetIdCommandHandler();
         case "getTargetPrecedentActsTableCmd":
           return GetTargetPrecedentActsTableCommandHandler();
         case "getTargetActSectionsStringArrayCmd":
@@ -543,6 +545,14 @@ namespace Empiria.Web.UI.Ajax {
 
       return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "FamilyFullName", "( Seleccionar al certificador del contrato )",
                                                 String.Empty, "No consta o no se puede determinar");
+    }
+
+    private string GetRecordingBookImageSetIdCommandHandler() {
+      int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
+
+      var recordingBook = RecordingBook.Parse(recordingBookId);
+
+      return recordingBook.ImageSetId.ToString();
     }
 
     private string GetRecordingBooksStringArrayCommandHandler() {

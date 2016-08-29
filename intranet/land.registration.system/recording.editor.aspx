@@ -200,6 +200,10 @@
       case 'showImagingControlSlip':
         showImagingControlSlip();
         return;
+      case 'displayRecordingBookImageSet':
+        displayRecordingBookImageSet(arguments[1]);
+        return;
+
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
@@ -207,6 +211,27 @@
     if (success) {
       sendPageCommand(command);
       gbSended = true;
+    }
+  }
+
+  function displayRecordingBookImageSet(selectBoxControlName) {
+    var recordingBookId = getElement(selectBoxControlName).value;
+
+    if (!recordingBookId || recordingBookId.length == 0) {
+      alert('Se requiere seleccionar un volumen registral de la lista.');
+      return;
+    }
+    var url = "../ajax/land.registration.system.data.aspx";
+    url += "?commandName=getRecordingBookImageSetId";
+    url += "&recordingBookId=" + recordingBookId;
+
+    var imageSetId = invokeAjaxGetJsonObject(url);
+
+    if (+imageSetId > 0) {
+      gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow,
+                                                   "./image.set.viewer.aspx?id=" + imageSetId, false);
+    } else {
+      alert("El volumen seleccionado no ha sido digitalizado.");
     }
   }
 

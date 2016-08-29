@@ -586,6 +586,8 @@
     getElement('<%=cboResponsible.ClientID%>').value = '';
   }
 
+  //var timeout = setTimeout("location.reload(true);", 300000);
+
 	/* ]]> */
 	</script>
 </asp:Content>
