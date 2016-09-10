@@ -148,8 +148,6 @@ namespace Empiria.Land.WebApp {
         return false;
       }
       return true;
-
-      //return LRSWorkflowRules.IsTransactionDocumentReadyForEdition(transaction);
     }
 
     protected bool IsReadyToAppendRecordingActs() {

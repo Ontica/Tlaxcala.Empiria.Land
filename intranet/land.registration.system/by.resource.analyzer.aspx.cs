@@ -77,7 +77,7 @@ namespace Empiria.Land.WebApp {
 
     protected bool IsResourceSelected {
       get {
-        return (!resource.IsEmptyInstance);
+        return (!resource.IsEmptyInstance && resource is RealEstate);
       }
     }
 
@@ -117,8 +117,7 @@ namespace Empiria.Land.WebApp {
           return this.IsRecordingActSelected ? "tabOff" : "tabDisabled";
 
         case TabStrip.ResourceEditor:
-          return "tabDisabled";
-          //return this.IsResourceSelected ? "tabOn" : "tabOff";
+          return this.IsResourceSelected ? "tabOff" : "tabDisabled";
 
         case TabStrip.ResourceHistory:
           return this.IsResourceSelected ? "tabOn" : "tabDisabled";
@@ -152,7 +151,7 @@ namespace Empiria.Land.WebApp {
           source = "recording.act.editor.aspx?propertyId={{RESOURCE.ID}}&id={{RECORDING.ACT.ID}}";
           break;
         case TabStrip.ResourceEditor:
-          source = "property.editor.aspx?propertyId={{RESOURCE.ID}}&recordingActId={{RECORDING.ACT.ID}}";
+          source = "real.estate.editor.aspx?propertyId={{RESOURCE.ID}}&recordingActId={{RECORDING.ACT.ID}}";
           break;
         case TabStrip.ResourceHistory:
           source = "resource.history.aspx?resourceId={{RESOURCE.ID}}&id={{RECORDING.ACT.ID}}";
