@@ -59,7 +59,7 @@
             <td style="vertical-align:text-top">Observaciones:</td>
             <td class="lastCell">
               <textarea id="txtNotes" name="txtNotes" cols="320" rows="3"
-                        style="width:504px" class="textArea" runat="server"></textarea>
+                        style="width:492px" class="textArea" runat="server"></textarea>
             </td>
           </tr>
          </table>
@@ -79,7 +79,7 @@
             </td>
             <td>Denominado:</td>
             <td class="lastCell">
-              <input type="text" class="textBox" id='txtCommonName' name='txtCommonName' style="width:276px" runat='server' />
+              <input type="text" class="textBox" id='txtCommonName' name='txtCommonName' style="width:270px" runat='server' />
             </td>
           </tr>
           <tr>
@@ -90,7 +90,7 @@
             </td>
             <td>Municipio:</td>
             <td class="lastCell">
-              <select id='cboMunicipality' name='cboMunicipality' class='selectBox' style='width:282px' onchange="return updateUserInterface(this);" runat='server'>
+              <select id='cboMunicipality' name='cboMunicipality' class='selectBox' style='width:276px' onchange="return updateUserInterface(this);" runat='server'>
                 <option value="">( Seleccionar )</option>
               </select>
             </td>
@@ -98,7 +98,7 @@
           <tr>
             <td style="vertical-align:text-top">Ubicado en:</td>
             <td class="lastCell" colspan="3">
-              <textarea id="txtLocationReference" name="txtLocation" cols="320" rows="2" style="width:502px" class="textArea" runat="server"></textarea>
+              <textarea id="txtLocationReference" name="txtLocation" cols="320" rows="2" style="width:492px" class="textArea" runat="server"></textarea>
             </td>
           </tr>
         </table>
@@ -131,7 +131,7 @@
             <td style="vertical-align:text-top">Medidas<br />y<br />colindancias:</td>
             <td class="lastCell">
                 <textarea id="txtMetesAndBounds" name="txtMetesAndBounds" cols="320" rows="10"
-                          style="width:542px" class="textArea" runat="server"></textarea>
+                          style="width:502px" class="textArea" runat="server"></textarea>
             </td>
           </tr>
 

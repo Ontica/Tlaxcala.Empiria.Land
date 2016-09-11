@@ -130,17 +130,19 @@ namespace Empiria.Land.WebApp {
     }
 
     private void LoadImagingControlIDsGrid(FixedList<RecordingDocument> documents) {
-      string html = ReadHeaderTemplate(typeof(RecordingDocument));
+      string html = ReadImagingControlIDHeaderTemplate();
 
       for (int i = 0; i < documents.Count; i++) {
         var item = documents[i];
 
-        string row = ReadRowTemplate(typeof(RecordingDocument), i);
+        string row = ReadImagingControlIDRowTemplate(i);
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectDocumentFromSearchGrid");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.ImagingControlID);
+        var transaction = item.GetTransaction();
+        row = row.Replace("{{TRANSACTION.UID}}", transaction.UID);
+        row = row.Replace("{{TRANSACTION.REQUESTED.BY}}", transaction.RequestedBy);
         row = row.Replace("{{IMAGING.LINKS}}", HtmlFormatters.GetImagingLinks(item));
-
         html += row;
       }
       _searchResultsGrid = TableWrapper(html);
@@ -270,6 +272,17 @@ namespace Empiria.Land.WebApp {
       return template;
     }
 
+    static private string ReadImagingControlIDHeaderTemplate() {
+      const string template =
+          "<tr class='detailsHeader'>" +
+            "<td>Núm. de control</td>" +
+            "<td>Núm. de trámite</td>" +
+            "<td>Interesado</td>" +
+            "<td>Img</td>" +
+          "</tr>";
+      return template;
+    }
+
     static private string ReadRowTemplate(Type type) {
       const string template =
         "<tr class='{{CLASS}}'>" +
@@ -280,6 +293,22 @@ namespace Empiria.Land.WebApp {
         "</td></tr>";
 
       return template;
+    }
+
+    static private string ReadImagingControlIDRowTemplate(int rowIndex) {
+      const string template =
+        "<tr class='{{CLASS}}'>" +
+        "<td style='vertical-align:top;white-space:normal'>" +
+          "<a href='javascript:doOperation(\"{{ON.SELECT.OPERATION}}\", {{ITEM.ID}});'>" +
+          "{{ITEM.DISPLAY.TEXT}}</a>" +
+        "<td style='vertical-align:top;white-space:nowrap'>{{TRANSACTION.UID}}</td>" +
+        "<td style='valign:top;white-space:normal;width:95%'>{{TRANSACTION.REQUESTED.BY}}</td>" +
+        "<td style='vertical-align:top;white-space:nowrap'>{{IMAGING.LINKS}}</td>" +
+        "</td></tr>";
+
+      return template.Replace("{{CLASS}}",
+                              (rowIndex % 2 == 0) ? "detailsItem" : "detailsOddItem");
+
     }
 
     static private string ReadRowTemplate(Type type, int rowIndex) {

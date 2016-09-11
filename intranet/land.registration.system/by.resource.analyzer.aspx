@@ -35,14 +35,14 @@
         <table cellpadding="0" cellspacing="0">
           <tr>
             <td id="divImageViewer" valign='top' style="position:relative;">
-              <div id="divImageContainer" style="overflow:auto;width:520px;height:540px;top:0;">
+              <div id="divImageContainer" style="overflow:auto;width:500px;height:540px;top:0;">
                   <object id="documentViewer" type="text/html" style="width:100%; height:100%;">
                     <p>visor de documentos</p>
                   </object>
                 </div>
             </td>
             <td><img src="../themes/default/textures/pixel.gif" height="1px" width="12px" alt="" /></td>
-            <td id="divDocumentViewer" valign="top" style="width:720px;">
+            <td id="divDocumentViewer" valign="top" style="width:740px;">
               <table class="tabStrip">
                 <tr>
                   <td id="tabStripItem_0" class="<%=TabStripClass(TabStrip.DocumentEditor)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Editar documento</td>
@@ -293,10 +293,10 @@
     if (width > 28) {
       divContent.style.width = width - 28;
     }
-    if (((width - 720) - 38) > 720) {
-      divImageContainer.style.width = (width - 720) - 38;
+    if (((width - 740) - 38) > 740) {
+      divImageContainer.style.width = (width - 740) - 38;
     } else {
-      divImageContainer.style.width = 560;
+      divImageContainer.style.width = 520;
     }
   }
 
