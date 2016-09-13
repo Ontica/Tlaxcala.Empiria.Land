@@ -128,9 +128,35 @@ namespace Empiria.Land.WebApp {
         return false;
       }
       if (this.transaction.Document.IsEmptyInstance) {
-        return false;
+        return IsReadyForCreation();
       }
       return this.transaction.Document.IsReadyForEdition;
+    }
+
+    private bool IsReadyForCreation() {
+      if (!(ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
+            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Certificates") ||
+            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Juridic"))) {
+        return false;
+      }
+      if (!this.transaction.Document.IsEmptyInstance) {
+        return false;
+      }
+
+      Assertion.Assert(!transaction.IsEmptyInstance,
+                       "Transaction can't be the empty instance.");
+
+      if (!(transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording ||
+            transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration ||
+            transaction.Workflow.CurrentStatus == LRSTransactionStatus.Juridic)) {
+        return false;
+      }
+
+      if (transaction.Workflow.GetCurrentTask().Responsible.Id == ExecutionServer.CurrentUserId) {
+        return true;
+      } else {
+        return false;
+      }
     }
 
     protected bool IsReadyToAppendRecordingActs() {
