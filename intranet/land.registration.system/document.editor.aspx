@@ -76,6 +76,7 @@
             <textarea id="txtObservations" name="txtObservations" class="textArea" style="width:698px" cols="348" rows="10" runat="server"></textarea>
           </td>
         </tr>
+        <% if (base.IsReadyForEdition()) { %>
         <tr id="rowEditButtons" style="display:inline">
           <td>&nbsp;</td>
           <td class="lastCell" colspan="2">
@@ -95,6 +96,7 @@
           <td >
           </td>
         </tr>
+        <% } %>
       </table>
     </td>
   </tr>
@@ -132,6 +134,7 @@
             </div>
           </td>
         </tr>
+        <% if (base.IsReadyForEdition()) { %>
         <tr>
           <td class="totalsRow lastCell" style='width:860px;display:<%=base.IsReadyToAppendRecordingActs() && base.RecordingActs.Count > 0 ? "inline" : "none"%>'>
             <div style="width:50%;float:left">
@@ -144,6 +147,7 @@
             </div>
           </td>
         </tr>
+        <% } %>
       </table>
     </td>
   </tr>

@@ -118,7 +118,7 @@
                   <td style='width:160px'>Acto jurídico</td>
                   <td style='width:240px'>Predio / Recurso</td>
                   <td style='width:360px'>Antecedente registrado en</td>
-                  <td>¿Qué desea hacer?</td>
+                  <td>&nbsp;</td>
                 </tr>
                 <%=GetRecordingActsGrid()%>
                 <tr class='totalsRow' style='display:<%=base.IsReadyForEdition() && base.RecordingActs.Count == 0 ? "inline" : "none"%>'>

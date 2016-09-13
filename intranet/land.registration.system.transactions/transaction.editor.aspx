@@ -323,7 +323,7 @@
             </table>
           </div>
           <div style="text-align: right">
-            <% if (!transaction.IsNew) { %>
+            <% if (!transaction.IsNew && base.CanCreateCertificate()) { %>
               <br />
               <input class="button" type="button" value="Crear nuevo certificado" onclick="doOperation('createNewCertificate')" style="height:28px;width:132px" />
               &nbsp; &nbsp;

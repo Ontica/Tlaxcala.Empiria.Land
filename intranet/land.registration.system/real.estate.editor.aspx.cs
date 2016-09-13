@@ -42,14 +42,23 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+    protected bool AllowEdition() {
+      return recordingAct.Document.IsReadyForEdition;
+             // !recordingAct.IsCompleted && !property.IsCompleted;
+    }
+
     #endregion Protected methods
 
     #region Private methods
 
     private void DoCommand() {
       switch (base.CommandName) {
-        case "saveProperty":
+        case "saveRealEstate":
           SaveProperty();
+          Response.Redirect("real.estate.editor.aspx?propertyId=" +
+                            property.Id.ToString() + "&recordingActId=" + recordingAct.Id.ToString(), true);
+          return;
+        case "cancelEdition":
           Response.Redirect("real.estate.editor.aspx?propertyId=" +
                             property.Id.ToString() + "&recordingActId=" + recordingAct.Id.ToString(), true);
           return;

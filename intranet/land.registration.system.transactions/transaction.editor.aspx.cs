@@ -425,6 +425,18 @@ namespace Empiria.Land.WebApp {
       onloadScript += "doOperation('goToTransaction', " + copy.Id.ToString() + ");";
     }
 
+    protected bool CanCreateCertificate() {
+      if (this.transaction.Workflow.CurrentStatus != LRSTransactionStatus.Elaboration &&
+          this.transaction.Workflow.CurrentStatus != LRSTransactionStatus.Recording) {
+        return false;
+      }
+      if (!(ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
+            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Certificates"))) {
+        return false;
+      }
+      return (this.transaction.Workflow.GetCurrentTask().Responsible.Id == ExecutionServer.CurrentUserId);
+    }
+
     protected string GetCertificates() {
       const string template = "<tr class='{CLASS}'><td>{{CERTIFICATE-UID}}</td>" +
                               "<td style='white-space:normal'>{{TYPE}}</td>" +

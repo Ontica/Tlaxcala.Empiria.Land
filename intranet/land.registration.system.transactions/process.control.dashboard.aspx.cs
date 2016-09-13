@@ -287,7 +287,7 @@ namespace Empiria.Land.WebApp {
       }
       imageProcessingEngine.Start();
       base.SetOKScriptMsg("El procesamiento de imágenes se ha iniciado.\\n\\n" +
-                          "Más tarde estarán los resultados.");
+                          "Más tarde estarán listos los resultados.");
       txtSearchExpression.Value = "";
       txtSearchExpression.Focus();
     }

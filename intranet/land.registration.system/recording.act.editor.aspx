@@ -86,7 +86,7 @@
                     <td>&nbsp;</td>
                   </tr>
                   <%=GetRecordingActPartiesGrid()%>
-                  <% if (base.recordingAct.Status != Empiria.Land.Registration.RecordableObjectStatus.Registered) { %>
+                  <% if (base.IsReadyForEdition()) { %>
                   <tr class="selectedItem">
                     <td><a href="javascript:doOperation('showRecordingActPartyEditor')">Agregar una persona u organización a este acto jurídico</a></td>
                     <td colspan="5" align="right"><a href="javascript:doOperation('saveRecordingActAsComplete')">Toda la información está completa</a></td>
@@ -247,10 +247,12 @@
 
   function disableRecordingActEditor(disabled) {
     disableControls(getElement("tblRecordingActEditor"), disabled);
-    getElement("btnEditRecordingAct").disabled = false;
-    getElement("btnExitSaveRecordingAct").disabled = false;
     gbRecordingActEditorDisabled = disabled;
 
+    <% if (base.IsReadyForEdition()) { %>
+    getElement("btnEditRecordingAct").disabled = false;
+    getElement("btnExitSaveRecordingAct").disabled = false;
+    <% } %>
     if (disabled) {
       getElement("btnEditRecordingAct").value = "Editar este acto jurídico";
       getElement("btnExitSaveRecordingAct").value = "Salir de este editor";

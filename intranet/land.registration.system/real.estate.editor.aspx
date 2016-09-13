@@ -52,7 +52,7 @@
               <input type="text" class="textBox" id='txtPartitionOf' name='txtPartitionOf' readonly='readonly'
                      style="width:132px" runat='server' title="" />
               <img src="../themes/default/buttons/document.sm.gif" alt="" title="Muestra la historia del predio padre"
-                   style="margin-left:-4px" onclick="doOperation('displayParentResourceHistory')" />Historia del predio padre
+                   style="margin-left:-4px" onclick="doOperation('displayParentResource')" />Ver datos del predio padre
             </td>
           </tr>
           <tr>
@@ -135,14 +135,23 @@
             </td>
           </tr>
 
+          <% if (base.AllowEdition()) { %>
           <tr>
             <td>&nbsp;</td>
-            <td class="lastCell" style="text-align:right">
-                 <input type="button" value="Toda la información está completa" class="button"
-                        tabindex="-1" style="width:180px;height:28px" onclick="doOperation('saveProperty')" />
-                 &nbsp; &nbsp;
+            <td class="lastCell">
+                 <input id="btnEditRealEstate" type="button" value="Editar" class="button"
+                        tabindex="-1" style="width:88px;height:28px" onclick="disableEditionFields(false)" />
+                 &nbsp; &nbsp; &nbsp;
+                 <input id="btnCancelEdition" type="button" value="Descartar cambios" class="button"
+                        tabindex="-1" style="width:124px;height:28px" onclick="doOperation('cancelEdition')" />
+                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                 <input id="btnSaveRealEstate" type="button" value="Guardar los cambios" class="button"
+                        tabindex="-1" style="width:120px;height:28px" onclick="doOperation('saveRealEstate')" />
+                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </td>
           </tr>
+          <% } %>
 
         </table>
       </td>
@@ -160,11 +169,13 @@
       return;
     }
     switch (command) {
-      case 'saveProperty':
-        return saveProperty();
+      case 'saveRealEstate':
+        return saveRealEstate();
       case 'searchCadastralNumber':
         alert("La búsqueda de claves catastrales no está disponible en este momento.");
         return;
+      case 'cancelEdition':
+        return cancelEdition();
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
@@ -175,7 +186,17 @@
     }
   }
 
-  function saveProperty() {
+  function cancelEdition() {
+    var sMsg = "Descartar cambios en la edición del predio.\n\n";
+    sMsg += "La siguiente operación descartará los cambios efectuados en la información del predio.\n\n";
+    sMsg += "¿Descarto los cambios efectuados en el predio?";
+    if (confirm(sMsg)) {
+      setUnknownPropertyFields();
+      sendPageCommand("cancelEdition");
+    }
+  }
+
+  function saveRealEstate() {
     if (!validateProperty()) {
       return;
     }
@@ -188,7 +209,7 @@
     sMsg += "¿Toda la información del predio está completa?";
     if (confirm(sMsg)) {
       setUnknownPropertyFields();
-      sendPageCommand("saveProperty");
+      sendPageCommand("saveRealEstate");
     }
   }
 
@@ -214,14 +235,8 @@
   }
 
   function setUnknownPropertyFields() {
-    if (getElement("txtCadastralKey").value.length == 0) {
-      getElement("txtCadastralKey").value = "No consta";
-    }
     if (getElement("txtLotSize").value.length == 0) {
       getElement("txtLotSize").value = "0.00";
-    }
-    if (getElement("txtMetesAndBounds").value.length == 0) {
-      getElement("txtMetesAndBounds").value = "No consta";
     }
   }
 
@@ -253,6 +268,20 @@
     return true;
   }
 
+  function disableEditionFields(disabled) {
+    disableControls(getElement("tabStripItemView_0"), disabled);
+
+    <% if (base.AllowEdition()) { %>
+    getElement("btnEditRealEstate").disabled = !disabled;
+    getElement("btnSaveRealEstate").disabled = disabled;
+    <% } %>
+
+    getElement("txtPropertyUID").readOnly = true;
+    getElement("txtPartitionNo").readOnly = true;
+    getElement("txtPartitionOf").readOnly = true;
+  }
+
+
   function resetMunicipalitiesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getCadastralOfficeMunicipalitiesComboCmd";
@@ -271,6 +300,7 @@
   }
 
   addEvent(document, 'keypress', upperCaseKeyFilter);
+  disableEditionFields(true);
 
   </script>
 </html>

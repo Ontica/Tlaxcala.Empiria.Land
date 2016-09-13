@@ -36,6 +36,10 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+    protected bool IsReadyForEdition() {
+      return recordingAct.Document.IsReadyForEdition;
+    }
+
     #endregion Protected methods
 
     #region Private methods

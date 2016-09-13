@@ -269,7 +269,7 @@ namespace Empiria.Land.WebApp {
 
       cboAnnotationCategory.Value = "0";
 
-      gRecordingActs = LRSGridControls.GetBatchCaptureRecordingActsGrid(this.recording);
+      //gRecordingActs = LRSGridControls.GetBatchCaptureRecordingActsGrid(this.recording);
       gAnnotationActs = String.Empty;
       LoadRecordingActsPropertiesCombo();
       LoadAnotherPropertyRecorderOfficesCombo();

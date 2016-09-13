@@ -124,30 +124,13 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool IsReadyForEdition() {
-      if (transaction.IsEmptyInstance) {
+      if (this.transaction.IsEmptyInstance) {
         return false;
       }
-
-      if (transaction.IsEmptyInstance) {
+      if (this.transaction.Document.IsEmptyInstance) {
         return false;
       }
-      if (!(ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
-            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Certificates") ||
-            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Juridic"))) {
-        return false;
-      }
-      if (!(transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording ||
-            transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration ||
-            transaction.Workflow.CurrentStatus == LRSTransactionStatus.Juridic)) {
-        return false;
-      }
-      if (transaction.Document.IsEmptyInstance) {
-        return true;
-      }
-      if (transaction.Document.Status != RecordableObjectStatus.Incomplete) {
-        return false;
-      }
-      return true;
+      return this.transaction.Document.IsReadyForEdition;
     }
 
     protected bool IsReadyToAppendRecordingActs() {

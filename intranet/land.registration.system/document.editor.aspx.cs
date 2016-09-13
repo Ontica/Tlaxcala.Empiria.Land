@@ -116,7 +116,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool IsReadyForEdition() {
-      return LRSWorkflowRules.IsDocumentReadyForEdition(document);
+      return document.IsReadyForEdition;
     }
 
     protected bool IsReadyToAppendRecordingActs() {
