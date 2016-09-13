@@ -464,9 +464,8 @@ namespace Empiria.Land.WebApp {
           temp = temp.Replace("{{ISSUED-BY}}", certificate.IssuedBy.Nickname);
           temp = temp.Replace("{{ISSUE-TIME}}", certificate.IssueTime.ToString("dd/MMM/yyyy HH:mm"));
           temp = temp.Replace("{{STATUS}}", certificate.Status == CertificateStatus.Closed ? "Cerrado" : "Eliminado");
-          temp = temp.Replace("{{OPTIONS-COMBO}}", "{{VIEW-LINK}} &nbsp; &nbsp; |  &nbsp; &nbsp; {{OPEN-LINK}}");
+          temp = temp.Replace("{{OPTIONS-COMBO}}", "{{VIEW-LINK}}");
           temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE-UID}}')\">Ver o imprimir</a>");
-          temp = temp.Replace("{{OPEN-LINK}}", "<a href=\"javascript:doOperation('openCertificate', '{{CERTIFICATE-UID}}')\">Abrir para edición</a>");
         } else {
           temp = temp.Replace("{{ISSUED-BY}}", "&nbsp;");
           temp = temp.Replace("{{ISSUE-TIME}}", "No emitido");

@@ -20,7 +20,7 @@
         <td style="text-align:right;vertical-align:top;width:40%">
           <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.UID%>" />
           <br />
-          Trámite: <%=transaction.UID%> <%=transaction.IsReentry ? "&nbsp; <b>(Reingreso)</b>" : "" %>
+          Trámite: <%=transaction.UID%> <%=transaction.IsReentry ? "&nbsp; <b>(REINGRESO)</b>" : "" %>
         </td>
       </tr>
       <tr><td colspan="2"><h2 style="padding-top:0;">CONTROL DEL ACERVO DOCUMENTAL</h2></td></tr>
@@ -64,12 +64,12 @@
             <br />
             <b><%=document.UID%></b>
             <br />
-            Número de documento
+            Número de documento <%=transaction.IsReentry ? "<b>(REINGRESO)</b>" : "" %>
           </td>
           <td style="text-align:center">
             <span style="font-size:22pt"><%=document.AuthorizationTime.ToString("dd/MMM/yyyy")%></span>
             <br />
-            Fecha de registro
+            Fecha de registro <%=transaction.IsReentry ? "del <b>REINGRESO</b>" : "" %>
           </td>
           <td style="text-align:right;font-size:26px">
             <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=document.ImagingControlID%>" />
