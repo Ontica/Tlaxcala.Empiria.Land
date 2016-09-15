@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.RecordingActEditor" CodeFile="recording.act.editor.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
-<%@ Register tagprefix="empiriaControl" tagname="RecordingActAttributesEditorControl" src="../land.registration.system.controls/recording.act.attributes.editor.control.ascx" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyEditorControl" src="../land.registration.system.controls/recording.party.editor.control.ascx" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyViewerControl" src="../land.registration.system.controls/recording.party.viewer.control.ascx" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -30,38 +29,52 @@
           <table id="tblRecordingActEditor" class="editionTable">
             <tr>
               <td>Acto jurídico:</td>
-              <td class="lastCell" colspan="5">
-                <input id="txtRecordingActName" type="text" class="textBox" maxlength="4" style="width:280px;margin-right:0" readonly="readonly" runat="server" />
-                &nbsp; &nbsp;
-                Aplica a:
-                <select id="cboProperty" class="selectBox" style="width:154px" title="" runat="server">
-                </select>
+              <td class="lastCell" colspan="3">
+                <input id="txtRecordingActName" type="text" class="textBox" style="width:294px;margin-right:0" readonly="readonly" runat="server" />
+                &nbsp;Folio real:
+                <input id="txtProperty" type="text" class="textBox" style="width:132px;margin-right:0" readonly="readonly" runat="server" />
               </td>
             </tr>
-            <tr>
-              <td class='lastCell' colspan='6'>
-                <empiriaControl:RecordingActAttributesEditorControl ID="oRecordingActAttributes" runat="server" Visible="true" />
+            <tr style="display:<%= base.EditOperationAmount ? "inline" : "none" %>">
+              <td>
+                Monto de la operación:
+              </td>
+              <td class="lastCell" colspan="3">
+                <input id="txtOperationAmount" type="text" class="textBox" style="width:90px;" onblur='this_formatAsNumber(this, 4);'
+                       onkeypress="return positiveKeyFilter(this);" title="" maxlength="18" runat="server" />
+                <select id="cboOperationCurrency" class="selectBox" style="width:52px;margin-left:-6px" runat="server">
+                  <option value="">(?)</option>
+                  <option value="600" title="Pesos mexicanos">MXN</option>
+                  <option value="602" title="Unidades de inversión">UDIS</option>
+                  <option value="603" title="Salarios mínimos">SM</option>
+                  <option value="601" title="Dólares americanos">USD</option>
+                  <option value="-2" title="No consta">N/C</option>
+                </select>
+                <% if (base.EditAppraisalAmount) { %>
+                Avalúo:
+                <input id="txtAppraisalAmount" type="text" class="textBox" style="width:90px;"
+                        onkeypress="return positiveKeyFilter(this);" onblur='this_formatAsNumber(this);'
+                        title="" maxlength="18" runat="server" />
+                <select id="cboAppraisalCurrency" class="selectBox" style="width:52px;margin-left:-6px" runat="server">
+                  <option value="">(?)</option>
+                  <option value="600" title="Pesos mexicanos">MXN</option>
+                  <option value="602" title="Unidades de inversión">UDIS</option>
+                  <option value="-2" title="No consta">N/C</option>
+                </select>
+                <% } %>
               </td>
             </tr>
             <tr>
               <td style="vertical-align:text-top">Observaciones:</td>
-              <td class="lastCell" colspan="5">
-                <textarea id="txtObservations" cols="320" rows="2" style="width:500px" class="textArea" runat="server"></textarea>
+              <td class="lastCell" colspan="3">
+                <textarea id="txtObservations" cols="320" rows="2" style="width:440px" class="textArea" runat="server"></textarea>
               </td>
             </tr>
             <tr>
-              <td>Estado del acto:</td>
+              <td>&nbsp;</td>
               <td class="lastCell" colspan="5">
-                <select id="cboStatus" class="selectBox" style="width:122px;margin-top:-8px;" title="" onchange="return updateUserInterface(this);" runat="server">
-                  <option value="">( Seleccionar )</option>
-                  <option value="L">No legible</option>
-                  <option value="P">Pendiente</option>
-                  <option value="I">En proceso</option>
-                  <option value="R">Registrado</option>
-                </select>
-                <img src="../themes/default/textures/pixel.gif" height="1px" width="60px" alt="" />
                 <input id="btnEditRecordingAct" type="button" value="Editar este acto jurídico" class="button" tabindex="-1" style="width:140px" onclick="doOperation('onclick_btnEditRecordingAct')" />
-                <img src="../themes/default/textures/pixel.gif" height="1px" width="48px" alt="" />
+                <img src="../themes/default/textures/pixel.gif" height="1px" width="98px" alt="" />
                 <input id="btnExitSaveRecordingAct" type="button" value="Salir de este editor" class="button" tabindex="-1" style="width:110px" onclick="doOperation('onclick_btnExitSaveRecordingAct')" />
               </td>
             </tr>
@@ -74,28 +87,28 @@
       <tr>
         <td>
           <table class="editionTable">
-          <tr>
-            <td colspan="8" class="lastCell">
-              <div style="overflow-y:auto;width:620px;">
-                <table class="details" style="width:99%">
-                  <tr class="detailsHeader">
-                    <td width="85%">Nombre</td>
-                    <td>Identificación</td>
-                    <td>Participa como</td>
-                    <td>Titularidad</td>
-                    <td>&nbsp;</td>
-                  </tr>
-                  <%=GetRecordingActPartiesGrid()%>
-                  <% if (base.IsReadyForEdition()) { %>
-                  <tr class="selectedItem">
-                    <td><a href="javascript:doOperation('showRecordingActPartyEditor')">Agregar una persona u organización a este acto jurídico</a></td>
-                    <td colspan="5" align="right"><a href="javascript:doOperation('saveRecordingActAsComplete')">Toda la información está completa</a></td>
-                  </tr>
-                  <% } %>
-                </table>
-              </div>
-            </td>
-          </tr>
+            <tr>
+              <td colspan="8" class="lastCell">
+                <div style="overflow-y:auto;width:620px;">
+                  <table class="details" style="width:99%">
+                    <tr class="detailsHeader">
+                      <td width="85%">Nombre</td>
+                      <td>Identificación</td>
+                      <td>Participa como</td>
+                      <td>Titularidad</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <%=GetRecordingActPartiesGrid()%>
+                    <% if (base.IsReadyForEdition()) { %>
+                    <tr class="selectedItem">
+                      <td><a href="javascript:doOperation('showRecordingActPartyEditor')">Agregar una persona u organización a este acto jurídico</a></td>
+                      <td colspan="5" align="right"><a href="javascript:doOperation('saveRecordingActAsComplete')">Toda la información está completa</a></td>
+                    </tr>
+                    <% } %>
+                  </table>
+                </div>
+              </td>
+            </tr>
           </table>
         </td>
       </tr>
@@ -182,7 +195,6 @@
     var sMsg = "Guardar la información del acto jurídico.\n\n";
     sMsg += "La siguiente operación guardará la información del siguiente acto jurídico:\n\n";
     sMsg += "Tipo:\t<%=recordingAct.RecordingActType.DisplayName%>\n";
-    sMsg += "Estado:\t" + getComboOptionText(getElement("cboStatus")) + "\n\n";
     sMsg += "¿Toda la información está correcta?";
     if (confirm(sMsg)) {
       sendPageCommand("saveRecordingAct");
@@ -212,11 +224,39 @@
   }
 
   function validateRecordingAct() {
-    if (getElement('cboStatus').value.length == 0) {
-      alert("Requiero se proporcione el estado del acto jurídico.");
+    <% if (base.EditOperationAmount) { %>
+    if (getElement('cboOperationCurrency').value.length == 0) {
+      alert("Requiero la moneda del importe de la operación.");
       return false;
     }
-    return <%=oRecordingActAttributes.ClientID%>_validate();
+    if (Number(getElement('cboOperationCurrency').value) < 0 &&
+        getElement('<%=txtOperationAmount.ClientID%>').value.length != 0) {
+      alert("Se seleccionó 'No consta' como moneda pero el importe de la operación sí se proporcionó.");
+      return false;
+    }
+    if (Number(getElement('cboOperationCurrency').value) > 0 &&
+        getElement('txtOperationAmount').value.length == 0) {
+      alert("Requiero el importe de la operación.");
+      return false;
+    }
+    <% } %>
+    <% if (base.EditAppraisalAmount) { %>
+    if (getElement('cboAppraisalCurrency').value.length == 0) {
+      alert("Requiero la moneda del importe del avalúo.");
+      return false;
+    }
+    if (Number(getElement('cboAppraisalCurrency').value) < 0 &&
+        getElement('txtAppraisalAmount').value.length != 0) {
+      alert("Se seleccionó 'No consta' como moneda pero el importe del avalúo sí se proporcionó.");
+      return false;
+    }
+    if (Number(getElement('cboAppraisalCurrency').value) > 0 &&
+        getElement('txtAppraisalAmount').value.length == 0) {
+      alert("Requiero el importe del avalúo.");
+      return false;
+    }
+    <% } %>
+    return true;
   }
 
   function checkUnknownRecordingActFields() {
@@ -259,11 +299,7 @@
     } else {
       getElement("btnEditRecordingAct").value = "Descartar los cambios";
       getElement("btnExitSaveRecordingAct").value = "Guardar los cambios";
-      if (getElement("cboStatus").value == 'R') {
-        getElement("cboStatus").value = 'I';
-      }
     }
-    getElement("cboProperty").disabled = false;
   }
 
   function appendParty() {
@@ -275,11 +311,6 @@
   function updateUserInterface(oControl) {
     if (oControl == null) {
       return;
-    }
-    if (oControl == getElement("cboStatus")) {
-      if (getElement("cboStatus").value == "R") {
-        getElement("cboStatus").value = "";
-      }
     }
   }
 

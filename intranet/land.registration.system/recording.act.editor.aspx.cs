@@ -9,9 +9,10 @@
 *                                                                                                            *
 ********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
-using System.Web.UI.WebControls;
 
+using Empiria.DataTypes;
 using Empiria.Presentation.Web;
+
 using Empiria.Land.Registration;
 using Empiria.Land.UI;
 
@@ -38,6 +39,18 @@ namespace Empiria.Land.WebApp {
 
     protected bool IsReadyForEdition() {
       return recordingAct.Document.IsReadyForEdition;
+    }
+
+    protected bool EditOperationAmount {
+      get {
+        return recordingAct.RecordingActType.RecordingRule.EditOperationAmount;
+      }
+    }
+
+    protected bool EditAppraisalAmount {
+      get {
+        return recordingAct.RecordingActType.RecordingRule.EditAppraisalAmount;
+      }
     }
 
     #endregion Protected methods
@@ -94,7 +107,7 @@ namespace Empiria.Land.WebApp {
       oPartyEditorControl.SelectParty(partyId);
 
       this.oAntecedentParties.BaseRecordingAct = this.recordingAct;
-      this.oAntecedentParties.Property = RealEstate.Parse(int.Parse(cboProperty.Value));
+      this.oAntecedentParties.Property = recordingAct.Resource;
     }
 
     protected string GetRecordingActPartiesGrid() {
@@ -102,9 +115,27 @@ namespace Empiria.Land.WebApp {
     }
 
     private void SaveRecordingAct() {
-      oRecordingActAttributes.FillRecordingAct();
       recordingAct.Notes = txtObservations.Value;
-      recordingAct.ChangeStatusTo((RecordableObjectStatus) Convert.ToChar(cboStatus.Value));
+
+      if (this.EditOperationAmount) {
+        if (txtOperationAmount.Value.Length == 0) {
+          txtOperationAmount.Value = "0.00";
+        }
+        recordingAct.ExtensionData.OperationAmount =
+                                    Money.Parse(Currency.Parse(int.Parse(cboOperationCurrency.Value)),
+                                                decimal.Parse(txtOperationAmount.Value));
+      }
+
+      if (this.EditAppraisalAmount) {
+        if (txtAppraisalAmount.Value.Length == 0) {
+          txtAppraisalAmount.Value = "0.00";
+        }
+        recordingAct.ExtensionData.AppraisalAmount =
+                                    Money.Parse(Currency.Parse(int.Parse(cboAppraisalCurrency.Value)),
+                                                decimal.Parse(txtAppraisalAmount.Value));
+      }
+
+      recordingAct.Save();
     }
 
     private void SaveRecordingActAsComplete() {
@@ -113,7 +144,6 @@ namespace Empiria.Land.WebApp {
 
     private void Initialize() {
       recordingAct = RecordingAct.Parse(int.Parse(Request.QueryString["id"]));
-      oRecordingActAttributes.RecordingAct = this.recordingAct;
 
       oPartyEditorControl.RecordingAct = this.recordingAct;
       oPartyEditorControl.LoadEditor();
@@ -124,27 +154,28 @@ namespace Empiria.Land.WebApp {
     private void LoadControls() {
       txtRecordingActName.Value = "(" + recordingAct.Index.ToString("00") + ") " + recordingAct.DisplayName;
       txtObservations.Value = recordingAct.Notes;
-      cboStatus.Value = ((char) recordingAct.Status).ToString();
       FillPropertiesCombo();
       if (this.recordingAct.RecordingActType.Name.StartsWith("ObjectType.RecordingAct.DomainAct")) {
-        //this.oAntecedentParties.BaseRecordingAct = this.recordingAct;
-        //this.oAntecedentParties.Property = RealEstate.Parse(int.Parse(cboProperty.Value));
       } else {
         this.oAntecedentParties.Visible = false;
       }
-      //oPartyEditorControl.LoadEditor();
-      //oRecordingActAttributes.LoadRecordingAct();
+      if (recordingAct.ExtensionData.AppraisalAmount != Money.Empty) {
+        txtAppraisalAmount.Value = recordingAct.ExtensionData.AppraisalAmount.Amount.ToString("N2");
+        cboAppraisalCurrency.Value = recordingAct.ExtensionData.AppraisalAmount.Currency.Id.ToString();
+      }
+      if (recordingAct.ExtensionData.OperationAmount != Money.Empty) {
+        txtOperationAmount.Value = recordingAct.ExtensionData.OperationAmount.Amount.ToString("N2");
+        cboOperationCurrency.Value = recordingAct.ExtensionData.OperationAmount.Currency.Id.ToString();
+      }
     }
 
     private void FillPropertiesCombo() {
       this.oAntecedentParties.Visible = false;
-      cboProperty.Items.Clear();
 
       if (!recordingAct.Resource.IsFirstRecordingAct(recordingAct)) {
         this.oAntecedentParties.Visible = true;
       }
-      cboProperty.Items.Add(new ListItem(recordingAct.Resource.UID,
-                                         recordingAct.Resource.Id.ToString()));
+      txtProperty.Value = recordingAct.Resource.UID;
     }
 
     #endregion Private methods

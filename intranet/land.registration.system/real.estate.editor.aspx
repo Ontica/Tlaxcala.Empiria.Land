@@ -43,6 +43,7 @@
                    style="margin-left:-4px" onclick="doOperation('showCadastralCertificate')" />Cédula catastral
             </td>
           </tr>
+
           <tr>
             <td>Fracción:</td>
             <td class="lastCell">
@@ -62,6 +63,24 @@
                         style="width:492px" class="textArea" runat="server"></textarea>
             </td>
           </tr>
+
+          <% if (base.AllowEdition()) { %>
+          <tr>
+            <td>&nbsp;</td>
+            <td class="lastCell">
+                 <input id="btnEditRealEstate" type="button" value="Editar este predio" class="button"
+                        tabindex="-1" style="width:104px;height:28px" onclick="disableEditionFields(false)" />
+                 &nbsp; &nbsp; &nbsp;
+                 <input id="btnCancelEdition" type="button" value="Descartar cambios" class="button"
+                        tabindex="-1" style="width:124px;height:28px" onclick="doOperation('cancelEdition')" />
+                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                 <input id="btnSaveRealEstate" type="button" value="Guardar los cambios" class="button"
+                        tabindex="-1" style="width:120px;height:28px" onclick="doOperation('saveRealEstate')" />
+                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </td>
+          </tr>
+          <% } %>
          </table>
       </td>
     </tr>
@@ -130,29 +149,10 @@
           <tr>
             <td style="vertical-align:text-top">Medidas<br />y<br />colindancias:</td>
             <td class="lastCell">
-                <textarea id="txtMetesAndBounds" name="txtMetesAndBounds" cols="320" rows="10"
+                <textarea id="txtMetesAndBounds" name="txtMetesAndBounds" cols="320" rows="8"
                           style="width:502px" class="textArea" runat="server"></textarea>
             </td>
           </tr>
-
-          <% if (base.AllowEdition()) { %>
-          <tr>
-            <td>&nbsp;</td>
-            <td class="lastCell">
-                 <input id="btnEditRealEstate" type="button" value="Editar" class="button"
-                        tabindex="-1" style="width:88px;height:28px" onclick="disableEditionFields(false)" />
-                 &nbsp; &nbsp; &nbsp;
-                 <input id="btnCancelEdition" type="button" value="Descartar cambios" class="button"
-                        tabindex="-1" style="width:124px;height:28px" onclick="doOperation('cancelEdition')" />
-                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                 <input id="btnSaveRealEstate" type="button" value="Guardar los cambios" class="button"
-                        tabindex="-1" style="width:120px;height:28px" onclick="doOperation('saveRealEstate')" />
-                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            </td>
-          </tr>
-          <% } %>
-
         </table>
       </td>
     </tr>

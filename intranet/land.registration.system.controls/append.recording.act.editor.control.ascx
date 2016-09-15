@@ -130,7 +130,7 @@
               </select>
             </td>
             <td>Número:</td>
-            <td><input id="txtPartitionNo" type="text" class="textBox" style="width:66px;margin-right:0" maxlength="10" /></td>
+            <td><input id="txtPartitionNo" type="text" class="textBox" style="width:122px;margin-right:0" maxlength="40" /></td>
             <td class="lastCell">
               <label><input id="chkNoNumberPartition" type="checkbox" onclick="updatePartitionControls();" />Sin número</label>
               <label><input id="chkGeneratePartitionRank" type="checkbox" onclick="updatePartitionControls()" />Generar un rango</label>
@@ -139,7 +139,7 @@
           <tr id="divRepeatPartitionUntilRow" style="display:none">
             <td colspan="2">&nbsp;</td>
             <td>Número final:</td>
-            <td><input id="txtRepeatPartitionUntil" type="text" class="textBox" style="width:66px;margin-right:0" maxlength="4" /></td>
+            <td><input id="txtRepeatPartitionUntil" type="text" class="textBox" style="width:122px;margin-right:0" maxlength="4" /></td>
             <td class="lastCell">&nbsp;</td>
           </tr>
         </table>
