@@ -142,6 +142,22 @@ function grayImage(e) {
   resetStatus();
 }
 
+function copyToClipboard(text) {
+  var textArea = document.createElement("textarea");
+  textArea.value = text;
+
+  document.body.appendChild(textArea);
+
+  textArea.select();
+
+  try {
+    document.execCommand("copy");
+  } catch(e) {
+    //  no-op
+  }
+  document.body.removeChild(textArea);
+}
+
 function hasValue(controlName, exceptionMsg) {
   var control = getElement(controlName);
   if (control.value == "") {
@@ -540,7 +556,6 @@ function onMouseOutTabStripCommandHandler(tabStrip) {
 }
 
 function openInWindow(oWindow, url, fullWindow) {
-
   var options = "";
 
   if (fullWindow != null && fullWindow === true) {
