@@ -232,7 +232,7 @@
     getElement('ifraPropertyHistory').src = '<%=TabStripSource(TabStrip.ResourceHistory)%>';
     getElement('ifraSearchInfo').src = '<%=TabStripSource(TabStrip.GlobalSearch)%>';
     getElement('ifraRecordingActEditor').src = '<%=TabStripSource(TabStrip.RecordingActEditor)%>';
-    // getElement('ifraDocumentEditor').src = '<%=TabStripSource(TabStrip.DocumentEditor)%>';
+    getElement('ifraDocumentEditor').src = '<%=TabStripSource(TabStrip.DocumentEditor)%>';
     getElement('ifraPropertyEditor').src = '<%=TabStripSource(TabStrip.ResourceEditor)%>';
   }
 

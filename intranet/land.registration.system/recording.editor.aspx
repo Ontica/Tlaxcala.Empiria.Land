@@ -78,23 +78,20 @@
         <tr id="rowEditButtons" style="display:inline">
           <td>&nbsp;</td>
           <td class="lastCell" colspan="2">
-            <input id='btnSaveRecording' type="button" value="Guardar los cambios" class="button" style="width:112px;height:28px" onclick='doOperation("saveDocument")' title='Guarda el documento' />
+            <input id='cmdEditDocument' type="button" value="Editar documento" class="button" style="width:128px;height:28px;display:none" onclick='doOperation("editDocument")' />
             &nbsp; &nbsp; &nbsp;
-            <!--
-            <input id='btnCancelEdition' type="button" value="Cancelar edición" class="button" style="width:112px;height:28px" onclick='doOperation("cancelEdition")' title='Cancela los cambios realizados sobre el documento' />
+            <input id='cmdSaveDocument' type="button" value="Guardar los cambios" class="button" style="width:112px;height:28px;display:none" onclick='doOperation("saveDocument")' title='Guarda el documento' />
             &nbsp; &nbsp; &nbsp;
-            <input id='btnCloseForRecording' type="button" value="Registro completo" class="button" style="width:112px;height:28px" onclick='doOperation("closeRegistration")' title='Cierra el documento y evita cambios adicionales en el registro' />
-            &nbsp; &nbsp; &nbsp;
-            <input id='btnOpenForRecording' type="button" value="Abrir para registro" class="button" style="width:112px;height:28px" onclick='doOperation("closeRegistration")' title='Abre el documento nuevamente para registro' />
-            !-->
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
-            <input id='cmdShowImagingControlSlip' type="button" value="Imprimir carátula" class="button" style="width:112px;height:28px;top:8px" onclick='doOperation("showImagingControlSlip")' title='Imprimir la carátula' />
-            <input id='cmdGenerateImagingControlID' type="button" value="Generar número de control" class="button" style="width:148px;height:28px;top:8px" onclick='doOperation("generateImagingControlID")' title='Generar número de control' />
+            <input id='cmdGenerateImagingControlID' type="button" value="Generar número de control" class="button" style="width:148px;height:28px;top:8px;display:none" onclick='doOperation("generateImagingControlID")' title='Generar número de control' />
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <input id='cmdShowImagingControlSlip' type="button" value="Imprimir carátula" class="button" style="width:112px;height:28px;top:8px;display:none" onclick='doOperation("showImagingControlSlip")' title='Imprimir la carátula' />
             &nbsp; &nbsp;
-            <input id='cmdPrintFinalSeal' type="button" value="Imprimir sello electrónico" class="button" style="width:132px;height:28px;top:8px" onclick='doOperation("viewGlobalRecordingSeal")' title='Imprime el sello que va en la escritura que se entrega al interesado' />
+            <input id='cmdShowRecordingSeal' type="button" value="Sello registral" class="button" style="width:112px;height:28px;top:8px;display:none" onclick='doOperation("viewGlobalRecordingSeal")' title='Visualiza el sello que va en la escritura que se entrega al interesado' />
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <input id='cmdCloseDocument' type="button" value="Cerrar documento" class="button" style="width:122px;height:28px;top:8px;display:none" onclick='doOperation("closeDocument")' title='Cierra el documento protegiéndolo ante cambios no autorizados.' />
+            <input id='cmdOpenDocument' type="button" value="Abrir documento" class="button" style="width:122px;height:28px;top:8px;display:none" onclick='doOperation("openDocument")' title='Abre este documento para editarlo.' />
           </td>
           <td >
           </td>
@@ -178,8 +175,18 @@
       case 'deleteBookRecording':
         alert(arguments[1]);
         return deleteBookRecording(arguments[1]);
+
+      case 'editDocument':
+        return editDocument();
+
       case 'saveDocument':
         return saveDocument();
+
+      case 'closeDocument':
+        return closeDocument();
+
+      case 'openDocument':
+        return openDocument();
 
       case 'editResource':
         return editResource(arguments[1], arguments[2]);
@@ -210,6 +217,33 @@
     if (success) {
       sendPageCommand(command);
       gbSended = true;
+    }
+  }
+
+  function closeDocument() {
+    <% if (!base.CanCloseDocument()) { %>
+      alert("No es posible cerrar el documento  ya que no está abierto para registro en libros, " +
+            "o no cuenta con los permisos necesarios para efectuar esta operación.");
+      return false;
+    <% } %>
+
+    var sMsg = "Cerrar documento\n\n";
+    if (confirm("¿Cierro este documento y lo protejo ante cambios no autorizados?")) {
+      sendPageCommand('closeDocument');
+      return true;
+    }
+  }
+
+  function openDocument() {
+    <% if (!base.CanOpenDocument()) { %>
+      alert("No es posible abrir el documento ya que no cuenta con los permisos necesarios para efectuar esta operación.");
+      return false;
+    <% } %>
+
+    var sMsg = "Abrir documento\n\n";
+    if (confirm("¿Abro este documento para editarlo o agregarle o modificarle actos jurídicos?")) {
+      sendPageCommand('openDocument');
+      return true;
     }
   }
 
@@ -252,6 +286,29 @@
     }
   }
 
+  function editDocument() {
+    <% if (!IsReadyForEdition()) { %>
+      alert("No es posible editar el documento ya que no está abierto para registro en libros, " +
+            "o no cuenta con los permisos necesarios para efectuar esta operación.");
+      return false;
+    <% } %>
+    protectRecordingEditor(false);
+    if (getElement('cmdEditDocument').value == "Descartar los cambios") {
+      if (confirm("¿Descarto los cambios efectuados en el documento?")) {
+        sendPageCommand('refreshDocument');
+        return true;
+      }
+    } else {
+      getElement('cmdEditDocument').value = "Descartar los cambios";
+      getElement('cmdSaveDocument').style.display = 'inline';
+      getElement('cmdCloseDocument').style.display = 'none';
+      getElement('cmdOpenDocument').style.display = 'none';
+      getElement("cmdShowRecordingSeal").style.display = 'none';
+    }
+
+  }
+
+
   function deleteRecordingAct(recordingActId) {
     <% if (!IsReadyForEdition()) { %>
       alert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, " +
@@ -279,6 +336,7 @@
   function protectRecordingEditor(disabledFlag) {
     <%=oRecordingDocumentEditor.ClientID%>_disabledControl(disabledFlag);
     disableControls(getElement("divDocumentData"), disabledFlag);
+    disableControls(getElement("rowEditButtons"), false);
   }
 
   function editResource(resourceId, recordingActId) {
@@ -316,6 +374,7 @@
     if (!<%=oRecordingDocumentEditor.ClientID%>_validate('<%=transaction.PresentationTime.ToString("dd/MMM/yyyy")%>')) {
       return false;
     }
+
     sendPageCommand('saveDocument');
     return true;
   }
@@ -354,21 +413,25 @@
     <%=base.OnLoadScript%>
     <% if (!IsReadyForEdition()) { %>
     protectRecordingEditor(true);
+    <% } else { %>
+    protectRecordingEditor(true);
+    getElement('cmdEditDocument').style.display = 'inline';
     <% } %>
-    getElement("cmdShowImagingControlSlip").style.display = "none";
-    getElement("cmdGenerateImagingControlID").style.display = "none";
 
-    getElement("cmdPrintFinalSeal").disabled = true;
+
     <% if (base.IsReadyForGenerateImagingControlID()) { %>
     getElement("cmdGenerateImagingControlID").style.display = "inline";
-    getElement("cmdGenerateImagingControlID").disabled = false;
     <% } %>
     <% if (this.transaction.Document.ImagingControlID.Length != 0) { %>
     getElement("cmdShowImagingControlSlip").style.display = "inline";
-    getElement("cmdShowImagingControlSlip").disabled = false;
     <% } %>
-    <% if (IsReadyForPrintFinalSeal()) { %>
-    getElement("cmdPrintFinalSeal").disabled = false;
+    <% if (!base.transaction.Document.IsEmptyDocument) { %>
+      getElement("cmdShowRecordingSeal").style.display = "inline";
+    <% } %>
+    <% if (base.CanCloseDocument()) { %>
+      getElement('cmdCloseDocument').style.display = 'inline';
+    <% } else if (base.CanOpenDocument()) { %>
+    getElement('cmdOpenDocument').style.display = 'inline';
     <% } %>
   }
 

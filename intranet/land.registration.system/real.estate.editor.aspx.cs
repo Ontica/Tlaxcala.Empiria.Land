@@ -43,8 +43,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool AllowEdition() {
-      return recordingAct.Document.IsReadyForEdition;
-             // !recordingAct.IsCompleted && !property.IsCompleted;
+      return recordingAct.Document.IsReadyForEdition();
     }
 
     #endregion Protected methods

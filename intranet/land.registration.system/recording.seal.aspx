@@ -17,7 +17,7 @@
 	        <h3>DIRECCIÓN DE NOTARÍAS Y REGISTROS PÚBLICOS</h3>
           <h4>GOBIERNO DEL ESTADO DE TLAXCALA</h4>
           <% if (!document.IsClosed) { %>
-          <h2 class="warning" style="padding-top:0">SELLO REGISTRAL INCOMPLETO</h2>
+          <h2 class="warning" style="padding-top:0">ESTE DOCUMENTO NO HA SIDO CERRADO</h2>
           <% } else if (!document.IsHistoricDocument) { %>
           <h2 style="padding-top:0">SELLO REGISTRAL</h2>
           <% } else { %>

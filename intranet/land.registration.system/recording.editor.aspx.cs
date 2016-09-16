@@ -90,6 +90,17 @@ namespace Empiria.Land.WebApp {
           DeleteRecordingAct();
           SetRefreshPageScript();
           return;
+        case "openDocument":
+          OpenDocument();
+          SetRefreshPageScript();
+          return;
+        case "closeDocument":
+          CloseDocument();
+          SetRefreshPageScript();
+          return;
+        case "refreshDocument":
+          Response.Redirect("recording.editor.aspx?transactionId=" + transaction.Id.ToString(), true);
+          return;
         case "generateImagingControlID":
           GenerateImagingControlID();
           return;
@@ -98,6 +109,18 @@ namespace Empiria.Land.WebApp {
           return;
         default:
           throw new NotImplementedException(base.CommandName);
+      }
+    }
+
+    private void CloseDocument() {
+      if (this.CanCloseDocument()) {
+        transaction.Document.Close();
+      }
+    }
+
+    private void OpenDocument() {
+      if (this.CanOpenDocument()) {
+        transaction.Document.Open();
       }
     }
 
@@ -123,6 +146,29 @@ namespace Empiria.Land.WebApp {
       SetMessageBox(msg);
     }
 
+    protected bool CanCloseDocument() {
+      if (this.transaction.IsEmptyInstance) {
+        return false;
+      }
+      if (this.transaction.Document.IsEmptyInstance) {
+        return false;
+      }
+      if (this.transaction.Document.RecordingActs.Count == 0) {
+        return false;
+      }
+      return this.transaction.Document.IsReadyToClose();
+    }
+
+    protected bool CanOpenDocument() {
+      if (this.transaction.IsEmptyInstance) {
+        return false;
+      }
+      if (this.transaction.Document.IsEmptyInstance) {
+        return false;
+      }
+      return this.transaction.Document.IsReadyToOpen();
+    }
+
     protected bool IsReadyForEdition() {
       if (this.transaction.IsEmptyInstance) {
         return false;
@@ -130,7 +176,7 @@ namespace Empiria.Land.WebApp {
       if (this.transaction.Document.IsEmptyInstance) {
         return IsReadyForCreation();
       }
-      return this.transaction.Document.IsReadyForEdition;
+      return this.transaction.Document.IsReadyForEdition();
     }
 
     private bool IsReadyForCreation() {

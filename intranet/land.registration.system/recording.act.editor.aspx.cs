@@ -38,7 +38,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool IsReadyForEdition() {
-      return recordingAct.Document.IsReadyForEdition;
+      return recordingAct.Document.IsReadyForEdition();
     }
 
     protected bool EditOperationAmount {
