@@ -825,12 +825,20 @@
     }
     <%  if (!base.IsHistoricEdition &&
             base.Transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Elaboration) { %>
-    if (getElement('cboRecordingActType').value != "2201") {
+      if (getElement('cboRecordingActType').value != "2201") {
         alert("En elaboración de certificados sólo es posible agregar el acto 'Asignación de folio real'.");
         getElement('cboRecordingActType').focus();
         return false;
       }
     <% } %>
+    if (getElement('cboRecordingActType').value == "2201") {
+      if (getElement('cboPrecedentRecording').value != "-1" || getSelectedResource() != null) {
+        alert("No es posible asignar un folio real sobre un pedio que ya tiene folio.");
+        getElement('cboPrecedentRecording').focus();
+        return false;
+      }
+    }
+
     if (getElement('cboRecordingTaskType').value.length == 0) {
       alert("Requiero se proporcione la información del predio o recurso sobre el que se aplicará el acto jurídico " + recordingAct + ".");
       getElement('cboRecordingTaskType').focus();
