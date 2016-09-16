@@ -54,3 +54,7 @@ h4 {
   border-spacing: 14pt 2pt;
   margin-left: -14pt;
 }
+
+.warning {
+  color:#ff0000;
+}

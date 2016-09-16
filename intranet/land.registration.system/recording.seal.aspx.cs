@@ -49,7 +49,6 @@ namespace Empiria.Land.WebApp {
 
     #region Protected methods
 
-
     protected string GetDigitalSeal() {
       if (document.IsHistoricDocument && document.Status != RecordableObjectStatus.Closed) {
         return AsWarning("El documento está incompleto por lo que no tiene sello digital.");

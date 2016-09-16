@@ -16,7 +16,9 @@
         <td style="text-align:center;width:95%">
 	        <h3>DIRECCIÓN DE NOTARÍAS Y REGISTROS PÚBLICOS</h3>
           <h4>GOBIERNO DEL ESTADO DE TLAXCALA</h4>
-          <% if (!document.IsHistoricDocument) { %>
+          <% if (!document.IsClosed) { %>
+          <h2 class="warning" style="padding-top:0">SELLO REGISTRAL INCOMPLETO</h2>
+          <% } else if (!document.IsHistoricDocument) { %>
           <h2 style="padding-top:0">SELLO REGISTRAL</h2>
           <% } else { %>
           <h2 style="padding-top:0">SELLO REGISTRAL DE PARTIDA HISTÓRICA</h2>
@@ -44,7 +46,15 @@
     </div>
     <div class="footNotes">
       <table >
-        <% if (!document.IsHistoricDocument) { %>
+        <% if (!document.IsClosed) { %>
+        <tr>
+          <td colspan="3" style="text-align:center;font-size:10pt" >
+            <br /><br />
+            <b class="warning">*** ESTE DOCUMENTO AUN NO HA SIDO CERRADO. ***</b>
+            <br />&nbsp;
+          </td>
+        </tr>
+        <% } else if (!document.IsHistoricDocument) { %>
         <tr>
           <td colspan="3" style="text-align:center;font-size:10pt" >
             <br /><br />
@@ -57,9 +67,13 @@
         <% } %>
         <tr>
           <td><b>Sello digital:</b><br />
+            <% if (!document.IsClosed) { %>
+            <span class="warning">** ESTE DOCUMENTO NO ES OFICIAL **</span>
+            <% } else { %>
             <%=Empiria.EmpiriaString.DivideLongString(GetDigitalSeal(), 64, "&#8203;")%>
             <br />
             <%=GetRecordingOfficialsInitials()%>
+            <% } %>
           </td>
           <td style="text-wrap:none">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
           <td>
