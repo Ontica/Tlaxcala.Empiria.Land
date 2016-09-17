@@ -243,7 +243,7 @@ namespace Empiria.Land.WebApp {
     private void SaveDomainRoleParty() {
       var role = (DomainActPartyRole) BasePartyRole.Parse(int.Parse(Request.Form[cboRole.Name]));
 
-      RecordingActParty rap = RecordingActParty.Create(this.RecordingAct, this.party, role);
+      RecordingActParty rap = this.RecordingAct.AppendParty(this.party, role);
 
       if (txtOwnershipPartAmount.Value.Length == 0) {
         txtOwnershipPartAmount.Value = "1.00";
@@ -264,8 +264,7 @@ namespace Empiria.Land.WebApp {
       }
       foreach (string selectedParty in selectedParties) {
         var role = (SecondaryPartyRole) BasePartyRole.Parse(int.Parse(Request.Form[cboRole.Name]));
-        var rap = RecordingActParty.Create(this.RecordingAct,
-                                           this.party, role, Party.Parse(int.Parse(selectedParty)));
+        var rap = this.RecordingAct.AppendParty(this.party, role, Party.Parse(int.Parse(selectedParty)));
 
         FillPartyData(rap);
 
