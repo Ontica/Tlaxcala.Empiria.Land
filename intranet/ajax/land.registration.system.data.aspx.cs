@@ -102,6 +102,8 @@ namespace Empiria.Web.UI.Ajax {
           return SearchRecordingActPartiesCommandHandler();
         case "validateIfDocumentCanBeClosedCmd":
           return ValidateIfDocumentCanBeClosedCommandHandler();
+        case "validateIfDocumentCanBeOpenedCmd":
+          return ValidateIfDocumentCanBeOpenedCommandHandler();
         case "validateDocumentRecordingActCmd":
           return ValidateDocumentRecordingActCommandHandler();
         case "validateAnnotationSemanticsCmd":
@@ -935,6 +937,19 @@ namespace Empiria.Web.UI.Ajax {
       }
       return String.Empty;
     }
+
+    private string ValidateIfDocumentCanBeOpenedCommandHandler() {
+      try {
+        int documentId = GetCommandParameter<int>("documentId");
+
+        var document = RecordingDocument.Parse(documentId);
+        document.AssertCanBeOpened();
+      } catch (Exception e) {
+        return e.Message;
+      }
+      return String.Empty;
+    }
+
 
     private RecordingTask ParseRecordingTaskParameters() {
       var task = new RecordingTask(

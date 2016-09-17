@@ -249,12 +249,22 @@
       alert("No es posible abrir el documento ya que no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
-
+    if (!validateIfCanBeOpened()) {
+      return false;
+    }
     var sMsg = "Abrir documento\n\n";
     if (confirm("¿Abro este documento para editarlo o agregarle o modificarle actos jurídicos?")) {
       sendPageCommand('openDocument');
       return true;
     }
+  }
+
+    function validateIfCanBeOpened() {
+    var ajaxURL = "../ajax/land.registration.system.data.aspx";
+    ajaxURL += "?commandName=validateIfDocumentCanBeOpenedCmd";
+    ajaxURL += "&documentId=<%=base.transaction.Document.Id%>";
+
+    return invokeAjaxValidator(ajaxURL);
   }
 
   function displayRecordingBookImageSet(selectBoxControlName) {
