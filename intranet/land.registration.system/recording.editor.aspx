@@ -226,12 +226,22 @@
             "o no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
-
+    if (!validateIfCanBeClosed()) {
+      return false;
+    }
     var sMsg = "Cerrar documento\n\n";
     if (confirm("¿Cierro este documento y lo protejo ante cambios no autorizados?")) {
       sendPageCommand('closeDocument');
       return true;
     }
+  }
+
+  function validateIfCanBeClosed() {
+    var ajaxURL = "../ajax/land.registration.system.data.aspx";
+    ajaxURL += "?commandName=validateIfDocumentCanBeClosedCmd";
+    ajaxURL += "&documentId=<%=base.transaction.Document.Id%>";
+
+    return invokeAjaxValidator(ajaxURL);
   }
 
   function openDocument() {

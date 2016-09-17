@@ -100,6 +100,8 @@ namespace Empiria.Web.UI.Ajax {
           return GetWitnessInPositionStringArrayCommandHandler();
         case "searchRecordingActPartiesCmd":
           return SearchRecordingActPartiesCommandHandler();
+        case "validateIfDocumentCanBeClosedCmd":
+          return ValidateIfDocumentCanBeClosedCommandHandler();
         case "validateDocumentRecordingActCmd":
           return ValidateDocumentRecordingActCommandHandler();
         case "validateAnnotationSemanticsCmd":
@@ -916,6 +918,18 @@ namespace Empiria.Web.UI.Ajax {
       try {
         RecordingTask task = ParseRecordingTaskParameters();
         task.AssertValid();
+      } catch (Exception e) {
+        return e.Message;
+      }
+      return String.Empty;
+    }
+
+    private string ValidateIfDocumentCanBeClosedCommandHandler() {
+      try {
+        int documentId = GetCommandParameter<int>("documentId");
+
+        var document = RecordingDocument.Parse(documentId);
+        document.AssertCanBeClosed();
       } catch (Exception e) {
         return e.Message;
       }
