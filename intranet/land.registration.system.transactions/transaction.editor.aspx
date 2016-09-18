@@ -278,8 +278,6 @@
             <% } %>
             <% if (transaction.Workflow.IsReadyForReentry) { %>
             <input class="button" type="button" value="Reingresar trámite" onclick="doOperation('reentryTransaction')" style="height:28px;width:120px" runat="server" />
-            <% } else if (base.CanUnarchiveTransaction()) { %>
-            <input class="button" type="button" value="Desarchivar trámite" onclick="doOperation('unarchiveTransaction')" style="height:28px;width:120px" runat="server" />
             <% } %>
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
           </td>
@@ -399,8 +397,6 @@
         return saveAndReceiveTransaction();
       case 'reentryTransaction':
         return reentryTransaction();
-      case 'unarchiveTransaction':
-        return unarchiveTransaction();
       case 'createCopy':
         return createCopy();
       case 'appendRecordingAct':
@@ -549,16 +545,6 @@
     sMsg += "¿Reingreso este trámite";
     if (confirm(sMsg)) {
       sendPageCommand("reentryTransaction");
-    }
-  }
-
-  function unarchiveTransaction() {
-    var sMsg = "Desarchivar trámites.\n\n";
-
-    sMsg += "Esta operación desarchivará este trámite y lo enviará a la mesa de control.\n\n";
-    sMsg += "¿Desarchivo este trámite";
-    if (confirm(sMsg)) {
-      sendPageCommand("unarchiveTransaction");
     }
   }
 

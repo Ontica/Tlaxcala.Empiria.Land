@@ -65,9 +65,6 @@ namespace Empiria.Land.WebApp {
         case "reentryTransaction":
           ReentryTransaction();
           return;
-        case "unarchiveTransaction":
-          UnarchiveTransaction();
-          return;
         case "copyTransaction":
           CopyTransaction();
           return;
@@ -152,13 +149,6 @@ namespace Empiria.Land.WebApp {
         return false;
       }
       return ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReceiveTransaction");
-    }
-
-    protected bool CanUnarchiveTransaction() {
-      if (transaction.Workflow.CurrentStatus != LRSTransactionStatus.Archived) {
-        return false;
-      }
-      return ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReentryByFails");
     }
 
     protected bool IsEditable() {
@@ -337,39 +327,6 @@ namespace Empiria.Land.WebApp {
       transaction.Agency = Contact.Parse(int.Parse(cboManagementAgency.Value));
       transaction.Save();
       onloadScript = "alert('Los cambios efectuados en la información del trámite se guardaron correctamente.');";
-
-      //if (!isNew) {
-      //  return;
-      //}
-
-      //if (transaction.TransactionType.Id == 702) {
-      //  switch (transaction.DocumentType.Id) {
-      //    case 709: //Certificación de escrituras
-      //      AppendConcept(2110, 887, decimal.Parse(txtReceiptTotal.Value));
-      //      return;
-      //    case 710: // Propiedad/No propiedad
-      //      AppendConcept(2111, 859, decimal.Parse(txtReceiptTotal.Value));
-      //      return;
-      //    case 711: // Certificado de inscripción
-      //      AppendConcept(2112, 859, decimal.Parse(txtReceiptTotal.Value));
-      //      return;
-      //    case 712: // Certificado de NO inscripción
-      //      AppendConcept(2113, 859, decimal.Parse(txtReceiptTotal.Value));
-      //      return;
-      //    case 713: // Libertad de gravamen
-      //      AppendConcept(2114, 859, decimal.Parse(txtReceiptTotal.Value));
-      //      return;
-      //    case 714: //Capitulaciones matrimoniales
-      //      AppendConcept(2115, 859, decimal.Parse(txtReceiptTotal.Value));
-      //      return;
-      //    case 715: //Búsqueda de bienes
-      //      AppendConcept(2116, 887, 150.00m);
-      //      return;
-      //    case 724: // Copias certificadas
-      //      AppendConcept(2117, 886, decimal.Parse(txtReceiptTotal.Value));
-      //      return;
-      //  } // switch
-      //}
     }
 
     private void ApplyVoidReceipt() {
@@ -397,22 +354,11 @@ namespace Empiria.Land.WebApp {
     }
 
     private void ReentryTransaction() {
-      int graceDaysForReentry = 90;
-      if (transaction.LastDeliveryTime.AddDays(graceDaysForReentry) > DateTime.Now) {
-        transaction.Workflow.DoReentry("Trámite reingresado");
+      try {
+        transaction.Workflow.Reentry();
         onloadScript = "alert('Este trámite fue reingresado correctamente.');doOperation('redirectThis')";
-      } else {
-        onloadScript = "alert('No es posible reingresar trámites después de 90 días de entregados.');doOperation('redirectThis')";
-      }
-    }
-
-    private void UnarchiveTransaction() {
-      int graceDaysForReentry = 90;
-      if (transaction.LastDeliveryTime.AddDays(graceDaysForReentry) > DateTime.Now) {
-        transaction.Workflow.Unarchive("Trámite desarchivado");
-        onloadScript = "alert('Este trámite fue desarchivado correctamente.');doOperation('redirectThis')";
-      } else {
-        onloadScript = "alert('No es posible desarchivar trámites después de 90 días de archivados.');doOperation('redirectThis')";
+      } catch (Exception e) {
+        onloadScript = "alert('" + EmpiriaString.FormatForScripting(e.Message) + "');doOperation('redirectThis')";
       }
     }
 
