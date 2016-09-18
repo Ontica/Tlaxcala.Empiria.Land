@@ -34,7 +34,14 @@
               <input id="txtLookupResource" type="text" class="textBox" maxlength="19" style="width:184px" />
               <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px"
                     onclick="doRecordingActEditorOperation('lookupResource')" />
-              <label><input type="checkbox" id="chkSelectPredecentInPhysicalBooks" onclick="return showPrecedentRecordingSection()"; />Seleccionar el antecedente vía libro/partida</label>
+              <span id='divSelectedLookupResource' style="display:none">
+                <a href="javascript:doOperation('editResource', olookupResource.Id)">Consultar historia</a>
+                &nbsp; | &nbsp;
+                <a href="javascript:unselectLookupResource()">Deseleccionar</a>
+              </span>
+              <br />
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+              <label><input type="checkbox" id="chkSelectPredecentInPhysicalBooks" onclick="return showPrecedentRecordingSection()"; />Buscar el antecedente en libros</label>
               <br />
             </span>
             <table id="divPhysicalRecordingSelector" class="editionTable" style="display:none;width:200px" >
@@ -288,15 +295,30 @@
 
     if (olookupResource.Id == -1) {
       _selectedResource = null;
-      alert("No existe ningún predio con el folio proporcionado.");
+      alert("No existe ningún predio o asociación con el folio real proporcionado.");
+      getElement('divSelectedLookupResource').style.display = 'none';
+      getElement("chkSelectPredecentInPhysicalBooks").disabled = false;
+      getElement("txtLookupResource").readOnly = false;
       return false;
     } else {
       _selectedResource = olookupResource.Id;
-      alert("Predio encontrado.");
+      alert("Folio real encontrado.");
+      getElement('divSelectedLookupResource').style.display = 'inline';
       getElement("divPhysicalRecordingSelector").style.display = 'none';
+      getElement("txtLookupResource").readOnly = true;
+      getElement("chkSelectPredecentInPhysicalBooks").checked = false;
+      getElement("chkSelectPredecentInPhysicalBooks").disabled = true;
       showTargetRecordingActSections();
       return true;
     }
+  }
+
+  function unselectLookupResource() {
+    _selectedResource = null;
+    olookupResource = null;
+    getElement('divSelectedLookupResource').style.display = 'none';
+    getElement("chkSelectPredecentInPhysicalBooks").disabled = false;
+    getElement("txtLookupResource").readOnly = false;
   }
 
   function updatePartitionControls() {
@@ -734,7 +756,6 @@
 
     } else if (getElement('cboPrecedentRecording').value.length != 0 &&
                getElement('cboPrecedentRecording').value != "-1") {
-      alert(getElement('cboPrecedentRecording').value);
       sMsg += getPartitionText();
       sMsg += "Predio:\t\t" + getSelectedResourceText() + "\n";
       sMsg += "Antecedente en:\t" + "Partida " + getPhysicalRecordingNumber() + "\n";
