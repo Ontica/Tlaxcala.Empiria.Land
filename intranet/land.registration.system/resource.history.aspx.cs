@@ -22,6 +22,7 @@ namespace Empiria.Land.WebApp {
     #region Fields
 
     protected Resource resource = null;
+    protected RecordingAct selectedRecordingAct = null;
 
     protected string OnLoadScript = String.Empty;
 
@@ -63,10 +64,11 @@ namespace Empiria.Land.WebApp {
 
     private void Initialize() {
       resource = Resource.Parse(int.Parse(Request.QueryString["resourceId"]));
+      selectedRecordingAct = RecordingAct.Parse(int.Parse(Request.QueryString["id"]));
     }
 
     protected string GetHistoryGrid() {
-      return ResourceHistoryGrid.Parse(this.resource);
+      return ResourceHistoryGrid.Parse(this.resource, selectedRecordingAct.Document);
     }
 
     #endregion Private methods

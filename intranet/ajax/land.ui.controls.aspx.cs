@@ -71,10 +71,12 @@ namespace Empiria.Web.UI.Ajax {
 
     private string GetResourceHistoryGrid() {
       int resourceId = GetCommandParameter<int>("resourceId");
+      int selectedDocumentId = GetCommandParameter<int>("selectedDocumentId");
 
       var resource = Resource.Parse(resourceId);
+      var selectedDocument  = RecordingDocument.Parse(selectedDocumentId);
 
-      return ResourceHistoryGrid.Parse(resource);
+      return ResourceHistoryGrid.Parse(resource, selectedDocument);
     }
 
     private string GetTransactionDocumentAndCertificatesGrid() {

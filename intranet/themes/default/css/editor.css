@@ -299,6 +299,26 @@ table.details .detailsOddItem td {
   border-bottom: gainsboro 1px solid;
 	font: 8pt Arial, Helvetica;
 }
+table.details .selectedItem td {
+  background-color: #eaffea;
+  border-bottom: #efefef 1px solid;
+  margin: 2px 2px 2px 2px;
+  padding: 4px 4px 4px 8px;
+  vertical-align: top;
+  border-left: gainsboro 1px solid;
+  border-bottom: gainsboro 1px solid;
+  font: 8pt Arial, Helvetica;
+}
+table.details .warningItem td {
+  background-color: #ffecec;
+  border-bottom: #efefef 1px solid;
+  margin: 2px 2px 2px 2px;
+  padding: 4px 4px 4px 8px;
+  vertical-align: top;
+  border-left: gainsboro 1px solid;
+  border-bottom: gainsboro 1px solid;
+  font: 8pt Arial, Helvetica;
+}
 table.details .detailsGreenItem td {
   background-color: #f0fce1;
   border-bottom: #efefef 1px solid;

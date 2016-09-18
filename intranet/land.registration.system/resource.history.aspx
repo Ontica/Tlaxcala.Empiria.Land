@@ -95,7 +95,7 @@
   function getResourceHistoryGridHtml(resourceId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getResourceHistoryGridCmd";
-    url += "&resourceId=" + resourceId;
+    url += "&selectedDocumentId=<%=base.selectedRecordingAct.Document.Id%>&resourceId=" + resourceId;
 
     return invokeAjaxMethod(false, url, null);
   }

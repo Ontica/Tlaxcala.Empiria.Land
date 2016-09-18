@@ -138,7 +138,7 @@
     }
     switch (command) {
       case 'onSelectDocument':
-        onSelectDocument(arguments[1]);
+        onSelectDocument(arguments[1], arguments[2] ? arguments[2] : -1);
         return;
       case 'onSelectRecordingAct':
         onSelectRecordingAct(arguments[1], arguments[2]);
@@ -180,8 +180,8 @@
     displayImageSet(imageSetId);
   }
 
-  function onSelectDocument(documentId) {
-    displayDocumentImage(documentId);
+  function onSelectDocument(documentId, selectedRecordingActId) {
+    displayDocumentSeal(documentId, selectedRecordingActId);
   }
 
   function onSelectRecordingAct(documentId, recordingActId) {
@@ -200,9 +200,12 @@
     parent.appendChild(clone);
   }
 
-  function displayDocumentImage(documentId) {
-    var newURL = "./recording.seal.aspx?transactionId=-1&id=" + documentId;
-
+  function displayDocumentSeal(documentId, selectedRecordingActId) {
+    var newURL = "./recording.seal.aspx?transactionId=-1&id=" + documentId +
+                  "&selectedRecordingActId=" + selectedRecordingActId;
+    if (<%=recordingAct.Document.Id%> == documentId) {
+      newURL += "&main=true";
+    }
     var clone = getElement("documentViewer").cloneNode(true);
     clone.setAttribute('data', newURL);
 
@@ -226,7 +229,7 @@
 
   function loadContent() {
     <% if (base.IsRecordingActSelected) { %>
-      doOperation('onSelectDocument', '<%=recordingAct.Document.Id%>');
+      doOperation('onSelectDocument', '<%=recordingAct.Document.Id%>', '<%=recordingAct.Id%>');
     <% } %>
 
     getElement('ifraPropertyHistory').src = '<%=TabStripSource(TabStrip.ResourceHistory)%>';

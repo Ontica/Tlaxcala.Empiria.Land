@@ -25,6 +25,8 @@ namespace Empiria.Land.WebApp {
     protected LRSTransaction transaction = null;
 
     private FixedList<RecordingAct> recordingActs = null;
+    private RecordingAct selectedRecordingAct = null;
+    private bool isMainDocument = false;
 
     #endregion Fields
 
@@ -33,6 +35,8 @@ namespace Empiria.Land.WebApp {
     protected void Page_Load(object sender, EventArgs e) {
       int documentId = int.Parse(Request.QueryString["id"]);
       int transactionId = int.Parse(Request.QueryString["transactionId"]);
+      int selectedRecordingActId = int.Parse(Request.QueryString["selectedRecordingActId"] ?? "-1");
+      isMainDocument = bool.Parse(Request.QueryString["main"] ?? "false");
 
       if (documentId != -1) {
         document = RecordingDocument.Parse(documentId);
@@ -41,7 +45,7 @@ namespace Empiria.Land.WebApp {
         transaction = LRSTransaction.Parse(transactionId);
         document = transaction.Document;
       }
-
+      selectedRecordingAct = RecordingAct.Parse(selectedRecordingActId);
       recordingActs = document.RecordingActs;
     }
 
@@ -136,44 +140,46 @@ namespace Empiria.Land.WebApp {
 
       int index = 0;
       foreach (RecordingAct recordingAct in recordingActs) {
+        string temp = String.Empty;
+
         index++;
 
         // If amendment act, process it and continue
         if (recordingAct.RecordingActType.IsAmendmentActType) {
-          html += this.GetAmendmentActText(recordingAct, index);
+          temp = this.GetAmendmentActText(recordingAct, index);
+          html += this.Decorate(recordingAct, temp);
           continue;
         }
 
         // If not amendment act, then process it by resource type application
 
         switch (recordingAct.RecordingActType.RecordingRule.AppliesTo) {
-
           case RecordingRuleApplication.RealEstate:
           case RecordingRuleApplication.RecordingAct:
           case RecordingRuleApplication.Structure:
-            html += this.GetRealEstateActText(recordingAct, index);
+            temp = this.GetRealEstateActText(recordingAct, index);
             break;
           case RecordingRuleApplication.Association:
             var resource = recordingAct.Resource;
             Assertion.Assert(resource is Association,
                              "Type mismatch parsing association with id {0}", resource.Id);
-            html += this.GetAssociationActText(recordingAct, (Association) resource, index);
+            temp = this.GetAssociationActText(recordingAct, (Association) resource, index);
             break;
 
           case RecordingRuleApplication.NoProperty:
             // For now, we don't display seals with the NoProperty resource identificator
-            html += this.GetNoPropertyActText(recordingAct, index);
+            temp = this.GetNoPropertyActText(recordingAct, index);
             break;
 
           case RecordingRuleApplication.Undefined:
             if (recordingAct.Resource is RealEstate) {
-              html += this.GetRealEstateActText(recordingAct, index);
+              temp = this.GetRealEstateActText(recordingAct, index);
               break;
             } else if (recordingAct.Resource is Association) {
-              html += this.GetAssociationActText(recordingAct, (Association) recordingAct.Resource, index);
+              temp = this.GetAssociationActText(recordingAct, (Association) recordingAct.Resource, index);
               break;
             } else if (recordingAct.Resource is NoPropertyResource) {
-              html += this.GetNoPropertyActText(recordingAct, index);
+              temp = this.GetNoPropertyActText(recordingAct, index);
               break;
             } else {
               throw Assertion.AssertNoReachThisCode();
@@ -181,9 +187,25 @@ namespace Empiria.Land.WebApp {
          default:
             throw new NotImplementedException("Undefined rule for recording acts text " +
                                               recordingAct.RecordingActType.RecordingRule.AppliesTo);
-        }
+        }  // select
+        html += this.Decorate(recordingAct, temp);
       }
       return html;
+    }
+
+    private string Decorate(RecordingAct recordingAct, string text) {
+      if (this.selectedRecordingAct.IsEmptyInstance) {
+        return text;
+      }
+      if (recordingAct.Equals(this.selectedRecordingAct)) {
+        if (this.isMainDocument) {
+          return "<span class='selectedItem'> " + text + "</span>";
+        } else {
+          return "<span class='markedItem'> " + text + "</span>";
+        }
+      } else {
+        return text;
+      }
     }
 
     protected string GetRecordingOfficialsInitials() {
