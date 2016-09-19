@@ -23,7 +23,8 @@
     <span class="appTitle">
       <%=GetTitle()%>
     </span>
-    <span class="rightItem">
+    <span class="rightItem" style="padding-top:16px">
+      <%=GetRightTitle()%>
     </span>
   </div>
   <div id="divBody">

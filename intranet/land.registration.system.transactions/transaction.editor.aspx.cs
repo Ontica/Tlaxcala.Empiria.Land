@@ -603,6 +603,22 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
+    protected string GetRightTitle() {
+      string title = String.Empty;
+      if (this.transaction.IsNew) {
+        return "&nbsp;";
+      }
+
+      if (this.transaction.PresentationTime != ExecutionServer.DateMaxValue) {
+        title = "Presentado el: " + this.transaction.PresentationTime.ToString("dd/MMMM/yyy HH:mm");
+      }
+      if (this.transaction.IsReentry) {
+        title += "<br/>Reingresado el: " + this.transaction.LastReentryTime.ToString("dd/MMMM/yyy HH:mm");
+      }
+      return title;
+    }
+
     private void RedirectEditor() {
       var isNew = (int.Parse(Request.QueryString["id"]) == 0);
       if (isNew) {

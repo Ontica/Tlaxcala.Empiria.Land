@@ -98,7 +98,7 @@ namespace Empiria.Land.WebApp {
         if (recordingActId != -1) {
           recordingAct = RecordingAct.Parse(recordingActId);
         } else {
-          recordingAct = resource.LastRecordingAct;
+          recordingAct = RecordingAct.Empty;
         }
       } else {
         recordingAct = RecordingAct.Empty;
