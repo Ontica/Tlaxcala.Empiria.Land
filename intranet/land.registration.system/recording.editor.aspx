@@ -80,6 +80,8 @@
           <td class="lastCell" colspan="2">
             <input id='cmdEditDocument' type="button" value="Editar documento" class="button" style="width:128px;height:28px;display:none" onclick='doOperation("editDocument")' />
             &nbsp; &nbsp; &nbsp;
+            <input id='cmdDeleteDocument' type="button" value="Eliminar documento" class="button" style="width:128px;height:28px;display:none" onclick='doOperation("deleteDocument")' />
+            &nbsp; &nbsp; &nbsp;
             <input id='cmdSaveDocument' type="button" value="Guardar los cambios" class="button" style="width:112px;height:28px;display:none" onclick='doOperation("saveDocument")' title='Guarda el documento' />
             &nbsp; &nbsp; &nbsp;
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -188,6 +190,9 @@
       case 'openDocument':
         return openDocument();
 
+      case 'deleteDocument':
+        return deleteDocument();
+
       case 'editResource':
         return editResource(arguments[1], arguments[2]);
 
@@ -252,19 +257,30 @@
     if (!validateIfCanBeOpened()) {
       return false;
     }
-    var sMsg = "Abrir documento\n\n";
-    if (confirm("¿Abro este documento para editarlo o agregarle o modificarle actos jurídicos?")) {
+    var sMsg = "Abrir documento.\n\n";
+    sMsg += "¿Abro este documento para editarlo o agregarle o modificarle actos jurídicos?";
+    if (confirm(sMsg)) {
       sendPageCommand('openDocument');
       return true;
     }
   }
 
-    function validateIfCanBeOpened() {
+  function validateIfCanBeOpened() {
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
     ajaxURL += "?commandName=validateIfDocumentCanBeOpenedCmd";
     ajaxURL += "&documentId=<%=base.transaction.Document.Id%>";
 
     return invokeAjaxValidator(ajaxURL);
+  }
+
+  function deleteDocument() {
+    var sMsg = "Eliminar documento.\n\n";
+    sMsg += "PRECAUCIÓN: Esta operación no puede ser revertida y se perderán todos los cambios.\n\n";
+    sMsg += "¿Elimino el documento y dejo este trámite sin documento registral?";
+    if (confirm(sMsg)) {
+      sendPageCommand('deleteDocument');
+      return true;
+    }
   }
 
   function displayRecordingBookImageSet(selectBoxControlName) {
@@ -321,13 +337,13 @@
     } else {
       getElement('cmdEditDocument').value = "Descartar los cambios";
       getElement('cmdSaveDocument').style.display = 'inline';
+      getElement('cmdDeleteDocument').style.display = 'none';
       getElement('cmdCloseDocument').style.display = 'none';
       getElement('cmdOpenDocument').style.display = 'none';
       getElement("cmdShowRecordingSeal").style.display = 'none';
     }
 
   }
-
 
   function deleteRecordingAct(recordingActId) {
     <% if (!IsReadyForEdition()) { %>
@@ -451,7 +467,10 @@
     <% if (base.CanCloseDocument()) { %>
       getElement('cmdCloseDocument').style.display = 'inline';
     <% } else if (base.CanOpenDocument()) { %>
-    getElement('cmdOpenDocument').style.display = 'inline';
+      getElement('cmdOpenDocument').style.display = 'inline';
+    <% } %>
+    <% if (base.CanDeleteDocument()) { %>
+      getElement('cmdDeleteDocument').style.display = 'inline';
     <% } %>
   }
 

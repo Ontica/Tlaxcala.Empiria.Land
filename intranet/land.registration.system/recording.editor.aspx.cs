@@ -98,6 +98,10 @@ namespace Empiria.Land.WebApp {
           CloseDocument();
           SetRefreshPageScript();
           return;
+        case "deleteDocument":
+          DeleteDocument();
+          SetRefreshPageScript();
+          return;
         case "refreshDocument":
           Response.Redirect("recording.editor.aspx?transactionId=" + transaction.Id.ToString(), true);
           return;
@@ -121,6 +125,12 @@ namespace Empiria.Land.WebApp {
     private void OpenDocument() {
       if (this.CanOpenDocument()) {
         transaction.Document.Open();
+      }
+    }
+
+    private void DeleteDocument() {
+      if (this.CanDeleteDocument()) {
+        transaction.RemoveDocument();
       }
     }
 
@@ -167,6 +177,19 @@ namespace Empiria.Land.WebApp {
         return false;
       }
       return this.transaction.Document.IsReadyToOpen();
+    }
+
+    protected bool CanDeleteDocument() {
+      if (this.transaction.IsEmptyInstance) {
+        return false;
+      }
+      if (this.transaction.Document.IsEmptyInstance) {
+        return false;
+      }
+      if (this.transaction.Document.RecordingActs.Count > 0) {
+        return false;
+      }
+      return this.transaction.Document.IsReadyForEdition();
     }
 
     protected bool IsReadyForEdition() {
