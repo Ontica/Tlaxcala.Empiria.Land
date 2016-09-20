@@ -64,12 +64,12 @@
             </td>
           </tr>
 
-          <% if (base.AllowEdition()) { %>
+          <% if (base.IsInEditionMode()) { %>
           <tr>
             <td>&nbsp;</td>
             <td class="lastCell">
                  <input id="btnEditRealEstate" type="button" value="Editar este predio" class="button"
-                        tabindex="-1" style="width:104px;height:28px" onclick="disableEditionFields(false)" />
+                        tabindex="-1" style="width:104px;height:28px" onclick="doOperation('openForEdition')" />
                  &nbsp; &nbsp; &nbsp;
                  <input id="btnCancelEdition" type="button" value="Descartar cambios" class="button"
                         tabindex="-1" style="width:124px;height:28px" onclick="doOperation('cancelEdition')" />
@@ -169,6 +169,8 @@
       return;
     }
     switch (command) {
+      case 'openForEdition':
+        return openForEdition();
       case 'saveRealEstate':
         return saveRealEstate();
       case 'searchCadastralNumber':
@@ -184,6 +186,19 @@
       sendPageCommand(command);
       gbSended = true;
     }
+  }
+
+  function openForEdition() {
+    <% if (!base.RecordingActAllowsEdition()) { %>
+    var sMsg = 'La información de este predio ya fue registrada en un acto anterior, ';
+      sMsg += 'y este acto jurídico NO permite modificar la información del predio.\n\n';
+      sMsg += 'Si la información del predio cambió desde el último acto jurídico registrado ';
+      sMsg += 'entonces se puede agregar antes de este acto, un acto jurídico de ';
+      sMsg += 'Modificación de medidas y colindancias o alguno otro similar.';
+      alert(sMsg);
+      return;
+    <% } %>
+    disableEditionFields(false);
   }
 
   function cancelEdition() {
@@ -271,7 +286,7 @@
   function disableEditionFields(disabled) {
     disableControls(getElement("tabStripItemView_0"), disabled);
 
-    <% if (base.AllowEdition()) { %>
+    <% if (base.IsInEditionMode()) { %>
     getElement("btnEditRealEstate").disabled = !disabled;
     getElement("btnSaveRealEstate").disabled = disabled;
     <% } %>

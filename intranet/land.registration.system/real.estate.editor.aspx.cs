@@ -42,8 +42,14 @@ namespace Empiria.Land.WebApp {
       }
     }
 
-    protected bool AllowEdition() {
+    protected bool IsInEditionMode() {
       return recordingAct.Document.IsReadyForEdition();
+    }
+
+    protected bool RecordingActAllowsEdition() {
+      return property.RealEstateType.IsEmptyInstance ||
+             recordingAct.ResourceUpdated ||
+             recordingAct.RecordingActType.RecordingRule.EditRealEstate;
     }
 
     #endregion Protected methods
@@ -69,6 +75,7 @@ namespace Empiria.Land.WebApp {
     private void SaveProperty() {
       FillPropertyData();
       property.Save();
+      recordingAct.OnResourceUpdated(property);
     }
 
     private void Initialize() {
