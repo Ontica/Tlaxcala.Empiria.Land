@@ -115,26 +115,30 @@ namespace Empiria.Land.WebApp {
     }
 
     private void SaveRecordingAct() {
-      recordingAct.Notes = txtObservations.Value;
+      Money? operationAmount = Money.Empty;
+      Money? appraisalAmount = Money.Empty;
 
       if (this.EditOperationAmount) {
         if (txtOperationAmount.Value.Length == 0) {
           txtOperationAmount.Value = "0.00";
         }
-        recordingAct.ExtensionData.OperationAmount =
-                                    Money.Parse(Currency.Parse(int.Parse(cboOperationCurrency.Value)),
-                                                decimal.Parse(txtOperationAmount.Value));
+        operationAmount = Money.Parse(Currency.Parse(int.Parse(cboOperationCurrency.Value)),
+                                      decimal.Parse(txtOperationAmount.Value));
       }
 
       if (this.EditAppraisalAmount) {
         if (txtAppraisalAmount.Value.Length == 0) {
           txtAppraisalAmount.Value = "0.00";
         }
-        recordingAct.ExtensionData.AppraisalAmount =
-                                    Money.Parse(Currency.Parse(int.Parse(cboAppraisalCurrency.Value)),
-                                                decimal.Parse(txtAppraisalAmount.Value));
+        appraisalAmount = Money.Parse(Currency.Parse(int.Parse(cboAppraisalCurrency.Value)),
+                                      decimal.Parse(txtAppraisalAmount.Value));
       }
 
+      if (this.EditOperationAmount || this.EditAppraisalAmount) {
+        var recordingActExtData = new RecordingActExtData(appraisalAmount, operationAmount);
+        recordingAct.SetExtensionData(recordingActExtData);
+      }
+      recordingAct.Notes = txtObservations.Value;
       recordingAct.Save();
     }
 
