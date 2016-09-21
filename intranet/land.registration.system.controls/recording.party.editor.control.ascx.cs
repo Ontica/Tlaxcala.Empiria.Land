@@ -113,7 +113,8 @@ namespace Empiria.Land.WebApp {
 
       if (!this.RecordingAct.RecordingActType.IsDomainActType) {
         if (domainParties.Count((x) => !x.RecordingAct.Document.Equals(this.recordingAct.Document)) == 0) {
-          this.cboRole.Items.Add(new ListItem("Propietario actual", "1199"));
+          this.cboRole.Items.Add(new ListItem(DomainActPartyRole.AntecedentOwnerRole.Name,
+                                 DomainActPartyRole.AntecedentOwnerRole.Id.ToString()));
         }
       }
 
