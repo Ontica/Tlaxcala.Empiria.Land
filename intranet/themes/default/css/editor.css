@@ -151,6 +151,12 @@ input.button {
 	width: 66px;
 	padding: 1px 2px 1px 2px;
 }
+input.green-button {
+  border-left: 2px solid green;
+}
+input.red-button {
+  border-left: 2px solid red;
+}
 input.checkBox {
 	border: none;
 	padding: 1px 2px 1px 0px;

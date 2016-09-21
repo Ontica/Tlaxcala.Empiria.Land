@@ -171,9 +171,6 @@
 
   function onSelectResource(resourceId) {
     displayResourceHistoryGrid(resourceId);
-
-    //window.parent.execScript("doOperation('onSelectRecordingAct', " + documentId + ", " + recordingActId + ")");
-
   }
 
   function onSelectRecordingBook(recordingBookId) {

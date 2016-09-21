@@ -79,13 +79,10 @@
           <td>&nbsp;</td>
           <td class="lastCell" colspan="2">
             <input id='cmdEditDocument' type="button" value="Editar documento" class="button" style="width:128px;height:28px;display:none" onclick='doOperation("editDocument")' />
-            &nbsp; &nbsp; &nbsp;
-            <input id='cmdDeleteDocument' type="button" value="Eliminar documento" class="button" style="width:128px;height:28px;display:none" onclick='doOperation("deleteDocument")' />
-            &nbsp; &nbsp; &nbsp;
-            <input id='cmdSaveDocument' type="button" value="Guardar los cambios" class="button" style="width:112px;height:28px;display:none" onclick='doOperation("saveDocument")' title='Guarda el documento' />
-            &nbsp; &nbsp; &nbsp;
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-
+            <input id='cmdDeleteDocument' type="button" value="Eliminar documento" class="button red-button" style="width:128px;height:28px;display:none" onclick='doOperation("deleteDocument")' />
+            &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp;
             <input id='cmdGenerateImagingControlID' type="button" value="Generar número de control" class="button" style="width:148px;height:28px;top:8px;display:none" onclick='doOperation("generateImagingControlID")' title='Generar número de control' />
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             <input id='cmdShowImagingControlSlip' type="button" value="Imprimir carátula" class="button" style="width:112px;height:28px;top:8px;display:none" onclick='doOperation("showImagingControlSlip")' title='Imprimir la carátula' />
@@ -94,6 +91,7 @@
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             <input id='cmdCloseDocument' type="button" value="Cerrar documento" class="button" style="width:122px;height:28px;top:8px;display:none" onclick='doOperation("closeDocument")' title='Cierra el documento protegiéndolo ante cambios no autorizados.' />
             <input id='cmdOpenDocument' type="button" value="Abrir documento" class="button" style="width:122px;height:28px;top:8px;display:none" onclick='doOperation("openDocument")' title='Abre este documento para editarlo.' />
+            <input id='cmdSaveDocument' type="button" value="Guardar los cambios" class="button green-button" style="width:112px;height:28px;display:none" onclick='doOperation("saveDocument")' title='Guarda el documento' />
           </td>
           <td >
           </td>
@@ -330,12 +328,18 @@
     <% } %>
     protectRecordingEditor(false);
     if (getElement('cmdEditDocument').value == "Descartar los cambios") {
-      if (confirm("¿Descarto los cambios efectuados en el documento?")) {
-        sendPageCommand('refreshDocument');
+      var sMsg = "Deshacer los cambios.\n\n";
+      sMsg += "Esta operación va a deshacer los cambios efectudados en el encabezado del documento.\n\n";
+      sMsg += "¿Descarto los cambios efectuados en el documento?";
+      if (confirm(sMsg)) {
+        if (confirm("Precaución:\n\n¿En verdad se desea descartar los cambios en el documento?")) {
+          sendPageCommand('refreshDocument');
+        }
         return true;
       }
     } else {
       getElement('cmdEditDocument').value = "Descartar los cambios";
+      getElement('cmdEditDocument').className = "button red-button";
       getElement('cmdSaveDocument').style.display = 'inline';
       getElement('cmdDeleteDocument').style.display = 'none';
       getElement('cmdCloseDocument').style.display = 'none';
