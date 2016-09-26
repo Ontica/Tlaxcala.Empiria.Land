@@ -7,6 +7,9 @@
   max-width:780px;
 }
 
+.bigger {
+  font-size: 11pt;
+}
 h2 {
   font-size: 16pt;
   padding-top: 13pt;

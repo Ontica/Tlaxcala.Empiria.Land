@@ -11,7 +11,7 @@
     <table>
       <tr>
         <td rowspan="2" style="vertical-align:top">
-          <img class="logo" src="../themes/default/customer/government.seal.png" style="padding-left:45pt;height:84pt" alt="" title="" />
+          <img class="logo" src="../themes/default/customer/government.seal.png" style="padding-left:30pt;height:84pt" alt="" title="" />
         </td>
         <td style="vertical-align:top;text-align:left;width:60%">
 	        <h3>DIRECCIÓN DE NOTARÍAS Y REGISTROS PÚBLICOS</h3>
@@ -23,10 +23,19 @@
           Trámite: <%=transaction.UID%> <%=transaction.IsReentry ? "&nbsp; <b>(REINGRESO)</b>" : "" %>
         </td>
       </tr>
-      <tr><td colspan="2"><h2 style="padding-top:0;">CONTROL DEL ACERVO DOCUMENTAL</h2></td></tr>
+      <tr>
+        <td><h2 style="padding-top:0;text-align:left">CONTROL DEL ACERVO DOCUMENTAL</h2></td>
+        <td>
+            <% if (!base.UniqueInvolvedResource.IsEmptyInstance) { %>
+            <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=base.UniqueInvolvedResource.UID%>" />
+            <br />
+            <span><b>FOLIO REAL:</b><%=base.UniqueInvolvedResource.UID%></span>
+            <% } %>
+        </td>
+      </tr>
     </table>
     <br />
-    <div style="margin-left:50pt">
+    <div style="margin-left:30pt">
      <table style="width:95%;">
         <tr>
           <td style='vertical-align:top'>Interesado:<br /></td>
@@ -56,7 +65,7 @@
         </tr>
       </table>
     </div>
-    <div style="position: absolute; bottom:5pt;left:55pt;border-top: 1px solid black;padding-top:10pt">
+    <div style="position: absolute; bottom:5pt;left:30pt;border-top: 1px solid black;padding-top:10pt">
       <table style="width:90%;">
         <tr>
           <td>

@@ -280,7 +280,6 @@ namespace Empiria.Land.WebApp {
       }
     }
 
-
     protected string GetRecordingSignerName() {
       if (document.IsHistoricDocument) {
         return String.Empty;
@@ -300,6 +299,16 @@ namespace Empiria.Land.WebApp {
         return "Director de Notarías y Registros Públicos";
       } else {
         return "C. Oficial Registrador del Distrito Judicial de Zacatecas";
+      }
+    }
+
+    private Resource _uniqueInvolvedResource = null;
+    protected Resource UniqueInvolvedResource {
+      get {
+        if (_uniqueInvolvedResource == null) {
+          _uniqueInvolvedResource = document.GetUniqueInvolvedResource();
+        }
+        return _uniqueInvolvedResource;
       }
     }
 
@@ -338,9 +347,9 @@ namespace Empiria.Land.WebApp {
                       this.GetRealEstateTextWithAntecedentAndCadastralKey(recordingAct));
       } else if (resource is Association) {
         x = x.Replace("{RESOURCE.DATA}", "sobre la sociedad o asociación denominada '" +
-                      ((Association) resource).Name) + "' con folio único <b>" + resource.UID + "</b>";
+                      ((Association) resource).Name) + "' con folio único <b class='bigger'>" + resource.UID + "</b>";
       } else if (resource is NoPropertyResource) {
-        x = x.Replace("{RESOURCE.DATA}", "con identificador de inscripción <b>" + resource.UID + "</b>");
+        x = x.Replace("{RESOURCE.DATA}", "con identificador de inscripción <b class='bigger'>" + resource.UID + "</b>");
       } else {
         throw Assertion.AssertNoReachThisCode("Unknown rule for resources with type {0}.", resource.GetType());
       }
@@ -513,7 +522,7 @@ namespace Empiria.Land.WebApp {
     }
 
     private string GetRealEstateTextWithCadastralKey(RealEstate property) {
-      string x = "<b>" + property.UID + "</b>";
+      string x = "<b class='bigger'>" + property.UID + "</b>";
 
       if (property.CadastralKey.Length != 0) {
         x += " (Clave catastral: <b>" + property.CadastralKey + "</b>)";
@@ -533,7 +542,7 @@ namespace Empiria.Land.WebApp {
       } else if (!domainAntecedent.PhysicalRecording.IsEmptyInstance) {
         x += ", con antecedente de inscripción en " + domainAntecedent.PhysicalRecording.AsText;
       } else if (domainAntecedent.Document.Equals(recordingAct.Document)) {
-        x += ", registrado en este documento.";
+        x += ", registrado en este documento";
       } else if (!(domainAntecedent is DomainAct)) {   // TODO: this is very strange, is a special case
         x += String.Format(" el {0} bajo el número de documento electrónico {1}",
                            this.GetDateAsText(domainAntecedent.Document.AuthorizationTime),
@@ -550,17 +559,17 @@ namespace Empiria.Land.WebApp {
       const string incorporationActText =
             "{INDEX}.- <b style='text-transform:uppercase'>CONSTITUCIÓN</b> de " +
             "la {ASSOCIATION.KIND} denominada <b>{ASSOCIATION.NAME}</b>, " +
-            "misma a la que se le asignó el folio único <b>{ASSOCIATION.UID}</b>.<br/>";
+            "misma a la que se le asignó el folio único <b class='bigger'>{ASSOCIATION.UID}</b>.<br/>";
 
       const string overAssociationWithIncorporationActInDigitalRecording =
           "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> de " +
           "la {ASSOCIATION.KIND} denominada <b>{ASSOCIATION.NAME}</b>, " +
-          "con folio único <b>{ASSOCIATION.UID}</b>.<br/>";
+          "con folio único <b class='bigger'>{ASSOCIATION.UID}</b>.<br/>";
 
       const string overAssociationWithIncorporationActInPhysicalRecording =
           "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> de " +
           "la {ASSOCIATION.KIND} denominada <b>{ASSOCIATION.NAME}</b>, " +
-          "con folio único <b>{ASSOCIATION.UID}</b> y " +
+          "con folio único <b class='bigger'>{ASSOCIATION.UID}</b> y " +
           "antecedente de inscripción en {ANTECEDENT}.<br/>";
 
       RecordingAct incorporationAct = association.GetIncorporationAct();

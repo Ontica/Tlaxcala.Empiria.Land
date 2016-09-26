@@ -41,6 +41,16 @@ namespace Empiria.Land.WebApp {
       transaction = document.GetTransaction();
     }
 
+    private Resource _uniqueInvolvedResource = null;
+    protected Resource UniqueInvolvedResource {
+      get {
+        if (_uniqueInvolvedResource == null) {
+          _uniqueInvolvedResource = document.GetUniqueInvolvedResource();
+        }
+        return _uniqueInvolvedResource;
+      }
+    }
+
     protected string GetRecordingActsDescriptionText() {
       var temp = String.Empty;
 

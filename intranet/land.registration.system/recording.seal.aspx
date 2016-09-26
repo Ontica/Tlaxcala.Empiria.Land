@@ -25,6 +25,12 @@
           <% } %>
           <h5><%=document.UID%></h5>
         </td>
+        <td style="font-size:8pt;vertical-align:middle">
+            <% if (!base.UniqueInvolvedResource.IsEmptyInstance && document.IsClosed) { %>
+            <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=base.UniqueInvolvedResource.UID%>" />
+            <div><b>FOLIO REAL: </b><%=base.UniqueInvolvedResource.UID%></div>
+            <% } %>
+        </td>
       </tr>
     </table>
     <div class="certificate-text">
@@ -56,13 +62,14 @@
         </tr>
         <% } else if (!document.IsHistoricDocument) { %>
         <tr>
-          <td colspan="3" style="text-align:center;font-size:10pt" >
-            <br /><br />
+          <td colspan="3" style="text-align:center;font-size:11pt" >
+            <br /><br /><br />
             <b><%=GetRecordingSignerName()%></b>
             <br />
             <%=GetRecordingSignerPosition()%>
             <br />&nbsp;
           </td>
+          <td style="text-wrap:none">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
         </tr>
         <% } %>
         <tr>
@@ -79,7 +86,7 @@
           <td>
             <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=document.UID%>" />
             <br />
-            <span><%=document.UID%> <%=transaction.IsReentry ? "&nbsp; <b>(Reingreso)</b>" : "" %></span>
+            <span>Documento: <%=document.UID%> <%=transaction.IsReentry ? "&nbsp; <b>(Reingreso)</b>" : "" %></span>
           </td>
         </tr>
       </table>
