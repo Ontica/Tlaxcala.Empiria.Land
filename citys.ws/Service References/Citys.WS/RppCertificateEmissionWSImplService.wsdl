@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://ws.ispac.tdw.ieci/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" name="RppCertificateEmissionWSImplService" targetNamespace="http://ws.ispac.tdw.ieci/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://pruebasunimert.cloudapp.net:8080/SIGEM_ExternalWS/rppCertificateEmissionWS?xsd=1" namespace="http://ws.ispac.tdw.ieci/" />
+    </xsd:schema>
+  </types>
+  <message name="receiveCertificate">
+    <part name="arg0" type="tns:authBean" />
+    <part name="arg1" type="tns:rppCertificateEmissionCertificateBean" />
+  </message>
+  <message name="receiveCertificateResponse">
+    <part name="return" type="xsd:int" />
+  </message>
+  <message name="canSendDocument">
+    <part name="arg0" type="tns:authBean" />
+    <part name="arg1" type="xsd:string" />
+  </message>
+  <message name="canSendDocumentResponse">
+    <part name="return" type="xsd:boolean" />
+  </message>
+  <portType name="RppCertificateEmissionWS">
+    <operation name="receiveCertificate" parameterOrder="arg0 arg1">
+      <input wsam:Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/receiveCertificateRequest" message="tns:receiveCertificate" />
+      <output wsam:Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/receiveCertificateResponse" message="tns:receiveCertificateResponse" />
+    </operation>
+    <operation name="canSendDocument" parameterOrder="arg0 arg1">
+      <input wsam:Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/canSendDocumentRequest" message="tns:canSendDocument" />
+      <output wsam:Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/canSendDocumentResponse" message="tns:canSendDocumentResponse" />
+    </operation>
+  </portType>
+  <binding name="RppCertificateEmissionWSImplPortBinding" type="tns:RppCertificateEmissionWS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="receiveCertificate">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://ws.ispac.tdw.ieci/" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://ws.ispac.tdw.ieci/" />
+      </output>
+    </operation>
+    <operation name="canSendDocument">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://ws.ispac.tdw.ieci/" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://ws.ispac.tdw.ieci/" />
+      </output>
+    </operation>
+  </binding>
+  <service name="RppCertificateEmissionWSImplService">
+    <port name="RppCertificateEmissionWSImplPort" binding="tns:RppCertificateEmissionWSImplPortBinding">
+      <soap:address location="http://pruebasunimert.cloudapp.net:8080/SIGEM_ExternalWS/rppCertificateEmissionWS" />
+    </port>
+  </service>
+</definitions>
