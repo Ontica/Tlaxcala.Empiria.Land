@@ -106,6 +106,9 @@ namespace Empiria.Land.WebApp {
           UndeleteTransaction();
           LoadEditor();
           return;
+        case "sendCertificateToCITYS":
+          SendCertificateToCITYS();
+          return;
         default:
           throw new NotImplementedException(base.CommandName);
       }
@@ -625,6 +628,27 @@ namespace Empiria.Land.WebApp {
         Response.Redirect("transaction.editor.aspx?id=" + transaction.Id.ToString() + "&isNew=true");
         //} else {
         //  Response.Redirect("transaction.editor.aspx?id=" + transaction.Id.ToString());
+      }
+    }
+
+    private void SendCertificateToCITYS() {
+      int status = 0;
+      try {
+        var connector = new Empiria.Land.Connectors.CitysConnector();
+
+        var certificate = transaction.GetIssuedCertificates()[0];
+        var getFilePath = @"E:\empiria.files\tlaxcala.citys\Libertad-Gravamen.pdf";
+
+        status = connector.SendAvisoPreventivo(certificate, System.IO.File.ReadAllBytes(getFilePath));
+
+        onloadScript = "alert('El certificado fue enviado correctamente al sistema CITYS.');doOperation('redirectThis')";
+
+      } catch (System.ServiceModel.FaultException e) {
+        onloadScript = "alert('Problema del cliente: {0}\\nProblema del servidor: {1}\\n:Motivo: {2}');doOperation('redirectThis')";
+        onloadScript = String.Format(onloadScript, e.Code.IsSenderFault, e.Code.IsReceiverFault, EmpiriaString.FormatForScripting(e.Reason.ToString()));
+      } catch (Exception e) {
+        onloadScript = "alert('HTTP Status:{0}\\nProblema:{1}');doOperation('redirectThis')";
+        onloadScript = String.Format(onloadScript, status, EmpiriaString.FormatForScripting(e.ToString()));
       }
     }
 
