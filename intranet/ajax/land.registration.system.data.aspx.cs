@@ -100,7 +100,9 @@ namespace Empiria.Web.UI.Ajax {
           return GetWitnessInPositionStringArrayCommandHandler();
         case "searchRecordingActPartiesCmd":
           return SearchRecordingActPartiesCommandHandler();
-        case "validateIfDocumentCanBeClosedCmd":
+
+        case "validateIfDocumentCanBeCloseCmd":
+          // Very rare: If use 'validateIfDocumentCanBeClosedCmd' then ajax never dispatches the call
           return ValidateIfDocumentCanBeClosedCommandHandler();
         case "validateIfDocumentCanBeOpenedCmd":
           return ValidateIfDocumentCanBeOpenedCommandHandler();
@@ -110,14 +112,13 @@ namespace Empiria.Web.UI.Ajax {
           return ValidateAnnotationSemanticsCommandHandler();
         case "validateDeleteRecordingActCmd":
           return ValidateDeleteRecordingActCommandHandler();
-        case "validateDeleteRecordingActPropertyCmd":
-          return ValidateDeleteRecordingActPropertyCommandHandler();
         case "validateNextTransactionStateCmd":
           return ValidateNextTransactionStateCommandHandler();
         case "validateRecordingSemanticsCmd":
           return ValidateRecordingSemanticsCommandHandler();
         case "validateRecordingActAsCompleteCmd":
           return ValidateRecordingActAsCompleteCommandHandler();
+
         default:
           throw new WebPresentationException(WebPresentationException.Msg.UnrecognizedCommandName,
                                              commandName);
@@ -832,26 +833,6 @@ namespace Empiria.Web.UI.Ajax {
       return String.Empty;
     }
 
-    private string ValidateDeleteRecordingActPropertyCommandHandler() {
-      throw new NotImplementedException();
-
-      //int recordingId = int.Parse(GetCommandParameter("recordingId", true));
-      //int recordingActId = int.Parse(GetCommandParameter("recordingActId", true));
-      //int propertyId = int.Parse(GetCommandParameter("propertyId", true));
-
-      //Recording recording = Recording.Parse(recordingId);
-      //RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
-      //Resource resource = recordingAct.GetPropertyEvent(Property.Parse(propertyId)).Resource;
-
-      //LandRegistrationException exception = null;
-      //exception = LRSValidator.ValidateDeleteRecordingActProperty(recordingAct, resource);
-
-      //if (exception != null) {
-      //  return exception.Message;
-      //}
-      //return String.Empty;
-    }
-
     private string ValidateNextTransactionStateCommandHandler() {
       int transactionId = int.Parse(GetCommandParameter("transactionId", true));
       LRSTransactionStatus nextStatus = (LRSTransactionStatus) char.Parse(GetCommandParameter("newState", true));
@@ -929,8 +910,8 @@ namespace Empiria.Web.UI.Ajax {
     private string ValidateIfDocumentCanBeClosedCommandHandler() {
       try {
         int documentId = GetCommandParameter<int>("documentId");
-
         var document = RecordingDocument.Parse(documentId);
+
         document.AssertCanBeClosed();
       } catch (Exception e) {
         return e.Message;
@@ -941,15 +922,14 @@ namespace Empiria.Web.UI.Ajax {
     private string ValidateIfDocumentCanBeOpenedCommandHandler() {
       try {
         int documentId = GetCommandParameter<int>("documentId");
-
         var document = RecordingDocument.Parse(documentId);
+
         document.AssertCanBeOpened();
       } catch (Exception e) {
         return e.Message;
       }
       return String.Empty;
     }
-
 
     private RecordingTask ParseRecordingTaskParameters() {
       var task = new RecordingTask(

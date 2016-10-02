@@ -66,9 +66,9 @@
                 </td>
               </tr>
               <tr>
-                <td>Partida:<br />&nbsp;</td>
+                <td style="vertical-align:top">Partida:</td>
                 <td>
-                    <select id="cboPrecedentRecording" class="selectBox" style="width:98px" title=""
+                    <select id="cboPrecedentRecording" class="selectBox" style="width:98px" title=''
                             onchange="return updateUI(this);">
                         <option value="">¿Libro?</option>
                     </select>
@@ -78,6 +78,13 @@
                             <option value="">¿Inscripción?</option>
                           </select>
                           <a href="javascript:doOperation('editResource', getElement('cboPrecedentProperty').value)">Consultar historia</a>
+                          <br />
+                          <label>
+                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            <input type="checkbox" id="chkAddResourceToExistingRecording" disabled="disabled" onclick="return showPrecedentRecordingSection()"; />
+                            Agregar otro folio real a esta partida histórica
+                          </label>
                         </span>
                         <span id="divRecordingQuickAddSection" style="display:none">
                           Partida donde está registrado el antecedente:
@@ -90,7 +97,48 @@
                             <option value="-Bis2">-Bis2</option>
                           </select>
                         </span>
-                    <br />&nbsp;
+                    <br />
+                    <table ID="tblQuickAddFields"class="editionTable" style="display:none;width:200px;color:darkred">
+                      <tr>
+                        <td>Documento registrado en la partida:</td>
+                        <td colspan="3">
+                          <select id="cboQuickAddDocumentType" class="selectBox" style="width:200px" title="">
+                            <option value="">( Seleccionar )</option>
+                            <option value="2410">Escritura pública</option>
+                            <option value="2414">Oficio de notaría</option>
+                            <option value="2412">Documento de juzgado</option>
+                            <option value="2413">Documento de terceros</option>
+                            <option value="2411">Título de propiedad</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Fecha de presentación de la partida:</td>
+                        <td><input type="text" class="textBox" id='txtQuickAddPresentationDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" /></td>
+                        <td>Registrado el:</td>
+                        <td><input type="text" class="textBox" id='txtQuickAddRecordingDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" /></td>
+                      </tr>
+                      <tr>
+                      </tr>
+                      <tr>
+                        <td>Último acto jurídico de traslativo<br />
+                          registrado en la partida para dicho predio:</td>
+                        <td colspan="3">
+                          <select id="cboQuickAddRecordingActType" class="selectBox" style="width:208px" title="">
+                            <option value=""></option>
+                            <option value="">Compraventa</option>
+                            <option value="">Donación</option>
+                            <option value="">Etcétera</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Número de lote/fracción/casa que<br />
+                            identifica al predio:</td>
+                        <td colspan="3"><input type="text" class="textBox" id='txtQuickActPartitionNum' style="width:208px;"
+                                        onblur="formatAsDate(this)" title="" value="Estos campos están deshabilitados." runat="server" /></td>
+                      </tr>
+                    </table>
                 </td>
             </table>
             <br />
@@ -200,9 +248,6 @@
           <td>
             <select id="cboTargetAct" class="selectBox" style="width:202px" title="" onchange="return updateUI(this);">
               <option value="">( Acto a cancelar o modificar )</option>
-              <option value="2250">Crédito hipotecario</option>
-              <option value="2729">Embargo</option>
-              <option value="2256">Fianza</option>
             </select>
           </td>
           <td>
@@ -425,6 +470,7 @@
       resetPropertyTypeSelectorCombo();
       showTargetRecordingActSections();
     } else if (oControl == getElement("cboRecordingTaskType")) {
+      updateSelectedResource();
       showPrecedentRecordingSection();
     } else if (oControl == getElement("cboPrecedentRecordingSection")) {
       resetPrecedentDomainBooksCombo();
@@ -500,9 +546,11 @@
     if (selectedValue != "-1") {
       resetPrecedentPropertiesCombo();
       getElement('divRecordingQuickAddSection').style.display = 'none';
+      getElement('tblQuickAddFields').style.display = 'none';
       getElement('divPropertySelectorSection').style.display = 'inline';
     } else {
       getElement('divRecordingQuickAddSection').style.display = 'inline';
+      getElement('tblQuickAddFields').style.display = 'inline';
       getElement('divPropertySelectorSection').style.display = 'none';
     }
   }
@@ -638,15 +686,12 @@
   }
 
   function updateSelectedResource() {
-    var isResourceSelected = (!createAntecedentResource() && getElement("cboPrecedentProperty").value != '');
-
-    if (!isResourceSelected) {
+    if (isCreateResourceTask() || createAntecedentResource()) {
       _selectedResource = null;
-    } else if (isResourceSelected && _selectedResource == null) {
+    } else if (getElement("cboPrecedentProperty").value != '') {
       _selectedResource = getElement("cboPrecedentProperty").value;
-    } else if (isResourceSelected && _selectedResource != null) {
-      // TODO: && was changed
-      _selectedResource = getElement("cboPrecedentProperty").value;
+    } else {
+      _selectedResource = null;
     }
   }
 
@@ -662,7 +707,8 @@
     //getElement('tblTargetPrecedentActsTable').innerHTML = html;
   }
 
-  // Represents the resource that was selected using the search box. Returns null if no resource was selected.
+  // Represents the resource that was selected using the search box.
+  // Returns null if no resource was selected.
   function createAntecedentResource() {
     return (getElement("cboPrecedentRecording").value == "-1");
   }
@@ -1055,8 +1101,6 @@
                                         getElement('cboQuickAddBisRecordingTag').value;
     if (getSelectedResource() != null) {
       qs += "&precedentPropertyId=" + getSelectedResource();
-    } else {
-      qs += "&precedentPropertyId=" + getElement('cboPrecedentProperty').value;
     }
     qs += "&resourceName=" + getElement('txtResourceName').value;
 

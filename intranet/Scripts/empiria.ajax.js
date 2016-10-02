@@ -212,6 +212,7 @@ function HttpClient() { }
       if (!this.xmlhttp) {
         this.start();
       }
+
       this.xmlhttp.open(this.requestType, url, this.isAsync);
       // set onreadystatechange here since it will be reset after a completed call in Mozilla
       var self = this;

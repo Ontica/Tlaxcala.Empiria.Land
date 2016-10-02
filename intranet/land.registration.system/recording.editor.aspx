@@ -225,26 +225,18 @@
 
   function closeDocument() {
     <% if (!base.CanCloseDocument()) { %>
-      alert("No es posible cerrar el documento  ya que no está abierto para registro en libros, " +
+      alert("No es posible cerrar el documento ya que no está abierto para registro en libros, " +
             "o no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
     if (!validateIfCanBeClosed()) {
       return false;
     }
-    var sMsg = "Cerrar documento\n\n";
-    if (confirm("¿Cierro este documento y lo protejo ante cambios no autorizados?")) {
+    var sMsg = "¿Cierro este documento y lo protejo ante cambios no autorizados?";
+    if (confirm(sMsg)) {
       sendPageCommand('closeDocument');
       return true;
     }
-  }
-
-  function validateIfCanBeClosed() {
-    var ajaxURL = "../ajax/land.registration.system.data.aspx";
-    ajaxURL += "?commandName=validateIfDocumentCanBeClosedCmd";
-    ajaxURL += "&documentId=<%=base.transaction.Document.Id%>";
-
-    return invokeAjaxValidator(ajaxURL);
   }
 
   function openDocument() {
@@ -261,6 +253,15 @@
       sendPageCommand('openDocument');
       return true;
     }
+  }
+
+  function validateIfCanBeClosed() {
+    // Very rare: If use 'Closed' in validateIfDocumentCanBeCloseCmd then ajax never dispatches the call
+    var ajaxURL = "../ajax/land.registration.system.data.aspx";
+    ajaxURL += "?commandName=validateIfDocumentCanBeCloseCmd";
+    ajaxURL += "&documentId=<%=base.transaction.Document.Id%>";
+
+    return invokeAjaxValidator(ajaxURL);
   }
 
   function validateIfCanBeOpened() {
