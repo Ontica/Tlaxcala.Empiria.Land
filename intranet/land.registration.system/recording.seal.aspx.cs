@@ -54,23 +54,22 @@ namespace Empiria.Land.WebApp {
     #region Protected methods
 
     protected string GetDigitalSeal() {
-      if (document.IsHistoricDocument && document.Status != RecordableObjectStatus.Closed) {
+      if (document.Status != RecordableObjectStatus.Closed) {
         return AsWarning("El documento está incompleto por lo que no tiene sello digital.");
-      }
-      string s = "||" + transaction.UID + "|" + document.UID;
-      for (int i = 0; i < recordingActs.Count; i++) {
-        s += "|" + recordingActs[i].Id.ToString();
-      }
-      s += "||";
-      return Empiria.Security.Cryptographer.CreateDigitalSign(s);
+      };
+
+      return document.GetDigitalSeal();
     }
 
     protected string GetDigitalSignature() {
-      string s = "||" + transaction.UID + "|" + document.UID;
-      for (int i = 0; i < recordingActs.Count; i++) {
-        s += "|" + recordingActs[i].Id.ToString();
+      if (document.IsHistoricDocument) {
+        return AsWarning("Los documentos históricos no tienen firma digital.");
       }
-      return Empiria.Security.Cryptographer.CreateDigitalSign(s + "eSign");
+      if (document.Status != RecordableObjectStatus.Closed) {
+        return AsWarning("El documento está incompleto por lo que aún no ha sido firmado.");
+      }
+
+      return document.GetDigitalSignature();
     }
 
     protected string GetDocumentDescriptionText() {

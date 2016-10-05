@@ -77,7 +77,7 @@
             <% if (!document.IsClosed) { %>
             <span class="warning">** ESTE DOCUMENTO NO ES OFICIAL **</span>
             <% } else { %>
-            <%=Empiria.EmpiriaString.DivideLongString(GetDigitalSeal(), 64, "&#8203;")%>
+            <%=Empiria.EmpiriaString.DivideLongString(base.GetDigitalSeal(), 64, "&#8203;")%>
             <br />
             <%=GetRecordingOfficialsInitials()%>
             <% } %>
