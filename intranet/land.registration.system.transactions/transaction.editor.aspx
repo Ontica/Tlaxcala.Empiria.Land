@@ -48,9 +48,7 @@
         <tr>
           <td><b>Interesado:</b></td>
           <td colspan="3">
-            <input id='txtRequestedBy' type="text" class="textBox" style="width:478px;" title="" runat="server" />
-            <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda"
-                 style="margin-left:-4px" onclick="doOperation('searchParty')" />
+            <input id='txtRequestedBy' type="text" class="textBox" style="width:504px;" title="" runat="server" />
             <input type="hidden" id="txtTransactionKey" runat="server" />
           </td>
           <td class="lastCell" valign="top">
@@ -67,9 +65,7 @@
               <option value="">( Seleccionar )</option>
             </select>
             No. Instrumento:
-            <input id='txtDocumentNumber' type="text" class="textBox" style="width:194px;" title="" maxlength="128" runat="server" />
-            <img src="../themes/default/buttons/search.gif" alt="" title="Busca un número de instrumento"
-                 style="margin-left:-4px" onclick="doOperation('searchParty')" />
+            <input id='txtDocumentNumber' type="text" class="textBox" style="width:220px;" title="" maxlength="128" runat="server" />
           </td>
         </tr>
         <tr>
@@ -114,6 +110,36 @@
       </table>
     </td>
   </tr>
+
+<tr>
+  <td class="subTitle">Folio real involucrado en el trámite</td>
+</tr>
+<tr>
+  <td>
+    <table class="editionTable">
+      <tr>
+        <td>Folio real base:</td>
+          <td>
+            <input id='txtBaseResourceUID' type="text" class="textBox" style="width:170px;" title="" maxlength="20" runat="server" />
+            <img src="../themes/default/buttons/search.gif" alt="" title="Busca un número de instrumento"
+                 style="margin-left:-8px" onclick="doOperation('lookupBaseResource')" />
+              <span id='divSelectedResource' style="display:none">
+                <a href="javascript:doOperation('viewBaseResource', oBaseResource.Id)">Consultar historia</a>
+                &nbsp; | &nbsp;
+                <a href="javascript:doOperation('unselectBaseResource')">Borrar</a>
+              </span>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+          </td>
+          <td class="lastCell">
+            <label>
+                <input type="checkbox" id="chkNoBaseResource" onclick="return noBaseResourceCheckBoxSelected()"; />
+                  Es un trámite sobre una propiedad SIN folio real asignado<br />&nbsp; &nbsp; &nbsp; &nbsp;o involucra a más de un predio base.
+            </label>
+          </td>
+      </tr>
+     </table>
+  </td>
+</tr>
 <tr>
   <td class="subTitle">Actos jurídicos y conceptos involucrados en el trámite</td>
 </tr>
@@ -328,6 +354,10 @@
               &nbsp; &nbsp;
               <input class="button" type="button" value="Refrescar" onclick="doOperation('refreshCertificates')" style="height:28px;width:92px" />
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <% } else if (transaction.IsExternalTransaction && transaction.GetIssuedCertificates().Count == 1 && transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Revision) { %>
+              <br />
+              <input class="button" type="button" value="Enviar certificado a CITYS" onclick="doOperation('sendCertificateToCITYS')" style="height:28px;width:144px" />
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             <% } %>
           </div>
         </td>
@@ -335,40 +365,40 @@
     </table>
 
     <table id="tabStripItemView_3" class="editionTable" style="display:none">
-    <tr>
-      <td class="subTitle">Historia del trámite</td>
-    </tr>
-    <tr>
-      <td>
-        <div style="overflow:auto;width:100%;">
-          <table class="details" style="width:97%">
-            <tr class="detailsHeader">
-              <td>Tipo de movimiento</td>
-              <td>Responsable</td>
-              <td>Recibido</td>
-              <td>Terminado</td>
-              <td>Entregado</td>
-              <td>Trabajo</td>
-              <td>Estado</td>
-              <td width="40%">Observaciones</td>
-            </tr>
-            <%=GetTransactionTrack()%>
-          </table>
-        </div>
-        <br />
-        <br />
-        <% if (transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Deleted) { %>
-        <input id="cmdUndelete" class="button" type="button" value="Reactivar" onclick="doOperation('undelete')" style="height:28px;width:110px" runat="server" />
-        <% } %>
-      </td>
-    </tr>
- </table>
-        </div>
-      </div> <!-- end divBody !-->
-      <div id="divBottomToolbar" style="display:none">
-      </div> <!-- end divBottomToolbar !-->
-    </div> <!-- end divCanvas !-->
-  </form>
+      <tr>
+        <td class="subTitle">Historia del trámite</td>
+      </tr>
+      <tr>
+        <td>
+          <div style="overflow:auto;width:100%;">
+            <table class="details" style="width:97%">
+              <tr class="detailsHeader">
+                <td>Tipo de movimiento</td>
+                <td>Responsable</td>
+                <td>Recibido</td>
+                <td>Terminado</td>
+                <td>Entregado</td>
+                <td>Trabajo</td>
+                <td>Estado</td>
+                <td width="40%">Observaciones</td>
+              </tr>
+              <%=GetTransactionTrack()%>
+            </table>
+          </div>
+          <br />
+          <br />
+          <% if (transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Deleted) { %>
+          <input id="cmdUndelete" class="button" type="button" value="Reactivar" onclick="doOperation('undelete')" style="height:28px;width:110px" runat="server" />
+          <% } %>
+        </td>
+      </tr>
+    </table>
+  </div>
+ </div> <!-- end divBody !-->
+<div id="divBottomToolbar" style="display:none">
+ </div> <!-- end divBottomToolbar !-->
+</div> <!-- end divCanvas !-->
+</form>
 </body>
   <script type="text/javascript">
   /* <![CDATA[ */
@@ -400,6 +430,9 @@
         return reentryTransaction();
       case 'createCopy':
         return createCopy();
+      case 'lookupBaseResource':
+        return lookupBaseResource();
+
       case 'appendRecordingAct':
         return appendRecordingAct();
       case 'deleteRecordingAct':
@@ -458,6 +491,9 @@
       case "openCertificate":
         openCertificate(arguments[1]);
         return;
+      case "sendCertificateToCITYS":
+        sendCertificateToCITYS();
+        return;
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
@@ -465,6 +501,46 @@
     if (success) {
       sendPageCommand(command);
       gbSended = true;
+    }
+  }
+
+  function noBaseResourceCheckBoxSelected() {
+    if (getElement('chkNoBaseResource').checked) {
+      getElement('txtBaseResourceUID').disabled = true;
+      getElement('divSelectedResource').style.display = 'none';
+    } else {
+      getElement('txtBaseResourceUID').disabled = false;
+      getElement('divSelectedResource').style.display = 'none';
+    }
+  }
+
+  var oBaseResource = null;
+  function lookupBaseResource() {
+    if (getElement("txtBaseResourceUID").value.length == 0) {
+      alert("Requiero se proporcione el folio real para poder hacer la búsqueda.");
+      return;
+    }
+
+    var url = "../ajax/land.registration.system.data.aspx";
+    url += "?commandName=lookupResource";
+    url += "&resourceUID=" + getElement("txtBaseResourceUID").value;
+
+    olookupResource = invokeAjaxGetJsonObject(url);
+
+    if (olookupResource.Id == -1) {
+      _selectedResource = null;
+      alert("No existe ningún predio o asociación con el folio real proporcionado.");
+      getElement('divSelectedResource').style.display = 'none';
+      getElement("txtBaseResourceUID").readOnly = false;
+      getElement("chkNoBaseResource").disabled = false;
+      return false;
+    } else {
+      _selectedResource = olookupResource.Id;
+      alert("Folio real encontrado.");
+      getElement('divSelectedResource').style.display = 'inline';
+      getElement("txtBaseResourceUID").readOnly = true;
+      getElement("chkNoBaseResource").disabled = true;
+      return true;
     }
   }
 
@@ -500,6 +576,18 @@
     alert("Reabrir certificados todavía no está disponible.");
     return;
   }
+
+  function sendCertificateToCITYS() {
+    var sMsg = "Enviar certificado al sistema CITYS.\n\n";
+
+    sMsg += "¿Envío el certificado al sistema CITYS?";
+
+    if (confirm(sMsg)) {
+      sendPageCommand("sendCertificateToCITYS");
+      gbSended = true;
+    }
+  }
+
 
   function appendPayment() {
     if (isEmpty(getElement('txtReceiptNumber'))) {
@@ -838,6 +926,7 @@
   addEvent(getElement("txtRequestedBy"), 'keypress', upperCaseKeyFilter);
   addEvent(getElement("txtDocumentNumber"), 'keypress', upperCaseKeyFilter);
   addEvent(getElement("txtDiscountAuthorization"), 'keypress', upperCaseKeyFilter);
+  addEvent(getElement("txtBaseResourceUID"), 'keypress', upperCaseKeyFilter);
 
   /* ]]> */
   </script>

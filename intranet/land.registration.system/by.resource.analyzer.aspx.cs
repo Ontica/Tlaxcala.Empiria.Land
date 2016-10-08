@@ -108,7 +108,8 @@ namespace Empiria.Land.WebApp {
     protected string TabStripClass(TabStrip tabStrip) {
       switch (tabStrip) {
         case TabStrip.DocumentEditor:
-          return this.IsResourceSelected ? "tabOff" : "tabOn";
+          return "tabDisabled";
+        //return this.IsResourceSelected ? "tabOff" : "tabOn";
 
         case TabStrip.GlobalSearch:
           return this.IsResourceSelected ? "tabOff" : "tabOn";
@@ -142,7 +143,7 @@ namespace Empiria.Land.WebApp {
 
       switch (tabStrip) {
         case TabStrip.DocumentEditor:
-          source = "document.editor.aspx?documentId={{DOCUMENT.ID}}&selectedRecordingActId={{RECORDING.ACT.ID}}";
+          //source = "document.editor.aspx?documentId={{DOCUMENT.ID}}&selectedRecordingActId={{RECORDING.ACT.ID}}";
           break;
         case TabStrip.GlobalSearch:
           source = "document.search.aspx?resourceId={{RESOURCE.ID}}&id={{RECORDING.ACT.ID}}";

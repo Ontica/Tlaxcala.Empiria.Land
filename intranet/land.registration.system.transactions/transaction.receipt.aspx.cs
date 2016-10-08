@@ -111,13 +111,13 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetCertificate() {
-      const string cert = "<tr width='24px'><td style='white-space:nowrap'>{NUMBER}</td>" +
-                      "<td style='white-space:nowrap'>{CODE}</td>" +
-                      "<td style='white-space:nowrap;width:30%'>{CONCEPT}</td>" +
-                      "<td style='white-space:nowrap'>{LAW.ARTICLE}</td>" +
-                      "<td align='right'>{SUBTOTAL}</td>" +
-                      "<td align='right'>{DISCOUNTS}</td>" +
-                      "<td align='right'><b>{TOTAL}</b></td></tr>";
+      const string cert = "<tr width='24px'><td style='white-space:nowrap' valign='top'>{NUMBER}</td>" +
+                      "<td style='white-space:nowrap' valign='top'>{CODE}</td>" +
+                      "<td style='white-space:nowrap;width:30%' valign='top'>{CONCEPT}</td>" +
+                      "<td style='white-space:nowrap' valign='top'>{LAW.ARTICLE}</td>" +
+                      "<td align='right' valign='top'>{SUBTOTAL}</td>" +
+                      "<td align='right' valign='top'>{DISCOUNTS}</td>" +
+                      "<td align='right' valign='top'><b>{TOTAL}</b></td></tr>";
       FixedList<LRSTransactionItem> list = transaction.Items;
       string html = String.Empty;
 
@@ -146,13 +146,13 @@ namespace Empiria.Land.WebApp {
     protected string GetConcepts() {
       FixedList<LRSTransactionItem> list = transaction.Items;
 
-      const string template = "<tr width='24px'><td>{NUMBER}</td>" +
-                              "<td style='white-space:normal'>{CONCEPT}&nbsp; &nbsp; &nbsp;</td>" +
-                              "<td align='right' style='white-space:nowrap'>{OPERATION.VALUE}</td>" +
-                              "<td align='right' style='white-space:nowrap'>{QTY}</td>" +
-                              "<td style='white-space:nowrap'>{UNIT}</td>" +
-                              "<td style='white-space:normal'>{LAW.ARTICLE}</td>" +
-                              "<td style='white-space:nowrap'>{NOTES}</td></tr>";
+      const string template = "<tr width='24px'><td valign='top'>{NUMBER}</td>" +
+                              "<td style='white-space:normal' valign='top'>{CONCEPT}&nbsp; &nbsp; &nbsp;</td>" +
+                              "<td align='right' style='white-space:nowrap' valign='top'>{OPERATION.VALUE}</td>" +
+                              "<td align='right' style='white-space:nowrap' valign='top'>{QTY}</td>" +
+                              "<td style='white-space:nowrap' valign='top'>{UNIT}</td>" +
+                              "<td style='white-space:normal' valign='top'>{LAW.ARTICLE}</td>" +
+                              "<td style='white-space:nowrap' valign='top'>{NOTES}</td></tr>";
 
       string html = String.Empty;
       for (int i = 0; i < list.Count; i++) {

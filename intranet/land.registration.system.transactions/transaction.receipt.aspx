@@ -95,13 +95,19 @@
          </td>
       </tr>
       <tr>
-        <td>
+        <td style="border-top: 3px solid #3a3a3a;font-size:7pt">
           <table style="width:100%" cellpadding="4px" cellspacing="0px">
             <tr>
-              <td style="border-top: 3px solid #3a3a3a;font-size:7pt">
-                <b>Cadena original:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 132, "&#8203;")%>
+              <td valign="top">
+                <b>Cadena original:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 78, "&#8203;")%>
                 <br /><br />
-                <b>Sello electrónico:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalSign(), 132, "&#8203;")%>
+                <b>Sello electrónico:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalSign(), 78, "&#8203;")%>
+              </td>
+              <td valign="top">
+                <% if (!base.transaction.BaseResource.IsEmptyInstance) { %>
+                <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=base.transaction.BaseResource.UID%>" />
+                <div><b>FOLIO REAL:</b><%=base.transaction.BaseResource.UID%></div>
+                <% } %>
               </td>
             </tr>
           </table>

@@ -119,8 +119,7 @@
         <option value='770'>Embargo</option>
         <option value='769'>Embargo (reinscripción)</option>
         <option value='780'>Inmovilización de predio</option>
-        <option value='776'>Nombramiento de albacea provisional</option>
-        <option value='720'>Nombramiento de albacea definitivo</option>
+        <option value='720'>Nombramiento de albacea</option>
         <option value='781'>Nulidad de inscripción</option>
         <option value='777'>Sentencia de patrimonio familiar</option>
         <option value='771'>Sentencia de usucapión</option>
