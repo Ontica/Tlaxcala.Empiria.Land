@@ -124,11 +124,10 @@
           <br />
           <div class="title"><%=Empiria.ExecutionServer.ServerName%></div>
           <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-          <strong>IMPORTANTE:</strong>
+          <strong>Acceso al sitio:</strong>
           <br /><br />
-            <span style="color:mediumseagreen">Del 19 al 30 de septiembre habrá cambios RELEVANTES en el sistema.<br/>
-            Se proporcionará capacitación y ayuda por parte del área de soporte.</span><br/>
-            Les agradecemos de antemano su comprensión y sugerencias.
+            Para ingresar a este sitio se requiere el nombre de usuario, la contraseña de
+            acceso y el valor de la posición D5K de la tarjeta de acceso personal:<br />&nbsp;
           <div class="formRow">
             <span class="formLabel">Usuario:</span>
             <span class="formControl"><input id="txtUserId" type="text" maxlength="32" size="24" name="txtUserId" runat="server" /></span>
