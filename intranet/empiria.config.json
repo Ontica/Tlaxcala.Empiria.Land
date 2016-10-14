@@ -126,7 +126,7 @@
     {
       "type": "Land.WebApp",
       "key": "CertificatesSystem.Url",
-      "value": "http://intranet.empiria.land/certificates/"
+      "value": "http://empiria.land/certificates/"
     },
     {
       "type": "Land.WebApp",

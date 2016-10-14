@@ -106,6 +106,11 @@ namespace Empiria.Land.WebApp {
           UndeleteTransaction();
           LoadEditor();
           return;
+
+        case "autoCreateCertificate":
+          AutoCreateCertificate();
+          LoadEditor();
+          return;
         case "sendCertificateToCITYS":
           SendCertificateToCITYS();
           return;
@@ -414,7 +419,7 @@ namespace Empiria.Land.WebApp {
           temp = temp.Replace("{{ISSUE-TIME}}", certificate.IssueTime.ToString("dd/MMM/yyyy HH:mm"));
           temp = temp.Replace("{{STATUS}}", certificate.Status == CertificateStatus.Closed ? "Cerrado" : "Eliminado");
           temp = temp.Replace("{{OPTIONS-COMBO}}", "{{VIEW-LINK}}");
-          temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE-UID}}')\">Ver o imprimir</a>");
+          temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE_ID}}')\">Ver o imprimir</a>");
         } else {
           temp = temp.Replace("{{ISSUED-BY}}", "&nbsp;");
           temp = temp.Replace("{{ISSUE-TIME}}", "No emitido");
@@ -423,6 +428,7 @@ namespace Empiria.Land.WebApp {
           temp = temp.Replace("{{EDIT-LINK}}", "<a href=\"javascript:doOperation('editCertificate', '{{CERTIFICATE-UID}}')\">Editar</a>");
           temp = temp.Replace("{{DELETE-LINK}}", "<a href=\"javascript:doOperation('deleteCertificate', '{{CERTIFICATE-UID}}')\">Eliminar</a>");
         }
+        temp = temp.Replace("{{CERTIFICATE_ID}}", certificate.Id.ToString());
         temp = temp.Replace("{{CERTIFICATE-UID}}", certificate.UID);
         html += temp;
       }
@@ -558,6 +564,27 @@ namespace Empiria.Land.WebApp {
       return html;
     }
 
+    private void AutoCreateCertificate() {
+      string certificateType = Request.Form[cboCertificateType.ClientID];
+      string propertyUID = Request.Form[txtCertificatePropertyUID.ClientID];
+      string ownerName = Request.Form[txtCertificateOwnerName.ClientID];
+
+      RealEstate property = propertyUID.Length > 0 ? RealEstate.TryParseWithUID(propertyUID) : RealEstate.Empty;
+
+      if (property == null) {
+        onloadScript = "alert('El folio real proporcionado no existe.');doOperation('redirectThis')";
+        return;
+      }
+
+      var certificate = Certificate.AutoCreate(this.transaction, certificateType, property, ownerName);
+
+      onloadScript = "alert('El certificado fue generado correctamente.');doOperation('redirectThis')";
+
+      cboCertificateType.Value = String.Empty;
+      txtCertificatePropertyUID.Value = String.Empty;
+      txtCertificateOwnerName.Value = String.Empty;
+    }
+
     private void AppendConcept() {
       LRSFee fee = this.ParseFee();
 
@@ -637,11 +664,12 @@ namespace Empiria.Land.WebApp {
         var connector = new Empiria.Land.Connectors.CitysConnector();
 
         var certificate = transaction.GetIssuedCertificates()[0];
-        var getFilePath = @"E:\empiria.files\tlaxcala.citys\Libertad-Gravamen.pdf";
 
-        status = connector.SendAvisoPreventivo(certificate, System.IO.File.ReadAllBytes(getFilePath));
+        var fileInfo = CreatePDFFile(certificate);
+        status = connector.SendAvisoPreventivo(certificate, System.IO.File.ReadAllBytes(fileInfo.FullName));
 
-        onloadScript = "alert('El certificado fue enviado correctamente al sistema CITYS.');doOperation('redirectThis')";
+        onloadScript = String.Format("alert('El certificado fue enviado correctamente al sistema CITYS. Status {0}.');" +
+                                     "doOperation('redirectThis')", status);
 
       } catch (System.ServiceModel.FaultException e) {
         onloadScript = "alert('Problema del cliente: {0}\\nProblema del servidor: {1}\\n:Motivo: {2}');doOperation('redirectThis')";
@@ -650,6 +678,31 @@ namespace Empiria.Land.WebApp {
         onloadScript = "alert('HTTP Status:{0}\\nProblema:{1}');doOperation('redirectThis')";
         onloadScript = String.Format(onloadScript, status, EmpiriaString.FormatForScripting(e.ToString()));
       }
+    }
+
+    private System.IO.FileInfo CreatePDFFile(Certificate certificate) {
+      const string filePath = @"E:\empiria.files\tlaxcala.citys\";
+      const string url = "http://192.168.2.22/testing.intranet/";
+
+      System.IO.StreamWriter sw = System.IO.File.CreateText(filePath + certificate.UID + ".html");
+
+      Server.Execute("../land.registration.system/certificate.aspx?certificateId=" + certificate.Id, sw);
+      sw.Close();
+      sw.Dispose();
+
+      PDFTech.PDFDocument.License = "COFIGBER-2022-189-P0050";
+      PDFTech.PDFCreationOptions options = new PDFTech.PDFCreationOptions();
+
+      options.SetMargin(30, 30, 30, 30);
+      options.DefaultCharset = PDFTech.Charset.Unicode;
+      options.Viewer.ViewerPreferences = PDFTech.ViewerPreference.FitWindow;
+
+      PDFTech.PDFDocument pdf = new PDFTech.PDFDocument(filePath + certificate.UID + ".pdf", options);
+
+      pdf.ImportHTML(url + "emitted.certificates/" + certificate.UID + ".html", true);
+      pdf.Save();
+
+      return new System.IO.FileInfo(pdf.FileName);
     }
 
   } // class TransactionEditor

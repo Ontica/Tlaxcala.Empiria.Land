@@ -350,7 +350,7 @@
           <div style="text-align: right">
             <% if (!transaction.IsNew && base.CanCreateCertificate()) { %>
               <br />
-              <input class="button" type="button" value="Crear nuevo certificado" onclick="doOperation('createNewCertificate')" style="height:28px;width:132px" />
+              <input class="button" type="button" value="Crear certificado manualmente" onclick="doOperation('createNewCertificate')" style="height:28px;width:178px" />
               &nbsp; &nbsp;
               <input class="button" type="button" value="Refrescar" onclick="doOperation('refreshCertificates')" style="height:28px;width:92px" />
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -362,6 +362,49 @@
           </div>
         </td>
       </tr>
+
+      <% if (!transaction.IsNew && base.CanCreateCertificate()) { %>
+      <tr>
+        <td class="subtitle"><b>Generación de certificados</b></td>
+      </tr>
+      <tr>
+        <td>
+           <table class="editionTable">
+              <tr valign="top">
+                <td>Tipo de certificado:</td>
+                <td class="lastCell" valign="top">
+                  <select id="cboCertificateType" class="selectBox" style="width:210px" onchange="return updateUserInterface(this);" runat="server">
+                    <option value=""> (Seleccionar el tipo de certificado )</option>
+                    <option value="gravamen">Libertad de gravamen / Gravamen</option>
+                    <option value="inscripción">Certificado de inscripción</option>
+                    <option value="no-propiedad">Certificado de NO propiedad</option>
+                  </select>
+                  &nbsp; &nbsp; &nbsp; &nbsp;
+                  <input class="button" type="button" value="Generar certificado" onclick="doOperation('autoCreateCertificate')" style="height:28px;width:142px" />
+                </td>
+              </tr>
+             <tr id='divCertificatePropertyUID' style="display:none">
+              <td>
+                Folio real:
+              </td>
+              <td class="lastCell">
+                <input id='txtCertificatePropertyUID' type="text" class="textBox"
+                        style="width:202px;" title="" maxlength="20" runat="server" />
+              </td>
+             </tr>
+             <tr id='divCertificateOwnerName' style="display:none">
+              <td>
+                Nombre:
+              </td>
+              <td class="lastCell">
+                <input id='txtCertificateOwnerName' type="text" class="textBox"
+                        style="width:600px;" title="" maxlength="200" runat="server" />
+              </td>
+             </tr>
+            </table>
+        </td>
+      </tr>
+      <% } %>
     </table>
 
     <table id="tabStripItemView_3" class="editionTable" style="display:none">
@@ -476,6 +519,10 @@
       case "appendPayment":
         appendPayment();
         return;
+
+      case "autoCreateCertificate":
+        autoCreateCertificate();
+        return;
       case "createNewCertificate":
         createNewCertificate();
         return;
@@ -544,6 +591,64 @@
     }
   }
 
+  function autoCreateCertificate() {
+    var certificateType = getElement('cboCertificateType').value;
+    if (certificateType == "") {
+      alert("Requiero se seleccione el tipo de certificado que se desea generar.");
+      return;
+    }
+    if (certificateType == "gravamen" || certificateType == "inscripción") {
+      if (getElement('txtCertificatePropertyUID').value == '') {
+        alert("Requiero se proporcione el folio real del predio sobre el que se generará el certificado.");
+        return;
+      }
+      if (getElement('txtCertificatePropertyUID').value.length != 19) {
+        alert("El folio real tiene un formato que no reconozco.");
+        return;
+      }
+    }
+    if (certificateType == "no-propiedad") {
+      if (getElement('txtCertificateOwnerName').value == '') {
+        alert("Requiero se proporcione el nombre de la persona física o moral sobre la que se generará el certificado.");
+        return;
+      }
+      if (getElement('txtCertificateOwnerName').value.length <= 10) {
+        alert("El nombre de la persona tiene una longitud demasiado corta.");
+        return;
+      }
+    }
+    var sMsg = "Generar certificado.\n\n";
+
+    sMsg += "Tipo de certificado: " + getComboOptionText(getElement('cboCertificateType')) + "\n";
+    sMsg += "Folio real: " + getElement('txtCertificatePropertyUID').value + "\n\n";
+    sMsg += "Nombre: " + getElement('txtCertificateOwnerName').value + "\n\n";
+    sMsg += "¿Genero el certificado con la información proporcionada?";
+
+    if (confirm(sMsg)) {
+      sendPageCommand("autoCreateCertificate");
+      gbSended = true;
+    }
+  }
+
+  function setAutocreateCertificateControls() {
+    var certificateType = getElement('cboCertificateType').value;
+    if (certificateType == "gravamen" || certificateType == "inscripción") {
+      getElement('divCertificatePropertyUID').style.display = 'inline';
+      getElement('divCertificateOwnerName').style.display = 'none';
+    } else if (certificateType == "no-propiedad") {
+      getElement('divCertificatePropertyUID').style.display = 'none';
+      getElement('divCertificateOwnerName').style.display = 'inline';
+    } else {
+      getElement('divCertificatePropertyUID').style.display = 'none';
+      getElement('divCertificateOwnerName').style.display = 'none';
+    }
+  }
+
+<% if (!transaction.IsNew && base.CanCreateCertificate()) { %>
+  addEvent(getElement("txtCertificatePropertyUID"), 'keypress', upperCaseKeyFilter);
+  addEvent(getElement("txtCertificateOwnerName"), 'keypress', upperCaseKeyFilter);
+<% } %>
+
   function createNewCertificate() {
     var url = gCertificatesServerURL + "certificados.html?" +
              "transactionUID=<%=transaction.UID%>&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
@@ -551,10 +656,8 @@
     createNewWindow(url);
   }
 
-  function viewCertificate(certificateUID) {
-    var url = gCertificatesServerURL + "editar.html?" +
-             "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
-             "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
+  function viewCertificate(certificateId) {
+    var url = "../land.registration.system/certificate.aspx?certificateId=" + certificateId;
 
     createNewWindow(url);
   }
@@ -833,6 +936,8 @@
       resetRecordingsTypesCombo();
     } else if (oControl == getElement("cboRecordingActType")) {
       resetLawArticlesCombo();
+    } else if (oControl == getElement("cboCertificateType")) {
+      setAutocreateCertificateControls();
     }
   }
 
