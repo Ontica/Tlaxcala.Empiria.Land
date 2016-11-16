@@ -1,22 +1,31 @@
 ﻿using System;
 using System.Drawing;
 
+using C1.Win.C1BarCode;
+
 namespace Empiria.Web.UI {
 
   public partial class BarCodeControl : System.Web.UI.Page {
 
     private void Page_Load(object sender, System.EventArgs e) {
       Response.Clear();
+      Response.ContentType = "image/gif";
       PrintBarcode();
       Response.End();
-
     }
 
     private Image GetBarcode() {
-      C1.Win.C1BarCode.C1BarCode bc = new C1.Win.C1BarCode.C1BarCode();
-      bc.CodeType = C1.Win.C1BarCode.CodeTypeEnum.Code128;
+      C1BarCode bc = new C1BarCode();
+      bc.CodeType = CodeTypeEnum.Code128;
       bc.Text = Request.QueryString["data"];
-      bc.ShowText = false;
+
+      int height = int.Parse(Request.QueryString["height"] ?? "-1");
+      if (height > 0) {
+        bc.BarHeight = height;
+      }
+
+      bool showText = bool.Parse(Request.QueryString["show-text"] ?? "false");
+      bc.ShowText = showText;
 
       //return bc.Image;
       return bc.GetImage(System.Drawing.Imaging.ImageFormat.Gif);
@@ -24,15 +33,15 @@ namespace Empiria.Web.UI {
 
     private void PrintBarcode() {
       Image barcodeImage = this.GetBarcode();
-      if (!String.IsNullOrEmpty(Request.QueryString["mode"]) && Request.QueryString["mode"] == "vertical") {
-        barcodeImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
+
+      bool showVertical = bool.Parse(Request.QueryString["vertical"] ?? "false");
+
+      if (showVertical) {
+        barcodeImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
       }
-      //Graphics graphics = System.Drawing.Graphics.FromImage(barcodeImage);
-      //graphics.Flush();
-      Response.ContentType = "image/gif";
+
       barcodeImage.Save(Response.OutputStream, System.Drawing.Imaging.ImageFormat.Gif);
-      //graphics.Dispose();
-      //barcodeImage.Dispose();
+
     }
 
   } // class CalendarControl
