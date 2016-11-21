@@ -101,8 +101,9 @@
           <table style="width:100%" cellpadding="4px" cellspacing="0px">
             <tr>
               <td valign="top" style="width:100px">
-                <img style="margin-left:-6pt;margin-top:-4pt" alt="" title="" src="../user.controls/qrcode.aspx?size=100&data=http://registropublico.tlaxcala.gob.mx/consultas/?type=transaction%26uid=<%=transaction.UID%>" />
-                <div style="margin-top:-4pt;font-size:7pt;">
+                <img style="margin-left:-12pt;margin-top:-12pt" alt="" title=""
+                     src="../user.controls/qrcode.aspx?size=120&data=http://registropublico.tlaxcala.gob.mx/consultas/?type=transaction%26uid=<%=transaction.UID%>%26hash=<%=transaction.QRCodeSecurityHash()%>" />
+                <div style="margin-top:-12pt;font-size:7pt;white-space:nowrap">
                   Consulte este trámite<br />
                   <b><%=base.transaction.UID%></b>
                 </div>
@@ -110,7 +111,7 @@
               <td valign="top" style="font-size:8pt">
                 <b>Sello electrónico:</b>
                 <br />
-                <%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalSign(), 78, "&#8203;").Substring(0, 64)%>
+                <%=transaction.GetDigitalSign().Substring(0, 64)%>
                 <br />
                 <b>Recibió: </b>
                 <br />

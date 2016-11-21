@@ -82,25 +82,23 @@
         <% } %>
         <tr>
           <td style="vertical-align:top;width:100px">
-            <img style="margin-left:-12pt;margin-top:-12pt" alt="" title="" src="../user.controls/qrcode.aspx?size=120&data=http://registropublico.tlaxcala.gob.mx/consultas/?type=document%26uid=<%=document.UID%>" />
-            <div style="margin-top:-12pt;font-size:7pt;">
+            <img style="margin-left:-12pt;margin-top:-12pt" alt="" title="" src="../user.controls/qrcode.aspx?size=120&data=http://registropublico.tlaxcala.gob.mx/consultas/?type=document%26uid=<%=document.UID%>%26hash=<%=document.QRCodeSecurityHash()%>" />
+            <div style="margin-top:-12pt;font-size:7pt;white-space:nowrap">
               Valide este documento<br />
               <b><%=document.UID%></b>
             </div>
           </td>
           <td style="vertical-align:top;width:90%;white-space:nowrap">
-            <!--
             <b>Código de verificación:</b>
             <br />
-            &nbsp; &nbsp;69X4WE
+            &nbsp; &nbsp;<%=base.document.QRCodeSecurityHash()%>
             <br />
-            !-->
             <b>Sello digital:</b>
             <br />
             <% if (!document.IsClosed) { %>
             <span class="warning">** ESTE DOCUMENTO NO ES OFICIAL **</span>
             <% } else { %>
-            &nbsp; &nbsp;<%=Empiria.EmpiriaString.DivideLongString(base.GetDigitalSeal(), 64, "&#8203;").Substring(0, 64)%>
+            &nbsp; &nbsp;<%=base.GetDigitalSeal().Substring(0, 64)%>
             <% } %>
             <br />
             <b>Firma digital:</b>
@@ -116,8 +114,8 @@
           </td>
           <td style="vertical-align:top">
             <% if (!base.UniqueInvolvedResource.IsEmptyInstance && document.IsClosed) { %>
-            <img style="margin-right:-12pt;margin-left:-12pt;margin-top:-12pt" alt="" title="" src="../user.controls/qrcode.aspx?size=120&data=http://registropublico.tlaxcala.gob.mx/consultas/?type=resource%26uid=<%=base.UniqueInvolvedResource.UID%>" />
-            <div style="margin-top:-12pt;font-size:7pt;">
+            <img style="margin-right:-12pt;margin-left:-12pt;margin-top:-12pt" alt="" title="" src="../user.controls/qrcode.aspx?size=120&data=http://registropublico.tlaxcala.gob.mx/consultas/?type=resource%26uid=<%=base.UniqueInvolvedResource.UID%>%26hash=<%=base.UniqueInvolvedResource.QRCodeSecurityHash()%>" />
+            <div style="margin-top:-12pt;font-size:7pt;white-space:nowrap">
               Consultar folio real/predio<br />
               <b><%=base.UniqueInvolvedResource.UID%></b>
             </div>

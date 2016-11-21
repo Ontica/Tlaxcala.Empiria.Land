@@ -10,7 +10,7 @@ namespace Empiria.Web.UI {
 
     private void Page_Load(object sender, System.EventArgs e) {
       Response.Clear();
-      Response.ContentType = "image/png";
+      Response.ContentType = "image/gif";
 
       string text = Request.QueryString["data"];
       int size = int.Parse(Request.QueryString["size"] ?? "150");
@@ -29,7 +29,7 @@ namespace Empiria.Web.UI {
 
       var renderer = new GraphicsRenderer(fCodeSize, Brushes.Black, Brushes.White);
 
-      renderer.WriteToStream(qrCode.Matrix, ImageFormat.Png, Response.OutputStream);
+      renderer.WriteToStream(qrCode.Matrix, ImageFormat.Gif, Response.OutputStream);
     }
 
   } // class QRCodeControl
