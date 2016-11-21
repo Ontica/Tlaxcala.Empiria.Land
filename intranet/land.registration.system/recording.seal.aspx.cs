@@ -218,7 +218,7 @@ namespace Empiria.Land.WebApp {
         }
         temp += official.Nickname;
       }
-      return temp.Length != 0 ? "* " + temp : String.Empty;
+      return temp;
     }
 
     // For future use

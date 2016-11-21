@@ -52,7 +52,9 @@
 							      </td>
 						      </tr>
 						      <tr>
-							      <td align="right"><img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.UID%>" /></td>
+							      <td align="right">
+                      <img style="margin-left:8pt" alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.UID%>" />
+							      </td>
 						      </tr>
 					      </table>
 				      </td>
@@ -95,13 +97,31 @@
          </td>
       </tr>
       <tr>
-        <td style="border-top: 3px solid #3a3a3a;font-size:7pt">
+        <td style="font-size:8pt">
           <table style="width:100%" cellpadding="4px" cellspacing="0px">
             <tr>
-              <td valign="top">
-                <b>Cadena original:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 78, "&#8203;")%>
-                <br /><br />
-                <b>Sello electrónico:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalSign(), 78, "&#8203;")%>
+              <td valign="top" style="width:100px">
+                <img style="margin-left:-6pt;margin-top:-4pt" alt="" title="" src="../user.controls/qrcode.aspx?size=100&data=http://registropublico.tlaxcala.gob.mx/consultas/?type=transaction%26uid=<%=transaction.UID%>" />
+                <div style="margin-top:-4pt;font-size:7pt;">
+                  Consulte este trámite<br />
+                  <b><%=base.transaction.UID%></b>
+                </div>
+              </td>
+              <td valign="top" style="font-size:8pt">
+                <b>Sello electrónico:</b>
+                <br />
+                <%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalSign(), 78, "&#8203;").Substring(0, 64)%>
+                <br />
+                <b>Recibió: </b>
+                <br />
+                <%=transaction.ReceivedBy.FullName%>
+                <div style="font-size:7pt;margin-top:8pt;">
+                  Consulte el <b>estado</b> de su trámite leyendo el código QR con su celular o dispositivo móvil,
+                  o visite nuestro sitio <b>http://registropublico.tlaxcala.gob.mx</b>.
+                  También podrá consultar documentos, certificados y predios con folio real asignado.
+                  <br /><br />
+                  Este comprobante deberá <b>PRESENTARSE en la <u>Ventanilla de Entregas</u></b> al recoger su documento o certificado.
+                </div>
               </td>
               <td valign="top">
                 <% if (!base.transaction.BaseResource.IsEmptyInstance) { %>
@@ -111,20 +131,6 @@
               </td>
             </tr>
           </table>
-        </td>
-      </tr>
-      <tr>
-        <td align="center" style="border-top: 1px solid #3a3a3a">
-          <br /><br />
-          <b><%=transaction.ReceivedBy.FullName%></b><br />
-            Recibió<br />&nbsp;
-        </td>
-      </tr>
-      <tr>
-        <td style="border-top: 1px dotted #3a3a3a">
-        * Este comprobante deberá <b>PRESENTARSE en la <u>Ventanilla de Entregas</u></b> al recoger su documento o certificado.
-        <br /><br />
-        &nbsp;&nbsp;Fecha de entrega de su documento o certificado:
         </td>
       </tr>
     </table>

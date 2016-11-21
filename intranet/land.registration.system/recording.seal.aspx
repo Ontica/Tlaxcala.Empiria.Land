@@ -8,6 +8,7 @@
   <link href="../themes/default/css/official.document.css" type="text/css" rel="stylesheet" />
   </head>
   <body>
+
     <table>
       <tr>
         <td>
@@ -24,32 +25,39 @@
           <h2 style="padding-top:0">SELLO REGISTRAL DE PARTIDA HISTÓRICA</h2>
           <% } %>
           <h5><%=document.UID%></h5>
-        </td>
-        <td style="font-size:8pt;vertical-align:middle">
-            <% if (!base.UniqueInvolvedResource.IsEmptyInstance && document.IsClosed) { %>
-            <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=base.UniqueInvolvedResource.UID%>" />
-            <div><b>FOLIO REAL: </b><%=base.UniqueInvolvedResource.UID%></div>
-            <% } %>
+          <% if (transaction.IsReentry) { %>
+            <h5><b>(Reingreso)</b></h5>
+          <% } %>
         </td>
       </tr>
     </table>
-    <div class="certificate-text">
-      <p>
-        <%=GetPrelationText()%>
-      </p>
-      <p>
-        <%=base.GetRecordingActsText()%>
-      </p>
-      <p style="text-align:justify;font-size:9pt">
-        <%=GetDocumentDescriptionText()%>
-      </p>
-      <p>
-        <%=GetPaymentText()%>
-      </p>
-      <p>
-        <%=GetRecordingPlaceAndDate()%>
-      </p>
-    </div>
+
+    <table>
+      <tr>
+        <td style="vertical-align:top">
+          <img style="margin-left:8pt" alt="" title="" src="../user.controls/barcode.aspx?data=<%=document.UID%>&vertical=true&show-text=true&height=32" />
+        </td>
+        <td>
+          <div class="document-text">
+              <p>
+                <%=GetPrelationText()%>
+              </p>
+              <p>
+                <%=base.GetRecordingActsText()%>
+              </p>
+              <p style="text-align:justify;font-size:9pt">
+                <%=GetDocumentDescriptionText()%>
+              </p>
+              <p>
+                <%=GetPaymentText()%>
+              </p>
+              <p>
+                <%=GetRecordingPlaceAndDate()%>
+              </p>
+            </div>
+        </td>
+      </tr>
+    </table>
     <div class="footNotes">
       <table >
         <% if (!document.IsClosed) { %>
@@ -73,23 +81,52 @@
         </tr>
         <% } %>
         <tr>
-          <td><b>Sello digital:</b><br />
+          <td style="vertical-align:top;width:100px">
+            <img style="margin-left:-12pt;margin-top:-12pt" alt="" title="" src="../user.controls/qrcode.aspx?size=120&data=http://registropublico.tlaxcala.gob.mx/consultas/?type=document%26uid=<%=document.UID%>" />
+            <div style="margin-top:-12pt;font-size:7pt;">
+              Valide este documento<br />
+              <b><%=document.UID%></b>
+            </div>
+          </td>
+          <td style="vertical-align:top;width:90%;white-space:nowrap">
+            <!--
+            <b>Código de verificación:</b>
+            <br />
+            &nbsp; &nbsp;69X4WE
+            <br />
+            !-->
+            <b>Sello digital:</b>
+            <br />
             <% if (!document.IsClosed) { %>
             <span class="warning">** ESTE DOCUMENTO NO ES OFICIAL **</span>
             <% } else { %>
-            <%=Empiria.EmpiriaString.DivideLongString(base.GetDigitalSeal(), 64, "&#8203;")%>
-            <br />
-            <%=GetRecordingOfficialsInitials()%>
+            &nbsp; &nbsp;<%=Empiria.EmpiriaString.DivideLongString(base.GetDigitalSeal(), 64, "&#8203;").Substring(0, 64)%>
             <% } %>
-          </td>
-          <td style="text-wrap:none">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
-          <td>
-            <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=document.UID%>" />
             <br />
-            <span>Documento: <%=document.UID%> <%=transaction.IsReentry ? "&nbsp; <b>(Reingreso)</b>" : "" %></span>
+            <b>Firma digital:</b>
+            <br />
+            &nbsp; &nbsp;Documento firmado de forma autógrafa.
+            <br />
+            <b>Registró:</b> <%=GetRecordingOfficialsInitials()%>
+            <br />
+            <div style="font-size:7pt;margin-top:4pt;text-align:left;">
+              Verifique la <u>autenticidad</u> de este documento y el estado de su predio. Para ello lea los códigos QR con su<br />
+              celular o dispositivo móvil, o visite nuestro sitio <b>http://registropublico.tlaxcala.gob.mx</b>.
+            </div>
+          </td>
+          <td style="vertical-align:top">
+            <% if (!base.UniqueInvolvedResource.IsEmptyInstance && document.IsClosed) { %>
+            <img style="margin-right:-12pt;margin-left:-12pt;margin-top:-12pt" alt="" title="" src="../user.controls/qrcode.aspx?size=120&data=http://registropublico.tlaxcala.gob.mx/consultas/?type=resource%26uid=<%=base.UniqueInvolvedResource.UID%>" />
+            <div style="margin-top:-12pt;font-size:7pt;">
+              Consultar folio real/predio<br />
+              <b><%=base.UniqueInvolvedResource.UID%></b>
+            </div>
+            <% } %>
           </td>
         </tr>
       </table>
+
     </div>
+
   </body>
 </html>

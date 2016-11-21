@@ -17,10 +17,9 @@ h2 {
 }
 
 h5 {
-    margin-top: 2pt;
-    font-size: 11pt;
-    line-height: 2px;
-    font-weight: 100;
+  margin-top: 2pt;
+  font-size: 10pt;
+  font-weight: 100;
 }
 
 h3 {
@@ -37,7 +36,7 @@ h4 {
 
 .footNotes {
   font-size: 8pt;
-  padding-left: 48pt;
+  padding-left: 42pt;
 }
 
 .certificate-text {
@@ -48,6 +47,13 @@ h4 {
   margin-right: 1.2cm;
 }
 
+.document-text {
+  text-align: justify;
+  padding-left: 16pt;
+  margin-left: 16pt;
+  margin-right: 1.2cm;
+}
+
 .logo {
   padding-left: 28pt;
 }
@@ -55,8 +61,8 @@ h4 {
 .table-transaction-data {
   padding: 0;
   border-spacing: 14pt 2pt;
-  margin-left: -14pt;
 }
+
 
 .warning {
   color:#ff0000;
