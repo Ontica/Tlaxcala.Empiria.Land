@@ -124,10 +124,10 @@
           <br />
           <div class="title"><%=Empiria.ExecutionServer.ServerName%></div>
           <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-          <strong>Acceso al sitio:</strong>
+          <strong>ACCESO AL SISTEMA:</strong>
           <br /><br />
-            Para ingresar a este sitio se requiere el nombre de usuario, la contraseña de
-            acceso y el valor de la posición D5K de la tarjeta de acceso personal:<br />&nbsp;
+             Para acceder a este sitio se requiere ingresar la cuenta de<br />
+             usuario y la contraseña de acceso:<br />&nbsp;
           <div class="formRow">
             <span class="formLabel">Usuario:</span>
             <span class="formControl"><input id="txtUserId" type="text" maxlength="32" size="24" name="txtUserId" runat="server" /></span>

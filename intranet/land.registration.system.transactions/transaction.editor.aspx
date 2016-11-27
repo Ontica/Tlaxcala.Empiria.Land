@@ -363,7 +363,7 @@
         </td>
       </tr>
 
-      <% if (!transaction.IsNew && base.CanCreateCertificate()) { %>
+      <% if (!transaction.IsNew && base.CanCreateCertificate() && base.AutoCreateCertificateEnabled) { %>
       <tr>
         <td class="subtitle"><b>Generación de certificados</b></td>
       </tr>
@@ -644,7 +644,7 @@
     }
   }
 
-<% if (!transaction.IsNew && base.CanCreateCertificate()) { %>
+<% if (!transaction.IsNew && base.CanCreateCertificate() && base.AutoCreateCertificateEnabled) { %>
   addEvent(getElement("txtCertificatePropertyUID"), 'keypress', upperCaseKeyFilter);
   addEvent(getElement("txtCertificateOwnerName"), 'keypress', upperCaseKeyFilter);
 <% } %>
@@ -936,8 +936,10 @@
       resetRecordingsTypesCombo();
     } else if (oControl == getElement("cboRecordingActType")) {
       resetLawArticlesCombo();
+    <% if (!transaction.IsNew && base.CanCreateCertificate() && base.AutoCreateCertificateEnabled) { %>
     } else if (oControl == getElement("cboCertificateType")) {
       setAutocreateCertificateControls();
+    <% } %>
     }
   }
 

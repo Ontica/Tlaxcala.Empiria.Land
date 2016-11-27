@@ -29,6 +29,8 @@ namespace Empiria.Land.WebApp {
     protected LRSTransaction transaction = null;
     private string onloadScript = String.Empty;
 
+    protected bool AutoCreateCertificateEnabled = false;
+
     #endregion Fields
 
     protected void Page_Load(object sender, EventArgs e) {
@@ -111,6 +113,7 @@ namespace Empiria.Land.WebApp {
           AutoCreateCertificate();
           LoadEditor();
           return;
+
         case "sendCertificateToCITYS":
           SendCertificateToCITYS();
           return;
@@ -246,7 +249,7 @@ namespace Empiria.Land.WebApp {
 
     private void LoadRecordingActCombos() {
       if (!String.IsNullOrEmpty(cboRecordingActTypeCategory.Value)) {
-        RecordingActTypeCategory recordingActTypeCategory = RecordingActTypeCategory.Parse(int.Parse(cboRecordingActTypeCategory.Value));
+        var recordingActTypeCategory = RecordingActTypeCategory.Parse(int.Parse(cboRecordingActTypeCategory.Value));
         FixedList<RecordingActType> list = recordingActTypeCategory.RecordingActTypes;
 
         HtmlSelectContent.LoadCombo(this.cboRecordingActType, list, "Id", "DisplayName",
@@ -419,14 +422,26 @@ namespace Empiria.Land.WebApp {
           temp = temp.Replace("{{ISSUE-TIME}}", certificate.IssueTime.ToString("dd/MMM/yyyy HH:mm"));
           temp = temp.Replace("{{STATUS}}", certificate.Status == CertificateStatus.Closed ? "Cerrado" : "Eliminado");
           temp = temp.Replace("{{OPTIONS-COMBO}}", "{{VIEW-LINK}}");
-          temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE_ID}}')\">Ver o imprimir</a>");
+
+          if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration ||
+              transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording) {
+            temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('editCertificate', '{{CERTIFICATE-UID}}')\">Ver o imprimir</a>");
+          } else {
+            temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE_ID}}')\">Imprimir</a>");
+          }
         } else {
           temp = temp.Replace("{{ISSUED-BY}}", "&nbsp;");
           temp = temp.Replace("{{ISSUE-TIME}}", "No emitido");
           temp = temp.Replace("{{STATUS}}", "Pendiente");
-          temp = temp.Replace("{{OPTIONS-COMBO}}", "{{EDIT-LINK}} &nbsp; &nbsp; | &nbsp; &nbsp; {{DELETE-LINK}} ");
-          temp = temp.Replace("{{EDIT-LINK}}", "<a href=\"javascript:doOperation('editCertificate', '{{CERTIFICATE-UID}}')\">Editar</a>");
-          temp = temp.Replace("{{DELETE-LINK}}", "<a href=\"javascript:doOperation('deleteCertificate', '{{CERTIFICATE-UID}}')\">Eliminar</a>");
+          if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration ||
+              transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording) {
+            temp = temp.Replace("{{OPTIONS-COMBO}}", "{{EDIT-LINK}} &nbsp; &nbsp; | &nbsp; &nbsp; {{DELETE-LINK}} ");
+            temp = temp.Replace("{{EDIT-LINK}}", "<a href=\"javascript:doOperation('editCertificate', '{{CERTIFICATE-UID}}')\">Editar</a>");
+            temp = temp.Replace("{{DELETE-LINK}}", "<a href=\"javascript:doOperation('deleteCertificate', '{{CERTIFICATE-UID}}')\">Eliminar</a>");
+          } else {
+            temp = temp.Replace("{{OPTIONS-COMBO}}", "{{VIEW-LINK}}");
+            temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE_ID}}')\">Imprimir</a>");
+          }
         }
         temp = temp.Replace("{{CERTIFICATE_ID}}", certificate.Id.ToString());
         temp = temp.Replace("{{CERTIFICATE-UID}}", certificate.UID);
@@ -576,9 +591,13 @@ namespace Empiria.Land.WebApp {
         return;
       }
 
-      var certificate = Certificate.AutoCreate(this.transaction, certificateType, property, ownerName);
+      if (AutoCreateCertificateEnabled) {
+        var certificate = Certificate.AutoCreate(this.transaction, certificateType, property, ownerName);
 
-      onloadScript = "alert('El certificado fue generado correctamente.');doOperation('redirectThis')";
+        onloadScript = "alert('El certificado fue generado correctamente.');doOperation('redirectThis')";
+      } else {
+        onloadScript = "alert('La funcionalidad para crear certificados automáticos aún no está disponible.');doOperation('redirectThis')";
+      }
 
       cboCertificateType.Value = String.Empty;
       txtCertificatePropertyUID.Value = String.Empty;
@@ -682,7 +701,7 @@ namespace Empiria.Land.WebApp {
 
     private System.IO.FileInfo CreatePDFFile(Certificate certificate) {
       const string filePath = @"E:\empiria.files\tlaxcala.citys\";
-      const string url = "http://192.168.2.22/testing.intranet/";
+      const string url = "http://192.168.2.22/intranet/";   // http://192.168.2.22/testing.intranet/
 
       System.IO.StreamWriter sw = System.IO.File.CreateText(filePath + certificate.UID + ".html");
 
