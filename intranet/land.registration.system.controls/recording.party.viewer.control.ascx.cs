@@ -33,7 +33,7 @@ namespace Empiria.Land.WebApp {
         this.Visible = false;
         return string.Empty;
       }
-      RecordingAct antecedent = property.GetRecordingAntecedent(baseRecordingAct, false);
+      RecordingAct antecedent = property.Tract.GetRecordingAntecedent(baseRecordingAct, false);
 
       return LRSGridControls.GetRecordingActPartiesGrid(antecedent, true);
     }

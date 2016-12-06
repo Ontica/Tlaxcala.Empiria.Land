@@ -176,7 +176,7 @@ namespace Empiria.Land.WebApp {
     private void FillPropertiesCombo() {
       this.oAntecedentParties.Visible = false;
 
-      if (!recordingAct.Resource.IsFirstRecordingAct(recordingAct)) {
+      if (!recordingAct.Resource.Tract.IsFirstRecordingAct(recordingAct)) {
         this.oAntecedentParties.Visible = true;
       }
       txtProperty.Value = recordingAct.Resource.UID;

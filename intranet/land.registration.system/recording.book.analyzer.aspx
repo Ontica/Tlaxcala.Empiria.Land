@@ -1233,15 +1233,6 @@
     return invokeAjaxValidator(url);
   }
 
-  function validateDeleteRecordingAct(recordingActId) {
-    var ajaxURL = "../ajax/land.registration.system.data.aspx";
-    ajaxURL += "?commandName=validateDeleteRecordingActCmd";
-    ajaxURL += "&recordingId=<%=recording.Id%>";
-    ajaxURL += "&recordingActId=" + recordingActId;
-
-    return invokeAjaxValidator(ajaxURL);
-  }
-
   function validateDeleteRecordingActProperty(recordingActId, propertyId) {
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
     ajaxURL += "?commandName=validateDeleteRecordingActPropertyCmd";

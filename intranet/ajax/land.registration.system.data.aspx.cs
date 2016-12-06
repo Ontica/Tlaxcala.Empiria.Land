@@ -110,8 +110,6 @@ namespace Empiria.Web.UI.Ajax {
           return ValidateDocumentRecordingActCommandHandler();
         case "validateAnnotationSemanticsCmd":
           return ValidateAnnotationSemanticsCommandHandler();
-        case "validateDeleteRecordingActCmd":
-          return ValidateDeleteRecordingActCommandHandler();
         case "validateNextTransactionStateCmd":
           return ValidateNextTransactionStateCommandHandler();
         case "validateRecordingSemanticsCmd":
@@ -187,7 +185,7 @@ namespace Empiria.Web.UI.Ajax {
 
       var appliesTo = recordingActType.GetAppliesToRecordingActTypesList();
 
-      var list = resource.GetRecordingActsTract();
+      var list = resource.Tract.GetRecordingActs();
 
       return HtmlSelectContent.GetComboAjaxHtml<RecordingAct>(list.FindAll((x) => appliesTo.Contains(x.RecordingActType)),
                                 "Id", (x) => x.RecordingActType.DisplayName + " " + x.Document.UID + " " +
@@ -811,22 +809,6 @@ namespace Empiria.Web.UI.Ajax {
         }
       }
       exception = LRSValidator.ValidateRecordingAuthorizer(recordingBook, authorizedBy, authorizationDate);
-      if (exception != null) {
-        return exception.Message;
-      }
-      return String.Empty;
-    }
-
-    private string ValidateDeleteRecordingActCommandHandler() {
-      int recordingId = int.Parse(GetCommandParameter("recordingId", true));
-      int recordingActId = int.Parse(GetCommandParameter("recordingActId", true));
-
-      Recording recording = Recording.Parse(recordingId);
-      RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
-
-      LandRegistrationException exception = null;
-      exception = LRSValidator.ValidateDeleteRecordingAct(recordingAct);
-
       if (exception != null) {
         return exception.Message;
       }

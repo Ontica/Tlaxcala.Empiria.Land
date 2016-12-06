@@ -413,7 +413,7 @@ namespace Empiria.Land.WebApp {
       x = overTheWhole.Replace("{INDEX}", index.ToString());
       x = x.Replace("{RECORDING.ACT}", this.GetRecordingActDisplayName(recordingAct));
 
-      var antecedent = recordingAct.Resource.GetRecordingAntecedent(recordingAct);
+      var antecedent = recordingAct.Resource.Tract.GetRecordingAntecedent(recordingAct);
       x = x.Replace("{PROPERTY.UID}",
                     this.GetRealEstateTextWithAntecedentAndCadastralKey(recordingAct));
 
@@ -505,7 +505,7 @@ namespace Empiria.Land.WebApp {
       }
 
       var parentAntecedent =
-              newPartition.IsPartitionOf.GetRecordingAntecedent(recordingAct.Document.PresentationTime);
+              newPartition.IsPartitionOf.Tract.GetRecordingAntecedent(recordingAct.Document.PresentationTime);
 
       if (!parentAntecedent.PhysicalRecording.IsEmptyInstance) {
         x = x.Replace("{PARTITION.OF}", "<u>" + newPartition.IsPartitionOf.UID + "</u> " +
@@ -530,7 +530,7 @@ namespace Empiria.Land.WebApp {
     }
 
     private string GetRealEstateTextWithAntecedentAndCadastralKey(RecordingAct recordingAct) {
-      var domainAntecedent = recordingAct.Resource.GetRecordingAntecedent(recordingAct);
+      var domainAntecedent = recordingAct.Resource.Tract.GetRecordingAntecedent(recordingAct);
       var property = (RealEstate) recordingAct.Resource;
 
       string x = GetRealEstateTextWithCadastralKey(property);
