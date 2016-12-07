@@ -88,8 +88,8 @@
                         </span>
                         <span id="divRecordingQuickAddSection" style="display:none">
                           Partida donde está registrado el antecedente:
-                          <input id="txtQuickAddRecordingNumber" type="text" class="textBox" style="width:52px;margin-right:0"
-                                  onkeypress="return recordingNumberKeyFilter(this);" title="" maxlength="9" />
+                          <input id="txtQuickAddRecordingNumber" type="text" class="textBox" style="width:82px;margin-right:0"
+                                  onkeypress="return recordingNumberKeyFilter(this);" title="" maxlength="24" />
                           <select id="cboQuickAddBisRecordingTag" class="selectBox" style="width:60px" title="">
                             <option value=""></option>
                             <option value="-Bis">-Bis</option>
@@ -274,8 +274,8 @@
             <span id="divTargetActRecordingQuickAddSection" style="display:inline">
             <br />
             Partida donde fue registrado el acto:
-            <input id="txtTargetActPhysicalRecordingNo" type="text" class="textBox" style="width:52px;margin-right:0"
-                   onkeypress="return recordingNumberKeyFilter(this);" maxlength="9" />
+            <input id="txtTargetActPhysicalRecordingNo" type="text" class="textBox" style="width:82px;margin-right:0"
+                   onkeypress="return recordingNumberKeyFilter(this);" maxlength="24" />
             <select id="cboTargetActBisRecordingTag" class="selectBox" style="width:60px" title="">
               <option value=""></option>
               <option value="-Bis">-Bis</option>
@@ -1008,7 +1008,7 @@
       }
       if (!isValidRecordingNumber(getElement('txtTargetActPhysicalRecordingNo').value)) {
         alert("El número de partida donde está inscrito el acto que se va a cancelar o modificar " +
-              "tiene un formato que no reconozco.\nEjemplos de formatos válidos son: 123 o 234 o 123/4 o 34/345.");
+              "tiene un formato que no reconozco.\nEjemplos de formatos válidos son: 123 o 234 o 123/4 o 34/123/79.");
         getElement('txtTargetActPhysicalRecordingNo').focus();
         return false;
       }
@@ -1017,10 +1017,8 @@
   }
 
   function isValidRecordingNumber(recordingNumber) {
-    if (isNumericValue(recordingNumber)) {
-      return true;
-    }
-    var pattern = "^[0-9]+\/[0-9]+$";
+    var pattern = "^[0-9]+(\/[0-9]+)*$";
+
     var regex = new RegExp(pattern);
 
     return regex.test(recordingNumber);
