@@ -46,10 +46,16 @@ namespace Empiria.Land.WebApp {
       return recordingAct.Document.IsReadyForEdition();
     }
 
+    protected bool AllowsPartitionEdition() {
+      return property.IsPartition && this.RecordingActAllowsEdition() &&
+             property.IsInTheRankOfTheFirstDomainAct(recordingAct);
+    }
+
     protected bool RecordingActAllowsEdition() {
       return property.RealEstateType.IsEmptyInstance ||
              recordingAct.ResourceUpdated ||
-             recordingAct.RecordingActType.RecordingRule.EditRealEstate;
+             recordingAct.RecordingActType.RecordingRule.EditRealEstate ||
+             property.IsInTheRankOfTheFirstDomainAct(recordingAct);
     }
 
     #endregion Protected methods
@@ -117,7 +123,6 @@ namespace Empiria.Land.WebApp {
         txtPartitionNo.Value = property.PartitionNo;
         txtPartitionOf.Value = property.IsPartitionOf.UID;
       }
-
     }
 
     private void FillPropertyData() {
@@ -152,7 +157,12 @@ namespace Empiria.Land.WebApp {
         data.LotSize = Quantity.Zero;
       }
 
-      property.Update(data);
+      property.SetExtData(data);
+
+      if (txtPartitionNo.Value != property.PartitionNo &&
+          this.AllowsPartitionEdition()) {
+        property.SetPartitionNo(EmpiriaString.TrimAll(txtPartitionNo.Value));
+      }
     }
 
     #endregion Private methods

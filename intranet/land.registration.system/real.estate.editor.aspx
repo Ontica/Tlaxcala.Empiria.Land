@@ -194,7 +194,7 @@
       sMsg += 'y este acto jurídico NO permite modificar la información del predio.\n\n';
       sMsg += 'Si la información del predio cambió desde el último acto jurídico registrado ';
       sMsg += 'entonces se puede agregar antes de este acto, un acto jurídico de ';
-      sMsg += 'Modificación de medidas y colindancias o alguno otro similar.';
+      sMsg += '\'Actualización de los datos del predio\' o alguno otro similar.';
       alert(sMsg);
       return;
     <% } %>
@@ -292,8 +292,13 @@
     <% } %>
 
     getElement("txtPropertyUID").readOnly = true;
-    getElement("txtPartitionNo").readOnly = true;
     getElement("txtPartitionOf").readOnly = true;
+
+    <% if (!base.AllowsPartitionEdition()) { %>
+      getElement("txtPartitionNo").readOnly = true;
+    <% } else { %>
+      getElement("txtPartitionNo").readOnly = false;
+    <% } %>
   }
 
 
