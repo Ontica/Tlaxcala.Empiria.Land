@@ -152,41 +152,51 @@ namespace Empiria.Land.WebApp {
 
         // If not amendment act, then process it by resource type application
 
-        switch (recordingAct.RecordingActType.RecordingRule.AppliesTo) {
-          case RecordingRuleApplication.RealEstate:
-          case RecordingRuleApplication.RecordingAct:
-          case RecordingRuleApplication.Structure:
-            temp = this.GetRealEstateActText(recordingAct, index);
-            break;
-          case RecordingRuleApplication.Association:
-            var resource = recordingAct.Resource;
-            Assertion.Assert(resource is Association,
-                             "Type mismatch parsing association with id {0}", resource.Id);
-            temp = this.GetAssociationActText(recordingAct, (Association) resource, index);
-            break;
+        if (recordingAct.Resource is RealEstate) {
+          temp = this.GetRealEstateActText(recordingAct, index);
+        } else if (recordingAct.Resource is Association) {
+          temp = this.GetAssociationActText(recordingAct, (Association) recordingAct.Resource, index);
+        } else if (recordingAct.Resource is NoPropertyResource) {
+          temp = this.GetNoPropertyActText(recordingAct, index);
+        } else {
+          throw Assertion.AssertNoReachThisCode();
+        }
 
-          case RecordingRuleApplication.NoProperty:
-            // For now, we don't display seals with the NoProperty resource identificator
-            temp = this.GetNoPropertyActText(recordingAct, index);
-            break;
+        //switch (recordingAct.RecordingActType.RecordingRule.AppliesTo) {
+        //  case RecordingRuleApplication.RealEstate:
+        //  case RecordingRuleApplication.RecordingAct:
+        //  case RecordingRuleApplication.Structure:
+        //    temp = this.GetRealEstateActText(recordingAct, index);
+        //    break;
+        //  case RecordingRuleApplication.Association:
+        //    var resource = recordingAct.Resource;
+        //    Assertion.Assert(resource is Association,
+        //                     "Type mismatch parsing association with id {0}", resource.Id);
+        //    temp = this.GetAssociationActText(recordingAct, (Association) resource, index);
+        //    break;
 
-          case RecordingRuleApplication.Undefined:
-            if (recordingAct.Resource is RealEstate) {
-              temp = this.GetRealEstateActText(recordingAct, index);
-              break;
-            } else if (recordingAct.Resource is Association) {
-              temp = this.GetAssociationActText(recordingAct, (Association) recordingAct.Resource, index);
-              break;
-            } else if (recordingAct.Resource is NoPropertyResource) {
-              temp = this.GetNoPropertyActText(recordingAct, index);
-              break;
-            } else {
-              throw Assertion.AssertNoReachThisCode();
-            }
-         default:
-            throw new NotImplementedException("Undefined rule for recording acts text " +
-                                              recordingAct.RecordingActType.RecordingRule.AppliesTo);
-        }  // select
+        //  case RecordingRuleApplication.NoProperty:
+        //    // For now, we don't display seals with the NoProperty resource identificator
+        //    temp = this.GetNoPropertyActText(recordingAct, index);
+        //    break;
+
+        //  case RecordingRuleApplication.Undefined:
+        //    if (recordingAct.Resource is RealEstate) {
+        //      temp = this.GetRealEstateActText(recordingAct, index);
+        //      break;
+        //    } else if (recordingAct.Resource is Association) {
+        //      temp = this.GetAssociationActText(recordingAct, (Association) recordingAct.Resource, index);
+        //      break;
+        //    } else if (recordingAct.Resource is NoPropertyResource) {
+        //      temp = this.GetNoPropertyActText(recordingAct, index);
+        //      break;
+        //    } else {
+        //      throw Assertion.AssertNoReachThisCode();
+        //    }
+        // default:
+        //    throw new NotImplementedException("Undefined rule for recording acts text " +
+        //                                      recordingAct.RecordingActType.RecordingRule.AppliesTo);
+        //}  // select
         html += this.Decorate(recordingAct, temp);
       }
       return html;
