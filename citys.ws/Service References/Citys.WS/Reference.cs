@@ -8,33 +8,33 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Citys.WS {
+namespace CityS.WS {
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://ws.ispac.tdw.ieci/", ConfigurationName="Citys.WS.RppCertificateEmissionWS")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://ws.ispac.tdw.ieci/", ConfigurationName="CityS.WS.RppCertificateEmissionWS")]
     public interface RppCertificateEmissionWS {
 
         [System.ServiceModel.OperationContractAttribute(Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/receiveCertificateRequest", ReplyAction="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/receiveCertificateResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        int receiveCertificate(Citys.WS.authBean arg0, Citys.WS.rppCertificateEmissionCertificateBean arg1);
+        int receiveCertificate(CityS.WS.authBean arg0, CityS.WS.rppCertificateEmissionCertificateBean arg1);
 
         [System.ServiceModel.OperationContractAttribute(Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/receiveCertificateRequest", ReplyAction="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/receiveCertificateResponse")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        System.Threading.Tasks.Task<int> receiveCertificateAsync(Citys.WS.authBean arg0, Citys.WS.rppCertificateEmissionCertificateBean arg1);
+        System.Threading.Tasks.Task<int> receiveCertificateAsync(CityS.WS.authBean arg0, CityS.WS.rppCertificateEmissionCertificateBean arg1);
 
         [System.ServiceModel.OperationContractAttribute(Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/canSendDocumentRequest", ReplyAction="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/canSendDocumentResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        bool canSendDocument(Citys.WS.authBean arg0, string arg1);
+        bool canSendDocument(CityS.WS.authBean arg0, string arg1);
 
         [System.ServiceModel.OperationContractAttribute(Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/canSendDocumentRequest", ReplyAction="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/canSendDocumentResponse")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        System.Threading.Tasks.Task<bool> canSendDocumentAsync(Citys.WS.authBean arg0, string arg1);
+        System.Threading.Tasks.Task<bool> canSendDocumentAsync(CityS.WS.authBean arg0, string arg1);
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1590.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -42,7 +42,13 @@ namespace Citys.WS {
     public partial class authBean : object, System.ComponentModel.INotifyPropertyChanged {
 
         private int appIdField;
+
+        private bool appIdFieldSpecified;
+
         private bool citizenField;
+
+        private bool citizenFieldSpecified;
+
         private string passwordField;
 
         private string userField;
@@ -63,7 +69,11 @@ namespace Citys.WS {
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool appIdSpecified {
             get {
-                return true;
+                return this.appIdFieldSpecified;
+            }
+            set {
+                this.appIdFieldSpecified = value;
+                this.RaisePropertyChanged("appIdSpecified");
             }
         }
 
@@ -82,9 +92,13 @@ namespace Citys.WS {
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool citizenSpecified {
-          get {
-            return true;
-          }
+            get {
+                return this.citizenFieldSpecified;
+            }
+            set {
+                this.citizenFieldSpecified = value;
+                this.RaisePropertyChanged("citizenSpecified");
+            }
         }
 
         /// <remarks/>
@@ -122,7 +136,7 @@ namespace Citys.WS {
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1590.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -132,6 +146,8 @@ namespace Citys.WS {
         private byte[] certificateField;
 
         private int certificateTypeField;
+
+        private bool certificateTypeFieldSpecified;
 
         private string folioRealField;
 
@@ -167,7 +183,11 @@ namespace Citys.WS {
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool certificateTypeSpecified {
             get {
-                return true;
+                return this.certificateTypeFieldSpecified;
+            }
+            set {
+                this.certificateTypeFieldSpecified = value;
+                this.RaisePropertyChanged("certificateTypeSpecified");
             }
         }
 
@@ -218,12 +238,12 @@ namespace Citys.WS {
     }
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface RppCertificateEmissionWSChannel : Citys.WS.RppCertificateEmissionWS, System.ServiceModel.IClientChannel {
+    public interface RppCertificateEmissionWSChannel : CityS.WS.RppCertificateEmissionWS, System.ServiceModel.IClientChannel {
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RppCertificateEmissionWSClient : System.ServiceModel.ClientBase<Citys.WS.RppCertificateEmissionWS>, Citys.WS.RppCertificateEmissionWS {
+    public partial class RppCertificateEmissionWSClient : System.ServiceModel.ClientBase<CityS.WS.RppCertificateEmissionWS>, CityS.WS.RppCertificateEmissionWS {
 
         public RppCertificateEmissionWSClient() {
         }
@@ -244,19 +264,19 @@ namespace Citys.WS {
                 base(binding, remoteAddress) {
         }
 
-        public int receiveCertificate(Citys.WS.authBean arg0, Citys.WS.rppCertificateEmissionCertificateBean arg1) {
+        public int receiveCertificate(CityS.WS.authBean arg0, CityS.WS.rppCertificateEmissionCertificateBean arg1) {
             return base.Channel.receiveCertificate(arg0, arg1);
         }
 
-        public System.Threading.Tasks.Task<int> receiveCertificateAsync(Citys.WS.authBean arg0, Citys.WS.rppCertificateEmissionCertificateBean arg1) {
+        public System.Threading.Tasks.Task<int> receiveCertificateAsync(CityS.WS.authBean arg0, CityS.WS.rppCertificateEmissionCertificateBean arg1) {
             return base.Channel.receiveCertificateAsync(arg0, arg1);
         }
 
-        public bool canSendDocument(Citys.WS.authBean arg0, string arg1) {
+        public bool canSendDocument(CityS.WS.authBean arg0, string arg1) {
             return base.Channel.canSendDocument(arg0, arg1);
         }
 
-        public System.Threading.Tasks.Task<bool> canSendDocumentAsync(Citys.WS.authBean arg0, string arg1) {
+        public System.Threading.Tasks.Task<bool> canSendDocumentAsync(CityS.WS.authBean arg0, string arg1) {
             return base.Channel.canSendDocumentAsync(arg0, arg1);
         }
     }

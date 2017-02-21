@@ -74,6 +74,10 @@ Copyright (C) Microsoft Corporation. All rights reserved.
       <Project>{29B783CB-DC89-4156-B61C-A889365BC93E}</Project>
       <Name>Empiria.WebServices</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\empiria\land\Land.Documentation\Empiria.Land.Documentation.csproj">
+      <Project>{7D98C757-6ED4-48D0-B351-A99CE5ED8987}</Project>
+      <Name>Empiria.Land.Documentation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\empiria\land\Land.Registration\Empiria.Land.Registration.csproj">
       <Project>{EA85313C-BBBB-4F31-B6B9-05BB79ADDFF1}</Project>
       <Name>Empiria.Land.Registration</Name>
@@ -85,6 +89,10 @@ Copyright (C) Microsoft Corporation. All rights reserved.
     <ProjectReference Include="..\..\..\..\empiria\land\Land.WebServices\Empiria.Land.WebServices.csproj">
       <Project>{81492947-B902-4EE9-B506-F9DDAD9CF06A}</Project>
       <Name>Empiria.Land.WebServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\citys.ws\CityS.WS.csproj">
+      <Project>{3F336E9D-D9FA-492F-BB91-EE81BB49AEB6}</Project>
+      <Name>CityS.WS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(_WebPublishTargetsPath)\Web\Microsoft.WebSite.Publishing.targets" />

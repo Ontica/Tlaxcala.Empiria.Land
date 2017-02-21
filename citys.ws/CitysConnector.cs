@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Citys.WS;
+using CityS.WS;
 
 using Empiria.Land.Certification;
 using Empiria.Land.Registration.Transactions;
