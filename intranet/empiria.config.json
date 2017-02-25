@@ -5,6 +5,11 @@
   "settings": [
     {
       "type": "",
+      "key": "ApplicationKey",
+      "value": "vQNLXJeCoRPOtINfussrnSabsNs5jaOCRpdEYg5aXIOehqiBIARTgPUwtbrA940Q"
+    },
+    {
+      "type": "",
       "key": "License.Name",
       "value": "Tlaxcala"
     },
@@ -122,6 +127,26 @@
       "type": "Data",
       "key": "DataTechnology.Default",
       "value": 1
+    },
+    {
+      "type": "WebApi.Client",
+      "key": "Default.WebApiServer",
+      "value": "Microservices"
+    },
+    {
+      "type": "WebApi.Client",
+      "key": "WebApiServer.Microservices",
+      "value": "http://empiria.microservices"
+    },
+    {
+      "type": "WebApi.Client",
+      "key": "WebApiServer.Land",
+      "value": "http://empiria.land/web.api/"
+    },
+    {
+      "type": "WebApi.Client",
+      "key": "ServiceDirectory.Path",
+      "value": "v1/system/service-directory"
     },
     {
       "type": "Land.WebApp",
