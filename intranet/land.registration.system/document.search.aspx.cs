@@ -1,13 +1,13 @@
 ﻿/* Empiria Land **********************************************************************************************
-*																																																						 *
+*                                                                                                            *
 *  Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *  Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
 *  Type      : DocumentSearch                                   Pattern  : Explorer Web Page                 *
-*  Version   : 2.1                                              License  : Please read license.txt file      *
+*  Version   : 3.0                                              License  : Please read license.txt file      *
 *                                                                                                            *
 *  Summary   : Search tool for recording documents, recordable resources, certificates and physical books.   *
 *                                                                                                            *
-********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 2009-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 using System.Linq;
 
@@ -178,7 +178,7 @@ namespace Empiria.Land.WebApp {
 
         string row = ReadRowTemplate(typeof(Recording), i);
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectDocumentFromSearchGrid");
-        row = row.Replace("{{ITEM.ID}}", item.Document.Id.ToString());
+        row = row.Replace("{{ITEM.ID}}", item.MainDocument.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.AsText);
         row = row.Replace("{{IMAGING.LINKS}}", HtmlFormatters.GetImagingLinks(item.RecordingBook));
 

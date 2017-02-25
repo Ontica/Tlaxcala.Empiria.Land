@@ -1,13 +1,13 @@
 ﻿/* Empiria Land *********************************************************************************************
 *                                                                                                           *
-* Solution  : Empiria Land                                     System   : Land Intranet Application         *
-* Namespace : Empiria.Web.UI.Ajax                              Assembly : Empiria.Land.Intranet.dll         *
-* Type      : LandRegistrationSystemData                       Pattern  : Ajax Services Web Page            *
-* Version   : 2.1                                              License  : Please read license.txt file      *
-* 																																																					*
-* Summary   : Gets Empiria control contents through Ajax invocation.                                        *
-*																																																						*
-********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
+*  Solution  : Empiria Land                                     System   : Land Intranet Application        *
+*  Namespace : Empiria.Web.UI.Ajax                              Assembly : Empiria.Land.Intranet.dll        *
+*  Type      : LandRegistrationSystemData                       Pattern  : Ajax Services Web Page           *
+*  Version   : 3.0                                              License  : Please read license.txt file     *
+*                                                                                                           *
+*  Summary   : Gets Empiria control contents through Ajax invocation.                                       *
+*                                                                                                           *
+********************************** Copyright(c) 2009-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
 using Empiria.DataTypes;
@@ -88,8 +88,8 @@ namespace Empiria.Web.UI.Ajax {
           return GetLawArticlesStringArrayCommandHandler();
         case "getRecordingRawData":
           return GetRecordingRawDataCommandHandler();
-        case "getRecordingDocumentRawData":
-          return GetRecordingDocumentRawDataCommandHandler();
+        //case "getRecordingDocumentRawData":
+        //  return GetRecordingDocumentRawDataCommandHandler();
         case "getRecordingStartImageIndexCmd":
           return GetRecordingStartImageIndexCommandHandler();
         case "getRecordingTypesStringArrayCmd":
@@ -360,13 +360,15 @@ namespace Empiria.Web.UI.Ajax {
 
     private string GetRecordingRawDataCommandHandler() {
       int recordingId = int.Parse(GetCommandParameter("recordingId", true));
+
       Recording recording = Recording.Parse(recordingId);
+      RecordingDocument mainDocument = recording.MainDocument;
 
       string rawData = String.Empty;
 
-      rawData += recording.Document.PresentationTime.Date.ToString("dd/MMM/yyyy") + "|";
-      rawData += recording.Document.PresentationTime.ToString("HH:mm") + "|";
-      rawData += recording.AuthorizationTime.ToString("dd/MMM/yyyy") + "|";
+      rawData += mainDocument.PresentationTime.Date.ToString("dd/MMM/yyyy") + "|";
+      rawData += mainDocument.PresentationTime.ToString("HH:mm") + "|";
+      rawData += mainDocument.AuthorizationTime.ToString("dd/MMM/yyyy") + "|";
 
       if (recording.Payments.Total > 0) {
         rawData += recording.Payments.Total.ToString("N2") + "|";
@@ -378,90 +380,90 @@ namespace Empiria.Web.UI.Ajax {
       }
       rawData += recording.AuthorizedBy.Id.ToString() + "|";
 
-      if (recording.Document != null && !recording.Document.IsEmptyInstance) {
-        rawData += recording.Document.DocumentType.Id.ToString() + "|";
+      if (!mainDocument.IsEmptyInstance) {
+        rawData += mainDocument.DocumentType.Id.ToString() + "|";
       } else {
         rawData += "|";
       }
       return rawData;
     }
 
-    private string GetRecordingDocumentRawDataCommandHandler() {
-      int recordingId = int.Parse(GetCommandParameter("recordingId", true));
-      Recording recording = Recording.Parse(recordingId);
+    //private string GetRecordingDocumentRawDataCommandHandler() {
+    //  int recordingId = int.Parse(GetCommandParameter("recordingId", true));
+    //  Recording recording = Recording.Parse(recordingId);
 
-      if (recording.Document.IsEmptyInstance) {
-        return String.Empty;
-      }
+    //  if (recording.Document.IsEmptyInstance) {
+    //    return String.Empty;
+    //  }
 
-      string rawData = String.Empty;
+    //  string rawData = String.Empty;
 
-      switch (recording.Document.DocumentType.Name) {
-        case "ObjectType.RecordingDocument.Empty":
-          return String.Empty;
-        case "ObjectType.RecordingDocument.NotaryDeed":
-          return GetNotaryDeedRecordingDocumentRawData(recording.Document);
-        case "ObjectType.RecordingDocument.PropertyTitle":
-          return GetPropertyTitleRecordingDocumentRawData(recording.Document);
-        case "ObjectType.RecordingDocument.JudicialOrder":
-          return GetJudicialOrderRecordingDocumentRawData(recording.Document);
-        case "ObjectType.RecordingDocument.PrivateContract":
-          return GetPrivateContractRecordingDocumentRawData(recording.Document);
-      }
+    //  switch (recording.Document.DocumentType.Name) {
+    //    case "ObjectType.RecordingDocument.Empty":
+    //      return String.Empty;
+    //    case "ObjectType.RecordingDocument.NotaryDeed":
+    //      return GetNotaryDeedRecordingDocumentRawData(recording.Document);
+    //    case "ObjectType.RecordingDocument.PropertyTitle":
+    //      return GetPropertyTitleRecordingDocumentRawData(recording.Document);
+    //    case "ObjectType.RecordingDocument.JudicialOrder":
+    //      return GetJudicialOrderRecordingDocumentRawData(recording.Document);
+    //    case "ObjectType.RecordingDocument.PrivateContract":
+    //      return GetPrivateContractRecordingDocumentRawData(recording.Document);
+    //  }
 
-      return rawData;
-    }
+    //  return rawData;
+    //}
 
-    private string GetNotaryDeedRecordingDocumentRawData(RecordingDocument document) {
-      string rawData = "oNotaryPublicDeed|";
+    //private string GetNotaryDeedRecordingDocumentRawData(RecordingDocument document) {
+    //  string rawData = "oNotaryPublicDeed|";
 
-      rawData += document.IssuePlace.Id.ToString() + "|";
-      rawData += document.IssueOffice.Id.ToString() + "|";
-      rawData += document.IssuedBy.Id.ToString() + "|";
-      rawData += document.ExtensionData.BookNo + "|";
-      rawData += document.AsText + "|";
-      rawData += document.ExtensionData.StartSheet + "|";
-      rawData += document.ExtensionData.EndSheet + "|";
-      rawData += document.IssueDate.ToString("dd/MMM/yyyy");
+    //  rawData += document.IssuePlace.Id.ToString() + "|";
+    //  rawData += document.IssueOffice.Id.ToString() + "|";
+    //  rawData += document.IssuedBy.Id.ToString() + "|";
+    //  rawData += document.ExtensionData.BookNo + "|";
+    //  rawData += document.AsText + "|";
+    //  rawData += document.ExtensionData.StartSheet + "|";
+    //  rawData += document.ExtensionData.EndSheet + "|";
+    //  rawData += document.IssueDate.ToString("dd/MMM/yyyy");
 
-      return rawData;
-    }
+    //  return rawData;
+    //}
 
-    private string GetPropertyTitleRecordingDocumentRawData(RecordingDocument document) {
-      string rawData = "oEjidalSystemTitle|";
+    //private string GetPropertyTitleRecordingDocumentRawData(RecordingDocument document) {
+    //  string rawData = "oEjidalSystemTitle|";
 
-      rawData += document.Number + "|";
-      rawData += document.IssuedBy.Id.ToString() + "|";
-      rawData += document.IssueDate.ToString("dd/MMM/yyyy") + "|";
-      rawData += document.IssueOffice.Id + "|";
-      rawData += document.ExtensionData.StartSheet;
+    //  rawData += document.Number + "|";
+    //  rawData += document.IssuedBy.Id.ToString() + "|";
+    //  rawData += document.IssueDate.ToString("dd/MMM/yyyy") + "|";
+    //  rawData += document.IssueOffice.Id + "|";
+    //  rawData += document.ExtensionData.StartSheet;
 
-      return rawData;
-    }
+    //  return rawData;
+    //}
 
-    private string GetJudicialOrderRecordingDocumentRawData(RecordingDocument document) {
-      string rawData = "oJudgeOfficialLetter|";
+    //private string GetJudicialOrderRecordingDocumentRawData(RecordingDocument document) {
+    //  string rawData = "oJudgeOfficialLetter|";
 
-      rawData += document.IssuePlace.Id.ToString() + "|";
-      rawData += document.IssueOffice.Id.ToString() + "|";
-      rawData += document.IssuedBy.Id.ToString() + "|";
-      rawData += document.ExtensionData.BookNo + "|";
-      rawData += document.Number + "|";
-      rawData += document.IssueDate.ToString("dd/MMM/yyyy");
+    //  rawData += document.IssuePlace.Id.ToString() + "|";
+    //  rawData += document.IssueOffice.Id.ToString() + "|";
+    //  rawData += document.IssuedBy.Id.ToString() + "|";
+    //  rawData += document.ExtensionData.BookNo + "|";
+    //  rawData += document.Number + "|";
+    //  rawData += document.IssueDate.ToString("dd/MMM/yyyy");
 
-      return rawData;
-    }
+    //  return rawData;
+    //}
 
-    private string GetPrivateContractRecordingDocumentRawData(RecordingDocument document) {
-      string rawData = "oPrivateContract|";
+    //private string GetPrivateContractRecordingDocumentRawData(RecordingDocument document) {
+    //  string rawData = "oPrivateContract|";
 
-      rawData += document.IssuePlace.Id.ToString() + "|";
-      rawData += document.IssueDate.ToString("dd/MMM/yyyy") + "|";
-      rawData += document.Number + "|";
-      rawData += document.ExtensionData.MainWitness.Id.ToString();
+    //  rawData += document.IssuePlace.Id.ToString() + "|";
+    //  rawData += document.IssueDate.ToString("dd/MMM/yyyy") + "|";
+    //  rawData += document.Number + "|";
+    //  rawData += document.ExtensionData.MainWitness.Id.ToString();
 
-      return rawData;
-    }
+    //  return rawData;
+    //}
 
     private string SearchRecordingActPartiesCommandHandler() {
       int recordingActId = int.Parse(GetCommandParameter("recordingActId", true));
@@ -860,11 +862,17 @@ namespace Empiria.Web.UI.Ajax {
         recording = Recording.Empty;
       }
       LandRegistrationException exception = null;
-      exception = LRSValidator.ValidateRecordingNumber(recordingBook, recording, recordingNumber,
-                                                       imageStartIndex, imageEndIndex);
+
+      exception = LRSValidator.ValidateRecordingNumber(recordingBook, recording, recordingNumber);
       if (exception != null) {
         return exception.Message;
       }
+
+      exception = ValidateRecordingImageRange(recordingBook, imageStartIndex, imageEndIndex);
+      if (exception != null) {
+        return exception.Message;
+      }
+
       if (presentationTime != ExecutionServer.DateMinValue) {
         exception = LRSValidator.ValidateRecordingDates(recordingBook, recording,
                                                         presentationTime, authorizationDate);
@@ -872,12 +880,15 @@ namespace Empiria.Web.UI.Ajax {
           return exception.Message;
         }
       }
+
       exception = LRSValidator.ValidateRecordingAuthorizer(recordingBook, authorizedBy, authorizationDate);
       if (exception != null) {
         return exception.Message;
       }
+
       return String.Empty;
     }
+
 
     private string ValidateDocumentRecordingActCommandHandler() {
       try {
@@ -911,6 +922,18 @@ namespace Empiria.Web.UI.Ajax {
         return e.Message;
       }
       return String.Empty;
+    }
+
+    private LandRegistrationException ValidateRecordingImageRange(RecordingBook recordingBook,
+                                                                  int imageStartIndex, int imageEndIndex) {
+      var imageSet = Land.Documentation.RecordingBookImageSet.Parse(recordingBook.ImageSetId);
+
+      if ((imageStartIndex == 0) || (imageEndIndex == 0) ||
+          (imageStartIndex > imageEndIndex) || (imageEndIndex > imageSet.FilesCount)) {
+        return new LandRegistrationException(LandRegistrationException.Msg.InvalidRecordingImageRange,
+                                             recordingBook.AsText, imageStartIndex, imageEndIndex, imageSet.FilesCount);
+      }
+      return null;
     }
 
     private RecordingTask ParseRecordingTaskParameters() {
