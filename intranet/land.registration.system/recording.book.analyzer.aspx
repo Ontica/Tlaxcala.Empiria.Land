@@ -35,60 +35,15 @@
       <div id="divContent">
         <table cellpadding="0" cellspacing="0">
           <tr>
-            <td id="divImageViewer" valign='top' style="position:relative;<%=base.DisplayImages() == false ? "display:none;" : String.Empty%>">
-              <div id="divImageContainer" style="overflow:auto;width:520px;height:540px;top:0;">
-                <img id="imgCurrent" name="imgCurrent" src="<%=GetCurrentImagePath()%>" alt="" width="<%=GetCurrentImageWidth()%>" height="<%=GetCurrentImageHeight()%>" style="top:0px;" />
-              </div>
-              <table>
-                <tr>
-                  <td nowrap='nowrap'>Ver:</td>
-                  <td nowrap='nowrap'>
-                    <select id="cboRecordingBookSelector" class="selectBox" style="width:124px" onchange="showRecordingImages(this.value);" title="" runat="server">										
-                    </select>
-                  </td>
-                  <td nowrap='nowrap'>
-                    Ir a la imagen: <input id="txtGoToImage" name="txtGoToImage" type="text" class="textBox" maxlength="4" style="width:35px;margin-right:0px" onkeypress="return integerKeyFilter(this);" runat="server" />
-                  </td>
-                  <td nowrap='nowrap'><img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('gotoImage')" title="Ejecuta la búsqueda" /></td>
-                  <td width='40%'>&nbsp;</td>
-                  <td><img src='../themes/default/buttons/first.gif' onclick='doOperation("moveToImage", "first");' title='Muestra la primera imagen' alt='' /></td>
-                  <td><img src='../themes/default/buttons/previous.gif' onclick='doOperation("moveToImage", "previous");' title='Muestra la imagen anterior' alt='' /></td>
-                  <td><img src='../themes/default/buttons/next.gif' onclick='doOperation("moveToImage", "next");' title='Muestra la siguiente imagen' alt='' /></td>
-                  <td><img src='../themes/default/buttons/last.gif' onclick='doOperation("moveToImage", "last");' title='Muestra la última imagen' alt='' /></td>
-                  <td width='10px' nowrap='nowrap'>&nbsp;</td>
-                  <td nowrap='nowrap'>
-                    <% if (Empiria.ExecutionServer.CurrentPrincipal.IsInRole("BatchCapture.Supervisor")) { %>
-                    <select id="cboImageOperation" name="cboImageOperation" class="selectBox" style="width:100px" title="" runat="server">
-                      <option value="selectRecordingActOperation">(Operación)</option>
-                      <option value="insertEmptyImageBefore">Insertar</option>
-                      <option value="deleteImage">Eliminar</option>
-                      <option value="refreshImages">Reprocesar</option>
-                    </select>
-                    <img src='../themes/default/buttons/ellipsis.gif' onclick='doOperation(getElement("cboImageOperation").value);' title='Ejecuta la operación seleccionada' alt='' />
-                    <% } %>
-                  </td>
-                  <td width='10px' nowrap='nowrap'>&nbsp;</td>
-                  <td align="right" style="width:40%" nowrap='nowrap'>
-                    Zoom:
-                    <select id="cboZoomLevel" name="cboZoomLevel" class="selectBox" style="width:56px" title="" onchange="return doOperation('zoomImage')" runat="server">
-                      <option value="0.50">50%</option>
-                      <option value="0.75">75%</option>
-                      <option value="1.00">100%</option>
-                      <option value="1.25">125%</option>
-                      <option value="1.50">150%</option>
-                      <option value="1.75">175%</option>
-                      <option value="2.00">200%</option>
-                      <option value="2.50">250%</option>
-                      <option value="3.00">300%</option>
-                      <option value="3.50">350%</option>
-                      <option value="4.00">400%</option>
-                    </select>
-                  </td>
-                </tr>
-              </table>
+            <td id="divImageViewer" valign='top' style="position:relative;">
+              <div id="divImageContainer" style="overflow:auto;width:400px;height:540px;top:0;">
+                  <object id="documentViewer" type="text/html" style="width:100%; height:100%;">
+                    <p>Visor de imágenes de libros</p>
+                  </object>
+                </div>
             </td>
             <td><img src="../themes/default/textures/pixel.gif" height="1px" width="12px" alt="" /></td>
-            <td id="divDocumentViewer" valign="top" style="width:670px;">
+            <td id="divDocumentViewer" valign="top" style="width:600px;">
               <table class="tabStrip">
                 <tr>
                   <td id="tabStripItem_0" class="tabOn" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Analizar inscripciones</td>
@@ -166,25 +121,6 @@
                     <td class="lastCell">&nbsp;</td>
                   </tr>
                   <tr>
-                    <td class="lastCell" colspan="6">
-<table id="oRecordingPaymentTable" class="editionTable" style="display:inline;">
-  <tr>
-    <td>Total pago derechos: &nbsp;&nbsp;$</td>
-    <td>
-    <input id="txtRecordingPayment" name="txtRecordingPayment" type="text" class="textBox" style="width:66px"
-             onkeypress="return positiveKeyFilter(this);" title="" maxlength="9" runat="server" />
-    Boletas de pago:
-    </td>
-    <td>
-    <input id="txtRecordingPaymentReceipt" name="txtRecordingPaymentReceipt" type="text" class="textBox" style="width:162px"
-           title="" maxlength="48" runat="server" />
-    </td>
-    <td class="lastCell">&nbsp;</td>
-  </tr>
-</table>
-                    </td>
-                  </tr>
-                  <tr>
                     <td>El C. Registrador: &nbsp; &nbsp;&nbsp;Lic.</td>
                     <td colspan="2">
                       <select id="cboAuthorizedBy" name="cboAuthorizedBy" class="selectBox" style="width:304px" title="" onchange="return updateUserInterface();" runat="server">
@@ -248,10 +184,8 @@
                             <tr class="detailsHeader">
                               <td>#</td>
                               <td width="90%">Actos jurídicos vigentes</td>
-                              <td>Estado acto</td>
-                              <td>Predio</td>
-                              <td>Estado predio</td>
-                              <td>¿Qué desea hacer?</td>
+                              <td>Folio real</td>
+                              <td>&nbsp;</td>
                             </tr>
                             <%=gRecordingActs%>
                           </table>
@@ -265,7 +199,7 @@
                         </select>
                         Sobre el predio:&nbsp;
                         <select id="cboProperty" class="selectBox" style="width:160px" title="" onchange="return updateUserInterface(this);" runat='server'>
-                          <option value="0">"Agregar un nuevo predio</option>
+                          <option value="0">Agregar un nuevo predio</option>
                           <option value="-1">Seleccionar un predio</option>
                         </select>
                       </td>
@@ -414,25 +348,6 @@
                       </td>
                       <td colspan="2" class="lastCell">&nbsp;</td>
                     </tr>
-                    <tr id="divAnnotationEditorRow4bis" style="display:none">
-                      <td class="lastCell" colspan="7">
-<table id="oAnnotationPaymentTable" class="editionTable" style="display:inline;">
-  <tr>
-    <td>Total pago derechos: &nbsp;&nbsp;$</td>
-    <td>
-    <input id="txtAnnotationPayment" name="txtAnnotationPayment" type="text" class="textBox" style="width:66px"
-             onkeypress="return positiveKeyFilter(this);" title="" maxlength="9" runat="server" />
-    Boletas de pago:
-    </td>
-    <td colspan="3">
-    <input id="txtAnnotationPaymentReceipt" name="txtAnnotationPaymentReceipt" type="text" class="textBox" style="width:162px"
-           title="" maxlength="48" runat="server" />
-    </td>
-    <td class="lastCell">&nbsp;</td>
-  </tr>
-</table>
-                      </td>
-                    </tr>
                     <tr id="divAnnotationEditorRow5" style="display:none">
                       <td>El C. Registrador: &nbsp; Lic.</td>
                       <td colspan="4">
@@ -491,7 +406,7 @@
                 <td class="lastCell">
                   <iframe id="ifraItemEditor" style="z-index:99;left:0px;top:0px;"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
-                          src="" width="670px" visible="false" >
+                          src="" width="670px" height="1200px" visible="false" >
                   </iframe>
                 </td>
               </tr>
@@ -660,7 +575,7 @@
       case 'editAnnotation':
         editAnnotation(arguments[1], arguments[2]);
         return;
-      case 'editProperty':
+      case 'editResource':
         editProperty(arguments[1], arguments[2]);
         return;
       case 'deleteRecordingAct':
@@ -672,12 +587,6 @@
       case 'inheritAnnotationData':
         inheritAnnotationData();
         return;
-      case "upwardRecordingAct":
-        upwardRecordingAct(arguments[1], arguments[2]);
-        return;
-      case "downwardRecordingAct":
-        downwardRecordingAct(arguments[1], arguments[2]);
-        return;
       case 'selectRecordingActOperation':
         alert("Requiero se seleccione una operación de la lista.");
         return;
@@ -687,26 +596,9 @@
       case 'moveToImage':
         moveToImage(arguments[1]);
         return;
-      case 'zoomImage':
-        return doZoom();
-      case 'insertEmptyImageBefore':
-        if (!getElement('cboImageOperation').disabled) {
-          insertEmptyImageBefore();
-        }
-        return;
-      case 'deleteImage':
-        if (!getElement('cboImageOperation').disabled) {
-          deleteImage();
-        }
-        return;
       case 'refresh':
         sendPageCommand(command);
-        return;
-      case 'refreshImages':
-        if (!getElement('cboImageOperation').disabled) {
-          refreshImages();
-        }
-        return;		
+        return;	
       case 'gotoRecording':
         gotoRecording();
         return;
@@ -716,9 +608,6 @@
       case 'showAnotherRecording':
         showAnotherRecording();
         return;
-      case "showAdditionalImage":
-        showAdditionalImage();
-        break;
       case "onclick_editRecordingForEdition":
         onclick_editRecordingForEdition();
         return;
@@ -745,6 +634,18 @@
       sendPageCommand(command);
       gbSended = true;
     }
+  }
+
+  function displayImageSet() {
+    var newURL = "./image.set.viewer.aspx?id=<%=base.imageSet.Id%>";
+
+    var clone = getElement("documentViewer").cloneNode(true);
+    clone.setAttribute('data', newURL);
+
+    var parent = getElement("documentViewer").parentNode;
+
+    parent.removeChild(getElement("documentViewer"));
+    parent.appendChild(clone);
   }
 
   function showAnotherRecording() {
@@ -787,7 +688,6 @@
     getElement('txtAnnotationPresentationDate').value = dataArray[0];
     getElement('txtAnnotationPresentationTime').value = dataArray[1];
     getElement('txtAnnotationAuthorizationDate').value = dataArray[2];
-
 
     getElement('txtAnnotationPayment').value = dataArray[3];
     getElement('txtAnnotationPaymentReceipt').value = dataArray[5];
@@ -937,53 +837,6 @@
     return confirm(sMsg);
   }
 
-  function insertEmptyImageBefore() {
-    var newCurrentImagePosition = getCurrentImage() + 1;
-    var newBookImageCount = selectedBookImageCount(null) + 1;
-    var sMsg = "Insertar una imagen faltante.\n\n";
-    sMsg += "Esta operación insertará una imagen vacía en la posición\n";
-    sMsg += "actual, por lo que la imagen que actualmente se está\n";
-    sMsg += "visualizando en pantalla se volverá la número " + newCurrentImagePosition + ", y el\n";
-    sMsg += "libro ahora contendrá " +  newBookImageCount + " imágenes.\n\n";
-
-    sMsg += "¿Inserto una imagen vacía en la posición actual?";
-
-    if (confirm(sMsg)) {
-      sendPageCommand("insertEmptyImageBefore");
-      return;
-    }
-  }
-
-  function deleteImage() {
-    var newBookImageCount = selectedBookImageCount(null) - 1;
-    var sMsg = "Eliminar una imagen duplicada o incorrecta.\n\n";
-    sMsg += "Esta operación eliminará la imagen que actualmente\n";
-    sMsg += "se está visualizando en pantalla, por lo que el libro\n";
-    sMsg += "ahora contendrá " +  newBookImageCount + " imágenes.\n\n";
-
-    sMsg += "¿Elimino la imagen que actualmente se está visualizando\n";
-    sMsg += "y que ocupa la posición " + getCurrentImage() + "?";
-
-    if (confirm(sMsg)) {
-      sendPageCommand("deleteImage");
-      return;
-    }
-  }
-
-  function refreshImages() {
-    var newBookImageCount = selectedBookImageCount(null) - 1;
-    var sMsg = "Actualizar las imágenes del libro.\n\n";
-    sMsg += "Esta operación actualizará todos los nombres de las imágenes que\n";
-    sMsg += "conforman este libro, y recalculará las estadísticas de las mismas.\n\n";
-
-    sMsg += "¿Actualizo todos los nombres de las imágenes y las estadísticas?";
-
-    if (confirm(sMsg)) {
-      sendPageCommand("refreshImagesStatistics");
-      return;
-    }	
-  }
-
   function addPropertyToRecordingAct(recordingActId, propertyId) {
     var itemId = "_" + recordingActId + "_" + propertyId;
 
@@ -1004,7 +857,7 @@
   function editProperty(propertyId, recordingActId) {	
     var oEditor = getElement("ifraItemEditor");
 
-    oEditor.src = "property.editor.aspx?propertyId=" + propertyId + "&recordingActId=" + recordingActId;
+    oEditor.src = "real.estate.editor.aspx?propertyId=" + propertyId + "&recordingActId=" + recordingActId;
 
     oEditor.visible = true;
     doCommand('onClickTabStripCmd', getElement('tabStripItem_1'));
@@ -1029,20 +882,7 @@
   }
 
   function showRecordingImages(recordingId) {
-    getElement("cboRecordingBookSelector").value = recordingId;
-    if (getElement("cboRecordingBookSelector").selectedIndex == 0) {
-      getElement("hdnCurrentImagePosition").value = <%=currentImagePosition%>;
-      if (existsElement("cboImageOperation")) {
-        getElement("cboImageOperation").disabled = false;
-      }
-    } else if (getElement("cboRecordingBookSelector").value.length != 0) {
-      getElement("hdnCurrentImagePosition").value = -1;
-      if (existsElement("cboImageOperation")) {
-        getElement("cboImageOperation").disabled = true;
-      }
-    } else if (getElement("cboRecordingBookSelector").value.length == 0) {
-      return;
-    }
+    getElement("hdnCurrentImagePosition").value = <%=currentImagePosition%>;
     moveToImage("refresh");
   }
 
@@ -1176,46 +1016,6 @@
     }
   }
 
-  function downwardRecordingAct(recordingActId, propertyId) {
-    var itemId = "_" + recordingActId + "_" + propertyId;
-
-    var sMsg = "Bajar este acto en la secuencia jurídica de la inscripción.\n\n";		
-    sMsg += "Esta operación ubicará este acto jurídico por debajo del acto\n";
-    sMsg += "jurídico que lo precede dentro de esta inscripción:\n\n";
-    sMsg += getInnerText('ancRecordingAct_' + recordingActId).toUpperCase() + "\n";
-    sMsg += "Posición actual:\t" + Number(getInnerText('ancRecordingActIndex' + itemId)) + "\n";
-    sMsg += "Nueva posición:\t" + Number(Number(getInnerText('ancRecordingActIndex' + itemId)) + 1).toString() + "\n";
-    sMsg += "Propiedad base:\t" + getInnerText('ancRecordingActProperty' + itemId) + "\n\n";
-    sMsg += "La secuencia jurídica indica qué acto jurídico antecede a otro u\n";
-    sMsg += "otros dentro de una misma inscripción y para la misma propiedad.\n\n";		
-    sMsg += "¿Bajo este acto jurídico dentro de la inscripción?";
-
-    if (confirm(sMsg)) {
-      sendPageCommand("downwardRecordingAct", "recordingActId=" + recordingActId);
-      return;
-    }
-  }
-
-  function upwardRecordingAct(recordingActId, propertyId) {
-    var itemId = "_" + recordingActId + "_" + propertyId;
-
-    var sMsg = "Subir este acto en la secuencia jurídica de la inscripción.\n\n";		
-    sMsg += "Esta operación ubicará este acto jurídico por encima del acto\n";
-    sMsg += "jurídico que lo antecede dentro de esta inscripción:\n\n";
-    sMsg += getInnerText('ancRecordingAct_' + recordingActId).toUpperCase() + "\n";
-    sMsg += "Posición actual:\t" + Number(getInnerText('ancRecordingActIndex' + itemId)) + "\n";
-    sMsg += "Nueva posición:\t" + Number(Number(getInnerText('ancRecordingActIndex' + itemId)) - 1).toString() + "\n";
-    sMsg += "Propiedad base:\t" + getInnerText('ancRecordingActProperty' + itemId) + "\n\n";
-    sMsg += "La secuencia jurídica indica qué acto jurídico antecede a otro u\n";
-    sMsg += "otros dentro de una misma inscripción y para la misma propiedad.\n\n";		
-    sMsg += "¿Subo este acto jurídico dentro de la inscripción?";
-
-    if (confirm(sMsg)) {
-      sendPageCommand("upwardRecordingAct", "recordingActId=" + recordingActId);
-      return;
-    }
-  }
-
   function validateAnnotationSemantics() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=validateAnnotationSemanticsCmd";
@@ -1253,12 +1053,14 @@
     url += "?commandName=validateRecordingSemanticsCmd";
     url += "&recordingBookId=<%=recordingBook.Id%>";
     url += "&recordingId=<%=recording.Id%>";
-    url += "&number=" + getElement("txtRecordingNumber").value + getElement("cboBisRecordingNumber").value;
+    url += "&recordingNumber=" + getElement("txtRecordingNumber").value + getElement("cboBisRecordingNumber").value;
     url += "&imageStartIndex=" + getElement("txtImageStartIndex").value;
     url += "&imageEndIndex=" + getElement("txtImageEndIndex").value;
     url += "&presentationTime=" + getElement("txtPresentationDate").value + " " + getElement("txtPresentationTime").value;
     url += "&authorizationDate=" + getElement("txtAuthorizationDate").value;
     url += "&authorizedById=" + getElement("cboAuthorizedBy").value;
+
+    alert(url);
 
     return invokeAjaxValidator(url);
   }
@@ -1547,64 +1349,8 @@
       alert("Necesito se seleccione de la lista al C. Oficial Registrador que autorizó esta inscripción.");
       return false;
     }
-    if (!validatePayment(getElement('txtRecordingPayment'), getElement('txtRecordingPaymentReceipt'))) {
-      return false;
-    }
     if (!<%=oRecordingDocumentEditor.ClientID%>_validate(getElement("txtPresentationDate").value)) {
       return false;
-    }
-    <% if (base.DisplayImages()) { %>
-    var overlappingRecordings = getOverlappingRecordingsCount(<%=recordingBook.Id%>, <%=recording.Id%>, getElement("txtImageStartIndex").value, getElement("txtImageEndIndex").value);
-    if (overlappingRecordings > 0) {
-      var sMsg = "Posible traslape de imágenes de inscripciones.\n\nEn las imágenes comprendidas en el rango de la " + getElement('txtImageStartIndex').value;
-      if (overlappingRecordings == 1) {
-        sMsg += " a la " + getElement('txtImageEndIndex').value + ", existe otra inscripción.\n\n¿Las imágenes inicial y final son correctas?";
-      } else {
-        sMsg += " a la " + getElement('txtImageEndIndex').value + ", existen otras " + overlappingRecordings + " inscripciones.\n\n¿Es esto correcto?";
-      }
-      if (!confirm(sMsg)) {
-        return false;
-      }
-    }
-    <% } %>
-    return true;
-  }
-
-  function validatePayment(oPayment, oReceipt) {
-    if (oPayment.value.length == 0) {
-      sMsg  = "Validación del pago de derechos.\n\n";
-      sMsg += "Requiero se proporcione el importe total por pago de derechos.\n\n";
-      alert(sMsg);
-      return false;
-    }
-    if (!isNumeric(oPayment)) {
-      sMsg  = "Validación del pago de derechos.\n\n";
-      sMsg += "No reconozco el importe total por pago de derechos.";
-      alert(sMsg);
-      return false;
-    }
-    if (convertToNumber(oPayment.value) < 0) {
-      sMsg  = "Validación del pago de derechos.\n\n";
-      sMsg += "No reconozco importes por pago de derechos negativos.";
-      alert(sMsg);
-      return false;
-    }
-    if (oReceipt.value.length == 0) {
-      sMsg = "Validación del pago de derechos.\n\n";
-      sMsg += "No se proporcionó la boleta de pago pero sí el importe\n";
-      sMsg += "total por pago de derechos de inscripción.\n\n";
-      sMsg += "¿El número de boleta de pago no es legible o no consta?";
-      if (!confirm(sMsg)) {
-        return false;
-      }
-    }
-    if (0 < oReceipt.value.length && oReceipt.value.length < 6) {
-      sMsg = "Validación del pago de derechos.\n\n";
-      sMsg += "El número de boleta de pago contiene menos de seis caracteres.\n\n";
-      sMsg += "¿El número de boleta de pago es correcto?";
-      if (!confirm(sMsg)) {
-        return false;
-      }
     }
     return true;
   }
@@ -1744,23 +1490,8 @@
       alert("Necesito se seleccione de la lista al C. Oficial Registrador que autorizó la anotación.");
       return false;
     }
-    if (!validatePayment(getElement('txtAnnotationPayment'), getElement('txtAnnotationPaymentReceipt'))) {
-      return false;
-    }
     if (!<%=oAnnotationDocumentEditor.ClientID%>_validate(getElement("txtAnnotationPresentationDate").value)) {
       return false;
-    }
-    var overlappingRecordings = getOverlappingRecordingsCount(getElement("cboAnnotationBook").value, 0, getElement("txtAnnotationImageStartIndex").value, getElement("txtAnnotationImageEndIndex").value);
-    if (overlappingRecordings > 0) {
-      var sMsg = "Posible traslape de imágenes de anotaciones.\n\nEn las imágenes comprendidas en el rango de la " + getElement('txtAnnotationImageStartIndex').value;
-      if (overlappingRecordings == 1) {
-        sMsg += " a la " + getElement('txtAnnotationImageEndIndex').value + ", existe otra anotación o limitación.\n\n¿Las imágenes inicial y final son correctas?";
-      } else {
-        sMsg += " a la " + getElement('txtAnnotationImageEndIndex').value + ", existen otras " + overlappingRecordings + " anotaciones o limitaciones.\n\n¿Es esto correcto?";
-      }
-      if (!confirm(sMsg)) {
-        return false;
-      }
     }
     return true;
   }
@@ -1809,17 +1540,8 @@
         alert("No reconozco la posición de la imagen que se desea desplegar.");
         return;
     }
-    if (getElement('cboRecordingBookSelector').value.length == 0) {
-      return;
-    } else if (getElement('cboRecordingBookSelector').selectedIndex == 0) {
-      ajaxURL += "&recordingBookId=<%=recordingBook.Id%>";
-    } else if (getElement("cboRecordingBookSelector").value.substring(0, 1) != "&") {
-      ajaxURL += "&recordingId=" + getElement('cboRecordingBookSelector').value;
-    } else if (getElement("cboRecordingBookSelector").value.substring(0, 1) == "&") {
-      ajaxURL += getElement("cboRecordingBookSelector").value;
-    } else {
-      return;
-    }
+
+    ajaxURL += "&recordingBookId=<%=recordingBook.Id%>";
     ajaxURL += "&currentPosition=" + getElement("hdnCurrentImagePosition").value;
 
     var result = invokeAjaxMethod(false, ajaxURL, null);
@@ -1828,15 +1550,6 @@
     setPageTitle();
   }
 
-  function doZoom() {
-    var oImage = getElement("imgCurrent");
-
-    var width = 1336;
-    var height = 994;
-    var zoomLevel = Number(getElement('cboZoomLevel').value);
-    oImage.setAttribute('width', Number(width) * zoomLevel);
-    oImage.setAttribute('height', Number(height) * zoomLevel);
-  }
   function setPageTitle() {
     var s = String();
     var imageXOfY = getCurrentImage() + " de " + selectedBookImageCount();
@@ -1845,15 +1558,8 @@
     setInnerText(getElement("spanCurrentImage"), "No digitalizado");
     return;
     <% } %>
-    if (getElement("cboRecordingBookSelector").value.length == 0) {
-      // no-op
-    } else if (getElement("cboRecordingBookSelector").selectedIndex == 0) {
-      setInnerText(getElement("spanCurrentImage"), "Imagen " + imageXOfY);
-    } else if (getElement("cboRecordingBookSelector").value.substring(0, 1) != "&") {
-      setInnerText(getElement("spanCurrentImage"), "Imagen " + imageXOfY + " de la anotación " + getComboOptionText(getElement("cboRecordingBookSelector")));
-    } else if (getElement("cboRecordingBookSelector").value.substring(0, 1) == "&") {
-      setInnerText(getElement("spanCurrentImage"), "Imagen " + imageXOfY + " del apéndice " + getComboOptionText(getElement("cboRecordingBookSelector")));
-    }
+
+    setInnerText(getElement("spanCurrentImage"), "Imagen " + imageXOfY);
   }
 
   function getCurrentImage() {
@@ -1864,74 +1570,6 @@
     <% if (base.DisplayImages()) { %>
     getElement(controlName).value = getCurrentImage();
     <% } %>
-  }
-
-  function selectedBookImageCount() {
-    if (arguments.length == 1) {
-      return "N/D"; // OOJJO recordingBook.ImagingFilesFolder.FilesCount.ToString()
-    }
-
-    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getRecordingBookImageCountCmd";
-
-    if (getElement('cboRecordingBookSelector').value.substring(0,1) == "&") {
-      ajaxURL += getElement('cboRecordingBookSelector').value;
-    } else if (getElement('cboRecordingBookSelector').value > 0) {
-      ajaxURL += "&recordingId=" + getElement('cboRecordingBookSelector').value;
-    } else {
-      ajaxURL += "&recordingBookId=<%=recordingBook.Id%>";
-    }
-
-    var result = invokeAjaxMethod(false, ajaxURL, null);
-
-    return Number(result);
-  }
-
-  function getRecordingStartImageIndex() {
-    if (getElement('cboRecordingBookSelector').value.length == 0) {
-      return 1;
-    }
-    if (getElement('cboRecordingBookSelector').value.substring(0, 1) == "&") {
-      return 1;
-    } else {
-      var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getRecordingStartImageIndexCmd";
-      ajaxURL += "&recordingId=" + getElement('cboRecordingBookSelector').value;
-
-      var result = invokeAjaxMethod(false, ajaxURL, null);
-
-      return Number(result);
-    }
-  }
-
-  function gotoImage() {
-    if (getElement("txtGoToImage").value.length == 0) {
-      alert("Necesito conocer el número de imagen que se desea visualizar.");
-      return false;
-    }
-    if (!isNumeric(getElement("txtGoToImage"))) {
-      alert("No reconozco el número de imagen proporcionado.");
-      return false;
-    }
-    if (Number(getElement("txtGoToImage").value) <= 0) {
-      alert("El número de imagen que se desea visualizar debe ser positivo.");
-      return false;
-    }
-    var imageCount = selectedBookImageCount();
-    if (Number(getElement("txtGoToImage").value) > imageCount) {
-      alert("El libro seleccionado sólo contiene " + imageCount + " imágenes.");
-      return false;
-    }
-
-    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getDirectoryImageURL";
-    var newPosition = Number(getElement("txtGoToImage").value) -  1;
-    ajaxURL += "&position=" + newPosition;
-    ajaxURL += "&recordingBookId=<%=recordingBook.Id%>";
-    ajaxURL += "&currentPosition=" + getElement("hdnCurrentImagePosition").value;
-    var result = invokeAjaxMethod(false, ajaxURL, null);
-    getElement("imgCurrent").src = result;
-    getElement("hdnCurrentImagePosition").value = newPosition;
-    setPageTitle();
-
-    return true;
   }
 
   function gotoRecording() {
@@ -1972,27 +1610,6 @@
     return;
   }
 
-  function getOverlappingRecordingsCount(recordingBookId, recordingId, imageStartIndex, imageEndIndex) {
-    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getOverlappingRecordingsCountCmd";
-    ajaxURL += "&recordingBookId=" + recordingBookId;
-    ajaxURL += "&recordingId=" + recordingId;		
-    ajaxURL += "&imageStartIndex=" + imageStartIndex;
-    ajaxURL += "&imageEndIndex=" + imageEndIndex;
-
-    var result = invokeAjaxMethod(false, ajaxURL, null);
-
-    return Number(result);
-  }
-
-  function getRecordingBookImageCount(recordingBookId) {
-    var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getRecordingBookImageCountCmd";
-    ajaxURL += "&recordingBookId=" + recordingBookId;
-
-    var result = invokeAjaxMethod(false, ajaxURL, null);
-
-    return Number(result);
-  }
-
   function showRecordingForEdition(showEditorFlag) {
     if (showEditorFlag) {
       getElement("btnEditRecording").value = "Descartar los cambios";
@@ -2022,34 +1639,6 @@
     }
   }
 
-  function showAdditionalImage() {
-    if (getElement('cboAnnotationBook').value == '') {
-      alert("Requiero se seleccione primero el libro de referencia.");
-      return;
-    }
-    var gotoImage = Number();
-    if (getElement("txtAnnotationImageEndIndex").value != '') {
-      gotoImage = Number(getElement("txtAnnotationImageEndIndex").value);
-    } else if (getElement("txtAnnotationImageStartIndex").value != '') {
-      gotoImage = Number(getElement("txtAnnotationImageStartIndex").value);
-    } else {
-      gotoImage = 1;
-    }
-    var recordingBookImageCount = 0;
-
-    if (gotoImage > 0) {
-      recordingBookImageCount = getRecordingBookImageCount(getElement('cboAnnotationBook').value);
-    }
-    if (gotoImage > recordingBookImageCount) {
-      alert("El libro " + getComboOptionText(getElement('cboAnnotationBook')) + " contiene sólo " + recordingBookImageCount + " imágenes.");
-      return false;
-    }
-    var source = "directory.image.viewer.aspx?";
-    source += "id=" + getElement('cboAnnotationBook').value;
-    source += "&gotoImage=" + gotoImage;
-    createNewWindow(source);
-  }
-
   function showAnnotationsEditor() {
     <% if (recording.RecordingActs.Count == 0) { %>
       alert("Para poder anexar una anotación o limitación, requiero que la inscripción contenga al menos un acto jurídico traslativo de dominio.");
@@ -2061,7 +1650,6 @@
       getElement("divAnnotationEditorRow2").style.display = 'none';
       getElement("divAnnotationEditorRow3").style.display = 'none';
       getElement("divAnnotationEditorRow4").style.display = 'none';
-      getElement("divAnnotationEditorRow4bis").style.display = 'none';
       getElement("divAnnotationEditorRow5").style.display = 'none';
       getElement("divAnnotationEditorRow6").style.display = 'none';			
 
@@ -2071,7 +1659,6 @@
       getElement("divAnnotationEditorRow2").style.display = 'inline';
       getElement("divAnnotationEditorRow3").style.display = 'inline';
       getElement("divAnnotationEditorRow4").style.display = 'inline';
-      getElement("divAnnotationEditorRow4bis").style.display = 'inline';
       getElement("divAnnotationEditorRow5").style.display = 'inline';
       getElement("divAnnotationEditorRow6").style.display = 'inline';			
     }
@@ -2160,7 +1747,8 @@
 //    getElement("txtObservations").disabled = true;
 //  }
 
-  function window_onload() {
+   function window_onload() {
+    displayImageSet();
     setWorkplace2();
     setPageTitle();
     <% if (recording.IsNew) { %>
@@ -2212,8 +1800,6 @@
   function window_onscroll() {
     var documentHeight = getElement("divDocumentViewer").offsetHeight;
     var scrollHeight = getElement("divContent").scrollTop;
-    //var oBody = getElement("divDocumentViewer");
-    //getElement('divImageViewer').style.top = Math.min(scrollHeight, documentHeight - scrollHeight) + "px";
 
     var newHeight = Math.min(documentHeight - scrollHeight, scrollHeight);
 
@@ -2228,23 +1814,19 @@
     var oFrame = getElement("ifraItemEditor");
     var oBody = oFrame.document.body;
 
-    //var newHeight = oBody.scrollHeight + (oBody.offsetHeight - oBody.clientHeight);
     var newHeight = oBody.scrollHeight + oBody.clientHeight;
 
-    if (newHeight <= 800) {
-      oFrame.style.height = 800;
+    if (newHeight <= 1200) {
+      oFrame.style.height = 1200;
     } else {
       oFrame.style.height = newHeight;
     }
-    //oFrame.style.width = oBody.scrollWidth + (oBody.offsetWidth - oBody.clientWidth);
   }
 
   addEvent(window, 'load', window_onload);
   addEvent(window, 'resize', window_onresize);
   addEvent(getElement('divContent'), 'scroll', window_onscroll);
   addEvent(getElement("ifraItemEditor"), 'resize', ifraItemEditor_onresize);
-  addEvent(getElement('<%=txtRecordingPaymentReceipt.ClientID%>'), 'keypress', upperCaseKeyFilter);
-  addEvent(getElement('<%=txtAnnotationPaymentReceipt.ClientID%>'), 'keypress', upperCaseKeyFilter);
 
   /* ]]> */
   </script>

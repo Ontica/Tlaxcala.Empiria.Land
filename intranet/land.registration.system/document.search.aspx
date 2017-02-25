@@ -129,6 +129,9 @@
       case 'displayResourcePopupWindow':
         displayResourcePopupWindow(arguments[1]);
         return;
+      case 'showRecordingBookAnalyzer':
+        showRecordingBookAnalyzer(arguments[1]);
+        return;
         //case 'refreshRecording':
         //  return closeModalWindow(document.all.divRecordingActEditorWindow);
 
@@ -148,6 +151,12 @@
 
   function onSelectImageSet(imageSetId) {
     window.parent.execScript("doOperation('onSelectImageSet', " + imageSetId + ")");
+  }
+
+  function showRecordingBookAnalyzer(recordingBookId) {
+    var url = "recording.book.analyzer.aspx?bookId=" + recordingBookId;
+
+    createNewWindow(url);
   }
 
   function displayResourcePopupWindow(resourceId) {

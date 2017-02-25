@@ -1,17 +1,19 @@
 ﻿/* Empiria Land **********************************************************************************************
-*																																																						 *
+*                                                                                                            *
 *  Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *  Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
 *  Type      : RecordingBookAnalyzer                            Pattern  : Explorer Web Page                 *
-*  Version   : 2.1                                              License  : Please read license.txt file      *
-*																																																						 *
+*  Version   : 3.0                                              License  : Please read license.txt file      *
+*                                                                                                            *
 *  Summary   :                                                                                               *
 *                                                                                                            *
-********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 2009-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+using Empiria.Contacts;
+using Empiria.Land.Documentation;
 using Empiria.Land.Registration;
 using Empiria.Land.UI;
 using Empiria.Presentation;
@@ -28,11 +30,12 @@ namespace Empiria.Land.WebApp {
     protected LRSDocumentEditorControl oAnnotationDocumentEditor = null;
     protected RecordingBook recordingBook = null;
     protected Recording recording = null;
+    protected RecordingBookImageSet imageSet = null;
+
     protected int currentImagePosition = 0;
     protected string gRecordingActs = String.Empty;
     protected string gAnnotationActs = String.Empty;
-    protected int currentImageWidth = 1336;
-    protected int currentImageHeight = 994;
+
     protected int recordingsPerViewerPage = 25;
 
     #endregion Fields
@@ -61,33 +64,8 @@ namespace Empiria.Land.WebApp {
       hdnCurrentImagePosition.Value = currentImagePosition.ToString();
     }
 
-    private void LoadRecordingBooksCombo() {
-      throw new NotImplementedException("OOJJOO");
-
-      //cboRecordingBookSelector.Items.Clear();
-      //cboRecordingBookSelector.Items.Add(new ListItem("Libro Raíz", recording.Id.ToString()));
-
-      //FixedList<TractIndexItem> annotations = recording.GetPropertiesAnnotationsList();
-      //for (int i = 0; i < annotations.Count; i++) {
-      //  cboRecordingBookSelector.Items.Add(new ListItem(Char.ConvertFromUtf32(65 + i),
-      //                                     annotations[i].RecordingAct.Recording.Id.ToString()));
-      //}
-      //if (RecordingBook.UseBookAttachments) {
-      //  RecordingAttachmentFolderList attachmentFolders = recording.GetAttachmentFolderList();
-      //  if (attachmentFolders.Count != 0) {
-      //    cboRecordingBookSelector.Items.Add(new ListItem("( Apéndices )", String.Empty));
-      //  }
-      //  foreach (RecordingAttachmentFolder folder in attachmentFolders) {
-      //    cboRecordingBookSelector.Items.Add(new ListItem(folder.Alias,
-      //                                       "&attachment=true&name=" + folder.Name +
-      //                                       "&recordingId=" + folder.Recording.Id.ToString()));
-      //  }
-      //}
-    }
-
     private void LoadControls() {
-      cboRecordingType.Value = recording.Document.DocumentType.Id.ToString();
-      LoadRecordingBooksCombo();
+      cboRecordingType.Value = recording.MainDocument.DocumentType.Id.ToString();
       LoadRecordingActTypeCategoriesCombo();
       LoadAnnotationActsCategoriesCombo();
       LoadRecorderOfficersCombo();
@@ -179,14 +157,6 @@ namespace Empiria.Land.WebApp {
           DeleteRecordingActProperty();
           RefreshPage();
           return;
-        case "upwardRecordingAct":
-          UpwardRecordingAct();
-          RefreshPage();
-          return;
-        case "downwardRecordingAct":
-          DownwardRecordingAct();
-          RefreshPage();
-          return;
         case "deleteAnnotation":
           DeleteAnnotation();
           RefreshPage();
@@ -200,19 +170,6 @@ namespace Empiria.Land.WebApp {
           MoveToRecording();
           Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
                             "&id=" + recording.Id.ToString(), true);
-          return;
-        case "gotoImage":
-          MoveToImage(txtGoToImage.Value);
-          return;
-        case "insertEmptyImageBefore":
-          InsertEmptyImageBefore();
-          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
-                            "&id=0&image=" + hdnCurrentImagePosition.Value, true);
-          return;
-        case "deleteImage":
-          DeleteImage();
-          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
-                            "&id=0&image=" + hdnCurrentImagePosition.Value, true);
           return;
         case "refreshImagesStatistics":
           RefreshImagesStatistics();
@@ -252,15 +209,13 @@ namespace Empiria.Land.WebApp {
         txtImageEndIndex.Disabled = true;
       }
       cboRecordingActTypeCategory.Value = "0";
-      if (recording.Document.PresentationTime.Date != ExecutionServer.DateMaxValue) {
-        txtPresentationDate.Value = recording.Document.PresentationTime.ToString("dd/MMM/yyyy");
-        txtPresentationTime.Value = recording.Document.PresentationTime.ToString("HH:mm");
+      if (recording.MainDocument.PresentationTime.Date != ExecutionServer.DateMaxValue) {
+        txtPresentationDate.Value = recording.MainDocument.PresentationTime.ToString("dd/MMM/yyyy");
+        txtPresentationTime.Value = recording.MainDocument.PresentationTime.ToString("HH:mm");
       }
-      if (recording.AuthorizationTime.Date != ExecutionServer.DateMaxValue) {
-        txtAuthorizationDate.Value = recording.AuthorizationTime.ToString("dd/MMM/yyyy");
+      if (recording.MainDocument.AuthorizationTime.Date != ExecutionServer.DateMaxValue) {
+        txtAuthorizationDate.Value = recording.MainDocument.AuthorizationTime.ToString("dd/MMM/yyyy");
       }
-      txtRecordingPayment.Value = recording.Payments.Total.ToString();
-      txtRecordingPaymentReceipt.Value = recording.Payments.ReceiptNumbers;
       cboAuthorizedBy.Value = recording.AuthorizedBy.Id.ToString();
 
       LoadStatusCombo();
@@ -269,7 +224,7 @@ namespace Empiria.Land.WebApp {
 
       cboAnnotationCategory.Value = "0";
 
-      //gRecordingActs = LRSGridControls.GetBatchCaptureRecordingActsGrid(this.recording);
+      gRecordingActs = LRSGridControls.GetPhysicalRecordingActsGrid(this.recording);
       gAnnotationActs = String.Empty;
       LoadRecordingActsPropertiesCombo();
       LoadAnotherPropertyRecorderOfficesCombo();
@@ -295,7 +250,7 @@ namespace Empiria.Land.WebApp {
       if (recording.RecordingActs.Count != 0) {
         cboProperty.Items.Add(new ListItem("( Seleccionar )", ""));
       }
-      foreach (var recordingAct in recording.Document.RecordingActs) {
+      foreach (var recordingAct in recording.MainDocument.RecordingActs) {
 
         var item = new ListItem(recordingAct.Resource.UID, recordingAct.Resource.Id.ToString());
         cboProperty.Items.Add(item);
@@ -344,17 +299,12 @@ namespace Empiria.Land.WebApp {
       //recordingAct.RemoveProperty(property);
     }
 
-    private void DeleteImage() {
-      throw new NotImplementedException();
-     // recordingBook.DeleteImageAtIndex(int.Parse(hdnCurrentImagePosition.Value));
-    }
-
     private void DeleteRecordingAct() {
       int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
 
       RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
 
-      recording.Document.RemoveRecordingAct(recordingAct);
+      recording.MainDocument.RemoveRecordingAct(recordingAct);
     }
 
     private void DeleteRecording() {
@@ -394,12 +344,6 @@ namespace Empiria.Land.WebApp {
       //recordingAct.Save();
     }
 
-    private void InsertEmptyImageBefore() {
-      throw new NotImplementedException();
-
-      //recordingBook.InsertEmptyImageAtIndex(int.Parse(hdnCurrentImagePosition.Value));
-    }
-
     private void RefreshImagesStatistics() {
       throw new NotImplementedException();
 
@@ -430,26 +374,6 @@ namespace Empiria.Land.WebApp {
       //RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
 
       //recordingAct.AttachResource(new Property());
-    }
-
-    private void UpwardRecordingAct() {
-      throw new NotImplementedException("OOJJOO");
-
-      //int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
-
-      //RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
-
-      //recording.Document.UpwardRecordingAct(recordingAct);
-    }
-
-    private void DownwardRecordingAct() {
-      throw new NotImplementedException("OOJJOO");
-
-      //int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
-
-      //RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
-
-      //recording.Document.DownwardRecordingAct(recordingAct);
     }
 
     private void RegisterAsNoLegibleRecording(bool appendMode) {
@@ -485,14 +409,6 @@ namespace Empiria.Land.WebApp {
       //     txtAnnotationImageStartIndex.Value.Length != 0) {
       //  annotation.StartImageIndex = int.Parse(txtAnnotationImageStartIndex.Value);
       //  annotation.EndImageIndex = int.Parse(txtAnnotationImageEndIndex.Value);
-      //}
-    }
-
-    private void SetRecordingImageIndex() {
-      throw new NotImplementedException("OOJJOO");
-      //if (this.DisplayImages() && txtImageStartIndex.Value.Length != 0) {
-      //  recording.StartImageIndex = int.Parse(txtImageStartIndex.Value);
-      //  recording.EndImageIndex = int.Parse(txtImageEndIndex.Value);
       //}
     }
 
@@ -546,39 +462,46 @@ namespace Empiria.Land.WebApp {
     }
 
     private void RegisterAsIncompleteRecording(bool appendRecordingAct) {
-      throw new NotImplementedException("OOJJOO");
+      var dto = new RecordingDTO(this.recordingBook, txtRecordingNumber.Value);
 
-      //recording.RecordingBook = this.recordingBook;
-      //recording.SetNumber(int.Parse(txtRecordingNumber.Value), cboBisRecordingNumber.Value);
-      //recording.Status = RecordableObjectStatus.Incomplete;
-      //SetRecordingImageIndex();
-      //recording.PresentationTime = EmpiriaString.ToDateTime(txtPresentationDate.Value + " " + txtPresentationTime.Value);
-      //recording.AuthorizedTime = EmpiriaString.ToDate(txtAuthorizationDate.Value);
-      //recording.AuthorizedBy = Contact.Parse(int.Parse(cboAuthorizedBy.Value));
-      //recording.ReceiptTotal = decimal.Parse(txtRecordingPayment.Value);
-      //recording.ReceiptNumber = EmpiriaString.TrimAll(txtRecordingPaymentReceipt.Value);
-      //recording.Notes = txtObservations.Value;
-      //recording.Document = oRecordingDocumentEditor.FillRecordingDocument(RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value)));
-      //recording.Save();
-      //if (appendRecordingAct) {
-      //  AppendRecordingAct();
-      //}
-      //this.recordingBook.Refresh();
+      if (this.DisplayImages() && txtImageStartIndex.Value.Length != 0) {
+        dto.StartImageIndex = int.Parse(txtImageStartIndex.Value);
+        dto.EndImageIndex = int.Parse(txtImageEndIndex.Value);
+      }
+      dto.PresentationTime = EmpiriaString.ToDateTime(txtPresentationDate.Value + " " + txtPresentationTime.Value);
+      dto.AuthorizationDate = EmpiriaString.ToDate(txtAuthorizationDate.Value);
+      dto.AuthorizedBy = Contact.Parse(int.Parse(cboAuthorizedBy.Value));
+
+      dto.Notes = txtObservations.Value;
+      dto.MainDocument = oRecordingDocumentEditor.FillRecordingDocument(RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value)));
+
+      dto.Status = RecordableObjectStatus.Incomplete;
+
+      recording = this.recordingBook.AddRecording(dto);
+
+      if (appendRecordingAct) {
+        this.AppendRecordingAct();
+      }
+      this.recordingBook.Refresh();
     }
 
     private void AppendRecordingAct() {
-      throw new NotImplementedException("OOJJOO");
+      int propertyId = int.Parse(cboProperty.Value);
 
-      //int propertyId = int.Parse(cboProperty.Value);
-      //Property property = null;
-      //if (propertyId == 0) {
-      //  property = new Property();
-      //} else if (propertyId == -1) {
-      //  property = Property.Parse(int.Parse(Request.Form["cboAnotherProperty"]));
-      //} else {
-      //  property = Property.Parse(propertyId);
-      //}
-      //RecordingActType recordingActType = RecordingActType.Parse(int.Parse(Request.Form["cboRecordingActType"]));
+      Resource resource = null;
+      if (propertyId == 0) {
+        resource = new RealEstate(RealEstateExtData.Empty);
+      } else if (propertyId == -1) {
+        resource = RealEstate.Parse(int.Parse(Request.Form["cboAnotherProperty"]));
+      } else {
+        resource = RealEstate.Parse(propertyId);
+      }
+
+      RecordingActType recordingActType = RecordingActType.Parse(int.Parse(Request.Form["cboRecordingActType"]));
+      recording.MainDocument.AppendRecordingAct(recordingActType, resource, null, this.recording);
+
+
+      //recording.Document.
       //recording.CreateRecordingAct(recordingActType, property);
     }
 
@@ -649,8 +572,6 @@ namespace Empiria.Land.WebApp {
       txtPresentationDate.Value = String.Empty;
       txtPresentationTime.Value = String.Empty;
       txtAuthorizationDate.Value = String.Empty;
-      txtRecordingPayment.Value = String.Empty;
-      txtRecordingPaymentReceipt.Value = String.Empty;
       cboAuthorizedBy.Value = String.Empty;
       txtObservations.Value = String.Empty;
 
@@ -662,8 +583,6 @@ namespace Empiria.Land.WebApp {
       txtAnnotationPresentationDate.Value = String.Empty;
       txtAnnotationPresentationTime.Value = String.Empty;
       txtAnnotationAuthorizationDate.Value = String.Empty;
-      txtAnnotationPayment.Value = String.Empty;
-      txtAnnotationPaymentReceipt.Value = String.Empty;
     }
 
     private void MoveToImage(string position) {
@@ -722,61 +641,53 @@ namespace Empiria.Land.WebApp {
       }
     }
 
-    private void SetImageZoom() {
-      decimal zoomFactor = decimal.Parse(cboZoomLevel.Value);
-
-      currentImageWidth = Convert.ToInt32(Math.Round(1336m * zoomFactor, 0));
-      currentImageHeight = Convert.ToInt32(Math.Round(994m * zoomFactor, 0));
-    }
-
     protected bool DisplayImages() {
-      throw new NotImplementedException();
-      //return !recordingBook.ImagingFilesFolder.IsEmptyInstance;
+      return recordingBook.HasImageSet;
     }
 
     protected string GetCurrentImagePath() {
-      throw new NotImplementedException();
+      var imageSet = Land.Documentation.RecordingBookImageSet.Parse(recordingBook.ImageSetId);
 
-      //return recordingBook.ImagingFilesFolder.GetImageURL(currentImagePosition);
+      if (!imageSet.IsEmptyInstance) {
+        return ".." + imageSet.UrlRelativePath +
+                      imageSet.ImagesNamesArray[currentImagePosition];
+      } else {
+        return String.Empty;
+      }
     }
 
     private void Initialize() {
-      throw new NotImplementedException("OOJJOO");
+      recordingBook = RecordingBook.Parse(int.Parse(Request.QueryString["bookId"]));
+      recording = recordingBook.GetFirstRecording();
+      imageSet = RecordingBookImageSet.Parse(recordingBook.ImageSetId);
 
-      //recordingBook = RecordingBook.Parse(int.Parse(Request.QueryString["bookId"]));
-      //if (String.IsNullOrEmpty(Request.QueryString["id"])) {
-      //  recording = recordingBook.GetLastRecording();
-      //  if (recording != null) {
-      //    Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
-      //                      "&id=" + recording.Id.ToString(), true);
-      //  } else {
-      //    Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
-      //                      "&id=-1", true);
-      //  }
-      //} else if (int.Parse(Request.QueryString["id"]) == -1 || int.Parse(Request.QueryString["id"]) == 0) {
-      //  recording = new Recording();
-      //  recording.RecordingBook = this.recordingBook;
-      //} else {
-      //  recording = Recording.Parse(int.Parse(Request.QueryString["Id"]));
-      //}
-      //if (!String.IsNullOrEmpty(Request.QueryString["image"])) {
-      //  currentImagePosition = int.Parse(Request.QueryString["image"]);
-      //} else if (!IsPostBack && !recording.IsNew && DisplayImages()) {
-      //  currentImagePosition = recording.StartImageIndex - 1;
-      //} else {
-      //  currentImagePosition = -1;
-      //}
-      //if (IsPostBack && !String.IsNullOrEmpty(hdnCurrentImagePosition.Value)) {
-      //  currentImagePosition = int.Parse(hdnCurrentImagePosition.Value);
-      //}
-      //if (!IsPostBack) {
-      //  cboZoomLevel.Value = "1.00";
-      //}
-      //SetImageZoom();
-      //oRecordingDocumentEditor.LoadRecordingDocument(recording.Document);
-      //Recording annotation = new Recording();
-      //annotation.RecordingBook = this.recordingBook;
-      //oAnnotationDocumentEditor.LoadRecordingDocument(annotation.Document);
+      if (String.IsNullOrEmpty(Request.QueryString["id"])) {
+        recording = recordingBook.GetLastRecording();
+        if (recording != null) {
+          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
+                            "&id=" + recording.Id.ToString(), true);
+        } else {
+          Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
+                            "&id=-1", true);
+        }
+      } else if (int.Parse(Request.QueryString["id"]) == -1 || int.Parse(Request.QueryString["id"]) == 0) {
+        recording = this.recordingBook.CreateNew();
+      } else {
+        recording = Recording.Parse(int.Parse(Request.QueryString["Id"]));
+      }
+      if (!String.IsNullOrEmpty(Request.QueryString["image"])) {
+        currentImagePosition = int.Parse(Request.QueryString["image"]);
+      } else if (!IsPostBack && !recording.IsNew && DisplayImages()) {
+        currentImagePosition = recording.StartImageIndex - 1;
+      } else {
+        currentImagePosition = -1;
+      }
+      if (IsPostBack && !String.IsNullOrEmpty(hdnCurrentImagePosition.Value)) {
+        currentImagePosition = int.Parse(hdnCurrentImagePosition.Value);
+      }
+      oRecordingDocumentEditor.LoadRecordingDocument(recording.MainDocument);
+      Recording annotation = this.recordingBook.CreateNew();
+      oAnnotationDocumentEditor.LoadRecordingDocument(annotation.MainDocument);
     }
 
     private void LoadRecorderOfficersCombo() {
@@ -790,14 +701,6 @@ namespace Empiria.Land.WebApp {
 
     private void LoadAnnotationActsCategoriesCombo() {
       LRSHtmlSelectControls.LoadLegacyAnnotationActTypesCategoriesCombo(this.cboAnnotationCategory);
-    }
-
-    protected string GetCurrentImageHeight() {
-      return currentImageHeight.ToString() + "em";
-    }
-
-    protected string GetCurrentImageWidth() {
-      return currentImageWidth.ToString() + "em";
     }
 
     protected string GetRecordingsViewerGrid() {
