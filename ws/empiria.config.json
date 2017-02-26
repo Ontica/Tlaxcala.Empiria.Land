@@ -1,0 +1,47 @@
+﻿{
+  "appName": "Tlaxcala Web Services",
+  "version": "0.0",
+  "date": "2017-02-25",
+  "settings": [
+    {
+      "type": "",
+      "key": "ApplicationKey",
+      "value": "d5AF4FyqLXG50hNCekZFwUf8Odlq8n2birEbW3rvOXrF2256bUCvEFthHDxFQnGW"
+    },
+    {
+      "type": "",
+      "key": "License.Name",
+      "value": "Tlaxcala"
+    },
+    {
+      "type": "",
+      "key": "License.IsSpecial",
+      "value": false
+    },
+    {
+      "type": "",
+      "key": "IsDevelopmentServer",
+      "value": true
+    },
+    {
+      "type": "",
+      "key": "System.Url",
+      "value": "http://www.ontica.org/land/"
+    },
+    {
+      "type": "WebApi.Client",
+      "key": "Default.WebApiServer",
+      "value": "Microservices"
+    },
+    {
+      "type": "WebApi.Client",
+      "key": "WebApiServer.Microservices",
+      "value": "http://empiria.microservices"
+    },
+    {
+      "type": "WebApi.Client",
+      "key": "ServiceDirectory.Path",
+      "value": "v1/system/service-directory"
+    }
+  ]
+}

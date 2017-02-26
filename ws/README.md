@@ -1,7 +1,4 @@
-﻿Empiria Land Web API
-====================
+﻿Empiria Land Web Services
+=========================
 
-Empiria Land Web API provides the following services:
-
-
-Empiria Land Web API is part of Empiria Land software product line.
+Old fashioned XML/SOAP web services that are still in use by some external systems (government treasury).

@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 /*************************************************************************************************************
 * Assembly configuration attributes.																																	       *
 *************************************************************************************************************/
-[assembly: AssemblyTitle("Empiria.Land.WebServices.dll")]
+[assembly: AssemblyTitle("Tlaxcala.Land.WebServices.dll")]
 [assembly: AssemblyDescription("Empiria Land Web Services (to be deprecated in future versions)")]
 [assembly: AssemblyVersion("2.1.0308.0")]
 [assembly: AssemblyFileVersion("2.1.0308")]
