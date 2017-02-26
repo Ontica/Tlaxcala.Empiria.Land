@@ -1,9 +1,19 @@
-﻿using System;
-
-using CityS.WS;
+﻿/* Empiria Land **********************************************************************************************
+*                                                                                                            *
+*  Solution  : Empiria Land                                System   : Land System Connectors                 *
+*  Namespace : Empiria.Land.Connectors                     Assembly : Empiria.Land.Connectors.dll            *
+*  Type      : CitysConnector                              Pattern  : System Interface                       *
+*  Version   : 3.0                                         License  : Please read license.txt file           *
+*                                                                                                            *
+*  Summary   : Citys System web service interface used to interact with Empiria Land.                        *
+*                                                                                                            *
+********************************* Copyright (c) 2016-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
+using System;
 
 using Empiria.Land.Certification;
 using Empiria.Land.Registration.Transactions;
+
+using Empiria.Land.Connectors.CitysWS;
 
 namespace Empiria.Land.Connectors {
 
@@ -100,8 +110,6 @@ namespace Empiria.Land.Connectors {
 
       return returnData;
     }
-
-
 
     private CitysCertificateType ConvertToCitysCertificateType(CertificateType certificateType) {
       switch (certificateType.Name) {

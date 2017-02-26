@@ -8,29 +8,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CityS.WS {
+namespace Empiria.Land.Connectors.CitysWS {
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://ws.ispac.tdw.ieci/", ConfigurationName="CityS.WS.RppCertificateEmissionWS")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://ws.ispac.tdw.ieci/", ConfigurationName="CitysWS.RppCertificateEmissionWS")]
     public interface RppCertificateEmissionWS {
 
         [System.ServiceModel.OperationContractAttribute(Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/receiveCertificateRequest", ReplyAction="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/receiveCertificateResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        int receiveCertificate(CityS.WS.authBean arg0, CityS.WS.rppCertificateEmissionCertificateBean arg1);
+        int receiveCertificate(Empiria.Land.Connectors.CitysWS.authBean arg0, Empiria.Land.Connectors.CitysWS.rppCertificateEmissionCertificateBean arg1);
 
         [System.ServiceModel.OperationContractAttribute(Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/receiveCertificateRequest", ReplyAction="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/receiveCertificateResponse")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        System.Threading.Tasks.Task<int> receiveCertificateAsync(CityS.WS.authBean arg0, CityS.WS.rppCertificateEmissionCertificateBean arg1);
+        System.Threading.Tasks.Task<int> receiveCertificateAsync(Empiria.Land.Connectors.CitysWS.authBean arg0, Empiria.Land.Connectors.CitysWS.rppCertificateEmissionCertificateBean arg1);
 
         [System.ServiceModel.OperationContractAttribute(Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/canSendDocumentRequest", ReplyAction="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/canSendDocumentResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        bool canSendDocument(CityS.WS.authBean arg0, string arg1);
+        bool canSendDocument(Empiria.Land.Connectors.CitysWS.authBean arg0, string arg1);
 
         [System.ServiceModel.OperationContractAttribute(Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/canSendDocumentRequest", ReplyAction="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/canSendDocumentResponse")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        System.Threading.Tasks.Task<bool> canSendDocumentAsync(CityS.WS.authBean arg0, string arg1);
+        System.Threading.Tasks.Task<bool> canSendDocumentAsync(Empiria.Land.Connectors.CitysWS.authBean arg0, string arg1);
     }
 
     /// <remarks/>
@@ -238,12 +238,12 @@ namespace CityS.WS {
     }
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface RppCertificateEmissionWSChannel : CityS.WS.RppCertificateEmissionWS, System.ServiceModel.IClientChannel {
+    public interface RppCertificateEmissionWSChannel : Empiria.Land.Connectors.CitysWS.RppCertificateEmissionWS, System.ServiceModel.IClientChannel {
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RppCertificateEmissionWSClient : System.ServiceModel.ClientBase<CityS.WS.RppCertificateEmissionWS>, CityS.WS.RppCertificateEmissionWS {
+    public partial class RppCertificateEmissionWSClient : System.ServiceModel.ClientBase<Empiria.Land.Connectors.CitysWS.RppCertificateEmissionWS>, Empiria.Land.Connectors.CitysWS.RppCertificateEmissionWS {
 
         public RppCertificateEmissionWSClient() {
         }
@@ -264,19 +264,19 @@ namespace CityS.WS {
                 base(binding, remoteAddress) {
         }
 
-        public int receiveCertificate(CityS.WS.authBean arg0, CityS.WS.rppCertificateEmissionCertificateBean arg1) {
+        public int receiveCertificate(Empiria.Land.Connectors.CitysWS.authBean arg0, Empiria.Land.Connectors.CitysWS.rppCertificateEmissionCertificateBean arg1) {
             return base.Channel.receiveCertificate(arg0, arg1);
         }
 
-        public System.Threading.Tasks.Task<int> receiveCertificateAsync(CityS.WS.authBean arg0, CityS.WS.rppCertificateEmissionCertificateBean arg1) {
+        public System.Threading.Tasks.Task<int> receiveCertificateAsync(Empiria.Land.Connectors.CitysWS.authBean arg0, Empiria.Land.Connectors.CitysWS.rppCertificateEmissionCertificateBean arg1) {
             return base.Channel.receiveCertificateAsync(arg0, arg1);
         }
 
-        public bool canSendDocument(CityS.WS.authBean arg0, string arg1) {
+        public bool canSendDocument(Empiria.Land.Connectors.CitysWS.authBean arg0, string arg1) {
             return base.Channel.canSendDocument(arg0, arg1);
         }
 
-        public System.Threading.Tasks.Task<bool> canSendDocumentAsync(CityS.WS.authBean arg0, string arg1) {
+        public System.Threading.Tasks.Task<bool> canSendDocumentAsync(Empiria.Land.Connectors.CitysWS.authBean arg0, string arg1) {
             return base.Channel.canSendDocumentAsync(arg0, arg1);
         }
     }
