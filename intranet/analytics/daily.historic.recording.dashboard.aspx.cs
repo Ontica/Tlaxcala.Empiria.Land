@@ -1,13 +1,13 @@
 ﻿/* Empiria Land **********************************************************************************************
-*																																																						 *
-*	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
-*	 Namespace : Empiria.Web.UI.Workflow                          Assembly : Empiria.Land.Intranet.dll         *
-*	 Type      : TasksDashboard                                   Pattern  : Explorer Web Page                 *
-*  Version   : 2.1                                              License  : Please read license.txt file      *
-*																																																						 *
+*                                                                                                            *
+*  Solution  : Empiria Land                                     System   : Land Intranet Application         *
+*  Namespace : Empiria.Web.UI.Workflow                          Assembly : Empiria.Land.Intranet.dll         *
+*  Type      : TasksDashboard                                   Pattern  : Explorer Web Page                 *
+*  Version   : 3.0                                              License  : Please read license.txt file      *
+*                                                                                                            *
 *  Summary   : Multiview dashboard used for workflow task management.                                        *
-*																																																						 *
-********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
+*                                                                                                            *
+********************************** Copyright(c) 2009-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 using System.Data;
 using System.Web.UI;

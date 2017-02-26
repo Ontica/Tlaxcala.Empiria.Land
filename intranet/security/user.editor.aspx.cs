@@ -1,13 +1,13 @@
 ﻿/* Empiria Land **********************************************************************************************
-*																																																						 *
-*	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
-*	 Namespace : Empiria.Web.UI.Security                          Assembly : Empiria.Land.Intranet.dll         *
-*	 Type      : ChangePassword                                   Pattern  : MasterPage View		               *
-*  Version   : 2.1                                              License  : Please read license.txt file      *
-*																																																						 *
+*                                                                                                            *
+*  Solution  : Empiria Land                                     System   : Land Intranet Application         *
+*  Namespace : Empiria.Web.UI.Security                          Assembly : Empiria.Land.Intranet.dll         *
+*  Type      : ChangePassword                                   Pattern  : MasterPage View                   *
+*  Version   : 3.0                                              License  : Please read license.txt file      *
+*                                                                                                            *
 *  Summary   : Allows change the current user password.                                                      *
-*																																																						 *
-********************************** Copyright(c) 1994-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
+*                                                                                                            *
+********************************** Copyright(c) 1994-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
 using Empiria.Presentation.Web;
@@ -186,8 +186,6 @@ namespace Empiria.Web.UI.Security {
     }
 
     private void SetEditorButtons() {
-      Empiria.Security.IEmpiriaPrincipal principal = Empiria.ExecutionServer.CurrentPrincipal;
-
       btnAcceptChangesText = "Aceptar";
       btnApplyChangesText = "Aplicar";
     }

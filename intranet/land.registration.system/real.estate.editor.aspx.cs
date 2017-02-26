@@ -1,13 +1,13 @@
 ﻿/* Empiria Land **********************************************************************************************
-*																																																						 *
+*                                                                                                            *
 *  Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *  Namespace : Empiria.Land.WebApp                              Assembly : Empiria.Land.Intranet.dll         *
 *  Type      : RealEstateEditor                                 Pattern  : Explorer Web Page                 *
-*  Version   : 2.1                                              License  : Please read license.txt file      *
-*																																																						 *
+*  Version   : 3.0                                              License  : Please read license.txt file      *
+*                                                                                                            *
 *  Summary   : Display and update real estate data from the user interface.                                  *
 *                                                                                                            *
-********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 2009-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
 using Empiria.DataTypes;

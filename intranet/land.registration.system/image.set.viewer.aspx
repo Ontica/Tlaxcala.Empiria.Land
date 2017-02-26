@@ -142,7 +142,7 @@
     resizeWorkplace2();
     addEvent(window, 'resize', resizeWorkplace2);
     setObjectEvents();
-    window.defaultStatus = ""; //"Sistema Empiria 2016. Copyright(c) 1999-2016. La Vía Óntica SC, Ontica LLC and contributors.";
+    window.defaultStatus = ""; //"Sistema Empiria 2017. Copyright(c) 1999-2017. La Vía Óntica SC, Ontica LLC and contributors.";
   }
 
   function resizeWorkplace2() {
@@ -176,10 +176,12 @@
 
   addEvent(window, 'load', window_onload);
 
+    //oncontextmenu="return false"
+
   /* ]]> */
   </script>
 </head>
-<body oncontextmenu="return false">
+<body>
 <form name="aspnetForm" method="post" id="aspnetForm" runat="server">
   <div>
     <input type="hidden" name="hdnPageCommand" id="hdnPageCommand" runat="server" />
@@ -204,7 +206,7 @@
                   <td nowrap='nowrap'>
                     Ir a la imagen: <input id="txtGoToImage" name="txtGoToImage" type="text" class="textBox" maxlength="3"
                                      style="width:28px;margin-right:0px" onkeypress="return integerKeyFilter(this);" runat="server" /><img
-                                      src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('gotoImage')" title="Ejecuta la búsqueda" /></td>
+                                     src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('gotoImage')" title="Ejecuta la búsqueda" /></td>
                   <td width='40%' nowrap='nowrap'>&nbsp;</td>
                   <td><img src='../themes/default/buttons/first.gif' onclick='doOperation("moveToImage", "first");' title='Muestra la primera imagen' alt='' /></td>
                   <td><img src='../themes/default/buttons/previous.gif' onclick='doOperation("moveToImage", "previous");' title='Muestra la imagen anterior' alt='' /></td>

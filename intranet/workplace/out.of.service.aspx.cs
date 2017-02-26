@@ -1,14 +1,13 @@
 ﻿/* Empiria Land **********************************************************************************************
-*																																																						 *
-*	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
-*	 Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Intranet.dll         *
-*	 Type      : QualityControl                                   Pattern  : Explorer Web Page                 *
-*  Version   : 2.1                                              License  : Please read license.txt file      *
-*																																																						 *
-*  Summary   : Gets user credentials and redirects users to the workplace start page.                        *
-*																																																						 *
-********************************** Copyright(c) 1994-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
-
+*                                                                                                            *
+*  Solution  : Empiria Land                                     System   : Land Intranet Application         *
+*  Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Intranet.dll         *
+*  Type      : QualityControl                                   Pattern  : Explorer Web Page                 *
+*  Version   : 3.0                                              License  : Please read license.txt file      *
+*                                                                                                            *
+*  Summary   :                                                                                               *
+*                                                                                                            *
+********************************** Copyright(c) 1994-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using Empiria.Presentation.Web;
 
 namespace Empiria.Web.UI {

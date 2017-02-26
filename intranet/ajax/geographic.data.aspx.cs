@@ -1,13 +1,13 @@
 ﻿/* Empiria Land **********************************************************************************************
-*																																																						 *
-*	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
-*	 Namespace : Empiria.Web.UI.Ajax                              Assembly : Empiria.Land.Intranet.dll         *
-*	 Type      : GeographicData                                   Pattern  : Ajax Services Web Page            *
-*  Version   : 2.1                                              License  : Please read license.txt file      *
-*																																																						 *
+*                                                                                                            *
+*  Solution  : Empiria Land                                     System   : Land Intranet Application         *
+*  Namespace : Empiria.Web.UI.Ajax                              Assembly : Empiria.Land.Intranet.dll         *
+*  Type      : GeographicData                                   Pattern  : Ajax Services Web Page            *
+*  Version   : 3.0                                              License  : Please read license.txt file      *
+*                                                                                                            *
 *  Summary   : Validates and gets geographic data through Ajax invocation.                                   *
-*																																																						 *
-********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
+*                                                                                                            *
+********************************** Copyright(c) 2009-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
 using Empiria.Geography;

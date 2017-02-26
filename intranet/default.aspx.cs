@@ -1,13 +1,13 @@
 ﻿/* Empiria Land **********************************************************************************************
-*																																																						 *
-*	 Solution  : Empiria Land                                     System   : Land Intranet Application         *
-*	 Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Intranet.dll         *
-*	 Type      : LogonPage										                    Pattern  : Logon Web Page                    *
-*  Version   : 2.1                                              License  : Please read license.txt file      *
-*																																																						 *
+*                                                                                                            *
+*  Solution  : Empiria Land                                     System   : Land Intranet Application         *
+*  Namespace : Empiria.Web.UI                                   Assembly : Empiria.Land.Intranet.dll         *
+*  Type      : LogonPage                                        Pattern  : Logon Web Page                    *
+*  Version   : 3.0                                              License  : Please read license.txt file      *
+*                                                                                                            *
 *  Summary   : Gets user credentials and redirects users to the workplace start page.                        *
-*																																																						 *
-********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
+*                                                                                                            *
+********************************** Copyright(c) 2009-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
 using Empiria.Presentation.Web.Controllers;

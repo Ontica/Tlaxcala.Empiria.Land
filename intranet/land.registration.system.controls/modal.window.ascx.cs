@@ -1,13 +1,13 @@
 ﻿/* Empiria Land **********************************************************************************************
-*																																																						 *
+*                                                                                                            *
 *  Solution  : Empiria                                          System   : Web Application                   *
 *  Namespace : Empiria.WebApp                                   Assembly :                                   *
 *  Type      : ModalWindowControl                               Pattern  : User Control                      *
-*  Version   : 2.1                                              License  : Please read license.txt file      *
-*																																																						 *
+*  Version   : 3.0                                              License  : Please read license.txt file      *
+*                                                                                                            *
 *  Summary   : HTML modal window used to display diverse HTML content.                                       *
 *                                                                                                            *
-********************************** Copyright(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 2009-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
 namespace Empiria.WebApp {

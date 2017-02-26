@@ -2,11 +2,11 @@
 *																																																						 *
 *	 Solution  : Empiria Web																			System   : Javascript Core Library					 *
 *	 File      : /clock.js																				Pattern  : JavaScript Methods Library				 *
-*  Version   : 2.1                                              License  : Please read license.txt file      *
+*  Version   : 3.0                                              License  : Please read license.txt file      *
 *																																																						 *
 *  Summary   : Displays the client system date-time in an html item.                                         *
 *																																																						 *
-********************************** Copyright(c) 1994-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 1994-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 
 // region Public methods
 
