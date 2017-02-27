@@ -466,7 +466,7 @@
     <% if (this.transaction.Document.ImagingControlID.Length != 0) { %>
     getElement("cmdShowImagingControlSlip").style.display = "inline";
     <% } %>
-    <% if (!base.transaction.Document.IsEmptyDocument) { %>
+    <% if (!base.transaction.Document.IsEmptyDocumentType) { %>
       getElement("cmdShowRecordingSeal").style.display = "inline";
     <% } %>
     <% if (base.CanCloseDocument()) { %>
