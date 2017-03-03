@@ -36,7 +36,7 @@
     gLastSelectedRowCell = gridCell;
 	  gridCell.parentElement.className = 'selectedItem';
 	  gridCell.innerHTML = "»";
-	  window.parent.execScript("doCommand('onSelectedObjectChangeCmd', '" + queryString + "')");
+	  window.parent.eval("doCommand('onSelectedObjectChangeCmd', '" + queryString + "')");
 	}
 	
 	function window_onload() {

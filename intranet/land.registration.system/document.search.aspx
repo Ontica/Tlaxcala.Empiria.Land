@@ -150,7 +150,7 @@
   }
 
   function onSelectImageSet(imageSetId) {
-    window.parent.execScript("doOperation('onSelectImageSet', " + imageSetId + ")");
+      window.parent.eval("doOperation('onSelectImageSet', " + imageSetId + ")");
   }
 
   function showRecordingBookAnalyzer(recordingBookId) {
@@ -187,20 +187,20 @@
   }
 
   function onSelectDocument(documentId, recordingActId) {
-    window.parent.execScript("doOperation('onSelectDocument', " + documentId + ", " + recordingActId + ")");
+      window.parent.eval("doOperation('onSelectDocument', " + documentId + ", " + recordingActId + ")");
   }
 
   function onSelectDocumentFromSearchGrid(documentId) {
     displayDocumentRecordingActsGrid(documentId);
-    window.parent.execScript("doOperation('onSelectDocument', " + documentId + ")");
+    window.parent.eval("doOperation('onSelectDocument', " + documentId + ")");
   }
 
   function onSelectRecordingAct(documentId, recordingActId) {
-    window.parent.execScript("doOperation('onSelectRecordingAct', " + documentId + ", " + recordingActId + ")");
+      window.parent.eval("doOperation('onSelectRecordingAct', " + documentId + ", " + recordingActId + ")");
   }
 
   function onSelectCertificate(certificateId) {
-    window.parent.execScript("doOperation('onSelectCertificate', " + certificateId + ")");
+      window.parent.eval("doOperation('onSelectCertificate', " + certificateId + ")");
   }
 
   function onSelectParty(partyId) {

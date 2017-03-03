@@ -506,7 +506,6 @@ function setPageTitleWithTabStrip(oTabStrip) {
   }
   var oMainPage = window.parent;
   var script = "setPageTitle('" + pageTitle + "');";
-  //oMainPage.execScript(script);
   oMainPage.eval(script);
 }
 

@@ -171,7 +171,7 @@
         getElement("txtExternalNumber").value = "Sin número";
         return;
       case 'closeWindow':
-        window.parent.execScript("doOperation('refreshRecording')");
+            window.parent.eval("doOperation('refreshRecording')");
         return;
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
@@ -278,7 +278,7 @@
 
   function onclick_btnExitSaveRecordingAct() {
     if (gbRecordingActEditorDisabled) {
-      window.parent.execScript("doOperation('refreshRecording')");
+        window.parent.eval("doOperation('refreshRecording')");
       return;
     } else {
       return doOperation("saveRecordingAct");

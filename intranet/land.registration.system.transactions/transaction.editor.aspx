@@ -506,7 +506,7 @@
         getElement("txtExternalNumber").value = "S/N";
         return;
       case 'closeWindow':
-        window.parent.execScript("doOperation('refreshRecording')");
+            window.parent.eval("doOperation('refreshRecording')");
         return;
       case 'appendGeographicalItem':
         return appendGeographicalItem();

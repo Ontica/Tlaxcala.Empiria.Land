@@ -66,9 +66,9 @@ function showCalendar(oDataSource, oImageSource) {
 	} else {
     oCalendar.contentWindow.moveTo(x, y);
     if (cal_isDate(oDataSource)) {
-      oCalendar.contentWindow.execScript("setDate('" + oDataSource.value + "')");
+        oCalendar.contentWindow.eval("setDate('" + oDataSource.value + "')");
     } else {
-      oCalendar.contentWindow.execScript("setDate('')");
+        oCalendar.contentWindow.eval("setDate('')");
     }
     oCalendar.style.zIndex = 999;
     oCalendar.style.visibility = "visible";

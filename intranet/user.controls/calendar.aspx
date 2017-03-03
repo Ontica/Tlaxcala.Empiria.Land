@@ -15,11 +15,11 @@
       }
 
       function on_calendar_date_selected(value) {
-        window.parent.execScript("on_calendar_date_selected('" + value + "')");
+          window.parent.eval("on_calendar_date_selected('" + value + "')");
       }
 
       function on_calendar_lost_focus() {
-        window.parent.execScript("on_calendar_lost_focus()");
+          window.parent.eval("on_calendar_lost_focus()");
       }
 
       function on_calendar_resize() {
@@ -27,7 +27,7 @@
         var x = oBody.scrollWidth + (oBody.offsetWidth - oBody.clientWidth) + 1;
         var y = oBody.scrollHeight + (oBody.offsetHeight - oBody.clientHeight) + 1;
 
-        window.parent.execScript("on_calendar_resize(" + x + ", " + y + ")");
+            window.parent.eval("on_calendar_resize(" + x + ", " + y + ")");
       }
 
       function window_onload() {
