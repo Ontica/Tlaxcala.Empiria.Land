@@ -430,12 +430,12 @@ namespace Empiria.Land.WebApp {
             temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE_ID}}')\">Imprimir</a>");
           }
         } else {
-          temp = temp.Replace("{{ISSUED-BY}}", "&nbsp;");
+          temp = temp.Replace("{{ISSUED-BY}}", "&#160;");
           temp = temp.Replace("{{ISSUE-TIME}}", "No emitido");
           temp = temp.Replace("{{STATUS}}", "Pendiente");
           if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration ||
               transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording) {
-            temp = temp.Replace("{{OPTIONS-COMBO}}", "{{EDIT-LINK}} &nbsp; &nbsp; | &nbsp; &nbsp; {{DELETE-LINK}} ");
+            temp = temp.Replace("{{OPTIONS-COMBO}}", "{{EDIT-LINK}}&#160;&#160; |&#160;&#160; {{DELETE-LINK}} ");
             temp = temp.Replace("{{EDIT-LINK}}", "<a href=\"javascript:doOperation('editCertificate', '{{CERTIFICATE-UID}}')\">Editar</a>");
             temp = temp.Replace("{{DELETE-LINK}}", "<a href=\"javascript:doOperation('deleteCertificate', '{{CERTIFICATE-UID}}')\">Eliminar</a>");
           } else {
@@ -456,10 +456,10 @@ namespace Empiria.Land.WebApp {
                               "<td align='right'>{REC.RIGHTS}</td>" +
                               "<td align='right'>{SHEETS}</td><td align='right'>{FOREIGN}</td>" +
                               "<td align='right'>{SUBTOTAL}</td><td align='right'>{DISCOUNT}</td><td align='right'><b>{TOTAL}</b></td>" +
-                              "{DELETE.CELL}";
-      const string deleteCell = "<td><img src='../themes/default/buttons/trash.gif' alt='' onclick='return doOperation(\"deleteRecordingAct\", {ID})'</td></tr>";
+                              "{DELETE.CELL} </tr >"; ///error en </ tr>
+      const string deleteCell = "<td><img src='../themes/default/buttons/trash.gif' alt='' onclick='return doOperation(\"deleteRecordingAct\", {ID})' /></td>";
 
-      const string footer = "<tr class='totalsRow'><td>&nbsp;</td><td colspan='2'>{MESSAGE}</td><td colspan='6' align='right'><b>Total:</b></td><td align='right'><b>{TOTAL}</b></td><td>&nbsp;</td></tr>";
+      const string footer = "<tr class='totalsRow'><td>&#160;</td><td colspan='2'>{MESSAGE}</td><td colspan='6' align='right'><b>Total:</b></td><td align='right'><b>{TOTAL}</b></td><td>&#160;</td></tr>";
       decimal total = 0;
       string html = String.Empty;
       FixedList<LRSTransactionItem> list = transaction.Items;
@@ -481,7 +481,7 @@ namespace Empiria.Land.WebApp {
         if (this.IsEditable()) {
           temp = temp.Replace("{DELETE.CELL}", deleteCell);
         } else {
-          temp = temp.Replace("{DELETE.CELL}", "&nbsp;");
+          temp = temp.Replace("{DELETE.CELL}", "&#160;");
         }
         temp = temp.Replace("{ID}", list[i].Id.ToString());
 
@@ -489,7 +489,7 @@ namespace Empiria.Land.WebApp {
         total += list[i].Fee.Total;
       }
 
-      string message = "&nbsp;";
+      string message = "&#160;";
       if (this.IsEditable() && this.transaction.Items.Count > 0) {
         message = "<a href=\"javascript:doOperation('showConceptsEditor')\">Agregar más conceptos</a>";
       } else if (transaction.Workflow.IsEmptyItemsTransaction) {
@@ -510,9 +510,9 @@ namespace Empiria.Land.WebApp {
                               "<td style='white-space:nowrap;'>{RESPONSIBLE}</td><td align='right'>{CHECK.IN}</td><td align='right'>{END.PROCESS}</td><td align='right'>{CHECK.OUT}</td>" +
                               "<td align='right'>{ELAPSED.TIME}</td><td>{STATUS}</td><td style='white-space:normal;width:30%;'>{NOTES}</td></tr>";
 
-      const string subTotalTemplate = "<tr class='detailsGreenItem'><td colspan='5'>&nbsp;</td><td  align='right'><b>{WORK.TOTAL.TIME}</b></td><td>&nbsp;</td><td>Duración total: <b>{TOTAL.TIME}</b></td></tr>";
+      const string subTotalTemplate = "<tr class='detailsGreenItem'><td colspan='5'>&#160;</td><td  align='right'><b>{WORK.TOTAL.TIME}</b></td><td>&#160;</td><td>Duración total: <b>{TOTAL.TIME}</b></td></tr>";
 
-      const string footer = "<tr class='detailsSuperHeader' valign='middle'><td colspan='5' style='height:28px'>&nbsp;&nbsp;{NEXT.STATUS}</td><td  align='right'><b>{WORK.TOTAL.TIME}</b></td><td>&nbsp;</td><td>&nbsp;&nbsp;&nbsp;Duración total: <b>{TOTAL.TIME}</b></td></tr>";
+      const string footer = "<tr class='detailsSuperHeader' valign='middle'><td colspan='5' style='height:28px'>&#160;&#160;{NEXT.STATUS}</td><td  align='right'><b>{WORK.TOTAL.TIME}</b></td><td>&#160;</td><td>&#160;&#160;&#160;Duración total: <b>{TOTAL.TIME}</b></td></tr>";
 
       LRSWorkflowTaskList taskList = this.transaction.Workflow.Tasks;
 
@@ -548,13 +548,13 @@ namespace Empiria.Land.WebApp {
         }
         temp = temp.Replace("{CHECK.IN}", task.CheckInTime.ToString(dateFormat));
         temp = temp.Replace("{END.PROCESS}", task.EndProcessTime != ExecutionServer.DateMaxValue ?
-                                                      task.EndProcessTime.ToString(dateFormat) : "&nbsp;");
+                                                      task.EndProcessTime.ToString(dateFormat) : "&#160;");
         temp = temp.Replace("{CHECK.OUT}", task.CheckOutTime != ExecutionServer.DateMaxValue ?
-                                                      task.CheckOutTime.ToString(dateFormat) : "&nbsp;");
+                                                      task.CheckOutTime.ToString(dateFormat) : "&#160;");
 
         TimeSpan elapsedTime = task.OfficeWorkElapsedTime;
         temp = temp.Replace("{ELAPSED.TIME}", elapsedTime == TimeSpan.Zero ?
-                                                  "&nbsp;" : EmpiriaString.TimeSpanString(elapsedTime));
+                                                  "&#160;" : EmpiriaString.TimeSpanString(elapsedTime));
         temp = temp.Replace("{STATUS}", task.StatusName);
 
         temp = temp.Replace("{NOTES}", task.Notes);
@@ -574,7 +574,7 @@ namespace Empiria.Land.WebApp {
       html += footer.Replace("{WORK.TOTAL.TIME}", EmpiriaString.TimeSpanString(workTimeSeconds));
       html = html.Replace("{TOTAL.TIME}", EmpiriaString.TimeSpanString(elapsedTimeSeconds));
       html = html.Replace("{NEXT.STATUS}", (task != null && task.Status == WorkflowTaskStatus.OnDelivery) ?
-                                                      "Próximo estado: &nbsp;<b>" + task.NextStatusName + "</b>" : String.Empty);
+                                                      "Próximo estado:&#160;<b>" + task.NextStatusName + "</b>" : String.Empty);
 
       return html;
     }
@@ -656,7 +656,7 @@ namespace Empiria.Land.WebApp {
     protected string GetRightTitle() {
       string title = String.Empty;
       if (this.transaction.IsNew) {
-        return "&nbsp;";
+        return "&#160;";
       }
 
       if (this.transaction.PresentationTime != ExecutionServer.DateMaxValue) {
