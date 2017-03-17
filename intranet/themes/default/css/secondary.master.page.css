@@ -1,5 +1,5 @@
-﻿html, body {
-  color: #fcfcfc;
+html, body {
+  color: #fbfbfb;
   font-family: Arial, Sans-serif;
   font-size: 8pt;
   padding: 0;
@@ -7,18 +7,18 @@
   overflow: hidden;
   height: 100%;
   border: none;
-  cursor: auto;
-}
+  cursor: auto; }
+
 a, a:link, a:visited, a:active {
   background-color: inherit;
   color: #f2daa2;
-  text-decoration: none;
-}
+  text-decoration: none; }
+
 a:hover {
   background-color: inherit;
   color: #ffe4b5;
-  text-decoration: none;
-}
+  text-decoration: none; }
+
 .tabStrip {
   padding: 0;
   margin: 0 0 14px 0;
@@ -28,123 +28,125 @@ a:hover {
   width: 100%;
   font-weight: bold;
   font-family: Arial;
-  margin-left: -6px;
-}
+  margin-left: -6px; }
+
 td.tabOn {
   background-color: #900000;
   margin-right: 4px;
-  text-align:center;	
+  text-align: center;
   border-right: #606060 1pt solid;
   white-space: nowrap;
   color: #ffffff;
   height: 26px;
-  cursor: pointer;
-}
+  cursor: pointer; }
 td.tabOff {
-  background-color: #7F7F7F;
+  background-color: #7f7f7f;
   white-space: nowrap;
   color: #ffffff;
   cursor: pointer;
   border-right: #606060 1px solid;
   border-bottom: #606060 1px solid;
-  text-align: center;
-}
+  text-align: center; }
 td.tabHover {
   background-color: #a0a0a0;
-  text-align:center;
+  text-align: center;
   border-right: #606060 1pt solid;
   white-space: nowrap;
   color: #ffffff;
-  cursor: pointer;
-}
+  cursor: pointer; }
 td.tabDisabled {
   background-color: #a0a0a0;
   border-right: #606060 1pt solid;
-  text-align:center;
+  text-align: center;
   white-space: nowrap;
-  color: #d8d8d8;
-}
+  color: #d7d7d7; }
+
 img {
   cursor: pointer;
-  border: 0px;
+  border: 0;
   margin-right: 4px;
-  vertical-align: middle;
-}
-img.decoratorImage {
-  cursor: auto;
-}
-img.logo {
-  cursor: auto;
-  position: absolute;
-  z-index: 100;
-}
+  vertical-align: middle; }
+  img.decoratorImage {
+    cursor: auto; }
+  img.logo {
+    cursor: auto;
+    position: absolute;
+    z-index: 100; }
+
 #divCanvas {
   margin: 0;
   padding: 0;
-  background-image: url(../customer/main.menu.png);	
-}
+  background-image: url(../customer/main.menu.png); }
+
 #divHeader {
-  background-color: #3F4B3F;
-  color: white;
+  background-color: #3f4b3f;
+  color: #ffffff;
   height: 48px;
   overflow: hidden;
-  padding: 2px 4pt 0 8pt;
-}
+  padding: 2px 4pt 0 8pt; }
+
 #divBody {
   background-color: #fbfbfb;
   color: inherit;
   padding: 0;
   margin: 0;
   top: 0;
-  position: relative;	
-}
+  position: relative; }
+
 #divContent {
   background-color: inherit;
   color: #3c3c3c;
   font-family: Tahoma, Verdana, Serif;
-  font-size: 8pt;	
-  margin: 2px 0 2px 0;
+  font-size: 8pt;
+  margin: 2px 0;
   padding: 12px 12px 0 12px;
   position: absolute;
   float: left;
-  overflow: auto;
-}
+  overflow: auto; }
+
 span.appTitle {
   background: transparent;
   float: left;
   text-align: left;
-  color: white;
+  color: #ffffff;
   font-size: 16pt;
   font-family: Century, Serif;
-  padding-top: 10px;
-}
+  padding-top: 10px; }
+span.leftItem {
+  float: left;
+  text-align: left; }
+span.rightItem {
+  float: right;
+  text-align: right; }
+  span.rightItem img {
+    padding-top: 6px; }
+
 tr.detailsSuperHeader {
-   background: #3a5577;
-   color: #eeeeee;
-   height: 26px;
-}
+  background: #165493;
+  color: #eeeeee;
+  height: 26px; }
 tr.detailsSuperFooter {
   background: #d2b48c;
   color: #eeeeee;
-  height: 8px;
-}
+  height: 8px; }
+
 #divContentAlwaysVisible {
   background-color: inherit;
   color: #3c3c3c;
   font-family: Tahoma, Verdana, Serif;
-  font-size: 8pt;	
-  margin: 2px 0 2px 0;
-  padding: 12px 12px 012px;
+  font-size: 8pt;
+  margin: 2px 0;
+  padding: 12px 12px 12px;
   position: absolute;
   float: left;
-  overflow:visible;
-}
+  overflow: visible; }
+
 #divRightMenu {
   background-color: #f5f5f5;
   color: #3c3c3c;
   font-family: Tahoma, Verdana, Serif;
   font-size: 8pt;
-  margin: 2px 2px 2px 2px;
+  margin: 2px;
   padding: 12px 12px 0 12px;
   position: absolute;
   float: right;
@@ -153,75 +155,64 @@ tr.detailsSuperFooter {
   right: 0;
   width: 30%;
   overflow: auto;
-  border-left: #b0c4de 1px solid;
-}
+  border-left: #b0c4de 1px solid; }
+
 div.contentTitle {
   background-color: inherit;
-  color: #784f25;		
+  color: #784f25;
   font-size: 14pt;
   font-weight: normal;
   font-family: Arial, Sans-Serif;
-  padding: 8px 0 2px 0;
-  border-bottom: #d2b48c 1px solid;	
-}
+  padding: 8px 0 2px;
+  border-bottom: #d2b48c 1px solid; }
 div.contentHint {
   background-color: inherit;
   color: #afafaf;
-  font-size: 8pt;	
+  font-size: 8pt;
   font-family: Arial, Sans-Serif;
-  padding: 2px 0 16px 2px;
-}
+  padding: 2px 0 16px 2px; }
+div.leftItem {
+  float: left;
+  text-align: left; }
+div.rightItem {
+  float: right;
+  text-align: right; }
+
 #divWait {
   background-color: inherit;
   color: #3a5577;
-  display: none;	
+  display: none;
   font-weight: bold;
   float: none;
   margin-left: 24px;
   text-align: center;
   position: relative;
-  overflow: auto;
-}
+  overflow: auto; }
+
 #divBottomToolbar {
-  background-color: #f1e3c5;
+  background-color: #f2e5c4;
   border-top: #d2b48c 1px solid;
   color: #486988;
   float: none;
   font-family: Tahoma, Verdana, Sans-Serif;
   height: 28px;
-  padding: 6px 24px 0 24px;
-  margin: 0;
-}
-div.leftItem, span.leftItem {
-  float: left;
-  text-align: left;
-}
-div.rightItem, span.rightItem {
-  float: right;
-  text-align: right;
-}
-span.rightItem img {
- padding-top: 6px;
-}
+  padding: 6px 24px 0;
+  margin: 0; }
+
 .actionButton {
   height: 24px;
   font-family: Tahoma, Verdana;
-  font-size: 8pt;
-}
-.actionsSeparator tr {
-  padding-bottom: 4px;
-  padding-top: 12px;
-  border-top: #1b5b9e 1px solid;
+  font-size: 8pt; }
 
-}
 .actionsSeparator {
-  border-top: #9a9a9a 1px solid;
-	font-size: 8pt;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color:#f6f6f6;
-}
-
-/* region Modal Window Styles */
+  border-top: #a0a0a0 1px solid;
+  font-size: 8pt;
+  font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f6f6f6; }
+  .actionsSeparator tr {
+    padding-bottom: 4px;
+    padding-top: 12px;
+    border-top: #1b5b9e 1px solid; }
 
 .modalWindow {
   background-color: #fafafa;
@@ -229,41 +220,30 @@ span.rightItem img {
   visibility: visible;
   display: inline;
   z-index: 900;
-  border: 1pt solid #cacaca;
-}
+  border: 1pt solid #cacaca; }
 
 .modalHeader {
-  background-color: #3F4B3F;
-  color: white;
+  background-color: #3f4b3f;
+  color: #ffffff;
   height: 24px;
   padding: 4pt 0 0 10pt;
   font-size: 10pt;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+  font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; }
 
 .modalCloseIcon {
   right: 2pt;
   height: 24px;
-  position:absolute;
-}
+  position: absolute; }
 
 .modalBody {
-  color: inherit;
-}
+  color: inherit; }
 
 .modalContent {
   color: #3c3c3c;
   font-family: Tahoma, Verdana, Serif;
-  font-size: 8pt;	
-  margin: 2px 0 2px 0;
+  font-size: 8pt;
+  margin: 2px 0;
   padding: 12px 12px 0 12px;
-  overflow: auto;
-}
+  overflow: auto; }
 
-/*.opaq {
-  opacity: 0.3;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
-  filter: alpha(opacity = 30);
-}*/
-
-/* endregion Modal Window Styles */
+/*# sourceMappingURL=secondary.master.page.css.map */

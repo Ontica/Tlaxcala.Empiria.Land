@@ -1,92 +1,85 @@
-﻿table.details {
-  padding: 0px 0px 0px 0px;
-  margin: 0px 0px 0px 0px;
-	font-family: Tahoma, Verdana;
+a.detailsLink, a.detailsLink:link, a.detailsLink:active, a.detailsLink:visited {
+  background-color: Transparent;
+  color: #8b6245;
+  text-decoration: none; }
+
+a.detailsLinkTitle, a.detailsLinkTitle:link, a.detailsLinkTitle:active, a.detailsLinkTitle:visited {
+  background-color: Transparent;
+  color: #295685;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 8pt;
+  font-family: Helvetica, Arial; }
+
+a.detailsLink:hover {
+  text-decoration: underline; }
+a.detailsLinkTitle:hover {
+  text-decoration: underline; }
+
+.boldItem {
+  background-color: inherit;
+  color: #3c3c3c;
+  white-space: nowrap; }
+
+.detailsHeader {
+  padding: 0;
+  border: none;
+  background-color: #cd853f;
+  margin: 0; }
+
+.detailsHeaderTitle {
+  background-color: Transparent;
+  font-weight: bold;
+  color: #103a6b;
+  text-decoration: none; }
+
+table.details {
+  padding: 0;
+  margin: 0;
+  font-family: Tahoma, Verdana;
   background-color: transparent;
   width: 100%;
   line-height: 14pt;
   border-collapse: collapse;
   border-left: #dadada 1px solid;
   border-right: #dadada 1px solid;
-  border-bottom: #dadada 1px solid;
-}
-table.details .detailsHeader td {
-	background-color: #d2b48c;
-	color: #262626;
-	border: #cacaca 1px solid;
-	margin: 0px;
-	padding: 2px 4px 2px 8px;
-	font-family: Tahoma, Verdana;
-	height: 24px;
-}
-table.details .detailsSubHeader td {
-  background-color: #fff8dc;
-  color: #191958;
-  margin: 0px;
-  padding: 2px 4px 2px 8px;
-  font-family: Tahoma, Verdana;
-  height: 22px;
-  border-right: medium none;
-  border-top: #cacaca 1px solid;
-  border-left: medium none;
-  border-bottom: #cacaca 1px solid;
-}
-table.details .detailsItem td {
-  background-color: #efefef;
-  border-bottom: #dfdfdf 1px solid;
-  margin: 2px 2px 2px 2px;
-  padding: 4px 4px 4px 8px;
-  vertical-align: top;
-}
-a.detailsLink, a.detailsLink:link, a.detailsLink:active, a.detailsLink:visited
-{
-	background-color: Transparent;
-	color: #8b6245;
-	text-decoration: none;
-}
-a.detailsLink:hover {
-  text-decoration: underline;
-}
-a.detailsLinkTitle, a.detailsLinkTitle:link, a.detailsLinkTitle:active, a.detailsLinkTitle:visited
-{
-  background-color: Transparent;
-  color: #295685;
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 8pt;
-  font-family: Helvetica, Arial;
-}
-a.detailsLinkTitle:hover {
-  text-decoration: underline;
-}
-.boldItem {
-  background-color: inherit;
-  color: #3a3f3a;
-  white-space: nowrap;
-}
-table.details .detailsOddItem td {
-  background-color: #fffaf0;
-  border-bottom: #efefef 1px solid;
-  margin: 2px 2px 2px 2px;
-  padding: 4px 4px 4px 8px;
-  vertical-align: top;
-}
-table.details .alertItem td {
-  background-color: #cc625e;
-  border-bottom: #efefef 1px solid;
-  margin: 2px 2px 2px 2px;
-  padding: 4px 4px 4px 8px;
-  vertical-align: top;
-}
-.detailsHeader {
-	padding: 0px 0px 0px 0px;
-	border: none;
-	background-color: #cd853f;
-	margin: 0px 0px 0px 0px;
-}
-.detailsHeaderTitle {
-	background-color: Transparent;
-	font-weight: bold;
-	color: #103a6b;
-	text-decoration: none;
-}
+  border-bottom: #dadada 1px solid; }
+  table.details .detailsHeader td {
+    background-color: #d2b48c;
+    color: #262626;
+    border: #cacaca 1px solid;
+    margin: 0;
+    padding: 2px 4px 2px 8px;
+    font-family: Tahoma, Verdana;
+    height: 24px; }
+  table.details .detailsSubHeader td {
+    background-color: #fff8dc;
+    color: #191958;
+    margin: 0;
+    padding: 2px 4px 2px 8px;
+    font-family: Tahoma, Verdana;
+    height: 22px;
+    border-right: medium none;
+    border-top: #cacaca 1px solid;
+    border-left: medium none;
+    border-bottom: #cacaca 1px solid; }
+  table.details .detailsItem td {
+    background-color: #efefef;
+    border-bottom: #e0e0e0 1px solid;
+    margin: 2px;
+    padding: 4px 4px 4px 8px;
+    vertical-align: top; }
+  table.details .detailsOddItem td {
+    background-color: #fffaf0;
+    border-bottom: #efefef 1px solid;
+    margin: 2px;
+    padding: 4px 4px 4px 8px;
+    vertical-align: top; }
+  table.details .alertItem td {
+    background-color: #cc625e;
+    border-bottom: #efefef 1px solid;
+    margin: 2px;
+    padding: 4px 4px 4px 8px;
+    vertical-align: top; }
+
+/*# sourceMappingURL=explorer.css.map */
