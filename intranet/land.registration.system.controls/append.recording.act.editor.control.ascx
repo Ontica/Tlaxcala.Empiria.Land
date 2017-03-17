@@ -19,7 +19,7 @@
             <input type="button" value="Agregar el acto jurídico" class="button" style="width:125px;height:28px;vertical-align:middle"
                    onclick='doRecordingActEditorOperation("appendRecordingAct")' />
           </td>
-          <td class="lastCell">&nbsp;</td>
+          <td class="lastCell">&#160;</td>
         </tr>
         <tr id="divPropertyTypeSelector">
           <td style="vertical-align:baseline">Sobre:</td>
@@ -36,12 +36,12 @@
                     onclick="doRecordingActEditorOperation('lookupResource')" />
               <span id='divSelectedLookupResource' style="display:none">
                 <a href="javascript:doOperation('editResource', olookupResource.Id)">Consultar historia</a>
-                &nbsp; | &nbsp;
+               &#160; |&#160;
                 <a href="javascript:unselectLookupResource()">Deseleccionar</a>
               </span>
               <br />
-              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
-              <label><input type="checkbox" id="chkSelectPredecentInPhysicalBooks" onclick="return showPrecedentRecordingSection()"; />Buscar el antecedente en libros</label>
+             &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+              <label><input type="checkbox" id="chkSelectPredecentInPhysicalBooks" onclick="return showPrecedentRecordingSection();" />Buscar el antecedente en libros</label>
               <br />
             </span>
             <table id="divPhysicalRecordingSelector" class="editionTable" style="display:none;width:200px" >
@@ -60,7 +60,7 @@
                             onchange="return updateUI(this);">
                       <option value="">( Primero seleccionar Distrito y sección )</option>
                     </select>
-                  &nbsp;&nbsp;
+                 &#160;&#160;
                   <a href="javascript:doOperation('displayRecordingBookImageSet', 'cboPrecedentRecordingBook')">
                     <img src='../themes/default/bullets/book.gif' />Consultar imágenes</a>
                 </td>
@@ -73,16 +73,16 @@
                         <option value="">¿Libro?</option>
                     </select>
                       <span id="divPropertySelectorSection" style="display:none">
-                        Antecedente: &nbsp; &nbsp;
+                        Antecedente:&#160;&#160;
                           <select id="cboPrecedentProperty" class="selectBox" style="width:200px" title="" onchange="return updateUI(this);">
                             <option value="">¿Inscripción?</option>
                           </select>
                           <a href="javascript:doOperation('editResource', getElement('cboPrecedentProperty').value)">Consultar historia</a>
                           <br />
                           <label>
-                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            <input type="checkbox" id="chkAddResourceToExistingRecording" disabled="disabled" onclick="return showPrecedentRecordingSection()"; />
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;
+                            <input type="checkbox" id="chkAddResourceToExistingRecording" disabled="disabled" onclick="return showPrecedentRecordingSection();" />
                             Agregar otro folio real a esta partida histórica
                           </label>
                         </span>
@@ -98,7 +98,7 @@
                           </select>
                         </span>
                     <br />
-                    <table ID="tblQuickAddFields"class="editionTable" style="display:none;width:200px;color:darkred">
+                    <table ID="tblQuickAddFields" class="editionTable" style="display:none;width:200px;color:darkred">
                       <tr>
                         <td>Documento registrado en la partida:</td>
                         <td colspan="3">
@@ -140,6 +140,7 @@
                       </tr>
                     </table>
                 </td>
+                  </tr>///se agrego
             </table>
             <br />
             <span id="divResourceName" style="display:none">
@@ -150,14 +151,14 @@
 
             <span id="divCadastralInfo" style="display:none">
               Clave catastral:
-              <input id="txtCadastralKey" type="text" class="textBox" style="width:230px;margin-right:0" maxlength="38" />
-              &nbsp;
-              <input type="button" value="Vincular" class="button" style="width:68px;height:24px;vertical-align:middle"
+              <input id="txtCadastralKey" type="text" class="textBox" style="width:230px; margin-right:0" maxlength="38" />
+             &#160;
+              <input type="button" value="Vincular" class="button" style="width:68px; height:24px; vertical-align:middle"
                    onclick='doRecordingActEditorOperation("getCadastralInfo")' />
               <br/>
             </span>
           </td>
-          <td class="lastCell">&nbsp;</td>
+          <td class="lastCell">&#160;</td>
         </tr>
       </table>
     </td>
@@ -185,17 +186,17 @@
               </select>
             </td>
             <td>Número:</td>
-            <td><input id="txtPartitionNo" type="text" class="textBox" style="width:122px;margin-right:0" maxlength="40" /></td>
+            <td><input id="txtPartitionNo" type="text" class="textBox" style="width:122px; margin-right:0" maxlength="40" /></td>
             <td class="lastCell">
               <label><input id="chkNoNumberPartition" type="checkbox" onclick="updatePartitionControls();" />Sin número</label>
               <label><input id="chkGeneratePartitionRank" type="checkbox" onclick="updatePartitionControls()" />Generar un rango</label>
             </td>
           </tr>
           <tr id="divRepeatPartitionUntilRow" style="display:none">
-            <td colspan="2">&nbsp;</td>
+            <td colspan="2">&#160;</td>
             <td>Número final:</td>
-            <td><input id="txtRepeatPartitionUntil" type="text" class="textBox" style="width:122px;margin-right:0" maxlength="4" /></td>
-            <td class="lastCell">&nbsp;</td>
+            <td><input id="txtRepeatPartitionUntil" type="text" class="textBox" style="width:122px; margin-right:0" maxlength="4" /></td>
+            <td class="lastCell">&#160;</td>
           </tr>
         </table>
     </td>
@@ -208,8 +209,8 @@
       <table class="editionTable">
         <tr>
           <td class="lastCell">
-            <div style="overflow:auto;width:780px;">
-              <table class="details"style="width:99%">
+            <div style="overflow:auto; width:780px;">
+              <table class="details" style="width:99%">
                 <tr class="detailsHeader">
                   <td>#</td>
                   <td>Acto jurídico</td>
@@ -219,7 +220,7 @@
                   <td>Estado</td>
                 </tr>
                 <tr id='tblTargetPrecedentActsTable' class='totalsRow' style='display:inline'>
-                  <td>&nbsp;</td>
+                  <td>&#160;</td>
                   <td colspan='5'>
                     <select id="cboTemporalId" class="selectBox" style="width:600px" title="">
                       <option value="">( Actos jurídicos del predio )</option>
@@ -227,7 +228,7 @@
                   </td>
                 </tr>
                 <tr class="totalsRow" style="display:none">
-                  <td>&nbsp;</td>
+                  <td>&#160;</td>
                   <td colspan="5">
                     <a href="javascript:doRecordingActEditorOperation('showTargetActEditor')">
                     <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />El acto jurídico a cancelar o modificar no aparece en la lista</a>
@@ -257,7 +258,7 @@
               <option value="">( Seleccionar acto jurídico a cancelar o modificar ) </option>
             </select>
           </td>
-          <td class="lastCell">&nbsp;</td>
+          <td class="lastCell">&#160;</td>
         </tr>
         <tr id="divTargetActBookAndRecording" style="display:none">
           <td colspan="2"></td>
@@ -287,7 +288,7 @@
 
             </span>
           </td>
-          <td class="lastCell">&nbsp;</td>
+          <td class="lastCell">&#160;</td>
           </tr>
         </table>
       </td>

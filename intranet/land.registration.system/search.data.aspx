@@ -34,7 +34,7 @@
       <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Inscripción de documentos</td>
       <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Emisión de certificados</td>
       <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Historia del trámite</td>
-      <td class="lastCell" colspan="1" rowspan="1"><a id="top" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
+      <td class="lastCell" colspan="1" rowspan="1"><a id="top" />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
     </tr>
   </table>
   <table id="tabStripItemView_0" class="editionTable" style="display:inline">
@@ -114,7 +114,7 @@
   <td class="subTitle">Actos jurídicos y conceptos involucrados en el trámite</td>
 </tr>
 <tr>
-  <td class="subTitle">&nbsp;</td>
+  <td class="subTitle">&#160;</td>
 </tr>
 </table>
 

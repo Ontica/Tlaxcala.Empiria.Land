@@ -7,7 +7,7 @@
           <td style="width:125px">Buscar:</td>
           <td class="lastCell">
             <input id='txtSearchParty' type="text" class="textBox" style="width:212px;margin-right:0;" maxlength="64" onkeypress="this_onSearchTextBoxKeyFilter(this)" runat="server" />
-            &nbsp;
+           &#160;
             <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-4px" onclick="this_searchParties()" />
             <select id="cboPartyType" class="selectBox" style="width:118px" title="" onchange="return this_updateUserInterface(this);" runat="server">
               <option value="0">( Todas )</option>
@@ -61,7 +61,7 @@
     </td>
   </tr>
   <tr>
-    <td>Otra información:<br />&nbsp;</td>
+    <td>Otra información:<br />&#160;</td>
     <td class="lastCell">
       <textarea id="txtPersonNotes" cols="310" rows="2" style="width:490px" class="textArea" runat="server"></textarea>
     </td>
@@ -69,7 +69,7 @@
 </table>
 <table id="tblOrganizationPartyEditor" class="editionTable" style="display:none;margin-top:-12px" runat='server'>
   <tr>
-    <td>Nombre o razón social:<br />&nbsp;</td>
+    <td>Nombre o razón social:<br />&#160;</td>
     <td class="lastCell">
       <textarea id="txtOrgName" cols="320" rows="2" style="width:490px" class="textArea" runat="server"></textarea>
     </td>
@@ -81,7 +81,7 @@
     </td>
   </tr>
   <tr>
-    <td>Otra información:<br />&nbsp;</td>
+    <td>Otra información:<br />&#160;</td>
     <td class="lastCell">
       <textarea id="txtOrgNotes" cols="310" rows="2" style="width:490px" class="textArea" runat="server"></textarea>
     </td>
@@ -115,7 +115,7 @@
               <input id='txtOwnershipPartAmount' class="textBox" style="width:58px;" onkeypress="return positiveKeyFilter(this);" title="" runat='server' />
             </div>
             <div id="divUsufructuaryRole" style="display:none;">
-              De la nuda de:&nbsp;
+              De la nuda de:&#160;
               <select id="cboUsufructuaryOf" class="selectBox" style="width:296px" onchange="return this_updateUserInterface(this);" runat="server">
                 <option value="">( Seleccionar al nudo propietario )</option>
               </select>
@@ -147,7 +147,7 @@
               </select>
               <br />
               <div id="divUsufructCondition" style="display:none">
-                Finalización:  &nbsp;&nbsp;&nbsp;&nbsp;
+                Finalización: &#160;&#160;&#160;&#160;
                 <input id='txtUsufructEndCondition' class="textBox" onblur="this_formatUsufructEndCondition();" style="width:290px;" title="" runat="server" />
                 <select id="cboUsufructTimeUnit" class="selectBox" style="width:108px;display:none" title="" runat="server">
                   <option value="Años">Años</option>
@@ -170,7 +170,7 @@
           </td>
         </tr>
         <tr>
-          <td>&nbsp;</td>
+          <td>&#160;</td>
           <td>
             <input id='txtNotes' class="textBox" style="width:315px;" title="" runat="server" />
             <input type="button" value="Agregar" class="button" tabindex="-1" style="width:54px; vertical-align:middle" onclick="doOperation('appendParty')" />

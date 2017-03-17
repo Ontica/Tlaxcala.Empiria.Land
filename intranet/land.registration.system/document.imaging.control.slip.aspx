@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-  <title>&nbsp;</title>
+  <title>&#160;</title>
   <meta http-equiv="Expires" content="-1" />
   <meta http-equiv="Pragma" content="no-cache" />
   <link href="../themes/default/css/official.document.css" type="text/css" rel="stylesheet" />
@@ -20,7 +20,7 @@
         <td style="text-align:right;vertical-align:top;width:40%">
           <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.UID%>" />
           <br />
-          Trámite: <%=transaction.UID%> <%=transaction.IsReentry ? "&nbsp; <b>(REINGRESO)</b>" : "" %>
+          Trámite: <%=transaction.UID%> <%=transaction.IsReentry ? "&#160; <b>(REINGRESO)</b>" : "" %>
         </td>
       </tr>
       <tr>

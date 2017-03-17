@@ -70,27 +70,27 @@
       <span id="spanRecordingDocumentEditor" runat="server"></span>
       <table class="editionTable">
         <tr>
-          <td>Descripción:<br /><br /><br /><br /><br /><br /><br /><br /><br />&nbsp;</td>
+          <td>Descripción:<br /><br /><br /><br /><br /><br /><br /><br /><br />&#160;</td>
           <td colspan="2" class="lastCell">
             <textarea id="txtObservations" name="txtObservations" class="textArea" style="width:698px" cols="348" rows="10" runat="server"></textarea>
           </td>
         </tr>
         <% if (base.IsReadyForEdition()) { %>
         <tr id="rowEditButtons" style="display:inline">
-          <td>&nbsp;</td>
+          <td>&#160;</td>
           <td class="lastCell" colspan="2">
             <input id='btnSaveRecording' type="button" value="Guardar los cambios" class="button" style="width:112px;height:28px" onclick='doOperation("saveDocument")' title='Guardar el documento' />
-            &nbsp; &nbsp; &nbsp;
+           &#160;&#160;&#160;
             <!--
             <input id='btnCancelEdition' type="button" value="Cancelar edición" class="button" style="width:112px;height:28px" onclick='doOperation("cancelEdition")' title='Cancela los cambios realizados sobre el documento' />
-            &nbsp; &nbsp; &nbsp;
+           &#160;&#160;&#160;
             <input id='btnCloseForRecording' type="button" value="Registro completo" class="button" style="width:112px;height:28px" onclick='doOperation("closeRegistration")' title='Cierra el documento y evita cambios adicionales en el registro' />
-            &nbsp; &nbsp; &nbsp;
+           &#160;&#160;&#160;
             <input id='btnOpenForRecording' type="button" value="Abrir para registro" class="button" style="width:112px;height:28px" onclick='doOperation("closeRegistration")' title='Abre el documento nuevamente para registro' />
             !-->
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+           &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+           &#160;&#160;&#160;&#160;&#160;
+           &#160;&#160;&#160;&#160;&#160;
           </td>
           <td >
           </td>
@@ -118,7 +118,7 @@
                 </tr>
                 <%=GetRecordingActsGrid()%>
                 <tr class='totalsRow' style='display:<%=base.IsReadyForEdition() && base.RecordingActs.Count == 0 ? "inline" : "none"%>'>
-                  <td>&nbsp;</td>
+                  <td>&#160;</td>
                   <td colspan='2'>
                     Todavía no se han agregado actos jurídicos al documento.
                   </td>
@@ -138,11 +138,11 @@
           <td class="totalsRow lastCell" style='width:860px;display:<%=base.IsReadyToAppendRecordingActs() && base.RecordingActs.Count > 0 ? "inline" : "none"%>'>
             <div style="width:50%;float:left">
                 <a href="javascript:doOperation('showRecordingActEditor')">
-                <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />Registrar otro acto jurídico</a>
+                <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />Registrar otro acto jurídico 1</a>
             </div>
             <div style="width:50%;text-align:right;">
               <a href="javascript:doOperation('showSearchRecordingsView')">
-              <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar la información registral</a>&nbsp; &nbsp; &nbsp;
+              <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar la información registral 1</a>&#160;&#160;&#160;
             </div>
           </td>
         </tr>

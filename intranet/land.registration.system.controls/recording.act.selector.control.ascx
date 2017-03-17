@@ -5,13 +5,13 @@
     <td colspan="6">
       <select id="cboRecordingActTypeCategory" name="cboRecordingActTypeCategory" class="selectBox" style="width:302px" title="" runat='server'>
       </select>
-      &nbsp;Predio:&nbsp;
+     &#160;Predio:&#160;
       <select id="cboProperty" class="selectBox" style="width:172px" title="" runat='server'>
         <option value="0">Nuevo predio</option>
         <option value="-1">Predio ya inscrito</option>
       </select>
     </td>
-    <td class="lastCell">&nbsp;</td>
+    <td class="lastCell">&#160;</td>
   </tr>
   <tr>
     <td>Acto jurídico:</td>
@@ -22,7 +22,7 @@
     </td>
   </tr>
   <tr id="<%=this.ClientID%>_divRegisteredPropertiesSection" style="display:none">
-    <td>Libro registral:<br /><br />&nbsp;</td>
+    <td>Libro registral:<br /><br />&#160;</td>
     <td colspan="6">
       <select id="cboAnotherRecorderOffice" class="selectBox" style="width:174px" title="" runat='server'>
       </select>
@@ -33,15 +33,15 @@
       <select id="cboAnotherRecording" class="selectBox" style="width:116px" title="" runat='server'>
       </select>
       <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" onclick="<%=this.ClientID%>_doOperation('showRecording')" />
-      &nbsp; &nbsp; &nbsp; &nbsp;Folio del predio:&nbsp;
+     &#160;&#160;&#160;&#160;Folio del predio:&#160;
       <select id="cboAnotherProperty" class="selectBox" style="width:202px" title="" runat='server'>
       </select>
       <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" onclick="<%=this.ClientID%>_doOperation('showRecording')" />
     </td>
-    <td class="lastCell">&nbsp;</td>
+    <td class="lastCell">&#160;</td>
   </tr>
   <tr>
-    <td>Importe del avalúo:&nbsp;</td>
+    <td>Importe del avalúo:&#160;</td>
     <td colspan="6" class="lastCell">
       <input id="txtAppraisalAmount" type="text" class="textBox" style="width:90px;"
               onkeypress="return positiveKeyFilter(this);" onblur='this_formatAsNumber(this);'
@@ -50,7 +50,7 @@
         <option value="600" title="Pesos mexicanos">MXN</option>
         <option value="602" title="Unidades de inversión">UDIS</option>
       </select>
-      &nbsp; &nbsp; &nbsp;&nbsp;
+     &#160;&#160;&#160;&#160;
       Importe de la operación:
       <input id="txtOperationAmount" type="text" class="textBox" style="width:90px;" onblur='this_formatAsNumber(this, 4);'
                 onkeypress="return positiveKeyFilter(this);" title="" maxlength="18" runat="server" />
@@ -65,7 +65,7 @@
     </td>
   </tr>
   <tr style="height:35px;vertical-align:bottom">
-    <td>&nbsp;</td>
+    <td>&#160;</td>
     <td class="lastCell" colspan="6">
       <img src="../themes/default/textures/pixel.gif" height="1px" width="350px" alt="" />
       <input type="button" value="Agregar el acto jurídico a la lista" class="button" style="height:28px;width:174px" onclick="<%=this.ClientID%>_doOperation('appendRecordingAct')" />

@@ -31,7 +31,7 @@
               <td>Acto jurídico:</td>
               <td class="lastCell" colspan="3">
                 <input id="txtRecordingActName" type="text" class="textBox" style="width:294px;margin-right:0" readonly="readonly" runat="server" />
-                &nbsp;Folio real:
+               &#160;Folio real:
                 <input id="txtProperty" type="text" class="textBox" style="width:132px;margin-right:0" readonly="readonly" runat="server" />
               </td>
             </tr>
@@ -71,7 +71,7 @@
               </td>
             </tr>
             <tr>
-              <td>&nbsp;</td>
+              <td>&#160;</td>
               <td class="lastCell" colspan="5">
                 <input id="btnEditRecordingAct" type="button" value="Editar este acto jurídico" class="button" tabindex="-1" style="width:140px" onclick="doOperation('onclick_btnEditRecordingAct')" />
                 <img src="../themes/default/textures/pixel.gif" height="1px" width="98px" alt="" />
@@ -96,7 +96,7 @@
                       <td>Identificación</td>
                       <td>Participa como</td>
                       <td>Titularidad</td>
-                      <td>&nbsp;</td>
+                      <td>&#160;</td>
                     </tr>
                     <%=GetRecordingActPartiesGrid()%>
                     <% if (base.IsReadyForEdition()) { %>

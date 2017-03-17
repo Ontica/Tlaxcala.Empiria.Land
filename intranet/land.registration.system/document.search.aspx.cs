@@ -162,7 +162,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectParty");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.ExtendedName);
-        row = row.Replace("{{IMAGING.LINKS}}", "&nbsp;");
+        row = row.Replace("{{IMAGING.LINKS}}", "&#160;");
 
         html += row;
       }
@@ -234,7 +234,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectResource");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.UID);
-        row = row.Replace("{{IMAGING.LINKS}}", "&nbsp;");
+        row = row.Replace("{{IMAGING.LINKS}}", "&#160;");
 
         html += row;
       }
@@ -252,7 +252,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectTransaction");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.UID);
-        row = row.Replace("{{IMAGING.LINKS}}", "&nbsp;");
+        row = row.Replace("{{IMAGING.LINKS}}", "&#160;");
 
         html += row;
       }

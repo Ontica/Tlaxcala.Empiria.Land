@@ -24,10 +24,10 @@
   <div id="divCanvas">
     <div id="divHeader" style="height:90px">
       <span id="spanPageTitle" class="appTitle">
-        &nbsp;
+       &#160;
       </span>
       <span id="spanPageRightTitle" class="rightItem appTitle" style="margin-right:8px">
-        &nbsp;
+       &#160;
       </span>
     </div> <!--divHeader!-->
     <div id="divBody">
@@ -50,7 +50,7 @@
                   <td id="tabStripItem_2" class="<%=TabStripClass(TabStrip.ResourceEditor)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Predio</td>
                   <td id="tabStripItem_3" class="<%=TabStripClass(TabStrip.ResourceHistory)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Historia del predio</td>
                   <td id="tabStripItem_4" class="<%=TabStripClass(TabStrip.GlobalSearch)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Consultar el acervo</td>
-                  <td class="lastCell">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a id="top" /></td>
+                  <td class="lastCell">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <a id="top" /></td>
                 </tr>
               </table>
 

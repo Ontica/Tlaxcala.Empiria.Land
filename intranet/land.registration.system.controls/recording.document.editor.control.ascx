@@ -15,10 +15,10 @@
       </select>
     </td>
     <td class="lastCell">
-      No. Oficio: &nbsp;
+      No. Oficio:&#160;
       <input id="txtNotaryOfficialLetterNo" type="text" class="textBox" style="width:100px" title="" maxlength="36"  runat="server" />
       <input type="button" class="button" value="Sin Núm." style="width:52px;height:24px;vertical-align:middle;margin-left:-8px" onclick="getElement('<%=txtNotaryOfficialLetterNo.ClientID%>').value='S/N'" />
-      &nbsp;&nbsp;Fecha del oficio:
+     &#160;&#160;Fecha del oficio:
       <input id='txtNotaryOfficialLetterIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
       <img id='imgNotaryOfficialLetterIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtNotaryOfficialLetterIssueDate.ClientID%>'), getElement('imgNotaryOfficialLetterIssueDate'));" title="Despliega el calendario" alt="" />
     </td>
@@ -63,9 +63,9 @@
       Escritura:
         <input id="txtNotaryDocNumber" name="txtNotaryDocNumber" type="text" class="textBox" style="width:40px"
          onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
-       &nbsp;Folios del: &nbsp;<input id="txtNotaryDocStartSheet" name="txtNotaryDocStartSheet" type="text" class="textBox" style="width:50px"
+      &#160;Folios del:&#160;<input id="txtNotaryDocStartSheet" name="txtNotaryDocStartSheet" type="text" class="textBox" style="width:50px"
          onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
-       al:&nbsp;&nbsp;
+       al:&#160;&#160;
        <input id="txtNotaryDocEndSheet" name="txtNotaryDocEndSheet" type="text" class="textBox" style="width:40px"
          onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
       Fecha de la escritura:
@@ -78,7 +78,7 @@
 <table id="oEjidalSystemTitle" class="editionTable" style="display:none;" runat="server">
   <tr>
     <td colspan="2">
-      Título de propiedad No: &nbsp;
+      Título de propiedad No:&#160;
     <input id="txtPropTitleDocNumber" type="text" class="textBox" style="width:136px" onkeypress="return upperCaseKeyFilter(this);"
          title="" maxlength="32" runat="server" /></td>
     <td>Expedido por:</td>
@@ -126,11 +126,11 @@
       </select>
     </td>
     <td>
-      Expediente: &nbsp;
+      Expediente:&#160;
       <input id="txtJudicialDocBook" type="text" class="textBox" style="width:120px" title="" maxlength="36"  runat="server" />
     </td>
     <td class="lastCell">
-      Oficio: &nbsp;
+      Oficio:&#160;
       <input id="txtJudicialDocNumber" type="text" class="textBox" style="width:100px" title="" maxlength="36"  runat="server" />
       Fecha:
       <input id='txtJudicialDocIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />

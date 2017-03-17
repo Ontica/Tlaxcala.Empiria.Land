@@ -70,12 +70,12 @@
             <tr>
               <td style="white-space:nowrap;">Notaría/Gestor:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.Agency.Alias%></b></td>
               <td style="white-space:nowrap">Tipo de trámite:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.TransactionType.Name%></b></td>
-              <td style="white-space:nowrap">Emitió:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.PostedBy.Alias%>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+              <td style="white-space:nowrap">Emitió:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.PostedBy.Alias%>&#160;&#160;&#160;&#160;</b></td>
             </tr>
             <tr>
               <td style="white-space:nowrap">Instrumento:</td><td><b><%=transaction.DocumentDescriptor%></b></td>
               <td style="white-space:nowrap">Tipo de documento:</td><td style="white-space:nowrap"><b><%=transaction.DocumentType.Name%></b></td>
-              <td style="white-space:nowrap">Emisión:</td><td style="white-space:nowrap"><b><%=transaction.PostingTime.ToString("dd/MMM/yyyy HH:mm")%>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+              <td style="white-space:nowrap">Emisión:</td><td style="white-space:nowrap"><b><%=transaction.PostingTime.ToString("dd/MMM/yyyy HH:mm")%>&#160;&#160;&#160;&#160;</b></td>
             </tr>
             <tr style='display:<%=transaction.ExtensionData.RequesterNotes.Length != 0 ? "inline" : "none" %>'>
               <td valign="top" style="white-space:nowrap">Observaciones:</td>
@@ -115,7 +115,7 @@
       </tr>
     </table>
 
-    <div class="breakpage">&nbsp;</div>
+    <div class="breakpage">&#160;</div>
 
     <table cellspacing="0" cellpadding="0" width="100%">
       <tr valign="top">
@@ -178,12 +178,12 @@
             <tr>
               <td style="white-space:nowrap;">Notaría/Gestor:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.Agency.Alias%></b></td>
               <td style="white-space:nowrap">Tipo de trámite:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.TransactionType.Name%></b></td>
-              <td style="white-space:nowrap">Emitió:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.PostedBy.Alias%>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+              <td style="white-space:nowrap">Emitió:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.PostedBy.Alias%>&#160;&#160;&#160;&#160;</b></td>
             </tr>
             <tr>					
               <td style="white-space:nowrap">Instrumento:</td><td><b><%=transaction.DocumentDescriptor%></b></td>
               <td style="white-space:nowrap">Tipo de documento:</td><td style="white-space:nowrap"><b><%=transaction.DocumentType.Name%></b></td>
-              <td style="white-space:nowrap">Emisión:</td><td style="white-space:nowrap"><b><%=transaction.PostingTime.ToString("dd/MMM/yyyy HH:mm")%>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+              <td style="white-space:nowrap">Emisión:</td><td style="white-space:nowrap"><b><%=transaction.PostingTime.ToString("dd/MMM/yyyy HH:mm")%>&#160;&#160;&#160;&#160;</b></td>
             </tr>
             <tr style='display:<%=transaction.ExtensionData.RequesterNotes.Length != 0 ? "inline" : "none" %>'>
               <td valign="top" style="white-space:nowrap">Observaciones:</td>

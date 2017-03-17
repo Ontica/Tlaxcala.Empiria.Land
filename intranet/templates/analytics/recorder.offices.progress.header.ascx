@@ -7,7 +7,7 @@
     <th align="right"><a href="javascript:sendPageCommand('sortData', 'PendingRecordingsCount DESC')">Inscripciones</a></th>
     <th align="right"><a href="javascript:sendPageCommand('sortData', 'PendingRecordingsCount DESC')">No legibles</a></th>
     <th align="right"><a href="javascript:sendPageCommand('sortData', 'NoLegibleRecordingsCount DESC')">No vigentes</a></th>
-    <th>&nbsp;</th>
+    <th>&#160;</th>
   </tr>
 </thead>
 <%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).HintContent%>

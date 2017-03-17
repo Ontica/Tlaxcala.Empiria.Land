@@ -9,7 +9,7 @@
     <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 3);" title="">Tareas en proceso</td>
     <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Tareas reasignadas</td>
     <td id="tabStripItem_5" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 5);" title="">Tareas descartadas</td>
-    <td>&nbsp; &nbsp;</td>
+    <td>&#160;&#160;</td>
     <td><input id="currentTabStripItem" name="currentTabStripItem" type="hidden" /></td>
   </tr>
 </table>
@@ -65,14 +65,14 @@
         <img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('loadData')" title="Ejecuta la búsqueda" />
 				<% if (this.SelectedTabStrip == 0) { %>
         <a href="javascript:doOperation('createWorkgroup')"><img src="../themes/default/buttons/go.button.png" alt=""
-                 title="Imprime el reporte con la programación de reparto para las unidades seleccionadas" />Crear un grupo de trabajo</a> &nbsp; &nbsp;
+                 title="Imprime el reporte con la programación de reparto para las unidades seleccionadas" />Crear un grupo de trabajo</a>&#160;&#160;
         <% } %>
 				<% if (this.SelectedTabStrip == 1) { %>
         <a href="javascript:doOperation('createUser')"><img src="../themes/default/buttons/go.button.png" alt=""
-                 title="Imprime el reporte con la programación de reparto para las unidades seleccionadas" />Registrar un nuevo usuario</a> &nbsp; &nbsp;
+                 title="Imprime el reporte con la programación de reparto para las unidades seleccionadas" />Registrar un nuevo usuario</a>&#160;&#160;
         <% } %>
      </td>
-     <td width="80%">&nbsp;</td>
+     <td width="80%">&#160;</td>
     </tr>
     <tr>
 			<% if (this.SelectedTabStrip >= 2) { %>
@@ -80,7 +80,7 @@
       <td nowrap="nowrap">
         <input type="text" class="textBox" id='txtFromDate' name='txtFromDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
         <img id='imgFromDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtFromDate.ClientID%>'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />
-        &nbsp;&nbsp;al día
+       &#160;&#160;al día
         <input type="text" class="textBox" id='txtToDate' name='txtToDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
         <img id='imgToDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtToDate.ClientID%>'), getElement('imgToDate'));" title="Despliega el calendario" alt="" />
       </td>

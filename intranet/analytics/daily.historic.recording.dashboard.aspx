@@ -7,7 +7,7 @@
     <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 1);" title="">Análisis de calidad</td>
     <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 2);" title="">Análisis de trámites</td>
     <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 3);" title="">Análisis de consultas</td>
-    <td>&nbsp; &nbsp;</td>
+    <td>&#160;&#160;</td>
     <td><input id="currentTabStripItem" name="currentTabStripItem" type="hidden" /></td>
   </tr>
 </table>
@@ -17,7 +17,7 @@
       <% if (base.SelectedTabStrip == 0 || base.SelectedTabStrip == 2) { %>
       <td nowrap="nowrap">Analizar:</td>
       <td>
-				<select id="cboView" name="cboView" class="selectBox" style="width:250px" runat="server" onchange="doOperation('updateUserInterface', this);">
+      <select id="cboView" name="cboView" class="selectBox" style="width:250px" runat="server" onchange="doOperation('updateUserInterface', this);">
 					<option value="">( Seleccionar )</option>
 					<option value="DayByDayProgressAnalysis">Avance de análisis y captura por Distrito</option>
 					<option value="ProductivityByAnalyst">Productividad de analistas</option>
@@ -37,7 +37,7 @@
       <td nowrap="nowrap">
         <input type="text" class="textBox" id='txtFromDate' name='txtFromDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
         <img id='imgFromDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtFromDate.ClientID%>'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />
-        &nbsp;&nbsp;al día
+       &#160;&#160;al día
         <input type="text" class="textBox" id='txtToDate' name='txtToDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
         <img id='imgToDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtToDate.ClientID%>'), getElement('imgToDate'));" title="Despliega el calendario" alt="" />
       </td>
@@ -45,7 +45,7 @@
         <img src="../themes/default/buttons/search.gif" alt="" onclick="doOperation('loadData')" title="Ejecuta la búsqueda" />
       </td>
       <% } %>
-     <td width="80%">&nbsp;</td>
+     <td width="80%">&#160;</td>
     </tr>
   </table>
   <div id="divObjectExplorer" class="dataTableContainer">

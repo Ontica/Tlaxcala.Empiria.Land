@@ -72,7 +72,7 @@
             <tr>
               <td style="white-space:nowrap">Notaría/Gestor:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.Agency.Alias%></b></td>
 							<td style="white-space:nowrap">Tipo de trámite:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.TransactionType.Name%></b></td>
-              <td style="white-space:nowrap">Importe:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.Items.TotalFee.Total.ToString("C2")%></b>&nbsp; (R: <b><%=transaction.Payments.ReceiptNumbers%>)</b></td>
+              <td style="white-space:nowrap">Importe:</td><td style="white-space:nowrap;width:30%"><b><%=transaction.Items.TotalFee.Total.ToString("C2")%></b>&#160; (R: <b><%=transaction.Payments.ReceiptNumbers%>)</b></td>
             </tr>
             <tr>
 							<td style="white-space:nowrap">Hora de presentación:</td><td style="white-space:nowrap"><b><%=transaction.PresentationTime.ToString("dd/MMM/yyyy HH:mm:ss")%></b></td>
@@ -102,7 +102,7 @@
             <tr>
               <td valign="top" style="width:100px">
                 <img style="margin-left:-12pt;margin-top:-12pt" alt="" title=""
-                     src="../user.controls/qrcode.aspx?size=120&data=http://registropublico.tlaxcala.gob.mx/consultas/?type=transaction%26uid=<%=transaction.UID%>%26hash=<%=transaction.QRCodeSecurityHash()%>" />
+                     src="../user.controls/qrcode.aspx?size=120&#38;data=http://registropublico.tlaxcala.gob.mx/consultas/?type=transaction%26uid=<%=transaction.UID%>%26hash=<%=transaction.QRCodeSecurityHash()%>" />
                 <div style="margin-top:-12pt;font-size:7pt;white-space:nowrap">
                   Consulte este trámite<br />
                   <b><%=base.transaction.UID%></b>

@@ -190,10 +190,10 @@
   <div id="divCanvas">
     <div id="divHeader">
       <span id="spanPageTitle" class="appTitle">
-        &nbsp;
+       &#160;
       </span>
       <span id="spanCurrentImage" class="rightItem appTitle" style="margin-right:8px">
-        &nbsp;
+       &#160;
       </span>
     </div> <!--divHeader!-->
     <div id="divBody">
@@ -207,12 +207,12 @@
                     Ir a la imagen: <input id="txtGoToImage" name="txtGoToImage" type="text" class="textBox" maxlength="3"
                                      style="width:28px;margin-right:0px" onkeypress="return integerKeyFilter(this);" runat="server" /><img
                                      src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('gotoImage')" title="Ejecuta la búsqueda" /></td>
-                  <td width='40%' nowrap='nowrap'>&nbsp;</td>
+                  <td width='40%' nowrap='nowrap'>&#160;</td>
                   <td><img src='../themes/default/buttons/first.gif' onclick='doOperation("moveToImage", "first");' title='Muestra la primera imagen' alt='' /></td>
                   <td><img src='../themes/default/buttons/previous.gif' onclick='doOperation("moveToImage", "previous");' title='Muestra la imagen anterior' alt='' /></td>
                   <td><img src='../themes/default/buttons/next.gif' onclick='doOperation("moveToImage", "next");' title='Muestra la siguiente imagen' alt='' /></td>
                   <td><img src='../themes/default/buttons/last.gif' onclick='doOperation("moveToImage", "last");' title='Muestra la última imagen' alt='' /></td>
-                  <td width='40%' nowrap='nowrap'>&nbsp;</td>
+                  <td width='40%' nowrap='nowrap'>&#160;</td>
                   <td align="right" style="width:100%">
                     Zoom:
                     <select id="cboZoomLevel" name="cboZoomLevel" class="selectBox" style="width:56px" title="" onchange="return doOperation('zoomImage')" runat="server">
