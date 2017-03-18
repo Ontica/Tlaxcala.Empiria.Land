@@ -79,7 +79,7 @@ img {
   background-image: url(../customer/main.menu.png); }
 
 #divHeader {
-  background-color: #3f4b3f;
+  background-color: #2C3942;
   color: #ffffff;
   height: 48px;
   overflow: hidden;
@@ -122,7 +122,7 @@ span.rightItem {
     padding-top: 6px; }
 
 tr.detailsSuperHeader {
-  background: #165493;
+  background: #2e8e56;
   color: #eeeeee;
   height: 26px; }
 tr.detailsSuperFooter {

@@ -122,7 +122,7 @@ table.details {
     font-family: Tahoma, Verdana;
     height: 24px; }
   table.details .detailsTitle td {
-    background-color: #6a7f6a;
+    background-color: #094e29;
     border: none;
     text-align: left;
     color: #ffffff;
@@ -335,13 +335,13 @@ a.detailsLink:hover {
 a.detailsLinkTitle:hover {
   text-decoration: underline; }
 a.pending-edition:link {
-  color: #903030;
+  color: #9b1b1f;
   text-decoration: none; }
 a.pending-edition:visited {
-  color: #903030;
+  color: #9b1b1f;
   text-decoration: none; }
 a.pending-edition:active {
-  color: #903030;
+  color: #9b1b1f;
   text-decoration: none; }
 a.pending-edition:hover {
   text-decoration: underline; }
@@ -416,7 +416,7 @@ div.dataTableContainer {
     width: 98%;
     z-index: 0; }
     div.dataTableContainer table th {
-      background-color: #6a7f6a;
+      background-color: #094e29;
       border: none;
       text-align: left;
       color: #ffffff;
@@ -476,20 +476,20 @@ div.dataTableContainer {
     font: 8pt Arial, Helvetica;
     white-space: nowrap; }
   div.dataTableContainer .hintDataRow td {
-    background-color: #fef7cb;
+    background-color: #edfde8;
     border-left: #dadada 0px solid;
     vertical-align: middle;
     color: #4f4f4f;
     font: italic 8pt Arial, Helvetica;
     white-space: normal; }
   div.dataTableContainer .notFoundDataRow td {
-    background-color: #fef7cb;
+    background-color: #edfde8;
     vertical-align: middle;
     font: italic 8pt Arial, Helvetica;
     white-space: normal;
     color: #911010; }
   div.dataTableContainer .selectedDataRow td {
-    background-color: #fef7cb;
+    background-color: #edfde8;
     vertical-align: top;
     font: 8pt Arial, Helvetica;
     white-space: nowrap; }

@@ -144,7 +144,7 @@ td.mainMenu {
   padding: 0 0 0 18px;
   white-space: nowrap; }
 td.mainSubMenu {
-  background-color: #903030;
+  background-color: #9b1b1f;
   color: #ffffff;
   height: 28px;
   padding: 0 0 0 6px; }
@@ -181,11 +181,11 @@ td.mainSubMenu {
       color: #ffffff;
       text-decoration: underline; }
 td.menuOn {
-  background-color: #903030;
+  background-color: #9b1b1f;
   padding: 0 12px;
   text-align: center;
   border-right: #aaa 1px solid;
-  border-bottom: #903030;
+  border-bottom: #9b1b1f;
   color: #ffffff;
   height: 26px;
   cursor: pointer; }

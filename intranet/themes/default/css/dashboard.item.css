@@ -52,7 +52,7 @@ input.toolboxButton {
   padding: 0;
   margin: 0;
   white-space: nowrap;
-  border-bottom: #3f4b3f 0pt solid;
+  border-bottom: #2C3942 0pt solid;
   border-collapse: collapse;
   width: 100%;
   font-weight: bold;
@@ -62,9 +62,9 @@ input.toolboxButton {
 td.tabOn {
   padding: 0 0 5px 0;
   margin: 0;
-  border-bottom: #3f4b3f 3pt solid;
+  border-bottom: #2C3942 3pt solid;
   border-collapse: collapse;
-  background-color: #3f4b3f;
+  background-color: #2C3942;
   margin-right: 4px;
   text-align: center;
   border-right: #eeeeee 1pt solid;
@@ -76,7 +76,7 @@ td.tabOn {
 td.tabOff {
   padding: 0 0 5px 0;
   margin: 0;
-  border-bottom: #3f4b3f 3pt solid;
+  border-bottom: #2C3942 3pt solid;
   background-color: #a9a9a9;
   border-right: #eeeeee 1pt solid;
   text-align: center;
@@ -88,7 +88,7 @@ td.tabOff {
 td.tabHover {
   padding: 0 0 5px 0;
   margin: 0;
-  border-bottom: #3f4b3f 3pt solid;
+  border-bottom: #2C3942 3pt solid;
   background-color: #b1bab1;
   text-align: center;
   border-right: #eeeeee 1pt solid;
@@ -100,7 +100,7 @@ td.tabHover {
 td.tabDisabled {
   padding: 0 0 5px 0;
   margin: 0;
-  border-bottom: #3f4b3f 3pt solid;
+  border-bottom: #2C3942 3pt solid;
   background-color: #e4e4e4;
   border-right: #eeeeee 1pt solid;
   text-align: center;
@@ -109,7 +109,7 @@ td.tabDisabled {
 td.tabEmpty {
   padding: 0 0 5px 0;
   margin: 0;
-  border-bottom: #3f4b3f 3pt solid;
+  border-bottom: #2C3942 3pt solid;
   background-color: #ffffff;
   border-right: #ffffff 1pt solid;
   text-align: center;
