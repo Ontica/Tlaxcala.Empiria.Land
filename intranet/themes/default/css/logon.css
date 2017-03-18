@@ -92,7 +92,7 @@ li {
   margin: 0;
   position: absolute;
   border-top: #04371f 0 solid;
-  border-bottom: #064d2c 20px solid; }
+  border-bottom: #2C3942 20px solid; }
 
 #divRightColumn {
   background-color: #ffffff;
@@ -105,7 +105,7 @@ li {
   position: relative;
   z-index: 100;
   border-top: #04371f 0 solid;
-  border-bottom: #064d2c 20px solid; }
+  border-bottom: #2C3942 20px solid; }
 
 div.formRow {
   clear: both;
