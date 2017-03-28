@@ -1,13 +1,12 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.DocumentSearch" CodeFile="document.search.aspx.cs" %>
 <%@ Register tagprefix="empiriaControl" tagname="ModalWindow" src="../land.registration.system.controls/modal.window.ascx" %>
 <%@ OutputCache Location="None" NoStore="true" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
   <title></title>
   <meta http-equiv="Expires" content="-1" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
   <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
@@ -216,7 +215,7 @@
   function displayDocumentRecordingActsGrid(documentId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getDocumentRecordingActsGridCmd";
-    url += "&documentId=" + documentId;
+    url += "&#38;documentId=" + documentId;
 
     var gridHtml = invokeAjaxMethod(false, url, null);
 
@@ -226,7 +225,7 @@
   function displayBookPhysicalRecordingsWithRecordingActsGrid(recordingBookId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getPhysicalRecordingsWithRecordingActsGridCmd";
-    url += "&recordingBookId=" + recordingBookId;
+    url += "&#38;recordingBookId=" + recordingBookId;
 
     var gridHtml = invokeAjaxMethod(false, url, null);
 
@@ -236,7 +235,7 @@
   function displayPartyRecordingActsGrid(partyId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getPartyRecordingActsGridCmd";
-    url += "&partyId=" + partyId;
+    url += "&#38;partyId=" + partyId;
 
     var gridHtml = invokeAjaxMethod(false, url, null);
 
@@ -246,7 +245,7 @@
   function displayTransactionDocumentAndCertificatesGrid(transactionId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getTransactionDocumentAndCertificatesGridCmd";
-    url += "&transactionId=" + transactionId;
+    url += "&#38;transactionId=" + transactionId;
 
     var gridHtml = invokeAjaxMethod(false, url, null);
 
@@ -262,7 +261,7 @@
   function getResourceHistoryGridHtml(resourceId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getResourceHistoryGridCmd";
-    url += "&selectedDocumentId=-1&resourceId=" + resourceId;
+    url += "&#38;selectedDocumentId=-1&#38;resourceId=" + resourceId;
 
     return invokeAjaxMethod(false, url, null);
   }

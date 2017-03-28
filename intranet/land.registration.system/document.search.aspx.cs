@@ -289,8 +289,8 @@ namespace Empiria.Land.WebApp {
         "<td style='white-space:normal'>" +
           "<a href='javascript:doOperation(\"{{ON.SELECT.OPERATION}}\", {{ITEM.ID}});'>" +
           "{{ITEM.DISPLAY.TEXT}}</a>" +
-        "<td style='white-space:nowrap'>{{IMAGING.LINKS}}</td>" +
-        "</td></tr>";
+        "</td><td style='white-space:nowrap'>{{IMAGING.LINKS}}</td>" +
+        "</tr>";
 
       return template;
     }
@@ -301,10 +301,10 @@ namespace Empiria.Land.WebApp {
         "<td style='vertical-align:top;white-space:normal'>" +
           "<a href='javascript:doOperation(\"{{ON.SELECT.OPERATION}}\", {{ITEM.ID}});'>" +
           "{{ITEM.DISPLAY.TEXT}}</a>" +
-        "<td style='vertical-align:top;white-space:nowrap'>{{TRANSACTION.UID}}</td>" +
+        "</td><td style='vertical-align:top;white-space:nowrap'>{{TRANSACTION.UID}}</td>" +
         "<td style='valign:top;white-space:normal;width:95%'>{{TRANSACTION.REQUESTED.BY}}</td>" +
         "<td style='vertical-align:top;white-space:nowrap'>{{IMAGING.LINKS}}</td>" +
-        "</td></tr>";
+        "</tr>";
 
       return template.Replace("{{CLASS}}",
                               (rowIndex % 2 == 0) ? "detailsItem" : "detailsOddItem");

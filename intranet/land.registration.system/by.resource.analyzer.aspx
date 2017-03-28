@@ -2,7 +2,7 @@
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Import Namespace="Empiria.Land.Registration" %>
 <%@ Import Namespace="Empiria.Land.WebApp" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
 <title>Editor de documentos</title>
@@ -87,7 +87,7 @@
             <table id="tabStripItemView_3" class="editionTable" style="<%=TabStripDisplayView(TabStrip.ResourceHistory)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraPropertyHistory" style="z-index:99;left:0;top:0;" width="720px"
+                  <iframe id="ifraPropertyHistory" style="z-index:99;left:0;top:0;" width="720px" 
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true">
                   </iframe>
                 </td>
@@ -97,7 +97,7 @@
             <table id="tabStripItemView_4" class="editionTable" style="<%=TabStripDisplayView(TabStrip.GlobalSearch)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraSearchInfo" style="z-index:99;left:0;top:0;" width="720px"
+                  <iframe id="ifraSearchInfo" style="z-index:99;left:0;top:0;" width="720px" height="900px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true">
                   </iframe>
                 </td>
@@ -185,7 +185,7 @@
   }
 
   function onSelectRecordingAct(documentId, recordingActId) {
-    window.document.location.href = "by.resource.analyzer.aspx?resourceId=-1&recordingActId=" + recordingActId;
+    window.document.location.href = "by.resource.analyzer.aspx?resourceId=-1"+"&#38;recordingActId=" + recordingActId;
   }
 
   function onSelectCertificate(certificateId) {
@@ -204,7 +204,7 @@
     var newURL = "./recording.seal.aspx?transactionId=-1&id=" + documentId +
                   "&selectedRecordingActId=" + selectedRecordingActId;
     if (<%=recordingAct.Document.Id%> == documentId) {
-      newURL += "&main=true";
+      newURL += "&#38;main=true";
     }
     var clone = getElement("documentViewer").cloneNode(true);
     clone.setAttribute('data', newURL);
@@ -256,7 +256,7 @@
 
   function setPageTitle() {
     <% if (base.IsRecordingActSelected) { %>
-    getElement("spanPageTitle").innerHTML = "Documento: <%=recordingAct.Document.UID%><br/>"+
+    getElement("spanPageTitle").innerHTML = "Documento: <%=recordingAct.Document.UID%></br>"+
                                             "Acto jurídico: <%=recordingAct.DisplayName%> [<%=recordingAct.Index + 1%>]";
     getElement("spanPageRightTitle").innerText = "Predio: <%=resource.UID%>";
     <% } else { %>
@@ -331,14 +331,14 @@
 
   function resizeFrame(e) {
     var oFrame = null;
-
+    
     if (arguments.length == 2) {
       oFrame = arguments[1];
     } else {
       oFrame = window.event.srcElement;
     }
 
-    var oBody = oFrame.document.body;
+    var oBody = oFrame.contentDocument.body;
 
     var newHeight = oBody.scrollHeight + oBody.clientHeight;
 

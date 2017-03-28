@@ -112,7 +112,7 @@
       return;
     }
     var url = "recording.book.analyzer.aspx?"
-    url += "bookId=" + recordingBookId + "&id=" + recordingId;
+    url += "bookId=" + recordingBookId + "&#38;id=" + recordingId;
 
     createNewWindow(url);
   }
@@ -211,11 +211,11 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingBooksStringArrayCmd";
     if (getElement('<%=cboAnotherRecorderOffice.ClientID%>').value.length != 0) {
-      url += "&recorderOfficeId=" + getElement('<%=cboAnotherRecorderOffice.ClientID%>').value;
+      url += "&#38;recorderOfficeId=" + getElement('<%=cboAnotherRecorderOffice.ClientID%>').value;
     } else {
-      url += "&recorderOfficeId=0";
+      url += "&#38;recorderOfficeId=0";
     }
-    url += "&recordingActTypeCategoryId=1051";
+    url += "&#38;recordingActTypeCategoryId=1051";
 
     invokeAjaxComboItemsLoader(url, getElement('<%=cboAnotherRecordingBook.ClientID%>'));
 
@@ -226,9 +226,9 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingNumbersStringArrayCmd";
     if (getElement('<%=cboAnotherRecordingBook.ClientID%>').value.length != 0) {
-      url += "&recordingBookId=" + getElement('<%=cboAnotherRecordingBook.ClientID%>').value;
+      url += "&#38;recordingBookId=" + getElement('<%=cboAnotherRecordingBook.ClientID%>').value;
     } else {
-      url += "&recordingBookId=0";
+      url += "&#38;recordingBookId=0";
     }
     invokeAjaxComboItemsLoader(url, getElement('<%=cboAnotherRecording.ClientID%>'));
     <%=this.ClientID%>_resetAnotherPropertiesCombo();
@@ -238,9 +238,9 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingPropertiesArrayCmd";
     if (getElement('<%=cboAnotherRecording.ClientID%>').value.length != 0) {
-      url += "&recordingId=" + getElement('<%=cboAnotherRecording.ClientID%>').value;
+      url += "&#38;recordingId=" + getElement('<%=cboAnotherRecording.ClientID%>').value;
     } else {
-      url += "&recordingId=0";
+      url += "&#38;recordingId=0";
     }
     invokeAjaxComboItemsLoader(url, getElement('<%=cboAnotherProperty.ClientID%>'));
   }
@@ -256,7 +256,7 @@
   function <%=this.ClientID%>_resetRecordingsTypesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
-    url += "&recordingActTypeCategoryId=" + getElement("<%=cboRecordingActTypeCategory.ClientID%>").value;
+    url += "&#38;recordingActTypeCategoryId=" + getElement("<%=cboRecordingActTypeCategory.ClientID%>").value;
     invokeAjaxComboItemsLoader(url, getElement('cboRecordingActType'));
   }
 

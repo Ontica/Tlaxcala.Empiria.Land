@@ -130,12 +130,12 @@ namespace Empiria.Land.WebApp {
           return;
         case "newRecording":
           Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
-                            "&id=-1&image=" + hdnCurrentImagePosition.Value);
+                            "&#38;id=-1&#38;image=" + hdnCurrentImagePosition.Value);
           return;
         case "deleteRecording":
           DeleteRecording();
           Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
-                            "&id=0&image=" + hdnCurrentImagePosition.Value, true);
+                            "&#38;id=0&#38;image=" + hdnCurrentImagePosition.Value, true);
           return;
         case "appendPropertyToAnnotation":
           AppendPropertyToAnnotation();
@@ -164,12 +164,12 @@ namespace Empiria.Land.WebApp {
         case "gotoRecording":
           GoToRecording();
           Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
-                            "&id=" + recording.Id.ToString(), true);
+                            "&#38;id=" + recording.Id.ToString(), true);
           return;
         case "moveToRecording":
           MoveToRecording();
           Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
-                            "&id=" + recording.Id.ToString(), true);
+                            "&#38;id=" + recording.Id.ToString(), true);
           return;
         case "refreshImagesStatistics":
           RefreshImagesStatistics();
@@ -190,7 +190,7 @@ namespace Empiria.Land.WebApp {
 
     private void RefreshPage() {
       Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
-                        "&id=" + recording.Id.ToString() + "&image=" + hdnCurrentImagePosition.Value, true);
+                        "&#38;id=" + recording.Id.ToString() + "&#38;image=" + hdnCurrentImagePosition.Value, true);
     }
 
     private void LoadRecordingControls() {
@@ -665,10 +665,10 @@ namespace Empiria.Land.WebApp {
         recording = recordingBook.GetLastRecording();
         if (recording != null) {
           Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
-                            "&id=" + recording.Id.ToString(), true);
+                            "&#38;id=" + recording.Id.ToString(), true);
         } else {
           Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
-                            "&id=-1", true);
+                            "&#38;id=-1", true);
         }
       } else if (int.Parse(Request.QueryString["id"]) == -1 || int.Parse(Request.QueryString["id"]) == 0) {
         recording = this.recordingBook.CreateNew();

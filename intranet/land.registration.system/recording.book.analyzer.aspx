@@ -1,13 +1,12 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.RecordingBookAnalyzer" CodeFile="recording.book.analyzer.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Import Namespace="Empiria.Land.Registration" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
 <title></title>
 <meta http-equiv="Expires" content="-1" />
 <meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
@@ -657,7 +656,7 @@
     source += "bookId=" + getElement('cboAnotherRecordingBook').value;
 
     if (getElement('cboAnotherRecording').value.length != 0) {
-      source += "&id=" + getElement('cboAnotherRecording').value;
+      source += "&#38;id=" + getElement('cboAnotherRecording').value;
     }
     createNewWindow(source);
   }
@@ -666,7 +665,7 @@
   function gotoRecordingBook(recordingBookId, recordingId) {
     var source = "recording.book.analyzer.aspx?";
     source += "bookId=" + recordingBookId;
-    source += "&id=" + recordingId;
+    source += "&#38;id=" + recordingId;
     createNewWindow(source);
   }
 
@@ -702,7 +701,7 @@
   function getRecordingRawData() {
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
     ajaxURL += "?commandName=getRecordingRawData";
-    ajaxURL += "&recordingId=<%=recording.Id%>";
+    ajaxURL += "&#38;recordingId=<%=recording.Id%>";
 
     return invokeAjaxMethod(false, ajaxURL, null);
   }
@@ -856,8 +855,7 @@
 
   function editProperty(propertyId, recordingActId) {	
     var oEditor = getElement("ifraItemEditor");
-
-    oEditor.src = "real.estate.editor.aspx?propertyId=" + propertyId + "&recordingActId=" + recordingActId;
+    oEditor.src = "real.estate.editor.aspx?propertyId=" + propertyId + "&#38;recordingActId=" + recordingActId;
 
     oEditor.visible = true;
     doCommand('onClickTabStripCmd', getElement('tabStripItem_1'));
@@ -1019,16 +1017,16 @@
   function validateAnnotationSemantics() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=validateAnnotationSemanticsCmd";
-    url += "&annotationTypeId=" + getElement("cboAnnotation").value;
-    url += "&annotationBookId=" + getElement("cboAnnotationBook").value;
-    url += "&propertyId=" + getElement("cboAnnotationProperty").value;
-    url += "&number=" + getElement("txtAnnotationNumber").value;
-    url += "&bisSuffixNumber=" + getElement("cboBisAnnotationNumber").value;
-    url += "&imageStartIndex=" + getElement("txtAnnotationImageStartIndex").value;
-    url += "&imageEndIndex=" + getElement("txtAnnotationImageEndIndex").value;
-    url += "&presentationTime=" + getElement("txtAnnotationPresentationDate").value + " " + getElement("txtAnnotationPresentationTime").value;
-    url += "&authorizationDate=" + getElement("txtAnnotationAuthorizationDate").value;
-    url += "&authorizedById=" + getElement("cboAnnotationAuthorizedBy").value;
+    url += "&#38;annotationTypeId=" + getElement("cboAnnotation").value;
+    url += "&#38;annotationBookId=" + getElement("cboAnnotationBook").value;
+    url += "&#38;propertyId=" + getElement("cboAnnotationProperty").value;
+    url += "&#38;number=" + getElement("txtAnnotationNumber").value;
+    url += "&#38;bisSuffixNumber=" + getElement("cboBisAnnotationNumber").value;
+    url += "&#38;imageStartIndex=" + getElement("txtAnnotationImageStartIndex").value;
+    url += "&#38;imageEndIndex=" + getElement("txtAnnotationImageEndIndex").value;
+    url += "&#38;presentationTime=" + getElement("txtAnnotationPresentationDate").value + " " + getElement("txtAnnotationPresentationTime").value;
+    url += "&#38;authorizationDate=" + getElement("txtAnnotationAuthorizationDate").value;
+    url += "&#38;authorizedById=" + getElement("cboAnnotationAuthorizedBy").value;
 
     return invokeAjaxValidator(url);
   }
@@ -1036,9 +1034,9 @@
   function validateDeleteRecordingActProperty(recordingActId, propertyId) {
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
     ajaxURL += "?commandName=validateDeleteRecordingActPropertyCmd";
-    ajaxURL += "&recordingId=<%=recording.Id%>";
-    ajaxURL += "&recordingActId=" + recordingActId;
-    ajaxURL += "&propertyId=" + propertyId;
+    ajaxURL += "&#38;recordingId=<%=recording.Id%>";
+    ajaxURL += "&#38;recordingActId=" + recordingActId;
+    ajaxURL += "&#38;propertyId=" + propertyId;
 
     return invokeAjaxValidator(ajaxURL);
   }
@@ -1051,14 +1049,14 @@
     <% } %>
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=validateRecordingSemanticsCmd";
-    url += "&recordingBookId=<%=recordingBook.Id%>";
-    url += "&recordingId=<%=recording.Id%>";
-    url += "&recordingNumber=" + getElement("txtRecordingNumber").value + getElement("cboBisRecordingNumber").value;
-    url += "&imageStartIndex=" + getElement("txtImageStartIndex").value;
-    url += "&imageEndIndex=" + getElement("txtImageEndIndex").value;
-    url += "&presentationTime=" + getElement("txtPresentationDate").value + " " + getElement("txtPresentationTime").value;
-    url += "&authorizationDate=" + getElement("txtAuthorizationDate").value;
-    url += "&authorizedById=" + getElement("cboAuthorizedBy").value;
+    url += "&#38;recordingBookId=<%=recordingBook.Id%>";
+    url += "&#38;recordingId=<%=recording.Id%>";
+    url += "&#38;recordingNumber=" + getElement("txtRecordingNumber").value + getElement("cboBisRecordingNumber").value;
+    url += "&#38;imageStartIndex=" + getElement("txtImageStartIndex").value;
+    url += "&#38;imageEndIndex=" + getElement("txtImageEndIndex").value;
+    url += "&#38;presentationTime=" + getElement("txtPresentationDate").value + " " + getElement("txtPresentationTime").value;
+    url += "&#38;authorizationDate=" + getElement("txtAuthorizationDate").value;
+    url += "&#38;authorizedById=" + getElement("cboAuthorizedBy").value;
 
     alert(url);
 
@@ -1112,16 +1110,16 @@
 
   function findAnnotationIdWithEditorData() {
     var url = "../ajax/land.registration.system.data.aspx?commandName=findAnnotationIdCmd";
-    url += "&annotationBookId=" + getElement("cboAnnotationBook").value;
-    url += "&annotationTypeId=" + getElement("cboAnnotation").value;
-    url += "&propertyId=" + getElement("cboAnnotationProperty").value;
-    url += "&number=" + getElement("txtAnnotationNumber").value;
-    url += "&bisSuffixNumber=" + getElement("cboBisAnnotationNumber").value;
-    url += "&imageStartIndex=" + getElement("txtAnnotationImageStartIndex").value;
-    url += "&imageEndIndex=" + getElement("txtAnnotationImageEndIndex").value;
-    url += "&presentationTime=" + getElement("txtAnnotationPresentationDate").value + " " + getElement("txtAnnotationPresentationTime").value;
-    url += "&authorizationDate=" + getElement("txtAnnotationAuthorizationDate").value;
-    url += "&authorizedById=" + getElement("cboAnnotationAuthorizedBy").value;
+    url += "&#38;annotationBookId=" + getElement("cboAnnotationBook").value;
+    url += "&#38;annotationTypeId=" + getElement("cboAnnotation").value;
+    url += "&#38;propertyId=" + getElement("cboAnnotationProperty").value;
+    url += "&#38;number=" + getElement("txtAnnotationNumber").value;
+    url += "&#38;bisSuffixNumber=" + getElement("cboBisAnnotationNumber").value;
+    url += "&#38;imageStartIndex=" + getElement("txtAnnotationImageStartIndex").value;
+    url += "&#38;imageEndIndex=" + getElement("txtAnnotationImageEndIndex").value;
+    url += "&#38;presentationTime=" + getElement("txtAnnotationPresentationDate").value + " " + getElement("txtAnnotationPresentationTime").value;
+    url += "&#38;authorizationDate=" + getElement("txtAnnotationAuthorizationDate").value;
+    url += "&#38;authorizedById=" + getElement("cboAnnotationAuthorizedBy").value;
 
     var annotationId = invokeAjaxMethod(false, url, null);
 
@@ -1183,11 +1181,11 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingBooksStringArrayCmd";
     if (getElement("cboAnotherRecorderOffice").value.length != 0) {
-      url += "&recorderOfficeId=" + getElement("cboAnotherRecorderOffice").value;
+      url += "&#38;recorderOfficeId=" + getElement("cboAnotherRecorderOffice").value;
     } else {
-      url += "&recorderOfficeId=0";
+      url += "&#38;recorderOfficeId=0";
     }
-    url += "&recordingActTypeCategoryId=1051";
+    url += "&#38;recordingActTypeCategoryId=1051";
 
     invokeAjaxComboItemsLoader(url, getElement("cboAnotherRecordingBook"));
 
@@ -1198,9 +1196,9 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingNumbersStringArrayCmd";
     if (getElement("cboAnotherRecordingBook").value.length != 0) {
-      url += "&recordingBookId=" + getElement("cboAnotherRecordingBook").value;
+      url += "&#38;recordingBookId=" + getElement("cboAnotherRecordingBook").value;
     } else {
-      url += "&recordingBookId=0";
+      url += "&#38;recordingBookId=0";
     }
     invokeAjaxComboItemsLoader(url, getElement("cboAnotherRecording"));
     resetAnotherPropertiesCombo();
@@ -1210,9 +1208,9 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingPropertiesArrayCmd";
     if (getElement("cboAnotherRecording").value.length != 0) {
-      url += "&recordingId=" + getElement("cboAnotherRecording").value;
+      url += "&#38;recordingId=" + getElement("cboAnotherRecording").value;
     } else {
-      url += "&recordingId=0";
+      url += "&#38;recordingId=0";
     }
     invokeAjaxComboItemsLoader(url, getElement("cboAnotherProperty"));
   }
@@ -1228,7 +1226,7 @@
   function resetRecordingsTypesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
-    url += "&recordingActTypeCategoryId=" + getElement("cboRecordingActTypeCategory").value;
+    url += "&#38;recordingActTypeCategoryId=" + getElement("cboRecordingActTypeCategory").value;
 
     invokeAjaxComboItemsLoader(url, getElement("cboRecordingActType"));
   }
@@ -1236,14 +1234,14 @@
   function resetAnnotationsTypesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getAnnotationTypesStringArrayCmd";
-    url += "&annotationTypeCategoryId=" + getElement("cboAnnotationCategory").value;
+    url += "&#38;annotationTypeCategoryId=" + getElement("cboAnnotationCategory").value;
     invokeAjaxComboItemsLoader(url, getElement("cboAnnotation"))
   }
 
   function resetAnnotationsOfficialsCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getAnnotationsOfficialsStringArrayCmd";
-    url += "&recordingBookId=" + getElement("cboAnnotationBook").value;
+    url += "&#38;recordingBookId=" + getElement("cboAnnotationBook").value;
 
     invokeAjaxComboItemsLoader(url, getElement("cboAnnotationAuthorizedBy"))
   }
@@ -1251,8 +1249,8 @@
   function resetAnnotationsBooksCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingBooksStringArrayCmd";
-    url += "&recorderOfficeId=<%=recordingBook.RecorderOffice.Id.ToString()%>";
-    url += "&recordingActTypeCategoryId=" + getElement("cboAnnotationCategory").value;
+    url += "&#38;recorderOfficeId=<%=recordingBook.RecorderOffice.Id.ToString()%>";
+    url += "&#38;recordingActTypeCategoryId=" + getElement("cboAnnotationCategory").value;
     invokeAjaxComboItemsLoader(url, getElement("cboAnnotationBook"))
   }
 
@@ -1517,23 +1515,23 @@
     var newPosition = 0;
     switch (position) {
       case "first":
-        ajaxURL += "&position=" + position;
+        ajaxURL += "&#38;position=" + position;
         newPosition = 0;
         break;
       case "previous":
-        ajaxURL += "&position=" + position;
+        ajaxURL += "&#38;position=" + position;
         newPosition = Math.max(Number(getElement("hdnCurrentImagePosition").value) - 1, 0);
         break;					
       case "next":
-        ajaxURL += "&position=" + position;
+        ajaxURL += "&#38;position=" + position;
         newPosition = Math.min(Number(getElement("hdnCurrentImagePosition").value) + 1, selectedBookImageCount() - 1);
         break;
       case "last":
-        ajaxURL += "&position=" + position;
+        ajaxURL += "&#38;position=" + position;
         newPosition = selectedBookImageCount() - 1;
         break;
       case "refresh":
-        ajaxURL += "&position=" + position;
+        ajaxURL += "&#38;position=" + position;
         newPosition = getRecordingStartImageIndex() - 1;
         break;
       default:
@@ -1541,8 +1539,8 @@
         return;
     }
 
-    ajaxURL += "&recordingBookId=<%=recordingBook.Id%>";
-    ajaxURL += "&currentPosition=" + getElement("hdnCurrentImagePosition").value;
+    ajaxURL += "&#38;recordingBookId=<%=recordingBook.Id%>";
+    ajaxURL += "&#38;currentPosition=" + getElement("hdnCurrentImagePosition").value;
 
     var result = invokeAjaxMethod(false, ajaxURL, null);
     getElement("imgCurrent").src = result;
@@ -1586,8 +1584,8 @@
       return false;
     }
     var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getRecordingIdCmd";
-    ajaxURL += "&recordingBookId=<%=recordingBook.Id%>";	
-    ajaxURL += "&recordingNumber=" + getElement("txtGoToRecording").value;
+    ajaxURL += "&#38;recordingBookId=<%=recordingBook.Id%>";	
+    ajaxURL += "&#38;recordingNumber=" + getElement("txtGoToRecording").value;
 
     var result = invokeAjaxMethod(false, ajaxURL, null);
     if (Number(result) != 0) {
@@ -1601,9 +1599,9 @@
 
   function refreshRecordingViewer() {
     var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getRecordingsViewerPageCmd";
-    ajaxURL += "&recordingBookId=<%=recordingBook.Id%>";
-    ajaxURL += "&page=" + getElement("cboRecordingViewerPage").value;
-    ajaxURL += "&itemsPerPage=<%=recordingsPerViewerPage%>";
+    ajaxURL += "&#38;recordingBookId=<%=recordingBook.Id%>";
+    ajaxURL += "&#38;page=" + getElement("cboRecordingViewerPage").value;
+    ajaxURL += "&#38;itemsPerPage=<%=recordingsPerViewerPage%>";
 
     var result = invokeAjaxMethod(false, ajaxURL, null);
     getElement("tblRecordingsViewer").outerHTML = result;
@@ -1685,7 +1683,7 @@
     sMsg += getComboOptionText(getElement('cboAnnotation')).toUpperCase() + "\n";
     sMsg += "Inscrita en:\t" + getComboOptionText(getElement('cboAnnotationBook')) + "\n";
     sMsg += "Número:\t\t" + getElement('txtAnnotationNumber').value + getElement('cboBisAnnotationNumber').value;		
-    if (getElement('txtAnnotationImageStartIndex').value != '1' && getElement('txtAnnotationImageEndIndex').value != '1') {
+    if (getElement('txtAnnotationImageStartIndex').value != '1' &#38;& getElement('txtAnnotationImageEndIndex').value != '1') {
       sMsg += ", ubicada de la imagen " + getElement('txtAnnotationImageStartIndex').value + " a la " + getElement('txtAnnotationImageEndIndex').value + "\n";
     }  else {
       sMsg += ", ubicada en una imagen no determinada.\n";

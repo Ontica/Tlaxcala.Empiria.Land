@@ -142,7 +142,7 @@
                 </td>
                   </tr>///se agrego
             </table>
-            <br />
+            <br/>
             <span id="divResourceName" style="display:none">
               Nombre:
               <input id="txtResourceName" type="text" class="textBox" style="width:344px;margin-right:0" maxlength="255" />
@@ -155,7 +155,7 @@
              &#160;
               <input type="button" value="Vincular" class="button" style="width:68px; height:24px; vertical-align:middle"
                    onclick='doRecordingActEditorOperation("getCadastralInfo")' />
-              <br/>
+              </>
             </span>
           </td>
           <td class="lastCell">&#160;</td>
@@ -335,7 +335,7 @@
 
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=lookupResource";
-    url += "&resourceUID=" + getElement("txtLookupResource").value;
+    url += "&#38;resourceUID=" + getElement("txtLookupResource").value;
 
     olookupResource = invokeAjaxGetJsonObject(url);
 
@@ -436,7 +436,7 @@
   function setRecordingRule() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingActRuleCmd";
-    url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+    url += "&#38;recordingActTypeId=" + getElement("cboRecordingActType").value;
 
     oCurrentRecordingRule = invokeAjaxGetJsonObject(url);
 
@@ -448,7 +448,7 @@
   function updateTargetRecordingActCombos() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getTargetRecordingActTypesCmd";
-    url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+    url += "&#38;recordingActTypeId=" + getElement("cboRecordingActType").value;
 
     invokeAjaxComboItemsLoader(url, getElement('cboTargetAct'));
 
@@ -501,9 +501,9 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getTargetActSectionsStringArrayCmd";
     if (getElement("cboTargetAct").value.length != 0) {
-      url += "&recordingActTypeId=" + getElement('cboTargetAct').value;
+      url += "&#38;recordingActTypeId=" + getElement('cboTargetAct').value;
     } else {
-      url += "&recordingActTypeId=-1";
+      url += "&#38;recordingActTypeId=-1";
     }
     invokeAjaxComboItemsLoader(url, getElement('cboTargetActSection'));
 
@@ -519,7 +519,7 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getDomainBooksStringArrayCmd";
     if (isSelectedTargetActSection()) {
-      url += "&sectionFilter=" + getElement('cboTargetActSection').value;
+      url += "&#38;sectionFilter=" + getElement('cboTargetActSection').value;
     }
     invokeAjaxComboItemsLoader(url, getElement('cboTargetActPhysicalBook'));
 
@@ -530,9 +530,9 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingNumbersStringArrayCmd";
     if (getElement("cboTargetActPhysicalBook").value.length != 0) {
-      url += "&recordingBookId=" + getElement("cboTargetActPhysicalBook").value;
+      url += "&#38;recordingBookId=" + getElement("cboTargetActPhysicalBook").value;
     } else {
-      url += "&recordingBookId=0";
+      url += "&#38;recordingBookId=0";
     }
     invokeAjaxComboItemsLoader(url, getElement("cboTargetActRecording"));
     resetTargetActsGrid();
@@ -573,7 +573,7 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getDomainBooksStringArrayCmd";
     if (getElement("cboPrecedentRecordingSection").value.length != 0) {
-      url += "&sectionFilter=" + getElement('cboPrecedentRecordingSection').value;
+      url += "&#38;sectionFilter=" + getElement('cboPrecedentRecordingSection').value;
     }
     invokeAjaxComboItemsLoader(url, getElement('cboPrecedentRecordingBook'));
     resetPrecedentRecordingsCombo();
@@ -583,12 +583,12 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingNumbersStringArrayCmd";
     if (getElement("cboPrecedentRecordingBook").value.length != 0) {
-      url += "&recordingBookId=" + getElement("cboPrecedentRecordingBook").value;
+      url += "&#38;recordingBookId=" + getElement("cboPrecedentRecordingBook").value;
     } else {
-      url += "&recordingBookId=0";
+      url += "&#38;recordingBookId=0";
     }
     if (getElement("cboRecordingActType").value.length != 0) {
-      url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+      url += "&#38;recordingActTypeId=" + getElement("cboRecordingActType").value;
     }
     invokeAjaxComboItemsLoader(url, getElement("cboPrecedentRecording"));
     showPrecedentPropertiesSection();
@@ -599,7 +599,7 @@
   function resetPropertyTypeSelectorCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getPropertyTypeSelectorComboCmd";
-    url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+    url += "&#38;recordingActTypeId=" + getElement("cboRecordingActType").value;
 
     invokeAjaxComboItemsLoader(url, getElement("cboRecordingTaskType"));
     showPrecedentRecordingSection();
@@ -609,12 +609,12 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingPropertiesArrayCmd";
     if (getElement("cboPrecedentRecording").value.length != 0) {
-      url += "&recordingId=" + getElement("cboPrecedentRecording").value;
+      url += "&#38;recordingId=" + getElement("cboPrecedentRecording").value;
     } else {
-      url += "&recordingId=0";
+      url += "&#38;recordingId=0";
     }
     if (getElement("cboRecordingActType").value.length != 0) {
-      url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+      url += "&#38;recordingActTypeId=" + getElement("cboRecordingActType").value;
     }
     invokeAjaxComboItemsLoader(url, getElement("cboPrecedentProperty"));
   }
@@ -622,7 +622,7 @@
   function resetRecordingActTypesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
-    url += "&recordingActTypeCategoryId=" + getElement('cboRecordingActTypeCategory').value;
+    url += "&#38;recordingActTypeCategoryId=" + getElement('cboRecordingActTypeCategory').value;
 
     invokeAjaxComboItemsLoader(url, getElement("cboRecordingActType"));
     resetPropertyTypeSelectorCombo();
@@ -631,7 +631,7 @@
   function validateRecordingActSemantics() {
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
     ajaxURL += "?commandName=validateDocumentRecordingActCmd";
-    ajaxURL += "&" + getRecordingActQueryString();
+    ajaxURL += "&#38;" + getRecordingActQueryString();
 
     return invokeAjaxValidator(ajaxURL);
   }
@@ -699,8 +699,8 @@
   function updateTargetPrecedentActsTable() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getTargetPrecedentActsTableCmd";
-    url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
-    url += "&resourceId=" + getSelectedResource();
+    url += "&#38;recordingActTypeId=" + getElement("cboRecordingActType").value;
+    url += "&#38;resourceId=" + getSelectedResource();
 
     invokeAjaxComboItemsLoader(url, getElement("cboTemporalId"));
 
@@ -765,7 +765,7 @@
       return;
     }
     var url = "../land.registration.system/recording.book.analyzer.aspx?bookId=" + bookId +
-              "&id=" + recordingId;
+              "&#38;id=" + recordingId;
 
     createNewWindow(url);
   }
@@ -777,7 +777,7 @@
       return;
     }
     var url = "../land.registration.system/property.editor.aspx?propertyId=" + propertyId +
-              "&recordingActId=-1&recordingId=" + getElement('cboPrecedentRecording').value;
+              "&#38;recordingActId=-1"+"&#38;recordingId=" + getElement('cboPrecedentRecording').value;
     createNewWindow(url);
   }
 
@@ -1090,35 +1090,35 @@
 
   function getRecordingActQueryString() {
     var qs = "transactionId=<%=base.Transaction.Id%>";
-    qs += "&documentId=<%=base.Document.Id%>\n";
-    qs += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
-    qs += "&recordingTaskType=" + getElement('cboRecordingTaskType').value;
-    qs += "&cadastralKey=" + getElement('txtCadastralKey').value;
-    qs += "&precedentRecordingBookId=" + getElement('cboPrecedentRecordingBook').value;
-    qs += "&precedentRecordingId=" + getElement('cboPrecedentRecording').value;
-    qs += "&quickAddRecordingNumber=" + getElement('txtQuickAddRecordingNumber').value +
+    qs += "&#38;documentId=<%=base.Document.Id%>\n";
+    qs += "&#38;recordingActTypeId=" + getElement('cboRecordingActType').value;
+    qs += "&#38;recordingTaskType=" + getElement('cboRecordingTaskType').value;
+    qs += "&#38;cadastralKey=" + getElement('txtCadastralKey').value;
+    qs += "&#38;precedentRecordingBookId=" + getElement('cboPrecedentRecordingBook').value;
+    qs += "&#38;precedentRecordingId=" + getElement('cboPrecedentRecording').value;
+    qs += "&#38;quickAddRecordingNumber=" + getElement('txtQuickAddRecordingNumber').value +
                                         getElement('cboQuickAddBisRecordingTag').value;
     if (getSelectedResource() != null) {
-      qs += "&precedentPropertyId=" + getSelectedResource();
+      qs += "&#38;precedentPropertyId=" + getSelectedResource();
     }
-    qs += "&resourceName=" + getElement('txtResourceName').value;
+    qs += "&#38;resourceName=" + getElement('txtResourceName').value;
 
     // Partition data
     if (getElement('cboRecordingTaskType').value == "createPartition") {
-      qs += "&partitionType=" + getElement('cboPropertyPartitionType').value;
-      qs += "&partitionNo=" + (getElement('chkNoNumberPartition').checked ?
+      qs += "&#38;partitionType=" + getElement('cboPropertyPartitionType').value;
+      qs += "&#38;partitionNo=" + (getElement('chkNoNumberPartition').checked ?
                                           'sin número' : getElement('txtPartitionNo').value);
-      qs += "&partitionRepeatUntilNo=" + (getElement('chkGeneratePartitionRank').checked ?
+      qs += "&#38;partitionRepeatUntilNo=" + (getElement('chkGeneratePartitionRank').checked ?
                                                      getElement('txtRepeatPartitionUntil').value : "");
     }
 
     // target act values
-    qs += "&targetRecordingActId=" + getElement('cboTemporalId').value;
+    qs += "&#38;targetRecordingActId=" + getElement('cboTemporalId').value;
 
-    qs += "&targetActTypeId=" + getElement('cboTargetAct').value;
-    qs += "&targetActPhysicalBookId=" + getElement('cboTargetActPhysicalBook').value;
-    qs += "&targetActRecordingId=" + getElement('cboTargetActRecording').value;
-    qs += "&targetRecordingNumber=" + getElement('txtTargetActPhysicalRecordingNo').value +
+    qs += "&#38;targetActTypeId=" + getElement('cboTargetAct').value;
+    qs += "&#38;targetActPhysicalBookId=" + getElement('cboTargetActPhysicalBook').value;
+    qs += "&#38;targetActRecordingId=" + getElement('cboTargetActRecording').value;
+    qs += "&#38;targetRecordingNumber=" + getElement('txtTargetActPhysicalRecordingNo').value +
                                       getElement('cboTargetActBisRecordingTag').value;
 
     return qs;
