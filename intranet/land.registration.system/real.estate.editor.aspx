@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.RealEstateEditor" CodeFile="real.estate.editor.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
   <title></title>
@@ -268,15 +268,15 @@
       alert("Necesito conocer la unidad de medida de la superficie total del predio.");
       return false;
     }
-    if (getElement("txtLotSize").value.length == 0 && getElement("cboLotSizeUnit").value > 0) {
+    if (getElement("txtLotSize").value.length == 0 &#38;&#38; getElement("cboLotSizeUnit").value > 0) {
       alert("Necesito conocer la superficie total del predio.");
       return false;
     }
-    if (getElement("txtLotSize").value.length != 0 && getElement("cboLotSizeUnit").value == "-2") {
+    if (getElement("txtLotSize").value.length != 0 &#38;&#38; getElement("cboLotSizeUnit").value == "-2") {
       alert("La superficie total está marcada como 'No consta' pero el valor de la misma sí fue proporcionado.");
       return false;
     }
-    if (!isNumeric(getElement("txtLotSize")) && getElement("cboLotSizeUnit").value > 0) {
+    if (!isNumeric(getElement("txtLotSize")) &#38;&#38; getElement("cboLotSizeUnit").value > 0) {
       alert("No reconozco la superficie total del predio.");
       return false;
     }
@@ -305,7 +305,7 @@
   function resetMunicipalitiesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getCadastralOfficeMunicipalitiesComboCmd";
-    url += "&cadastralOfficeId=" + getElement("cboRecordingOffice").value;
+    url += "&#38;cadastralOfficeId=" + getElement("cboRecordingOffice").value;
 
     invokeAjaxComboItemsLoader(url, getElement("cboMunicipality"));
   }

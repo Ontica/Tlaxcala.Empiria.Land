@@ -1014,7 +1014,7 @@
 
   function ifraRecordingEditor_onresize() {
     var oFrame = getElement("ifraRecordingEditor");
-    var oBody = oFrame.document.body;
+      var oBody = oFrame.contentDocument.body;
 
     var newHeight = oBody.scrollHeight + oBody.clientHeight;
 

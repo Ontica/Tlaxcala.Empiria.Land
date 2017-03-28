@@ -19,7 +19,8 @@
   /* <![CDATA[ */
 
   function <%=this.ClientID%>_close() {
-    <%=this.ClientID%>_Window.style.display = 'none';
+    var oModalWindow  = getElement("<%=this.ClientID%>_Window");
+    oModalWindow.style.display = 'none';
   }
 
   function <%=this.ClientID%>_show(title, innerHtml) {
@@ -32,9 +33,8 @@
   }
 
   function <%=this.ClientID%>_center() {
-    var modalWindow = getElement('<%=this.ClientID%>_Window');
-
-    var x = (document.body.clientWidth - modalWindow.currentStyle.width.replace("px", "")) / 2;
+    var modalWindow = getElement("<%=this.ClientID%>_Window");
+    var x = (document.body.clientWidth - modalWindow.style.width.replace("px", "")) / 2;
     //var y = (document.body.clientHeight - modalWindow.currentStyle.height.replace("px", "")) / 2;
     var y = 80;
 

@@ -93,7 +93,7 @@
             <input id='cmdOpenDocument' type="button" value="Abrir documento" class="button" style="width:122px;height:28px;top:8px;display:none" onclick='doOperation("openDocument")' title='Abre este documento para editarlo.' />
             <input id='cmdSaveDocument' type="button" value="Guardar los cambios" class="button green-button" style="width:112px;height:28px;display:none" onclick='doOperation("saveDocument")' title='Guarda el documento' />
           </td>
-          <td >
+          <td>
           </td>
         </tr>
       </table>

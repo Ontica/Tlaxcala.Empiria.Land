@@ -2,7 +2,7 @@
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyEditorControl" src="../land.registration.system.controls/recording.party.editor.control.ascx" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyViewerControl" src="../land.registration.system.controls/recording.party.viewer.control.ascx" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
 <title></title>
@@ -205,7 +205,7 @@
   function saveRecordingActAsComplete() {
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
     ajaxURL += "?commandName=validateRecordingActAsCompleteCmd";
-    ajaxURL += "&recordingActId=<%=recordingAct.Id%>";
+    ajaxURL += "&#38;recordingActId=<%=recordingAct.Id%>";
 
     if (!invokeAjaxValidator(ajaxURL)) {
       return;
