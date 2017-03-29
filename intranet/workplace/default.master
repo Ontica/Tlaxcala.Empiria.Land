@@ -74,7 +74,7 @@
   <form id="frmEditor" runat="server">
     <table id="tblMainMenu" style="cellspacing:0">
       <tr>
-        <td class="mainLogo" rowspan="2"><img src="../themes/default/customer/customer.logo.png" style="height:48px" alt="" />&#160;</td>
+        <td class="mainLogo" rowspan="2"><img src="../themes/default/customer/customer.logo.png" style="height:40px; width:195px;" alt="" />&#160;</td>
         <td align="right" class="mainMenuFirstRow">Hola <%=Empiria.ExecutionServer.CurrentIdentity.Name%>&#160;&#160;&#160;|&#160;&#160;&#160; <a id="oClock">Trabajando ...</a>&#160;&#160;</td>
       </tr>
       <tr>
