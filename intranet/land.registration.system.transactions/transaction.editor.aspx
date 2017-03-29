@@ -199,40 +199,40 @@
             <tr>
               <td>Fundamento:</td>
               <td>
-                <select id="cboLawArticle" class="selectBox" style="width:160px" onchange="return updateUserInterface(this);" runat="server">
+                <select id="cboLawArticle" class="selectBox" style="width:160px" onchange="return updateUserInterface(window.event, true);" runat="server">
                   <option value="">( Fundamento )</option>
                 </select>
               </td>
               <td>Valor de la operación:</td>
               <td>
-              $<input id='txtOperationValue' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              $<input id='txtOperationValue' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
               <td>Derechos de registro:</td>
               <td>
-              $<input id='txtRecordingRightsFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              $<input id='txtRecordingRightsFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
             </tr>
             <tr>
               <td>Cotejo:</td>
               <td>
-                $<input id='txtSheetsRevisionFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:64px;" title="" maxlength="8" runat="server" />
+                $<input id='txtSheetsRevisionFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:64px;" title="" maxlength="8" runat="server" />
                &#160;
-                Fojas: <input id='txtSheetsCount' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:28px;" title="" maxlength="3" runat="server" />
+                Fojas: <input id='txtSheetsCount' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:28px;" title="" maxlength="3" runat="server" />
               </td>
               <td>Támite foráneo:</td>
-              <td>$<input id='txtForeignRecordFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              <td>$<input id='txtForeignRecordFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
               <td><b>Subtotal:</b></td>
-              <td>$<input id='txtSubtotal' disabled="disabled" type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              <td>$<input id='txtSubtotal' disabled="disabled" type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
             </tr>
             <tr>
               <td>Tipo de descuento:</td>
               <td>
-                <select id="cboAuthorizationType" class="selectBox" style="width:160px" onchange="return updateUserInterface(this);" runat="server">
+                <select id="cboAuthorizationType" class="selectBox" style="width:160px" onchange="return updateUserInterface(window.event, true);" runat="server">
                   <option value="">( Seleccionar )</option>
                 </select>
               </td>
               <td>Clave de autorización:</td>
               <td><input id='txtDiscountAuthorization' type="text" class="textBox" style="width:76px;" title="" maxlength="8" runat="server" /></td>
               <td>Descuento:</td>
-              <td>$<input id='txtDiscount' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              <td>$<input id='txtDiscount' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
             </tr>
             <tr>
               <td colspan="4">&#160;</td>

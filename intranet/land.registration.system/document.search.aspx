@@ -40,7 +40,7 @@
               <option value="transaction">Trámites</option>
               <option value="imagingControl">No. control acervo</option>
             </select>
-            <input id='txtSearchBox' name='txtSearchBox' type="text" onkeypress="return alphaNumericKeyFilter(event, true, searchDataCallback);"
+            <input id='txtSearchBox' name='txtSearchBox' type="text" onkeypress="return alphaNumericKeyFilter(window.event, true, searchDataCallback);"
                    class="textBox" style="width:240px" runat='server' title="" />
             <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda"
                  style="margin-left:-8px" onclick="doOperation('searchData')" />
