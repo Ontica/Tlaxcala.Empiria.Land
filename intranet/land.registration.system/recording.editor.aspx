@@ -152,7 +152,8 @@
 </div>
 </form>
 <div><span id="span" runat="server"></span></div>
-<iframe id="ifraCalendar" style="z-index:99;left:0;visibility:hidden;position:relative;top:0"
+
+<iframe id="ifraCalendar" style="z-index:99;left:560px;visibility:hidden;position:relative;top:130px; width:225px;  height:160px;"
     marginheight="0" marginwidth="0" frameborder="0" scrolling="no" src="../user.controls/calendar.aspx" width="100%">
 </iframe>
 </body>

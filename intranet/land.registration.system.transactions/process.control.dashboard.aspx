@@ -73,10 +73,10 @@
         </select>
         Del:
         <input type="text" class="textBox" id='txtFromDate' name='txtFromDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-        <img id='imgFromDate' style="margin-left:-8px" src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtFromDate.ClientID%>'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />
+        <img id='imgFromDate' style="margin-left:-8px" src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtFromDate.ClientID%>'), getElement('imgFromDate'), '255px');" title="Despliega el calendario" alt="" />
         al:
         <input type="text" class="textBox" id='txtToDate' name='txtToDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-        <img id='imgToDate' style="margin-left:-8px" src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtToDate.ClientID%>'), getElement('imgToDate'));" title="Despliega el calendario" alt="" />
+        <img id='imgToDate' style="margin-left:-8px" src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtToDate.ClientID%>'), getElement('imgToDate'), '355px');" title="Despliega el calendario" alt="" />
           <a href="javascript:doOperation('setTodayDate')">Hoy</a>
       </td>
       <td nowrap="nowrap">

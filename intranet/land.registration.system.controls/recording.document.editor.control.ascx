@@ -59,19 +59,19 @@
     <td>Volumen / libro:</td>
     <td class="lastCell" colspan="2">
       <input id="txtNotaryDocBook" type="text" class="textBox" style="width:40px"
-             onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
+             onkeypress="return integerKeyFilter(window.event, true);" title="" maxlength="6"  runat="server" />
       Escritura:
         <input id="txtNotaryDocNumber" name="txtNotaryDocNumber" type="text" class="textBox" style="width:40px"
-         onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
+         onkeypress="return integerKeyFilter(window.event, true);" title="" maxlength="6"  runat="server" />
       &#160;Folios del:&#160;<input id="txtNotaryDocStartSheet" name="txtNotaryDocStartSheet" type="text" class="textBox" style="width:50px"
-         onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
+         onkeypress="return integerKeyFilter(window.event, true);" title="" maxlength="6"  runat="server" />
        al:&#160;&#160;
        <input id="txtNotaryDocEndSheet" name="txtNotaryDocEndSheet" type="text" class="textBox" style="width:40px"
-         onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
+         onkeypress="return integerKeyFilter(window.event, true);" title="" maxlength="6"  runat="server" />
       Fecha de la escritura:
       <input type="text" class="textBox" id='txtNotaryDocIssueDate' name='txtNotaryDocIssueDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
       <img id='imgNotaryDocIssueDate' src="../themes/default/buttons/ellipsis.gif"
-      onclick="return showCalendar(getElement('<%=txtNotaryDocIssueDate.ClientID%>'), getElement('imgNotaryDocIssueDate'));" title="Despliega el calendario" alt="" />
+      onclick="return showCalendar(event, getElement('<%=txtNotaryDocIssueDate.ClientID%>'), getElement('imgNotaryDocIssueDate'));" title="Despliega el calendario" alt="" />
     </td>
   </tr>
 </table>

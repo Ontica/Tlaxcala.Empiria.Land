@@ -155,7 +155,7 @@
              &#160;
               <input type="button" value="Vincular" class="button" style="width:68px; height:24px; vertical-align:middle"
                    onclick='doRecordingActEditorOperation("getCadastralInfo")' />
-              </>
+              <br/>
             </span>
           </td>
           <td class="lastCell">&#160;</td>
