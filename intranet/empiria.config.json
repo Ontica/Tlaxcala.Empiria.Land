@@ -10,18 +10,28 @@
     },
     {
       "type": "",
-      "key": "License.Name",
-      "value": "Tlaxcala"
+      "key": "GlobalConfigurationFile",
+      "value": "E:\\empiria.files\\config.data\\empiria.land.development.json"
     },
     {
-      "type": "",
-      "key": "License.IsSpecial",
-      "value": false
+      "type": "Presentation",
+      "key": "Session.DefaultViewModel",
+      "value": "WebUI.Dashboard.MainWorkDashboard"
     },
     {
-      "type": "",
-      "key": "IsDevelopmentServer",
-      "value": true
+      "type": "Presentation.Web",
+      "key": "Session.MaxLogonAttempts",
+      "value": 5
+    },
+    {
+      "type": "Presentation.Web",
+      "key": "Session.Timeout",
+      "value": 120
+    },
+    {
+      "type": "Presentation.Web",
+      "key": "Server.RootPath",
+      "value": "http://empiria.land/intranet/"
     },
     {
       "type": "WebApi.Client",
@@ -31,12 +41,12 @@
     {
       "type": "WebApi.Client",
       "key": "WebApiServer.Microservices",
-      "value": "http://localhost/microservices/"
+      "value": "http://empiria.land/microservices/"
     },
     {
       "type": "WebApi.Client",
       "key": "WebApiServer.Land",
-      "value": "http://localhost/web.api/"
+      "value": "http://empiria.land/web.api/"
     },
     {
       "type": "WebApi.Client",
@@ -44,14 +54,24 @@
       "value": "v1/system/service-directory"
     },
     {
+      "type": "Land",
+      "key": "UIControls.AppendRecordingActEditorControl",
+      "value": "~/land.registration.system.controls/append.recording.act.editor.control.ascx"
+    },
+    {
+      "type": "Land",
+      "key": "UIControls.RecordingDocumentEditorControl",
+      "value": "~/land.registration.system.controls/recording.document.editor.control.ascx"
+    },
+    {
       "type": "Land.WebApp",
       "key": "CertificatesSystem.Url",
-      "value": "http://localhost/certificates/"
+      "value": "http://intranet.empiria.land/certificates/"
     },
     {
       "type": "Land.WebApp",
       "key": "LegacyDataViewer.Url",
-      "value": "http://192.168.1.22/anotaciones/Home2015.aspx"
+      "value": "http://192.168.2.22/anotaciones/Home2015.aspx"
     }
   ]
 }

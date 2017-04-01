@@ -10,38 +10,8 @@
     },
     {
       "type": "",
-      "key": "License.Name",
-      "value": "Tlaxcala"
-    },
-    {
-      "type": "",
-      "key": "License.IsSpecial",
-      "value": false
-    },
-    {
-      "type": "",
-      "key": "IsDevelopmentServer",
-      "value": true
-    },
-    {
-      "type": "",
-      "key": "System.Url",
-      "value": "http://www.ontica.org/land/"
-    },
-    {
-      "type": "WebApi.Client",
-      "key": "Default.WebApiServer",
-      "value": "Microservices"
-    },
-    {
-      "type": "WebApi.Client",
-      "key": "WebApiServer.Microservices",
-      "value": "http://empiria.microservices"
-    },
-    {
-      "type": "WebApi.Client",
-      "key": "ServiceDirectory.Path",
-      "value": "v1/system/service-directory"
+      "key": "GlobalConfigurationFile",
+      "value": "E:\\empiria.files\\config.data\\empiria.land.development.json"
     }
   ]
 }
