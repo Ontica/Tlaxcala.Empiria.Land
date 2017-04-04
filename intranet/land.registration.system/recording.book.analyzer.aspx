@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
 <title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="Expires" content="-1" />
 <meta http-equiv="Pragma" content="no-cache" />
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
@@ -109,13 +110,13 @@
                     <td>Fecha de presentación:</td>
                     <td>
                       <input id='txtPresentationDate' name='txtPresentationDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                      <img id='imgPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtPresentationDate'), getElement('imgPresentationDate'));" title="Despliega el calendario" alt="" />
+                      <img id='imgPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtPresentationDate'), getElement('imgPresentationDate'));" title="Despliega el calendario" alt="" />
                      &#160;&#160;&#160;&#160;&#160;&#160;&#160;Hora de presentación:</td>
                     <td><input id="txtPresentationTime" name="txtPresentationTime" type="text" class="textBox" style="width:40px;margin-right:2px" maxlength="5" title="" onkeypress='return hourKeyFilter(this);' runat="server" />Hrs&#160;</td>
                     <td>F. Autorización:</td>
                     <td>
                       <input id='txtAuthorizationDate' name='txtAuthorizationDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                      <img id='imgAuthorizationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtAuthorizationDate'), getElement('imgAuthorizationDate'));" title="Despliega el calendario" alt="" />
+                      <img id='imgAuthorizationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtAuthorizationDate'), getElement('imgAuthorizationDate'));" title="Despliega el calendario" alt="" />
                     </td>
                     <td class="lastCell">&#160;</td>
                   </tr>
@@ -334,14 +335,14 @@
                       <td>Fecha de presentación:</td>
                       <td>
                         <input type="text" class="textBox" id='txtAnnotationPresentationDate' name='txtAnnotationPresentationDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                        <img id='imgAnnotationPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtAnnotationPresentationDate'), getElement('imgAnnotationPresentationDate'));" title="Despliega el calendario" alt="" style="margin-left:-4px" />
+                        <img id='imgAnnotationPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtAnnotationPresentationDate'), getElement('imgAnnotationPresentationDate'));" title="Despliega el calendario" alt="" style="margin-left:-4px" />
                        &#160; Hora:
                       </td>
                       <td><input id="txtAnnotationPresentationTime" name="txtAnnotationPresentationTime" type="text" class="textBox" style="width:40px" maxlength="5" title="" onkeypress='return hourKeyFilter(this);' runat="server" /></td>
                       <td>Autorización:</td>
                       <td>
                         <input id='txtAnnotationAuthorizationDate' name='txtAnnotationAuthorizationDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                        <img id='imgAnnotationAuthorizationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtAnnotationAuthorizationDate'), getElement('imgAnnotationAuthorizationDate'));" title="Despliega el calendario" alt=""  style="margin-left:-4px" />
+                        <img id='imgAnnotationAuthorizationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtAnnotationAuthorizationDate'), getElement('imgAnnotationAuthorizationDate'));" title="Despliega el calendario" alt=""  style="margin-left:-4px" />
                        &#160;&#160;&#160;
                         <input type="button" value="Heredar" class="button" style="width:64px" onclick='doOperation("inheritAnnotationData")' title="Hereda la información de la inscripción del predio a esta anotación o limitación" />
                       </td>
@@ -443,10 +444,10 @@
                       <td>Presentación:</td>
                       <td colspan="2">
                         <input type="text" class="textBox" id='txtSearchPresentationFromDate' name='txtSearchPresentationFromDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                        <img id='img2' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtSearchPresentationFromDate'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />
+                        <img id='img2' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtSearchPresentationFromDate'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />
                         Al día:
                         <input type="text" class="textBox" id='txtSearchPresentationToDate' name='txtSearchPresentationToDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                        <img id='img3' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtSearchPresentationToDate'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />													
+                        <img id='img3' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtSearchPresentationToDate'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />													
                       </td>
                       <td class="lastCell">&#160;</td>
                     </tr>
@@ -454,7 +455,7 @@
                       <td>Autorización:</td>
                       <td colspan="2">
                         <input type="text" class="textBox" id='txtSearchAuthorizationFromDate' name='txtSearchAuthorizationFromDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                        <img id='img4' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtSearchAuthorizationFromDate'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />
+                        <img id='img4' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtSearchAuthorizationFromDate'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />
                         Al día:
                         <input type="text" class="textBox" id='txtSearchAuthorizationToDate' name='txtFromDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
                       </td>
@@ -1177,7 +1178,7 @@
     }
   }
 
-  function resetAnotherRecordingBooksCombo() {
+    function resetAnotherRecordingBooksCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingBooksStringArrayCmd";
     if (getElement("cboAnotherRecorderOffice").value.length != 0) {
@@ -1223,7 +1224,7 @@
     }
   }
 
-  function resetRecordingsTypesCombo() {
+    function resetRecordingsTypesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
     url += "&#38;recordingActTypeCategoryId=" + getElement("cboRecordingActTypeCategory").value;
@@ -1246,7 +1247,7 @@
     invokeAjaxComboItemsLoader(url, getElement("cboAnnotationAuthorizedBy"))
   }
 
-  function resetAnnotationsBooksCombo() {
+    function resetAnnotationsBooksCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingBooksStringArrayCmd";
     url += "&#38;recorderOfficeId=<%=recordingBook.RecorderOffice.Id.ToString()%>";

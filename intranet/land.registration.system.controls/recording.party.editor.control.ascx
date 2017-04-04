@@ -153,7 +153,7 @@
                   <option value="Años">Años</option>
                   <option value="Meses">Meses</option>
                 </select>
-                <img id='imgUsufructEndDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtUsufructEndCondition.ClientID%>'), getElement('imgUsufructEndDate'));" style="margin-left:-6px;display:none;" title="Despliega el calendario" alt="" />
+                <img id='imgUsufructEndDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtUsufructEndCondition.ClientID%>'), getElement('imgUsufructEndDate'));" style="margin-left:-6px;display:none;" title="Despliega el calendario" alt="" />
               </div>
             </div>
             <div id="divSecondaryRole" style="display:none;">

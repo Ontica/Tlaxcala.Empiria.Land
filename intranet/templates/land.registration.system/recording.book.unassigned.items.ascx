@@ -56,12 +56,12 @@
    		  <img src="../themes/default/textures/pixel.gif" height="1px" width="7px" alt="" />
 			  Fecha de presentación de la primera inscripción:&#160;
 			  <input type="text" class="textBox" id='txtFromDate<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>' value='<%#((DateTime)DataBinder.Eval(Container, "DataItem.RecordingsControlFirstDate")).ToString("dd/MMM/yyyy")%>' style="margin-right:2px;width:64px;" onblur="formatAsDate(this)" title="" value="" /><img id='imgFromDate<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>'
-               src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtFromDate<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>'), getElement('imgFromDate<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>'));" title="Despliega el calendario"  style="padding:0px;margin:0px" alt="" hspace="0" />
+               src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtFromDate<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>'), getElement('imgFromDate<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>'));" title="Despliega el calendario"  style="padding:0px;margin:0px" alt="" hspace="0" />
 			  <br />
    		  <img src="../themes/default/textures/pixel.gif" height="1px" width="20px" alt="" />			
 			  Fecha de autorización de la última inscripción:&#160;
         <input type="text" class="textBox" id='txtToDate<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>' value='<%#((DateTime)DataBinder.Eval(Container, "DataItem.RecordingsControlLastDate")).ToString("dd/MMM/yyyy")%>' style="margin-right:2px;width:64px;" onblur="formatAsDate(this)" title="" value="" /><img id='imgToDate<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>'
-               src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtToDate<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>'), getElement('imgToDate<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>'));" title="Despliega el calendario"  style="padding:0px;margin:0px" alt="" hspace="0" />			
+               src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtToDate<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>'), getElement('imgToDate<%# DataBinder.Eval(Container, "DataItem.RecordingBookId")%>'));" title="Despliega el calendario"  style="padding:0px;margin:0px" alt="" hspace="0" />			
      </span>
      <span id="divCloseRecordingBook<%#DataBinder.Eval(Container, "DataItem.RecordingBookId")%>" style="display:none">
      		<img src="../themes/default/textures/pixel.gif" height="1px" width="46px" alt="" />

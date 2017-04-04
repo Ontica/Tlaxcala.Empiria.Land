@@ -37,10 +37,10 @@
     Inscripciones: <input id="txtRecordingsControlCount<%#DataBinder.Eval(Container, "DataItem.FilesFolderId")%>" class="textBox" type="text" maxlength="4" style="width:32px" onkeypress="return integerKeyFilter(this);" />
     <br />
     Fecha de la primera inscripción:&#160;&#160;&#160;&#160;<input type="text" class="textBox" id='txtFromDate<%# DataBinder.Eval(Container, "DataItem.FilesFolderId")%>' style="margin-right:2px;width:64px;" onblur="formatAsDate(this)" title="" value="" /><img id='imgFromDate<%# DataBinder.Eval(Container, "DataItem.FilesFolderId")%>'
-    src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtFromDate<%# DataBinder.Eval(Container, "DataItem.FilesFolderId")%>'), getElement('imgFromDate<%# DataBinder.Eval(Container, "DataItem.FilesFolderId")%>'));" title="Despliega el calendario"  style="padding:0px;margin:0px" alt="" hspace="0" />
+    src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtFromDate<%# DataBinder.Eval(Container, "DataItem.FilesFolderId")%>'), getElement('imgFromDate<%# DataBinder.Eval(Container, "DataItem.FilesFolderId")%>'));" title="Despliega el calendario"  style="padding:0px;margin:0px" alt="" hspace="0" />
    &#160;
     Última:&#160;&#160;<input type="text" class="textBox" id='txtToDate<%# DataBinder.Eval(Container, "DataItem.FilesFolderId")%>' style="margin-right:2px;width:64px;" onblur="formatAsDate(this)" title="" value="" /><img id='imgToDate<%# DataBinder.Eval(Container, "DataItem.FilesFolderId")%>'
-    src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtToDate<%# DataBinder.Eval(Container, "DataItem.FilesFolderId")%>'), getElement('imgToDate<%# DataBinder.Eval(Container, "DataItem.FilesFolderId")%>'));" title="Despliega el calendario"  style="padding:0px;margin:0px" alt="" hspace="0" />
+    src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtToDate<%# DataBinder.Eval(Container, "DataItem.FilesFolderId")%>'), getElement('imgToDate<%# DataBinder.Eval(Container, "DataItem.FilesFolderId")%>'));" title="Despliega el calendario"  style="padding:0px;margin:0px" alt="" hspace="0" />
 	</td>
 	<td style="white-space:nowrap;width:40%">
 		<span class='boldItem'>¿Qué debo hacer con este directorio?</span><br /><br />
