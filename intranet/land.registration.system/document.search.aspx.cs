@@ -317,7 +317,7 @@ namespace Empiria.Land.WebApp {
     }
 
     static private string TableWrapper(string html) {
-      return "<table class='details' style='width:96%'>" + html + "</table>";
+      return "<table class='details' style='width:96%;height:100px;'>" + html + "</table>";
     }
 
     #endregion Auxiliar methods

@@ -67,7 +67,7 @@
              <table id="tabStripItemView_1" class="editionTable" style="<%=TabStripDisplayView(TabStrip.RecordingActEditor)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraRecordingActEditor" style="z-index:99;left:0;top:0;" width="720px"
+                  <iframe id="ifraRecordingActEditor" style="z-index:99;left:0;top:0;" width="720px" height="630px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true" >
                   </iframe>
                 </td>
@@ -77,7 +77,7 @@
             <table id="tabStripItemView_2" class="editionTable" style="<%=TabStripDisplayView(TabStrip.ResourceEditor)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraPropertyEditor" style="z-index:99;left:0;top:0;" width="720px"
+                  <iframe id="ifraPropertyEditor" style="z-index:99;left:0;top:0;" width="720px" height="630px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true">
                   </iframe>
                 </td>
@@ -256,7 +256,7 @@
 
   function setPageTitle() {
     <% if (base.IsRecordingActSelected) { %>
-    getElement("spanPageTitle").innerHTML = "Documento: <%=recordingAct.Document.UID%></br>"+
+    getElement("spanPageTitle").innerHTML = "Documento: <%=recordingAct.Document.UID%><br></br>"+
                                             "Acto jurídico: <%=recordingAct.DisplayName%> [<%=recordingAct.Index + 1%>]";
     getElement("spanPageRightTitle").innerText = "Predio: <%=resource.UID%>";
     <% } else { %>
