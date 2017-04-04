@@ -89,7 +89,7 @@
                         <span id="divRecordingQuickAddSection" style="display:none">
                           Partida donde está registrado el antecedente:
                           <input id="txtQuickAddRecordingNumber" type="text" class="textBox" style="width:82px;margin-right:0"
-                                  onkeypress="return recordingNumberKeyFilter(this);" title="" maxlength="24" />
+                                  onkeypress="return recordingNumberKeyFilter(window.event);" title="" maxlength="24" />
                           <select id="cboQuickAddBisRecordingTag" class="selectBox" style="width:60px" title="">
                             <option value=""></option>
                             <option value="-Bis">-Bis</option>
@@ -98,7 +98,7 @@
                           </select>
                         </span>
                     <br />
-                    <table ID="tblQuickAddFields" class="editionTable" style="display:none;width:200px;color:darkred">
+                    <table id="tblQuickAddFields" class="editionTable" style="display:none;width:200px;color:darkred">
                       <tr>
                         <td>Documento registrado en la partida:</td>
                         <td colspan="3">
@@ -328,14 +328,14 @@
 
   var olookupResource = null;
   function lookupResource() {
-    if (getElement("txtLookupResource").value.length == 0) {
+    if (getElement('txtLookupResource').value.length == 0) {
       alert("Requiero se proporcione el folio real o número de documento para hacer la búsqueda");
       return;
     }
 
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=lookupResource";
-    url += "&#38;resourceUID=" + getElement("txtLookupResource").value;
+    url += "&resourceUID=" + getElement('txtLookupResource').value;
 
     olookupResource = invokeAjaxGetJsonObject(url);
 
@@ -436,7 +436,7 @@
   function setRecordingRule() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingActRuleCmd";
-    url += "&#38;recordingActTypeId=" + getElement("cboRecordingActType").value;
+    url += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
 
     oCurrentRecordingRule = invokeAjaxGetJsonObject(url);
 
@@ -448,7 +448,7 @@
   function updateTargetRecordingActCombos() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getTargetRecordingActTypesCmd";
-    url += "&#38;recordingActTypeId=" + getElement("cboRecordingActType").value;
+    url += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
 
     invokeAjaxComboItemsLoader(url, getElement('cboTargetAct'));
 
@@ -456,12 +456,13 @@
   }
 
   function updateUI(oControl) {
+    console.log('estoy en updateUI ');
     if (oControl == null) {
       return;
     }
     if (oControl == getElement("cboRecordingActTypeCategory")) {
       if (!assertAppendRecordingActIsPossible()) {
-        getElement("cboRecordingActTypeCategory").value = '';
+        getElement('cboRecordingActTypeCategory').value = '';
         return;
       }
       resetRecordingActTypesCombo();
@@ -501,9 +502,9 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getTargetActSectionsStringArrayCmd";
     if (getElement("cboTargetAct").value.length != 0) {
-      url += "&#38;recordingActTypeId=" + getElement('cboTargetAct').value;
+      url += "&recordingActTypeId=" + getElement('cboTargetAct').value;
     } else {
-      url += "&#38;recordingActTypeId=-1";
+      url += "&recordingActTypeId=-1";
     }
     invokeAjaxComboItemsLoader(url, getElement('cboTargetActSection'));
 
@@ -519,7 +520,7 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getDomainBooksStringArrayCmd";
     if (isSelectedTargetActSection()) {
-      url += "&#38;sectionFilter=" + getElement('cboTargetActSection').value;
+      url += "&sectionFilter=" + getElement('cboTargetActSection').value;
     }
     invokeAjaxComboItemsLoader(url, getElement('cboTargetActPhysicalBook'));
 
@@ -530,11 +531,11 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingNumbersStringArrayCmd";
     if (getElement("cboTargetActPhysicalBook").value.length != 0) {
-      url += "&#38;recordingBookId=" + getElement("cboTargetActPhysicalBook").value;
+      url += "&recordingBookId=" + getElement('cboTargetActPhysicalBook').value;
     } else {
-      url += "&#38;recordingBookId=0";
+      url += "&recordingBookId=0";
     }
-    invokeAjaxComboItemsLoader(url, getElement("cboTargetActRecording"));
+    invokeAjaxComboItemsLoader(url, getElement('cboTargetActRecording'));
     resetTargetActsGrid();
   }
 
@@ -573,24 +574,24 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getDomainBooksStringArrayCmd";
     if (getElement("cboPrecedentRecordingSection").value.length != 0) {
-      url += "&#38;sectionFilter=" + getElement('cboPrecedentRecordingSection').value;
+      url += "&sectionFilter=" + getElement('cboPrecedentRecordingSection').value;
     }
     invokeAjaxComboItemsLoader(url, getElement('cboPrecedentRecordingBook'));
     resetPrecedentRecordingsCombo();
   }
 
-  function resetPrecedentRecordingsCombo() {
+  function resetPrecedentRecordingsCombo() { //////quite "" puse ''
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingNumbersStringArrayCmd";
     if (getElement("cboPrecedentRecordingBook").value.length != 0) {
-      url += "&#38;recordingBookId=" + getElement("cboPrecedentRecordingBook").value;
+      url += "&recordingBookId=" + getElement('cboPrecedentRecordingBook').value;
     } else {
-      url += "&#38;recordingBookId=0";
+      url += "&recordingBookId=0";
     }
     if (getElement("cboRecordingActType").value.length != 0) {
-      url += "&#38;recordingActTypeId=" + getElement("cboRecordingActType").value;
+      url += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
     }
-    invokeAjaxComboItemsLoader(url, getElement("cboPrecedentRecording"));
+    invokeAjaxComboItemsLoader(url, getElement('cboPrecedentRecording'));
     showPrecedentPropertiesSection();
     updateSelectedResource();
     showTargetRecordingActSections();
@@ -599,9 +600,9 @@
   function resetPropertyTypeSelectorCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getPropertyTypeSelectorComboCmd";
-    url += "&#38;recordingActTypeId=" + getElement("cboRecordingActType").value;
+    url += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
 
-    invokeAjaxComboItemsLoader(url, getElement("cboRecordingTaskType"));
+    invokeAjaxComboItemsLoader(url, getElement('cboRecordingTaskType'));
     showPrecedentRecordingSection();
   }
 
@@ -609,29 +610,30 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingPropertiesArrayCmd";
     if (getElement("cboPrecedentRecording").value.length != 0) {
-      url += "&#38;recordingId=" + getElement("cboPrecedentRecording").value;
+      url += "&recordingId=" + getElement('cboPrecedentRecording').value;
     } else {
-      url += "&#38;recordingId=0";
+      url += "&recordingId=0";
     }
     if (getElement("cboRecordingActType").value.length != 0) {
-      url += "&#38;recordingActTypeId=" + getElement("cboRecordingActType").value;
+      url += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
     }
-    invokeAjaxComboItemsLoader(url, getElement("cboPrecedentProperty"));
+    invokeAjaxComboItemsLoader(url, getElement('cboPrecedentProperty'));
   }
-
+            
   function resetRecordingActTypesCombo() {
+    console.log('holaa 5 ');
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
-    url += "&#38;recordingActTypeCategoryId=" + getElement('cboRecordingActTypeCategory').value;
+    url += "&recordingActTypeCategoryId=" + getElement('cboRecordingActTypeCategory').value;
 
-    invokeAjaxComboItemsLoader(url, getElement("cboRecordingActType"));
+    invokeAjaxComboItemsLoader(url, getElement('cboRecordingActType'));
     resetPropertyTypeSelectorCombo();
   }
 
   function validateRecordingActSemantics() {
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
     ajaxURL += "?commandName=validateDocumentRecordingActCmd";
-    ajaxURL += "&#38;" + getRecordingActQueryString();
+    ajaxURL += "&" + getRecordingActQueryString();
 
     return invokeAjaxValidator(ajaxURL);
   }
@@ -699,11 +701,11 @@
   function updateTargetPrecedentActsTable() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getTargetPrecedentActsTableCmd";
-    url += "&#38;recordingActTypeId=" + getElement("cboRecordingActType").value;
-    url += "&#38;resourceId=" + getSelectedResource();
+    url += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
+    url += "&resourceId=" + getSelectedResource();
 
-    invokeAjaxComboItemsLoader(url, getElement("cboTemporalId"));
-
+    invokeAjaxComboItemsLoader(url, getElement('cboTemporalId')); ///cam,bie 2" por '
+ 
     //var html = invokeAjaxMethod(false, url, null);
     //getElement('tblTargetPrecedentActsTable').innerHTML = html;
   }
@@ -711,7 +713,7 @@
   // Represents the resource that was selected using the search box.
   // Returns null if no resource was selected.
   function createAntecedentResource() {
-    return (getElement("cboPrecedentRecording").value == "-1");
+    return (getElement('cboPrecedentRecording').value == "-1");
   }
 
   function showTargetActEditor() {
@@ -724,7 +726,7 @@
     var selectedResource = getSelectedResource();
     var createResource = createAntecedentResource();
 
-    var applyTargetRecording = (getElement("cboRecordingTaskType").value == "actAppliesToOtherRecordingAct" &&
+    var applyTargetRecording = (getElement('cboRecordingTaskType').value == "actAppliesToOtherRecordingAct" &&
                                (selectedResource != null || createResource));
 
 
@@ -765,19 +767,19 @@
       return;
     }
     var url = "../land.registration.system/recording.book.analyzer.aspx?bookId=" + bookId +
-              "&#38;id=" + recordingId;
+              "&id=" + recordingId;
 
     createNewWindow(url);
   }
 
   function showPrecedentProperty() {
-    var propertyId = getElement("cboPrecedentProperty").value;
+    var propertyId = getElement('cboPrecedentProperty').value;
     if (propertyId.length == 0 || propertyId == "-1" || propertyId == "0") {
       alert("Necesito se seleccione un predio de la lista.");
       return;
     }
     var url = "../land.registration.system/property.editor.aspx?propertyId=" + propertyId +
-              "&#38;recordingActId=-1"+"&#38;recordingId=" + getElement('cboPrecedentRecording').value;
+              "&recordingActId=-1"+"&recordingId=" + getElement('cboPrecedentRecording').value;
     createNewWindow(url);
   }
 
@@ -840,16 +842,16 @@
 
   function getPartitionText() {
     var sMsg = '';
-    if (getElement('cboRecordingTaskType').value != 'createPartition') {
+    if (getElement("cboRecordingTaskType").value != 'createPartition') {
       return '';
     }
     sMsg += "\t\tSobre " + getElement('cboPropertyPartitionType').value;
-    if (getElement('chkNoNumberPartition').checked) {
+    if (getElement("chkNoNumberPartition").checked) {
       sMsg += " sin número";
     } else {
       sMsg += " No. " + getElement('txtPartitionNo').value;
     }
-    if (getElement('chkGeneratePartitionRank').checked) {
+    if (getElement("chkGeneratePartitionRank").checked) {
       sMsg += " al No. " + getElement('txtRepeatPartitionUntil').value + "\n";
       sMsg += "\t\tlos cuales son NUEVAS FRACCIONES del\n";
     } else {
@@ -860,7 +862,7 @@
 
   function getSelectedResourceText() {
     if (getSelectedResource() != null) {
-      if (getElement('cboPrecedentProperty').value != '') {
+      if (getElement("cboPrecedentProperty").value != '') {
         return getComboOptionText(getElement('cboPrecedentProperty'));
       } else {
         return getElement('txtLookupResource').value;
@@ -870,7 +872,7 @@
   }
 
   function getTargetActPhysicalRecordingText() {
-    if (getElement('cboTargetActSection').value == "annotation") {
+    if (getElement("cboTargetActSection").value == "annotation") {
       return "Al margen de la partida";
     }
     return getComboOptionText(getElement('cboTargetActPhysicalBook')) + "\n" +
@@ -881,25 +883,25 @@
   function validateRecordingAct() {
     var recordingAct = getComboOptionText(getElement('cboRecordingActType'));
 
-    if (getElement('cboRecordingActTypeCategory').value.length == 0) {
+    if (getElement("cboRecordingActTypeCategory").value.length == 0) {
       alert("Necesito se seleccione de la lista la categoría del acto jurídico que va a agregarse al documento.");
       getElement('cboRecordingActTypeCategory').focus();
       return false;
     }
-    if (getElement('cboRecordingActType').value == "") {
+    if (getElement("cboRecordingActType").value == "") {
       alert("Requiero se seleccione de la lista el acto jurídico que va a agregarse al documento.");
       getElement('cboRecordingActType').focus();
       return false;
     }
     <%  if (!base.IsHistoricEdition &&
             base.Transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Elaboration) { %>
-      if (getElement('cboRecordingActType').value != "2201") {
+      if (getElement("cboRecordingActType").value != "2201") {
         alert("En elaboración de certificados sólo es posible agregar el acto 'Asignación de folio real'.");
         getElement('cboRecordingActType').focus();
         return false;
       }
     <% } %>
-    if (getElement('cboRecordingActType').value == "2201") {
+    if (getElement("cboRecordingActType").value == "2201") {
       if (getElement('cboPrecedentRecording').value != "-1" || getSelectedResource() != null) {
         alert("No es posible asignar un folio real sobre un pedio que ya tiene folio.");
         getElement('cboPrecedentRecording').focus();
@@ -907,7 +909,7 @@
       }
     }
 
-    if (getElement('cboRecordingTaskType').value.length == 0) {
+    if (getElement("cboRecordingTaskType").value.length == 0) {
       alert("Requiero se proporcione la información del predio o recurso sobre el que se aplicará el acto jurídico " + recordingAct + ".");
       getElement('cboRecordingTaskType').focus();
       return false;
@@ -1090,35 +1092,35 @@
 
   function getRecordingActQueryString() {
     var qs = "transactionId=<%=base.Transaction.Id%>";
-    qs += "&#38;documentId=<%=base.Document.Id%>\n";
-    qs += "&#38;recordingActTypeId=" + getElement('cboRecordingActType').value;
-    qs += "&#38;recordingTaskType=" + getElement('cboRecordingTaskType').value;
-    qs += "&#38;cadastralKey=" + getElement('txtCadastralKey').value;
-    qs += "&#38;precedentRecordingBookId=" + getElement('cboPrecedentRecordingBook').value;
-    qs += "&#38;precedentRecordingId=" + getElement('cboPrecedentRecording').value;
-    qs += "&#38;quickAddRecordingNumber=" + getElement('txtQuickAddRecordingNumber').value +
+    qs += "&documentId=<%=base.Document.Id%>\n";
+    qs += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
+    qs += "&recordingTaskType=" + getElement('cboRecordingTaskType').value;
+    qs += "&cadastralKey=" + getElement('txtCadastralKey').value;
+    qs += "&precedentRecordingBookId=" + getElement('cboPrecedentRecordingBook').value;
+    qs += "&precedentRecordingId=" + getElement('cboPrecedentRecording').value;
+    qs += "&quickAddRecordingNumber=" + getElement('txtQuickAddRecordingNumber').value +
                                         getElement('cboQuickAddBisRecordingTag').value;
     if (getSelectedResource() != null) {
-      qs += "&#38;precedentPropertyId=" + getSelectedResource();
+      qs += "&precedentPropertyId=" + getSelectedResource();
     }
-    qs += "&#38;resourceName=" + getElement('txtResourceName').value;
+    qs += "&resourceName=" + getElement('txtResourceName').value;
 
     // Partition data
     if (getElement('cboRecordingTaskType').value == "createPartition") {
-      qs += "&#38;partitionType=" + getElement('cboPropertyPartitionType').value;
-      qs += "&#38;partitionNo=" + (getElement('chkNoNumberPartition').checked ?
+      qs += "&partitionType=" + getElement('cboPropertyPartitionType').value;
+      qs += "&partitionNo=" + (getElement('chkNoNumberPartition').checked ?
                                           'sin número' : getElement('txtPartitionNo').value);
-      qs += "&#38;partitionRepeatUntilNo=" + (getElement('chkGeneratePartitionRank').checked ?
+      qs += "&partitionRepeatUntilNo=" + (getElement('chkGeneratePartitionRank').checked ?
                                                      getElement('txtRepeatPartitionUntil').value : "");
     }
 
     // target act values
-    qs += "&#38;targetRecordingActId=" + getElement('cboTemporalId').value;
+    qs += "&targetRecordingActId=" + getElement('cboTemporalId').value;
 
-    qs += "&#38;targetActTypeId=" + getElement('cboTargetAct').value;
-    qs += "&#38;targetActPhysicalBookId=" + getElement('cboTargetActPhysicalBook').value;
-    qs += "&#38;targetActRecordingId=" + getElement('cboTargetActRecording').value;
-    qs += "&#38;targetRecordingNumber=" + getElement('txtTargetActPhysicalRecordingNo').value +
+    qs += "&targetActTypeId=" + getElement('cboTargetAct').value;
+    qs += "&targetActPhysicalBookId=" + getElement('cboTargetActPhysicalBook').value;
+    qs += "&targetActRecordingId=" + getElement('cboTargetActRecording').value;
+    qs += "&targetRecordingNumber=" + getElement('txtTargetActPhysicalRecordingNo').value +
                                       getElement('cboTargetActBisRecordingTag').value;
 
     return qs;

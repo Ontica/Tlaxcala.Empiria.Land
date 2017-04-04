@@ -199,10 +199,10 @@
 
 
   function showRecordingActEditor() {
-    if (divRecordingActEditor.style.display == 'none') {
-      divRecordingActEditor.style.display = 'inline';
+    if (getElement('divRecordingActEditor').style.display == 'none') {
+      getElement('divRecordingActEditor').style.display = 'inline';
     } else {
-      divRecordingActEditor.style.display = 'none';
+      getElement('divRecordingActEditor').style.display = 'none';
     }
   }
 

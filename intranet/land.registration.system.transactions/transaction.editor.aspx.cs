@@ -663,7 +663,7 @@ namespace Empiria.Land.WebApp {
         title = "Presentado el: " + this.transaction.PresentationTime.ToString("dd/MMMM/yyy HH:mm");
       }
       if (this.transaction.IsReentry) {
-        title += "</br>Reingresado el: " + this.transaction.LastReentryTime.ToString("dd/MMMM/yyy HH:mm");
+        title += "<br></br>Reingresado el: " + this.transaction.LastReentryTime.ToString("dd/MMMM/yyy HH:mm");
       }
       return title;
     }
