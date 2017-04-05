@@ -529,14 +529,14 @@
     if (arguments.length == 1) {
       showFlag = arguments[0];
     } else {
-      showFlag = (<%=tblPartySeacher.ClientID%>.style.display == 'none');
+    showFlag = getElement('<%=tblPartySeacher.ClientID%>').style.display == 'none';
     }
 
     if (showFlag) {
-      <%=tblPartySeacher.ClientID%>.style.display = "inline";
+      getElement('<%=tblPartySeacher.ClientID%>').style.display = "inline";
       getElement('<%=txtSearchParty.ClientID%>').focus();
     } else {
-      <%=tblPartySeacher.ClientID%>.style.display = "none";
+      getElement('<%=tblPartySeacher.ClientID%>').style.display = "none";
     }
   }
 
@@ -547,22 +547,22 @@
   function this_displayEditor() {
     if (getElement('<%=cboParty.ClientID%>').value.length == 0) {
       this_cleanEditor();
-      <%=tblPartySeacher.ClientID%>.style.display = "inline";
-      <%=tblHumanPartyEditor.ClientID%>.style.display = "none";
-      <%=tblOrganizationPartyEditor.ClientID%>.style.display = "none";
-      <%=tblPartyRoleEditor.ClientID%>.style.display = "none";
+      getElement('<%=tblPartySeacher.ClientID%>').style.display = "inline";
+      getElement('<%=tblHumanPartyEditor.ClientID%>').style.display = "none";
+      getElement('<%=tblOrganizationPartyEditor.ClientID%>').style.display = "none";
+      getElement('<%=tblPartyRoleEditor.ClientID%>').style.display = "none";
     }
     if (getElement('<%=cboParty.ClientID%>').value == "appendParty") {
       this_cleanEditor();
-      <%=tblPartySeacher.ClientID%>.style.display = "inline";
+      getElement('<%=tblPartySeacher.ClientID%>').style.display = "inline";
       if (this_isPersonPartySelected()) {
-        <%=tblHumanPartyEditor.ClientID%>.style.display = "inline";
-        <%=tblOrganizationPartyEditor.ClientID%>.style.display = "none";
+        getElement('<%=tblHumanPartyEditor.ClientID%>').style.display = "inline";
+        getElement('<%=tblOrganizationPartyEditor.ClientID%>').style.display = "none";
       } else {
-        <%=tblHumanPartyEditor.ClientID%>.style.display = "none";
-        <%=tblOrganizationPartyEditor.ClientID%>.style.display = "inline";
+        getElement('<%=tblHumanPartyEditor.ClientID%>').style.display = "none";
+        getElement('<%=tblOrganizationPartyEditor.ClientID%>').style.display = "inline";
       }
-      <%=tblPartyRoleEditor.ClientID%>.style.display = "inline";
+      getElement('<%=tblPartyRoleEditor.ClientID%>').style.display = "inline";
       disabledPartyControls(false);
     } else if (getElement('<%=cboParty.ClientID%>').value.length != 0) {
       doOperation('selectParty', getElement('<%=cboParty.ClientID%>').value);

@@ -131,11 +131,11 @@
           <td class="totalsRow lastCell" style='width:860px;display:<%=base.IsReadyToAppendRecordingActs() && base.RecordingActs.Count > 0 ? "inline" : "none"%>'>
             <div style="width:50%; float:left; display:inline;">
                 <a href="javascript:doOperation('showRecordingActEditor')">
-                <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />Registrar otro acto jurídico 2</a>
+                <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />Registrar otro acto jurídico </a>
             </div>
             <div style="width:50%; text-align:right; display:inline;">
               <a href="javascript:doOperation('showSearchRecordingsView')">
-              <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar la información registral 2</a>&#160;&#160;&#160;
+              <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar la información registral </a>&#160;&#160;&#160;
             </div>
           </td>
         </tr>
