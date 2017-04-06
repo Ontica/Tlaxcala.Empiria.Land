@@ -9,6 +9,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "intranet", "http://localhos
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6"
+		ProjectReferences = "{3f336e9d-d9fa-492f-bb91-ee81bb49aeb6}|Empiria.Land.Connectors.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_4834"
 		Debug.AspNetCompiler.PhysicalPath = "intranet\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_4834\"
