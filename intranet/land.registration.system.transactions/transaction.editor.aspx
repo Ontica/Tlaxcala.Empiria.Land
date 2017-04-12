@@ -255,14 +255,14 @@
       <tr>
         <td>Recibo de pago:</td>
         <td>
-          <input id='txtReceiptNumber' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);"
+          <input id='txtReceiptNumber' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);"
                  style="width:86px;" title="" maxlength="7" runat="server" />
         </td>
         <td>
         Importe:
         </td>
         <td colspan="3" valign="bottom">
-          <b>$</b>&#160;<input id='txtReceiptTotal' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);"
+          <b>$</b>&#160;<input id='txtReceiptTotal' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);"
                          style="width:71px;" title="" maxlength="8" runat="server" />
         </td>
         <td class="lastCell">

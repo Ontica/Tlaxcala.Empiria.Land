@@ -215,6 +215,8 @@
                   <td width='40%' nowrap='nowrap'>&#160;</td>
                   <td align="right" style="width:100%">
                     Zoom:
+                  </td>
+                  <td>
                     <select id="cboZoomLevel" name="cboZoomLevel" class="selectBox" style="width:56px" title="" onchange="return doOperation('zoomImage')" runat="server">
                       <option value="0.50">50%</option>
                       <option value="0.75">75%</option>

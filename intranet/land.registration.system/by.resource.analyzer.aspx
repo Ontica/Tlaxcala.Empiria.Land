@@ -2,13 +2,13 @@
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Import Namespace="Empiria.Land.Registration" %>
 <%@ Import Namespace="Empiria.Land.WebApp" %>
-<!DOCTYPE html>
+<!DOCTYPE html [<!ENTITY nbsp "&#160;">]>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
 <title>Editor de documentos</title>
 <meta http-equiv="Expires" content="-1" />
 <meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+ <meta charset="UTF-8"> 
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
@@ -22,7 +22,7 @@
     <input type="hidden" name="hdnPageCommand" id="hdnPageCommand" runat="server" />
   </div>
   <div id="divCanvas">
-    <div id="divHeader" style="height:90px">
+    <div id="divHeader" style="height:60px">
       <span id="spanPageTitle" class="appTitle">
        &#160;
       </span>
@@ -30,19 +30,19 @@
        &#160;
       </span>
     </div> <!--divHeader!-->
-    <div id="divBody">
+    <div id="divBody" >
       <div id="divContent">
         <table cellpadding="0" cellspacing="0">
           <tr>
-            <td id="divImageViewer" valign='top' style="position:relative;">
-              <div id="divImageContainer" style="overflow:auto;width:500px;height:540px;top:0;">
-                  <object id="documentViewer" type="text/html" style="width:100%; height:100%;">
+            <td id="divImageViewer" valign='top' style="position:relative; overflow:hidden;">
+              <div id="divImageContainer" style="overflow:hidden;width:920px;height:720px;top:0;">
+                  <object id="documentViewer" type="text/html" style="width:100%; height:100%;overflow:hidden;">
                     <p>visor de documentos</p>
                   </object>
                 </div>
             </td>
             <td><img src="../themes/default/textures/pixel.gif" height="1px" width="12px" alt="" /></td>
-            <td id="divDocumentViewer" valign="top" style="width:740px;">
+            <td id="divDocumentViewer" valign="top" style="width:680px;">
               <table class="tabStrip">
                 <tr>
                   <td id="tabStripItem_0" class="<%=TabStripClass(TabStrip.DocumentEditor)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Editar documento</td>
@@ -67,7 +67,7 @@
              <table id="tabStripItemView_1" class="editionTable" style="<%=TabStripDisplayView(TabStrip.RecordingActEditor)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraRecordingActEditor" style="z-index:99;left:0;top:0;" width="720px" height="630px"
+                  <iframe id="ifraRecordingActEditor" style="z-index:99;left:0;top:0;" width="720px" height="650px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true" >
                   </iframe>
                 </td>
@@ -77,7 +77,7 @@
             <table id="tabStripItemView_2" class="editionTable" style="<%=TabStripDisplayView(TabStrip.ResourceEditor)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraPropertyEditor" style="z-index:99;left:0;top:0;" width="720px" height="630px"
+                  <iframe id="ifraPropertyEditor" style="z-index:99;left:0;top:0;" width="720px" height="650px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true">
                   </iframe>
                 </td>
@@ -87,7 +87,7 @@
             <table id="tabStripItemView_3" class="editionTable" style="<%=TabStripDisplayView(TabStrip.ResourceHistory)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraPropertyHistory" style="z-index:99;left:0;top:0;" width="720px" 
+                  <iframe id="ifraPropertyHistory" style="z-index:99;left:0;top:0;" width="720px"  height="650px" 
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true">
                   </iframe>
                 </td>
@@ -97,7 +97,7 @@
             <table id="tabStripItemView_4" class="editionTable" style="<%=TabStripDisplayView(TabStrip.GlobalSearch)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraSearchInfo" style="z-index:99;left:0;top:0;" width="720px" height="900px"
+                  <iframe id="ifraSearchInfo" style="z-index:99;left:0;top:0;" width="620px" height="800px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true">
                   </iframe>
                 </td>

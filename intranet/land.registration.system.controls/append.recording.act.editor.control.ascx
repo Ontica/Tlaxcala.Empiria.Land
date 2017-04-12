@@ -201,9 +201,11 @@
         </table>
     </td>
   </tr>
+  <br /><br />
   <tr id="divTargetPrecedentActSectionTitle" style="display:none">
     <td class="actionsSeparator">(2) Seleccionar el acto jurídico a cancelar o modificar</td>
   </tr>
+  <br /><br />
   <tr id="divTargetPrecedentActTable" style="display:none">
     <td>
       <table class="editionTable">
@@ -241,10 +243,11 @@
       </table>
       </td>
     </tr>
+   <br /><br />
     <tr id="divTargetPrecedentActSection" style="display:none">
     <td>
       <table class="editionTable">
-        <tr>
+        <tr style='display:inline'>
           <td>Que aplica a:</td>
           <td>
             <select id="cboTargetAct" class="selectBox" style="width:202px" title="" onchange="return updateUI(this);">
@@ -260,6 +263,7 @@
           </td>
           <td class="lastCell">&#160;</td>
         </tr>
+        <br /><br />
         <tr id="divTargetActBookAndRecording" style="display:none">
           <td colspan="2"></td>
           <td>Volumen:
@@ -276,7 +280,7 @@
             <br />
             Partida donde fue registrado el acto:
             <input id="txtTargetActPhysicalRecordingNo" type="text" class="textBox" style="width:82px;margin-right:0"
-                   onkeypress="return recordingNumberKeyFilter(this);" maxlength="24" />
+                   onkeypress="return recordingNumberKeyFilter(window.event, true);" maxlength="24" />
             <select id="cboTargetActBisRecordingTag" class="selectBox" style="width:60px" title="">
               <option value=""></option>
               <option value="-Bis">-Bis</option>
@@ -456,7 +460,6 @@
   }
 
   function updateUI(oControl) {
-    console.log('estoy en updateUI ');
     if (oControl == null) {
       return;
     }
@@ -621,7 +624,6 @@
   }
             
   function resetRecordingActTypesCombo() {
-    console.log('holaa 5 ');
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
     url += "&recordingActTypeCategoryId=" + getElement('cboRecordingActTypeCategory').value;

@@ -36,7 +36,7 @@
         <table cellpadding="0" cellspacing="0">
           <tr>
             <td id="divImageViewer" valign='top' style="position:relative;">
-              <div id="divImageContainer" style="overflow:auto;width:400px;height:540px;top:0;">
+              <div id="divImageContainer" style="overflow:auto;width:400px;height:600px;top:0;">
                   <object id="documentViewer" type="text/html" style="width:100%; height:100%;">
                     <p>Visor de imágenes de libros</p>
                   </object>
