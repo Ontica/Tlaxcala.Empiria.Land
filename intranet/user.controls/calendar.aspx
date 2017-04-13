@@ -1,11 +1,11 @@
 ﻿<%@ Page language="c#" AutoEventWireup="false" Inherits="Empiria.Web.UI.CalendarControl" CodeFile="calendar.aspx.cs" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	<head>
 		<title>Calendario</title>
 		<script type="text/javascript" src="../scripts/empiria.general.js"></script>
-		<script type="text/javascript" language="javascript">
-    <!--
+		<script type="text/javascript">
+   
 
 			function setDate(value) {
 				getElement('txtDate').value = value;
@@ -32,7 +32,7 @@
 
       function window_onload() {
         <% if (!isVisible) { %>
-      		getElement('divCalendar').style.visibility = "hidden";
+      		getElement('divCalendar').style.visibility = "hidden"; ///visible para  verlo
       	<% } %>
       	document.forms[0].action = "calendar.aspx";
         <% if (selectedValue.Length != 0) { %>
@@ -40,13 +40,13 @@
         <% } %>
         on_calendar_resize();
       }
-    //-->
+   
 		</script>
 	</head>
-	<body style="FONT-SIZE: 8pt; Z-INDEX: 100; COLOR: #191970; FONT-FAMILY: Arial, Helvetica; BACKGROUND-COLOR: #ffffef; TEXT-DECORATION: none" onload="window_onload();" onblur="on_calendar_lost_focus();">
+	<body onload="window_onload()" onblur="on_calendar_lost_focus();" style="FONT-SIZE: 8pt; Z-INDEX: 100; COLOR: #191970; FONT-FAMILY: Arial, Helvetica; BACKGROUND-COLOR: #ffffef; TEXT-DECORATION: none">
 		<form id="frmEditor" method="post" runat="server">
 			<div id="divCalendar">
-				<asp:Calendar id="objCalendar" style="FONT-SIZE: 8pt; Z-INDEX: 100; LEFT: 0px; COLOR: #330066; FONT-FAMILY: Arial, Helvetica; POSITION: absolute; TOP: 0px; TEXT-DECORATION: none" runat="server" Visible="true" TodayDayStyle-BackColor="#faebd7" SelectedDayStyle-BackColor="#e9967a" SelectedDayStyle-ForeColor="#191970" TitleStyle-Font-Size="8pt" TitleStyle-Wrap="false" TitleStyle-BackColor="#191970" TitleStyle-ForeColor="#ffffff" BorderStyle="Solid" TitleStyle-VerticalAlign="Middle" NextPrevStyle-ForeColor="#ffffff" NextPrevFormat="ShortMonth" BorderColor="Gray" BorderWidth="1px" NextMonthText=" ">
+        <asp:Calendar id="objCalendar" style="FONT-SIZE: 8pt; Z-INDEX: 100; LEFT: 0px; COLOR: #330066; FONT-FAMILY: Arial, Helvetica; POSITION: absolute; TOP: 0px; TEXT-DECORATION: none" runat="server" Visible="true" TodayDayStyle-BackColor="#faebd7" SelectedDayStyle-BackColor="#e9967a" SelectedDayStyle-ForeColor="#191970" TitleStyle-Font-Size="8pt" TitleStyle-Wrap="false" TitleStyle-BackColor="#191970" TitleStyle-ForeColor="#ffffff" BorderStyle="Solid" TitleStyle-VerticalAlign="Middle" NextPrevStyle-ForeColor="#ffffff" NextPrevFormat="ShortMonth" BorderColor="Gray" BorderWidth="1px" NextMonthText=" ">
 					<TodayDayStyle Font-Italic="True" Font-Bold="True" BackColor="BlanchedAlmond"></TodayDayStyle>
 					<SelectorStyle BorderStyle="None"></SelectorStyle>
 					<DayStyle ForeColor="MidnightBlue"></DayStyle>

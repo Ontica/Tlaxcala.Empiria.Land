@@ -1,5 +1,5 @@
 ﻿<thead>
   <tr>
-    <th width="100%">&nbsp;</th>
+    <th width="100%">&#160;</th>
   </tr>
 </thead>

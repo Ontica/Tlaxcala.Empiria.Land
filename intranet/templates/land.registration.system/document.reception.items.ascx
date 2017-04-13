@@ -7,9 +7,9 @@
 		<table class="ghostTable">
 			<tr><td rowspan="5"><a href="javascript:doOperation('editTransaction', <%#DataBinder.Eval(Container, "DataItem.TransactionId")%>)"><img src="../themes/default/app.icons/documents.gif" alt='' title="Abre el trámite" style='margin-right:20px' /></a></td>
 					<td colspan="2" style='width:100%;height:22px'><a id="ancRecordingBook<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>" class="detailsLinkTitle" href="javascript:doOperation('editTransaction', <%#DataBinder.Eval(Container, "DataItem.TransactionId")%>)" title="Abre el trámite"><%#DataBinder.Eval(Container, "DataItem.TransactionUID")%></a></td></tr>
-      <tr><td style="width:20px">Origen:&nbsp;</td><td><span class='boldItem'>Ventanilla</span></td></tr>
-      <tr><td style="width:20px">Tipo:&nbsp;</td><td><span class='boldItem'>Inscripción</span></td></tr>
-			<tr><td style="width:20px">Presentación:&nbsp;</td><td><span class='boldItem'><%#((DateTime)DataBinder.Eval(Container, "DataItem.TransactionPresentationTime")).ToString("dd/MMM/yyyy HH:mm:ss")%></span></td></tr>
+      <tr><td style="width:20px">Origen:&#160;</td><td><span class='boldItem'>Ventanilla</span></td></tr>
+      <tr><td style="width:20px">Tipo:&#160;</td><td><span class='boldItem'>Inscripción</span></td></tr>
+			<tr><td style="width:20px">Presentación:&#160;</td><td><span class='boldItem'><%#((DateTime)DataBinder.Eval(Container, "DataItem.TransactionPresentationTime")).ToString("dd/MMM/yyyy HH:mm:ss")%></span></td></tr>
     </table>
 	</td>
 	<td style="white-space:nowrap;width:30%">
@@ -24,7 +24,7 @@
 	</td>
   <td style="white-space:normal;"><span class='boldItem'><%#DataBinder.Eval(Container, "DataItem.TransactionNotes")%></span></td>
 	<td style="white-space:nowrap;width:40%">			
-	  &nbsp;
+	 &#160;
 	</td>
 </tr>
 <%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).IsLastItem((int) DataBinder.Eval(Container, "ItemIndex")) ? "</tbody>" : String.Empty %>

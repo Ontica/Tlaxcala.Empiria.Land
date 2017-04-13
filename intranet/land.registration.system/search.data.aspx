@@ -1,7 +1,7 @@
 ﻿<%@ Page language="c#" Inherits="Empiria.Land.WebApp.LRSSearchData" EnableViewState="true" EnableSessionState="true" CodeFile="search.data.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingActSelectorControl" src="../land.registration.system.controls/recording.act.selector.control.ascx" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
 <title>      <%=GetTitle()%></title>
@@ -34,7 +34,7 @@
       <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Inscripción de documentos</td>
       <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Emisión de certificados</td>
       <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Historia del trámite</td>
-      <td class="lastCell" colspan="1" rowspan="1"><a id="top" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
+      <td class="lastCell" colspan="1" rowspan="1"><a id="top" />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
     </tr>
   </table>
   <table id="tabStripItemView_0" class="editionTable" style="display:inline">
@@ -114,7 +114,7 @@
   <td class="subTitle">Actos jurídicos y conceptos involucrados en el trámite</td>
 </tr>
 <tr>
-  <td class="subTitle">&nbsp;</td>
+  <td class="subTitle">&#160;</td>
 </tr>
 </table>
 
@@ -231,8 +231,8 @@
   function resetRecordingsTypesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
-    url += "&recordingActTypeCategoryId=" + getElement("cboRecordingActTypeCategory").value;
-    url += "&filtered=false";
+    url += "&#38;recordingActTypeCategoryId=" + getElement("cboRecordingActTypeCategory").value;
+    url += "&#38;filtered=false";
 
     invokeAjaxComboItemsLoader(url, getElement("cboRecordingActType"));
 
@@ -242,7 +242,7 @@
   function resetLawArticlesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getLawArticlesStringArrayCmd";
-    url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+    url += "&#38;recordingActTypeId=" + getElement("cboRecordingActType").value;
     invokeAjaxComboItemsLoader(url, getElement("cboLawArticle"));
   }
 
@@ -286,7 +286,7 @@
 
   function ifraRecordingEditor_onresize() {
     var oFrame = getElement("ifraRecordingEditor");
-    var oBody = oFrame.document.body;
+    var oBody = oFrame.contentDocument.body;
 
     var newHeight = oBody.scrollHeight + oBody.clientHeight;
 

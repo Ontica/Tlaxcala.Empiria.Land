@@ -1,13 +1,13 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.RecordingBookAnalyzer" CodeFile="recording.book.analyzer.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Import Namespace="Empiria.Land.Registration" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
 <title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="Expires" content="-1" />
 <meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
@@ -25,10 +25,10 @@
   <div id="divCanvas">
     <div id="divHeader">
       <span id="spanPageTitle" class="appTitle">
-        &nbsp;
+       &#160;
       </span>
       <span id="spanCurrentImage" class="rightItem appTitle" style="margin-right:8px">
-        &nbsp;
+       &#160;
       </span>
     </div> <!--divHeader!-->
     <div id="divBody">
@@ -36,7 +36,7 @@
         <table cellpadding="0" cellspacing="0">
           <tr>
             <td id="divImageViewer" valign='top' style="position:relative;">
-              <div id="divImageContainer" style="overflow:auto;width:400px;height:540px;top:0;">
+              <div id="divImageContainer" style="overflow:auto;width:400px;height:600px;top:0;">
                   <object id="documentViewer" type="text/html" style="width:100%; height:100%;">
                     <p>Visor de imágenes de libros</p>
                   </object>
@@ -63,7 +63,7 @@
                   <tr>
                     <td colspan="4">Libro:
                       <input type="text" class="textBox" readonly="readonly" style="width:368px"  title="" value="<%=recordingBook.AsText%>" />
-                      &nbsp;Tipo de inscripción:
+                     &#160;Tipo de inscripción:
                     </td>
                     <td>
                       <select id="cboRecordingType" name="cboRecordingType" class="selectBox" style="width:136px" title="" onchange="return updateUserInterface(this);" runat="server">
@@ -75,7 +75,7 @@
                         <option value="2411" title="oEjidalSystemTitle">Título de propiedad</option>
                       </select>
                     </td>
-                    <td class="lastCell">&nbsp;</td>
+                    <td class="lastCell">&#160;</td>
                   </tr>
                   <tr>
                     <td>Número de inscripción:</td>
@@ -91,7 +91,7 @@
                         <option value="-05">-05</option>
                         <option value="-06">-06</option>
                       </select>
-                      &nbsp; &nbsp; &nbsp;Inscrita de la imagen:
+                     &#160;&#160;&#160;Inscrita de la imagen:
                     </td>
                     <td>
                       <input id="txtImageStartIndex" type="text" class="textBox" style="width:40px"
@@ -104,24 +104,24 @@
                              onkeypress="return integerKeyFilter(this);" title="" maxlength="4"  runat="server" /><img src="../themes/default/buttons/select_page.gif"
                       onclick="pickCurrentImage('txtImageEndIndex')" title="Selecciona el número de imagen que se está desplegando" alt="" />											
                     </td>
-                    <td class="lastCell">&nbsp;</td>
+                    <td class="lastCell">&#160;</td>
                   </tr>
                   <tr>
                     <td>Fecha de presentación:</td>
                     <td>
                       <input id='txtPresentationDate' name='txtPresentationDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                      <img id='imgPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtPresentationDate'), getElement('imgPresentationDate'));" title="Despliega el calendario" alt="" />
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hora de presentación:</td>
-                    <td><input id="txtPresentationTime" name="txtPresentationTime" type="text" class="textBox" style="width:40px;margin-right:2px" maxlength="5" title="" onkeypress='return hourKeyFilter(this);' runat="server" />Hrs&nbsp;</td>
+                      <img id='imgPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtPresentationDate'), getElement('imgPresentationDate'));" title="Despliega el calendario" alt="" />
+                     &#160;&#160;&#160;&#160;&#160;&#160;&#160;Hora de presentación:</td>
+                    <td><input id="txtPresentationTime" name="txtPresentationTime" type="text" class="textBox" style="width:40px;margin-right:2px" maxlength="5" title="" onkeypress='return hourKeyFilter(this);' runat="server" />Hrs&#160;</td>
                     <td>F. Autorización:</td>
                     <td>
                       <input id='txtAuthorizationDate' name='txtAuthorizationDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                      <img id='imgAuthorizationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtAuthorizationDate'), getElement('imgAuthorizationDate'));" title="Despliega el calendario" alt="" />
+                      <img id='imgAuthorizationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtAuthorizationDate'), getElement('imgAuthorizationDate'));" title="Despliega el calendario" alt="" />
                     </td>
-                    <td class="lastCell">&nbsp;</td>
+                    <td class="lastCell">&#160;</td>
                   </tr>
                   <tr>
-                    <td>El C. Registrador: &nbsp; &nbsp;&nbsp;Lic.</td>
+                    <td>El C. Registrador:&#160;&#160;&#160;Lic.</td>
                     <td colspan="2">
                       <select id="cboAuthorizedBy" name="cboAuthorizedBy" class="selectBox" style="width:304px" title="" onchange="return updateUserInterface();" runat="server">
                       </select>
@@ -131,10 +131,10 @@
                       <select id="cboStatus" name="cboStatus" class="selectBox" style="width:134px" title="" runat="server">
                       </select>
                     </td>
-                    <td class="lastCell">&nbsp;</td>
+                    <td class="lastCell">&#160;</td>
                   </tr>
                   <tr id="rowNoVigentOrIlegibleButtons" style="display:none">
-                    <td>&nbsp;</td>
+                    <td>&#160;</td>
                     <td colspan="2">
                       <input type="button" value="Analizar más tarde" class="button" style="width:110px" onclick='doOperation("registerAsPendingRecording")' title='Guarda la inscripción y la marca como pendiente para su análisis posterior' />
                       <img src="../themes/default/textures/pixel.gif" height="1px" width="42px" alt="" />
@@ -142,9 +142,9 @@
                     </td>
                     <td colspan="2" align="right">
                       <input type="button" value="Registrar como no vigente" class="button" style="width:142px" onclick='doOperation("registerAsObsoleteRecording")' title='Guarda la inscripción y la marca como no vigente' />
-                      &nbsp;
+                     &#160;
                     </td>
-                    <td class="lastCell">&nbsp;</td>
+                    <td class="lastCell">&#160;</td>
                   </tr>
                 </table>
               </td>
@@ -161,7 +161,7 @@
                       </td>
                     </tr>
                     <tr id="rowEditButtons" style="display:none">
-                      <td>&nbsp;</td>
+                      <td>&#160;</td>
                       <td colspan="2" class="lastCell">
                         <input id='btnEditRecording' type="button" value="Editar esta inscripción" class="button" style="width:130px" onclick='doOperation("onclick_editRecordingForEdition");' title='Guarda la inscripción y la marca como no legible' />
                         <img src="../themes/default/textures/pixel.gif" height="1px" width="216px" alt="" />
@@ -185,7 +185,7 @@
                               <td>#</td>
                               <td width="90%">Actos jurídicos vigentes</td>
                               <td>Folio real</td>
-                              <td>&nbsp;</td>
+                              <td>&#160;</td>
                             </tr>
                             <%=gRecordingActs%>
                           </table>
@@ -197,16 +197,16 @@
                       <td colspan="6">
                         <select id="cboRecordingActTypeCategory" name="cboRecordingActTypeCategory" class="selectBox" style="width:272px" title="" onchange="return updateUserInterface(this);" runat='server'>
                         </select>
-                        Sobre el predio:&nbsp;
+                        Sobre el predio:&#160;
                         <select id="cboProperty" class="selectBox" style="width:160px" title="" onchange="return updateUserInterface(this);" runat='server'>
                           <option value="0">Agregar un nuevo predio</option>
                           <option value="-1">Seleccionar un predio</option>
                         </select>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr id="divRegisteredPropertiesSection" style="display:none">
-                      <td>Libro:<br /><br />&nbsp;</td>
+                      <td>Libro:<br /><br />&#160;</td>
                       <td colspan="6">
                         <select id="cboAnotherRecorderOffice" class="selectBox" style="width:160px" title="" onchange="return updateUserInterface(this);" runat='server'>
                         </select>
@@ -217,11 +217,11 @@
                         <select id="cboAnotherRecording" class="selectBox" style="width:78px" title="" onchange="return updateUserInterface(this);" runat='server'>
                         </select>
                         <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" onclick="doOperation('showAnotherRecording')" />
-                        &nbsp;&nbsp;&nbsp;Predio ya inscrito:&nbsp;
+                       &#160;&#160;&#160;Predio ya inscrito:&#160;
                         <select id="cboAnotherProperty" class="selectBox" style="width:150px" title="" runat='server'>
                         </select>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr>
                       <td>Acto jurídico:</td>
@@ -233,7 +233,7 @@
                       <td>
                         <input type="button" value="Agregar un acto" class="button" style="width:88px" onclick='doOperation("registerAsIncompleteRecording")' />
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                   </table>
                 </td>
@@ -255,7 +255,7 @@
                             <td width="30%">Libro registral / Inscripción </td>
                             <td>Presentación/Autoriz</td>
                             <td>Estado</td>
-                            <td>&nbsp;</td>
+                            <td>&#160;</td>
                           </tr>
                           <%=gAnnotationActs%>
                           <tr class="selectedItem">
@@ -284,7 +284,7 @@
                         <option value="2409" title="">No determinado</option>
                       </select>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr id="divAnnotationEditorRow1" style="display:none">
                       <td>Tipo de movimiento:</td>
@@ -293,7 +293,7 @@
                           <option value="">( Primero seleccionar la categoría de la anotación )</option>							
                         </select>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr id="divAnnotationEditorRow2" style="display:none">
                       <td>Libro de referencia:</td>
@@ -302,7 +302,7 @@
                           <option value="">( Seleccionar el libro de registro donde se encuentra )</option>
                         </select>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr id="divAnnotationEditorRow3" style="display:none">
                       <td>Número de inscripción:</td>
@@ -317,48 +317,48 @@
                           <option value="-04">-04</option>
                           <option value="-05">-05</option>
                         </select>
-                        &nbsp; &nbsp;
+                       &#160;&#160;
                         De la imagen:
                       </td>
                       <td><input id="txtAnnotationImageStartIndex" name="txtAnnotationImageStartIndex" type="text" class="textBox" style="width:40px" onkeypress="return integerKeyFilter(this);" title="" maxlength="4" runat="server" /></td>
                       <td>a la imagen:</td>
                       <td>
-                        <input id="txtAnnotationImageEndIndex" name="txtAnnotationImageEndIndex" type="text" class="textBox" style="width:40px" title="" onkeypress="return integerKeyFilter(this);" maxlength="4" runat="server" />&nbsp;
+                        <input id="txtAnnotationImageEndIndex" name="txtAnnotationImageEndIndex" type="text" class="textBox" style="width:40px" title="" onkeypress="return integerKeyFilter(this);" maxlength="4" runat="server" />&#160;
                         <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" onclick="doOperation('showAdditionalImage')" />
-                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                       &#160;&#160;&#160;&#160;&#160;&#160;&#160;
                         <input type="button" value="No legible" class="button" style="width:64px" onclick='doOperation("appendNoLegibleAnnotation")' title="Anexa una anotación o limitación como no legible para ser registrada posteriormente" />
                       </td>
-                      <td>&nbsp;</td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td>&#160;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr id="divAnnotationEditorRow4" style="display:none">
                       <td>Fecha de presentación:</td>
                       <td>
                         <input type="text" class="textBox" id='txtAnnotationPresentationDate' name='txtAnnotationPresentationDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                        <img id='imgAnnotationPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtAnnotationPresentationDate'), getElement('imgAnnotationPresentationDate'));" title="Despliega el calendario" alt="" style="margin-left:-4px" />
-                        &nbsp; Hora:
+                        <img id='imgAnnotationPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtAnnotationPresentationDate'), getElement('imgAnnotationPresentationDate'));" title="Despliega el calendario" alt="" style="margin-left:-4px" />
+                       &#160; Hora:
                       </td>
                       <td><input id="txtAnnotationPresentationTime" name="txtAnnotationPresentationTime" type="text" class="textBox" style="width:40px" maxlength="5" title="" onkeypress='return hourKeyFilter(this);' runat="server" /></td>
                       <td>Autorización:</td>
                       <td>
                         <input id='txtAnnotationAuthorizationDate' name='txtAnnotationAuthorizationDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                        <img id='imgAnnotationAuthorizationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtAnnotationAuthorizationDate'), getElement('imgAnnotationAuthorizationDate'));" title="Despliega el calendario" alt=""  style="margin-left:-4px" />
-                        &nbsp; &nbsp; &nbsp;
+                        <img id='imgAnnotationAuthorizationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtAnnotationAuthorizationDate'), getElement('imgAnnotationAuthorizationDate'));" title="Despliega el calendario" alt=""  style="margin-left:-4px" />
+                       &#160;&#160;&#160;
                         <input type="button" value="Heredar" class="button" style="width:64px" onclick='doOperation("inheritAnnotationData")' title="Hereda la información de la inscripción del predio a esta anotación o limitación" />
                       </td>
-                      <td colspan="2" class="lastCell">&nbsp;</td>
+                      <td colspan="2" class="lastCell">&#160;</td>
                     </tr>
                     <tr id="divAnnotationEditorRow5" style="display:none">
-                      <td>El C. Registrador: &nbsp; Lic.</td>
+                      <td>El C. Registrador:&#160; Lic.</td>
                       <td colspan="4">
                         <select id="cboAnnotationAuthorizedBy" name="cboAnnotationAuthorizedBy" class="selectBox" style="width:374px" title="">
                           <option value="">( Seleccionar al C. Oficial Registrador )</option>
                         </select>
-                        &nbsp; &nbsp;
+                       &#160;&#160;
                         <input type="button" value="Agregar anotación" class="button" style="width:110px" onclick='doOperation("appendAnnotation")' title="Anexa la anotación o limitación a la inscripción actual" />
                       </td>
-                      <td>&nbsp;</td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td>&#160;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                   </table>
                   <table id="divAnnotationEditorRow6" class="editionTable" style="display:none">
@@ -369,31 +369,31 @@
                       <td colspan="5">
                         <textarea id="txtAnnotationObservations" name="txtAnnotationObservations" class="textArea" style="width:560px" cols="120" rows="2" runat="server"></textarea>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                   </table>
                 </td>
               </tr>
               <tr>
                 <td class="separator">
-                &nbsp;
+               &#160;
                 </td>
               </tr>
               <tr>
                 <td>
                   <table>
                     <tr>
-                      <td nowrap='nowrap'>Ir a la inscripción: &nbsp;<input id="txtGoToRecording" name="txtGoToRecording" type="text" class="textBox" maxlength="5" style="width:35px;margin-right:0px" onkeypress="return integerKeyFilter(this);" runat="server" /></td>
+                      <td nowrap='nowrap'>Ir a la inscripción:&#160;<input id="txtGoToRecording" name="txtGoToRecording" type="text" class="textBox" maxlength="5" style="width:35px;margin-right:0px" onkeypress="return integerKeyFilter(this);" runat="server" /></td>
                       <td nowrap='nowrap'><img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('gotoRecording')" title="Ejecuta la búsqueda" /></td>
-                      <td width='88px' nowrap='nowrap'>&nbsp;</td>
+                      <td width='88px' nowrap='nowrap'>&#160;</td>
                       <td><img src='../themes/default/buttons/first.gif' onclick='doOperation("moveToRecording", "First");' title='Muestra la primera inscripción' alt='' /></td>
                       <td><img src='../themes/default/buttons/previous.gif' onclick='doOperation("moveToRecording", "Previous");' title='Muestra la inscripción anterior' alt='' /></td>
                       <td><img src='../themes/default/buttons/next.gif' onclick='doOperation("moveToRecording", "Next");' title='Muestra la siguiente inscripción' alt='' /></td>
                       <td><img src='../themes/default/buttons/last.gif' onclick='doOperation("moveToRecording", "Last");' title='Muestra la última inscripción' alt='' /></td>
-                      <td width='48px' nowrap='nowrap'>&nbsp;</td>
+                      <td width='48px' nowrap='nowrap'>&#160;</td>
                       <td nowrap='nowrap'>
                       <input type="button" value="Actualizar" class="button" style="width:68px" onclick='doOperation("refresh")' />
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &#160;&#160;&#160;&#160;&#160;
                       <input type="button" value="Nueva inscripción" class="button" style="width:108px" onclick='doOperation("newRecording")' /></td>												
                     </tr>
                   </table>
@@ -438,28 +438,28 @@
                         <input type="text" class="textBox" id='Text23' name='txtExternalNumber' style="width:230px" maxlength="32" runat='server' title="" />
                         <img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('loadData')" title="Ejecuta la búsqueda" style="margin-left:-4px" />												
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr>
                       <td>Presentación:</td>
                       <td colspan="2">
                         <input type="text" class="textBox" id='txtSearchPresentationFromDate' name='txtSearchPresentationFromDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                        <img id='img2' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtSearchPresentationFromDate'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />
+                        <img id='img2' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtSearchPresentationFromDate'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />
                         Al día:
                         <input type="text" class="textBox" id='txtSearchPresentationToDate' name='txtSearchPresentationToDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                        <img id='img3' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtSearchPresentationToDate'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />													
+                        <img id='img3' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtSearchPresentationToDate'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />													
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr>
                       <td>Autorización:</td>
                       <td colspan="2">
                         <input type="text" class="textBox" id='txtSearchAuthorizationFromDate' name='txtSearchAuthorizationFromDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                        <img id='img4' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtSearchAuthorizationFromDate'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />
+                        <img id='img4' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtSearchAuthorizationFromDate'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />
                         Al día:
                         <input type="text" class="textBox" id='txtSearchAuthorizationToDate' name='txtFromDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                   </table>
                 </td>
@@ -474,7 +474,7 @@
                       <td>
                         <%=GetRecordingsViewerGrid()%>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr>
                       <td>
@@ -482,9 +482,9 @@
                         <span class="rightItem">Página
                         <select class="selectBox" id="cboRecordingViewerPage" name="cboRecordingViewerPage"
                                 style="width:45px" runat="server" onchange="doOperation('refreshRecordingViewer')" >
-                        </select>de <%=RecordingViewerPages()%>&nbsp;</span>
+                        </select>de <%=RecordingViewerPages()%>&#160;</span>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                      </tr>
                   </table>
                 </td>
@@ -657,7 +657,7 @@
     source += "bookId=" + getElement('cboAnotherRecordingBook').value;
 
     if (getElement('cboAnotherRecording').value.length != 0) {
-      source += "&id=" + getElement('cboAnotherRecording').value;
+      source += "&#38;id=" + getElement('cboAnotherRecording').value;
     }
     createNewWindow(source);
   }
@@ -666,7 +666,7 @@
   function gotoRecordingBook(recordingBookId, recordingId) {
     var source = "recording.book.analyzer.aspx?";
     source += "bookId=" + recordingBookId;
-    source += "&id=" + recordingId;
+    source += "&#38;id=" + recordingId;
     createNewWindow(source);
   }
 
@@ -702,7 +702,7 @@
   function getRecordingRawData() {
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
     ajaxURL += "?commandName=getRecordingRawData";
-    ajaxURL += "&recordingId=<%=recording.Id%>";
+    ajaxURL += "&#38;recordingId=<%=recording.Id%>";
 
     return invokeAjaxMethod(false, ajaxURL, null);
   }
@@ -856,8 +856,7 @@
 
   function editProperty(propertyId, recordingActId) {	
     var oEditor = getElement("ifraItemEditor");
-
-    oEditor.src = "real.estate.editor.aspx?propertyId=" + propertyId + "&recordingActId=" + recordingActId;
+    oEditor.src = "real.estate.editor.aspx?propertyId=" + propertyId + "&#38;recordingActId=" + recordingActId;
 
     oEditor.visible = true;
     doCommand('onClickTabStripCmd', getElement('tabStripItem_1'));
@@ -1019,16 +1018,16 @@
   function validateAnnotationSemantics() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=validateAnnotationSemanticsCmd";
-    url += "&annotationTypeId=" + getElement("cboAnnotation").value;
-    url += "&annotationBookId=" + getElement("cboAnnotationBook").value;
-    url += "&propertyId=" + getElement("cboAnnotationProperty").value;
-    url += "&number=" + getElement("txtAnnotationNumber").value;
-    url += "&bisSuffixNumber=" + getElement("cboBisAnnotationNumber").value;
-    url += "&imageStartIndex=" + getElement("txtAnnotationImageStartIndex").value;
-    url += "&imageEndIndex=" + getElement("txtAnnotationImageEndIndex").value;
-    url += "&presentationTime=" + getElement("txtAnnotationPresentationDate").value + " " + getElement("txtAnnotationPresentationTime").value;
-    url += "&authorizationDate=" + getElement("txtAnnotationAuthorizationDate").value;
-    url += "&authorizedById=" + getElement("cboAnnotationAuthorizedBy").value;
+    url += "&#38;annotationTypeId=" + getElement("cboAnnotation").value;
+    url += "&#38;annotationBookId=" + getElement("cboAnnotationBook").value;
+    url += "&#38;propertyId=" + getElement("cboAnnotationProperty").value;
+    url += "&#38;number=" + getElement("txtAnnotationNumber").value;
+    url += "&#38;bisSuffixNumber=" + getElement("cboBisAnnotationNumber").value;
+    url += "&#38;imageStartIndex=" + getElement("txtAnnotationImageStartIndex").value;
+    url += "&#38;imageEndIndex=" + getElement("txtAnnotationImageEndIndex").value;
+    url += "&#38;presentationTime=" + getElement("txtAnnotationPresentationDate").value + " " + getElement("txtAnnotationPresentationTime").value;
+    url += "&#38;authorizationDate=" + getElement("txtAnnotationAuthorizationDate").value;
+    url += "&#38;authorizedById=" + getElement("cboAnnotationAuthorizedBy").value;
 
     return invokeAjaxValidator(url);
   }
@@ -1036,9 +1035,9 @@
   function validateDeleteRecordingActProperty(recordingActId, propertyId) {
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
     ajaxURL += "?commandName=validateDeleteRecordingActPropertyCmd";
-    ajaxURL += "&recordingId=<%=recording.Id%>";
-    ajaxURL += "&recordingActId=" + recordingActId;
-    ajaxURL += "&propertyId=" + propertyId;
+    ajaxURL += "&#38;recordingId=<%=recording.Id%>";
+    ajaxURL += "&#38;recordingActId=" + recordingActId;
+    ajaxURL += "&#38;propertyId=" + propertyId;
 
     return invokeAjaxValidator(ajaxURL);
   }
@@ -1051,14 +1050,14 @@
     <% } %>
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=validateRecordingSemanticsCmd";
-    url += "&recordingBookId=<%=recordingBook.Id%>";
-    url += "&recordingId=<%=recording.Id%>";
-    url += "&recordingNumber=" + getElement("txtRecordingNumber").value + getElement("cboBisRecordingNumber").value;
-    url += "&imageStartIndex=" + getElement("txtImageStartIndex").value;
-    url += "&imageEndIndex=" + getElement("txtImageEndIndex").value;
-    url += "&presentationTime=" + getElement("txtPresentationDate").value + " " + getElement("txtPresentationTime").value;
-    url += "&authorizationDate=" + getElement("txtAuthorizationDate").value;
-    url += "&authorizedById=" + getElement("cboAuthorizedBy").value;
+    url += "&#38;recordingBookId=<%=recordingBook.Id%>";
+    url += "&#38;recordingId=<%=recording.Id%>";
+    url += "&#38;recordingNumber=" + getElement("txtRecordingNumber").value + getElement("cboBisRecordingNumber").value;
+    url += "&#38;imageStartIndex=" + getElement("txtImageStartIndex").value;
+    url += "&#38;imageEndIndex=" + getElement("txtImageEndIndex").value;
+    url += "&#38;presentationTime=" + getElement("txtPresentationDate").value + " " + getElement("txtPresentationTime").value;
+    url += "&#38;authorizationDate=" + getElement("txtAuthorizationDate").value;
+    url += "&#38;authorizedById=" + getElement("cboAuthorizedBy").value;
 
     alert(url);
 
@@ -1112,16 +1111,16 @@
 
   function findAnnotationIdWithEditorData() {
     var url = "../ajax/land.registration.system.data.aspx?commandName=findAnnotationIdCmd";
-    url += "&annotationBookId=" + getElement("cboAnnotationBook").value;
-    url += "&annotationTypeId=" + getElement("cboAnnotation").value;
-    url += "&propertyId=" + getElement("cboAnnotationProperty").value;
-    url += "&number=" + getElement("txtAnnotationNumber").value;
-    url += "&bisSuffixNumber=" + getElement("cboBisAnnotationNumber").value;
-    url += "&imageStartIndex=" + getElement("txtAnnotationImageStartIndex").value;
-    url += "&imageEndIndex=" + getElement("txtAnnotationImageEndIndex").value;
-    url += "&presentationTime=" + getElement("txtAnnotationPresentationDate").value + " " + getElement("txtAnnotationPresentationTime").value;
-    url += "&authorizationDate=" + getElement("txtAnnotationAuthorizationDate").value;
-    url += "&authorizedById=" + getElement("cboAnnotationAuthorizedBy").value;
+    url += "&#38;annotationBookId=" + getElement("cboAnnotationBook").value;
+    url += "&#38;annotationTypeId=" + getElement("cboAnnotation").value;
+    url += "&#38;propertyId=" + getElement("cboAnnotationProperty").value;
+    url += "&#38;number=" + getElement("txtAnnotationNumber").value;
+    url += "&#38;bisSuffixNumber=" + getElement("cboBisAnnotationNumber").value;
+    url += "&#38;imageStartIndex=" + getElement("txtAnnotationImageStartIndex").value;
+    url += "&#38;imageEndIndex=" + getElement("txtAnnotationImageEndIndex").value;
+    url += "&#38;presentationTime=" + getElement("txtAnnotationPresentationDate").value + " " + getElement("txtAnnotationPresentationTime").value;
+    url += "&#38;authorizationDate=" + getElement("txtAnnotationAuthorizationDate").value;
+    url += "&#38;authorizedById=" + getElement("cboAnnotationAuthorizedBy").value;
 
     var annotationId = invokeAjaxMethod(false, url, null);
 
@@ -1179,15 +1178,15 @@
     }
   }
 
-  function resetAnotherRecordingBooksCombo() {
+    function resetAnotherRecordingBooksCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingBooksStringArrayCmd";
     if (getElement("cboAnotherRecorderOffice").value.length != 0) {
-      url += "&recorderOfficeId=" + getElement("cboAnotherRecorderOffice").value;
+      url += "&#38;recorderOfficeId=" + getElement("cboAnotherRecorderOffice").value;
     } else {
-      url += "&recorderOfficeId=0";
+      url += "&#38;recorderOfficeId=0";
     }
-    url += "&recordingActTypeCategoryId=1051";
+    url += "&#38;recordingActTypeCategoryId=1051";
 
     invokeAjaxComboItemsLoader(url, getElement("cboAnotherRecordingBook"));
 
@@ -1198,9 +1197,9 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingNumbersStringArrayCmd";
     if (getElement("cboAnotherRecordingBook").value.length != 0) {
-      url += "&recordingBookId=" + getElement("cboAnotherRecordingBook").value;
+      url += "&#38;recordingBookId=" + getElement("cboAnotherRecordingBook").value;
     } else {
-      url += "&recordingBookId=0";
+      url += "&#38;recordingBookId=0";
     }
     invokeAjaxComboItemsLoader(url, getElement("cboAnotherRecording"));
     resetAnotherPropertiesCombo();
@@ -1210,9 +1209,9 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingPropertiesArrayCmd";
     if (getElement("cboAnotherRecording").value.length != 0) {
-      url += "&recordingId=" + getElement("cboAnotherRecording").value;
+      url += "&#38;recordingId=" + getElement("cboAnotherRecording").value;
     } else {
-      url += "&recordingId=0";
+      url += "&#38;recordingId=0";
     }
     invokeAjaxComboItemsLoader(url, getElement("cboAnotherProperty"));
   }
@@ -1225,10 +1224,10 @@
     }
   }
 
-  function resetRecordingsTypesCombo() {
+    function resetRecordingsTypesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
-    url += "&recordingActTypeCategoryId=" + getElement("cboRecordingActTypeCategory").value;
+    url += "&#38;recordingActTypeCategoryId=" + getElement("cboRecordingActTypeCategory").value;
 
     invokeAjaxComboItemsLoader(url, getElement("cboRecordingActType"));
   }
@@ -1236,23 +1235,23 @@
   function resetAnnotationsTypesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getAnnotationTypesStringArrayCmd";
-    url += "&annotationTypeCategoryId=" + getElement("cboAnnotationCategory").value;
+    url += "&#38;annotationTypeCategoryId=" + getElement("cboAnnotationCategory").value;
     invokeAjaxComboItemsLoader(url, getElement("cboAnnotation"))
   }
 
   function resetAnnotationsOfficialsCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getAnnotationsOfficialsStringArrayCmd";
-    url += "&recordingBookId=" + getElement("cboAnnotationBook").value;
+    url += "&#38;recordingBookId=" + getElement("cboAnnotationBook").value;
 
     invokeAjaxComboItemsLoader(url, getElement("cboAnnotationAuthorizedBy"))
   }
 
-  function resetAnnotationsBooksCombo() {
+    function resetAnnotationsBooksCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingBooksStringArrayCmd";
-    url += "&recorderOfficeId=<%=recordingBook.RecorderOffice.Id.ToString()%>";
-    url += "&recordingActTypeCategoryId=" + getElement("cboAnnotationCategory").value;
+    url += "&#38;recorderOfficeId=<%=recordingBook.RecorderOffice.Id.ToString()%>";
+    url += "&#38;recordingActTypeCategoryId=" + getElement("cboAnnotationCategory").value;
     invokeAjaxComboItemsLoader(url, getElement("cboAnnotationBook"))
   }
 
@@ -1517,23 +1516,23 @@
     var newPosition = 0;
     switch (position) {
       case "first":
-        ajaxURL += "&position=" + position;
+        ajaxURL += "&#38;position=" + position;
         newPosition = 0;
         break;
       case "previous":
-        ajaxURL += "&position=" + position;
+        ajaxURL += "&#38;position=" + position;
         newPosition = Math.max(Number(getElement("hdnCurrentImagePosition").value) - 1, 0);
         break;					
       case "next":
-        ajaxURL += "&position=" + position;
+        ajaxURL += "&#38;position=" + position;
         newPosition = Math.min(Number(getElement("hdnCurrentImagePosition").value) + 1, selectedBookImageCount() - 1);
         break;
       case "last":
-        ajaxURL += "&position=" + position;
+        ajaxURL += "&#38;position=" + position;
         newPosition = selectedBookImageCount() - 1;
         break;
       case "refresh":
-        ajaxURL += "&position=" + position;
+        ajaxURL += "&#38;position=" + position;
         newPosition = getRecordingStartImageIndex() - 1;
         break;
       default:
@@ -1541,8 +1540,8 @@
         return;
     }
 
-    ajaxURL += "&recordingBookId=<%=recordingBook.Id%>";
-    ajaxURL += "&currentPosition=" + getElement("hdnCurrentImagePosition").value;
+    ajaxURL += "&#38;recordingBookId=<%=recordingBook.Id%>";
+    ajaxURL += "&#38;currentPosition=" + getElement("hdnCurrentImagePosition").value;
 
     var result = invokeAjaxMethod(false, ajaxURL, null);
     getElement("imgCurrent").src = result;
@@ -1586,8 +1585,8 @@
       return false;
     }
     var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getRecordingIdCmd";
-    ajaxURL += "&recordingBookId=<%=recordingBook.Id%>";	
-    ajaxURL += "&recordingNumber=" + getElement("txtGoToRecording").value;
+    ajaxURL += "&#38;recordingBookId=<%=recordingBook.Id%>";	
+    ajaxURL += "&#38;recordingNumber=" + getElement("txtGoToRecording").value;
 
     var result = invokeAjaxMethod(false, ajaxURL, null);
     if (Number(result) != 0) {
@@ -1601,9 +1600,9 @@
 
   function refreshRecordingViewer() {
     var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getRecordingsViewerPageCmd";
-    ajaxURL += "&recordingBookId=<%=recordingBook.Id%>";
-    ajaxURL += "&page=" + getElement("cboRecordingViewerPage").value;
-    ajaxURL += "&itemsPerPage=<%=recordingsPerViewerPage%>";
+    ajaxURL += "&#38;recordingBookId=<%=recordingBook.Id%>";
+    ajaxURL += "&#38;page=" + getElement("cboRecordingViewerPage").value;
+    ajaxURL += "&#38;itemsPerPage=<%=recordingsPerViewerPage%>";
 
     var result = invokeAjaxMethod(false, ajaxURL, null);
     getElement("tblRecordingsViewer").outerHTML = result;
@@ -1685,7 +1684,7 @@
     sMsg += getComboOptionText(getElement('cboAnnotation')).toUpperCase() + "\n";
     sMsg += "Inscrita en:\t" + getComboOptionText(getElement('cboAnnotationBook')) + "\n";
     sMsg += "Número:\t\t" + getElement('txtAnnotationNumber').value + getElement('cboBisAnnotationNumber').value;		
-    if (getElement('txtAnnotationImageStartIndex').value != '1' && getElement('txtAnnotationImageEndIndex').value != '1') {
+    if (getElement('txtAnnotationImageStartIndex').value != '1' &#38;& getElement('txtAnnotationImageEndIndex').value != '1') {
       sMsg += ", ubicada de la imagen " + getElement('txtAnnotationImageStartIndex').value + " a la " + getElement('txtAnnotationImageEndIndex').value + "\n";
     }  else {
       sMsg += ", ubicada en una imagen no determinada.\n";

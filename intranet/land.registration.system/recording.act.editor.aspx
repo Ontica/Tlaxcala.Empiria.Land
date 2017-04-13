@@ -2,13 +2,13 @@
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyEditorControl" src="../land.registration.system.controls/recording.party.editor.control.ascx" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyViewerControl" src="../land.registration.system.controls/recording.party.viewer.control.ascx" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
 <title></title>
 <meta http-equiv="Expires" content="-1" />
 <meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
@@ -27,11 +27,11 @@
       <tr>
         <td>
           <table id="tblRecordingActEditor" class="editionTable">
-            <tr>
+            <tr style="display:inline">
               <td>Acto jurídico:</td>
               <td class="lastCell" colspan="3">
                 <input id="txtRecordingActName" type="text" class="textBox" style="width:294px;margin-right:0" readonly="readonly" runat="server" />
-                &nbsp;Folio real:
+               &#160;Folio real:
                 <input id="txtProperty" type="text" class="textBox" style="width:132px;margin-right:0" readonly="readonly" runat="server" />
               </td>
             </tr>
@@ -41,7 +41,7 @@
               </td>
               <td class="lastCell" colspan="3">
                 <input id="txtOperationAmount" type="text" class="textBox" style="width:90px;" onblur='this_formatAsNumber(this, 4);'
-                       onkeypress="return positiveKeyFilter(this);" title="" maxlength="18" runat="server" />
+                       onkeypress="return positiveKeyFilter(window.event, true);" title="" maxlength="18" runat="server" />
                 <select id="cboOperationCurrency" class="selectBox" style="width:52px;margin-left:-6px" runat="server">
                   <option value="">(?)</option>
                   <option value="600" title="Pesos mexicanos">MXN</option>
@@ -53,7 +53,7 @@
                 <% if (base.EditAppraisalAmount) { %>
                 Avalúo:
                 <input id="txtAppraisalAmount" type="text" class="textBox" style="width:90px;"
-                        onkeypress="return positiveKeyFilter(this);" onblur='this_formatAsNumber(this);'
+                        onkeypress="return positiveKeyFilter(window.event, true);" onblur='this_formatAsNumber(this);'
                         title="" maxlength="18" runat="server" />
                 <select id="cboAppraisalCurrency" class="selectBox" style="width:52px;margin-left:-6px" runat="server">
                   <option value="">(?)</option>
@@ -64,14 +64,14 @@
                 <% } %>
               </td>
             </tr>
-            <tr>
+            <tr style="display:inline">
               <td style="vertical-align:text-top">Observaciones:</td>
               <td class="lastCell" colspan="3">
                 <textarea id="txtObservations" cols="320" rows="2" style="width:440px" class="textArea" runat="server"></textarea>
               </td>
             </tr>
-            <tr>
-              <td>&nbsp;</td>
+            <tr style="display:inline">
+              <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
               <td class="lastCell" colspan="5">
                 <input id="btnEditRecordingAct" type="button" value="Editar este acto jurídico" class="button" tabindex="-1" style="width:140px" onclick="doOperation('onclick_btnEditRecordingAct')" />
                 <img src="../themes/default/textures/pixel.gif" height="1px" width="98px" alt="" />
@@ -96,7 +96,7 @@
                       <td>Identificación</td>
                       <td>Participa como</td>
                       <td>Titularidad</td>
-                      <td>&nbsp;</td>
+                      <td>&#160;</td>
                     </tr>
                     <%=GetRecordingActPartiesGrid()%>
                     <% if (base.IsReadyForEdition()) { %>
@@ -205,7 +205,7 @@
   function saveRecordingActAsComplete() {
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
     ajaxURL += "?commandName=validateRecordingActAsCompleteCmd";
-    ajaxURL += "&recordingActId=<%=recordingAct.Id%>";
+    ajaxURL += "&#38;recordingActId=<%=recordingAct.Id%>";
 
     if (!invokeAjaxValidator(ajaxURL)) {
       return;
@@ -229,12 +229,12 @@
       alert("Requiero la moneda del importe de la operación.");
       return false;
     }
-    if (Number(getElement('cboOperationCurrency').value) < 0 &&
+    if (Number(getElement('cboOperationCurrency').value) &#60; 0 &#38;&#38;
         getElement('<%=txtOperationAmount.ClientID%>').value.length != 0) {
       alert("Se seleccionó 'No consta' como moneda pero el importe de la operación sí se proporcionó.");
       return false;
     }
-    if (Number(getElement('cboOperationCurrency').value) > 0 &&
+        if (Number(getElement('cboOperationCurrency').value) &#62; 0 &#38;&#38;
         getElement('txtOperationAmount').value.length == 0) {
       alert("Requiero el importe de la operación.");
       return false;
@@ -245,12 +245,12 @@
       alert("Requiero la moneda del importe del avalúo.");
       return false;
     }
-    if (Number(getElement('cboAppraisalCurrency').value) < 0 &&
+    if (Number(getElement('cboAppraisalCurrency').value) &#60; 0 &#38;&#38;
         getElement('txtAppraisalAmount').value.length != 0) {
       alert("Se seleccionó 'No consta' como moneda pero el importe del avalúo sí se proporcionó.");
       return false;
     }
-    if (Number(getElement('cboAppraisalCurrency').value) > 0 &&
+        if (Number(getElement('cboAppraisalCurrency').value) &#62; 0 &#38;&#38;
         getElement('txtAppraisalAmount').value.length == 0) {
       alert("Requiero el importe del avalúo.");
       return false;

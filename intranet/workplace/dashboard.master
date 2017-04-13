@@ -1,11 +1,12 @@
-<%@ Master Language="C#" EnableViewState="true" ViewStateMode="Disabled" AutoEventWireup="false" CodeFile="dashboard.master.cs" Inherits="Empiria.Web.UI.Workplace.DashboardMasterPage" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<%@ Master Language="C#" EnableViewState="true" ViewStateMode="Disabled" AutoEventWireup="false" CodeFile="dashboard.master.cs" Inherits="Empiria.Web.UI.Workplace.DashboardMasterPage" %>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
   <title>Dashboard Item</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="-1" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+
   <link href="../themes/default/css/dashboard.item.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
@@ -31,12 +32,12 @@
 	  }
 	  if (gLastSelectedRowCell != null && gLastSelectedRowCell != gridCell) {
       gLastSelectedRowCell.parentElement.className = gLastSelectedRowClassName;
-      gLastSelectedRowCell.innerHTML = "&nbsp;";
+      gLastSelectedRowCell.innerHTML = "&#160;";
 	  }
     gLastSelectedRowClassName = gridCell.parentElement.className;
     gLastSelectedRowCell = gridCell;
 	  gridCell.parentElement.className = 'selectedItem';
-	  gridCell.innerHTML = "�";
+	  gridCell.innerHTML = "»";
 	  window.parent.eval("doCommand('onSelectedObjectChangeCmd', '" + queryString + "')");
 	}
 	
@@ -85,13 +86,15 @@
 	</script>
 </head>
 <body style="">
-	<form id="frmDashboardItem" onclick="hideCalendar('ifraCalendar');" runat="server">
+	<form id="frmDashboardItem" onclick="hideCalendar(event,'ifraCalendar');" runat="server">
 	  <asp:contentplaceholder id="dashboardItemPlaceHolder" runat="server" EnableViewState="true" ViewStateMode="Disabled">
 		</asp:contentplaceholder>
   </form>
-  <iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top:0px"
-        hspace="0px" vspace="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
-        src="../user.controls/calendar.aspx" width="100%">
+
+  <iframe id="ifraCalendar" style="z-index: 999;  visibility: hidden; position: relative; 
+        top: -530px; width:225px;  height:160px; " hspace="0px" vspace="0" marginheight="0" marginwidth="0"  
+        frameborder="0" scrolling="no" src ="../user.controls/calendar.aspx">
   </iframe>
+ 
 </body>
 </html>

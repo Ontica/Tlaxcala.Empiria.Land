@@ -23,7 +23,7 @@
 	<body onload="window_onload();">
 		<form id="frmEditor" method="post" runat="server">
        <br /><br /><br />
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b style="color:#3a3a3a">Impresión de documentos</b>
+     &#160;&#160;&#160;&#160;&#160;&#160;<b style="color:#3a3a3a">Impresión de documentos</b>
 			<iframe id="ifraPrintPage" name="ifraPrintPage" src="text.mode.print.aspx?<%=printPageQueryString%>" width="0px" height="0px"></iframe>
 		</form>
 	</body>

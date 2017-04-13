@@ -6,7 +6,7 @@
     <th align="right">Porcentaje</th>
     <th align="right">Acumulado</th>
     <th align="right">Posición</th>
-    <th>&nbsp;</th>
+    <th>&#160;</th>
   </tr>
 </thead>
 <%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).HintContent%>

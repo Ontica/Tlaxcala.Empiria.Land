@@ -140,8 +140,8 @@ namespace Empiria.Land.WebApp {
           temp = temp.Replace("{QTY}", recordingAct.Quantity.Amount.ToString("N0"));
           temp = temp.Replace("{UNIT}", recordingAct.Quantity.Unit.Name);
         } else {
-          temp = temp.Replace("{QTY}", "&nbsp;");
-          temp = temp.Replace("{UNIT}", "&nbsp;");
+          temp = temp.Replace("{QTY}", "&#160;");
+          temp = temp.Replace("{UNIT}", "&#160;");
         }
         temp = temp.Replace("{SUBTOTAL}", recordingAct.Fee.SubTotal.ToString("C2"));
         temp = temp.Replace("{DISCOUNTS}", recordingAct.Fee.Discount.Amount.ToString("C2"));
@@ -155,7 +155,7 @@ namespace Empiria.Land.WebApp {
     protected string GetConcepts() {
       const string template = "<tr width='24px'><td>{NUMBER}</td>" +
                               "<td style='white-space:nowrap'>{CODE}</td>" +
-                              "<td style='white-space:normal'>{CONCEPT}&nbsp;&nbsp;</td>" +
+                              "<td style='white-space:normal'>{CONCEPT}&#160;&#160;</td>" +
                               "<td align='right' style='white-space:nowrap'>{OPERATION.VALUE}</td>" +
                               "<td align='right' style='white-space:nowrap'>{QTY}</td>" +
                               "<td style='white-space:nowrap'>{UNIT}</td>" +
@@ -169,13 +169,13 @@ namespace Empiria.Land.WebApp {
         string temp = template.Replace("{NUMBER}", (i + 1).ToString("00"));
         temp = temp.Replace("{CODE}", recordingAct.TreasuryCode.FinancialConceptCode);
         temp = temp.Replace("{CONCEPT}", recordingAct.TransactionItemType.DisplayName);
-        temp = temp.Replace("{OPERATION.VALUE}", recordingAct.OperationValue.Amount != decimal.Zero ? recordingAct.OperationValue.ToString() : "&nbsp;");
+        temp = temp.Replace("{OPERATION.VALUE}", recordingAct.OperationValue.Amount != decimal.Zero ? recordingAct.OperationValue.ToString() : "&#160;");
         if (!recordingAct.Quantity.Unit.IsEmptyInstance) {
           temp = temp.Replace("{QTY}", recordingAct.Quantity.Amount.ToString("N0"));
           temp = temp.Replace("{UNIT}", recordingAct.Quantity.Unit.Name);
         } else {
-          temp = temp.Replace("{QTY}", "&nbsp;");
-          temp = temp.Replace("{UNIT}", "&nbsp;");
+          temp = temp.Replace("{QTY}", "&#160;");
+          temp = temp.Replace("{UNIT}", "&#160;");
         }
         temp = temp.Replace("{LAW.ARTICLE}", recordingAct.TreasuryCode.Name);
         temp = temp.Replace("{NOTES}", recordingAct.Notes);
@@ -187,7 +187,7 @@ namespace Empiria.Land.WebApp {
     protected string GetRecordingActsWithTotals() {
       FixedList<LRSTransactionItem> list = transaction.Items;
       const string template = "<tr width='24px'><td>{NUMBER}</td><td>{CONCEPT.CODE}</td>" +
-                              "<td style='white-space:normal'>{RECORDING.ACT}&nbsp; &nbsp; &nbsp;</td>" +
+                              "<td style='white-space:normal'>{RECORDING.ACT}&#160;&#160;&#160;</td>" +
                               "<td style='white-space:nowrap'>{LAW.ARTICLE}</td>" +
                               "<td align='right' style='white-space:nowrap'>{OPERATION.VALUE}</td>" +
                               "<td align='right' style='white-space:nowrap'>{RECORDING.RIGHTS}</td>" +
@@ -197,7 +197,7 @@ namespace Empiria.Land.WebApp {
                               "<td align='right' style='white-space:nowrap'>{DISCOUNTS}</td>" +
                               "<td align='right' style='white-space:nowrap'><b>{TOTAL}</b></td></tr>";
 
-      const string othersTemplate = "<tr width='24px'><td colspan='3'>&nbsp;</td><td><i>Otros conceptos:</i></td><td colspan='7'><i>{CONCEPTS}</i></td></tr>";
+      const string othersTemplate = "<tr width='24px'><td colspan='3'>&#160;</td><td><i>Otros conceptos:</i></td><td colspan='7'><i>{CONCEPTS}</i></td></tr>";
 
       const string totalsTemplate = "<tr width='24px' class='upperSeparatorRow'><td colspan='4'>{TOTAL_SPEECH}</td><td align='right'><b>Total</b>:</td>" +
                 "<td align='right'><b>{0}</b></td><td align='right'><b>{1}</b></td><td align='right'><b>{2}</b></td>" +
@@ -223,7 +223,7 @@ namespace Empiria.Land.WebApp {
         if (othersFee != decimal.Zero) {
           temp = String.Empty;
           if (recordingAct.Fee.ForeignRecordingFee != decimal.Zero) {
-            temp += " Trámite foráneo: " + recordingAct.Fee.ForeignRecordingFee.ToString("C2") + " &nbsp;";
+            temp += " Trámite foráneo: " + recordingAct.Fee.ForeignRecordingFee.ToString("C2") + "&#160;";
           }
           html += othersTemplate.Replace("{CONCEPTS}", temp);
         }

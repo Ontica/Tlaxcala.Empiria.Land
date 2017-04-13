@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.ImageSetViewer" CodeFile="image.set.viewer.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
 <title></title>
@@ -190,10 +190,10 @@
   <div id="divCanvas">
     <div id="divHeader">
       <span id="spanPageTitle" class="appTitle">
-        &nbsp;
+       &#160;
       </span>
       <span id="spanCurrentImage" class="rightItem appTitle" style="margin-right:8px">
-        &nbsp;
+       &#160;
       </span>
     </div> <!--divHeader!-->
     <div id="divBody">
@@ -207,14 +207,16 @@
                     Ir a la imagen: <input id="txtGoToImage" name="txtGoToImage" type="text" class="textBox" maxlength="3"
                                      style="width:28px;margin-right:0px" onkeypress="return integerKeyFilter(this);" runat="server" /><img
                                      src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('gotoImage')" title="Ejecuta la búsqueda" /></td>
-                  <td width='40%' nowrap='nowrap'>&nbsp;</td>
+                  <td width='40%' nowrap='nowrap'>&#160;</td>
                   <td><img src='../themes/default/buttons/first.gif' onclick='doOperation("moveToImage", "first");' title='Muestra la primera imagen' alt='' /></td>
                   <td><img src='../themes/default/buttons/previous.gif' onclick='doOperation("moveToImage", "previous");' title='Muestra la imagen anterior' alt='' /></td>
                   <td><img src='../themes/default/buttons/next.gif' onclick='doOperation("moveToImage", "next");' title='Muestra la siguiente imagen' alt='' /></td>
                   <td><img src='../themes/default/buttons/last.gif' onclick='doOperation("moveToImage", "last");' title='Muestra la última imagen' alt='' /></td>
-                  <td width='40%' nowrap='nowrap'>&nbsp;</td>
+                  <td width='40%' nowrap='nowrap'>&#160;</td>
                   <td align="right" style="width:100%">
                     Zoom:
+                  </td>
+                  <td>
                     <select id="cboZoomLevel" name="cboZoomLevel" class="selectBox" style="width:56px" title="" onchange="return doOperation('zoomImage')" runat="server">
                       <option value="0.50">50%</option>
                       <option value="0.75">75%</option>

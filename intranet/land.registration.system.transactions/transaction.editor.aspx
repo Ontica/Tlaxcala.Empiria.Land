@@ -1,10 +1,11 @@
 ﻿<%@ Page language="c#" Inherits="Empiria.Land.WebApp.LRSTransactionEditor" EnableViewState="true" EnableSessionState="true" CodeFile="transaction.editor.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingActSelectorControl" src="../land.registration.system.controls/recording.act.selector.control.ascx" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
 <title><%=GetTitle()%></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="Expires" content="-1" /><meta http-equiv="Pragma" content="no-cache" />
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
@@ -35,7 +36,7 @@
       <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Inscripción de documentos</td>
       <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Emisión de certificados</td>
       <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Historia del trámite</td>
-      <td class="lastCell" colspan="1" rowspan="1"><a id="top" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
+      <td class="lastCell" colspan="1" rowspan="1"><a id="top" />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
     </tr>
   </table>
   <table id="tabStripItemView_0" class="editionTable" style="display:inline">
@@ -125,15 +126,15 @@
                  style="margin-left:-8px" onclick="doOperation('lookupBaseResource')" />
               <span id='divSelectedResource' style="display:none">
                 <a href="javascript:doOperation('viewBaseResource', oBaseResource.Id)">Consultar historia</a>
-                &nbsp; | &nbsp;
+               &#160; |&#160;
                 <a href="javascript:doOperation('unselectBaseResource')">Borrar</a>
               </span>
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+           &#160;&#160;&#160;&#160;&#160;
           </td>
           <td class="lastCell">
             <label>
-                <input type="checkbox" id="chkNoBaseResource" onclick="return noBaseResourceCheckBoxSelected()"; />
-                  Es un trámite sobre una propiedad SIN folio real asignado<br />&nbsp; &nbsp; &nbsp; &nbsp;o involucra a más de un predio base.
+                <input type="checkbox" id="chkNoBaseResource" onclick="return noBaseResourceCheckBoxSelected()" />
+                  Es un trámite sobre una propiedad SIN folio real asignado<br />&#160;&#160;&#160;&#160;o involucra a más de un predio base.
             </label>
           </td>
       </tr>
@@ -162,7 +163,7 @@
                 <td align='right'>Subtotal</td>
                 <td align='right'>Dcto</td>
                 <td align='right'>Total</td>
-                <td>&nbsp;</td>
+                <td>&#160;</td>
               </tr>
               <%=base.GetRecordingActs()%>
             </table>
@@ -186,7 +187,7 @@
                 </select>
               </td>
               <td colspan="4">Acto jurídico:
-                &nbsp;
+               &#160;
                 <select id="cboRecordingActType" class="selectBox" style="width:335px" onchange="return updateUserInterface(this);" runat="server">
                   <option value="">( Seleccionar acto jurídico )</option>
                 </select>
@@ -198,43 +199,43 @@
             <tr>
               <td>Fundamento:</td>
               <td>
-                <select id="cboLawArticle" class="selectBox" style="width:160px" onchange="return updateUserInterface(this);" runat="server">
+                <select id="cboLawArticle" class="selectBox" style="width:160px" onchange="return updateUserInterface(window.event, true);" runat="server">
                   <option value="">( Fundamento )</option>
                 </select>
               </td>
               <td>Valor de la operación:</td>
               <td>
-              $<input id='txtOperationValue' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              $<input id='txtOperationValue' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
               <td>Derechos de registro:</td>
               <td>
-              $<input id='txtRecordingRightsFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              $<input id='txtRecordingRightsFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
             </tr>
             <tr>
               <td>Cotejo:</td>
               <td>
-                $<input id='txtSheetsRevisionFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:64px;" title="" maxlength="8" runat="server" />
-                &nbsp;
-                Fojas: <input id='txtSheetsCount' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:28px;" title="" maxlength="3" runat="server" />
+                $<input id='txtSheetsRevisionFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:64px;" title="" maxlength="8" runat="server" />
+               &#160;
+                Fojas: <input id='txtSheetsCount' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:28px;" title="" maxlength="3" runat="server" />
               </td>
               <td>Támite foráneo:</td>
-              <td>$<input id='txtForeignRecordFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              <td>$<input id='txtForeignRecordFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
               <td><b>Subtotal:</b></td>
-              <td>$<input id='txtSubtotal' disabled="disabled" type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              <td>$<input id='txtSubtotal' disabled="disabled" type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
             </tr>
             <tr>
               <td>Tipo de descuento:</td>
               <td>
-                <select id="cboAuthorizationType" class="selectBox" style="width:160px" onchange="return updateUserInterface(this);" runat="server">
+                <select id="cboAuthorizationType" class="selectBox" style="width:160px" onchange="return updateUserInterface(window.event, true);" runat="server">
                   <option value="">( Seleccionar )</option>
                 </select>
               </td>
               <td>Clave de autorización:</td>
               <td><input id='txtDiscountAuthorization' type="text" class="textBox" style="width:76px;" title="" maxlength="8" runat="server" /></td>
               <td>Descuento:</td>
-              <td>$<input id='txtDiscount' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
+              <td>$<input id='txtDiscount' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
             </tr>
             <tr>
-              <td colspan="4">&nbsp;</td>
+              <td colspan="4">&#160;</td>
               <td><b>TOTAL:</b></td>
               <td>$<input id='txtTotal' disabled="disabled" type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
             </tr>
@@ -254,14 +255,14 @@
       <tr>
         <td>Recibo de pago:</td>
         <td>
-          <input id='txtReceiptNumber' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);"
+          <input id='txtReceiptNumber' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);"
                  style="width:86px;" title="" maxlength="7" runat="server" />
         </td>
         <td>
         Importe:
         </td>
         <td colspan="3" valign="bottom">
-          <b>$</b>&nbsp;<input id='txtReceiptTotal' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);"
+          <b>$</b>&#160;<input id='txtReceiptTotal' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);"
                          style="width:71px;" title="" maxlength="8" runat="server" />
         </td>
         <td class="lastCell">
@@ -275,19 +276,19 @@
   </td>
 </tr>
   <tr>
-    <td class="subTitle">&nbsp;</td>
+    <td class="subTitle">&#160;</td>
   </tr>
   <tr>
     <td>
       <table id="transactionEditor1" class="editionTable">
         <tr>
-          <td>&nbsp;</td>
+          <td>&#160;</td>
           <td nowrap="nowrap">
             <% if (!transaction.IsNew) { %>
               <input class="button" type="button" value="Crear nuevo" onclick="doOperation('createNew')" style="height:28px;width:92px" runat="server" />
-              &nbsp; &nbsp;
+             &#160;&#160;
               <input id="copyFromLastTransaction" class="button" type="button" value="Crear una copia" onclick="doOperation('copyFromMyLastTransaction')" style="height:28px;width:92px" runat="server" />
-              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+             &#160;&#160;&#160;&#160;&#160;&#160;
               <% if (base.ShowPrintPaymentOrderButton) { %>
                 <input class="button" type="button" value="Orden de pago" onclick="doOperation('printOrderPayment')" style="height:28px;width:90px" runat="server" />
               <% } %>
@@ -306,7 +307,7 @@
             <% if (transaction.Workflow.IsReadyForReentry) { %>
             <input class="button" type="button" value="Reingresar trámite" onclick="doOperation('reentryTransaction')" style="height:28px;width:120px" runat="server" />
             <% } %>
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+           &#160;&#160;&#160;&#160;&#160;&#160;
           </td>
           <td class="lastCell"></td>
         </tr>
@@ -320,7 +321,7 @@
         <td class="lastCell">
           <iframe id="ifraRecordingEditor" style="z-index:99;left:0;top:0;"
                   marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
-                  src="../workplace/empty.page.aspx" width="90%" height="4000px" visible="true" >
+                  src="../workplace/empty.page.aspx" width="310%" height="4000px" visible="true" >
           </iframe>
         </td>
       </tr>
@@ -332,17 +333,17 @@
       </tr>
       <tr>
         <td>
-          <div style="overflow:auto;width:100%;">
+          <div style="overflow:auto; width:100%;">
             <table class="details" style="width:97%">
               <tr class="detailsHeader">
-                <td>#Certificado</td>
-                <td>Tipo de certificado</td>
-                <td>Predio</td>
-                <td>Interesado</td>
-                <td>Elaborado por</td>
-                <td>Fecha</td>
-                <td>Estado</td>
-                <td width="40%">¿Qué debo hacer?</td>
+                <td style="width:90px">#Certificado</td>
+                <td style="width:110px">Tipo de certificado</td>
+                <td style="width:80px">Predio</td>
+                <td style="width:110px">Interesado</td>
+                <td style="width:100px">Elaborado por</td>
+                <td style="width:70px">Fecha</td>
+                <td style="width:80px">Estado</td>
+                <td style="width:110px">¿Qué debo hacer?</td>
               </tr>
               <%=GetCertificates()%>
             </table>
@@ -351,13 +352,13 @@
             <% if (!transaction.IsNew && base.CanCreateCertificate()) { %>
               <br />
               <input class="button" type="button" value="Crear certificado manualmente" onclick="doOperation('createNewCertificate')" style="height:28px;width:178px" />
-              &nbsp; &nbsp;
+             &#160;&#160;
               <input class="button" type="button" value="Refrescar" onclick="doOperation('refreshCertificates')" style="height:28px;width:92px" />
-              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+             &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
             <% } else if (transaction.IsExternalTransaction && transaction.GetIssuedCertificates().Count == 1 && transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Revision) { %>
               <br />
               <input class="button" type="button" value="Enviar certificado a CITYS" onclick="doOperation('sendCertificateToCITYS')" style="height:28px;width:144px" />
-              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+             &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
             <% } %>
           </div>
         </td>
@@ -379,7 +380,7 @@
                     <option value="inscripción">Certificado de inscripción</option>
                     <option value="no-propiedad">Certificado de NO propiedad</option>
                   </select>
-                  &nbsp; &nbsp; &nbsp; &nbsp;
+                 &#160;&#160;&#160;&#160;
                   <input class="button" type="button" value="Generar certificado" onclick="doOperation('autoCreateCertificate')" style="height:28px;width:142px" />
                 </td>
               </tr>
@@ -1013,7 +1014,7 @@
 
   function ifraRecordingEditor_onresize() {
     var oFrame = getElement("ifraRecordingEditor");
-    var oBody = oFrame.document.body;
+      var oBody = oFrame.contentDocument.body;
 
     var newHeight = oBody.scrollHeight + oBody.clientHeight;
 

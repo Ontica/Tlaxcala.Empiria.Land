@@ -2,13 +2,13 @@
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyEditorControl" src="../land.registration.system.controls/recording.party.editor.control.ascx" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyViewerControl" src="../land.registration.system.controls/recording.party.viewer.control.ascx" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
   <title></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="-1" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
   <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
@@ -68,32 +68,32 @@
       <b style="font-size:10pt"><%=transaction.Document.UID%></b>
       <br />
       <span id="spanRecordingDocumentEditor" runat="server"></span>
-      <table class="editionTable">
+      <table class="editionTable" style="display:inline;">
         <tr>
-          <td>Descripción:<br /><br /><br /><br /><br /><br /><br /><br /><br />&nbsp;</td>
-          <td colspan="2" class="lastCell">
+          <td>Descripción:<br /><br /><br /><br /><br /><br /><br /><br /><br />&#160;</td>
+          <td class="lastCell" colspan="2">
             <textarea id="txtObservations" name="txtObservations" class="textArea" style="width:698px" cols="348" rows="10" runat="server"></textarea>
           </td>
         </tr>
         <tr id="rowEditButtons" style="display:inline">
-          <td>&nbsp;</td>
+          <td>&#160;</td>
           <td class="lastCell" colspan="2">
             <input id='cmdEditDocument' type="button" value="Editar documento" class="button" style="width:128px;height:28px;display:none" onclick='doOperation("editDocument")' />
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+           &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
             <input id='cmdDeleteDocument' type="button" value="Eliminar documento" class="button red-button" style="width:128px;height:28px;display:none" onclick='doOperation("deleteDocument")' />
-            &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp;
+           &#160;&#160;&#160;
+           &#160;&#160;&#160;
             <input id='cmdGenerateImagingControlID' type="button" value="Generar número de control" class="button" style="width:148px;height:28px;top:8px;display:none" onclick='doOperation("generateImagingControlID")' title='Generar número de control' />
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+           &#160;&#160;&#160;&#160;&#160;&#160;&#160;
             <input id='cmdShowImagingControlSlip' type="button" value="Imprimir carátula" class="button" style="width:112px;height:28px;top:8px;display:none" onclick='doOperation("showImagingControlSlip")' title='Imprimir la carátula' />
-            &nbsp; &nbsp;
+           &#160;&#160;
             <input id='cmdShowRecordingSeal' type="button" value="Sello registral" class="button" style="width:112px;height:28px;top:8px;display:none" onclick='doOperation("viewGlobalRecordingSeal")' title='Visualiza el sello que va en la escritura que se entrega al interesado' />
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+           &#160;&#160;&#160;&#160;&#160;
             <input id='cmdCloseDocument' type="button" value="Cerrar documento" class="button" style="width:122px;height:28px;top:8px;display:none" onclick='doOperation("closeDocument")' title='Cierra el documento protegiéndolo ante cambios no autorizados.' />
             <input id='cmdOpenDocument' type="button" value="Abrir documento" class="button" style="width:122px;height:28px;top:8px;display:none" onclick='doOperation("openDocument")' title='Abre este documento para editarlo.' />
             <input id='cmdSaveDocument' type="button" value="Guardar los cambios" class="button green-button" style="width:112px;height:28px;display:none" onclick='doOperation("saveDocument")' title='Guarda el documento' />
           </td>
-          <td >
+          <td>
           </td>
         </tr>
       </table>
@@ -114,11 +114,11 @@
                   <td style='width:160px'>Acto jurídico</td>
                   <td style='width:240px'>Predio / Recurso</td>
                   <td style='width:360px'>Antecedente registrado en</td>
-                  <td>&nbsp;</td>
+                  <td>&#160;</td>
                 </tr>
                 <%=GetRecordingActsGrid()%>
                 <tr class='totalsRow' style='display:<%=base.IsReadyForEdition() && base.RecordingActs.Count == 0 ? "inline" : "none"%>'>
-                  <td>&nbsp;</td>
+                  <td>&#160;</td>
                   <td colspan='4'>
                     Todavía no se han agregado actos jurídicos al documento.
                   </td>
@@ -129,13 +129,13 @@
         </tr>
         <tr>
           <td class="totalsRow lastCell" style='width:860px;display:<%=base.IsReadyToAppendRecordingActs() && base.RecordingActs.Count > 0 ? "inline" : "none"%>'>
-            <div style="width:50%;float:left">
+            <div style="width:50%; float:left; display:inline;">
                 <a href="javascript:doOperation('showRecordingActEditor')">
-                <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />Registrar otro acto jurídico</a>
+                <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />Registrar otro acto jurídico </a>
             </div>
-            <div style="width:50%;text-align:right;">
+            <div style="width:50%; text-align:right; display:inline;">
               <a href="javascript:doOperation('showSearchRecordingsView')">
-              <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar la información registral</a>&nbsp; &nbsp; &nbsp;
+              <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar la información registral </a>&#160;&#160;&#160;
             </div>
           </td>
         </tr>
@@ -152,7 +152,8 @@
 </div>
 </form>
 <div><span id="span" runat="server"></span></div>
-<iframe id="ifraCalendar" style="z-index:99;left:0;visibility:hidden;position:relative;top:0"
+
+<iframe id="ifraCalendar" style="z-index:99;left:560px;visibility:hidden;position:relative;top:130px; width:225px;  height:160px;"
     marginheight="0" marginwidth="0" frameborder="0" scrolling="no" src="../user.controls/calendar.aspx" width="100%">
 </iframe>
 </body>
@@ -259,7 +260,7 @@
     // Very rare: If use 'Closed' in validateIfDocumentCanBeCloseCmd then ajax never dispatches the call
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
     ajaxURL += "?commandName=validateIfDocumentCanBeCloseCmd";
-    ajaxURL += "&documentId=<%=base.transaction.Document.Id%>";
+    ajaxURL += "&#38;documentId=<%=base.transaction.Document.Id%>";
 
     return invokeAjaxValidator(ajaxURL);
   }
@@ -267,7 +268,7 @@
   function validateIfCanBeOpened() {
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
     ajaxURL += "?commandName=validateIfDocumentCanBeOpenedCmd";
-    ajaxURL += "&documentId=<%=base.transaction.Document.Id%>";
+    ajaxURL += "&#38;documentId=<%=base.transaction.Document.Id%>";
 
     return invokeAjaxValidator(ajaxURL);
   }
@@ -291,7 +292,7 @@
     }
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingBookImageSetId";
-    url += "&recordingBookId=" + recordingBookId;
+    url += "&#38;recordingBookId=" + recordingBookId;
 
     var imageSetId = invokeAjaxGetJsonObject(url);
 
@@ -314,10 +315,10 @@
   }
 
   function showRecordingActEditor() {
-    if (divRecordingActEditor.style.display == 'none') {
-      divRecordingActEditor.style.display = 'inline';
+      if (getElement('divRecordingActEditor').style.display == 'none') {
+        getElement('divRecordingActEditor').style.display = 'inline';
     } else {
-      divRecordingActEditor.style.display = 'none';
+        getElement('divRecordingActEditor').style.display = 'none';
     }
   }
 
@@ -389,7 +390,7 @@
       recordingActId = -1;
     }
     var url = "../land.registration.system/by.resource.analyzer.aspx?" +
-              "resourceId=" + resourceId + "&recordingActId=" + recordingActId;
+        "resourceId=" + resourceId + "&#38;recordingActId=" + recordingActId;
 
     gResourceEditorWindow = openInWindow(gResourceEditorWindow, url, true);
   }
@@ -429,13 +430,13 @@
     alert("Primero requiero se ingresen los datos de la escritura o documento que se va a inscribir.");
     return;
     <% } %>
-    var url = "../land.registration.system/recording.seal.aspx?transactionId=<%=transaction.Id%>&id=-1";
+    var url = "../land.registration.system/recording.seal.aspx?transactionId=<%=transaction.Id%>&#38;id=-1";
 
     gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url, false);
   }
 
   function viewRecordingSeal(recordingId) {
-    var url = "../land.registration.system/recording.seal.aspx?transactionId=<%=transaction.Id%>&id=" + recordingId;
+      var url = "../land.registration.system/recording.seal.aspx?transactionId=<%=transaction.Id%>&#38;id=" + recordingId;
 
     gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url, false);
   }

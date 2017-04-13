@@ -19,7 +19,7 @@
             <input type="button" value="Agregar el acto jurídico" class="button" style="width:125px;height:28px;vertical-align:middle"
                    onclick='doRecordingActEditorOperation("appendRecordingAct")' />
           </td>
-          <td class="lastCell">&nbsp;</td>
+          <td class="lastCell">&#160;</td>
         </tr>
         <tr id="divPropertyTypeSelector">
           <td style="vertical-align:baseline">Sobre:</td>
@@ -36,12 +36,12 @@
                     onclick="doRecordingActEditorOperation('lookupResource')" />
               <span id='divSelectedLookupResource' style="display:none">
                 <a href="javascript:doOperation('editResource', olookupResource.Id)">Consultar historia</a>
-                &nbsp; | &nbsp;
+               &#160; |&#160;
                 <a href="javascript:unselectLookupResource()">Deseleccionar</a>
               </span>
               <br />
-              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
-              <label><input type="checkbox" id="chkSelectPredecentInPhysicalBooks" onclick="return showPrecedentRecordingSection()"; />Buscar el antecedente en libros</label>
+             &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+              <label><input type="checkbox" id="chkSelectPredecentInPhysicalBooks" onclick="return showPrecedentRecordingSection();" />Buscar el antecedente en libros</label>
               <br />
             </span>
             <table id="divPhysicalRecordingSelector" class="editionTable" style="display:none;width:200px" >
@@ -60,7 +60,7 @@
                             onchange="return updateUI(this);">
                       <option value="">( Primero seleccionar Distrito y sección )</option>
                     </select>
-                  &nbsp;&nbsp;
+                 &#160;&#160;
                   <a href="javascript:doOperation('displayRecordingBookImageSet', 'cboPrecedentRecordingBook')">
                     <img src='../themes/default/bullets/book.gif' />Consultar imágenes</a>
                 </td>
@@ -73,23 +73,23 @@
                         <option value="">¿Libro?</option>
                     </select>
                       <span id="divPropertySelectorSection" style="display:none">
-                        Antecedente: &nbsp; &nbsp;
+                        Antecedente:&#160;&#160;
                           <select id="cboPrecedentProperty" class="selectBox" style="width:200px" title="" onchange="return updateUI(this);">
                             <option value="">¿Inscripción?</option>
                           </select>
                           <a href="javascript:doOperation('editResource', getElement('cboPrecedentProperty').value)">Consultar historia</a>
                           <br />
                           <label>
-                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            <input type="checkbox" id="chkAddResourceToExistingRecording" disabled="disabled" onclick="return showPrecedentRecordingSection()"; />
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;
+                            <input type="checkbox" id="chkAddResourceToExistingRecording" disabled="disabled" onclick="return showPrecedentRecordingSection();" />
                             Agregar otro folio real a esta partida histórica
                           </label>
                         </span>
                         <span id="divRecordingQuickAddSection" style="display:none">
                           Partida donde está registrado el antecedente:
                           <input id="txtQuickAddRecordingNumber" type="text" class="textBox" style="width:82px;margin-right:0"
-                                  onkeypress="return recordingNumberKeyFilter(this);" title="" maxlength="24" />
+                                  onkeypress="return recordingNumberKeyFilter(window.event);" title="" maxlength="24" />
                           <select id="cboQuickAddBisRecordingTag" class="selectBox" style="width:60px" title="">
                             <option value=""></option>
                             <option value="-Bis">-Bis</option>
@@ -98,7 +98,7 @@
                           </select>
                         </span>
                     <br />
-                    <table ID="tblQuickAddFields"class="editionTable" style="display:none;width:200px;color:darkred">
+                    <table id="tblQuickAddFields" class="editionTable" style="display:none;width:200px;color:darkred">
                       <tr>
                         <td>Documento registrado en la partida:</td>
                         <td colspan="3">
@@ -140,8 +140,9 @@
                       </tr>
                     </table>
                 </td>
+                  </tr>///se agrego
             </table>
-            <br />
+            <br/>
             <span id="divResourceName" style="display:none">
               Nombre:
               <input id="txtResourceName" type="text" class="textBox" style="width:344px;margin-right:0" maxlength="255" />
@@ -150,14 +151,14 @@
 
             <span id="divCadastralInfo" style="display:none">
               Clave catastral:
-              <input id="txtCadastralKey" type="text" class="textBox" style="width:230px;margin-right:0" maxlength="38" />
-              &nbsp;
-              <input type="button" value="Vincular" class="button" style="width:68px;height:24px;vertical-align:middle"
+              <input id="txtCadastralKey" type="text" class="textBox" style="width:230px; margin-right:0" maxlength="38" />
+             &#160;
+              <input type="button" value="Vincular" class="button" style="width:68px; height:24px; vertical-align:middle"
                    onclick='doRecordingActEditorOperation("getCadastralInfo")' />
               <br/>
             </span>
           </td>
-          <td class="lastCell">&nbsp;</td>
+          <td class="lastCell">&#160;</td>
         </tr>
       </table>
     </td>
@@ -185,31 +186,33 @@
               </select>
             </td>
             <td>Número:</td>
-            <td><input id="txtPartitionNo" type="text" class="textBox" style="width:122px;margin-right:0" maxlength="40" /></td>
+            <td><input id="txtPartitionNo" type="text" class="textBox" style="width:122px; margin-right:0" maxlength="40" /></td>
             <td class="lastCell">
               <label><input id="chkNoNumberPartition" type="checkbox" onclick="updatePartitionControls();" />Sin número</label>
               <label><input id="chkGeneratePartitionRank" type="checkbox" onclick="updatePartitionControls()" />Generar un rango</label>
             </td>
           </tr>
           <tr id="divRepeatPartitionUntilRow" style="display:none">
-            <td colspan="2">&nbsp;</td>
+            <td colspan="2">&#160;</td>
             <td>Número final:</td>
-            <td><input id="txtRepeatPartitionUntil" type="text" class="textBox" style="width:122px;margin-right:0" maxlength="4" /></td>
-            <td class="lastCell">&nbsp;</td>
+            <td><input id="txtRepeatPartitionUntil" type="text" class="textBox" style="width:122px; margin-right:0" maxlength="4" /></td>
+            <td class="lastCell">&#160;</td>
           </tr>
         </table>
     </td>
   </tr>
+  <br /><br />
   <tr id="divTargetPrecedentActSectionTitle" style="display:none">
     <td class="actionsSeparator">(2) Seleccionar el acto jurídico a cancelar o modificar</td>
   </tr>
+  <br /><br />
   <tr id="divTargetPrecedentActTable" style="display:none">
     <td>
       <table class="editionTable">
         <tr>
           <td class="lastCell">
-            <div style="overflow:auto;width:780px;">
-              <table class="details"style="width:99%">
+            <div style="overflow:auto; width:780px;">
+              <table class="details" style="width:99%">
                 <tr class="detailsHeader">
                   <td>#</td>
                   <td>Acto jurídico</td>
@@ -219,7 +222,7 @@
                   <td>Estado</td>
                 </tr>
                 <tr id='tblTargetPrecedentActsTable' class='totalsRow' style='display:inline'>
-                  <td>&nbsp;</td>
+                  <td>&#160;</td>
                   <td colspan='5'>
                     <select id="cboTemporalId" class="selectBox" style="width:600px" title="">
                       <option value="">( Actos jurídicos del predio )</option>
@@ -227,7 +230,7 @@
                   </td>
                 </tr>
                 <tr class="totalsRow" style="display:none">
-                  <td>&nbsp;</td>
+                  <td>&#160;</td>
                   <td colspan="5">
                     <a href="javascript:doRecordingActEditorOperation('showTargetActEditor')">
                     <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />El acto jurídico a cancelar o modificar no aparece en la lista</a>
@@ -240,10 +243,11 @@
       </table>
       </td>
     </tr>
+   <br /><br />
     <tr id="divTargetPrecedentActSection" style="display:none">
     <td>
       <table class="editionTable">
-        <tr>
+        <tr style='display:inline'>
           <td>Que aplica a:</td>
           <td>
             <select id="cboTargetAct" class="selectBox" style="width:202px" title="" onchange="return updateUI(this);">
@@ -257,8 +261,9 @@
               <option value="">( Seleccionar acto jurídico a cancelar o modificar ) </option>
             </select>
           </td>
-          <td class="lastCell">&nbsp;</td>
+          <td class="lastCell">&#160;</td>
         </tr>
+        <br /><br />
         <tr id="divTargetActBookAndRecording" style="display:none">
           <td colspan="2"></td>
           <td>Volumen:
@@ -275,7 +280,7 @@
             <br />
             Partida donde fue registrado el acto:
             <input id="txtTargetActPhysicalRecordingNo" type="text" class="textBox" style="width:82px;margin-right:0"
-                   onkeypress="return recordingNumberKeyFilter(this);" maxlength="24" />
+                   onkeypress="return recordingNumberKeyFilter(window.event, true);" maxlength="24" />
             <select id="cboTargetActBisRecordingTag" class="selectBox" style="width:60px" title="">
               <option value=""></option>
               <option value="-Bis">-Bis</option>
@@ -287,7 +292,7 @@
 
             </span>
           </td>
-          <td class="lastCell">&nbsp;</td>
+          <td class="lastCell">&#160;</td>
           </tr>
         </table>
       </td>
@@ -327,14 +332,14 @@
 
   var olookupResource = null;
   function lookupResource() {
-    if (getElement("txtLookupResource").value.length == 0) {
+    if (getElement('txtLookupResource').value.length == 0) {
       alert("Requiero se proporcione el folio real o número de documento para hacer la búsqueda");
       return;
     }
 
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=lookupResource";
-    url += "&resourceUID=" + getElement("txtLookupResource").value;
+    url += "&resourceUID=" + getElement('txtLookupResource').value;
 
     olookupResource = invokeAjaxGetJsonObject(url);
 
@@ -435,7 +440,7 @@
   function setRecordingRule() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingActRuleCmd";
-    url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+    url += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
 
     oCurrentRecordingRule = invokeAjaxGetJsonObject(url);
 
@@ -447,7 +452,7 @@
   function updateTargetRecordingActCombos() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getTargetRecordingActTypesCmd";
-    url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+    url += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
 
     invokeAjaxComboItemsLoader(url, getElement('cboTargetAct'));
 
@@ -460,7 +465,7 @@
     }
     if (oControl == getElement("cboRecordingActTypeCategory")) {
       if (!assertAppendRecordingActIsPossible()) {
-        getElement("cboRecordingActTypeCategory").value = '';
+        getElement('cboRecordingActTypeCategory').value = '';
         return;
       }
       resetRecordingActTypesCombo();
@@ -529,11 +534,11 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingNumbersStringArrayCmd";
     if (getElement("cboTargetActPhysicalBook").value.length != 0) {
-      url += "&recordingBookId=" + getElement("cboTargetActPhysicalBook").value;
+      url += "&recordingBookId=" + getElement('cboTargetActPhysicalBook').value;
     } else {
       url += "&recordingBookId=0";
     }
-    invokeAjaxComboItemsLoader(url, getElement("cboTargetActRecording"));
+    invokeAjaxComboItemsLoader(url, getElement('cboTargetActRecording'));
     resetTargetActsGrid();
   }
 
@@ -578,18 +583,18 @@
     resetPrecedentRecordingsCombo();
   }
 
-  function resetPrecedentRecordingsCombo() {
+  function resetPrecedentRecordingsCombo() { //////quite "" puse ''
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingNumbersStringArrayCmd";
     if (getElement("cboPrecedentRecordingBook").value.length != 0) {
-      url += "&recordingBookId=" + getElement("cboPrecedentRecordingBook").value;
+      url += "&recordingBookId=" + getElement('cboPrecedentRecordingBook').value;
     } else {
       url += "&recordingBookId=0";
     }
     if (getElement("cboRecordingActType").value.length != 0) {
-      url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+      url += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
     }
-    invokeAjaxComboItemsLoader(url, getElement("cboPrecedentRecording"));
+    invokeAjaxComboItemsLoader(url, getElement('cboPrecedentRecording'));
     showPrecedentPropertiesSection();
     updateSelectedResource();
     showTargetRecordingActSections();
@@ -598,9 +603,9 @@
   function resetPropertyTypeSelectorCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getPropertyTypeSelectorComboCmd";
-    url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+    url += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
 
-    invokeAjaxComboItemsLoader(url, getElement("cboRecordingTaskType"));
+    invokeAjaxComboItemsLoader(url, getElement('cboRecordingTaskType'));
     showPrecedentRecordingSection();
   }
 
@@ -608,22 +613,22 @@
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingPropertiesArrayCmd";
     if (getElement("cboPrecedentRecording").value.length != 0) {
-      url += "&recordingId=" + getElement("cboPrecedentRecording").value;
+      url += "&recordingId=" + getElement('cboPrecedentRecording').value;
     } else {
       url += "&recordingId=0";
     }
     if (getElement("cboRecordingActType").value.length != 0) {
-      url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+      url += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
     }
-    invokeAjaxComboItemsLoader(url, getElement("cboPrecedentProperty"));
+    invokeAjaxComboItemsLoader(url, getElement('cboPrecedentProperty'));
   }
-
+            
   function resetRecordingActTypesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
     url += "&recordingActTypeCategoryId=" + getElement('cboRecordingActTypeCategory').value;
 
-    invokeAjaxComboItemsLoader(url, getElement("cboRecordingActType"));
+    invokeAjaxComboItemsLoader(url, getElement('cboRecordingActType'));
     resetPropertyTypeSelectorCombo();
   }
 
@@ -698,11 +703,11 @@
   function updateTargetPrecedentActsTable() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getTargetPrecedentActsTableCmd";
-    url += "&recordingActTypeId=" + getElement("cboRecordingActType").value;
+    url += "&recordingActTypeId=" + getElement('cboRecordingActType').value;
     url += "&resourceId=" + getSelectedResource();
 
-    invokeAjaxComboItemsLoader(url, getElement("cboTemporalId"));
-
+    invokeAjaxComboItemsLoader(url, getElement('cboTemporalId')); ///cam,bie 2" por '
+ 
     //var html = invokeAjaxMethod(false, url, null);
     //getElement('tblTargetPrecedentActsTable').innerHTML = html;
   }
@@ -710,7 +715,7 @@
   // Represents the resource that was selected using the search box.
   // Returns null if no resource was selected.
   function createAntecedentResource() {
-    return (getElement("cboPrecedentRecording").value == "-1");
+    return (getElement('cboPrecedentRecording').value == "-1");
   }
 
   function showTargetActEditor() {
@@ -723,7 +728,7 @@
     var selectedResource = getSelectedResource();
     var createResource = createAntecedentResource();
 
-    var applyTargetRecording = (getElement("cboRecordingTaskType").value == "actAppliesToOtherRecordingAct" &&
+    var applyTargetRecording = (getElement('cboRecordingTaskType').value == "actAppliesToOtherRecordingAct" &&
                                (selectedResource != null || createResource));
 
 
@@ -770,13 +775,13 @@
   }
 
   function showPrecedentProperty() {
-    var propertyId = getElement("cboPrecedentProperty").value;
+    var propertyId = getElement('cboPrecedentProperty').value;
     if (propertyId.length == 0 || propertyId == "-1" || propertyId == "0") {
       alert("Necesito se seleccione un predio de la lista.");
       return;
     }
     var url = "../land.registration.system/property.editor.aspx?propertyId=" + propertyId +
-              "&recordingActId=-1&recordingId=" + getElement('cboPrecedentRecording').value;
+              "&recordingActId=-1"+"&recordingId=" + getElement('cboPrecedentRecording').value;
     createNewWindow(url);
   }
 
@@ -839,16 +844,16 @@
 
   function getPartitionText() {
     var sMsg = '';
-    if (getElement('cboRecordingTaskType').value != 'createPartition') {
+    if (getElement("cboRecordingTaskType").value != 'createPartition') {
       return '';
     }
     sMsg += "\t\tSobre " + getElement('cboPropertyPartitionType').value;
-    if (getElement('chkNoNumberPartition').checked) {
+    if (getElement("chkNoNumberPartition").checked) {
       sMsg += " sin número";
     } else {
       sMsg += " No. " + getElement('txtPartitionNo').value;
     }
-    if (getElement('chkGeneratePartitionRank').checked) {
+    if (getElement("chkGeneratePartitionRank").checked) {
       sMsg += " al No. " + getElement('txtRepeatPartitionUntil').value + "\n";
       sMsg += "\t\tlos cuales son NUEVAS FRACCIONES del\n";
     } else {
@@ -859,7 +864,7 @@
 
   function getSelectedResourceText() {
     if (getSelectedResource() != null) {
-      if (getElement('cboPrecedentProperty').value != '') {
+      if (getElement("cboPrecedentProperty").value != '') {
         return getComboOptionText(getElement('cboPrecedentProperty'));
       } else {
         return getElement('txtLookupResource').value;
@@ -869,7 +874,7 @@
   }
 
   function getTargetActPhysicalRecordingText() {
-    if (getElement('cboTargetActSection').value == "annotation") {
+    if (getElement("cboTargetActSection").value == "annotation") {
       return "Al margen de la partida";
     }
     return getComboOptionText(getElement('cboTargetActPhysicalBook')) + "\n" +
@@ -880,25 +885,25 @@
   function validateRecordingAct() {
     var recordingAct = getComboOptionText(getElement('cboRecordingActType'));
 
-    if (getElement('cboRecordingActTypeCategory').value.length == 0) {
+    if (getElement("cboRecordingActTypeCategory").value.length == 0) {
       alert("Necesito se seleccione de la lista la categoría del acto jurídico que va a agregarse al documento.");
       getElement('cboRecordingActTypeCategory').focus();
       return false;
     }
-    if (getElement('cboRecordingActType').value == "") {
+    if (getElement("cboRecordingActType").value == "") {
       alert("Requiero se seleccione de la lista el acto jurídico que va a agregarse al documento.");
       getElement('cboRecordingActType').focus();
       return false;
     }
     <%  if (!base.IsHistoricEdition &&
             base.Transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Elaboration) { %>
-      if (getElement('cboRecordingActType').value != "2201") {
+      if (getElement("cboRecordingActType").value != "2201") {
         alert("En elaboración de certificados sólo es posible agregar el acto 'Asignación de folio real'.");
         getElement('cboRecordingActType').focus();
         return false;
       }
     <% } %>
-    if (getElement('cboRecordingActType').value == "2201") {
+    if (getElement("cboRecordingActType").value == "2201") {
       if (getElement('cboPrecedentRecording').value != "-1" || getSelectedResource() != null) {
         alert("No es posible asignar un folio real sobre un pedio que ya tiene folio.");
         getElement('cboPrecedentRecording').focus();
@@ -906,7 +911,7 @@
       }
     }
 
-    if (getElement('cboRecordingTaskType').value.length == 0) {
+    if (getElement("cboRecordingTaskType").value.length == 0) {
       alert("Requiero se proporcione la información del predio o recurso sobre el que se aplicará el acto jurídico " + recordingAct + ".");
       getElement('cboRecordingTaskType').focus();
       return false;

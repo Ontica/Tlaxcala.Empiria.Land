@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.RealEstateEditor" CodeFile="real.estate.editor.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
   <title></title>
@@ -38,7 +38,7 @@
               <input type="text" class="textBox" id='txtCadastralKey' name='txtCadastralKey' style="width:320px;height:18px;font-size:9pt" maxlength="40" runat='server' title="" />
               <img src="../themes/default/buttons/search.gif" alt="" title="Busca la clave en el sistema de catastro para después hacer la vinculación entre folio real y clave catastral"
                    style="margin-left:-4px" onclick="doOperation('searchCadastralNumber')" />Vincular con catastro
-              &nbsp; &nbsp;
+             &#160;&#160;
               <img src="../themes/default/buttons/document.sm.gif" alt="" title="Visualiza la cédula catastral del predio"
                    style="margin-left:-4px" onclick="doOperation('showCadastralCertificate')" />Cédula catastral
             </td>
@@ -66,18 +66,18 @@
 
           <% if (base.IsInEditionMode()) { %>
           <tr>
-            <td>&nbsp;</td>
+            <td>&#160;</td>
             <td class="lastCell">
                  <input id="btnEditRealEstate" type="button" value="Editar este predio" class="button"
                         tabindex="-1" style="width:104px;height:28px" onclick="doOperation('openForEdition')" />
-                 &nbsp; &nbsp; &nbsp;
+                &#160;&#160;&#160;
                  <input id="btnCancelEdition" type="button" value="Descartar cambios" class="button"
                         tabindex="-1" style="width:124px;height:28px" onclick="doOperation('cancelEdition')" />
-                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                &#160;&#160;&#160;&#160;&#160;&#160;
                  <input id="btnSaveRealEstate" type="button" value="Guardar los cambios" class="button"
                         tabindex="-1" style="width:120px;height:28px" onclick="doOperation('saveRealEstate')" />
-                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                &#160;&#160;&#160;&#160;&#160;&#160;
             </td>
           </tr>
           <% } %>
@@ -268,15 +268,15 @@
       alert("Necesito conocer la unidad de medida de la superficie total del predio.");
       return false;
     }
-    if (getElement("txtLotSize").value.length == 0 && getElement("cboLotSizeUnit").value > 0) {
+    if (getElement("txtLotSize").value.length == 0 &#38;&#38; getElement("cboLotSizeUnit").value > 0) {
       alert("Necesito conocer la superficie total del predio.");
       return false;
     }
-    if (getElement("txtLotSize").value.length != 0 && getElement("cboLotSizeUnit").value == "-2") {
+    if (getElement("txtLotSize").value.length != 0 &#38;&#38; getElement("cboLotSizeUnit").value == "-2") {
       alert("La superficie total está marcada como 'No consta' pero el valor de la misma sí fue proporcionado.");
       return false;
     }
-    if (!isNumeric(getElement("txtLotSize")) && getElement("cboLotSizeUnit").value > 0) {
+    if (!isNumeric(getElement("txtLotSize")) &#38;&#38; getElement("cboLotSizeUnit").value > 0) {
       alert("No reconozco la superficie total del predio.");
       return false;
     }
@@ -305,7 +305,7 @@
   function resetMunicipalitiesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getCadastralOfficeMunicipalitiesComboCmd";
-    url += "&cadastralOfficeId=" + getElement("cboRecordingOffice").value;
+    url += "&#38;cadastralOfficeId=" + getElement("cboRecordingOffice").value;
 
     invokeAjaxComboItemsLoader(url, getElement("cboMunicipality"));
   }

@@ -12,7 +12,7 @@
     <th align="right"><a href="javascript:sendPageCommand('sortData', 'ClosedRecordingsCount DESC')">Cerradas</a></th>
     <th align="right"><a href="javascript:sendPageCommand('sortData', 'RecordingActsCount DESC')">Actos jurídicos</a></th>
     <th align="right"><a href="javascript:sendPageCommand('sortData', 'PropertiesCount DESC')">Predios</a></th>
-    <th>&nbsp;</th>
+    <th>&#160;</th>
   </tr>
 </thead>
 <%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).HintContent%>
