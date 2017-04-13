@@ -549,7 +549,9 @@ namespace Empiria.Land.WebApp {
       } else if (!property.IsPartitionOf.IsEmptyInstance && domainAntecedent.Equals(RecordingAct.Empty)) {
 
       } else if (!domainAntecedent.PhysicalRecording.IsEmptyInstance) {
-        x += ", con antecedente de inscripción en " + domainAntecedent.PhysicalRecording.AsText;
+        if (!recordingAct.AmendmentOf.PhysicalRecording.Equals(domainAntecedent.PhysicalRecording)) {
+          x += ", con antecedente de inscripción en " + domainAntecedent.PhysicalRecording.AsText;
+        }
       } else if (domainAntecedent.Document.Equals(recordingAct.Document)) {
         x += ", registrado en este documento";
       } else if (!(domainAntecedent is DomainAct)) {   // TODO: this is very strange, is a special case
