@@ -304,7 +304,7 @@ function ungrayImage(e) {
       } else {
         dataTableControlsHeight = 0;
       }
-      var newHeight = windowHeight - menuHeight - pageOptionsHeight - dataTableControlsHeight;
+      var newHeight = windowHeight - menuHeight - pageOptionsHeight - dataTableControlsHeight -50;
 
       getElement('divObjectExplorer').style.height = newHeight + "px";
       fixDataTableItems(getElement('divObjectExplorer'));

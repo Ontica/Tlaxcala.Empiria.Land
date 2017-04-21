@@ -135,7 +135,7 @@
             <td>Superficie:</td>
             <td class="lastCell">
               <input type="text" class="textBox" id='txtLotSize' name='txtLotSize' style="width:80px"
-                     maxlength="16" onkeypress="return positiveKeyFilter(this);" runat='server' title="" />
+                     maxlength="16" onkeypress="return positiveKeyFilter(window.event, true);" runat='server' title="" />
               <select id="cboLotSizeUnit" name="cboLotSizeUnit" class="selectBox" style="width:200px" runat='server' title="">
                 <option value="">( Unidad de medida )</option>
                 <option value="-2">No consta</option>

@@ -171,7 +171,7 @@
       </td>
     </tr>
   </table>
-  <div id="divObjectExplorer" class="dataTableContainer" style="height:260px;">
+  <div id="divObjectExplorer" class="dataTableContainer">
     <table>
       <asp:Repeater id="itemsRepeater" runat="server" EnableViewState="False"></asp:Repeater>
     </table>
