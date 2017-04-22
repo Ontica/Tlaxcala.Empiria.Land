@@ -18,7 +18,7 @@
 					      <table>
 						      <tr>
 							      <td>
-								      <img src="../themes/default/customer/government.seal.png" style="height:68px" alt="" title="" />
+								      <img src="../themes/default/customer/government.seal.png" alt="" title="" />
 							      </td>
 						      </tr>
 					      </table>

@@ -42,9 +42,12 @@ namespace Empiria.Land.WebApp {
     }
 
     private string ReplaceImagePaths(string text) {
-      text = text.Replace("assets/government.seal.png", "../themes/default/customer/government.seal.png");
-
-      return text.Replace("assets/seal.logo.left.png", "../themes/default/customer/seal.logo.left.png");
+      if (text.Contains("assets/government.seal.png")) {
+        text = text.Replace("assets/government.seal.png", "../themes/default/customer/government.seal.png");
+        return text.Replace("height=\"84pt\"", "");
+      } else {
+        return text.Replace("assets/seal.logo.left.png", "../themes/default/customer/seal.logo.left.png");
+      }
     }
 
     #endregion Methods

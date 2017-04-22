@@ -8,11 +8,11 @@
   <link href="../themes/default/css/official.document.css" type="text/css" rel="stylesheet" />
   </head>
   <body>
-
     <table>
       <tr>
-        <td>
-          <img class="logo" src="../themes/default/customer/government.seal.png" style="height:84pt" alt="" title="" />
+        <td style="vertical-align:top">
+          <br />
+          <img class="logo" src="../themes/default/customer/government.seal.png" alt="" title="" />
         </td>
         <td style="text-align:center;width:95%">
 	        <h3>DIRECCIÓN DE NOTARÍAS Y REGISTROS PÚBLICOS</h3>
