@@ -12,9 +12,9 @@
       <tr>
         <td style="vertical-align:top">
           <br />
-          <img class="logo" src="../themes/default/customer/government.seal.png" alt="" title="" />
+          <img style="margin-left:-22pt" class="logo" src="../themes/default/customer/government.seal.png" alt="" title="" />
         </td>
-        <td style="text-align:center;width:95%">
+        <td style="vertical-align:top;text-align:center;width:95%">
 	        <h3>DIRECCIÓN DE NOTARÍAS Y REGISTROS PÚBLICOS</h3>
           <h4>GOBIERNO DEL ESTADO DE TLAXCALA</h4>
           <% if (!document.IsClosed) { %>
