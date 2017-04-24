@@ -83,7 +83,7 @@ namespace Empiria.Land.WebApp {
 
     private void RefreshPage() {
       Response.Redirect("by.resource.analyzer.aspx?resourceId=" + resource.Id.ToString() +
-                        "&#38;recordingActId=" + recordingAct.Id.ToString(), true);
+                        "&recordingActId=" + recordingAct.Id.ToString(), true);
     }
 
     private void Initialize() {

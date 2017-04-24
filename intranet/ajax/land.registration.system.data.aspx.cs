@@ -757,7 +757,7 @@ namespace Empiria.Web.UI.Ajax {
         FixedList<RecordingActType> list = recordingActTypeCategory.RecordingActTypes;
 
         return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "DisplayName",
-                                                  "( ¿Qué acto jurídico se agregará al documento? )");
+                                                  "( ¿Qué acto jurídico se agregará ? )");
       } else {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar el tipo de acto )");
       }

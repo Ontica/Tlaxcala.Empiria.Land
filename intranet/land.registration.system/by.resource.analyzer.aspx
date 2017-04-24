@@ -8,7 +8,7 @@
 <title>Editor de documentos</title>
 <meta http-equiv="Expires" content="-1" />
 <meta http-equiv="Pragma" content="no-cache" />
- <meta charset="UTF-8"> 
+ <meta charset="UTF-8">
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
@@ -87,7 +87,7 @@
             <table id="tabStripItemView_3" class="editionTable" style="<%=TabStripDisplayView(TabStrip.ResourceHistory)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraPropertyHistory" style="z-index:99;left:0;top:0;" width="720px"  height="650px" 
+                  <iframe id="ifraPropertyHistory" style="z-index:99;left:0;top:0;" width="720px"  height="650px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true">
                   </iframe>
                 </td>
@@ -331,7 +331,7 @@
 
   function resizeFrame(e) {
     var oFrame = null;
-    
+
     if (arguments.length == 2) {
       oFrame = arguments[1];
     } else {
