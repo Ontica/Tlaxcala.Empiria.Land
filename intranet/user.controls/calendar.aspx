@@ -5,7 +5,6 @@
 		<title>Calendario</title>
 		<script type="text/javascript" src="../scripts/empiria.general.js"></script>
 		<script type="text/javascript">
-   
 
 			function setDate(value) {
 				getElement('txtDate').value = value;
@@ -40,7 +39,7 @@
         <% } %>
         on_calendar_resize();
       }
-   
+
 		</script>
 	</head>
 	<body onload="window_onload()" onblur="on_calendar_lost_focus();" style="FONT-SIZE: 8pt; Z-INDEX: 100; COLOR: #191970; FONT-FAMILY: Arial, Helvetica; BACKGROUND-COLOR: #ffffef; TEXT-DECORATION: none">

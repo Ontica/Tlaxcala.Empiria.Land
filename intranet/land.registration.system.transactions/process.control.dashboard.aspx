@@ -168,6 +168,7 @@
                 <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar el acervo</a>&#160;&#160;&#160;
         <a href="javascript:doOperation('showSearchRecordingsView')">
                 <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Información registral (anterior)</a>&#160;&#160;&#160;
+        <%--<a href="../land.registration.system/recording.book.analyzer.aspx?bookId=1339" target="_blank">capt hist</a>--%>
       </td>
     </tr>
   </table>

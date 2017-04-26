@@ -355,7 +355,8 @@
              &#160;&#160;
               <input class="button" type="button" value="Refrescar" onclick="doOperation('refreshCertificates')" style="height:28px;width:92px" />
              &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-            <% } else if (transaction.IsExternalTransaction && transaction.GetIssuedCertificates().Count == 1 && transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Revision) { %>
+            <% } else if (transaction.IsExternalTransaction && transaction.GetIssuedCertificates().Count == 1 &&
+                          transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Revision) { %>
               <br />
               <input class="button" type="button" value="Enviar certificado a CITYS" onclick="doOperation('sendCertificateToCITYS')" style="height:28px;width:144px" />
              &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
@@ -507,7 +508,7 @@
         getElement("txtExternalNumber").value = "S/N";
         return;
       case 'closeWindow':
-            window.parent.eval("doOperation('refreshRecording')");
+        window.parent.eval("doOperation('refreshRecording')");
         return;
       case 'appendGeographicalItem':
         return appendGeographicalItem();
@@ -634,11 +635,11 @@
   function setAutocreateCertificateControls() {
     var certificateType = getElement('cboCertificateType').value;
     if (certificateType == "gravamen" || certificateType == "inscripción") {
-      getElement('divCertificatePropertyUID').style.display = 'inline';
+      getElement('divCertificatePropertyUID').style.display = 'table-row';
       getElement('divCertificateOwnerName').style.display = 'none';
     } else if (certificateType == "no-propiedad") {
       getElement('divCertificatePropertyUID').style.display = 'none';
-      getElement('divCertificateOwnerName').style.display = 'inline';
+      getElement('divCertificateOwnerName').style.display = 'table-row';
     } else {
       getElement('divCertificatePropertyUID').style.display = 'none';
       getElement('divCertificateOwnerName').style.display = 'none';

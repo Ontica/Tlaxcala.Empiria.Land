@@ -192,7 +192,7 @@
       <span id="spanPageTitle" class="appTitle">
        &#160;
       </span>
-      <span id="spanCurrentImage" class="rightItem appTitle" style="margin-right:8px">
+      <span id="spanCurrentImage" class="rightItem appTitle" style="margin-right:4px">
        &#160;
       </span>
     </div> <!--divHeader!-->
@@ -220,6 +220,9 @@
                     <select id="cboZoomLevel" name="cboZoomLevel" class="selectBox" style="width:56px" title="" onchange="return doOperation('zoomImage')" runat="server">
                       <option value="0.50">50%</option>
                       <option value="0.75">75%</option>
+                      <option value="0.80">80%</option>
+                      <option value="0.85">85%</option>
+                      <option value="0.90">90%</option>
                       <option value="1.00">100%</option>
                       <option value="1.25">125%</option>
                       <option value="1.50">150%</option>

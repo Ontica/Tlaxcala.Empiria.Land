@@ -68,35 +68,35 @@
               <tr>
                 <td style="vertical-align:top">Partida:</td>
                 <td>
-                    <select id="cboPrecedentRecording" class="selectBox" style="width:98px" title=''
-                            onchange="return updateUI(this);">
-                        <option value="">¿Libro?</option>
-                    </select>
-                      <span id="divPropertySelectorSection" style="display:none">
-                        Antecedente:&#160;&#160;
-                          <select id="cboPrecedentProperty" class="selectBox" style="width:200px" title="" onchange="return updateUI(this);">
-                            <option value="">¿Inscripción?</option>
-                          </select>
-                          <a href="javascript:doOperation('editResource', getElement('cboPrecedentProperty').value)">Consultar historia</a>
-                          <br />
-                          <label>
-                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                            &#160;&#160;&#160;&#160;&#160;
-                            <input type="checkbox" id="chkAddResourceToExistingRecording" disabled="disabled" onclick="return showPrecedentRecordingSection();" />
-                            Agregar otro folio real a esta partida histórica
-                          </label>
-                        </span>
-                        <span id="divRecordingQuickAddSection" style="display:none">
-                          Partida donde está registrado el antecedente:
-                          <input id="txtQuickAddRecordingNumber" type="text" class="textBox" style="width:82px;margin-right:0"
-                                  onkeypress="return recordingNumberKeyFilter(window.event);" title="" maxlength="24" />
-                          <select id="cboQuickAddBisRecordingTag" class="selectBox" style="width:60px" title="">
-                            <option value=""></option>
-                            <option value="-Bis">-Bis</option>
-                            <option value="-Bis1">-Bis1</option>
-                            <option value="-Bis2">-Bis2</option>
-                          </select>
-                        </span>
+                  <select id="cboPrecedentRecording" class="selectBox" style="width:98px" title=''
+                          onchange="return updateUI(this);">
+                      <option value="">¿Libro?</option>
+                  </select>
+                  <span id="divPropertySelectorSection" style="display:none">
+                    Antecedente:&#160;&#160;
+                      <select id="cboPrecedentProperty" class="selectBox" style="width:200px" title="" onchange="return updateUI(this);">
+                        <option value="">¿Inscripción?</option>
+                      </select>
+                      <a href="javascript:doOperation('editResource', getElement('cboPrecedentProperty').value)">Consultar historia</a>
+                      <br />
+                      <label>
+                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                        &#160;&#160;&#160;&#160;&#160;
+                        <input type="checkbox" id="chkAddResourceToExistingRecording" disabled="disabled" onclick="return showPrecedentRecordingSection();" />
+                        Agregar otro folio real a esta partida histórica
+                      </label>
+                    </span>
+                    <span id="divRecordingQuickAddSection" style="display:none">
+                      Partida donde está registrado el antecedente:
+                      <input id="txtQuickAddRecordingNumber" type="text" class="textBox" style="width:82px;margin-right:0"
+                              onkeypress="return recordingNumberKeyFilter(window.event);" title="" maxlength="24" />
+                      <select id="cboQuickAddBisRecordingTag" class="selectBox" style="width:60px" title="">
+                        <option value=""></option>
+                        <option value="-Bis">-Bis</option>
+                        <option value="-Bis1">-Bis1</option>
+                        <option value="-Bis2">-Bis2</option>
+                      </select>
+                    </span>
                     <br />
                     <table id="tblQuickAddFields" class="editionTable" style="display:none;width:200px;color:darkred">
                       <tr>
@@ -201,11 +201,9 @@
         </table>
     </td>
   </tr>
-  <br /><br />
   <tr id="divTargetPrecedentActSectionTitle" style="display:none">
     <td class="actionsSeparator">(2) Seleccionar el acto jurídico a cancelar o modificar</td>
   </tr>
-  <br /><br />
   <tr id="divTargetPrecedentActTable" style="display:none">
     <td>
       <table class="editionTable">
@@ -622,7 +620,7 @@
     }
     invokeAjaxComboItemsLoader(url, getElement('cboPrecedentProperty'));
   }
-            
+
   function resetRecordingActTypesCombo() {
     var url = "../ajax/land.registration.system.data.aspx";
     url += "?commandName=getRecordingTypesStringArrayCmd";
@@ -707,7 +705,7 @@
     url += "&resourceId=" + getSelectedResource();
 
     invokeAjaxComboItemsLoader(url, getElement('cboTemporalId')); ///cam,bie 2" por '
- 
+
     //var html = invokeAjaxMethod(false, url, null);
     //getElement('tblTargetPrecedentActsTable').innerHTML = html;
   }

@@ -79,7 +79,7 @@ function showCalendar(event, oDataSource, oImageSource, leftpx) {
     oCalendar.style.zIndex = 999;
     oCalendar.style.visibility = "visible";
     oCalendar.style.left = leftpx;
-  
+
     oCalendar.focus();
 	}
 	return false;

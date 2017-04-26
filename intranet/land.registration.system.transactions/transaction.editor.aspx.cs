@@ -426,6 +426,7 @@ namespace Empiria.Land.WebApp {
           if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration ||
               transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording) {
             temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('editCertificate', '{{CERTIFICATE-UID}}')\">Ver o imprimir</a>");
+            //temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE_ID}}')\">Imprimir</a>");
           } else {
             temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE_ID}}')\">Imprimir</a>");
           }
