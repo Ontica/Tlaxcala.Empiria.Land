@@ -59,7 +59,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="land.registration\payment.services.asmx" />
-    <Content Include="LICENSE.txt" />
+    <None Include="LICENSE.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -75,7 +75,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="README.md" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="empiria.config.json">
