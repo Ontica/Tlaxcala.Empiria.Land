@@ -75,8 +75,7 @@ img {
 
 #divCanvas {
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 #divHeader {
   background-color: #2C3942;
@@ -122,7 +121,7 @@ span.rightItem {
     padding-top: 6px; }
 
 tr.detailsSuperHeader {
-  background: #2e8e56;
+  background: #094e29;
   color: #eeeeee;
   height: 26px; }
 tr.detailsSuperFooter {

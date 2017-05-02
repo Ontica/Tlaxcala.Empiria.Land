@@ -201,22 +201,22 @@
         <table cellpadding="0" cellspacing="0">
           <tr>
             <td valign="top">
-              <table>
+              <table style="width:100%">
                 <tr valign="top">
-                  <td nowrap='nowrap'>
+                  <td align="left"  style="width:30%" nowrap='nowrap'>
                     Ir a la imagen: <input id="txtGoToImage" name="txtGoToImage" type="text" class="textBox" maxlength="3"
                                      style="width:28px;margin-right:0px" onkeypress="return integerKeyFilter(this);" runat="server" /><img
                                      src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('gotoImage')" title="Ejecuta la búsqueda" /></td>
-                  <td width='40%' nowrap='nowrap'>&#160;</td>
-                  <td><img src='../themes/default/buttons/first.gif' onclick='doOperation("moveToImage", "first");' title='Muestra la primera imagen' alt='' /></td>
-                  <td><img src='../themes/default/buttons/previous.gif' onclick='doOperation("moveToImage", "previous");' title='Muestra la imagen anterior' alt='' /></td>
-                  <td><img src='../themes/default/buttons/next.gif' onclick='doOperation("moveToImage", "next");' title='Muestra la siguiente imagen' alt='' /></td>
-                  <td><img src='../themes/default/buttons/last.gif' onclick='doOperation("moveToImage", "last");' title='Muestra la última imagen' alt='' /></td>
-                  <td width='40%' nowrap='nowrap'>&#160;</td>
-                  <td align="right" style="width:100%">
-                    Zoom:
+                  <td align="center" style="width:10%"></td>
+                  <td align="center" style="width:1%"><img src='../themes/default/buttons/first.gif'  onclick='doOperation("moveToImage", "first");' title='Muestra la primera imagen' alt='' /></td>
+                  <td align="center" style="width:1%"><img src='../themes/default/buttons/previous.gif'  onclick='doOperation("moveToImage", "previous");' title='Muestra la imagen anterior' alt='' /></td>
+                  <td align="center" style="width:1%"><img src='../themes/default/buttons/next.gif'  onclick='doOperation("moveToImage", "next");' title='Muestra la siguiente imagen' alt='' /></td>
+                  <td align="center" style="width:1%"><img src='../themes/default/buttons/last.gif'  onclick='doOperation("moveToImage", "last");' title='Muestra la última imagen' alt='' /></td>
+                  <td align="center" style="width:25%"></td>
+                  <td align="right" style="width:5%">
+                    
                   </td>
-                  <td>
+                  <td align="right" style="width:20%"> Zoom:
                     <select id="cboZoomLevel" name="cboZoomLevel" class="selectBox" style="width:56px" title="" onchange="return doOperation('zoomImage')" runat="server">
                       <option value="0.50">50%</option>
                       <option value="0.75">75%</option>

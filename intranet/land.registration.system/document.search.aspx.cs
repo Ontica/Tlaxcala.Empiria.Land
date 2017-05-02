@@ -265,10 +265,9 @@ namespace Empiria.Land.WebApp {
 
     static private string ReadHeaderTemplate(Type type) {
       const string template =
-          "<tr class='detailsHeader'>" +
+     "<tr class='detailsHeader'>" +
             "<td colspan='2'>Resultado de la búsqueda</td>" +
-          "</tr>";
-
+     "</tr>";
       return template;
     }
 
@@ -317,7 +316,7 @@ namespace Empiria.Land.WebApp {
     }
 
     static private string TableWrapper(string html) {
-      return "<table class='details' style='width:96%;height:10px;'>" + html + "</table>";
+      return "<table class='details' style='width:100%;height:10px;'>" + html + "</table>";
     }
 
     #endregion Auxiliar methods

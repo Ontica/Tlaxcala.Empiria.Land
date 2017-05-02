@@ -262,7 +262,7 @@ input.textBox {
   vertical-align: middle;
   width: 99%; }
 input.textBox:read-only {
-  opacity: 0.4;
+  opacity: 0.8;
   color: #3c3c3c; }
 input.fileTextBox {
   background-color: #eeeeee;
@@ -303,6 +303,8 @@ input.button {
   height: 23px;
   width: 66px;
   padding: 1px 2px; }
+input:disabled {
+  opacity: 0.3; }
 input.green-button {
   border-left: 2px solid green; }
 input.red-button {
@@ -323,9 +325,10 @@ input.checkBox {
   font-weight: bold;
   margin: 2px 8px 2px 0;
   padding: 4px 2px 2px;
-  width: 99%; }
+  width: 99%;
+  white-space: pre-wrap; }
   .textArea:disabled {
-    opacity: 0.4;
+    opacity: 0.8;
     color: #3c3c3c; }
 
 .nowrap {
@@ -397,7 +400,7 @@ select.selectBox {
   padding: 4px 2px 2px;
   width: 100%; }
   select.selectBox:disabled {
-    opacity: 0.4;
+    opacity: 0.8;
     color: #3c3c3c; }
 
 img.imgPhoto {
@@ -432,6 +435,7 @@ div.dataTableContainer {
       font-family: Tahoma, Verdana;
       font-weight: normal;
       height: 26px;
+      width: 50%;
       margin: 0;
       padding: 2px 4px 2px 8px;
       position: relative;
@@ -449,12 +453,13 @@ div.dataTableContainer {
       border-bottom: #eeeeee 1px solid;
       font: 8pt Arial, Helvetica;
       margin: 2px;
-      padding: 4px 4px 4px 8px;
+      padding: 10px 4px 4px 8px;
       vertical-align: top;
       white-space: nowrap;
       height: 24px; }
   div.dataTableContainer thead tr {
-    position: relative;
+    position: absolute;
+    width: 100%;
     z-index: 20; }
   div.dataTableContainer thead a:hover {
     background-color: inherit;

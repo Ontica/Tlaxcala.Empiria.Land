@@ -31,7 +31,7 @@
     {
       "type": "Presentation.Web",
       "key": "Server.RootPath",
-      "value": "http://empiria.land/intranet/"
+      "value": "http://localhost/intranet/"
     },
     {
       "type": "WebApi.Client",
@@ -41,12 +41,12 @@
     {
       "type": "WebApi.Client",
       "key": "WebApiServer.Microservices",
-      "value": "http://empiria.land/microservices/"
+      "value": "http://localhost/microservices/"
     },
     {
       "type": "WebApi.Client",
       "key": "WebApiServer.Land",
-      "value": "http://empiria.land/web.api/"
+      "value": "http://localhost/web.api/"
     },
     {
       "type": "WebApi.Client",
@@ -66,7 +66,7 @@
     {
       "type": "Land.WebApp",
       "key": "CertificatesSystem.Url",
-      "value": "http://intranet.empiria.land/certificates/"
+      "value": "http://localhost/certificates/"
     },
     {
       "type": "Land.WebApp",

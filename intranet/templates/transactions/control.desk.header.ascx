@@ -9,21 +9,33 @@
 			<a href="javascript:sendPageCommand('sortData', 'RecorderOffice ASC')">Distrito</a> /
 			<a href="javascript:sendPageCommand('sortData', 'TransactionStatusName ASC')">Estado</a> /
 			<a href="javascript:sendPageCommand('sortData', 'ImagingControlID DESC')">Acervo</a>
-		</th>
-    <th>
+		  <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
+      <a>&#160;</a>		  <a>&#160;</a>      
+  
 			<a href="javascript:sendPageCommand('sortData', 'RequestedBy ASC')">Nombre</a> /
 		  <a href="javascript:sendPageCommand('sortData', 'DocumentDescriptor ASC')">Instrumento</a> /
 			<a href="javascript:sendPageCommand('sortData', 'ReceiptTotal ASC')">Derechos</a> /
 			<a href="javascript:sendPageCommand('sortData', 'ReceiptNo DESC')">Recibo</a> /
 			<a href="javascript:sendPageCommand('sortData', 'PresentationTime ASC')">Presentación</a> /
 			<a href="javascript:sendPageCommand('sortData', 'AuthorizationTime ASC')">Registro</a>
-    </th>
-    <th>
+      <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
+      <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
+      <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
+     
 			<a href="javascript:sendPageCommand('sortData', 'ToContact ASC')">Lo tiene</a> /
 			<a href="javascript:sendPageCommand('sortData', 'TrackTime DESC')">Recibido</a> /
 			<a href="javascript:sendPageCommand('sortData', 'FromContact DESC')">Entregó</a>
+      <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
+      <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
+      <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
+      <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
+      <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
+      <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
     </th>
     <th>¿Qué debo hacer con el trámite?</th>
   </tr>
+   <br />
+  <br />
 </thead>
+
 <%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).HintContent%>

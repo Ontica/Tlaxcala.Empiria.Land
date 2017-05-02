@@ -558,10 +558,10 @@ function onMouseOutTabStripCommandHandler(tabStrip) {
 function openInWindow(oWindow, url, fullWindow) {
   var options = "";
   if (fullWindow != null && fullWindow == true) {
-    options = "status=yes,scrollbars=yes,fullscreen=yes,location=no,menubar=no,resizable=yes,height=780px,width=1100px";
+    options = "status=yes,scrollbars=yes,fullscreen=yes,location=no,menubar=no,resizable=yes,height=760px,width=1300px";
   } else {
-    options = "status=yes,scrollbars=yes,fullscreen=no,location=no,menubar=no,resizable=yes," +
-              "height=780px,width=900px";
+    options = "status=yes,scrollbars=yes,fullscreen=yes,location=no,menubar=no,resizable=yes," +
+              "height=760px,width=1300px";
   }
 
 

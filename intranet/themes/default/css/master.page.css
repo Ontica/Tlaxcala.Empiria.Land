@@ -220,7 +220,7 @@ td.mainLogo {
 
 .masterMenu {
   padding: 0;
-  margin: 21px 0 0;
+  margin: 21px 0 -3px 0;
   border-collapse: collapse;
   font-weight: bold;
   font-family: Arial; }

@@ -50,8 +50,10 @@
     </td>
   </tr>
   <!-- #endregion Search box !-->
+  <tr><td>&#160;</td> </tr>
 
-  <!-- #region Search results !-->
+
+    <!-- #region Search results !-->
   <tr>
     <td>
       <table class="editionTable">
@@ -66,13 +68,15 @@
     </td>
   </tr>
   <!-- #endregion Search results !-->
+  <tr><td>&#160;</td> </tr>
+  <tr><td>&#160;</td> </tr>
 
   <tr>
     <td>
       <table class="editionTable">
         <tr>
           <td class="lastCell">
-            <div id='selectedItemViewer' style="overflow:auto;max-height:420px;">
+            <div id='selectedItemViewer' style="overflow:auto;max-height:230px;">
 
             </div>
           </td>
