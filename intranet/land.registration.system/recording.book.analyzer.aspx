@@ -1,13 +1,15 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.RecordingBookAnalyzer" CodeFile="recording.book.analyzer.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Import Namespace="Empiria.Land.Registration" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
 <title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="Expires" content="-1" />
 <meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta name="MS.LOCALE" content="ES-MX" />
+
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
@@ -28,22 +30,22 @@
         Registro histórico de partidas
       </span>
       <span id="spanCurrentImage" class="rightItem appTitle" style="margin-right:8px">
-        &nbsp;
+        &#160;
       </span>
     </div> <!--divHeader!-->
     <div id="divBody">
-      <div id="divContent">
+      <div id="divContent" style="height: 652px; width: 892px;">
         <table cellpadding="0" cellspacing="0">
           <tr>
-            <td id="divImageViewer" valign='top' style="position:relative;">
-              <div id="divImageContainer" style="overflow:auto;width:400px;height:540px;top:0;">
-                  <object id="documentViewer" type="text/html" style="width:100%; height:100%;">
+            <td id="divImageViewer" valign='top' style="position:relative;overflow:hidden;">
+              <div id="divImageContainer">
+                  <object id="documentViewer" type="text/html" style="width:100%; height:115%;overflow:hidden!important;">
                     <p>Visor de imágenes de libros</p>
                   </object>
                 </div>
             </td>
             <td><img src="../themes/default/textures/pixel.gif" height="1px" width="12px" alt="" /></td>
-            <td id="divDocumentViewer" valign="top" style="width:600px;">
+            <td id="divDocumentViewer" valign="top" style="height: 652px; width: 892px;">
               <table class="tabStrip">
                 <tr>
                   <td id="tabStripItem_0" class="tabOn" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Analizar inscripciones</td>
@@ -63,7 +65,7 @@
                   <tr>
                     <td colspan="4">Libro:
                       <input type="text" class="textBox" readonly="readonly" style="width:368px"  title="" value="<%=recordingBook.AsText%>" />
-                      &nbsp;Tipo de inscripción:
+                      &#160;Tipo de inscripción:
                     </td>
                     <td>
                       <select id="cboRecordingType" name="cboRecordingType" class="selectBox" style="width:136px" title="" onchange="return updateUserInterface(this);" runat="server">
@@ -76,12 +78,12 @@
                         <option value="2411" title="oEjidalSystemTitle">Título de propiedad</option>
                       </select>
                     </td>
-                    <td class="lastCell">&nbsp;</td>
+                    <td class="lastCell">&#160;</td>
                   </tr>
                   <tr>
-                    <td>Número de inscripción:</td>
+                    <td>Número de Partida:</td>
                     <td>
-                      <input id="txtRecordingNumber" type="text" class="textBox" style="width:35px;margin-right:0px" onkeypress="return integerKeyFilter(this);" title="" maxlength="5" runat="server" />
+                      <input id="txtRecordingNumber" type="text" class="textBox" style="width:35px;margin-right:0px" onkeypress="return integerKeyFilter(window.event, true);" title="" maxlength="5" runat="server" />
                       <select id="cboBisRecordingNumber" class="selectBox" style="width:52px" title="" runat='server'>
                         <option value=""></option>
                         <option value="-Bis">-Bis</option>
@@ -92,11 +94,11 @@
                         <option value="-05">-05</option>
                         <option value="-06">-06</option>
                       </select>
-                      &nbsp; &nbsp; &nbsp;Inscrita de la imagen:
+                      &#160;&#160;&#160;Inscrita de la imagen:
                     </td>
                     <td>
                       <input id="txtImageStartIndex" name="txtImageStartIndex" type="text" class="textBox" style="width:40px"
-                             onkeypress="return integerKeyFilter(this);" title="" maxlength="4"
+                             onkeypress="return integerKeyFilter(window.event, true);" title="" maxlength="4"
                              runat="server" /><img src="../themes/default/buttons/select_page.gif"
                                                    onclick="pickCurrentImage('txtImageStartIndex')"
                                                    title="Selecciona el número de imagen que se está desplegando" alt="" />
@@ -104,29 +106,29 @@
                     <td>a la imagen:</td>
                     <td>
                       <input id="txtImageEndIndex" name="txtImageEndIndex" type="text" class="textBox" style="width:40px"
-                             onkeypress="return integerKeyFilter(this);" title="" maxlength="4"
+                             onkeypress="return integerKeyFilter(window.event, true);" title="" maxlength="4"
                              runat="server" /><img src="../themes/default/buttons/select_page.gif"
                                                     onclick="pickCurrentImage('txtImageEndIndex')"
                                                     title="Selecciona el número de imagen que se está desplegando" alt="" />
                     </td>
-                    <td class="lastCell">&nbsp;</td>
+                    <td class="lastCell">&#160;</td>
                   </tr>
                   <tr>
                     <td>Fecha de presentación:</td>
                     <td>
                       <input id='txtPresentationDate' name='txtPresentationDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                      <img id='imgPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtPresentationDate'), getElement('imgPresentationDate'));" title="Despliega el calendario" alt="" />
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hora de presentación:</td>
-                    <td><input id="txtPresentationTime" name="txtPresentationTime" type="text" class="textBox" style="width:40px;margin-right:2px" maxlength="5" title="" onkeypress='return hourKeyFilter(this);' runat="server" />Hrs&nbsp;</td>
+                      <img id='imgPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtPresentationDate.ClientID%>'), getElement('imgPresentationDate'),'955px');" title="Despliega el calendario" alt="" />
+                       &#160;&#160;&#160;&#160;&#160;&#160;&#160;Hora de presentación:</td>
+                    <td><input id="txtPresentationTime" name="txtPresentationTime" type="text" class="textBox" style="width:40px;margin-right:2px" maxlength="5" title="" onkeypress='return hourKeyFilter(window.event, true);' runat="server" />Hrs&#160;</td>
                     <td>F. Autorización:</td>
                     <td>
                       <input id='txtAuthorizationDate' name='txtAuthorizationDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                      <img id='imgAuthorizationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('txtAuthorizationDate'), getElement('imgAuthorizationDate'));" title="Despliega el calendario" alt="" />
+                      <img id='imgAuthorizationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtAuthorizationDate'), getElement('imgAuthorizationDate'),'1320px');" title="Despliega el calendario" alt="" />
                     </td>
-                    <td class="lastCell">&nbsp;</td>
+                    <td class="lastCell">&#160;</td>
                   </tr>
                   <tr>
-                    <td>El C. Registrador: &nbsp; &nbsp;&nbsp;Lic.</td>
+                    <td>El C. Registrador: &#160; &#160;&#160;Lic.</td>
                     <td colspan="2">
                       <select id="cboAuthorizedBy" name="cboAuthorizedBy" class="selectBox" style="width:304px" title="" onchange="return updateUserInterface();" runat="server">
                       </select>
@@ -136,14 +138,14 @@
                       <select id="cboStatus" name="cboStatus" class="selectBox" style="width:134px" title="" runat="server">
                       </select>
                     </td>
-                    <td class="lastCell">&nbsp;</td>
+                    <td class="lastCell">&#160;</td>
                   </tr>
                   <tr>
                     <td>Notas sobre el análisis:<br />&#160;</td>
                     <td class="lastCell" colspan="5">
                       <textarea id="txtObservations" name="txtObservations" class="textArea" style="width:524px;" cols="240" rows="2" runat="server"></textarea>
                     </td>
-                    <td class="lastCell">&nbsp;</td>
+                    <td class="lastCell">&#160;</td>
                   </tr>
                 </table>
               </td>
@@ -154,7 +156,7 @@
                   <span id="spanRecordingDocumentEditor" runat="server"></span>
                   <table class="editionTable">
                     <tr>
-                      <td>Resumen:<br /><br /><br /><br /><br />&nbsp;</td>
+                      <td>Resumen:<br /><br /><br /><br /><br />&#160;</td>
                       <td class="lastCell" colspan="2">
                         <textarea id="txtResumen" name="txtResumen" class="textArea" style="width:564px;" cols="240" rows="5" runat="server"></textarea>
                       </td>
@@ -185,7 +187,7 @@
                               <td width="50%">Actos jurídicos vigentes</td>
                               <td width="30%">Inscrito en</td>
                               <td>Folio real</td>
-                              <td>&nbsp;</td>
+                              <td>&#160;</td>
                             </tr>
                             <%=gRecordingActs%>
                           </table>
@@ -202,7 +204,7 @@
                           <option value="">( Primero seleccionar una categoría )</option>
                         </select>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr>
                       <td>Sobre el predio:</td>
@@ -211,14 +213,14 @@
 
                         </select><input id='chkCreatePartition' type="checkbox" disabled="disabled"
                                         onchange="return updateUserInterface(this);" runat="server" />Sobre fracción
-                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &#160; &#160; &#160; &#160; &#160; &#160;
                         Clave catastral:
                         <input id='txtCadastralKey' name='txtCadastralKey' type="text" class="textBox" style="width:192px;" title="" runat="server" />
                       </td>
                       <td>
-                        &nbsp;
+                        &#160;
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr id="rowPartitionSection" style="display:none">
                       <td>Tipo de fracción:</td>
@@ -234,7 +236,7 @@
                           <option value="Local comercial">Local comercial</option>
                           <option value="Lote">Lote</option>
                         </select>
-                        &nbsp;
+                        &#160;
                         Número:
                         <input id="txtPartitionNo" type="text" class="textBox" style="width:122px; margin-right:0" maxlength="40" runat="server" />
                         <label><input id="chkNoNumberPartition" type="checkbox" onclick="updatePartitionControls();" />Sin número</label>
@@ -247,7 +249,7 @@
                           <td class="lastCell">&#160;</td>
                         </tr>--%>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr>
                       <td></td>
@@ -259,12 +261,12 @@
                           <option value="otherRecording">En otra partida</option>
                         </select>
                         <input type="button" value="Agregar el acto jurídico" class="button" style="width:124px" onclick='doOperation("appendRecordingAct")' />
-                        &nbsp; &nbsp; &nbsp;
+                        &#160; &#160; &#160;
                         </td>
-                        <td class="lastCell">&nbsp;</td>
+                        <td class="lastCell">&#160;</td>
                     </tr>
                     <tr id="rowRegisterOnMargin" style="display:none">
-                      <td style="vertical-align:top">Fecha de la<br />anotación:<br /><br />&nbsp;</td>
+                      <td style="vertical-align:top">Fecha de la<br />anotación:<br /><br />&#160;</td>
                       <td colspan="5" style="vertical-align:top">
                         <table class="internalTable">
                           <tr>
@@ -284,10 +286,10 @@
                             </tr>
                         </table>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr id="rowRegisterInAnotherSection" style="display:none">
-                      <td>Sección:<br /><br />&nbsp;</td>
+                      <td>Sección:<br /><br />&#160;</td>
                       <td colspan="6">
                         <select id="cboAnotherRecorderOffice" class="selectBox" style="width:160px" title="" onchange="return updateUserInterface(this);" runat='server'>
                         </select>
@@ -299,35 +301,35 @@
                         <select id="cboAnotherRecording" class="selectBox" style="width:78px" title="" onchange="return updateUserInterface(this);" runat='server'>
                         </select>
                         <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-8px" onclick="doOperation('showAnotherRecording')" />
-                        &nbsp;&nbsp;&nbsp;Predio ya inscrito:&nbsp;
+                        &#160;&#160;&#160;Predio ya inscrito:&#160;
                         <select id="cboAnotherProperty" class="selectBox" style="width:150px" title="" runat='server'>
                         </select>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                   </table>
                 </td>
               </tr>
               <tr>
                 <td class="separator">
-                &nbsp;
+                &#160;
                 </td>
               </tr>
               <tr id="rowRecordingNavigationControl">
                 <td>
                   <table>
                     <tr>
-                      <td nowrap='nowrap'>Ir a la inscripción: &nbsp;<input id="txtGoToRecording" name="txtGoToRecording" type="text" class="textBox" maxlength="5" style="width:35px;margin-right:0px" onkeypress="return integerKeyFilter(this);" runat="server" /></td>
+                      <td nowrap='nowrap'>Ir a la inscripción: &#160;<input id="txtGoToRecording" name="txtGoToRecording" type="text" class="textBox" maxlength="5" style="width:35px;margin-right:0px" onkeypress="return integerKeyFilter(this);" runat="server" /></td>
                       <td nowrap='nowrap'><img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('gotoRecording')" title="Ejecuta la búsqueda" /></td>
-                      <td width='88px' nowrap='nowrap'>&nbsp;</td>
+                      <td width='88px' nowrap='nowrap'>&#160;</td>
                       <td><img src='../themes/default/buttons/first.gif' onclick='doOperation("moveToRecording", "First");' title='Muestra la primera inscripción' alt='' /></td>
                       <td><img src='../themes/default/buttons/previous.gif' onclick='doOperation("moveToRecording", "Previous");' title='Muestra la inscripción anterior' alt='' /></td>
                       <td><img src='../themes/default/buttons/next.gif' onclick='doOperation("moveToRecording", "Next");' title='Muestra la siguiente inscripción' alt='' /></td>
                       <td><img src='../themes/default/buttons/last.gif' onclick='doOperation("moveToRecording", "Last");' title='Muestra la última inscripción' alt='' /></td>
-                      <td width='48px' nowrap='nowrap'>&nbsp;</td>
+                      <td width='48px' nowrap='nowrap'>&#160;</td>
                       <td nowrap='nowrap'>
                       <input type="button" value="Actualizar" class="button" style="width:68px" onclick='doOperation("refresh")' />
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      &#160;&#160;&#160;&#160;&#160;
                       <input type="button" value="Nueva inscripción" class="button" style="width:108px" onclick='doOperation("newRecording")' /></td>												
                     </tr>
                   </table>
@@ -373,7 +375,7 @@
                         <input type="text" class="textBox" id='Text23' name='txtExternalNumber' style="width:230px" maxlength="32" runat='server' title="" />
                         <img src="../themes/default/buttons/search.gif" alt="" onclick="return doOperation('loadData')" title="Ejecuta la búsqueda" style="margin-left:-4px" />												
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                   </table>
                 </td>
@@ -388,7 +390,7 @@
                       <td>
                         <%=GetRecordingsViewerGrid()%>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                     </tr>
                     <tr>
                       <td>
@@ -396,9 +398,9 @@
                         <span class="rightItem">Página
                         <select class="selectBox" id="cboRecordingViewerPage" name="cboRecordingViewerPage"
                                 style="width:45px" runat="server" onchange="doOperation('refreshRecordingViewer')" >
-                        </select>de <%=RecordingViewerPages()%>&nbsp;</span>
+                        </select>de <%=RecordingViewerPages()%>&#160;</span>
                       </td>
-                      <td class="lastCell">&nbsp;</td>
+                      <td class="lastCell">&#160;</td>
                      </tr>
                   </table>
                 </td>
@@ -417,7 +419,7 @@
     </div> <!-- end divBody !-->
   </div> <!-- end divCanvas !-->
 </form>
-<iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top:0px"
+<iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top: -560px; width:225px;  height:160px;"    
     marginheight="0"  marginwidth="0" frameborder="0" scrolling="no"
     src="../user.controls/calendar.aspx" width="100%">
 </iframe>
