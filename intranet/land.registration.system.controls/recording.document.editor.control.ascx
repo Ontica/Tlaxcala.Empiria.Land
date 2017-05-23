@@ -71,7 +71,7 @@
       Fecha de la escritura:
       <input type="text" class="textBox" id='txtNotaryDocIssueDate' name='txtNotaryDocIssueDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
       <img id='imgNotaryDocIssueDate' src="../themes/default/buttons/ellipsis.gif"
-      onclick="return showCalendar(event, getElement('<%=txtNotaryDocIssueDate.ClientID%>'), getElement('imgNotaryDocIssueDate'), '1370px');" title="Despliega el calendario" alt="" />
+      onclick="return showCalendar(event, getElement('<%=txtNotaryDocIssueDate.ClientID%>'), getElement('imgNotaryDocIssueDate'), '370px');" title="Despliega el calendario" alt="" />
     </td>
   </tr>
 </table>

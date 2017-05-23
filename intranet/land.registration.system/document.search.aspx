@@ -7,8 +7,10 @@
   <title></title>
   <meta http-equiv="Expires" content="-1" />
   <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+  <link href="../themes/default/css/tableStyle.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
@@ -51,6 +53,7 @@
   </tr>
   <!-- #endregion Search box !-->
   <tr><td>&#160;</td> </tr>
+    <tr><td>&#160;</td> </tr>
 
 
     <!-- #region Search results !-->
@@ -59,7 +62,7 @@
       <table class="editionTable">
         <tr>
           <td class="lastCell">
-            <div style="overflow:auto;max-height:<%=GetGridMaxHeight()%>;">
+            <div style="overflow-y:auto;overflow-x:hidden;max-width:580px;max-height:<%=GetGridMaxHeight()%>;">
               <%=GetSearchResultsGrid()%>
             </div>
           </td>
@@ -68,20 +71,19 @@
     </td>
   </tr>
   <!-- #endregion Search results !-->
-  <tr><td>&#160;</td> </tr>
-  <tr><td>&#160;</td> </tr>
+
 
   <tr>
     <td>
-      <table class="editionTable">
+      <div class="editionTable">
         <tr>
           <td class="lastCell">
-            <div id='selectedItemViewer' style="overflow:auto;max-height:230px;">
+            <div id='selectedItemViewer' style="overflow:hidden;max-height:250px; width:599px;">
 
             </div>
           </td>
         </tr>
-      </table>
+      </div>
     </td>
   </tr>
 

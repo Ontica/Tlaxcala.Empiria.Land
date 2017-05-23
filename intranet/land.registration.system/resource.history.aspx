@@ -7,28 +7,30 @@
   <title></title>
   <meta http-equiv="Expires" content="-1" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
   <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+  <link href="../themes/default/css/tableStyle.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
 </head>
 <body style="background-color:#fafafa; top:0; margin:0; margin-top:-14px; margin-left:-6px;">
+
 <form name="aspnetForm" method="post" id="aspnetForm" runat="server">
 <div id="divContentAlwaysVisible">
 <table id="tabStripItemView_0" style="display:inline;">
   <tr>
     <td>
-      <table class="editionTable">
+      <div class="editionTable">
         <tr>
           <td class="lastCell">
-            <div style="overflow:auto;max-height:880px;">
+           
+            <div style="overflow-y:auto;overflow-x:hidden;max-height:250px; width:599px;">
               <%=GetHistoryGrid()%>
             </div>
           </td>
         </tr>
-      </table>
+      </div>
     </td>
   </tr>
 </table>

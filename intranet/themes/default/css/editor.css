@@ -87,7 +87,7 @@ table.details {
   border-right: #dadada 1px solid;
   border-bottom: #dadada 1px solid; }
   table.details td.selectionCell {
-    background-color: #336666;
+    background-color: #315c7c;
     cursor: pointer; }
   table.details td.totalsCell {
     background-color: #cdcdcd;
@@ -146,10 +146,10 @@ table.details {
     border-left: #cacaca 1px solid;
     border-bottom: #cacaca 1px solid; }
   table.details .detailsItem td {
-    background-color: #fbfbfb;
+    background-color: #f6f4f4;
     border-bottom: #e0e0e0 1px solid;
     margin: 2px;
-    padding: 4px 4px 4px 8px;
+    padding: 4px 2px 4px 2px;
     vertical-align: top;
     height: 20px;
     border-left: #dadada 1px solid;
@@ -162,7 +162,7 @@ table.details {
     background-color: #eaffea;
     border-bottom: #efefef 1px solid;
     margin: 2px;
-    padding: 4px 4px 4px 8px;
+    padding: 4px 2px 4px 2px;
     vertical-align: top;
     border-left: #dadada 1px solid;
     border-bottom: #dadada 1px solid;
@@ -171,7 +171,7 @@ table.details {
     background-color: #fdfdfd;
     border-bottom: #efefef 1px solid;
     margin: 2px;
-    padding: 4px 4px 4px 8px;
+    padding: 4px 2px 4px 2px;
     height: 22px;
     vertical-align: top;
     border-left: #dadada 1px solid;
@@ -181,7 +181,7 @@ table.details {
     background-color: #ffecec;
     border-bottom: #efefef 1px solid;
     margin: 2px;
-    padding: 4px 4px 4px 8px;
+    padding: 4px 2px 4px 2px;
     vertical-align: top;
     border-left: #dadada 1px solid;
     border-bottom: #dadada 1px solid;
@@ -190,7 +190,7 @@ table.details {
     background-color: #f0fce1;
     border-bottom: #efefef 1px solid;
     margin: 2px;
-    padding: 4px 4px 4px 8px;
+    padding: 4px 2px 4px 2px;
     vertical-align: top;
     border-left: #dadada 1px solid;
     border-bottom: #dadada 1px solid;
@@ -199,7 +199,7 @@ table.details {
     background-color: #ffc8ad;
     border-bottom: #efefef 1px solid;
     margin: 2px;
-    padding: 4px 4px 4px 8px;
+    padding: 4px 2px 4px 2px;
     vertical-align: top;
     font: 8pt Arial, Helvetica; }
 

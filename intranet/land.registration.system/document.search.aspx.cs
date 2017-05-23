@@ -126,7 +126,7 @@ namespace Empiria.Land.WebApp {
 
     private void LoadCertificatesGrid(FixedList<Certificate> certificates) {
       _searchResultsGrid = CertificatesGrid.Parse(certificates);
-      _searchResultsGridMaxHeight = "600px";
+      _searchResultsGridMaxHeight = "450px";
     }
 
     private void LoadImagingControlIDsGrid(FixedList<RecordingDocument> documents) {
@@ -265,10 +265,12 @@ namespace Empiria.Land.WebApp {
 
     static private string ReadHeaderTemplate(Type type) {
       const string template =
+    
      "<tr class='detailsHeader'>" +
-            "<td colspan='2'>Resultado de la búsqueda</td>" +
+            "<td colspan='2' style='position: absolute; top: 95px; width: 89%; '>Resultado de la búsqueda</td>" +
      "</tr>";
-      return template;
+            
+            return template;
     }
 
     static private string ReadImagingControlIDHeaderTemplate() {
@@ -316,7 +318,7 @@ namespace Empiria.Land.WebApp {
     }
 
     static private string TableWrapper(string html) {
-      return "<table class='details' style='width:100%;height:10px;'>" + html + "</table>";
+      return "<table class='details' style='width:90%;height:10px;'>" + html + "</table>";
     }
 
     #endregion Auxiliar methods

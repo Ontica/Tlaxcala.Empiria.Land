@@ -8,9 +8,10 @@
 <title>Editor de documentos</title>
 <meta http-equiv="Expires" content="-1" />
 <meta http-equiv="Pragma" content="no-cache" />
- <meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+<link href="../themes/default/css/tableStyle.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
 <script type="text/javascript" src="../scripts/empiria.general.js"></script>
 <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
@@ -22,7 +23,7 @@
     <input type="hidden" name="hdnPageCommand" id="hdnPageCommand" runat="server" />
   </div>
   <div id="divCanvas">
-    <div id="divHeader" style="height:60px">
+    <div id="divHeader" style="height:70px">
       <span id="spanPageTitle" class="appTitle">
        &#160;
       </span>
@@ -35,7 +36,7 @@
         <table cellpadding="0" cellspacing="0">
           <tr>
             <td id="divImageViewer" valign='top' style="position:relative; overflow:hidden;">
-              <div id="divImageContainer" style="overflow:hidden;width:920px;height:720px;top:0;">
+              <div id="divImageContainer" style="overflow:hidden;width:900px;height:720px;top:0;">
                   <object id="documentViewer" type="text/html" style="width:100%; height:100%;overflow:hidden;">
                     <p>visor de documentos</p>
                   </object>
@@ -87,7 +88,8 @@
             <table id="tabStripItemView_3" class="editionTable" style="<%=TabStripDisplayView(TabStrip.ResourceHistory)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraPropertyHistory" style="z-index:99;left:0;top:0;" width="720px"  height="650px"
+                  
+                  <iframe id="ifraPropertyHistory" style="z-index:99;left:0;top:0;" width="620px"  height="650px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true">
                   </iframe>
                 </td>

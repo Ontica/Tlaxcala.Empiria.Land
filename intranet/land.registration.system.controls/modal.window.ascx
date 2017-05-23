@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.WebApp.ModalWindowControl" CodeFile="modal.window.ascx.cs" %>
-<div id='<%=this.ClientID%>_Window' class="modalWindow" style="height:500px;width:600px;display:none">
+<div id='<%=this.ClientID%>_Window' class="modalWindow" style="height:300px;width:610px;display:none">
   <div class="modalHeader">
     <span id='<%=this.ClientID%>_Title'>Historia del predio XXXX</span>
 
@@ -7,9 +7,10 @@
         onclick="<%=this.ClientID%>_close()" alt="Cerrar" />
 
 	</div>  <!-- divHeader !-->
+   
 	<div class="modalBody">
 
-    <div id='<%=this.ClientID%>_Content' class="modalContent" style="overflow:auto;max-height:520px;">
+    <div id='<%=this.ClientID%>_Content' class="modalContent" style="overflow:auto;max-height:440px;">
       <!-- Contenido !-->
     </div>
   </div>
@@ -36,7 +37,7 @@
     var modalWindow = getElement("<%=this.ClientID%>_Window");
     var x = (document.body.clientWidth - modalWindow.style.width.replace("px", "")) / 2;
     //var y = (document.body.clientHeight - modalWindow.currentStyle.height.replace("px", "")) / 2;
-    var y = 80;
+    var y = 110;
 
     modalWindow.style.left = x + "px";
     modalWindow.style.top = y + "px";
