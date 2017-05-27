@@ -62,7 +62,7 @@
       <table class="editionTable">
         <tr>
           <td class="lastCell">
-            <div style="overflow-y:auto;overflow-x:hidden;max-width:580px;max-height:<%=GetGridMaxHeight()%>;">
+            <div style="overflow-y:auto;overflow-x:hidden;max-width:615px!important;max-height:<%=GetGridMaxHeight()%>;">
               <%=GetSearchResultsGrid()%>
             </div>
           </td>

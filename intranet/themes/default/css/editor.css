@@ -147,6 +147,8 @@ table.details {
     border-bottom: #cacaca 1px solid; }
   table.details .detailsItem td {
     background-color: #f6f4f4;
+    word-wrap: break-word;
+    white-space: normal;
     border-bottom: #e0e0e0 1px solid;
     margin: 2px;
     padding: 4px 2px 4px 2px;
@@ -156,6 +158,8 @@ table.details {
     font: 8pt Arial, Helvetica; }
   table.details .selectedItem td {
     background-color: #e0e0e0;
+    word-wrap: break-word;
+    white-space: normal;
     border-bottom: #e0e0e0 1px solid;
     height: 22px;
     vertical-align: middle;
@@ -169,6 +173,8 @@ table.details {
     font: 8pt Arial, Helvetica; }
   table.details .detailsOddItem td {
     background-color: #fdfdfd;
+    word-wrap: break-word;
+    white-space: normal;
     border-bottom: #efefef 1px solid;
     margin: 2px;
     padding: 4px 2px 4px 2px;
@@ -179,6 +185,8 @@ table.details {
     font: 8pt Arial, Helvetica; }
   table.details .warningItem td {
     background-color: #ffecec;
+    word-wrap: break-word;
+    white-space: normal;
     border-bottom: #efefef 1px solid;
     margin: 2px;
     padding: 4px 2px 4px 2px;
@@ -188,6 +196,8 @@ table.details {
     font: 8pt Arial, Helvetica; }
   table.details .detailsGreenItem td {
     background-color: #f0fce1;
+    word-wrap: break-word;
+    white-space: normal;
     border-bottom: #efefef 1px solid;
     margin: 2px;
     padding: 4px 2px 4px 2px;
@@ -197,6 +207,8 @@ table.details {
     font: 8pt Arial, Helvetica; }
   table.details .alertItem td {
     background-color: #ffc8ad;
+    word-wrap: break-word;
+    white-space: normal;
     border-bottom: #efefef 1px solid;
     margin: 2px;
     padding: 4px 2px 4px 2px;

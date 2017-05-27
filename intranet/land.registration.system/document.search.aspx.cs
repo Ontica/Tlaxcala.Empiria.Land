@@ -267,7 +267,7 @@ namespace Empiria.Land.WebApp {
       const string template =
     
      "<tr class='detailsHeader'>" +
-            "<td colspan='2' style='position: absolute; top: 95px; width: 89%; '>Resultado de la búsqueda</td>" +
+            "<td colspan='2' style='position: absolute; top: 95px; width: 92%; '>Resultado de la búsqueda</td>" +
      "</tr>";
             
             return template;
