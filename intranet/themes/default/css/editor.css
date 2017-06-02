@@ -533,4 +533,10 @@ td.lockedDataTableCell {
   z-index: 0;
   left: expression(parentNode.parentNode.parentNode.parentNode.scrollLeft); }
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset; }
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: #000; }
+
 /*# sourceMappingURL=editor.css.map */

@@ -32,7 +32,7 @@ function hideCalendar(event) {
   }
 }
 
-function showCalendar(event, oDataSource, oImageSource, leftpx) {
+function showCalendar(event, oDataSource, oImageSource, leftpx, toppx) {
   event = event || window.event //For IE
 
   if (oDataSource.disabled) {
@@ -79,7 +79,52 @@ function showCalendar(event, oDataSource, oImageSource, leftpx) {
     oCalendar.style.zIndex = 999;
     oCalendar.style.visibility = "visible";
     oCalendar.style.left = leftpx;
+    oCalendar.style.top = toppx;
+    
+    var InitialURL = window.location.href;///document.referrer;
+    var url1 = window.location.href;
+    var url2 = window.document.referrer;
+    console.log('UrlInicial-->:', InitialURL);
+    console.log('Url1-->:', url1);
+    console.log('Url2-->:', url2);
+    var MyString = InitialURL.split("?");
 
+    console.log(MyString);
+    console.log('cadena[0] ', MyString[0]);///http://empiria.land/intranet/land.registration.system/recording.book.analyzer.aspx
+
+    if (MyString[0] == 'http://empiria.land/intranet/land.registration.system/recording.book.analyzer.aspx')
+    {
+        var leftpxString = leftpx.split("p");
+        var intLeftpx = parseInt(leftpxString); // int
+        console.log('intLeftpx ', intLeftpx);
+        leftpx = intLeftpx + 800;
+        console.log('leftpx ', leftpx);
+
+        var toppxString = toppx.split("p");
+        var intToppx = parseInt(toppxString); // int
+        console.log('intToppx ', intToppx);
+        toppx = intToppx + (-500)
+        console.log('toppx ', toppx);
+
+        leftpx = leftpx.toString();
+        toppx = toppx.toString();
+
+        leftpx = leftpx + 'px';
+        toppx = toppx + 'px';
+
+        console.log('leftpx final ', leftpx);
+        console.log('toppx final ', toppx);
+
+        oCalendar.style.left = leftpx;
+        oCalendar.style.top = toppx;
+    } else
+    {
+        oCalendar.style.left = leftpx;
+        oCalendar.style.top = toppx;
+    }
+    console.log('1 ', oCalendar.style.left);
+    console.log('2 ', leftpx);
+        
     oCalendar.focus();
 	}
 	return false;

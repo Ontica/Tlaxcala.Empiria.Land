@@ -20,7 +20,7 @@
       <input type="button" class="button" value="Sin Núm." style="width:52px;height:24px;vertical-align:middle;margin-left:-8px" onclick="getElement('<%=txtNotaryOfficialLetterNo.ClientID%>').value='S/N'" />
      &#160;&#160;Fecha del oficio:
       <input id='txtNotaryOfficialLetterIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgNotaryOfficialLetterIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtNotaryOfficialLetterIssueDate.ClientID%>'), getElement('imgNotaryOfficialLetterIssueDate'),'1370px');" title="Despliega el calendario" alt="" />
+      <img id='imgNotaryOfficialLetterIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtNotaryOfficialLetterIssueDate.ClientID%>'), getElement('imgNotaryOfficialLetterIssueDate'),'480px', '90px');" title="Despliega el calendario" alt="" />
     </td>
   </tr>
   <tr>
@@ -71,7 +71,7 @@
       Fecha de la escritura:
       <input type="text" class="textBox" id='txtNotaryDocIssueDate' name='txtNotaryDocIssueDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
       <img id='imgNotaryDocIssueDate' src="../themes/default/buttons/ellipsis.gif"
-      onclick="return showCalendar(event, getElement('<%=txtNotaryDocIssueDate.ClientID%>'), getElement('imgNotaryDocIssueDate'), '370px');" title="Despliega el calendario" alt="" />
+      onclick="return showCalendar(event, getElement('<%=txtNotaryDocIssueDate.ClientID%>'), getElement('imgNotaryDocIssueDate'), '420px', '125px');" title="Despliega el calendario" alt="" />
     </td>
   </tr>
 </table>
@@ -91,7 +91,7 @@
     <td>Fecha del acta de asamblea:</td>
     <td>
       <input id='txtPropTitleIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgPropTitleIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtPropTitleIssueDate.ClientID%>'), getElement('imgPropTitleIssueDate') , '1370px');" title="Despliega el calendario" alt="" />
+      <img id='imgPropTitleIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtPropTitleIssueDate.ClientID%>'), getElement('imgPropTitleIssueDate') , '250px', '130px');" title="Despliega el calendario" alt="" />
     </td>
     <td class="lastCell" colspan="2">
       Expedido en:
@@ -134,7 +134,7 @@
       <input id="txtJudicialDocNumber" type="text" class="textBox" style="width:100px" title="" maxlength="36"  runat="server" />
       Fecha:
       <input id='txtJudicialDocIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgJudicialDocIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtJudicialDocIssueDate.ClientID%>'), getElement('imgJudicialDocIssueDate'), '1370px');" title="Despliega el calendario" alt="" />
+      <img id='imgJudicialDocIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtJudicialDocIssueDate.ClientID%>'), getElement('imgJudicialDocIssueDate'), '550px', '90px');" title="Despliega el calendario" alt="" />
     </td>
   </tr>
   <tr>
@@ -203,7 +203,7 @@
     <td class="lastCell">
       Fecha:
       <input id='txtPrivateDocIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgPrivateDocIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtPrivateDocIssueDate.ClientID%>'), getElement('imgPrivateDocIssueDate'), '1370px');" title="Despliega el calendario" alt="" />
+      <img id='imgPrivateDocIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtPrivateDocIssueDate.ClientID%>'), getElement('imgPrivateDocIssueDate'), '495px', '130px');" title="Despliega el calendario" alt="" />
     </td>
   </tr>
 </table>

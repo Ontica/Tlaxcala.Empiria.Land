@@ -269,10 +269,10 @@ namespace Empiria.Land.WebApp {
 
     private string PlaceAndDateTextForHistoricDocuments() {
       const string template =
-            "De acuerdo a lo que consta en libros físicos y en documentos históricos:<br></br>" +
+            "De acuerdo a lo que consta en libros físicos y en documentos históricos:<br/>" +
             "Fecha de presentación: <b>{PRESENTATION.DATE}</b>. " +
-            "Fecha de registro: <b>{AUTHORIZATION.DATE}</b>.<br></br>" +
-            "Fecha de la captura histórica: <b>{RECORDING.DATE}</b>.<br></br>";
+            "Fecha de registro: <b>{AUTHORIZATION.DATE}</b>.<br/>" +
+            "Fecha de la captura histórica: <b>{RECORDING.DATE}</b>.<br/>";
 
       string x = template.Replace("{PRESENTATION.DATE}", GetDateAsText(document.PresentationTime));
       x = x.Replace("{AUTHORIZATION.DATE}", GetDateAsText(document.AuthorizationTime));
@@ -327,7 +327,7 @@ namespace Empiria.Land.WebApp {
 
     private string GetAmendmentActText(RecordingAct recordingAct, int index) {
       const string template = "{INDEX}.- <b style='text-transform:uppercase'>{AMENDMENT.ACT}</b> " +
-                              "{AMENDMENT.ACT.RECORDING}, {RESOURCE.DATA}.<br></br>";
+                              "{AMENDMENT.ACT.RECORDING}, {RESOURCE.DATA}.<br/>";
 
       string x = template.Replace("{INDEX}", index.ToString());
 
@@ -392,7 +392,7 @@ namespace Empiria.Land.WebApp {
 
     private string GetNoPropertyActText(RecordingAct recordingAct, int index) {
       const string template =
-            "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b><br></br>";
+            "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b><br/>";
 
       string x = template.Replace("{INDEX}", index.ToString());
 
@@ -416,7 +416,7 @@ namespace Empiria.Land.WebApp {
     private string GetRealEstateActOverTheWhole(RecordingAct recordingAct, int index) {
       const string overTheWhole =
           "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
-          "bien inmueble con folio real electrónico {PROPERTY.UID}.<br></br>";
+          "bien inmueble con folio real electrónico {PROPERTY.UID}.<br/>";
 
       string x = String.Empty;
 
@@ -445,27 +445,27 @@ namespace Empiria.Land.WebApp {
       const string overPartition =
           "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
           "<b>{PARTITION.NUMBER}</b> del bien inmueble con folio real {PARTITION.OF}, misma a la que " +
-          "se le asignó el folio real electrónico {PROPERTY.UID}.<br></br>";
+          "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
 
       const string overPartitionMale =
           "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
           "<b>{PARTITION.NUMBER}</b> del bien inmueble con folio real {PARTITION.OF}, mismo al que " +
-          "se le asignó el folio real electrónico {PROPERTY.UID}.<br></br>";
+          "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
 
       const string overLot =
           "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
           "<b>{PARTITION.NUMBER}</b> de la lotificación con folio real {PARTITION.OF}, mismo al que " +
-          "se le asignó el folio real electrónico {PROPERTY.UID}.<br></br>";
+          "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
 
       const string overApartment =
           "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
           "<b>{PARTITION.NUMBER}</b> del condominio con folio real {PARTITION.OF}, mismo a la que " +
-          "se le asignó el folio real electrónico {PROPERTY.UID}.<br></br>";
+          "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
 
       const string overHouse =
           "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
           "<b>{PARTITION.NUMBER}</b> del fraccionamiento con folio real {PARTITION.OF}, misma a la que " +
-          "se le asignó el folio real electrónico {PROPERTY.UID}.<br></br>";
+          "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
 
       Assertion.Assert(!newPartition.IsPartitionOf.IsEmptyInstance, "Bad call. Property is not a partition.");
 
@@ -570,18 +570,18 @@ namespace Empiria.Land.WebApp {
       const string incorporationActText =
             "{INDEX}.- <b style='text-transform:uppercase'>CONSTITUCIÓN</b> de " +
             "la {ASSOCIATION.KIND} denominada <b>{ASSOCIATION.NAME}</b>, " +
-            "misma a la que se le asignó el folio único <b class='bigger'>{ASSOCIATION.UID}</b>.<br></br>";
+            "misma a la que se le asignó el folio único <b class='bigger'>{ASSOCIATION.UID}</b>.<br/>";
 
       const string overAssociationWithIncorporationActInDigitalRecording =
           "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> de " +
           "la {ASSOCIATION.KIND} denominada <b>{ASSOCIATION.NAME}</b>, " +
-          "con folio único <b class='bigger'>{ASSOCIATION.UID}</b>.<br></br>";
+          "con folio único <b class='bigger'>{ASSOCIATION.UID}</b>.<br/>";
 
       const string overAssociationWithIncorporationActInPhysicalRecording =
           "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> de " +
           "la {ASSOCIATION.KIND} denominada <b>{ASSOCIATION.NAME}</b>, " +
           "con folio único <b class='bigger'>{ASSOCIATION.UID}</b> y " +
-          "antecedente de inscripción en {ANTECEDENT}.<br></br>";
+          "antecedente de inscripción en {ANTECEDENT}.<br/>";
 
       RecordingAct incorporationAct = association.GetIncorporationAct();
 

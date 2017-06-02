@@ -416,16 +416,16 @@
       <tr>
         <td>
           <div style="overflow:auto;width:100%;">
-            <table class="details" style="width:97%">
+            <table class="details" style="width:860px">
               <tr class="detailsHeader">
-                <td>Tipo de movimiento</td>
-                <td>Responsable</td>
-                <td>Recibido</td>
-                <td>Terminado</td>
-                <td>Entregado</td>
-                <td>Trabajo</td>
-                <td>Estado</td>
-                <td width="40%">Observaciones</td>
+                <td width="100">Tipo de movimiento</td>
+                <td width="120">Responsable</td>
+                <td width="120">Recibido</td>
+                <td width="120">Terminado</td>
+                <td width="120">Entregado</td>
+                <td width="120">Trabajo</td>
+                <td width="100">Estado</td>
+                <td >Observaciones</td>
               </tr>
               <%=GetTransactionTrack()%>
             </table>

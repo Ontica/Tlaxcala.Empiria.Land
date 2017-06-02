@@ -258,7 +258,7 @@
 
   function setPageTitle() {
     <% if (base.IsRecordingActSelected) { %>
-    getElement("spanPageTitle").innerHTML = "Documento: <%=recordingAct.Document.UID%><br></br>"+
+    getElement("spanPageTitle").innerHTML = "Documento: <%=recordingAct.Document.UID%><br/>"+
                                             "Acto jurídico: <%=recordingAct.DisplayName%> [<%=recordingAct.Index + 1%>]";
     getElement("spanPageRightTitle").innerText = "Predio: <%=resource.UID%>";
     <% } else { %>

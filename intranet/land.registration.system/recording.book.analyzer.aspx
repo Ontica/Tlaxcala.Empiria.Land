@@ -117,13 +117,13 @@
                     <td>Fecha de presentación:</td>
                     <td>
                       <input id='txtPresentationDate' name='txtPresentationDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                      <img id='imgPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtPresentationDate.ClientID%>'), getElement('imgPresentationDate'),'955px');" title="Despliega el calendario" alt="" />
+                      <img id='imgPresentationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtPresentationDate.ClientID%>'), getElement('imgPresentationDate'),'155px', '-60px');" title="Despliega el calendario" alt="" />
                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;Hora de presentación:</td>
                     <td><input id="txtPresentationTime" name="txtPresentationTime" type="text" class="textBox" style="width:40px;margin-right:2px" maxlength="5" title="" onkeypress='return hourKeyFilter(window.event, true);' runat="server" />Hrs&#160;</td>
                     <td>F. Autorización:</td>
                     <td>
                       <input id='txtAuthorizationDate' name='txtAuthorizationDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-                      <img id='imgAuthorizationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtAuthorizationDate'), getElement('imgAuthorizationDate'),'1320px');" title="Despliega el calendario" alt="" />
+                      <img id='imgAuthorizationDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('txtAuthorizationDate'), getElement('imgAuthorizationDate'),'520px' , '-60px');" title="Despliega el calendario" alt="" />
                     </td>
                     <td class="lastCell">&#160;</td>
                   </tr>
@@ -274,7 +274,7 @@
                               <input id='txtMarginalNoteDate' name='txtMarginalNoteDate' type="text" class="textBox"
                                        style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
                               <img id='imgMarginalNoteDate' src="../themes/default/buttons/ellipsis.gif"
-                                 onclick="return showCalendar(getElement('txtMarginalNoteDate'), getElement('MarginalNoteDate'));" title="Despliega el calendario" alt="" />
+                                 onclick="return showCalendar(event, getElement('txtMarginalNoteDate'), getElement('imgMarginalNoteDate'), '70px', '240px');" title="Despliega el calendario" alt="" />
                             </td>
                             <td style="vertical-align:top">
                               Anotación<br />
@@ -419,7 +419,7 @@
     </div> <!-- end divBody !-->
   </div> <!-- end divCanvas !-->
 </form>
-<iframe id="ifraCalendar" style="z-index:99;left:0px;visibility:hidden;position:relative;top: -560px; width:225px;  height:160px;"    
+<iframe id="ifraCalendar" style="z-index:99;visibility:hidden;position:relative; width:225px;  height:160px;"    
     marginheight="0"  marginwidth="0" frameborder="0" scrolling="no"
     src="../user.controls/calendar.aspx" width="100%">
 </iframe>
