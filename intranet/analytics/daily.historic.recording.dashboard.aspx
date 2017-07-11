@@ -70,13 +70,13 @@
         updateUserInterface(arguments[1]);
         return;
       default:
-        alert('La operación solicitada todavía no ha sido definida en el programa.');
+        showAlert(msgModalP = 'La operación solicitada todavía no ha sido definida en el programa.', headerModal = "");
         return;
     }
   }
 
   function createObject() {
-    alert('La operación solicitada todavía no ha sido definida en el programa.');
+    showAlert(msgModalP = 'La operación solicitada todavía no ha sido definida en el programa.', headerModal = "");
     return false;
   }
 

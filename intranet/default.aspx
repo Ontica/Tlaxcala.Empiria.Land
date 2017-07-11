@@ -1,4 +1,5 @@
 ﻿<%@ Page language="c#" Inherits="Empiria.Web.UI.LogonPage" EnableViewState="false" EnableSessionState="true" CodeFile="default.aspx.cs" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="./user.controls/alert.box.ascx" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
@@ -11,7 +12,9 @@
   <base target="_blank" />
   <title><%="Inicio » " + Empiria.ExecutionServer.ServerName + " » " + Empiria.ExecutionServer.CustomerName %></title>
   <link href="./themes/default/css/logon.css" type="text/css" rel="stylesheet" />
+  <link href="./themes/default/css/modal.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="./scripts/empiria.general.js"></script>
+
 </head>
 <body>
   <form id="frmEditor" method="post" target="_self" runat="server">
@@ -36,6 +39,11 @@
         </ul>
       </div>
       <div id="divRightColumn">
+        <!-- The Modal -->
+        <!-- Modal content -->
+        <uc:AlertBox id="alerbox" runat="server"/>
+        <!-- end The Modal -->
+        
         <div>
           <br />
           <div class="title"><%=Empiria.ExecutionServer.ServerName%></div>
@@ -112,17 +120,17 @@
 
     function validate() {
       if (getElement("txtUserId").value == '') {
-        alert("Para ingresar a este sitio se requiere proporcionar el identificador de acceso.");
-        getElement("txtUserId").focus();
-        return false;
+         showAlert('Para ingresar a este sitio se requiere proporcionar el identificador de acceso.');
+         getElement("txtUserId").focus();
+         return false;
       }
       if (getElement("txtPassword").value == '') {
-        alert("Para ingresar a este sitio se requiere proporcionar la contraseña de acceso.");
+        showAlert('Para ingresar a este sitio se requiere proporcionar la contraseña de acceso.');
         getElement("txtPassword").focus();
         return false;
       }
       if (getElement("txtAccessCode").value == '') {
-        alert("Para ingresar a este sitio se requiere proporcionar el valor ubicado en la\nposición A9K de la tarjeta de acceso personal.");
+        showAlert('Para ingresar a este sitio se requiere proporcionar el valor ubicado en la\nposición A9K de la tarjeta de acceso personal.');
         getElement("txtAccessCode").focus();
         return false;
       }

@@ -11,6 +11,7 @@
   <link href="../themes/default/css/dashboard.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/toolbar.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/explorer.css" type="text/css" rel="stylesheet" />
+  <link href="../themes/default/css/modal.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.clock.js"></script>

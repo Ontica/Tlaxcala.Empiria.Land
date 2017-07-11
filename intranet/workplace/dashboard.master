@@ -9,6 +9,7 @@
 
   <link href="../themes/default/css/dashboard.item.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+  <link href="../themes/default/css/modal.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
 	<script type="text/javascript" src="../scripts/empiria.general.js"></script>
 	<script type="text/javascript" src="../scripts/empiria.validation.js"></script>
