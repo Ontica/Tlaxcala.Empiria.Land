@@ -1,6 +1,7 @@
 ﻿<%@ Page language="c#" Inherits="Empiria.Land.WebApp.LRSTransactionEditor" EnableViewState="true" EnableSessionState="true" CodeFile="transaction.editor.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingActSelectorControl" src="../land.registration.system.controls/recording.act.selector.control.ascx" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
@@ -9,6 +10,7 @@
 <meta http-equiv="Expires" content="-1" /><meta http-equiv="Pragma" content="no-cache" />
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+<link href="../themes/default/css/modal.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
@@ -28,6 +30,7 @@
       <%=GetRightTitle()%>
     </span>
   </div>
+
   <div id="divBody">
     <div id="divContent">
   <table class="tabStrip">
@@ -99,8 +102,8 @@
 	            <option value="135">Certificados (Lety Palacios)</option>
               <option value="137">Comercio (Laura)</option>
               <option value="134">Copias certificadas</option>
-              <option value="141">Créditos (Javier Ceballos)</option>
-              <option value="140">Embargos (Alejandra)</option>
+              <option value="141">Créditos</option>
+              <option value="140">Embargos</option>
               <option value="144">Infonavit (Rubén)</option>
               <option value="143">Procede (Tere Roldán)</option>
 	            <option value="133">Sección 4ta</option>
@@ -440,8 +443,13 @@
     </table>
   </div>
  </div> <!-- end divBody !-->
+  
 <div id="divBottomToolbar" style="display:none">
  </div> <!-- end divBottomToolbar !-->
+              <!-- The Modal -->
+              <!-- Modal content -->
+              <uc:AlertBox id="alerbox" runat="server"/>
+              <!-- end The Modal -->
 </div> <!-- end divCanvas !-->
 </form>
 </body>
@@ -500,7 +508,7 @@
         gbSended = true;
         return;
       case 'searchCadastralNumber':
-        alert("La búsqueda de claves catastrales no está disponible en este momento.");
+        showAlert("La búsqueda de claves catastrales no está disponible en este momento.");
         return;
       case 'searchGeographicalItems':
         return searchGeographicalItems();
@@ -544,7 +552,7 @@
         sendCertificateToCITYS();
         return;
       default:
-        alert("La operación '" + command + "' no ha sido definida en el programa.");
+        showAlert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
     }
     if (success) {
@@ -566,7 +574,7 @@
   var oBaseResource = null;
   function lookupBaseResource() {
     if (getElement("txtBaseResourceUID").value.length == 0) {
-      alert("Requiero se proporcione el folio real para poder hacer la búsqueda.");
+      showAlert("Requiero se proporcione el folio real para poder hacer la búsqueda.");
       return;
     }
 
@@ -578,14 +586,14 @@
 
     if (olookupResource.Id == -1) {
       _selectedResource = null;
-      alert("No existe ningún predio o asociación con el folio real proporcionado.");
+      showAlert("No existe ningún predio o asociación con el folio real proporcionado.");
       getElement('divSelectedResource').style.display = 'none';
       getElement("txtBaseResourceUID").readOnly = false;
       getElement("chkNoBaseResource").disabled = false;
       return false;
     } else {
       _selectedResource = olookupResource.Id;
-      alert("Folio real encontrado.");
+      showAlert("Folio real encontrado.");
       getElement('divSelectedResource').style.display = 'inline';
       getElement("txtBaseResourceUID").readOnly = true;
       getElement("chkNoBaseResource").disabled = true;
@@ -596,37 +604,42 @@
   function autoCreateCertificate() {
     var certificateType = getElement('cboCertificateType').value;
     if (certificateType == "") {
-      alert("Requiero se seleccione el tipo de certificado que se desea generar.");
+      showAlert("Requiero se seleccione el tipo de certificado que se desea generar.");
       return;
     }
     if (certificateType == "gravamen" || certificateType == "inscripción") {
       if (getElement('txtCertificatePropertyUID').value == '') {
-        alert("Requiero se proporcione el folio real del predio sobre el que se generará el certificado.");
+        showAlert("Requiero se proporcione el folio real del predio sobre el que se generará el certificado.");
         return;
       }
       if (getElement('txtCertificatePropertyUID').value.length != 19) {
-        alert("El folio real tiene un formato que no reconozco.");
+        showAlert("El folio real tiene un formato que no reconozco.");
         return;
       }
     }
     if (certificateType == "no-propiedad") {
       if (getElement('txtCertificateOwnerName').value == '') {
-        alert("Requiero se proporcione el nombre de la persona física o moral sobre la que se generará el certificado.");
+        showAlert("Requiero se proporcione el nombre de la persona física o moral sobre la que se generará el certificado.");
         return;
       }
       if (getElement('txtCertificateOwnerName').value.length <= 10) {
-        alert("El nombre de la persona tiene una longitud demasiado corta.");
+        showAlert("El nombre de la persona tiene una longitud demasiado corta.");
         return;
       }
     }
-    var sMsg = "Generar certificado.\n\n";
+    var sMsg = "Generar certificado.<br /><br />";
 
-    sMsg += "Tipo de certificado: " + getComboOptionText(getElement('cboCertificateType')) + "\n";
-    sMsg += "Folio real: " + getElement('txtCertificatePropertyUID').value + "\n\n";
-    sMsg += "Nombre: " + getElement('txtCertificateOwnerName').value + "\n\n";
+    sMsg += "Tipo de certificado: " + getComboOptionText(getElement('cboCertificateType')) + "<br />";
+    sMsg += "Folio real: " + getElement('txtCertificatePropertyUID').value + "<br /><br />";
+    sMsg += "Nombre: " + getElement('txtCertificateOwnerName').value + "<br /><br />";
     sMsg += "¿Genero el certificado con la información proporcionada?";
 
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      sendPageCommand("autoCreateCertificate");
+      gbSended = true;
+    }*/
+    showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand("autoCreateCertificate");
       gbSended = true;
     }
@@ -673,21 +686,26 @@
   }
 
   function deleteCertificate(certificateUID) {
-    alert("Eliminar certificados todavía no está disponible.");
+    showAlert("Eliminar certificados todavía no está disponible.");
     return;
   }
 
   function openCertificate(certificateUID) {
-    alert("Reabrir certificados todavía no está disponible.");
+    showAlert("Reabrir certificados todavía no está disponible.");
     return;
   }
 
   function sendCertificateToCITYS() {
-    var sMsg = "Enviar certificado al sistema CITYS.\n\n";
+    var sMsg = "Enviar certificado al sistema CITYS.<br /><br />";
 
     sMsg += "¿Envío el certificado al sistema CITYS?";
 
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      sendPageCommand("sendCertificateToCITYS");
+      gbSended = true;
+    }*/
+    showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand("sendCertificateToCITYS");
       gbSended = true;
     }
@@ -696,31 +714,38 @@
 
   function appendPayment() {
     if (isEmpty(getElement('txtReceiptNumber'))) {
-      alert("Requiero se proporcione el número del recibo de pago para este trámite.");
+      showAlert("Requiero se proporcione el número del recibo de pago para este trámite.");
       return false;
     }
     if (isEmpty(getElement('txtReceiptTotal'))) {
-      alert("Requiero se ingrese el importe del recibo de pago.");
+      showAlert("Requiero se ingrese el importe del recibo de pago.");
       return false;
     }
     if (convertToNumber(getElement('txtReceiptTotal').value) != <%=transaction.Items.TotalFee.Total%>) {
-      alert("El total del recibo no coincide con el importe correcto del pago de derechos.");
+      showAlert("El total del recibo no coincide con el importe correcto del pago de derechos.");
       return false;
     }
-    var sMsg = "Agregar recibo de pago al trámite.\n\n";
+    var sMsg = "Agregar recibo de pago al trámite.<br /><br />";
 
-    sMsg += "Número de trámite:\t" + getElement('txtTransactionKey').value + "\n";
-    sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n\n";
+    sMsg += "Número de trámite:\t" + getElement('txtTransactionKey').value + "<br />";
+    sMsg += "Interesado: " + getElement('txtRequestedBy').value + "<br /><br />";
 
-    sMsg += "Recibo de pago:\t" + getElement('txtReceiptNumber').value + "\n";
-    sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
+    sMsg += "Recibo de pago:\t" + getElement('txtReceiptNumber').value + "<br />";
+    sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "<br /><br />";
 
     sMsg += "¿Agrego el pago a este trámite?";
 
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      sendPageCommand("appendPayment");
+      gbSended = true;
+    }*/
+    //var myMsg = getSendMsg("saveTransaction");
+    showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand("appendPayment");
       gbSended = true;
     }
+
   }
 
   function showConceptsEditor() {
@@ -737,20 +762,31 @@
 
     sMsg += "Esta operación reinigresará este trámite y lo enviará al distrito o mesa de trabajo correspondiente.\n\n";
     sMsg += "¿Reingreso este trámite";
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
       sendPageCommand("reentryTransaction");
+    }*/
+    showConfirm(sMsg, '', executeOp);
+    function executeOp() {
+      sendPageCommand("reentryTransaction");
+      gbSended = true;
     }
+
   }
 
   function deleteRecordingAct(transactionActId) {
-    var sMsg = "Eliminación de actos jurídicos y conceptos de pago.\n\n";
+    var sMsg = "Eliminación de actos jurídicos y conceptos de pago.<br /><br />";
 
-    sMsg += "Esta operación eliminará el siguiente elemento de la lista de actos jurídicos:\n\n";
-    sMsg += "Acto:\n";
-    sMsg += "Total\n\n";
+    sMsg += "Esta operación eliminará el siguiente elemento de la lista de actos jurídicos:<br /><br />";
+    sMsg += "Acto:<br />";
+    sMsg += "Total<br /><br />";
     sMsg += "¿Elimino el acto jurídico de la lista?";
 
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      sendPageCommand("deleteRecordingAct", "id=" + transactionActId);
+      gbSended = true;
+    }*/
+    showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand("deleteRecordingAct", "id=" + transactionActId);
       gbSended = true;
     }
@@ -777,51 +813,68 @@
     if (!doValidation("saveTransaction")) {
       return;
     }
-    if (!doSendMsg("saveTransaction")) {
+    /*
+    if (!doSendMsg("saveTransaction")) { ///doSendMsg = getSendMsg 
       return;
+    }*/
+    var myMsg = getSendMsg("saveTransaction");
+    showConfirm(myMsg, '', executeOp);
+    function executeOp() {
+     sendPageCommand("saveTransaction");
+     gbSended = true;
     }
-    sendPageCommand("saveTransaction");
-    gbSended = true;
   }
 
-  function saveAndReceiveTransaction() {
+  function saveAndReceiveTransaction() {////tal vez enviar al confirm sowconfirm
     if (!doValidation("saveAndReceiveTransaction")) {
       return;
     }
+    /*
     if (!doSendMsg("saveAndReceiveTransacion")) {
       return;
+    }*/
+    var myMsg2 = getSendMsg("saveAndReceiveTransaction");
+    showConfirm(myMsg2, '', executeOp);
+    function executeOp() {
+      sendPageCommand("saveAndReceiveTransaction");
+      gbSended = true;
     }
-    sendPageCommand("saveAndReceiveTransaction");
-    gbSended = true;
+   // sendPageCommand("saveAndReceiveTransaction");
+    //gbSended = true;
   }
 
   function appendRecordingAct() {
     if (!doValidateRecordingAct()) {
       return;
     }
-    var sMsg = getComboOptionText(getElement('cboRecordingActType')) + "\n\n";
+    var sMsg = getComboOptionText(getElement('cboRecordingActType')) + "<br /><br />";
 
-    sMsg += "Fundamento:\t\t" + getComboOptionText(getElement('cboLawArticle')) + "\n\n";
-    sMsg += "Valor de la operación:\t" + formatAsCurrency(getElement('txtOperationValue').value) + "\n\n";
-    sMsg += "Derechos registrales:\t\t" + formatAsCurrency(getElement('txtRecordingRightsFee').value) + "\n";
+    sMsg += "Fundamento:\t\t" + getComboOptionText(getElement('cboLawArticle')) + "<br /><br />";
+    sMsg += "Valor de la operación:\t" + formatAsCurrency(getElement('txtOperationValue').value) + "<br /><br />";
+    sMsg += "Derechos registrales:\t\t" + formatAsCurrency(getElement('txtRecordingRightsFee').value) + "<br />";
 
     if (convertToNumber(getElement('txtSheetsRevisionFee').value) != 0) {
-      sMsg += "Cotejo:\t\t\t" + formatAsCurrency(getElement('txtSheetsRevisionFee').value) + "\n";
+      sMsg += "Cotejo:\t\t\t" + formatAsCurrency(getElement('txtSheetsRevisionFee').value) + "<br />";
     }
     if (convertToNumber(getElement('txtForeignRecordFee').value) != 0) {
-      sMsg += "Foráneo:\t\t\t" + formatAsCurrency(getElement('txtForeignRecordFee').value) + "\n";
+      sMsg += "Foráneo:\t\t\t" + formatAsCurrency(getElement('txtForeignRecordFee').value) + "<br />";
     }
     sMsg += "\n";
     if (convertToNumber(getElement('txtDiscount').value) == 0) {
-      sMsg += "Total:\t\t\t" + formatAsCurrency(getTotal()) + "\n";
+      sMsg += "Total:\t\t\t" + formatAsCurrency(getTotal()) + "<br />";
     } else {
-      sMsg += "Subtotal:\t\t\t" + formatAsCurrency(getSubTotal()) + "\n";
-      sMsg += "Descuento:\t\t" + formatAsCurrency(getElement('txtDiscount').value) + "\n";
-      sMsg += "Total:\t\t\t" + formatAsCurrency(getTotal()) + "\n";
+      sMsg += "Subtotal:\t\t\t" + formatAsCurrency(getSubTotal()) + "<br />";
+      sMsg += "Descuento:\t\t" + formatAsCurrency(getElement('txtDiscount').value) + "<br />";
+      sMsg += "Total:\t\t\t" + formatAsCurrency(getTotal()) + "<br />";
     }
-    sMsg += "\n";
+    sMsg += "<br />";
     sMsg += "¿Agrego el acto jurídico y la información del pago de derechos?";
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      sendPageCommand("appendRecordingAct");
+      gbSended = true;
+    }*/
+    showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand("appendRecordingAct");
       gbSended = true;
     }
@@ -829,11 +882,11 @@
 
   function doValidateRecordingAct() {
     if (getElement('cboRecordingActType').value.length == 0) {
-      alert("Requiero se proporcione el acto jurídico.");
+      showAlert("Requiero se proporcione el acto jurídico.");
       return false;
     }
     if (getElement('cboLawArticle').value.length == 0) {
-      alert("Requiero se proporcione el fundamento del cobro.");
+      showAlert("Requiero se proporcione el fundamento del cobro.");
       return false;
     }
     if (!validateQuantity(getElement('txtOperationValue'), "Valor de la operación")) {
@@ -855,7 +908,7 @@
     getElement('txtTotal').value = getTotal();
 
     if (convertToNumber(getElement('txtTotal').value) < 0) {
-      alert("El importe total del acto no puede ser menor que cero.");
+      showAlert("El importe total del acto no puede ser menor que cero.");
       return false;
     }
     return true;
@@ -883,51 +936,53 @@
       return true;
     }
     if (!isNumeric(oElement)) {
-      alert("No reconozco el importe de " + elementName + ".");
+      showAlert("No reconozco el importe de " + elementName + ".");
       return false;
     }
     if (convertToNumber(oElement.value) < 0) {
-      alert("El importe de " + elementName + " debe ser mayor o igual a cero.");
+      showAlert("El importe de " + elementName + " debe ser mayor o igual a cero.");
       return false;
     }
     return true;
   }
 
-  function doSendMsg(command) {
-    var sMsg = "";
+    ///function doSendMsg(command) {
+    function getSendMsg(command) {
+      var sMsg = "";
 
-    sMsg  = "Número de trámite:\t" + getElement('txtTransactionKey').value + "\n";
-    sMsg += "Tipo de documento:\t" + getComboOptionText(getElement('cboDocumentType')) + "\n";
-    sMsg += "Núm instrumento:\t" + getElement('txtDocumentNumber').value + "\n\n";
+      sMsg = "Número de trámite:\t" + getElement('txtTransactionKey').value + "<br />";
+      sMsg += "Tipo de documento:\t" + getComboOptionText(getElement('cboDocumentType')) + "<br />";
+      sMsg += "Núm instrumento:\t" + getElement('txtDocumentNumber').value + "<br /><br />";
 
-    if (command == "saveTransaction") {
+      if (command == "saveTransaction") {
     <% if (base.transaction.IsNew) { %>
-    sMsg = "Crear una nueva solicitud de trámite.\n\n" + sMsg;
-    sMsg += "¿Creo este nuevo trámite con la información proporcionada?";
+        sMsg = "Crear una nueva solicitud de trámite.<br /><br />" + sMsg;
+        sMsg += "¿Creo este nuevo trámite con la información proporcionada?";
     <% } else { %>
-    sMsg = "Modificar la solicitud de trámite " + getElement('txtTransactionKey').value + ".\n\n" + sMsg;
-    sMsg += "¿Modifico la información de este trámite?";
+        sMsg = "Modificar la solicitud de trámite " + getElement('txtTransactionKey').value + ".<br /><br />" + sMsg;
+        sMsg += "¿Modifico la información de este trámite?";
     <% } %>
-    } else if (command == "saveAndReceiveTransacion") {
+      } else if (command == "saveAndReceiveTransacion") {
       <% if (base.transaction.IsNew) { %>
-      sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
-      sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n\n";
+        sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "<br /><br />";
+        sMsg += "Interesado: " + getElement('txtRequestedBy').value + "<br /><br />";
 
-      sMsg = "Crear y recibir una nueva solicitud de trámite.\n\n" + sMsg;
-      sMsg += "¿Creo este nuevo trámite y lo marco como recibido?";
+        sMsg = "Crear y recibir una nueva solicitud de trámite.<br /><br />" + sMsg;
+        sMsg += "¿Creo este nuevo trámite y lo marco como recibido?";
     <% } else { %>
-    sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
-    sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n\n";
-    sMsg = "Recibir la solicitud de trámite " + getElement('txtTransactionKey').value + ".\n\n" + sMsg;
-    sMsg += "¿Recibo este trámite?";
+        sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "<br /><br />";
+        sMsg += "Interesado: " + getElement('txtRequestedBy').value + "<br /><br />";
+        sMsg = "Recibir la solicitud de trámite " + getElement('txtTransactionKey').value + ".<br /><br />" + sMsg;
+        sMsg += "<br /><br />¿Recibo este trámite?";
     <% } %>
-    }
+      }
 
-    return confirm(sMsg);
+      //return confirm(sMsg);
+      return sMsg;  
   }
 
   function createCopy() {
-    alert("create Copy")
+    showAlert("create Copy")
   }
 
   function updateUserInterface(oControl) {
@@ -967,21 +1022,25 @@
     var oPayment = getElement('txtReceiptTotal');
 
     if (isEmpty(getElement('txtRequestedBy'))) {
-      alert("Requiero se proporcione el nombre del interesado.");
+      //alert("Requiero se proporcione el nombre del interesado.");
+      showAlert("Requiero se proporcione el nombre del interesado.");
       return false;
     }
     if (isEmpty(getElement('cboDocumentType'))) {
-      alert("Requiero se proporcione el tipo de documento que se desea inscribir.");
+      //alert("Requiero se proporcione el tipo de documento que se desea inscribir.");
+      showAlert("Requiero se proporcione el tipo de documento que se desea inscribir.");
       return false;
     }
     if (isEmpty(getElement('cboManagementAgency'))) {
-      alert("Requiero conocer la notaría o agencia que tramita.");
+      //alert("Requiero conocer la notaría o agencia que tramita.");
+      showAlert("Requiero conocer la notaría o agencia que tramita.");
       return false;
     }
     if (command == 'saveAndReceiveTransaction') {
       <% if (!base.transaction.Workflow.IsEmptyItemsTransaction) { %>
       if (isEmpty(getElement('txtReceiptNumber'))) {
-        alert("Requiero se proporcione el número del recibo emitido para este trámite.");
+        //alert("Requiero se proporcione el número del recibo emitido para este trámite.");
+        showAlert("Requiero se proporcione el número del recibo emitido para este trámite.");
         return false;
       }
       <% } %>
@@ -1021,7 +1080,6 @@
 
     oFrame.style.height = oBody.scrollHeight + (oBody.offsetHeight - oBody.clientHeight) + 400;
     oFrame.style.width = oBody.scrollWidth + (oBody.offsetWidth - oBody.clientWidth);
-    //alert(oFrame.style.height);
   }
 
   function window_onresize() {

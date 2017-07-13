@@ -337,7 +337,8 @@ namespace Empiria.Land.WebApp {
       transaction.RequestedBy = txtRequestedBy.Value.Replace("\'\'", "\"").Replace("\'", "¿");
       transaction.Agency = Contact.Parse(int.Parse(cboManagementAgency.Value));
       transaction.Save();
-      onloadScript = "alert('Los cambios efectuados en la información del trámite se guardaron correctamente.');";
+      //onloadScript = "alert('Los cambios efectuados en la información del trámite se guardaron correctamente.');";
+      onloadScript = "showAalert('Los cambios efectuados en la información del trámite se guardaron correctamente.');";
     }
 
     private void ApplyVoidReceipt() {
@@ -360,16 +361,15 @@ namespace Empiria.Land.WebApp {
       string s = LRSWorkflowRules.ValidateStatusChange(transaction, LRSTransactionStatus.Received);
 
       transaction.Workflow.Receive(String.Empty);
-
-      onloadScript = "alert('Este trámite fue recibido satistactoriamente.');doOperation('redirectThis')";
+      onloadScript = "showAlert('Este trámite fue recibido satistactoriamente.');doOperation('redirectThis')";
     }
 
     private void ReentryTransaction() {
       try {
         transaction.Workflow.Reentry();
-        onloadScript = "alert('Este trámite fue reingresado correctamente.');doOperation('redirectThis')";
+        onloadScript = "showAlert('Este trámite fue reingresado correctamente.');doOperation('redirectThis')";
       } catch (Exception e) {
-        onloadScript = "alert('" + EmpiriaString.FormatForScripting(e.Message) + "');doOperation('redirectThis')";
+        onloadScript = "showAlert('" + EmpiriaString.FormatForScripting(e.Message) + "');doOperation('redirectThis')";
       }
     }
 
@@ -377,8 +377,8 @@ namespace Empiria.Land.WebApp {
       SaveTransaction();
       LRSTransaction copy = this.transaction.MakeCopy();
 
-      onloadScript = @"alert('Este trámite fue copiado correctamente.\n\nEl nuevo trámite es el " + copy.UID +
-                     @".\n\nAl cerrar esta ventana se mostrará el nuevo trámite.');";
+      onloadScript = @"showAlert('Este trámite fue copiado correctamente.<br /><br />El nuevo trámite es el " + copy.UID +
+                     @".<br /><br />Al cerrar esta ventana se mostrará el nuevo trámite.');";
       onloadScript += "doOperation('goToTransaction', " + copy.Id.ToString() + ");";
     }
 
@@ -588,16 +588,16 @@ namespace Empiria.Land.WebApp {
       RealEstate property = propertyUID.Length > 0 ? RealEstate.TryParseWithUID(propertyUID) : RealEstate.Empty;
 
       if (property == null) {
-        onloadScript = "alert('El folio real proporcionado no existe.');doOperation('redirectThis')";
+        onloadScript = "showAlert('El folio real proporcionado no existe.');doOperation('redirectThis')";
         return;
       }
 
       if (AutoCreateCertificateEnabled) {
         var certificate = Certificate.AutoCreate(this.transaction, certificateType, property, ownerName);
 
-        onloadScript = "alert('El certificado fue generado correctamente.');doOperation('redirectThis')";
+        onloadScript = "showAlert('El certificado fue generado correctamente.');doOperation('redirectThis')";
       } else {
-        onloadScript = "alert('La funcionalidad para crear certificados automáticos aún no está disponible.');doOperation('redirectThis')";
+        onloadScript = "showAlert('La funcionalidad para crear certificados automáticos aún no está disponible.');doOperation('redirectThis')";
       }
 
       cboCertificateType.Value = String.Empty;
@@ -688,14 +688,14 @@ namespace Empiria.Land.WebApp {
         var fileInfo = CreatePDFFile(certificate);
         status = connector.SendAvisoPreventivo(certificate, System.IO.File.ReadAllBytes(fileInfo.FullName));
 
-        onloadScript = String.Format("alert('El certificado fue enviado correctamente al sistema CITYS. Status {0}.');" +
+        onloadScript = String.Format("showAlert('El certificado fue enviado correctamente al sistema CITYS. Status {0}.');" +
                                      "doOperation('redirectThis')", status);
 
       } catch (System.ServiceModel.FaultException e) {
-        onloadScript = "alert('Problema del cliente: {0}\\nProblema del servidor: {1}\\n:Motivo: {2}');doOperation('redirectThis')";
+        onloadScript = "showAlert('Problema del cliente: {0}\\nProblema del servidor: {1}\\n:Motivo: {2}');doOperation('redirectThis')";
         onloadScript = String.Format(onloadScript, e.Code.IsSenderFault, e.Code.IsReceiverFault, EmpiriaString.FormatForScripting(e.Reason.ToString()));
       } catch (Exception e) {
-        onloadScript = "alert('HTTP Status:{0}\\nProblema:{1}');doOperation('redirectThis')";
+        onloadScript = "showAlert('HTTP Status:{0}\\nProblema:{1}');doOperation('redirectThis')";
         onloadScript = String.Format(onloadScript, status, EmpiriaString.FormatForScripting(e.ToString()));
       }
     }

@@ -1,6 +1,7 @@
 ﻿
 <%@ Page Language="C#" EnableViewState="true" ViewStateMode="Disabled" EnableSessionState="true" MasterPageFile="~/workplace/dashboard.master" Inherits="Empiria.Land.WebApp.ProcessControlDashboard" CodeFile="process.control.dashboard.aspx.cs" %>
 <%@ Import Namespace="Empiria.Land.WebApp" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <asp:Content ID="dashboardItem" ContentPlaceHolderID="dashboardItemPlaceHolder" runat="Server" EnableViewState="true">
 <table id="tblDashboardMenu" class="tabStrip" style='display:<%=base.ShowTabStripMenu ? "inline" : "none"%> '>
   <tr>
@@ -107,8 +108,8 @@
 	        <option value="135">Certificados (Lety Palacios)</option>
           <option value="137">Comercio (Laura)</option>
           <option value="134">Copias certificadas</option>
-          <option value="141">Créditos (Javier Ceballos)</option>
-          <option value="140">Embargos (Alejandra)</option>
+          <option value="141">Créditos</option>
+          <option value="140">Embargos</option>
           <option value="144">Infonavit (Rubén)</option>
           <option value="143">Procede (Tere Roldán)</option>
 	        <option value="133">Sección 4ta</option>
@@ -179,6 +180,12 @@
   </div>
   <%=base.NavigationBarContent()%>
 </div>
+
+      <!-- The Modal -->
+        <!-- Modal content -->
+        <uc:AlertBox id="alerbox" runat="server"/>
+        <!-- end The Modal -->
+
 <script type="text/javascript">
     /* <![CDATA[ */
     function doOperation(operationName) {
@@ -241,20 +248,26 @@
                 processsDocumentImages();
                 return;
             default:
-                alert('La operación solicitada todavía no ha sido definida en el programa.');
+            showAlert(msgModalP = 'La operación solicitada todavía no ha sido definida en el programa', headerModal = "");
                 return;
         }
     }
     function generateImagingControlID(transactionId, documentId) {
-        var sMsg = "Generar número de control documental\n\n";
-        sMsg += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-        sMsg += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-        sMsg += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+      var sMsg = "Generar número de control documental<br /><br />";
+        sMsg += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+        sMsg += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+        sMsg += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br /><br />";
         sMsg += "¿Desea generar el número de control documental para el trámite indicado?";
-        if (confirm(sMsg)) {
+        /*if (confirm(sMsg)) {
             var qs = "id=" + documentId;
             sendPageCommand("generateImagingControlID", qs);
+        }*/
+        z = showConfirm(sMsg, '', executeOp);
+        function executeOp() {
+          var qs = "id=" + documentId;
+          sendPageCommand("generateImagingControlID", qs);
         }
+
     }
     function viewDocumentImaging(documentId) {
         var url = "../land.registration.system/document.imaging.control.slip.aspx?id=" + documentId;
@@ -269,11 +282,11 @@
             '../land.registration.system/by.resource.analyzer.aspx', true);
     }
     function executeWorkflowTask(workflowTaskName, objectId) {
-        alert(workflowTaskName + " " + objectId);
+      showAlert(workflowTaskName + " " + objectId);
     }
     function createLRSTransaction() {
         if (getElement('<%=cboProcessType.ClientID%>').value.length == 0) {
-          alert("Requiero se seleccione de la lista el tipo de trámite que se desea registrar.");
+          showAlert(msgModalP = 'Requiero se seleccione de la lista el tipo de trámite que se desea registrar.', headerModal = "");
           return;
       }
       var source = "transaction.editor.aspx?";
@@ -286,15 +299,22 @@
     }
     function receiveLRSTransaction(transactionId) {
         var sMsg = "Recepción del trámite por parte del interesado\n\n";
-        sMsg += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-        sMsg += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-        sMsg += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+        sMsg += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+        sMsg += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+        sMsg += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br /><br />";
         sMsg += "¿Está recibiendo los documentos de este trámite por parte del interesado?";
-        if (confirm(sMsg)) {
+        /*if (confirm(sMsg)) {
             var qs = "id=" + transactionId;
             qs += "|notes=" + getElement("txtNotes" + transactionId).value;
             sendPageCommand("receiveLRSTransaction", qs);
+        }*/
+        z = showConfirm(sMsg, '', executeOp);
+        function executeOp() {
+          var qs = "id=" + transactionId;
+          qs += "|notes=" + getElement("txtNotes" + transactionId).value;
+          sendPageCommand("receiveLRSTransaction", qs);
         }
+
     }
     function setTodayDate() {
         getElement('<%=txtFromDate.ClientID%>').value = '<%=DateTime.Today.ToString("dd/MMM/yyyy")%>';
@@ -304,56 +324,64 @@
         var nextStatus = getInnerText('ancNextStatusID' + transactionId);
         if (nextStatus == 'S') {
     <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSigner")) { %>
-        alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEl documento está marcado como 'Recibir para firma'.");
+          showAlert(msgModalP = 'No tengo registrados los permisos necesarios para entregarle este documento.<br /><br />El documento está marcado como ' + "'" + 'Recibir para firma' + "'" + '.', headerModal = "");
         return;
     <% } %>
     }
     if (nextStatus == 'K') {
     <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ControlDesk")) { %>
-            alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEl documento está marcado para recibirlo en mesa de control.\n\nSólo los responsables de la mesa de control pueden tomarlo.");
-            return;
+      showAlert(msgModalP = 'No tengo registrados los permisos necesarios para entregarle este documento.<br /><br />El documento está marcado para recibirlo en mesa de control.\n\nSólo los responsables de la mesa de control pueden tomarlo.', headerModal = "");
+              return;
     <% } %>
     }
     if (nextStatus == 'A') {
     <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSafeguard")) { %>
-            alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEl documento está marcado para recibirlo en la mesa de digitalización y resguardo'.");
+      showAlert(msgModalP = 'No tengo registrados los permisos necesarios para entregarle este documento.<br /><br />El documento está marcado para recibirlo en la mesa de digitalización y resguardo', headerModal = "");
             return;
 	 	<% } %>
         }
         if (nextStatus == 'D' || nextStatus == 'L') {
     <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) { %>
-            alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEl documento ya está listo para entregarlo (o devolverlo) al interesado.\n\nSólo los responsables de ventanilla de entregas pueden tomarlo.");
+          showAlert(msgModalP = 'No tengo registrados los permisos necesarios para entregarle este documento.<br /><br />El documento ya está listo para entregarlo (o devolverlo) al interesado.\n\nSólo los responsables de ventanilla de entregas pueden tomarlo.', headerModal = "");
             return;
     <% } %>
         }
         if (nextStatus == 'V') {
-      <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.QualityControl")) { %>
-            alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEste trámite está listo para enviarse al área de revisión.\n\nSólo el personal del área de revisión puede tomar este trámite.");
-            return;
+      <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.QualityControl")) { %>         
+          showAlert(msgModalP = 'No tengo registrados los permisos necesarios para entregarle este documento.<br /><br />Este trámite está listo para enviarse al área de revisión.\n\nSólo el personal del área de revisión puede tomar este trámite.', headerModal = "");
+          return;
       <% } %>
         }
         if (nextStatus == 'J') {
       <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Juridic")) { %>
-            alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEste trámite está marcado para entregarse al área jurídica.");
+          showAlert(msgModalP = 'No tengo registrados los permisos necesarios para entregarle este documento.<br /><br />Este trámite está marcado para entregarse al área jurídica.', headerModal = "");
             return;
       <% } %>
         }
         if (nextStatus == 'R' || nextStatus == 'C' || nextStatus == 'Q') {
-            alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEste trámite debe procesarse utilizando otra herramienta.");
+          showAlert(msgModalP = 'No tengo registrados los permisos necesarios para entregarle este documento.<br /><br />Este trámite debe procesarse utilizando otra herramienta', headerModal = "");
             return;
         }
-        var sMsg = "Recibir documentación.\n\n";
-        sMsg += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-        sMsg += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-        sMsg += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
-        sMsg += "Estado actual:\t" + getInnerText('ancStatus' + transactionId) + "\n";
-        sMsg += "Nuevo estado:\t" + getInnerText('ancNextStatus' + transactionId) + "\n\n";
+        var sMsg = "Recibir documentación.<br /><br />";
+        sMsg += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+        sMsg += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+        sMsg += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br /><br />";
+        sMsg += "Estado actual:\t" + getInnerText('ancStatus' + transactionId) + "<br />";
+        sMsg += "Nuevo estado:\t" + getInnerText('ancNextStatus' + transactionId) + "<br /><br />";
         sMsg += "¿Está recibiendo los documentos del trámite referido?";
-        if (confirm(sMsg)) {
+       /* if (confirm(sMsg)) {
             var qs = "id=" + transactionId;
             qs += "|notes=" + getElement("txtNotes" + transactionId).value;
             sendPageCommand("takeLRSTransaction", qs);
+        }*/
+        z = showConfirm(sMsg, '', executeOp);
+        function executeOp() {
+          var qs = "id=" + transactionId;
+          qs += "|notes=" + getElement("txtNotes" + transactionId).value;
+          sendPageCommand("takeLRSTransaction", qs);
         }
+
+
     }
     function validateNextTransactionState(transactionId, newState) {
         var ajaxURL = "../ajax/land.registration.system.data.aspx";
@@ -366,73 +394,81 @@
         var temp = "";
         switch (operation) {
             case "ReturnToControlDesk":
-                temp = "Dejar pendiente el 'siguiente estado' de este trámite.\n\n";
-                temp += "Este trámite ya tiene asignado el siguiente estado.\n\n" +
+            temp = "Dejar pendiente el 'siguiente estado' de este trámite.<br /><br />";
+            temp += "Este trámite ya tiene asignado el siguiente estado.<br /><br />" +
                     "Después de esta operación el trámite seguirá en mesa de control " +
-                    "pero el siguiente estado quedará pendiente de asignar.\n\n";
-                temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-                temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-                temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n";
-                temp += "Sig. estado:  " + getInnerText('ancNextStatus' + transactionId) + "\n\n";
+                    "pero el siguiente estado quedará pendiente de asignar.<br /><br />";
+            temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+            temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+            temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br />";
+            temp += "Sig. estado:  " + getInnerText('ancNextStatus' + transactionId) + "<br /><br />";
                 temp += "¿Dejo pendiente el siguiente estado de este trámite?";
                 break;
             case "ReceiveInControlDesk":
                 var responsible = getInnerText('ancResponsible' + transactionId);
-                temp = "Recibir el trámite en la mesa de control.\n\n";
-                temp += "Este trámite se recibirá en la mesa de control.\n\n" +
+                temp = "Recibir el trámite en la mesa de control.<br /><br />";
+                temp += "Este trámite se recibirá en la mesa de control.<br /><br />" +
                     "Se supone que " + responsible + " le está entregando físicamente los documentos de dicho trámite, " +
-                    "de lo contrario no debería ejecutar esta operación.\n\n";
-                temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-                temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-                temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+                    "de lo contrario no debería ejecutar esta operación.<br /><br />";
+                temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+                temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+                temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br /><br />";
                 temp += "¿Recibir el trámite en mesa de control?";
                 break;
             case "PullToControlDesk":
                 var responsible = getInnerText('ancResponsible' + transactionId);
-                temp = "Traer el trámite a la mesa de control.\n\n";
-                temp += "Este trámite se traerá a la mesa de control.\n\n" +
-                    "Se supone que " + responsible + " NO está laborando y que dejó este trámite en su bandeja de trabajo.\n\n" +
+                temp = "Traer el trámite a la mesa de control.<br /><br />";
+                temp += "Este trámite se traerá a la mesa de control.<br /><br />" +
+                  "Se supone que " + responsible + " NO está laborando y que dejó este trámite en su bandeja de trabajo.<br /><br />" +
                     "Quien ejecuta esta operación debe tener físicamente los documentos de dicho trámite, " +
                     "y asegurarse que " + responsible + " NO está en la oficina, " +
-                    "de lo contrario no debería ejecutar esta operación.\n\n";
-                temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-                temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-                temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n";
-                temp += "Fuera de la oficina:  " + responsible + "\n\n";
+                    "de lo contrario no debería ejecutar esta operación.<br /><br />";
+                temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+                temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+                temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br />";
+                temp += "Fuera de la oficina:  " + responsible + "<br /><br />";
                 temp += "¿Recibir el trámite de la persona que NO está laborando?";
                 break;
             case "Unarchive":
-                temp = "Desarchivar este trámite.\n\n" +
-                    "Este trámite se encuentra archivado.\n\n" +
-                    "Si tiene permisos, en el editor de trámites debe existir una opción para desarchivarlo.\n\n";
-                alert(temp);
+            temp = "Desarchivar este trámite.<br /><br />" +
+                    "Este trámite se encuentra archivado.<br /><br />" +
+                    "Si tiene permisos, en el editor de trámites debe existir una opción para desarchivarlo.<br /><br />";
+                showAlert(temp);
                 return;
             case "Nothing":
-                temp = "Por ahora no hay nada qué hacer con este trámite.\n\n" +
+            temp = "Por ahora no hay nada qué hacer con este trámite.<br /><br />" +
                     "El trámite se encuentra en un estado que no permite enviarlo " +
                     "o recibirlo en la mesa de control.";
-                alert(temp);
+                showAlert(temp);
                 return;
             case "Undefined":
-                temp = "Operación del tipo 'Undefined' en la mesa de control.\n\n" +
-                    "Esto representa un problema de programación en las reglas del sistema.\n\n" +
+            temp = "Operación del tipo 'Undefined' en la mesa de control.<br /><br />" +
+                    "Esto representa un problema de programación en las reglas del sistema.<br /><br />" +
                     "Favor de avisar esta situación a soporte lo antes posible.";
-                alert(temp);
+                showAlert(temp);
+
                 return;
             default:
                 return doTransactionOperation(transactionId);
         }
-        if (confirm(temp)) {
+        /*if (confirm(temp)) {
             var qs = "id=" + transactionId;
             qs += "|operation=" + operation;
             qs += "|notes=" + getElement("txtNotes" + transactionId).value;
             sendPageCommand("executeControlDeskOperation", qs);
+        }*/
+        showConfirm(temp, '', executeOp);
+        function executeOp() {
+          var qs = "id=" + transactionId;
+          qs += "|operation=" + operation;
+          qs += "|notes=" + getElement("txtNotes" + transactionId).value;
+          sendPageCommand("executeControlDeskOperation", qs);
         }
     }
     function doTransactionOperation(transactionId) {
         var newState = getElement("cboOperation" + transactionId).value;
         if (newState == "") {
-            alert("Requiero se seleccione el nuevo estado del trámite");
+          showAlert(msgModalP = 'Requiero se seleccione el nuevo estado del trámite', headerModal = "");
             return;
         }
         if (!validateNextTransactionState(transactionId, newState)) {
@@ -442,77 +478,88 @@
         if (newState == "R") {
             return receiveLRSTransaction(transactionId);
         } else if (newState == "P") {
-            temp = "Enviar este trámite a otra mesa de trabajo.\n\n";
-            temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-            temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-            temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+          temp = "Enviar este trámite a otra mesa de trabajo.<br /><br />";
+          temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+          temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+          temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br /><br />";
             temp += "¿Preparo este trámite para enviarlo a otra mesa de trabajo?";
         } else if (newState == "S") {
-            temp = "Enviar trámite a firma\n\n";
-            temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-            temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-            temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+          temp = "Enviar trámite a firma<br /><br />";
+          temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+          temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+          temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br /><br />";
             temp += "¿El trámite está listo para firma?";
         } else if (newState == "A") {
-            temp = "Enviar trámite a la mesa de digitalización y resguardo de documentos.\n\n";
-            temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-            temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-            temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+          temp = "Enviar trámite a la mesa de digitalización y resguardo de documentos.<br /><br />";
+          temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+          temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+          temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br /><br />";
             temp += "¿El trámite está revisado, firmado y listo para enviarse a la mesa de digitalización y resguardo de documentos?";
         } else if (newState == "D") {
-            temp = "Enviar trámite a mesa de entrega\n\n";
+          temp = "Enviar trámite a mesa de entrega<br /><br />";
             temp += "¿El trámite está listo para entregarlo al interesado?";
         } else if (newState == "C") {
-            temp = "Entregar el trámite al interesado\n\n";
-            temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-            temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-            temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+          temp = "Entregar el trámite al interesado<br /><br />";
+          temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+          temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+          temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br /><br />";
             temp += "¿Se está entregando el trámite al interesado?";
         } else if (newState == "L") {
             temp = "Devolver el trámite al interesado, ya que no procede\n\n";
-            temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-            temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-            temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+            temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+            temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+            temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br /><br />";
             temp += "¿Se va a devolver el trámite al interesado?";
         } else if (newState == "H") {
             temp = "Archivar este trámite\n\n";
-            temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-            temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-            temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+            temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+            temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+            temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br /><br />";
             temp += "¿Marco este trámite como archivado? (Ya no será posible hacerle cambios)";
         } else if (newState == "X") {
             temp = "Eliminar este trámite\n\n";
-            temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-            temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-            temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+            temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+            temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+            temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br /><br />";
             temp += "¿Elimino este trámite en forma definitiva?";
         } else {
             temp = "Enviar este trámite a otra parte del proceso:\n\n";
-            temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-            temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-            temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+            temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "<br />";
+            temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "<br />";
+            temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "<br /><br />";
             temp += "¿Muevo este trámite al estado seleccionado?";
         }
-        if (confirm(temp)) {
-            var qs = "id=" + transactionId;
-            qs += "|state=" + newState;
-            qs += "|notes=" + getElement("txtNotes" + transactionId).value;
-            sendPageCommand("changeTransactionStatus", qs);
+       //if (confirm(temp)) { 
+        z = showConfirm(temp,'', executeOp);
+ 
+        function executeOp(){
+          var qs = "id=" + transactionId;
+          qs += "|state=" + newState;
+          qs += "|notes=" + getElement("txtNotes" + transactionId).value;
+          sendPageCommand("changeTransactionStatus", qs);
         }
+   
     }
     function returnDocumentToMe(transactionId) {
-        var sMsg = "Regresar trámite a mi bandeja de pendientes\n\n";
-        sMsg += "¿Regreso el documento a la bandeja de trámites pendientes?";
-        if (confirm(sMsg)) {
-            sendPageCommand("returnDocumentToMe", "id=" + transactionId);
+      var sMsg = 'Regresar trámite a mi bandeja de pendientes<br /><br />';
+        sMsg += '¿Regreso el documento a la bandeja de trámites pendientes?';
+         //if (confirm(sMsg)) {
+        z = showConfirm(sMsg, '', executeOp);
+        function executeOp() {
+          sendPageCommand("returnDocumentToMe", "id=" + transactionId);
         }
+
     }
     function processsDocumentImages() {
-        var sMsg = "Esta operación procesará las imágenes pendientes de incorporar en el sistema.\n\n";
-        sMsg += "Dependiendo del número de imágenes, el proceso puede tardar varios minutos, incluso horas.\n\n";
+      var sMsg = "Esta operación procesará las imágenes pendientes de incorporar en el sistema.<br /><br />";
+      sMsg += "Dependiendo del número de imágenes, el proceso puede tardar varios minutos, incluso horas.<br /><br />";
         sMsg += "¿Proceso las imágenes pendientes?";
-        if (confirm(sMsg)) {
+        /*if (confirm(sMsg)) {
             sendPageCommand("processsDocumentImages");
+        }*/
+        z = showConfirm(sMsg, '', executeOp);
+        function executeOp() {
+          sendPageCommand("processsDocumentImages");
         }
     }
     function showTransactionEditor(transactionId) {
@@ -521,7 +568,7 @@
         createNewWindow(source);
     }
     function createObject() {
-        alert('La operación solicitada todavía no ha sido definida en el programa.');
+      showAlert(msgModalP = 'La operación solicitada todavía no ha sido definida en el programa.', headerModal = "");
         return false;
     }
     function loadData() {
@@ -543,9 +590,10 @@
     getElement('<%=cboResponsible.ClientID%>').value = '';
     }
   //var timeout = setTimeout("location.reload(true);", 300000);
-	/* ]]> */
+  
+  	/* ]]> */
+   
+
 	</script>
 </asp:Content>
-
-
 

@@ -98,8 +98,8 @@
 	            <option value="135">Certificados (Lety Palacios)</option>
               <option value="137">Comercio (Laura)</option>
               <option value="134">Copias certificadas</option>
-              <option value="141">Créditos (Javier Ceballos)</option>
-              <option value="140">Embargos (Alejandra)</option>
+              <option value="141">Créditos</option>
+              <option value="140">Embargos</option>
               <option value="144">Infonavit (Rubén)</option>
               <option value="143">Procede (Tere Roldán)</option>
 	            <option value="133">Sección 4ta</option>

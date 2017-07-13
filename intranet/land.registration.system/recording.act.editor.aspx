@@ -7,7 +7,8 @@
 <head runat="server">
 <title></title>
 <meta http-equiv="Expires" content="-1" />
-<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />  
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
