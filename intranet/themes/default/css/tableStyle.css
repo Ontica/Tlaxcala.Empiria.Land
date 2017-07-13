@@ -27,7 +27,7 @@ td.tbTitle {
   border-top: 1px solid #315c7c;
   border-left: 0;
   border-bottom: 0;
-  color: #ffffff;
+  color: white;
   background-color: #094e29;
   font-size: 8pt;
   padding: 2px 4px 2px 8px;
@@ -39,7 +39,7 @@ td.tbItem {
   border-top: 1px solid #315c7c;
   border-left: 1px solid #315c7c;
   border-bottom: 1px solid #315c7c;
-  background-color: #ffffff;
+  background-color: white;
   color: #1f1f1f;
   font-size: 8pt;
   word-wrap: break-word;
@@ -68,7 +68,7 @@ th.tbHeader {
   border-top: 1px solid #315c7c;
   border-left: 0;
   border-bottom: 0;
-  color: #ffffff;
+  color: white;
   background-color: #903030;
   font-size: 8pt;
   padding: 2px 4px 2px 8px;

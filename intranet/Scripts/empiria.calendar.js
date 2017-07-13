@@ -2,7 +2,6 @@
 function on_calendar_date_selected(value) {
   if (oCurrentCalendarDataSource != null) {
     oCurrentCalendarDataSource.value = value;
-    //document.all.ifraCalendar.style.visibility = "hidden";
     getElement("ifraCalendar").style.visibility = "hidden";
   }
   oCurrentCalendarDataSource = null;
@@ -15,19 +14,12 @@ function on_calendar_lost_focus() {
 }
 
 function on_calendar_resize(x, y) {
-  document.getElementById('ifraCalendar').width = x; //hage
+  document.getElementById('ifraCalendar').width = x; 
   document.getElementById('ifraCalendar').height = y;
 }
 
 function hideCalendar(event) {
-//  var oCalendar = document.all.ifraCalendar;
-//
-//	if (oCalendar.style.visibility == "visible") {
-//    //oCalendar.style.visibility = "hidden";
-//  }
-
-  //if (document.activeElement != document.all.ifraCalendar) {
-    if (document.activeElement != document.getElementById('ifraCalendar')) {//hage
+ if (document.activeElement != document.getElementById('ifraCalendar')) {
     getElement("ifraCalendar").style.visibility = "hidden";
   }
 }
@@ -39,7 +31,6 @@ function showCalendar(event, oDataSource, oImageSource, leftpx, toppx) {
     alert("Este control está deshabilitado.")
     return;
   }
-  //var oCalendar = document.all.ifraCalendar;
   var oCalendar = document.getElementById('ifraCalendar');//hage
   x = event.clientX;
   y = event.clientY;
@@ -47,9 +38,8 @@ function showCalendar(event, oDataSource, oImageSource, leftpx, toppx) {
   var parentX = oCalendar.contentWindow.parent.document.body.clientWidth;
   var parentY = oCalendar.contentWindow.parent.document.body.clientHeight;
 
-  //var calendarWidth = oCalendar.contentWindow.document.body.clientWidth;
-  var calendarWidth = oCalendar.contentWindow.document.clientWidth;//hage
-  var calendarHeight = oCalendar.contentWindow.document.clientHeight; //hage
+  var calendarWidth = oCalendar.contentWindow.document.clientWidth;
+  var calendarHeight = oCalendar.contentWindow.document.clientHeight;
 
   if ((x + calendarWidth) >= parentX) {
     x = x - calendarWidth;
@@ -84,36 +74,26 @@ function showCalendar(event, oDataSource, oImageSource, leftpx, toppx) {
     var InitialURL = window.location.href;///document.referrer;
     var url1 = window.location.href;
     var url2 = window.document.referrer;
-    console.log('UrlInicial-->:', InitialURL);
-    console.log('Url1-->:', url1);
-    console.log('Url2-->:', url2);
+
     var MyString = InitialURL.split("?");
 
-    console.log(MyString);
-    console.log('cadena[0] ', MyString[0]);///http://empiria.land/intranet/land.registration.system/recording.book.analyzer.aspx
+     //console.log('cadena[0] ', MyString[0]);///http://empiria.land/intranet/land.registration.system/recording.book.analyzer.aspx
 
     if (MyString[0] == 'http://empiria.land/intranet/land.registration.system/recording.book.analyzer.aspx')
     {
         var leftpxString = leftpx.split("p");
         var intLeftpx = parseInt(leftpxString); // int
-        console.log('intLeftpx ', intLeftpx);
         leftpx = intLeftpx + 800;
-        console.log('leftpx ', leftpx);
 
         var toppxString = toppx.split("p");
         var intToppx = parseInt(toppxString); // int
-        console.log('intToppx ', intToppx);
         toppx = intToppx + (-500)
-        console.log('toppx ', toppx);
-
+  
         leftpx = leftpx.toString();
         toppx = toppx.toString();
 
         leftpx = leftpx + 'px';
         toppx = toppx + 'px';
-
-        console.log('leftpx final ', leftpx);
-        console.log('toppx final ', toppx);
 
         oCalendar.style.left = leftpx;
         oCalendar.style.top = toppx;
@@ -122,8 +102,6 @@ function showCalendar(event, oDataSource, oImageSource, leftpx, toppx) {
         oCalendar.style.left = leftpx;
         oCalendar.style.top = toppx;
     }
-    console.log('1 ', oCalendar.style.left);
-    console.log('2 ', leftpx);
         
     oCalendar.focus();
 	}
