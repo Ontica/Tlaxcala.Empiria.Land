@@ -155,7 +155,7 @@
         window.open("../default.aspx", "_top", null, true);
       }
       <% if (Controller.Exception.Length != 0) { %>
-        alert("<%=Controller.Exception%>");
+      showAlert("<%=Controller.Exception%>");
       <% } %>
       if (getElement("txtUserId").value == "") {
         getElement("txtUserId").focus();

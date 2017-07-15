@@ -28,7 +28,7 @@ function showCalendar(event, oDataSource, oImageSource, leftpx, toppx) {
   event = event || window.event //For IE
 
   if (oDataSource.disabled) {
-    alert("Este control está deshabilitado.")
+    showAlert("Este control está deshabilitado.")
     return;
   }
   var oCalendar = document.getElementById('ifraCalendar');//hage

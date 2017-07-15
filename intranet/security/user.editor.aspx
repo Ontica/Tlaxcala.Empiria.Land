@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#"  EnableViewState="false" MasterPageFile="~/workplace/old.secondary.master" AutoEventWireup="true" Inherits="Empiria.Web.UI.Security.UserEditor" CodeFile="user.editor.aspx.cs" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <asp:Content ID="content" ContentPlaceHolderID="contentPlaceHolder" Runat="Server">
 <table class="editionTable">
   <tr><td class="subTitle">Información de la persona</td></tr>
@@ -120,7 +121,7 @@
         sendPageCommand("cancelEditionCmd");
         return;
       default:
-        alert('La operación \'' + operationName + '\' todavía no ha sido definida en el programa.');
+        showAlert('La operación \'' + operationName + '\' todavía no ha sido definida en el programa.');
         return;
     }
   }

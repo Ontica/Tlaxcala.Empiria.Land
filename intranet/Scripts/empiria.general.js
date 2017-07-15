@@ -88,7 +88,7 @@ function getElement(elementId) {
   if (element != undefined && element != null) {
     return element;
   } else {
-    alert("The element with Id '" + elementId + "' is not defined in the document.");
+    showAlert("The element with Id '" + elementId + "' is not defined in the document.");
     return null;
   }
 }
@@ -200,22 +200,22 @@ function setStatus(e) {
 }
 
 function showNotAllowedMessage() {
-  alert("Lo siento, el usuario registrado no cuenta con los permisos\nnecesarios para efectuar esta operación.");
+  showAlert("Lo siento, el usuario registrado no cuenta con los permisos\nnecesarios para efectuar esta operación.");
 }
 
 function showExceptionMsg(message) {
-  alert(message);
+  showAlert(message);
 }
 
 function showMsg(message) {
-  alert(message);
+  showAlert(message);
 }
 
 function showMessage(title, message) {
   var temp = title + "\n\n";
   temp += message;
 
-  alert(temp);
+  showAlert(temp);
 }
 
 function selectAllCheckboxes(checkBoxName) {
@@ -325,7 +325,7 @@ function ungrayImage(e) {
 
   function sendPageCommand(pageCommand) {
     if (gbSended) {
-      alert("Favor de intentar la operación deseada más tarde ya que\nexiste otro proceso en ejecución que primero debe concluir.");
+      showAlert("Favor de intentar la operación deseada más tarde ya que\nexiste otro proceso en ejecución que primero debe concluir.");
       return;
     }
     getElement("hdnEmpiriaPageCommandName").value = pageCommand;

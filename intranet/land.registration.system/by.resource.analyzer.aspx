@@ -2,6 +2,7 @@
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Import Namespace="Empiria.Land.Registration" %>
 <%@ Import Namespace="Empiria.Land.WebApp" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <!DOCTYPE html [<!ENTITY nbsp "&#160;">]>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
@@ -12,6 +13,7 @@
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/tableStyle.css" type="text/css" rel="stylesheet" />
+<link href="./themes/default/css/modal.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
 <script type="text/javascript" src="../scripts/empiria.general.js"></script>
 <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
@@ -111,8 +113,10 @@
         </table>
       </div> <!--divContent!-->
     </div> <!-- end divBody !-->
+ 
   </div> <!-- end divCanvas !-->
 </form>
+  
 </body>
   <script type="text/javascript">
   /* <![CDATA[ */
@@ -165,7 +169,7 @@
         window.location.reload(false);
         return;
       default:
-        alert("La operación '" + command + "' no ha sido definida en el programa.");
+        showAlert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
     }
     if (success) {
@@ -175,7 +179,7 @@
   }
 
   function onShowImageInFullScreen() {
-    alert("onShowImageInFullScreen");
+    showAlert("onShowImageInFullScreen");
   }
 
   function onSelectImageSet(imageSetId) {

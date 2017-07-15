@@ -319,7 +319,7 @@
       case 'showTargetActEditor':
         return showTargetActEditor();
       default:
-        alert("La operación '" + command + "' todavía no ha sido definida en el editor de actos jurídicos.");
+        showAlert("La operación '" + command + "' todavía no ha sido definida en el editor de actos jurídicos.");
         return;
     }
     if (success) {
@@ -331,7 +331,7 @@
   var olookupResource = null;
   function lookupResource() {
     if (getElement('txtLookupResource').value.length == 0) {
-      alert("Requiero se proporcione el folio real o número de documento para hacer la búsqueda");
+      showAlert("Requiero se proporcione el folio real o número de documento para hacer la búsqueda");
       return;
     }
 
@@ -343,14 +343,14 @@
 
     if (olookupResource.Id == -1) {
       _selectedResource = null;
-      alert("No existe ningún predio o asociación con el folio real proporcionado.");
+      showAlert("No existe ningún predio o asociación con el folio real proporcionado.");
       getElement('divSelectedLookupResource').style.display = 'none';
       getElement("chkSelectPredecentInPhysicalBooks").disabled = false;
       getElement("txtLookupResource").readOnly = false;
       return false;
     } else {
       _selectedResource = olookupResource.Id;
-      alert("Folio real encontrado.");
+      showAlert("Folio real encontrado.");
       getElement('divSelectedLookupResource').style.display = 'inline';
       getElement("divPhysicalRecordingSelector").style.display = 'none';
       getElement("txtLookupResource").readOnly = true;
@@ -391,10 +391,10 @@
     var cadastralKey = getElement('txtCadastralKey').value;
 
     if (cadastralKey == '') {
-      alert("Requiero se proporcione la clave catastral del predio.");
+      showAlert("Requiero se proporcione la clave catastral del predio.");
       return;
     } else {
-      alert("Desafortunadamente no tenemos conexión con el sistema de catastro.");
+      showAlert("Desafortunadamente no tenemos conexión con el sistema de catastro.");
     }
   }
 
@@ -419,15 +419,15 @@
 
   function assertAppendRecordingActIsPossible() {
     <% if (!base.IsHistoricEdition && base.Transaction.IsEmptyInstance) { %>
-    alert("Este control no está ligado a un trámite válido.");
+    showAlert("Este control no está ligado a un trámite válido.");
     return false;
     <% } %>
     <% if (base.Document.IsEmptyInstance) { %>
-    alert("Primero requiero se ingresen los datos de la escritura o documento que se va a inscribir.");
+    showAlert("Primero requiero se ingresen los datos de la escritura o documento que se va a inscribir.");
     return false;
     <% } %>
     <% if (!base.IsReadyForEdition()) { %>
-    alert("No es posible inscribir en libros debido a que el trámite no está en un estado válido para ello, o bien, no cuenta con los permisos necesarios para efectuar esta operación.");
+    showAlert("No es posible inscribir en libros debido a que el trámite no está en un estado válido para ello, o bien, no cuenta con los permisos necesarios para efectuar esta operación.");
     return false;
     <% } %>
     return true;
@@ -759,11 +759,11 @@
     var recordingId = getElement('cboPrecedentRecording').value;
 
     if (bookId.length == 0 || bookId == "-1") {
-      alert("Primero necesito se seleccione un libro de la lista de arriba.");
+      showAlert("Primero necesito se seleccione un libro de la lista de arriba.");
       return;
     }
     if (recordingId.length == 0 || recordingId == "-1") {
-      alert("Necesito se seleccione una partida de la lista.");
+      showAlert("Necesito se seleccione una partida de la lista.");
       return;
     }
     var url = "../land.registration.system/recording.book.analyzer.aspx?bookId=" + bookId +
@@ -775,7 +775,7 @@
   function showPrecedentProperty() {
     var propertyId = getElement('cboPrecedentProperty').value;
     if (propertyId.length == 0 || propertyId == "-1" || propertyId == "0") {
-      alert("Necesito se seleccione un predio de la lista.");
+      showAlert("Necesito se seleccione un predio de la lista.");
       return;
     }
     var url = "../land.registration.system/property.editor.aspx?propertyId=" + propertyId +
@@ -884,39 +884,39 @@
     var recordingAct = getComboOptionText(getElement('cboRecordingActType'));
 
     if (getElement("cboRecordingActTypeCategory").value.length == 0) {
-      alert("Necesito se seleccione de la lista la categoría del acto jurídico que va a agregarse al documento.");
+      showAlert("Necesito se seleccione de la lista la categoría del acto jurídico que va a agregarse al documento.");
       getElement('cboRecordingActTypeCategory').focus();
       return false;
     }
     if (getElement("cboRecordingActType").value == "") {
-      alert("Requiero se seleccione de la lista el acto jurídico que va a agregarse al documento.");
+      showAlert("Requiero se seleccione de la lista el acto jurídico que va a agregarse al documento.");
       getElement('cboRecordingActType').focus();
       return false;
     }
     <%  if (!base.IsHistoricEdition &&
             base.Transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Elaboration) { %>
       if (getElement("cboRecordingActType").value != "2201") {
-        alert("En elaboración de certificados sólo es posible agregar el acto 'Asignación de folio real'.");
+        showAlert("En elaboración de certificados sólo es posible agregar el acto 'Asignación de folio real'.");
         getElement('cboRecordingActType').focus();
         return false;
       }
     <% } %>
     if (getElement("cboRecordingActType").value == "2201") {
       if (getElement('cboPrecedentRecording').value != "-1" || getSelectedResource() != null) {
-        alert("No es posible asignar un folio real sobre un pedio que ya tiene folio.");
+        showAlert("No es posible asignar un folio real sobre un pedio que ya tiene folio.");
         getElement('cboPrecedentRecording').focus();
         return false;
       }
     }
 
     if (getElement("cboRecordingTaskType").value.length == 0) {
-      alert("Requiero se proporcione la información del predio o recurso sobre el que se aplicará el acto jurídico " + recordingAct + ".");
+      showAlert("Requiero se proporcione la información del predio o recurso sobre el que se aplicará el acto jurídico " + recordingAct + ".");
       getElement('cboRecordingTaskType').focus();
       return false;
     }
     if (oCurrentRecordingRule.AskForResourceName &&
         getElement('txtResourceName').value.length == 0) {
-      alert("Necesito se proporcione el nombre de la asociación o sociedad civil.");
+      showAlert("Necesito se proporcione el nombre de la asociación o sociedad civil.");
       getElement('txtResourceName').focus();
       return false;
     }
@@ -951,19 +951,19 @@
 
   function validatePartition() {
     if (getElement('cboPropertyPartitionType').value.length == 0) {
-      alert("Necesito conocer el tipo de fracción que se desea crear.");
+      showAlert("Necesito conocer el tipo de fracción que se desea crear.");
       getElement('cboPropertyPartitionType').focus();
       return false;
     }
     if (!getElement('chkNoNumberPartition').checked &&
          getElement('txtPartitionNo').value.length == 0) {
-      alert("Necesito conocer el número de " + getElement('cboPropertyPartitionType').value + ".");
+      showAlert("Necesito conocer el número de " + getElement('cboPropertyPartitionType').value + ".");
       getElement('txtPartitionNo').focus();
       return false;
     }
     if (getElement('chkGeneratePartitionRank').checked &&
         getElement('txtRepeatPartitionUntil').value.length == 0) {
-      alert("Necesito conocer el número de " + getElement('cboPropertyPartitionType').value +
+      showAlert("Necesito conocer el número de " + getElement('cboPropertyPartitionType').value +
             " donde termina el rango que se desea generar.");
       getElement('txtRepeatPartitionUntil').focus();
       return false;
@@ -977,13 +977,13 @@
     }
     // Validate data for target act creation
     if (getElement('cboTargetAct').value.length == 0) {
-      alert("Necesito se seleccione el acto jurídico a cancelar o modificar.");
+      showAlert("Necesito se seleccione el acto jurídico a cancelar o modificar.");
       getElement('cboTargetAct').focus();
       return false;
     }
     // Validate data for target act creation
     if (getElement('cboTargetActSection').value.length == 0) {
-      alert("Necesito se seleccione el distrito y sección del volumen donde está inscrito el acto jurídico que se va a cancelar o modificar.");
+      showAlert("Necesito se seleccione el distrito y sección del volumen donde está inscrito el acto jurídico que se va a cancelar o modificar.");
       getElement('cboTargetActSection').focus();
       return false;
     }
@@ -994,23 +994,23 @@
       return true;
     }
     if (getElement('cboTargetActPhysicalBook').value.length == 0) {
-      alert("Necesito se seleccione el volumen donde se encuentra inscrito el acto jurídico que se va a cancelar o modificar.");
+      showAlert("Necesito se seleccione el volumen donde se encuentra inscrito el acto jurídico que se va a cancelar o modificar.");
       getElement('cboTargetActPhysicalBook').focus();
       return false;
     }
     if (getElement('cboTargetActRecording').value.length == 0) {
-      alert("Necesito se seleccione la partida donde se encuentra inscrito el acto jurídico que se va a cancelar o modificar.");
+      showAlert("Necesito se seleccione la partida donde se encuentra inscrito el acto jurídico que se va a cancelar o modificar.");
       getElement('cboTargetActRecording').focus();
       return false;
     }
     if (getElement('cboTargetActRecording').value == "-1") {    // create physical recording
       if (getElement('txtTargetActPhysicalRecordingNo').value.length == 0) {
-        alert("Necesito se capture el número de partida donde está inscrito que se va a cancelar o modificar.");
+        showAlert("Necesito se capture el número de partida donde está inscrito que se va a cancelar o modificar.");
         getElement('txtTargetActPhysicalRecordingNo').focus();
         return false;
       }
       if (!isValidRecordingNumber(getElement('txtTargetActPhysicalRecordingNo').value)) {
-        alert("El número de partida donde está inscrito el acto que se va a cancelar o modificar " +
+        showAlert("El número de partida donde está inscrito el acto que se va a cancelar o modificar " +
               "tiene un formato que no reconozco.\nEjemplos de formatos válidos son: 123 o 234 o 123/4 o 34/123/79.");
         getElement('txtTargetActPhysicalRecordingNo').focus();
         return false;
@@ -1053,37 +1053,37 @@
     var recordingAct = getComboOptionText(getElement('cboRecordingActType'));
 
     if (getElement('cboPrecedentRecordingSection').value.length == 0) {
-      alert("Necesito conocer el distrito o sección donde se encuentra el antecedente registral del predio.");
+      showAlert("Necesito conocer el distrito o sección donde se encuentra el antecedente registral del predio.");
       getElement('cboPrecedentRecordingSection').focus();
       return false;
     }
     if (getElement('cboPrecedentRecordingBook').value.length == 0) {
-      alert("Requiero se seleccione el libro registral donde está inscrito el predio sobre el que se aplicará el acto jurídico " + recordingAct + ".");
+      showAlert("Requiero se seleccione el libro registral donde está inscrito el predio sobre el que se aplicará el acto jurídico " + recordingAct + ".");
       getElement('cboPrecedentRecordingBook').focus();
       return false;
     }
     if (getElement('cboPrecedentRecording').value.length == 0) {
-      alert("Necesito se seleccione de la lista el número de partida donde está registrado el antecedente del predio.");
+      showAlert("Necesito se seleccione de la lista el número de partida donde está registrado el antecedente del predio.");
       getElement('cboPrecedentRecording').focus();
       return false;
     }
     if (getElement('cboPrecedentRecording').value == "-1" &&
         getElement('txtQuickAddRecordingNumber').value.length == 0) {
-      alert("Necesito se capture el número de partida que se va a agregar y que corresponde al antecedente registral del predio sobre el que se aplicará el acto jurídico.");
+      showAlert("Necesito se capture el número de partida que se va a agregar y que corresponde al antecedente registral del predio sobre el que se aplicará el acto jurídico.");
       getElement('txtQuickAddRecordingNumber').focus();
       return false;
     }
     if (getElement('cboPrecedentRecording').value == "-1" &&
         getElement('txtQuickAddRecordingNumber').value.length != 0 &&
         !isValidRecordingNumber(getElement('txtQuickAddRecordingNumber').value)) {
-      alert("El número de partida tiene un formato que no reconozco.\nDebería ser un número.");
+      showAlert("El número de partida tiene un formato que no reconozco.\nDebería ser un número.");
       getElement('txtQuickAddRecordingNumber').focus();
       return false;
     }
     if (getElement('cboPrecedentRecording').value.length != 0 &&
         getElement('cboPrecedentRecording').value != "-1" &&
         getElement('cboPrecedentProperty').value.length == 0) {
-      alert("Necesito se seleccione de la lista el folio del predio al que aplicará el acto jurídico " + recordingAct + ".");
+      showAlert("Necesito se seleccione de la lista el folio del predio al que aplicará el acto jurídico " + recordingAct + ".");
       getElement('cboPrecedentProperty').focus();
       return false;
     }

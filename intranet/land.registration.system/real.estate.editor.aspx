@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.RealEstateEditor" CodeFile="real.estate.editor.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
@@ -9,6 +10,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
   <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+    <link href="../themes/default/css/modal.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
@@ -159,6 +161,10 @@
   </table>
 </div>
 </form>
+   <!-- The Modal -->
+              <!-- Modal content -->
+              <uc:AlertBox id="alerbox" runat="server"/>
+              <!-- end The Modal -->
 </body>
 <script type="text/javascript">
 
@@ -174,12 +180,12 @@
       case 'saveRealEstate':
         return saveRealEstate();
       case 'searchCadastralNumber':
-        alert("La búsqueda de claves catastrales no está disponible en este momento.");
+        showAlert("La búsqueda de claves catastrales no está disponible en este momento.");
         return;
       case 'cancelEdition':
         return cancelEdition();
       default:
-        alert("La operación '" + command + "' no ha sido definida en el programa.");
+        showAlert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
     }
     if (success) {
@@ -195,7 +201,7 @@
       sMsg += 'Si la información del predio cambió desde el último acto jurídico registrado ';
       sMsg += 'entonces se puede agregar antes de este acto, un acto jurídico de ';
       sMsg += '\'Actualización de los datos del predio\' o alguno otro similar.';
-      alert(sMsg);
+      showAlert(sMsg);
       return;
     <% } %>
     disableEditionFields(false);
@@ -257,27 +263,27 @@
 
   function validateProperty() {
     if (getElement("cboRealEstateKind").value.length == 0) {
-      alert("Necesito se seleccione de la lista el tipo de predio.");
+      showAlert("Necesito se seleccione de la lista el tipo de predio.");
       return false;
     }
     if (getElement("cboMunicipality").value.length == 0) {
-      alert("Requiero se seleccione de la lista el municipio\ndonde se encuentra ubicado el predio.");
+      showAlert("Requiero se seleccione de la lista el municipio\ndonde se encuentra ubicado el predio.");
       return false;
     }
     if (getElement("cboLotSizeUnit").value.length == 0) {
-      alert("Necesito conocer la unidad de medida de la superficie total del predio.");
+      showAlert("Necesito conocer la unidad de medida de la superficie total del predio.");
       return false;
     }
     if (getElement("txtLotSize").value.length == 0 &#38;&#38; getElement("cboLotSizeUnit").value > 0) {
-      alert("Necesito conocer la superficie total del predio.");
+      showAlert("Necesito conocer la superficie total del predio.");
       return false;
     }
     if (getElement("txtLotSize").value.length != 0 &#38;&#38; getElement("cboLotSizeUnit").value == "-2") {
-      alert("La superficie total está marcada como 'No consta' pero el valor de la misma sí fue proporcionado.");
+      showAlert("La superficie total está marcada como 'No consta' pero el valor de la misma sí fue proporcionado.");
       return false;
     }
     if (!isNumeric(getElement("txtLotSize")) &#38;&#38; getElement("cboLotSizeUnit").value > 0) {
-      alert("No reconozco la superficie total del predio.");
+      showAlert("No reconozco la superficie total del predio.");
       return false;
     }
     return true;

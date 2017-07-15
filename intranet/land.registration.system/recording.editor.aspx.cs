@@ -298,7 +298,7 @@ namespace Empiria.Land.WebApp {
     }
 
     private void SetMessageBox(string msg) {
-      OnLoadScript += "alert('" + msg + "');";
+      OnLoadScript += "showAlert('" + msg + "');";
     }
 
     private void SetRefreshPageScript() {

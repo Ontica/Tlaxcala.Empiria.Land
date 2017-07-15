@@ -2,6 +2,7 @@
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyEditorControl" src="../land.registration.system.controls/recording.party.editor.control.ascx" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyViewerControl" src="../land.registration.system.controls/recording.party.viewer.control.ascx" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
@@ -11,6 +12,7 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+   <link href="../themes/default/css/modal.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
@@ -149,13 +151,17 @@
     </td>
   </tr>
 </table>
+        <!-- The Modal -->
+              <!-- Modal content -->
+              <uc:AlertBox id="alerbox" runat="server"/>
+              <!-- end The Modal -->
 </div>
 </form>
 <div><span id="span" runat="server"></span></div>
-
-<iframe id="ifraCalendar" style="z-index:99;visibility:hidden;position:relative; width:225px;  height:160px;"
+  <iframe id="ifraCalendar" style="z-index:99;visibility:hidden;position:relative; width:225px;  height:160px;"
     marginheight="0" marginwidth="0" frameborder="0" scrolling="no" src="../user.controls/calendar.aspx" width="100%">
 </iframe>
+
 </body>
 <script type="text/javascript">
 
@@ -174,7 +180,7 @@
       case 'deleteRecordingAct':
         return deleteRecordingAct(arguments[1]);
       case 'deleteBookRecording':
-        alert(arguments[1]);
+        showAlert(arguments[1]);
         return deleteBookRecording(arguments[1]);
 
       case 'editDocument':
@@ -215,7 +221,7 @@
         return;
 
       default:
-        alert("La operación '" + command + "' no ha sido definida en el programa.");
+        showAlert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
     }
     if (success) {
@@ -226,7 +232,7 @@
 
   function closeDocument() {
     <% if (!base.CanCloseDocument()) { %>
-      alert("No es posible cerrar el documento ya que no está abierto para registro en libros, " +
+    showAlert("No es posible cerrar el documento ya que no está abierto para registro en libros, " +
             "o no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
@@ -242,7 +248,7 @@
 
   function openDocument() {
     <% if (!base.CanOpenDocument()) { %>
-      alert("No es posible abrir el documento ya que no cuenta con los permisos necesarios para efectuar esta operación.");
+    showAlert("No es posible abrir el documento ya que no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
     if (!validateIfCanBeOpened()) {
@@ -287,7 +293,7 @@
     var recordingBookId = getElement(selectBoxControlName).value;
 
     if (!recordingBookId || recordingBookId.length == 0) {
-      alert('Se requiere seleccionar un volumen registral de la lista.');
+      showAlert('Se requiere seleccionar un volumen registral de la lista.');
       return;
     }
     var url = "../ajax/land.registration.system.data.aspx";
@@ -300,7 +306,7 @@
       gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow,
                                                    "./image.set.viewer.aspx?id=" + imageSetId, false);
     } else {
-      alert("El volumen seleccionado no ha sido digitalizado.");
+      showAlert("El volumen seleccionado no ha sido digitalizado.");
     }
   }
 
@@ -324,7 +330,7 @@
 
   function editDocument() {
     <% if (!IsReadyForEdition()) { %>
-      alert("No es posible editar el documento ya que no está abierto para registro en libros, " +
+    showAlert("No es posible editar el documento ya que no está abierto para registro en libros, " +
             "o no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
@@ -353,7 +359,7 @@
 
   function deleteRecordingAct(recordingActId) {
     <% if (!IsReadyForEdition()) { %>
-      alert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, " +
+    showAlert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, " +
             "o no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
@@ -365,7 +371,7 @@
 
   function deleteBookRecording(recordingId) {
     <% if (!IsReadyForEdition()) { %>
-      alert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, " +
+    showAlert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, " +
             "o no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
@@ -383,7 +389,7 @@
 
   function editResource(resourceId, recordingActId) {
     if (resourceId == null || resourceId.length == 0) {
-      alert("Requiero se seleccione el predio a consultar.");
+      showAlert("Requiero se seleccione el predio a consultar.");
       return;
     }
     if (recordingActId == null || recordingActId.length == 0) {
@@ -397,20 +403,20 @@
 
   function saveDocument() {
     <% if (transaction.IsEmptyInstance) { %>
-    alert("Este control no está ligado a un trámite válido.");
+    showAlert("Este control no está ligado a un trámite válido.");
     return;
     <% } %>
     <% if (!IsReadyForEdition()) { %>
-    alert("No es posible modificar este documento debido a que no está en un estado válido para ello, o bien, " +
+    showAlert("No es posible modificar este documento debido a que no está en un estado válido para ello, o bien, " +
           "no cuenta con los permisos necesarios para efectuar esta operación.");
     return false;
     <% } %>
     if (getElement('cboRecordingType').value.length == 0) {
-      alert("Requiero se proporcione el tipo de documento.");
+      showAlert("Requiero se proporcione el tipo de documento.");
       return false;
     }
     if (getElement('cboSheetsCount').value.length == 0) {
-      alert("Necesito conocer el número de hojas que tiene el documento, incluyendo la hoja donde irán los sellos.");
+      showAlert("Necesito conocer el número de hojas que tiene el documento, incluyendo la hoja donde irán los sellos.");
       return false;
     }
     if (!<%=oRecordingDocumentEditor.ClientID%>_validate('<%=transaction.PresentationTime.ToString("dd/MMM/yyyy")%>')) {
@@ -427,7 +433,7 @@
 
   function viewGlobalRecordingSeal() {
     <% if (transaction.IsEmptyInstance || transaction.Document.IsEmptyInstance) { %>
-    alert("Primero requiero se ingresen los datos de la escritura o documento que se va a inscribir.");
+    showAlert("Primero requiero se ingresen los datos de la escritura o documento que se va a inscribir.");
     return;
     <% } %>
     var url = "../land.registration.system/recording.seal.aspx?transactionId=<%=transaction.Id%>&#38;id=-1";

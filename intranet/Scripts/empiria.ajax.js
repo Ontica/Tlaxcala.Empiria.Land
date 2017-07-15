@@ -109,7 +109,7 @@ function invokeAjaxValidator(url) {
   if (ajaxResult.indexOf('¿') != -1 || ajaxResult.indexOf('?') != -1) {
     return confirm(ajaxResult);
   } else {
-    alert(ajaxResult);
+    showAlert(ajaxResult);
     return false;
   }
 }
@@ -180,7 +180,7 @@ function HttpClient() { }
     onError: function(error) {
       window.status = '';
       document.body.style.cursor = "auto";
-      alert("Ocurrió un problema:\n\n" + error);
+      showAlert("Ocurrió un problema:\n\n" + error);
     },
 
     // method to initialize an XMLHttpRequest
@@ -200,7 +200,7 @@ function HttpClient() { }
           }
         }  // for
         if (!success) {
-          alert("No puedo crear un objeto de comunicación 'XmlHttpRequest' con el servidor.");
+          showAlert("No puedo crear un objeto de comunicación 'XmlHttpRequest' con el servidor.");
         }
       }  // main-catch
     },
@@ -229,7 +229,7 @@ function HttpClient() { }
         sMsg += "inesperados o fallas en la operación del sistema.";
         sMsg += "Por seguridad de la aplicación, esta página se cerrará automáticamente.";
         document.body.style.cursor = "auto";
-        alert(sMsg);
+        showAlert(sMsg);
         window.close();
         return null;
       }
@@ -240,7 +240,7 @@ function HttpClient() { }
         sMsg += "nuevamente a la aplicación desde la página de inicio.\n\n";
         sMsg += "Por seguridad de la aplicación, esta página se cerrará automáticamente.";
         document.body.style.cursor = "auto";
-        alert(sMsg);
+        showAlert(sMsg);
         window.close();
         return null;
       }
@@ -277,7 +277,7 @@ function HttpClient() { }
           }
           return;
         default:
-          alert("La invocación del método vía Ajax, regresó el estado " + this.xmlhttp.readyState + ", mismo que no reconozco.");
+          showAlert("La invocación del método vía Ajax, regresó el estado " + this.xmlhttp.readyState + ", mismo que no reconozco.");
           return;
       } // switch
     }

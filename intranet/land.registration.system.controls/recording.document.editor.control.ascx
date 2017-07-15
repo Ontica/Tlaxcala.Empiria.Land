@@ -229,32 +229,32 @@
 
   function <%=this.ClientID%>_validateNotaryRecording(presentationDate) {
     if (getElement("<%=cboNotaryDocIssuePlace.ClientID%>").value.length == 0) {
-      alert("Requiero se proporcione la ciudad a la que pertenece la\nnotaría donde se efectuó la protocolización.")
+      showAlert("Requiero se proporcione la ciudad a la que pertenece la\nnotaría donde se efectuó la protocolización.")
       return false;
     }
     if (getElement("<%=cboNotaryDocIssueOffice.ClientID%>").value.length == 0) {
-      alert("Requiero se proporcione la notaría donde se efectuó la protocolización.")
+      showAlert("Requiero se proporcione la notaría donde se efectuó la protocolización.")
       return false;
     }
     if (getElement("<%=cboNotaryDocIssuedBy.ClientID%>").value.length == 0) {
-      alert("Necesito se proporcione el nombre del notario que protocolizó la inscripción.")
+      showAlert("Necesito se proporcione el nombre del notario que protocolizó la inscripción.")
       return false;
     }
     if (getElement("<%=txtNotaryDocBook.ClientID%>").value.length == 0) {
-      alert("Requiero conocer el número de volumen donde está protocolizada la inscripción.")
+      showAlert("Requiero conocer el número de volumen donde está protocolizada la inscripción.")
       return false;
     }
     if (getElement("<%=txtNotaryDocNumber.ClientID%>").value.length == 0) {
-      alert("Necesito se proporcione el número de escritura que le corresponde a esta inscripción.")
+      showAlert("Necesito se proporcione el número de escritura que le corresponde a esta inscripción.")
       return false;
     }
     if (getElement("<%=txtNotaryDocIssueDate.ClientID%>").value.length != 0) {
       if (!isDate(getElement('<%=txtNotaryDocIssueDate.ClientID%>'))) {
-        alert("No reconozco la fecha en que fue protocolizada la inscripción.");
+        showAlert("No reconozco la fecha en que fue protocolizada la inscripción.");
         return false;
       }
       if (!isValidDatePeriod(getElement('<%=txtNotaryDocIssueDate.ClientID%>').value, presentationDate)) {
-        alert("La fecha de protocolización de la inscripción no puede ser posterior a su fecha de presentación.");
+        showAlert("La fecha de protocolización de la inscripción no puede ser posterior a su fecha de presentación.");
         return false;
       }
     } else {
@@ -267,34 +267,34 @@
 
   function <%=this.ClientID%>_validateNotaryOfficialLetter(presentationDate) {
     if (getElement("<%=cboNotaryOfficialLetterSubtype.ClientID%>").value.length == 0) {
-      alert("Requiero se proporcione el tipo de oficio.");
+      showAlert("Requiero se proporcione el tipo de oficio.");
       return false;
     }
     if (getElement("<%=txtNotaryDocNumber.ClientID%>").value.length == 0) {
       getElement("<%=txtNotaryDocNumber.ClientID%>").value = "S/N";
     }
     if (getElement("<%=txtNotaryOfficialLetterIssueDate.ClientID%>").value.length == 0) {
-      alert("Necesito se proporcione la fecha del oficio.")
+      showAlert("Necesito se proporcione la fecha del oficio.")
       return false;
     }
     if (!isDate(getElement('<%=txtNotaryOfficialLetterIssueDate.ClientID%>'))) {
-      alert("No reconozco la fecha del oficio.");
+      showAlert("No reconozco la fecha del oficio.");
       return false;
     }
     if (!isValidDatePeriod(getElement('<%=txtNotaryOfficialLetterIssueDate.ClientID%>').value, presentationDate)) {
-      alert("La fecha del oficio no puede ser posterior a su fecha de presentación.");
+      showAlert("La fecha del oficio no puede ser posterior a su fecha de presentación.");
       return false;
     }
     if (getElement("<%=cboNotaryOfficialLetterIssuePlace.ClientID%>").value.length == 0) {
-      alert("Requiero se proporcione la ciudad a la que pertenece la\nnotaría que envió el oficio.")
+      showAlert("Requiero se proporcione la ciudad a la que pertenece la\nnotaría que envió el oficio.")
       return false;
     }
     if (getElement("<%=cboNotaryOfficialLetterIssueOffice.ClientID%>").value.length == 0) {
-      alert("Requiero se proporcione la notaría que envió el oficio.")
+      showAlert("Requiero se proporcione la notaría que envió el oficio.")
       return false;
     }
     if (getElement("<%=cboNotaryOfficialLetterIssuedBy.ClientID%>").value.length == 0) {
-      alert("Necesito se proporcione el nombre del notario que firmó el oficio.")
+      showAlert("Necesito se proporcione el nombre del notario que firmó el oficio.")
       return false;
     }
     return true;
@@ -302,20 +302,20 @@
 
   function <%=this.ClientID%>_validateTitleRecording(presentationDate) {
     if (getElement("<%=txtPropTitleDocNumber.ClientID%>").value.length == 0) {
-      alert("Necesito se proporcione el número de título de propiedad.")
+      showAlert("Necesito se proporcione el número de título de propiedad.")
       return false;
     }
     if (getElement("<%=cboPropTitleDocIssuedBy.ClientID%>").value.length == 0) {
-      alert("Necesito se proporcione el nombre del funcionario que expidió el título de propiedad.")
+      showAlert("Necesito se proporcione el nombre del funcionario que expidió el título de propiedad.")
       return false;
     }
     if (getElement("<%=txtPropTitleIssueDate.ClientID%>").value.length != 0) {
       if (!isDate(getElement('<%=txtPropTitleIssueDate.ClientID%>'))) {
-        alert("No reconozco la fecha del acta de asamblea.");
+        showAlert("No reconozco la fecha del acta de asamblea.");
         return false;
       }
       if (!isValidDatePeriod(getElement('<%=txtPropTitleIssueDate.ClientID%>').value, presentationDate)) {
-        alert("La fecha del acta de asamblea no puede ser posterior a la fecha de presentación de la inscripción.");
+        showAlert("La fecha del acta de asamblea no puede ser posterior a la fecha de presentación de la inscripción.");
         return false;
       }
     } else {
@@ -324,11 +324,11 @@
       }
     }
     if (getElement("<%=cboPropTitleIssueOffice.ClientID%>").value.length == 0) {
-      alert("Necesito se proporcione la dependencia en donde estaba inscrita la propiedad.")
+      showAlert("Necesito se proporcione la dependencia en donde estaba inscrita la propiedad.")
       return false;
     }
     if (getElement("<%=txtPropTitleStartSheet.ClientID%>").value.length == 0) {
-      alert("Requiero se proporcione el folio de inscripción del predio dentro de la dependencia seleccionada.")
+      showAlert("Requiero se proporcione el folio de inscripción del predio dentro de la dependencia seleccionada.")
       return false;
     }
     return true;
@@ -336,36 +336,36 @@
 
   function <%=this.ClientID%>_validateJudicialRecording(presentationDate) {
     if (getElement("<%=cboJudicialDocSubtype.ClientID%>").value.length == 0) {
-      alert("Requiero se proporcione el tipo de documento.")
+      showAlert("Requiero se proporcione el tipo de documento.")
       return false;
     }
     if (getElement("<%=cboJudicialDocIssuePlace.ClientID%>").value.length == 0) {
-      alert("Requiero se proporcione la ciudad a la que pertenece la dependencia que envió la orden o resolución de registro.")
+      showAlert("Requiero se proporcione la ciudad a la que pertenece la dependencia que envió la orden o resolución de registro.")
       return false;
     }
     if (getElement("<%=cboJudicialDocIssueOffice.ClientID%>").value.length == 0) {
-      alert("Requiero se seleccione de la lista la dependencia que envió la orden de registro.")
+      showAlert("Requiero se seleccione de la lista la dependencia que envió la orden de registro.")
       return false;
     }
     if (getElement("<%=cboJudicialDocIssuedBy.ClientID%>").value.length == 0) {
-      alert("Necesito se seleccione el nombre del funcionario público que emitió la orden o resolución de registro.")
+      showAlert("Necesito se seleccione el nombre del funcionario público que emitió la orden o resolución de registro.")
       return false;
     }
     if (getElement("<%=txtJudicialDocBook.ClientID%>").value.length == 0) {
-      alert("Requiero conocer el número de expediente relacionado con la orden o resolución de registro.")
+      showAlert("Requiero conocer el número de expediente relacionado con la orden o resolución de registro.")
       return false;
     }
     if (getElement("<%=txtJudicialDocNumber.ClientID%>").value.length == 0) {
-      alert("Necesito se proporcione el número de oficio relacionado con la orden o resolución de registro.")
+      showAlert("Necesito se proporcione el número de oficio relacionado con la orden o resolución de registro.")
       return false;
     }
     if (getElement("<%=txtJudicialDocIssueDate.ClientID%>").value.length != 0) {
       if (!isDate(getElement('<%=txtJudicialDocIssueDate.ClientID%>'))) {
-        alert("No reconozco la fecha del oficio.");
+        showAlert("No reconozco la fecha del oficio.");
         return false;
       }
       if (!isValidDatePeriod(getElement('<%=txtJudicialDocIssueDate.ClientID%>').value, presentationDate)) {
-        alert("La fecha del oficio no puede ser posterior a la fecha de registro de la inscripción.");
+        showAlert("La fecha del oficio no puede ser posterior a la fecha de registro de la inscripción.");
         return false;
       }
     } else {
@@ -378,31 +378,31 @@
 
   function <%=this.ClientID%>_validatePrivateRecording(presentationDate) {
     if (getElement("<%=cboPrivateDocSubtype.ClientID%>").value.length == 0) {
-      alert("Requiero se proporcione el tipo de documento.");
+      showAlert("Requiero se proporcione el tipo de documento.");
       return false;
     }
     if (getElement("<%=cboPrivateDocIssuedBy.ClientID%>").value.length == 0) {
-      alert("Necesito conocer la entidad emisora del documento o contrato.")
+      showAlert("Necesito conocer la entidad emisora del documento o contrato.")
       return false;
     }
     if (getElement("<%=cboPrivateDocIssuePlace.ClientID%>").value.length == 0) {
-      alert("Requiero conocer la ciudad donde se expidió el documento o se celebró el contrato.");
+      showAlert("Requiero conocer la ciudad donde se expidió el documento o se celebró el contrato.");
       return false;
     }
     if (getElement("<%=txtPrivateDocIssueDate.ClientID%>").value.length == 0) {
-      alert("Necesito se proporcione la fecha del documento o contrato.");
+      showAlert("Necesito se proporcione la fecha del documento o contrato.");
       return false;
     }
     if (!isDate(getElement('<%=txtPrivateDocIssueDate.ClientID%>'))) {
-      alert("No reconozco la fecha del documento o celebración del contrato.");
+      showAlert("No reconozco la fecha del documento o celebración del contrato.");
       return false;
     }
     if (!isValidDatePeriod(getElement('<%=txtPrivateDocIssueDate.ClientID%>').value, presentationDate)) {
-      alert("La fecha del documento no puede ser posterior a la fecha de presentación de la inscripción.");
+      showAlert("La fecha del documento no puede ser posterior a la fecha de presentación de la inscripción.");
       return false;
     }
     if (getElement("<%=txtPrivateDocNumber.ClientID%>").value.length == 0) {
-      alert("Necesito se proporcione el número de documento o contrato.")
+      showAlert("Necesito se proporcione el número de documento o contrato.")
       return false;
     }
     return true;
@@ -467,7 +467,7 @@
         invokeAjaxComboItemsLoader(url, getElement('<%=cboPrivateDocIssuedBy.ClientID%>'));
         return;
       default:
-        alert("La opción de actualización del UI '" + sourceName + "' no ha sido definida en el programa.")
+        showAlert("La opción de actualización del UI '" + sourceName + "' no ha sido definida en el programa.")
         return;
     }
   }

@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" EnableViewState="true"  EnableSessionState="true" MasterPageFile="~/workplace/dashboard.master" AutoEventWireup="true" Inherits="Empiria.Web.UI.Workflow.TasksDashboard" CodeFile="tasks.dashboard.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <asp:Content ID="dashboardItem" ContentPlaceHolderID="dashboardItemPlaceHolder" runat="Server" EnableViewState="true">
 <table id="tblDashboardMenu" class="tabStrip" style='display:<%=base.ShowTabStripMenu ? "inline" : "none"%>'>
   <tr>
@@ -101,13 +102,13 @@
         updateUserInterface(arguments[1]);
         return;
       default:
-        alert('La operación solicitada todavía no ha sido definida en el programa.');
+        showAlert('La operación solicitada todavía no ha sido definida en el programa.');
         return;
     }
   }
 
   function createObject() {
-    alert('La operación solicitada todavía no ha sido definida en el programa.');
+    showAlert('La operación solicitada todavía no ha sido definida en el programa.');
     return false;
   }
 

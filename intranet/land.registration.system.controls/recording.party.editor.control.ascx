@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Land.WebApp.RecordingPartyEditorControl" CodeFile="recording.party.editor.control.ascx.cs" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <table id="tblPartySeacher" class="editionTable" style="margin-top:-12px;display:none;" runat="server">
   <tr>
     <td>
@@ -239,11 +240,11 @@
 
     if (getElement('<%=cboPartyFilter.ClientID%>').value == 'ByKeywords') {
       if (keywords.length == 0) {
-        alert("No se ha proprocionado ningún nombre para efectuar la búsqueda.");
+        showAlert("No se ha proprocionado ningún nombre para efectuar la búsqueda.");
         return false;
       }
       if (keywords.length < 5) {
-        alert("La longitud del nombre a buscar es demasiado corta.");
+        showAlert("La longitud del nombre a buscar es demasiado corta.");
         return false;
       }
     }
@@ -295,7 +296,7 @@
         getElement('divSecondaryRole').style.display = 'none';
         return;
       default:
-        alert("No reconozco la naturaleza del rol seleccionado.");
+        showAlert("No reconozco la naturaleza del rol seleccionado.");
         return false;
     }
   }
@@ -356,16 +357,16 @@
 
   function <%=this.ClientID%>_validatePersonParty() {
     if (getElement('<%=txtPersonFullName.ClientID%>').value.length == 0) {
-      alert("Requiero se proporcione el nombre completo de la persona.");
+      showAlert("Requiero se proporcione el nombre completo de la persona.");
       return false;
     }
     if (getElement('<%=cboIDNumberType.ClientID%>').value.length == 0) {
-      alert("Necesito se seleccione el tipo de identificación de la persona.");
+      showAlert("Necesito se seleccione el tipo de identificación de la persona.");
       return false;
     }
     if (getElement('<%=cboIDNumberType.ClientID%>').value != 'None') {
       if (getElement('<%=txtIDNumber.ClientID%>').value.length == 0) {
-        alert("Necesito se proporcione el número de identificación.");
+        showAlert("Necesito se proporcione el número de identificación.");
         return false;
       }
     }
@@ -374,7 +375,7 @@
 
   function <%=this.ClientID%>_validateOrganizationParty() {
     if (getElement('<%=txtOrgName.ClientID%>').value.length == 0) {
-      alert("Requiero se proporcione el nombre o razón social de la organización.");
+      showAlert("Requiero se proporcione el nombre o razón social de la organización.");
       return false;
     }
     return true;
@@ -396,7 +397,7 @@
     var roleType = this_selectedRoleType();
     switch (roleType) {
       case "NullRole":
-        alert("Requiero conocer el rol que juega la persona dentro de este acto jurídico.");
+        showAlert("Requiero conocer el rol que juega la persona dentro de este acto jurídico.");
         return false;
       case 'DomainRole':
         return this_domainRole_validate();
@@ -405,20 +406,20 @@
       case 'SecondaryRole':
         return this_secondaryRole_validate();
       default:
-        alert("No reconozco la naturaleza del rol seleccionado.");
+        showAlert("No reconozco la naturaleza del rol seleccionado.");
         return false;
     }
   }
 
   function this_secondaryRole_validate() {
     if (getElement('<%=cboFirstPartyInRole.ClientID%>').value.length == 0) {
-      alert("Requiero conocer a la persona de la que es " + getComboOptionText(getElement('<%=cboRole.ClientID%>')) + " " + this_getPersonName());
+      showAlert("Requiero conocer a la persona de la que es " + getComboOptionText(getElement('<%=cboRole.ClientID%>')) + " " + this_getPersonName());
       return false;
     }
     if (getElement('<%=cboFirstPartyInRole.ClientID%>').value == "multiselect") {
       var selected = getAllSelectedCheckboxesValues("chkFirstPartyInRole");
       if (selected.length == 0) {
-        alert("Necesito se seleccione al menos una persona u organización de la lista de selección múltiple.");
+        showAlert("Necesito se seleccione al menos una persona u organización de la lista de selección múltiple.");
         return false;
       }
       var selectedItemsArray = selected.split('|');
@@ -450,26 +451,26 @@
     var usufructPart = getElement('<%=txtUsufructPartAmount.ClientID%>').value;
     var selected = "";
     if (getElement('<%=cboUsufructuaryOf.ClientID%>').value.length == 0) {
-      alert("Requiero se seleccione la persona u organización que es nudo propietario del predio.");
+      showAlert("Requiero se seleccione la persona u organización que es nudo propietario del predio.");
       return false;
     }
     if (getElement('<%=cboUsufructuaryOf.ClientID%>').value == "multiselect") {
       selected = getAllSelectedCheckboxesValues("chkUsufructuaryOf");
       if (selected.length == 0) {
-        alert("Necesito se seleccione al menos a un nudo propietario del predio de la lista de selección múltiple.");
+        showAlert("Necesito se seleccione al menos a un nudo propietario del predio de la lista de selección múltiple.");
         return false;
       }
     }
     if (getElement('<%=cboUsufruct.ClientID%>').value.length == 0) {
-      alert("Requiero conocer el tipo de usufructo sobre el predio");
+      showAlert("Requiero conocer el tipo de usufructo sobre el predio");
       return false;
     }
     if (usufructPartUnit.length == 0) {
-      alert("Requiero conocer la unidad de medida del usufructo sobre el predio.");
+      showAlert("Requiero conocer la unidad de medida del usufructo sobre el predio.");
       return false;
     }
     if (usufructPartUnit != "Unit.Full" && usufructPartUnit != "Unit.Undivided" && usufructPart.length == 0) {
-      alert("Requiero conocer la parte del predio (o predios) de la que es usufructurario " + this_getPersonName()) + ".";
+      showAlert("Requiero conocer la parte del predio (o predios) de la que es usufructurario " + this_getPersonName()) + ".";
       return false;
     }
     if (getElement('<%=cboUsufructuaryOf.ClientID%>').value == "multiselect") {
@@ -502,11 +503,11 @@
     var domainPart = getElement('<%=txtOwnershipPartAmount.ClientID%>').value;
 
     if (getElement('<%=cboOwnershipPartUnit.ClientID%>').value.length == 0) {
-      alert("Requiero conocer la unidad de medida de la propiedad o dominio de " + this_getPersonName());
+      showAlert("Requiero conocer la unidad de medida de la propiedad o dominio de " + this_getPersonName());
       return false;
     }
     if (domainPartUnit != "Unit.Full" && domainPartUnit != "Unit.Undivided" && domainPart.length == 0) {
-      alert("Requiero conocer la parte de la que es propietario o tiene el dominio " + this_getPersonName());
+      showAlert("Requiero conocer la parte de la que es propietario o tiene el dominio " + this_getPersonName());
       return false;
     }
     if (confirm("¿Agrego a " + this_getPersonName() + " a este acto jurídico?")) {

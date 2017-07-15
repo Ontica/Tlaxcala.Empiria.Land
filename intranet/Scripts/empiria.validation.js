@@ -585,7 +585,7 @@ function isUrl(oSource) {
 function formatAsCurrency(theNumber) {
   theNumber = theNumber.toString().replace(/\$|\,/g,'');
   if (isNaN(theNumber)) {
-    alert("El valor proporcionado no es numérico, por lo que no puede convertirse a moneda.");
+    showAlert("El valor proporcionado no es numérico, por lo que no puede convertirse a moneda.");
     return "errorValue";
   }
   sign = (theNumber == (theNumber = Math.abs(theNumber)));
@@ -650,7 +650,7 @@ function formatAsDate(oSource) {
 function formatAsNumber(theNumber) {
   theNumber = theNumber.toString().replace(/\$|\,/g,'');
   if (isNaN(theNumber)) {
-    alert("El valor proporcionado no es numérico, por lo que no puede convertirse a moneda.");
+    showAlert("El valor proporcionado no es numérico, por lo que no puede convertirse a moneda.");
     return "errorValue";
   }
   var decimalPlaces = 2;
@@ -674,7 +674,7 @@ function formatAsNumber(theNumber) {
 function formatAsInteger(theNumber) {
   theNumber = theNumber.toString().replace(/\$|\,/g,'');
   if (isNaN(theNumber)) {
-    alert("El valor proporcionado no es numérico, por lo que no puede convertirse a entero.");
+    showAlert("El valor proporcionado no es numérico, por lo que no puede convertirse a entero.");
     return "errorValue";
   }
   sign = (theNumber == (theNumber = Math.abs(theNumber)));

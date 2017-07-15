@@ -160,7 +160,7 @@ function createWorkplaceCommandHandler(commandName) {
 function displayCalendar(textBoxName, imgCalendarName) {
 	var textBox = getElement(textBoxName);
 	var calendarImg = getElement(imgCalendarName);
-  alert('El calendario está en construcción.')
+  showAlert('El calendario está en construcción.')
 }
 
 function hideAlertMessageBox() {

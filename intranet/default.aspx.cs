@@ -39,11 +39,11 @@ namespace Empiria.Web.UI {
         SetDefaultValues();
       } else {
         if (String.IsNullOrEmpty(txtUserId.Value)) {
-          clientScriptCode = "alert('Para efectuar esta operación requiero el identificador de usuario.');";
+          clientScriptCode = "showAlert('Para efectuar esta operación requiero el identificador de usuario.');";
           return;
         }
         if (String.IsNullOrEmpty(txtPassword.Value)) {
-          clientScriptCode = "alert('Para efectuar esta operación requiero la contraseña de acceso al sistema.');";
+          clientScriptCode = "showAlert('Para efectuar esta operación requiero la contraseña de acceso al sistema.');";
 
           return;
         }

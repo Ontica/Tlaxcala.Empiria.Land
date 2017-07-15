@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.DocumentSearch" CodeFile="document.search.aspx.cs" %>
 <%@ Register tagprefix="empiriaControl" tagname="ModalWindow" src="../land.registration.system.controls/modal.window.ascx" %>
 <%@ OutputCache Location="None" NoStore="true" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
@@ -11,6 +12,7 @@
   <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/tableStyle.css" type="text/css" rel="stylesheet" />
+  <link href="../themes/default/css/modal.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
@@ -90,6 +92,12 @@
 </table>
 </div>
 <empiriaControl:ModalWindow id="oModalWindow" runat="server" width="820px" height="600px" />
+
+    <!-- The Modal -->
+              <!-- Modal content -->
+              <uc:AlertBox id="alerbox" runat="server"/>
+              <!-- end The Modal -->
+
 </form>
 </body>
 <script type="text/javascript">
@@ -145,7 +153,7 @@
         //  return;
 
       default:
-        alert("La operación '" + command + "' no ha sido definida en el programa.");
+        showAlert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
     }
     if (success) {
@@ -174,7 +182,7 @@
     if (getElement('txtSearchBox').value.length != 0) {
       return true;
     } else {
-      alert("Necesito se proporcione un texto para la búsqueda.");
+      showAlert("Necesito se proporcione un texto para la búsqueda.");
       return false;
     }
   }

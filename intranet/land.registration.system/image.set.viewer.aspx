@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.ImageSetViewer" CodeFile="image.set.viewer.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
@@ -7,6 +8,7 @@
 <meta http-equiv="Expires" content="-1" /><meta http-equiv="Pragma" content="no-cache" />
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+   <link href="../themes/default/css/modal.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
@@ -46,7 +48,7 @@
         moveToImage(arguments[1]);
         return;
       default:
-        alert("La operación '" + command + "' no ha sido definida en el programa.");
+        showAlert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
     }
     if (success) {
@@ -57,19 +59,19 @@
 
   function gotoImage() {
     if (getElement("txtGoToImage").value.length == 0) {
-      alert("Necesito conocer el número de imagen que se desea visualizar.");
+      showAlert("Necesito conocer el número de imagen que se desea visualizar.");
       return false;
     }
     if (!isNumeric(getElement("txtGoToImage"))) {
-      alert("No reconozco el número de imagen proporcionado.");
+      showAlert("No reconozco el número de imagen proporcionado.");
       return false;
     }
     if (Number(getElement("txtGoToImage").value) <= 0) {
-      alert("El número de imagen que se desea visualizar debe ser mayor a cero.");
+      showAlert("El número de imagen que se desea visualizar debe ser mayor a cero.");
       return false;
     }
     if (Number(getElement("txtGoToImage").value) > imageCount()) {
-      alert("Sólo existen " + imageCount() + " imágenes.");
+      showAlert("Sólo existen " + imageCount() + " imágenes.");
       return false;
     }
     var newIndex = Number(getElement("txtGoToImage").value) - 1;
@@ -103,7 +105,7 @@
         newIndex = imageCount() - 1;
         break;
       default:
-        alert("No reconozco la posición de la imagen que se desea desplegar.");
+        showAlert("No reconozco la posición de la imagen que se desea desplegar.");
         return;
     }
 
@@ -245,6 +247,10 @@
       </div> <!--divContent!-->
     </div> <!-- end divBody !-->
   </div> <!-- end divCanvas !-->
+   <!-- The Modal -->
+              <!-- Modal content -->
+              <uc:AlertBox id="alerbox" runat="server"/>
+              <!-- end The Modal -->
 </form>
 </body>
 </html>

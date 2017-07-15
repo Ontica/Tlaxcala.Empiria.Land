@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.RecordingBookAnalyzer" CodeFile="recording.book.analyzer.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Import Namespace="Empiria.Land.Registration" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
@@ -12,6 +13,7 @@
 
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+<link href="../themes/default/css/modal.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
@@ -419,6 +421,11 @@
     </div> <!-- end divBody !-->
   </div> <!-- end divCanvas !-->
 </form>
+    <!-- The Modal -->
+              <!-- Modal content -->
+              <uc:AlertBox id="alerbox" runat="server"/>
+              <!-- end The Modal -->
+
 <iframe id="ifraCalendar" style="z-index:99;visibility:hidden;position:relative; width:225px;  height:160px;"    
     marginheight="0"  marginwidth="0" frameborder="0" scrolling="no"
     src="../user.controls/calendar.aspx" width="100%">
@@ -474,7 +481,7 @@
         deleteRecordingActProperty(arguments[1], arguments[2]);
         return;
       case 'selectRecordingActOperation':
-        alert("Requiero se seleccione una operación de la lista.");
+        showAlert("Requiero se seleccione una operación de la lista.");
         return;
       case 'refresh':
         sendPageCommand(command);
@@ -504,7 +511,7 @@
         gotoRecordingBook();
         return;
       default:
-        alert("La operación '" + command + "' no ha sido definida en el programa.");
+        showAlert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
     }
     if (success) {
@@ -527,7 +534,7 @@
 
   function showAnotherRecording() {
     if (getElement('cboAnotherRecordingBook').value.length == 0) {
-      alert("Requiero se seleccione el libro registral que se desea consultar.");
+      showAlert("Requiero se seleccione el libro registral que se desea consultar.");
       return;
     }
     var source = "recording.book.analyzer.aspx?";
@@ -557,7 +564,7 @@
 
   function registerAsObsoleteRecording() {
     <% if (recording.RecordingActs.Count > 0) { %>
-      alert("Esta inscripción contiene actos jurídicos, razón por la cual no puede cambiarse al estado de no vigente.");
+    showAlert("Esta inscripción contiene actos jurídicos, razón por la cual no puede cambiarse al estado de no vigente.");
       return false;
     <% } %>
     if (!validateRecordingStep1()) {
@@ -606,7 +613,7 @@
       return false;
     }
     if (getElement("txtObservations").value == '') {
-      alert("Requiero un texto descriptivo que indique el motivo por el que se dejará pendiente esta inscripción.");
+      showAlert("Requiero un texto descriptivo que indique el motivo por el que se dejará pendiente esta inscripción.");
       return false;
     }
     if (!validateRecordingSemantics()) {
@@ -698,7 +705,7 @@
       return false;
     <% } %>
     <% if (recording.RecordingActs.Count > 0) { %>
-      alert("No puedo eliminar esta inscripción ya que contiene actos jurídicos.");
+      showAlert("No puedo eliminar esta inscripción ya que contiene actos jurídicos.");
       return false;
     <% } %>
 
@@ -772,7 +779,7 @@
 
   function changeRecordingActType(recordingActId, propertyId) {
     if (getElement('cboRecordingActType').value == '') {
-      alert("Para modificar este acto jurídico, se debe seleccionar de la lista de actos jurídicos el nuevo tipo de acto.");
+      showAlert("Para modificar este acto jurídico, se debe seleccionar de la lista de actos jurídicos el nuevo tipo de acto.");
       return false;
     }
 
@@ -926,50 +933,50 @@
       }
     <% } %>
     if (getElement('cboRecordingType').value == '') {
-      alert("Necesito se proporcione el tipo de inscripción.");
+      showAlert("Necesito se proporcione el tipo de inscripción.");
       return false;
     }
     if (getElement('txtRecordingNumber').value == '') {
-      alert("Necesito se proporcione el número de inscripción.");
+      showAlert("Necesito se proporcione el número de inscripción.");
       return false;
     }
     if (!isNumeric(getElement('txtRecordingNumber'))) {
-      alert("No reconozco el número de inscripción proporcionado.");
+      showAlert("No reconozco el número de inscripción proporcionado.");
       return false;
     }
     if (Number(getElement('txtRecordingNumber').value) <= 0) {
-      alert("Los números de inscripción deben ser mayores a cero.");
+      showAlert("Los números de inscripción deben ser mayores a cero.");
       return false;
     }
     <% if (base.DisplayImages()) { %>
     if (getElement('txtImageStartIndex').value == '') {
-      alert("Requiero se proporcione el número de imagen en donde comienza el documento.");
+      showAlert("Requiero se proporcione el número de imagen en donde comienza el documento.");
       return false;
     }
     if (!isNumericValue(getElement('txtImageStartIndex').value)) {
-      alert("No reconozco el número de imagen donde comienza el documento.");
+      showAlert("No reconozco el número de imagen donde comienza el documento.");
       return false;
     }
     if (getElement('txtImageEndIndex').value == '') {
-      alert("Requiero se proporcione el número de imagen en donde termina el documento.");
+      showAlert("Requiero se proporcione el número de imagen en donde termina el documento.");
       return false;
     }
     if (!isNumericValue(getElement('txtImageEndIndex').value)) {
-      alert("No reconozco el número de imagen donde termina el documento.");
+      showAlert("No reconozco el número de imagen donde termina el documento.");
       return false;
     }
     if (getElement('txtImageStartIndex').value <= 0) {
-      alert("La imagen inicial debe ser mayor a cero.");
+      showAlert("La imagen inicial debe ser mayor a cero.");
       return false;
     }
     if (Number(getElement('txtImageStartIndex').value) > Number(getElement('txtImageEndIndex').value)) {
-      alert("El número de imagen donde comienza la inscripción no pude ser mayor al número de imagen donde termina la misma.");
+      showAlert("El número de imagen donde comienza la inscripción no pude ser mayor al número de imagen donde termina la misma.");
       return false;
     }
     <% } %>
     if (getElement('txtPresentationDate').value != '') {
       if (!isDate(getElement('txtPresentationDate'))) {
-        alert("No reconozco la fecha de presentación de la inscripción.");
+        showAlert("No reconozco la fecha de presentación de la inscripción.");
         return false;
       }
       if (isNoLabourDate(getElement('txtPresentationDate').value)) {
@@ -980,7 +987,7 @@
     }
     if (getElement('txtPresentationTime').value != '') {
       if (!isHour(getElement("txtPresentationTime"))) {
-        alert("No reconozco la hora en la que se presentó la inscripción.");
+        showAlert("No reconozco la hora en la que se presentó la inscripción.");
         return;
       } else {
         getElement("txtPresentationTime").value = formatAsTime(getElement("txtPresentationTime").value);
@@ -988,7 +995,7 @@
     }
     if (getElement('txtAuthorizationDate').value != '') {
       if (!isDate(getElement('txtAuthorizationDate'))) {
-        alert("No reconozco la fecha de autorización de la inscripción.");
+        showAlert("No reconozco la fecha de autorización de la inscripción.");
         return false;
       }
       if (isNoLabourDate(getElement('txtAuthorizationDate').value)) {
@@ -999,7 +1006,7 @@
     }
     if (getElement('txtPresentationDate').value != '' && getElement('txtAuthorizationDate').value != '') {		
       if (!isValidDatePeriod(getElement('txtPresentationDate').value, getElement('txtAuthorizationDate').value)) {
-        alert("La fecha de autorización de la inscripción no puede ser anterior a su fecha de presentación.");
+        showAlert("La fecha de autorización de la inscripción no puede ser anterior a su fecha de presentación.");
         return false;
       }
       if (daysBetween(getElement('txtPresentationDate').value, getElement('txtAuthorizationDate').value) > 30) {
@@ -1009,7 +1016,7 @@
       }		
     }
     if (getElement('cboAuthorizedBy').value == '') {
-      alert("Necesito se seleccione de la lista al C. Oficial Registrador que autorizó esta inscripción.");
+      showAlert("Necesito se seleccione de la lista al C. Oficial Registrador que autorizó esta inscripción.");
       return false;
     }
     if (!<%=oRecordingDocumentEditor.ClientID%>_validate(getElement("txtPresentationDate").value)) {
@@ -1025,15 +1032,15 @@
       }
     <% } %>
     if (getElement('txtPresentationDate').value == '') {
-      alert("Requiero la fecha de presentación de la inscripción.");
+      showAlert("Requiero la fecha de presentación de la inscripción.");
       return false;
     }
     if (getElement("txtPresentationTime").value == '') {
-      alert("Requiero la hora de presentación de la inscripción.");
+      showAlert("Requiero la hora de presentación de la inscripción.");
       return;
     }
     if (getElement('txtAuthorizationDate').value == '') {
-      alert("Requiero la fecha de autorización de la inscripción.");
+      showAlert("Requiero la fecha de autorización de la inscripción.");
       return false;
     }
     return true;
@@ -1041,15 +1048,15 @@
 
   function validateRecordingAct() {
     if (getElement('cboRecordingActType').value == '') {
-      alert("Necesito se seleccione de la lista el tipo de acto jurídico.");
+      showAlert("Necesito se seleccione de la lista el tipo de acto jurídico.");
       return false;
     }
     if (getElement('cboProperty').value == '') {
-      alert("Necesito se seleccione de la lista el predio sobre el que aplicará el acto jurídico.");
+      showAlert("Necesito se seleccione de la lista el predio sobre el que aplicará el acto jurídico.");
       return false;
     }
     if (getElement('cboProperty').value == '-1' && getElement('cboAnotherProperty').value == "") {
-      alert("Necesito se seleccione de la lista el predio ya registrado o inscrito sobre el que aplicará el acto jurídico.");
+      showAlert("Necesito se seleccione de la lista el predio ya registrado o inscrito sobre el que aplicará el acto jurídico.");
       return false;
     }
     return true;
@@ -1077,15 +1084,15 @@
 
   function gotoRecording() {
     if (getElement("txtGoToRecording").value.length == 0) {
-      alert("Necesito conocer el número de inscripción que se desea visualizar.");
+      showAlert("Necesito conocer el número de inscripción que se desea visualizar.");
       return false;
     }
     if (!isNumeric(getElement("txtGoToRecording"))) {
-      alert("No reconozco el número de inscripción proporcionado.");
+      showAlert("No reconozco el número de inscripción proporcionado.");
       return false;
     }
     if (Number(getElement("txtGoToRecording").value) <= 0) {
-      alert("No reconozco el número de inscripción que se desea visualizar.");
+      showAlert("No reconozco el número de inscripción que se desea visualizar.");
       return false;
     }
     var ajaxURL = "../ajax/land.registration.system.data.aspx?commandName=getRecordingIdCmd";
@@ -1097,7 +1104,7 @@
       sendPageCommand("gotoRecording", "id=" + result);
       return;
     } else {
-      alert("No ha sido registrada ninguna inscripción con el número " + getElement("txtGoToRecording").value + " en este libro.");
+      showAlert("No ha sido registrada ninguna inscripción con el número " + getElement("txtGoToRecording").value + " en este libro.");
       return;
     }
   }

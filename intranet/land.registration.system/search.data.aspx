@@ -1,6 +1,7 @@
 ﻿<%@ Page language="c#" Inherits="Empiria.Land.WebApp.LRSSearchData" EnableViewState="true" EnableSessionState="true" CodeFile="search.data.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingActSelectorControl" src="../land.registration.system.controls/recording.act.selector.control.ascx" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
@@ -8,6 +9,7 @@
 <meta http-equiv="Expires" content="-1" /><meta http-equiv="Pragma" content="no-cache" />
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+<link href="../themes/default/css/modal.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
@@ -135,6 +137,10 @@
       </div> <!-- end divBottomToolbar !-->
     </div> <!-- end divCanvas !-->
   </form>
+    <!-- The Modal -->
+              <!-- Modal content -->
+              <uc:AlertBox id="alerbox" runat="server"/>
+              <!-- end The Modal -->
 </body>
   <script type="text/javascript">
   /* <![CDATA[ */
@@ -186,7 +192,7 @@
         gbSended = true;
         return;
       case 'searchCadastralNumber':
-        alert("La búsqueda de claves catastrales no está disponible en este momento.");
+        showAlert("La búsqueda de claves catastrales no está disponible en este momento.");
         return;
       case 'searchGeographicalItems':
         return searchGeographicalItems();
@@ -208,7 +214,7 @@
         appendPayment();
         return;
       default:
-        alert("La operación '" + command + "' no ha sido definida en el programa.");
+        showAlert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
     }
     if (success) {
@@ -251,15 +257,15 @@
     var oPayment = getElement('txtReceiptTotal');
 
     if (isEmpty(getElement('txtRequestedBy'))) {
-      alert("Requiero se proporcione el nombre del interesado.");
+      showAlert("Requiero se proporcione el nombre del interesado.");
       return false;
     }
     if (isEmpty(getElement('cboDocumentType'))) {
-      alert("Requiero se proporcione el tipo de documento que se desea inscribir.");
+      showAlert("Requiero se proporcione el tipo de documento que se desea inscribir.");
       return false;
     }
     if (isEmpty(getElement('cboManagementAgency'))) {
-      alert("Requiero conocer la notaría o agencia que tramita.");
+      showAlert("Requiero conocer la notaría o agencia que tramita.");
       return false;
     }
     return true;

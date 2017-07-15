@@ -2,6 +2,7 @@
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyEditorControl" src="../land.registration.system.controls/recording.party.editor.control.ascx" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyViewerControl" src="../land.registration.system.controls/recording.party.viewer.control.ascx" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
@@ -11,6 +12,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
   <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+  <link href="../themes/default/css/modal.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
@@ -163,6 +165,12 @@
 <iframe id="ifraCalendar" style="z-index:99;visibility:hidden;position:relative;"
     marginheight="0" marginwidth="0" frameborder="0" scrolling="no" src="../user.controls/calendar.aspx" width="100%">
 </iframe>
+
+   <!-- The Modal -->
+              <!-- Modal content -->
+              <uc:AlertBox id="alerbox" runat="server"/>
+              <!-- end The Modal -->
+
 </body>
 <script type="text/javascript">
 
@@ -188,7 +196,7 @@
         return;
 
       default:
-        alert("La operación '" + command + "' no ha sido definida en el programa.");
+        showAlert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
     }
     if (success) {
@@ -208,13 +216,20 @@
 
   function deleteRecordingAct(recordingActId) {
     <% if (!IsReadyForEdition()) { %>
-      alert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, o no cuenta con los permisos necesarios para efectuar esta operación.");
+      showAlert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, o no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
-    if (confirm("¿Elimino el acto jurídico seleccionado?")) {
+   /* if (confirm("¿Elimino el acto jurídico seleccionado?")) {
       sendPageCommand('deleteRecordingAct', 'id=' + recordingActId);
       return true;
-    }
+    }*/
+      sMsg = "¿Elimino el acto jurídico seleccionado?";
+      z = showConfirm(sMsg, '', executeOp);
+      function executeOp() {
+        sendPageCommand('deleteRecordingAct', 'id=' + recordingActId);
+        return true;
+      }
+
   }
 
   function protectRecordingEditor(disabledFlag) {
@@ -224,7 +239,7 @@
 
   function editResource(resourceId, recordingActId) {
     if (resourceId == null || resourceId.length == 0) {
-      alert("Requiero se seleccione el predio a consultar.");
+      showAlert("Requiero se seleccione el predio a consultar.");
       return;
     }
     if (recordingActId == null || recordingActId.length == 0) {
@@ -233,20 +248,20 @@
     var url = "../land.registration.system/by.resource.analyzer.aspx?" +
               "resourceId=" + resourceId + "&recordingActId=" + recordingActId;
 
-    alert("goto: " + url);
+    showAlert("goto: " + url);
   }
 
   function saveDocument() {
     <% if (!IsReadyForEdition()) { %>
-    alert("No es posible modificar este documento debido a que no está en un estado válido para ello, o bien, no cuenta con los permisos necesarios para efectuar esta operación.");
+    showAlert("No es posible modificar este documento debido a que no está en un estado válido para ello, o bien, no cuenta con los permisos necesarios para efectuar esta operación.");
     return false;
     <% } %>
     if (getElement('cboRecordingType').value.length == 0) {
-      alert("Requiero se proporcione el tipo de documento.");
+      showAlert("Requiero se proporcione el tipo de documento.");
       return false;
     }
     if (getElement('cboSheetsCount').value.length == 0) {
-      alert("Necesito conocer el número de hojas que tiene el documento, incluyendo la hoja donde irán los sellos.");
+      showAlert("Necesito conocer el número de hojas que tiene el documento, incluyendo la hoja donde irán los sellos.");
       return false;
     }
     if (!<%=oRecordingDocumentEditor.ClientID%>_validate('<%=document.PresentationTime.ToString("dd/MMM/yyyy")%>')) {

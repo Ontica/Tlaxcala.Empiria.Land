@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Land.WebApp.LRSRecordingActSelectorControl" CodeFile="recording.act.selector.control.ascx.cs" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <table id="<%=this.ClientID%>_tblRecordingActEditor" class="editionTable" style="display:none;">
   <tr>
     <td>Categoría:</td>
@@ -87,7 +88,7 @@
       case 'appendRecordingAct':
         return <%=this.ClientID%>_appendRecordingAct();
       default:
-        alert("La operación '" + command + "' no ha sido definida en el programa.");
+        showAlert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
     }
   }
@@ -108,7 +109,7 @@
     var recordingId = getElement('<%=cboAnotherRecording.ClientID%>').value;
 
     if (recordingBookId.length == 0) {
-      alert("Requiero se seleccione el libro registral que se desea consultar.");
+      showAlert("Requiero se seleccione el libro registral que se desea consultar.");
       return;
     }
     var url = "recording.book.analyzer.aspx?"
@@ -119,43 +120,43 @@
 
   function <%=this.ClientID%>_appendRecordingAct() {
     if (getElement('cboRecordingActType').value == '') {
-      alert("Necesito se seleccione de la lista el tipo de acto jurídico.");
+      showAlert("Necesito se seleccione de la lista el tipo de acto jurídico.");
       return false;
     }
     if (getElement('<%=cboProperty.ClientID%>').value == '') {
-      alert("Necesito se seleccione de la lista el predio sobre el que aplicará el acto jurídico.");
+      showAlert("Necesito se seleccione de la lista el predio sobre el que aplicará el acto jurídico.");
       return false;
     }
     if (getElement('<%=cboProperty.ClientID%>').value == '-1' && getElement('<%=cboAnotherProperty.ClientID%>').value == "") {
-      alert("Necesito se seleccione de la lista el predio ya registrado o inscrito sobre el que aplicará el acto jurídico.");
+      showAlert("Necesito se seleccione de la lista el predio ya registrado o inscrito sobre el que aplicará el acto jurídico.");
       return false;
     }
    if (getElement('<%=cboAppraisalCurrency.ClientID%>').value.length == 0) {
-      alert("Requiero la moneda del importe del avalúo.");
+     showAlert("Requiero la moneda del importe del avalúo.");
       return false;
     }
     if (Number(getElement('<%=cboAppraisalCurrency.ClientID%>').value) < 0 &&
         getElement('<%=txtAppraisalAmount.ClientID%>').value.length != 0) {
-      alert("Se seleccionó 'No consta' como moneda pero el importe del avalúo sí se proporcionó.");
+      showAlert("Se seleccionó 'No consta' como moneda pero el importe del avalúo sí se proporcionó.");
       return false;
     }
     if (Number(getElement('<%=cboAppraisalCurrency.ClientID%>').value) > 0 &&
         getElement('<%=txtAppraisalAmount.ClientID%>').value.length == 0) {
-      alert("Requiero el importe del avalúo.");
+      showAlert("Requiero el importe del avalúo.");
       return false;
     }
     if (getElement('<%=cboOperationCurrency.ClientID%>').value.length == 0) {
-      alert("Requiero la moneda del importe de la operación.");
+      showAlert("Requiero la moneda del importe de la operación.");
       return false;
     }
     if (Number(getElement('<%=cboOperationCurrency.ClientID%>').value) < 0 &&
         getElement('<%=txtOperationAmount.ClientID%>').value.length != 0) {
-      alert("Se seleccionó 'No consta' como moneda pero el importe de la operación sí se proporcionó.");
+      showAlert("Se seleccionó 'No consta' como moneda pero el importe de la operación sí se proporcionó.");
       return false;
     }
     if (Number(getElement('<%=cboOperationCurrency.ClientID%>').value) > 0 &&
         getElement('<%=txtOperationAmount.ClientID%>').value.length == 0) {
-      alert("Requiero el importe de la operación.");
+      showAlert("Requiero el importe de la operación.");
       return false;
     }
 
@@ -269,7 +270,7 @@
     if (oCurrency.value.length == 0) {
       sMsg  = "Validación del pago de derechos.\n\n";
       sMsg += "No se ha seleccionado la moneda del pago de derechos.";
-      alert(sMsg);
+      showAlert(sMsg);
       return false;
     }
     return true;

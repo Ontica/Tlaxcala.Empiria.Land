@@ -2,6 +2,7 @@
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyEditorControl" src="../land.registration.system.controls/recording.party.editor.control.ascx" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyViewerControl" src="../land.registration.system.controls/recording.party.viewer.control.ascx" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
@@ -12,6 +13,7 @@
 
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
+<link href="../themes/default/css/modal.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
 <script type="text/javascript" src="../scripts/empiria.general.js"></script>
 <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
@@ -129,6 +131,10 @@
   </div> <!-- divContent !-->
 
 </form>
+   <!-- The Modal -->
+              <!-- Modal content -->
+              <uc:AlertBox id="alerbox" runat="server"/>
+              <!-- end The Modal -->
 </body>
 <script type="text/javascript">
 
@@ -175,7 +181,7 @@
             window.parent.eval("doOperation('refreshRecording')");
         return;
       default:
-        alert("La operación '" + command + "' no ha sido definida en el programa.");
+        showAlert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
     }
     if (success) {
@@ -227,33 +233,33 @@
   function validateRecordingAct() {
     <% if (base.EditOperationAmount) { %>
     if (getElement('cboOperationCurrency').value.length == 0) {
-      alert("Requiero la moneda del importe de la operación.");
+      showAlert("Requiero la moneda del importe de la operación.");
       return false;
     }
     if (Number(getElement('cboOperationCurrency').value) &#60; 0 &#38;&#38;
         getElement('<%=txtOperationAmount.ClientID%>').value.length != 0) {
-      alert("Se seleccionó 'No consta' como moneda pero el importe de la operación sí se proporcionó.");
+      showAlert("Se seleccionó 'No consta' como moneda pero el importe de la operación sí se proporcionó.");
       return false;
     }
         if (Number(getElement('cboOperationCurrency').value) &#62; 0 &#38;&#38;
         getElement('txtOperationAmount').value.length == 0) {
-      alert("Requiero el importe de la operación.");
+      showAlert("Requiero el importe de la operación.");
       return false;
     }
     <% } %>
     <% if (base.EditAppraisalAmount) { %>
     if (getElement('cboAppraisalCurrency').value.length == 0) {
-      alert("Requiero la moneda del importe del avalúo.");
+      showAlert("Requiero la moneda del importe del avalúo.");
       return false;
     }
     if (Number(getElement('cboAppraisalCurrency').value) &#60; 0 &#38;&#38;
         getElement('txtAppraisalAmount').value.length != 0) {
-      alert("Se seleccionó 'No consta' como moneda pero el importe del avalúo sí se proporcionó.");
+      showAlert("Se seleccionó 'No consta' como moneda pero el importe del avalúo sí se proporcionó.");
       return false;
     }
         if (Number(getElement('cboAppraisalCurrency').value) &#62; 0 &#38;&#38;
         getElement('txtAppraisalAmount').value.length == 0) {
-      alert("Requiero el importe del avalúo.");
+      showAlert("Requiero el importe del avalúo.");
       return false;
     }
     <% } %>
