@@ -160,26 +160,30 @@
       return false;
     }
 
-    var sMsg = "Agregar un acto jurídico\n\n";
+    var sMsg = "Agregar un acto jurídico<br /><br />";
 
-    sMsg += "Esta operación agregará el siguiente acto jurídico al trámite de inscripción:\n\n";
+    sMsg += "Esta operación agregará el siguiente acto jurídico al trámite de inscripción: <br /><br />";
 
-    sMsg += "Acto jurídico:\t" + getComboOptionText(getElement('cboRecordingActType')) + "\n";
-    sMsg += "Predio:\t\t" + getComboOptionText(getElement('<%=cboProperty.ClientID%>')) + "\n";	
+    sMsg += "Acto jurídico:\t" + getComboOptionText(getElement('cboRecordingActType')) + "<br />";
+    sMsg += "Predio:\t\t" + getComboOptionText(getElement('<%=cboProperty.ClientID%>')) + "<br />";	
     if (getElement('<%=cboProperty.ClientID%>').value == "-1") {
-      sMsg += "Folio:\t\t" + getComboOptionText(getElement('<%=cboAnotherProperty.ClientID%>')) + "\n";
+      sMsg += "Folio:\t\t" + getComboOptionText(getElement('<%=cboAnotherProperty.ClientID%>')) + "<br />";
     }
-    sMsg += "Avalúo:\t\t$" + getElement('<%=txtAppraisalAmount.ClientID%>').value + " " + getComboOptionText(getElement('<%=cboAppraisalCurrency.ClientID%>')) + "\n";	
-    sMsg += "Operación:\t$" + getElement('<%=txtOperationAmount.ClientID%>').value + " " + getComboOptionText(getElement('<%=cboOperationCurrency.ClientID%>')) + "\n\n";	
+    sMsg += "Avalúo:\t\t$" + getElement('<%=txtAppraisalAmount.ClientID%>').value + " " + getComboOptionText(getElement('<%=cboAppraisalCurrency.ClientID%>')) + "<br />";	
+    sMsg += "Operación:\t$" + getElement('<%=txtOperationAmount.ClientID%>').value + " " + getComboOptionText(getElement('<%=cboOperationCurrency.ClientID%>')) + "<br /><br />";	
 
-    sMsg += "¿Agrego el acto jurídico a este trámite de inscripción?";
-    if (confirm(sMsg)) {
-      var pars = "id=" + getElement('cboRecordingActType').value + "|";
-      pars += "propertyId=" + <%=this.ClientID%>_getSelectedPropertyId();
+    sMsg += "¿Agrego el acto jurídico a este trámite de inscripción? ";
+    /*if (confirm(sMsg)) {
+      
+  }*/
+  z = showConfirm(sMsg, '', executeOp);
+  function executeOp() {
+    var pars = "id=" + getElement('cboRecordingActType').value + "|";
+    pars += "propertyId=" + <%=this.ClientID%>_getSelectedPropertyId();
 
-      sendPageCommand("appendRecordingAct", pars);
-      return true;
-    }
+    sendPageCommand("appendRecordingAct", pars);
+    return true;
+  }
     return false;
   }
 
@@ -268,7 +272,7 @@
     var oReceipt = getElement('cboRecordingActType');
 
     if (oCurrency.value.length == 0) {
-      sMsg  = "Validación del pago de derechos.\n\n";
+      sMsg = "Validación del pago de derechos.<br /><br />";
       sMsg += "No se ha seleccionado la moneda del pago de derechos.";
       showAlert(sMsg);
       return false;

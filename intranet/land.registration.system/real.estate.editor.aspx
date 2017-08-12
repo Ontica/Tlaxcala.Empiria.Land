@@ -5,9 +5,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
   <title></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="-1" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+  <meta name="MS.LOCALE" content="ES-MX" />
   <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
     <link href="../themes/default/css/modal.css" type="text/css" rel="stylesheet" />
@@ -197,7 +198,7 @@
   function openForEdition() {
     <% if (!base.RecordingActAllowsEdition()) { %>
     var sMsg = 'La información de este predio ya fue registrada en un acto anterior, ';
-      sMsg += 'y este acto jurídico NO permite modificar la información del predio.\n\n';
+    sMsg += 'y este acto jurídico NO permite modificar la información del predio.<br /><br />';
       sMsg += 'Si la información del predio cambió desde el último acto jurídico registrado ';
       sMsg += 'entonces se puede agregar antes de este acto, un acto jurídico de ';
       sMsg += '\'Actualización de los datos del predio\' o alguno otro similar.';
@@ -208,10 +209,15 @@
   }
 
   function cancelEdition() {
-    var sMsg = "Descartar cambios en la edición del predio.\n\n";
-    sMsg += "La siguiente operación descartará los cambios efectuados en la información del predio.\n\n";
+    var sMsg = "Descartar cambios en la edición del predio.<br /><br />";
+    sMsg += "La siguiente operación descartará los cambios efectuados en la información del predio.<br /><br />";
     sMsg += "¿Descarto los cambios efectuados en el predio?";
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      setUnknownPropertyFields();
+      sendPageCommand("cancelEdition");
+    }*/
+    z = showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       setUnknownPropertyFields();
       sendPageCommand("cancelEdition");
     }
@@ -221,36 +227,52 @@
     if (!validateProperty()) {
       return;
     }
-    if (!checkUnknownPropertyFields()) {
+    /*if (!checkUnknownPropertyFields()) {
       return;
-    }
-    var sMsg = "Guardar la información del predio como completa.\n\n";
-    sMsg += "La siguiente operación guardará la información del predio ";
-    sMsg += "con folio electrónico " + getElement("txtPropertyUID").value + ".\n\n";
-    sMsg += "¿Toda la información del predio está completa?";
-    if (confirm(sMsg)) {
-      setUnknownPropertyFields();
-      sendPageCommand("saveRealEstate");
-    }
+    }*/
+    var cMsg = checkUnknownPropertyFields();
+    y = showConfirm(cMsg, '', executeOpU);
+    function executeOpU() {
+      var sMsg = "Guardar la información del predio como completa.  \n\n<br /><br />";
+      sMsg += "La siguiente operación guardará la información del predio: \n\n<br /><br /> ";
+      sMsg += "con folio electrónico " + getElement("txtPropertyUID").value + "\n\n<br /><br />";
+      sMsg += "¿Toda la información del predio está completa?";
+      /*if (confirm(sMsg)) {
+        setUnknownPropertyFields();
+        sendPageCommand("saveRealEstate");
+      }*/
+      z = showConfirm(sMsg, '', executeOp);
+      function executeOp() {
+        setUnknownPropertyFields();
+        sendPageCommand("saveRealEstate");
+      } 
+    }    
+
   }
 
   function checkUnknownPropertyFields() {
     var sMsg = "";
 
     if (getElement("txtCadastralKey").value.length == 0) {
-      sMsg += " \tClave catastral.\n";
+      sMsg += " \tClave catastral.<br />";
     }
     if (getElement("txtLotSize").value.length == 0) {
-      sMsg += " \tSuperficie total.\n";
+      sMsg += " \tSuperficie total.<br />";
     }
     if (getElement("txtMetesAndBounds").value.length == 0) {
-      sMsg += " \tMedidas y colindancias.\n";
+      sMsg += " \tMedidas y colindancias.<br />";
     }
+    /*if (sMsg.length != 0) {
+      sMsg = "Los siguientes elementos de información serán guardados con el valor 'No consta', " +
+             "lo cual significa que no aparecen en la inscripción.<br /><br />" +
+        sMsg + "<br />¿Coloco todos los campos de la lista con el valor 'No consta'?";
+      return confirm(sMsg);
+    }*/
     if (sMsg.length != 0) {
       sMsg = "Los siguientes elementos de información serán guardados con el valor 'No consta', " +
-             "lo cual significa que no aparecen en la inscripción.\n\n" +
-             sMsg + "\n¿Coloco todos los campos de la lista con el valor 'No consta'?";
-      return confirm(sMsg);
+        "lo cual significa que no aparecen en la inscripción.<br /><br />" +
+        sMsg + "<br />¿Coloco todos los campos de la lista con el valor 'No consta'?";
+      return sMsg;
     }
     return true;
   }

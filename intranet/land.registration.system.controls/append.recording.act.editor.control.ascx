@@ -411,10 +411,17 @@
 
     var qs = getRecordingActQueryString();
     qs = qs.replace(/&/g, "|");
-    if (!showConfirmFormCreateRecordingAct()) {
+   /* if (!showConfirmFormCreateRecordingAct()) {
       return false;
     }
-    sendPageCommand("appendRecordingAct", qs);
+    sendPageCommand("appendRecordingAct", qs);*/
+
+    var myMsg2 = showConfirmFormCreateRecordingAct();
+    showConfirm(myMsg2, '', executeOp);
+    function executeOp() {
+      sendPageCommand("appendRecordingAct", qs);
+    }
+
   }
 
   function assertAppendRecordingActIsPossible() {
@@ -784,43 +791,43 @@
   }
 
   function showConfirmFormCreateRecordingAct() {
-    var sMsg = "Agregar el acto jurídico al documento:\n\n";
+    var sMsg = "Agregar el acto jurídico al documento:<br /><br />";
 
-    sMsg += 'Documento:\t<%=base.Document.UID%>\n';
+    sMsg += 'Documento:\t<%=base.Document.UID%><br />';
     <% if (!this.IsHistoricEdition) { %>
-      sMsg += 'Trámite:\t\t<%=base.Transaction.UID%>\n';
-      sMsg += 'Interesado(s):\t<%=Empiria.EmpiriaString.FormatForScripting(base.Transaction.RequestedBy)%>\n\n';
+    sMsg += 'Trámite:\t\t<%=base.Transaction.UID%><br />';
+    sMsg += 'Interesado(s):\t<%=Empiria.EmpiriaString.FormatForScripting(base.Transaction.RequestedBy)%><br /><br />';
     <% } else { %>
-      sMsg += 'Partida:\t\t<%=base.HistoricRecording.AsText%>\n';
+    sMsg += 'Partida:\t\t<%=base.HistoricRecording.AsText%><br />';
     <% } %>
 
-    sMsg += "Acto jurídico que se registrará:\n\n";
-    sMsg += "Acto jurídico:\t" + getComboOptionText(getElement('cboRecordingActType')) + "\n";
+    sMsg += "Acto jurídico que se registrará:<br /><br />";
+    sMsg += "Acto jurídico:\t" + getComboOptionText(getElement('cboRecordingActType')) + "<br />";
     if (isCreateResourceTask()) {
-      sMsg += "Predio:\t\t" + "Predio sin antecedente registral" + "\n";
-      sMsg += "Clave catastral:\t" + getElement('txtCadastralKey').value + "\n\n";
+      sMsg += "Predio:\t\t" + "Predio sin antecedente registral" + "<br />";
+      sMsg += "Clave catastral:\t" + getElement('txtCadastralKey').value + "<br /><br />";
     } else if (getElement('cboPrecedentRecording').value.length == 0) {
       sMsg += getPartitionText();
-      sMsg += "Predio:\t\t" + getSelectedResourceText() + "\n\n";
+      sMsg += "Predio:\t\t" + getSelectedResourceText() + "<br /><br />";
 
     } else if (getElement('cboPrecedentRecording').value.length != 0 &&
                getElement('cboPrecedentRecording').value != "-1") {
       sMsg += getPartitionText();
       sMsg += "Predio:\t\t" + getSelectedResourceText() + "\n";
-      sMsg += "Antecedente en:\t" + "Partida " + getPhysicalRecordingNumber() + "\n";
-      sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
+      sMsg += "Antecedente en:\t" + "Partida " + getPhysicalRecordingNumber() + "<br />";
+      sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "<br /><br />";
     } else {
       sMsg += getPartitionText();
-      sMsg += "Antecedente:\t" + "Crear folio real en partida " + getPhysicalRecordingNumber() + "\n";
-      sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
+      sMsg += "Antecedente:\t" + "Crear folio real en partida " + getPhysicalRecordingNumber() + "<br />";
+      sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "<br /><br />";
     }
     if (getElement('cboRecordingTaskType').value == 'actAppliesToOtherRecordingAct') {
-      sMsg += "Acto jurídico a cancelar o modificar:\n\n";
+      sMsg += "Acto jurídico a cancelar o modificar:<br /><br />";
       if (getElement('cboTemporalId').value != '') {
-        sMsg += "Acto involucrado:\t" + getComboOptionText(getElement('cboTemporalId')) + "\n";
+        sMsg += "Acto involucrado:\t" + getComboOptionText(getElement('cboTemporalId')) + "<br />";
       } else {
-        sMsg += "Acto involucrado:\t" + getComboOptionText(getElement('cboTargetAct')) + "\n";
-        sMsg += "Registrado en:\t" + getTargetActPhysicalRecordingText() + "\n\n";
+        sMsg += "Acto involucrado:\t" + getComboOptionText(getElement('cboTargetAct')) + "<br />";
+        sMsg += "Registrado en:\t" + getTargetActPhysicalRecordingText() + "<br /><br />";
       }
     }
 
@@ -829,7 +836,8 @@
       sMsg += " y lo aplico a UNA NUEVA FRACCIÓN del antecedente";
     }
     sMsg += "?";
-    return confirm(sMsg);
+    //return confirm(sMsg);
+    return sMsg;
   }
 
   function getPhysicalRecordingNumber() {
@@ -1011,7 +1019,7 @@
       }
       if (!isValidRecordingNumber(getElement('txtTargetActPhysicalRecordingNo').value)) {
         showAlert("El número de partida donde está inscrito el acto que se va a cancelar o modificar " +
-              "tiene un formato que no reconozco.\nEjemplos de formatos válidos son: 123 o 234 o 123/4 o 34/123/79.");
+              "tiene un formato que no reconozco.<br />Ejemplos de formatos válidos son: 123 o 234 o 123/4 o 34/123/79.");
         getElement('txtTargetActPhysicalRecordingNo').focus();
         return false;
       }
@@ -1076,7 +1084,7 @@
     if (getElement('cboPrecedentRecording').value == "-1" &&
         getElement('txtQuickAddRecordingNumber').value.length != 0 &&
         !isValidRecordingNumber(getElement('txtQuickAddRecordingNumber').value)) {
-      showAlert("El número de partida tiene un formato que no reconozco.\nDebería ser un número.");
+      showAlert("El número de partida tiene un formato que no reconozco.<br />Debería ser un número.");
       getElement('txtQuickAddRecordingNumber').focus();
       return false;
     }

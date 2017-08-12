@@ -185,6 +185,22 @@
 <script type="text/javascript">
 /* <![CDATA[ */
 
+  var modal = document.getElementById('myModal');
+
+  var msg = "";
+  var cbtn = document.getElementById('cancelBtn');
+  var okbtn = document.getElementById('okBtn');
+  var clbtn = document.getElementById('closeBtn');
+
+
+  // empty array
+  var ElementsClick = new Array();
+
+  var doClick = '';
+  var btnClick = '';
+  var response;
+  var processIDr;
+
   function this_setPartyControlsForEdition(clickSource) {
     <% if (base.isLoaded) { %>
       var disabledFlag = true;
@@ -192,27 +208,36 @@
       var disabledFlag = false;
     <% } %>
 
-    var sMsg = "";
+      var sMsg = "";
+      var returnVal = true;
+     
     if (clickSource && disabledFlag) {
       if (this_isPersonPartySelected()) {
         if (!<%=this.ClientID%>_validatePersonParty()) {
           return false;
         }
-        sMsg = "Esta operación modificará todos los actos jurídicos donde la persona\n";
-        sMsg += "esté referenciada.\n\n";
-        sMsg += "¿Guardo los cambios efectuados a la información de la persona?\n";
+        sMsg = "Esta operación modificará todos los actos jurídicos donde la persona<br />";
+        sMsg += "esté referenciada.<br /><br />";
+        sMsg += "¿Guardo los cambios efectuados a la información de la persona?<br />";
       } else {
         if (!<%=this.ClientID%>_validateOrganizationParty()) {
           return false;
         }
-        sMsg = "Esta operación modificará todos los actos jurídicos donde\n";
-        sMsg += "esta organización esté referenciada.\n\n";
-        sMsg += "¿Guardo los cambios efectuados a la información de la organización?\n";
+        sMsg = "Esta operación modificará todos los actos jurídicos donde<br />";
+        sMsg += "esta organización esté referenciada.<br /><br />";
+        sMsg += "¿Guardo los cambios efectuados a la información de la organización?<br />";
       }
-      if (confirm(sMsg)) {
-        doOperation('saveParty', getElement('<%=cboParty.ClientID%>').value);
-        return true;
-      } else {
+      //if (confirm(sMsg)) {
+        //doOperation('saveParty', getElement('<%=cboParty.ClientID%>').value);
+        //return true;
+      //}
+      if (sMsg!=null) {
+        showConfirm(sMsg, '', executeOp);
+        function executeOp() {
+          doOperation('saveParty', getElement('<%=cboParty.ClientID%>').value);
+          return true;
+        }
+       }else {
         return false;
       }
     }
@@ -381,6 +406,27 @@
     return true;
   }
 
+  // Creamos un array vacio
+  var ElementosClick = new Array();
+          // Capturamos el click y lo pasamos a una funcion
+
+  function captura_click(e) {
+    // Funcion para capturar el click del raton
+    var HaHechoClick;
+    if (e == null) {
+      // Si hac click un elemento, lo leemos
+      HaHechoClick = event.srcElement;
+    } else {
+      // Si ha hecho click sobre un destino, lo leemos
+      HaHechoClick = e.target;
+    }
+    // Añadimos el elemento al array de elementos
+    ElementosClick.push(HaHechoClick);
+    // Una prueba con salida en consola
+    console.log("Contenido sobre lo que ha hecho click: " + HaHechoClick.id);
+    return HaHechoClick.id;
+  }
+
   function <%=this.ClientID%>_validate() {
     if (getElement('<%=cboParty.ClientID%>').value == "appendParty") {
       if (this_isPersonPartySelected()) {
@@ -395,12 +441,13 @@
     }
 
     var roleType = this_selectedRoleType();
+    
     switch (roleType) {
       case "NullRole":
         showAlert("Requiero conocer el rol que juega la persona dentro de este acto jurídico.");
         return false;
       case 'DomainRole':
-        return this_domainRole_validate();
+        return this_domainRole_validate();   
       //case 'UsufructuaryRole':
       //  return this_usufructuraryRole_validate();
       case 'SecondaryRole':
@@ -410,6 +457,7 @@
         return false;
     }
   }
+
 
   function this_secondaryRole_validate() {
     if (getElement('<%=cboFirstPartyInRole.ClientID%>').value.length == 0) {
@@ -425,27 +473,40 @@
       var selectedItemsArray = selected.split('|');
       var selectedItemsText = "";
       for (var i = 0; i < selectedItemsArray.length; i++) {
-        selectedItemsText += getInnerText("chkFirstPartyInRole_text_" + selectedItemsArray[i]) + "\n";
+        selectedItemsText += getInnerText("chkFirstPartyInRole_text_" + selectedItemsArray[i]) + "<br />";
       }
-      var sMsg = "Agregar " + getComboOptionText(getElement('<%=cboRole.ClientID%>')) + ".\n\n";
+      var sMsg = "Agregar " + getComboOptionText(getElement('<%=cboRole.ClientID%>')) + ".<br /><br />";
       sMsg += "Esta operación agregará dentro de este acto jurídico a " + this_getPersonName();
-      sMsg += " como " + getComboOptionText(getElement('<%=cboRole.ClientID%>')) + " de:\n\n";
+      sMsg += " como " + getComboOptionText(getElement('<%=cboRole.ClientID%>')) + " de:<br /><br />";
       sMsg += selectedItemsText + "\n";
       sMsg += "¿Ejecuto la operación?";
     } else {
-      var sMsg = "Agregar " + getComboOptionText(getElement('<%=cboRole.ClientID%>')) + ".\n\n";
+      var sMsg = "Agregar " + getComboOptionText(getElement('<%=cboRole.ClientID%>')) + ".<br /><br />";
       sMsg += "Esta operación agregará dentro de este acto jurídico a " + this_getPersonName();
-      sMsg += " como " + getComboOptionText(getElement('<%=cboRole.ClientID%>')) + " de:\n\n";
-      sMsg += getComboOptionText(getElement('<%=cboFirstPartyInRole.ClientID%>')) + "\n\n";
+      sMsg += " como " + getComboOptionText(getElement('<%=cboRole.ClientID%>')) + " de:<br /><br />";
+      sMsg += getComboOptionText(getElement('<%=cboFirstPartyInRole.ClientID%>')) + "<br /><br />";
       sMsg += "¿Ejecuto la operación?";
     }
-    if (confirm(sMsg)) {
-      getElement('<%=hdnMultiPartiesInRole.ClientID%>').value = selected;
-      return true;
+    //if (confirm(sMsg)) {
+     // getElement('<%=hdnMultiPartiesInRole.ClientID%>').value = selected;
+     // return true;
+ //}
+    var confirmMsg = sMsg ;
+    if (confirmMsg != null) {
+     getElement('<%=hdnMultiPartiesInRole.ClientID%>').value = selected;
+      showConfirm(sMsg, '', executeOp1);
+
+      function executeOp1() {
+        getElement('<%=hdnMultiPartiesInRole.ClientID%>').value = selected;
+        sendPageCommand("appendParty");
+        return true;
+      }
     }
     return false;
   }
 
+ 
+ 
   function this_usufructuraryRole_validate() {
     var usufructPartUnit = getElement('<%=cboUsufructPartUnit.ClientID%>').value;
     var usufructPart = getElement('<%=txtUsufructPartAmount.ClientID%>').value;
@@ -510,9 +571,26 @@
       showAlert("Requiero conocer la parte de la que es propietario o tiene el dominio " + this_getPersonName());
       return false;
     }
-    if (confirm("¿Agrego a " + this_getPersonName() + " a este acto jurídico?")) {
+   /* if (confirm("¿Agrego a " + this_getPersonName() + " a este acto jurídico?")) {
       return true;
+    }*/
+    var confirmMsg = "¿Agrego a " + this_getPersonName() + " a este acto jurídico?";
+    if (confirmMsg != null) {
+      
+     
+       showConfirm(confirmMsg, '', executeOp);
+     ////return  showConfirmReturnCallback(confirmMsg, '', function () { returnResponse(); }, function () { finish(); } );  ///funciona casi   
+     /// showConfirmReturnCallback(confirmMsg, '', function () { step1(function () { returnResponse(); }); }, function () { finish(); });     /////////////////
+    ////esperar aqui
+      return response;
+
+      function executeOp() {
+        sendPageCommand("appendParty");
+        return true;
+      }
+
     }
+
     return false;
   }
 

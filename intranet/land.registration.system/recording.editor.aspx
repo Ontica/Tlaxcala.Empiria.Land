@@ -240,7 +240,12 @@
       return false;
     }
     var sMsg = "¿Cierro este documento y lo protejo ante cambios no autorizados?";
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      sendPageCommand('closeDocument');
+      return true;
+    }*/
+    z = showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand('closeDocument');
       return true;
     }
@@ -254,9 +259,14 @@
     if (!validateIfCanBeOpened()) {
       return false;
     }
-    var sMsg = "Abrir documento.\n\n";
+    var sMsg = "Abrir documento.<br /><br />";
     sMsg += "¿Abro este documento para editarlo o agregarle o modificarle actos jurídicos?";
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      sendPageCommand('openDocument');
+      return true;
+    }*/
+    z = showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand('openDocument');
       return true;
     }
@@ -281,9 +291,14 @@
 
   function deleteDocument() {
     var sMsg = "Eliminar documento.\n\n";
-    sMsg += "PRECAUCIÓN: Esta operación no puede ser revertida y se perderán todos los cambios.\n\n";
+    sMsg += "PRECAUCIÓN: Esta operación no puede ser revertida y se perderán todos los cambios.<br /><br />";
     sMsg += "¿Elimino el documento y dejo este trámite sin documento registral?";
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      sendPageCommand('deleteDocument');
+      return true;
+    }*/
+    z = showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand('deleteDocument');
       return true;
     }
@@ -330,18 +345,28 @@
 
   function editDocument() {
     <% if (!IsReadyForEdition()) { %>
-    showAlert("No es posible editar el documento ya que no está abierto para registro en libros, " +
+    showAlert("No es posible editar el documento ya que no está abierto para registro en libros," +
             "o no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
     protectRecordingEditor(false);
     if (getElement('cmdEditDocument').value == "Descartar los cambios") {
-      var sMsg = "Deshacer los cambios.\n\n";
-      sMsg += "Esta operación va a deshacer los cambios efectudados en el encabezado del documento.\n\n";
-      sMsg += "¿Descarto los cambios efectuados en el documento?";
-      if (confirm(sMsg)) {
-        if (confirm("Precaución:\n\n¿En verdad se desea descartar los cambios en el documento?")) {
+      var sMsg = "Deshacer los cambios. <br /><br />";
+      sMsg += "Esta operación va a deshacer los cambios efectudados en el encabezado del documento. <br /><br />";
+      sMsg += "<br /><br /> ¿Descarto los cambios efectuados en el documento?";
+      /*if (confirm(sMsg)) {
+        if (confirm("Precaución:<br /><br />¿En verdad se desea descartar los cambios en el documento?")) {
           sendPageCommand('refreshDocument');
+        }
+        return true;
+      }*/
+      showConfirm(sMsg, '', executeOp);
+      function executeOp() {
+        //return true;
+        showConfirm("Precaución: <br/><br/> <br></br> ¿En verdad se desea descartar los cambios en el documento?", '', executeOpc);
+        function executeOpc() {
+          sendPageCommand('refreshDocument');
+          return true;
         }
         return true;
       }
@@ -363,10 +388,15 @@
             "o no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
-    if (confirm("¿Elimino el acto jurídico seleccionado?")) {
+    /*if (confirm("¿Elimino el acto jurídico seleccionado?")) {
       sendPageCommand('deleteRecordingAct', 'id=' + recordingActId);
       return true;
-    }
+    }*/
+      z = showConfirm("¿Elimino el acto jurídico seleccionado?", '', executeOp);
+      function executeOp() {
+        sendPageCommand('deleteRecordingAct', 'id=' + recordingActId);
+        return true;
+      }
   }
 
   function deleteBookRecording(recordingId) {
@@ -375,10 +405,15 @@
             "o no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
     <% } %>
-    if (confirm("¿Elimino el registro de la partida seleccionada?")) {
+    /*if (confirm("¿Elimino el registro de la partida seleccionada?")) {
       sendPageCommand('deleteBookRecording', 'id=' + recordingId);
       return true;
-    }
+    }*/
+      z = showConfirm("¿Elimino el registro de la partida seleccionada?", '', executeOp);
+      function executeOp() {
+        sendPageCommand('deleteBookRecording', 'id=' + recordingId);
+        return true;
+      }
   }
 
   function protectRecordingEditor(disabledFlag) {

@@ -7,9 +7,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
 <title>Editor de documentos</title>
-<meta http-equiv="Expires" content="-1" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Expires" content="-1" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta name="MS.LOCALE" content="ES-MX" />
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/tableStyle.css" type="text/css" rel="stylesheet" />

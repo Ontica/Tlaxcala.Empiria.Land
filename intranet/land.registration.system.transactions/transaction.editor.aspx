@@ -7,7 +7,8 @@
 <head id="Head1" runat="server">
 <title><%=GetTitle()%></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="Expires" content="-1" /><meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+  <meta http-equiv="Pragma" content="no-cache" />
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/modal.css" type="text/css" rel="stylesheet" />
@@ -259,7 +260,7 @@
         <td>Recibo de pago:</td>
         <td>
           <input id='txtReceiptNumber' type="text" class="textBox" onkeypress="return positiveKeyFilter(window.event, true);"
-                 style="width:86px;" title="" maxlength="7" runat="server" />
+                 style="width:86px;" title="" maxlength="9" runat="server" />
         </td>
         <td>
         Importe:

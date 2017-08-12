@@ -1,4 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Land.WebApp.RecordingPartyViewerControl" CodeFile="recording.party.viewer.control.ascx.cs" %>
+﻿<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
+<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Land.WebApp.RecordingPartyViewerControl" CodeFile="recording.party.viewer.control.ascx.cs" %>
 <tr>
   <td>
     <table class="editionTable">

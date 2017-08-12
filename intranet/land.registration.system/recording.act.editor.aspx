@@ -156,7 +156,11 @@
         sendPageCommand("saveParty", "partyId=" + arguments[1]);
         return;
       case 'deleteParty':
-        if (confirm("¿Elimino la persona u organización seleccionada de este acto jurídico?")) {
+        /*if (confirm("¿Elimino la persona u organización seleccionada de este acto jurídico?")) {
+          sendPageCommand("deleteParty", "partyId=" + arguments[1]);
+        }*/
+        z = showConfirm("¿Elimino la persona u organización seleccionada de este acto jurídico?", '', executeOp);
+        function executeOp() {
           sendPageCommand("deleteParty", "partyId=" + arguments[1]);
         }
         return;
@@ -199,11 +203,15 @@
     } else {
       setUnknownRecordingActFields();
     }
-    var sMsg = "Guardar la información del acto jurídico.\n\n";
-    sMsg += "La siguiente operación guardará la información del siguiente acto jurídico:\n\n";
-    sMsg += "Tipo:\t<%=recordingAct.RecordingActType.DisplayName%>\n";
+    var sMsg = "Guardar la información del acto jurídico <br /><br />";
+    sMsg += "La siguiente operación guardará la información del siguiente acto jurídico:<br /><br />";
+    sMsg += "Tipo:\t<%=recordingAct.RecordingActType.DisplayName%><br />";
     sMsg += "¿Toda la información está correcta?";
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      sendPageCommand("saveRecordingAct");
+    }*/
+    z = showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand("saveRecordingAct");
     }
     return false;
@@ -217,14 +225,36 @@
     if (!invokeAjaxValidator(ajaxURL)) {
       return;
     }
-    var sMsg = "Cerrar el acto jurídico.\n\n";
-    sMsg += "Esta operación marcará el acto jurídico como registrado,\n";
-    sMsg += "por lo que debe revisarse que toda la información del\n";
-    sMsg += "mismo esté correcta y sea completa.\n\n";
+    var sMsg = "Cerrar el acto jurídico. &#160;<br /><br />";
+   /* sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160;  <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160;  <br />";*/
+    sMsg += "Esta operación marcará el acto jurídico como registrado, <br />";
+    sMsg += "por lo que debe revisarse que toda la información del <br />";
+    sMsg += "mismo esté correcta y sea completa. <br /><br />";
+    /*sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";
+    sMsg += "&#160; &#160; &#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160;&#160; &#160; &#160; &#160; <br />";*/
 
-    sMsg += "¿Marco este acto jurídico como completado?";
+    sMsg += " ¿Marco este acto jurídico como completado? ";
 
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      sendPageCommand("saveRecordingActAsComplete");
+      return;
+    }*/
+    z = showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand("saveRecordingActAsComplete");
       return;
     }
