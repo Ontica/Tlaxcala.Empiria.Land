@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="false" EnableViewState="true" Inherits="Empiria.Land.WebApp.RecordingDocumentFullEditorControl" CodeFile="recording.document.editor.control.ascx.cs" %>
+<%@ Register tagprefix="uc" tagname="AlertBox" src="../user.controls/alert.box.ascx" %>
 <table id="oNotaryOfficialLetter" class="editionTable" style="display:none;" runat="server">
   <tr>
     <td>
@@ -258,12 +259,22 @@
         return false;
       }
     } else {
-      if (!confirm("No se ha proporcionado la fecha en que se protocolizó la inscripción.\n\n¿Se desconoce la fecha de protocolozación?")) {
+      /*if (!confirm("No se ha proporcionado la fecha en que se protocolizó la inscripción.<br /><br />¿Se desconoce la fecha de protocolozación?")) {
         return false;
-      }
+      }*/
+
+      sMsg = 'No se ha proporcionado la fecha en que se protocolizó la inscripción.<br /><br />¿Se desconoce la fecha de protocolozación?';
+      showConfirm(sMsg, '', executeOp);
+      function executeOp() {
+        sendPageCommand('saveDocument');
+      } 
+      return;
+
+     
     }
     return true;
   }
+ 
 
   function <%=this.ClientID%>_validateNotaryOfficialLetter(presentationDate) {
     if (getElement("<%=cboNotaryOfficialLetterSubtype.ClientID%>").value.length == 0) {
@@ -286,7 +297,7 @@
       return false;
     }
     if (getElement("<%=cboNotaryOfficialLetterIssuePlace.ClientID%>").value.length == 0) {
-      showAlert("Requiero se proporcione la ciudad a la que pertenece la\nnotaría que envió el oficio.")
+      showAlert("Requiero se proporcione la ciudad a la que pertenece la<br />notaría que envió el oficio.")
       return false;
     }
     if (getElement("<%=cboNotaryOfficialLetterIssueOffice.ClientID%>").value.length == 0) {
@@ -319,9 +330,16 @@
         return false;
       }
     } else {
-      if (!confirm("No se ha proporcionado la fecha del acta de asamblea.\n\n¿Se desconoce la fecha del acta de asamblea?")) {
-        return false;
-      }
+
+      /*if (!confirm("No se ha proporcionado la fecha del acta de asamblea.<br /><br />¿Se desconoce la fecha del acta de asamblea?")) {
+        return false;*/
+      sMsg = 'No se ha proporcionado la fecha del acta de asamblea.<br /><br />¿Se desconoce la fecha del acta de asamblea?';
+        showConfirm(sMsg, '', executeOp);
+        function executeOp() {
+          sendPageCommand('saveDocument');
+        }
+        return;
+      //}
     }
     if (getElement("<%=cboPropTitleIssueOffice.ClientID%>").value.length == 0) {
       showAlert("Necesito se proporcione la dependencia en donde estaba inscrita la propiedad.")
@@ -369,9 +387,15 @@
         return false;
       }
     } else {
-      if (!confirm("No se ha proporcionado la fecha del oficio.\n\n¿Se desconoce la fecha del oficio?")) {
+      /*if (!confirm("No se ha proporcionado la fecha del oficio.<br /><br />¿Se desconoce la fecha del oficio?")) {
         return false;
+      }*/
+      sMsg = 'No se ha proporcionado la fecha del oficio.<br /><br />¿Se desconoce la fecha del oficio?';
+      showConfirm(sMsg, '', executeOp);
+      function executeOp() {
+        sendPageCommand('saveDocument');
       }
+      return;
     }
     return true;
   }

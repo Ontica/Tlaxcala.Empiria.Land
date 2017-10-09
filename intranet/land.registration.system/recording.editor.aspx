@@ -153,7 +153,7 @@
 </table>
         <!-- The Modal -->
               <!-- Modal content -->
-              <uc:AlertBox id="alerbox" runat="server"/>
+              <uc:AlertBox id="alertbox" runat="server"/>
               <!-- end The Modal -->
 </div>
 </form>

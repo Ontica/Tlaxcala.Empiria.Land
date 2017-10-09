@@ -13,7 +13,7 @@
             <button type="button" id="closeBtn" onclick="close_modal()" name="true"  value="none" style="float:right;">Aceptar</button>
             <button type="button" id="okBtn" onclick="capture_click(event)" name="true"  value="none" style="float:right;">Aceptar</button>
             <button type="button" id="cancelBtn"  onclick="capture_click(event)" name="false"  value="none" style="float:right;">Cancelar</button>
-
+            
           </div>
  
           <div id="mf" class="modal-footer">
@@ -33,6 +33,8 @@
   var cbtn = document.getElementById('cancelBtn');
   var okbtn = document.getElementById('okBtn');
   var clbtn = document.getElementById('closeBtn');
+  var okbtnr = document.getElementById('okBtnR');
+  var clbtnr = document.getElementById('cancelBtnR');
   
 
   // empty array
@@ -81,14 +83,34 @@
         window.clearInterval(processID);
       }
     }, 2000);
-
   } ////showConfirm
+ 
+  function answer() {///answer;
+   
+
+    doClick = event.srcElement;
+    ElementsClick.push(doClick);
+    console.log('doClick---- ', doClick);
+    console.log('doClick-name---- ', doClick.name);
+    if (doClick.name == 'true') {
+      modal.style.display = "none";
+      return true;
+    } else if (doClick.name == 'false') {
+      modal.style.display = "none";
+      return false;
+    } else if (doClick.name == '' || doClick.name == null || doClick.name == undefined) {
+
+     /// answer();
+    }
+  } ///////////answer;
 
   function capture_click(e, event) {//capture_click
     if (e == null ) {
       // read click in element
+      console.log('elemnto');
       btnClick = event.srcElement;
     } else {
+      console.log('objet');
       btnClick = e.target;
     }
     ElementsClick.push(btnClick);

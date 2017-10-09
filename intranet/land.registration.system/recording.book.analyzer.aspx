@@ -457,10 +457,12 @@
     }
     switch (command) {
       case 'saveRecording':
-        success = saveRecording();
+        //success = saveRecording();
+        success = saveRecording(command);
         break;
       case 'appendRecordingAct':
-        success = appendRecordingAct();
+        //success = appendRecordingAct();
+        success = appendRecordingAct(command);
         break;
       case 'newRecording':
         success = true;
@@ -573,10 +575,10 @@
     if (!validateRecordingSemantics()) {
       return false;
     }
-    var sMsg = "Registrar la inscripción como NO VIGENTE\n\n";
+    var sMsg = "Registrar la inscripción como NO VIGENTE<br /><br />";
 
-    sMsg += "Esta operación guardará la inscripción como NO VIGENTE,\n";
-    sMsg += "con la siguiente información:\n\n";
+    sMsg += "Esta operación guardará la inscripción como NO VIGENTE,<br />";
+    sMsg += "con la siguiente información:<br /><br />";
 
     sMsg += getRecordingDataForm();
 
@@ -592,11 +594,11 @@
     if (!validateRecordingSemantics()) {
       return false;
     }
-    var sMsg = "Registrar la inscripción como no legible\n\n";
+    var sMsg = "Registrar la inscripción como no legible<br /><br />";
 
-    sMsg += "Esta operación guardará la inscripción como no legible, para\n";
-    sMsg += "que posteriormente se busque en legajos u otros documentos la\n";
-    sMsg += "información correcta:\n\n";
+    sMsg += "Esta operación guardará la inscripción como no legible, para<br />";
+    sMsg += "que posteriormente se busque en legajos u otros documentos la<br />";
+    sMsg += "información correcta:<br /><br />";
 
     sMsg += getRecordingDataForm();
 
@@ -619,10 +621,10 @@
     if (!validateRecordingSemantics()) {
       return false;
     }
-    var sMsg = "Registrar la inscripción como pendiente.\n\n";
+    var sMsg = "Registrar la inscripción como pendiente.<br /><br />";
 
-    sMsg += "Esta operación guardará la inscripción como pendiente, para\n";
-    sMsg += "que en un futuro se agregue la información faltante:\n\n";
+    sMsg += "Esta operación guardará la inscripción como pendiente, para<br />";
+    sMsg += "que en un futuro se agregue la información faltante:<br /><br />";
 
     sMsg += getRecordingDataForm();
 
@@ -632,49 +634,61 @@
   }
 
 
-  function saveRecording() {
+    function saveRecording(commandParam) {
     if (!validateRecordingStep1()) {
       return false;
     }
     if (!validateRecordingStep2()) {
       return false;
     }
-    var sMsg = "Guardar la inscripción.\n\n";
+    var sMsg = "Guardar la inscripción.<br /><br />";
 
     sMsg += getRecordingDataForm();
     sMsg += "¿Guardo los cambios efectuados en esta inscripción?";
-
-    return confirm(sMsg);
+    //console.log('commandParam', commandParam);
+    //return confirm(sMsg);
+    showConfirm(sMsg, '', executeOp);
+    function executeOp() {
+      sendPageCommand(commandParam);
+      gbSended = true;
+    }
   }
 
-  function appendRecordingAct() {
+    function appendRecordingAct(commandParam) {
     if (!validateRecordingAct()) {
       return false;
     }
     if (!validateRecordingSemantics()) {
       return false;
     }
-    var sMsg = "Agregar un acto jurídico vigente\n\n";
+    var sMsg = "Agregar un acto jurídico vigente<br /><br />";
 
-    sMsg += "Esta operación agregará el siguiente acto jurídico a esta inscripción:\n\n";
+    sMsg += "Esta operación agregará el siguiente acto jurídico a esta inscripción:<br /><br />";
 
-    sMsg += "Libro:\t\t<%=recordingBook.AsText%>\n";
+    sMsg += "Libro:\t\t<%=recordingBook.AsText%><br />";
     sMsg += "Inscripción:\t" + getElement('txtRecordingNumber').value +
-    getElement('cboBisRecordingNumber').value + "\n\n";
+      getElement('cboBisRecordingNumber').value + "<br /><br />";
 
-    sMsg += "Acto jurídico:\t" + getComboOptionText(getElement('cboRecordingActType')) + "\n";
-    sMsg += "Predio:\t\t" + getComboOptionText(getElement('cboProperty')) + "\n";
+    sMsg += "Acto jurídico:\t" + getComboOptionText(getElement('cboRecordingActType')) + "<br />";
+    sMsg += "Predio:\t\t" + getComboOptionText(getElement('cboProperty')) + "<br />";
     if (getElement('cboProperty').value == "-1") {
-      sMsg += "Folio:\t\t" + getComboOptionText(getElement('cboAnotherProperty')) + "\n\n";
+      sMsg += "Folio:\t\t" + getComboOptionText(getElement('cboAnotherProperty')) + "<br /><br />";
     } else {
       sMsg += "\n";
     }
     <% if (base.recording.Status == RecordableObjectStatus.Obsolete) { %>
-    sMsg += "IMPORTANTE: La inscripción pasará de estado No vigente a Incompleta.\n\n";
+    sMsg += "IMPORTANTE: La inscripción pasará de estado No vigente a Incompleta.<br /><br />";
     <% } %>
-    sMsg += "¿Agrego el acto jurídico a la inscripción " + getElement('txtRecordingNumber').value +
+    sMsg += "<br /><br />¿Agrego el acto jurídico a la inscripción " + getElement('txtRecordingNumber').value +
               getElement('cboBisRecordingNumber').value + "?";
-    return confirm(sMsg);
+    //return confirm(sMsg);
+    console.log('commandParam', commandParam);
+     showConfirm(sMsg, '', executeOp);
+    function executeOp() {
+      sendPageCommand(commandParam);
+      gbSended = true;
+    }
+
   }
 
   function editProperty(propertyId, recordingActId) {	
@@ -709,14 +723,18 @@
       return false;
     <% } %>
 
-    var sMsg = "Eliminar la inscripción del libro registral.\n\n";		
-    sMsg += "Esta operación eliminará la siguiente inscripción contenida en este libro registral:\n\n";				
-    sMsg += "Libro:\t\t<%=recordingBook.AsText%>\n";
+      var sMsg = "Eliminar la inscripción del libro registral.<br /><br />";		
+      sMsg += "Esta operación eliminará la siguiente inscripción contenida en este libro registral:<br /><br />";				
+      sMsg += "Libro:\t\t<%=recordingBook.AsText%><br />";
     sMsg += "Inscripción:\t" + getElement('txtRecordingNumber').value +
-            getElement('cboBisRecordingNumber').value + "\n\n";
+      getElement('cboBisRecordingNumber').value + "<br /><br />";
     sMsg += "¿Elimino la inscripción " + getElement('txtRecordingNumber').value +
             getElement('cboBisRecordingNumber').value + " de este libro?";		
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      
+    }*/
+    z = showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand("deleteRecording", "id=<%=recording.Id%>");
       return;
     }
@@ -732,21 +750,26 @@
     }
     var itemId = "_" + recordingActId + "_" + propertyId;
 
-    var sMsg = "Eliminar el acto jurídico y la propiedad asociada.\n\n";		
+    var sMsg = "Eliminar el acto jurídico y la propiedad asociada.<br /><br />";		
     sMsg += "Esta operación eliminará el siguiente acto jurídico, junto con ";
-    sMsg += "la propiedad que está asociada al mismo:\n\n";
-    sMsg += getInnerText('ancRecordingAct_' + recordingActId).toUpperCase() + "\n";
-    sMsg += "Posición:\t\t" + getInnerText('ancRecordingActIndex' + itemId) + "\n";
-    sMsg += "Propiedad:\t" + getInnerText('ancRecordingActProperty' + itemId) + "\n\n";
+    sMsg += "la propiedad que está asociada al mismo:<br /><br />";
+    sMsg += getInnerText('ancRecordingAct_' + recordingActId).toUpperCase() + "<br />";
+    sMsg += "Posición:\t\t" + getInnerText('ancRecordingActIndex' + itemId) + "<br />";
+    sMsg += "Propiedad:\t" + getInnerText('ancRecordingActProperty' + itemId) + "<br /><br />";
 
     <% if (recording.RecordingActs.Count == 1) { %>
-    sMsg += "IMPORTANTE: Este es el único acto jurídico registrado en esta\n";
-    sMsg += "inscripción. Al eliminarse, también se cambiará el estado de la\n";
-    sMsg += "inscripción a pendiente o incompleta.\n\n";
+    sMsg += "IMPORTANTE: Este es el único acto jurídico registrado en esta<br />";
+    sMsg += "inscripción. Al eliminarse, también se cambiará el estado de la<br />";
+    sMsg += "inscripción a pendiente o incompleta.<br /><br />";
     <% } %>
-    sMsg += "¿Elimino este acto jurídico de la lista de actos vigentes,\n";
+    sMsg += "¿Elimino este acto jurídico de la lista de actos vigentes,<br />";
     sMsg += "así como la propiedad asociada a dicho acto?";
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      sendPageCommand("deleteRecordingAct", "recordingActId=" + recordingActId);
+      return;
+    }*/
+    z = showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand("deleteRecordingAct", "recordingActId=" + recordingActId);
       return;
     }
@@ -761,17 +784,22 @@
       return false;
     }
     var itemId = "_" + recordingActId + "_" + propertyId;
-    var sMsg = "Eliminar la propiedad relacionada con el acto jurídico.\n\n";
+    var sMsg = "Eliminar la propiedad relacionada con el acto jurídico.<br /><br />";
 
-    sMsg += "Esta operación eliminará la siguiente propiedad relacionada con el\n"
-    sMsg += "acto jurídico que se indica, pero no eliminará el acto jurídico en sí:\n\n";							
-    sMsg += getInnerText('ancRecordingAct_' + recordingActId).toUpperCase() + "\n";
-    sMsg += "Número de acto:\t " + getInnerText('ancRecordingActIndex' + itemId) + "\n";
-    sMsg += "Propiedad a eliminar: " + getInnerText('ancRecordingActProperty' + itemId) + "\n\n";
+    sMsg += "Esta operación eliminará la siguiente propiedad relacionada con el<br />"
+    sMsg += "acto jurídico que se indica, pero no eliminará el acto jurídico en sí:<br /><br />";							
+    sMsg += getInnerText('ancRecordingAct_' + recordingActId).toUpperCase() + "<br />";
+    sMsg += "Número de acto:\t " + getInnerText('ancRecordingActIndex' + itemId) + "<br />";
+    sMsg += "Propiedad a eliminar: " + getInnerText('ancRecordingActProperty' + itemId) + "<br /><br />";
 
     sMsg += "¿Elimino esta propiedad relacionada al acto jurídico que se indica?";		
 
-    if (confirm(sMsg)) {
+   /* if (confirm(sMsg)) {
+      sendPageCommand("deleteRecordingActProperty", "recordingActId=" + recordingActId + "|propertyId=" + propertyId);
+      return;
+    }*/
+    z = showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand("deleteRecordingActProperty", "recordingActId=" + recordingActId + "|propertyId=" + propertyId);
       return;
     }
@@ -783,16 +811,21 @@
       return false;
     }
 
-    var sMsg = "Modificar el tipo del acto jurídico.\n\n";		
-    sMsg += "Esta operación modificará el tipo del siguiente acto jurídico:\n\n";
+    var sMsg = "Modificar el tipo del acto jurídico.<br /><br />";		
+    sMsg += "Esta operación modificará el tipo del siguiente acto jurídico:<br /><br />";
 
     sMsg += "Libro:\t\t<%=recordingBook.AsText%>\n";
     sMsg += "Inscripción:\t" + getElement('txtRecordingNumber').value +
-            getElement('cboBisRecordingNumber').value + "\n\n";
-    sMsg += "Nuevo tipo:\t" + getComboOptionText(getElement('cboRecordingActType')) + "\n\n";
+      getElement('cboBisRecordingNumber').value + "<br /><br />";
+    sMsg += "Nuevo tipo:\t" + getComboOptionText(getElement('cboRecordingActType')) + "<br /><br />";
 
     sMsg += "¿Modifico el acto jurídico?";
-    if (confirm(sMsg)) {
+    /*if (confirm(sMsg)) {
+      sendPageCommand("changeRecordingActType", "recordingActId=" + recordingActId);
+      return;
+    }*/
+    z = showConfirm(sMsg, '', executeOp);
+    function executeOp() {
       sendPageCommand("changeRecordingActType", "recordingActId=" + recordingActId);
       return;
     }
@@ -937,7 +970,7 @@
       return false;
     }
     if (getElement('txtRecordingNumber').value == '') {
-      showAlert("Necesito se proporcione el número de inscripción.");
+      showAlert("Necesito se proporcione el número de inscripción ó partida.");
       return false;
     }
     if (!isNumeric(getElement('txtRecordingNumber'))) {
@@ -980,9 +1013,15 @@
         return false;
       }
       if (isNoLabourDate(getElement('txtPresentationDate').value)) {
-        if (!confirm("La fecha de presentación de la inscripción está marcada como un día no laborable.\n\n¿La fecha de presentación está correcta?")) {
+        /*if (!confirm("La fecha de presentación de la inscripción está marcada como un día no laborable.<br /><br />¿La fecha de presentación está correcta?")) {
           return false;
+        }*/
+        sMsg = 'La fecha de presentación de la inscripción está marcada como un día no laborable.<br /><br />¿La fecha de presentación está correcta?';
+        showConfirm(sMsg, '', executeOp);
+        function executeOp() {
+          sendPageCommand('saveRecording');
         }
+        return;
       }
     }
     if (getElement('txtPresentationTime').value != '') {
@@ -999,9 +1038,15 @@
         return false;
       }
       if (isNoLabourDate(getElement('txtAuthorizationDate').value)) {
-        if (!confirm("La fecha de autorización de la inscripción está marcada como un día no laborable.\n\n¿La fecha de autorización está correcta?")) {
+        /*if (!confirm("La fecha de autorización de la inscripción está marcada como un día no laborable.\n\n¿La fecha de autorización está correcta?")) {
           return false;
+        }*/
+        sMsg = 'La fecha de autorización de la inscripción está marcada como un día no laborable.\n\n¿La fecha de autorización está correcta?';
+        showConfirm(sMsg, '', executeOp);
+        function executeOp() {
+          sendPageCommand('saveRecording');
         }
+        return;
       }
     }
     if (getElement('txtPresentationDate').value != '' && getElement('txtAuthorizationDate').value != '') {		
@@ -1010,9 +1055,15 @@
         return false;
       }
       if (daysBetween(getElement('txtPresentationDate').value, getElement('txtAuthorizationDate').value) > 30) {
-        if (!confirm("Transcurrieron más de 30 días entre la fecha de presentación y la fecha de autorización de la inscripción.\n\n¿Las fechas de la inscripción están correctas?")) {
+        /*if (!confirm("Transcurrieron más de 30 días entre la fecha de presentación y la fecha de autorización de la inscripción.\n\n¿Las fechas de la inscripción están correctas?")) {
           return false;
+        }*/
+        sMsg = 'Transcurrieron más de 30 días entre la fecha de presentación y la fecha de autorización de la inscripción.\n\n¿Las fechas de la inscripción están correctas?';
+        showConfirm(sMsg, '', executeOp);
+        function executeOp() {
+          sendPageCommand('saveRecording');
         }
+        return;
       }		
     }
     if (getElement('cboAuthorizedBy').value == '') {
