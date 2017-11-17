@@ -214,7 +214,7 @@
                   <td align="center" style="width:1%"><img src='../themes/default/buttons/last.gif'  onclick='doOperation("moveToImage", "last");' title='Muestra la última imagen' alt='' /></td>
                   <td align="center" style="width:25%"></td>
                   <td align="right" style="width:5%">
-                    
+
                   </td>
                   <td align="right" style="width:20%"> Zoom:
                     <select id="cboZoomLevel" name="cboZoomLevel" class="selectBox" style="width:56px" title="" onchange="return doOperation('zoomImage')" runat="server">

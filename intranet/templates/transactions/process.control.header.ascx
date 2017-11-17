@@ -16,7 +16,7 @@
       <a>&#160;</a>
       <a>&#160;</a>
       <a>&#160;</a>
-    
+
 			<a href="javascript:sendPageCommand('sortData', 'RequestedBy ASC')">Nombre</a> /
 		  <a href="javascript:sendPageCommand('sortData', 'DocumentDescriptor ASC')">Instrumento</a> /
 			<a href="javascript:sendPageCommand('sortData', 'ReceiptTotal ASC')">Derechos</a> /

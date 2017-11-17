@@ -10,8 +10,7 @@
 			<a href="javascript:sendPageCommand('sortData', 'TransactionStatusName ASC')">Estado</a> /
 			<a href="javascript:sendPageCommand('sortData', 'ImagingControlID DESC')">Acervo</a>
 		  <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
-      <a>&#160;</a>		  <a>&#160;</a>      
-  
+      <a>&#160;</a>		  <a>&#160;</a>
 			<a href="javascript:sendPageCommand('sortData', 'RequestedBy ASC')">Nombre</a> /
 		  <a href="javascript:sendPageCommand('sortData', 'DocumentDescriptor ASC')">Instrumento</a> /
 			<a href="javascript:sendPageCommand('sortData', 'ReceiptTotal ASC')">Derechos</a> /
@@ -21,7 +20,7 @@
       <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
       <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
       <a>&#160;</a>		  <a>&#160;</a>      <a>&#160;</a>      <a>&#160;</a>
-     
+
 			<a href="javascript:sendPageCommand('sortData', 'ToContact ASC')">Lo tiene</a> /
 			<a href="javascript:sendPageCommand('sortData', 'TrackTime DESC')">Recibido</a> /
 			<a href="javascript:sendPageCommand('sortData', 'FromContact DESC')">Entregó</a>

@@ -31,7 +31,7 @@
     {
       "type": "Presentation.Web",
       "key": "Server.RootPath",
-      "value": "http://localhost/intranet/"
+      "value": "http://empiria.land/intranet/"
     },
     {
       "type": "WebApi.Client",
@@ -41,12 +41,12 @@
     {
       "type": "WebApi.Client",
       "key": "WebApiServer.Microservices",
-      "value": "http://localhost/microservices/"
+      "value": "http://empiria.land/microservices/"
     },
     {
       "type": "WebApi.Client",
       "key": "WebApiServer.Land",
-      "value": "http://localhost/web.api/"
+      "value": "http://empiria.land/web.api/"
     },
     {
       "type": "WebApi.Client",

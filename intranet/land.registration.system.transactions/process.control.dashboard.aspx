@@ -542,7 +542,7 @@
     getElement('<%=cboElapsedTime.ClientID%>').value = '';
     getElement('<%=cboResponsible.ClientID%>').value = '';
     }
-  //var timeout = setTimeout("location.reload(true);", 300000);
+  var timeout = setTimeout("location.reload(true);", 500000);
 	/* ]]> */
 	</script>
 </asp:Content>
