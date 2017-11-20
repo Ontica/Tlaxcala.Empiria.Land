@@ -697,9 +697,7 @@ function getComboSelectedOption(elementId) {
 }
 
 function getComboOptionText(oSource) {
-  var oSource1 = oSource;
-  var x = oSource1.options[oSource1.selectedIndex].text;
-  return oSource.options[oSource.selectedIndex].text;
+   return oSource.options(oSource.selectedIndex).text;
 }
 
 function formatAsTaxKey(oSource) {

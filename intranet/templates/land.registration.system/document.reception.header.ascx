@@ -17,7 +17,7 @@
 			<a href="javascript:sendPageCommand('sortData', 'BookAsText ASC')">Observaciones</a>
 		</th>
     <th>
-			&#160;
+			&nbsp;
 		</th>
   </tr>
 </thead>

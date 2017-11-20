@@ -1,12 +1,13 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.DocumentSearch" CodeFile="document.search.aspx.cs" %>
 <%@ Register tagprefix="empiriaControl" tagname="ModalWindow" src="../land.registration.system.controls/modal.window.ascx" %>
 <%@ OutputCache Location="None" NoStore="true" %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
   <title></title>
   <meta http-equiv="Expires" content="-1" />
   <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
   <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
@@ -40,7 +41,7 @@
               <option value="transaction">Trámites</option>
               <option value="imagingControl">No. control acervo</option>
             </select>
-            <input id='txtSearchBox' name='txtSearchBox' type="text" onkeypress="return alphaNumericKeyFilter(window.event, true, searchDataCallback);"
+            <input id='txtSearchBox' name='txtSearchBox' type="text" onkeypress="return alphaNumericKeyFilter(event, true, searchDataCallback);"
                    class="textBox" style="width:240px" runat='server' title="" />
             <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda"
                  style="margin-left:-8px" onclick="doOperation('searchData')" />
@@ -50,10 +51,8 @@
     </td>
   </tr>
   <!-- #endregion Search box !-->
-  <tr><td>&#160;</td> </tr>
 
-
-    <!-- #region Search results !-->
+  <!-- #region Search results !-->
   <tr>
     <td>
       <table class="editionTable">
@@ -68,15 +67,13 @@
     </td>
   </tr>
   <!-- #endregion Search results !-->
-  <tr><td>&#160;</td> </tr>
-  <tr><td>&#160;</td> </tr>
 
   <tr>
     <td>
       <table class="editionTable">
         <tr>
           <td class="lastCell">
-            <div id='selectedItemViewer' style="overflow:auto;max-height:230px;">
+            <div id='selectedItemViewer' style="overflow:auto;max-height:420px;">
 
             </div>
           </td>
@@ -153,7 +150,7 @@
   }
 
   function onSelectImageSet(imageSetId) {
-      window.parent.eval("doOperation('onSelectImageSet', " + imageSetId + ")");
+    window.parent.execScript("doOperation('onSelectImageSet', " + imageSetId + ")");
   }
 
   function showRecordingBookAnalyzer(recordingBookId) {
@@ -190,20 +187,20 @@
   }
 
   function onSelectDocument(documentId, recordingActId) {
-      window.parent.eval("doOperation('onSelectDocument', " + documentId + ", " + recordingActId + ")");
+    window.parent.execScript("doOperation('onSelectDocument', " + documentId + ", " + recordingActId + ")");
   }
 
   function onSelectDocumentFromSearchGrid(documentId) {
     displayDocumentRecordingActsGrid(documentId);
-    window.parent.eval("doOperation('onSelectDocument', " + documentId + ")");
+    window.parent.execScript("doOperation('onSelectDocument', " + documentId + ")");
   }
 
   function onSelectRecordingAct(documentId, recordingActId) {
-      window.parent.eval("doOperation('onSelectRecordingAct', " + documentId + ", " + recordingActId + ")");
+    window.parent.execScript("doOperation('onSelectRecordingAct', " + documentId + ", " + recordingActId + ")");
   }
 
   function onSelectCertificate(certificateId) {
-      window.parent.eval("doOperation('onSelectCertificate', " + certificateId + ")");
+    window.parent.execScript("doOperation('onSelectCertificate', " + certificateId + ")");
   }
 
   function onSelectParty(partyId) {
@@ -219,7 +216,7 @@
   function displayDocumentRecordingActsGrid(documentId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getDocumentRecordingActsGridCmd";
-    url += "&#38;documentId=" + documentId;
+    url += "&documentId=" + documentId;
 
     var gridHtml = invokeAjaxMethod(false, url, null);
 
@@ -229,7 +226,7 @@
   function displayBookPhysicalRecordingsWithRecordingActsGrid(recordingBookId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getPhysicalRecordingsWithRecordingActsGridCmd";
-    url += "&#38;recordingBookId=" + recordingBookId;
+    url += "&recordingBookId=" + recordingBookId;
 
     var gridHtml = invokeAjaxMethod(false, url, null);
 
@@ -239,7 +236,7 @@
   function displayPartyRecordingActsGrid(partyId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getPartyRecordingActsGridCmd";
-    url += "&#38;partyId=" + partyId;
+    url += "&partyId=" + partyId;
 
     var gridHtml = invokeAjaxMethod(false, url, null);
 
@@ -249,7 +246,7 @@
   function displayTransactionDocumentAndCertificatesGrid(transactionId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getTransactionDocumentAndCertificatesGridCmd";
-    url += "&#38;transactionId=" + transactionId;
+    url += "&transactionId=" + transactionId;
 
     var gridHtml = invokeAjaxMethod(false, url, null);
 
@@ -265,7 +262,7 @@
   function getResourceHistoryGridHtml(resourceId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getResourceHistoryGridCmd";
-    url += "&#38;selectedDocumentId=-1&#38;resourceId=" + resourceId;
+    url += "&selectedDocumentId=-1&resourceId=" + resourceId;
 
     return invokeAjaxMethod(false, url, null);
   }

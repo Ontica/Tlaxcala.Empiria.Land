@@ -2,54 +2,48 @@
 function on_calendar_date_selected(value) {
   if (oCurrentCalendarDataSource != null) {
     oCurrentCalendarDataSource.value = value;
-    //document.all.ifraCalendar.style.visibility = "hidden";
-    getElement("ifraCalendar").style.visibility = "hidden";
+    document.all.ifraCalendar.style.visibility = "hidden";
   }
   oCurrentCalendarDataSource = null;
 }
 
 function on_calendar_lost_focus() {
-  if (document.activeElement != document.getElementById('ifraCalendar')) {
-    getElement("ifraCalendar").style.visibility = "hidden";
+  if (document.activeElement != document.all.ifraCalendar) {
+    document.all.ifraCalendar.style.visibility = "hidden";
   }
 }
 
 function on_calendar_resize(x, y) {
-  document.getElementById('ifraCalendar').width = x; //hage
-  document.getElementById('ifraCalendar').height = y;
+  document.all.ifraCalendar.width = x;
+  document.all.ifraCalendar.height = y;
 }
 
-function hideCalendar(event) {
+function hideCalendar() {
 //  var oCalendar = document.all.ifraCalendar;
 //
 //	if (oCalendar.style.visibility == "visible") {
 //    //oCalendar.style.visibility = "hidden";
 //  }
 
-  //if (document.activeElement != document.all.ifraCalendar) {
-    if (document.activeElement != document.getElementById('ifraCalendar')) {//hage
+  if (document.activeElement != document.all.ifraCalendar) {
     getElement("ifraCalendar").style.visibility = "hidden";
   }
 }
 
-function showCalendar(event, oDataSource, oImageSource, leftpx) {
-  event = event || window.event //For IE
-
+function showCalendar(oDataSource, oImageSource) {
   if (oDataSource.disabled) {
     alert("Este control está deshabilitado.")
     return;
   }
-  //var oCalendar = document.all.ifraCalendar;
-  var oCalendar = document.getElementById('ifraCalendar');//hage
+  var oCalendar = document.all.ifraCalendar;
   x = event.clientX;
   y = event.clientY;
 
   var parentX = oCalendar.contentWindow.parent.document.body.clientWidth;
   var parentY = oCalendar.contentWindow.parent.document.body.clientHeight;
 
-  //var calendarWidth = oCalendar.contentWindow.document.body.clientWidth;
-  var calendarWidth = oCalendar.contentWindow.document.clientWidth;//hage
-  var calendarHeight = oCalendar.contentWindow.document.clientHeight; //hage
+  var calendarWidth = oCalendar.contentWindow.document.body.clientWidth;
+  var calendarHeight = oCalendar.contentWindow.document.body.clientHeight;
 
   if ((x + calendarWidth) >= parentX) {
     x = x - calendarWidth;
@@ -72,25 +66,16 @@ function showCalendar(event, oDataSource, oImageSource, leftpx) {
 	} else {
     oCalendar.contentWindow.moveTo(x, y);
     if (cal_isDate(oDataSource)) {
-        oCalendar.contentWindow.eval("setDate('" + oDataSource.value + "')");
+      oCalendar.contentWindow.execScript("setDate('" + oDataSource.value + "')");
     } else {
-        oCalendar.contentWindow.eval("setDate('')");
+      oCalendar.contentWindow.execScript("setDate('')");
     }
     oCalendar.style.zIndex = 999;
     oCalendar.style.visibility = "visible";
-    oCalendar.style.left = leftpx;
-
     oCalendar.focus();
 	}
 	return false;
 }
-
-function setDate(value) {
-    getElement('txtDate').value = value;
-    document.forms[0].action = "calendar.aspx?changed=true";
-    getElement('divCalendar').style.visibility = "hidden";
-    document.forms[0].submit();
-}//hage
 
 function cal_isDate(oSource) {
   cal_formatAsDate(oSource);

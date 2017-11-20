@@ -9,7 +9,7 @@
     <th align="right"><a href="javascript:sendPageCommand('sortData', 'IncompleteRecordingsCount DESC')">En proceso</a></th>
     <th align="right"><a href="javascript:sendPageCommand('sortData', 'ClosedRecordingsCount DESC')">Cancelados</a></th>
     <th align="right"><a href="javascript:sendPageCommand('sortData', 'RecordingActsCount DESC')">Tiempo promedio</a></th>
-    <th>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </th>
+    <th>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </th>
   </tr>
 </thead>
 <tbody>
@@ -22,7 +22,7 @@
     <td align="center">15</td>
     <td align="center">9</td>
     <td align="center">2.74 días</td>
-    <td>&#160;</td>
+    <td>&nbsp;</td>
   </tr>
   <tr class="oddDataRow">
     <td><b>Distrito II Fresnillo</b></td>
@@ -33,7 +33,7 @@
     <td align="center">9</td>
     <td align="center">3</td>
     <td align="center">2.45 días</td>
-    <td>&#160;</td>
+    <td>&nbsp;</td>
   </tr>
   <tr>
     <td><b>Distrito III Jerez</b></td>
@@ -44,7 +44,7 @@
     <td align="center">3</td>
     <td align="center">1</td>
     <td align="center">1.67 días</td>
-    <td>&#160;</td>
+    <td>&nbsp;</td>
   </tr>
   <tr class="oddDataRow">
     <td><b>Distrito IV Río Grande</b></td>
@@ -55,20 +55,20 @@
     <td align="center">2</td>
     <td align="center">0</td>
     <td align="center">2.10 días</td>
-    <td>&#160;</td>
+    <td>&nbsp;</td>
   </tr>
 </tbody>
 <tfoot>
   <tr align="center">
     <td><b>Totales:</b></td>
-    <td align="center"><b>396</b>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-    <td align="center"><b>103</b>&#160;&#160;&#160;&#160;&#160;</td>
-    <td align="center"><b>462</b>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-    <td align="center"><b>4</b>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-    <td align="center"><b>29</b>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-    <td align="center"><b>13</b>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+    <td align="center"><b>396</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td align="center"><b>103</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td align="center"><b>462</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td align="center"><b>4</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td align="center"><b>29</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td align="center"><b>13</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td align="center"><b>2.24 días prom</b></td>
-    <td>&#160;</td>
+    <td>&nbsp;</td>
   </tr>
 </tfoot>
 

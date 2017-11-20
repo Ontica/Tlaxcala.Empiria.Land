@@ -191,7 +191,7 @@ namespace Empiria.Web.UI.Ajax {
                                 "Id", (x) => x.RecordingActType.DisplayName + " " + x.Document.UID + " " +
                                        x.Document.AuthorizationTime + " " + x.AmendedBy.Id + " " + x.StatusName,
                                 "( Seleccionar el acto jurídico )");
-      //return "<tr id='tblTargetPrecedentActsTable' class='totalsRow' style='display:inline'><td>&#160;</td><td colspan='5'>Hello world</td></tr>";
+      //return "<tr id='tblTargetPrecedentActsTable' class='totalsRow' style='display:inline'><td>&nbsp;</td><td colspan='5'>Hello world</td></tr>";
     }
 
     private string GetTargetRecordingSectionsCommandHandler() {
@@ -757,7 +757,7 @@ namespace Empiria.Web.UI.Ajax {
         FixedList<RecordingActType> list = recordingActTypeCategory.RecordingActTypes;
 
         return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "DisplayName",
-                                                  "( ¿Qué acto jurídico se agregará ? )");
+                                                  "( ¿Qué acto jurídico se agregará al documento? )");
       } else {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar el tipo de acto )");
       }

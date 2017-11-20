@@ -10,5 +10,5 @@
 		<br />
 	  <%# ((DateTime)(DataBinder.Eval(Container, "DataItem.StartDate"))).ToString("dd/MMM/yyyy") %>
 	</td>
-	<td>&#160;</td>
+	<td>&nbsp;</td>
 </tr>

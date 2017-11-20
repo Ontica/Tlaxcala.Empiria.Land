@@ -153,12 +153,8 @@
                 <td>
                   <span id="spanRecordingDocumentEditor" runat="server"></span>
                   <table class="editionTable">
-                    <tr>
-                      <td>Resumen:<br /><br /><br /><br /><br />&nbsp;</td>
-                      <td class="lastCell" colspan="2">
-                        <textarea id="txtResumen" name="txtResumen" class="textArea" style="width:564px;" cols="240" rows="5" runat="server"></textarea>
-                      </td>
-                    </tr>
+                  </table>
+                  <table class="editionTable">
                     <tr id="rowEditButtons" style="display:table-row">
                       <td>&#160;</td>
                       <td class="lastCell" colspan="2">
@@ -456,8 +452,8 @@
       case 'newRecording':
         success = true;
         break;
-      case 'changeRecordingAct':
-        changeRecordingActType(arguments[1], arguments[2]);
+      case 'modifyRecordingActType':
+        modifyRecordingActType(arguments[1], arguments[2]);
         return;
       case 'editRecordingAct':
         editRecordingAct(arguments[1]);
@@ -768,23 +764,31 @@
     }
   }
 
-  function changeRecordingActType(recordingActId, propertyId) {
+  function modifyRecordingActType(recordingActId, propertyId) {
+    <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("BatchCapture.Supervisor")) { %>
+      showNotAllowedMessage();
+      return;
+    <% } %>
     if (getElement('cboRecordingActType').value == '') {
       alert("Para modificar este acto jurídico, se debe seleccionar de la lista de actos jurídicos el nuevo tipo de acto.");
       return false;
     }
+    var itemId = "_" + recordingActId + "_" + propertyId;
 
     var sMsg = "Modificar el tipo del acto jurídico.\n\n";		
     sMsg += "Esta operación modificará el tipo del siguiente acto jurídico:\n\n";
 
     sMsg += "Libro:\t\t<%=recordingBook.AsText%>\n";
     sMsg += "Inscripción:\t" + getElement('txtRecordingNumber').value +
-            getElement('cboBisRecordingNumber').value + "\n\n";
+            getElement('cboBisRecordingNumber').value + "\n\n";		
+    sMsg += getInnerText('ancRecordingAct_' + recordingActId).toUpperCase() + "\n";
+    sMsg += "Posición:\t\t" + getInnerText('ancRecordingActIndex' + itemId) + "\n"
+    sMsg += "Propiedad:\t" + getInnerText('ancRecordingActProperty' + itemId) + "\n\n";
     sMsg += "Nuevo tipo:\t" + getComboOptionText(getElement('cboRecordingActType')) + "\n\n";
 
-    sMsg += "¿Modifico el acto jurídico?";
+    sMsg += "¿Modifico el acto jurídico ubicado en la posición " + getInnerText('ancRecordingActIndex' + itemId) + "?";
     if (confirm(sMsg)) {
-      sendPageCommand("changeRecordingActType", "recordingActId=" + recordingActId);
+      sendPageCommand("modifyRecordingActType", "recordingActId=" + recordingActId);
       return;
     }
   }

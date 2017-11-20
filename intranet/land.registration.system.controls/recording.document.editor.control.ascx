@@ -15,12 +15,12 @@
       </select>
     </td>
     <td class="lastCell">
-      No. Oficio:&#160;
+      No. Oficio: &nbsp;
       <input id="txtNotaryOfficialLetterNo" type="text" class="textBox" style="width:100px" title="" maxlength="36"  runat="server" />
       <input type="button" class="button" value="Sin Núm." style="width:52px;height:24px;vertical-align:middle;margin-left:-8px" onclick="getElement('<%=txtNotaryOfficialLetterNo.ClientID%>').value='S/N'" />
-     &#160;&#160;Fecha del oficio:
+      &nbsp;&nbsp;Fecha del oficio:
       <input id='txtNotaryOfficialLetterIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgNotaryOfficialLetterIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtNotaryOfficialLetterIssueDate.ClientID%>'), getElement('imgNotaryOfficialLetterIssueDate'));" title="Despliega el calendario" alt="" />
+      <img id='imgNotaryOfficialLetterIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtNotaryOfficialLetterIssueDate.ClientID%>'), getElement('imgNotaryOfficialLetterIssueDate'));" title="Despliega el calendario" alt="" />
     </td>
   </tr>
   <tr>
@@ -59,26 +59,26 @@
     <td>Volumen / libro:</td>
     <td class="lastCell" colspan="2">
       <input id="txtNotaryDocBook" type="text" class="textBox" style="width:40px"
-             onkeypress="return integerKeyFilter(window.event, true);" title="" maxlength="6"  runat="server" />
+             onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
       Escritura:
         <input id="txtNotaryDocNumber" name="txtNotaryDocNumber" type="text" class="textBox" style="width:40px"
-         onkeypress="return integerKeyFilter(window.event, true);" title="" maxlength="6"  runat="server" />
-      &#160;Folios del:&#160;<input id="txtNotaryDocStartSheet" name="txtNotaryDocStartSheet" type="text" class="textBox" style="width:50px"
-         onkeypress="return integerKeyFilter(window.event, true);" title="" maxlength="6"  runat="server" />
-       al:&#160;&#160;
+         onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
+       &nbsp;Folios del: &nbsp;<input id="txtNotaryDocStartSheet" name="txtNotaryDocStartSheet" type="text" class="textBox" style="width:50px"
+         onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
+       al:&nbsp;&nbsp;
        <input id="txtNotaryDocEndSheet" name="txtNotaryDocEndSheet" type="text" class="textBox" style="width:40px"
-         onkeypress="return integerKeyFilter(window.event, true);" title="" maxlength="6"  runat="server" />
+         onkeypress="return integerKeyFilter(this);" title="" maxlength="6"  runat="server" />
       Fecha de la escritura:
       <input type="text" class="textBox" id='txtNotaryDocIssueDate' name='txtNotaryDocIssueDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
       <img id='imgNotaryDocIssueDate' src="../themes/default/buttons/ellipsis.gif"
-      onclick="return showCalendar(event, getElement('<%=txtNotaryDocIssueDate.ClientID%>'), getElement('imgNotaryDocIssueDate'));" title="Despliega el calendario" alt="" />
+      onclick="return showCalendar(getElement('<%=txtNotaryDocIssueDate.ClientID%>'), getElement('imgNotaryDocIssueDate'));" title="Despliega el calendario" alt="" />
     </td>
   </tr>
 </table>
 <table id="oEjidalSystemTitle" class="editionTable" style="display:none;" runat="server">
   <tr>
     <td colspan="2">
-      Título de propiedad No:&#160;
+      Título de propiedad No: &nbsp;
     <input id="txtPropTitleDocNumber" type="text" class="textBox" style="width:136px" onkeypress="return upperCaseKeyFilter(this);"
          title="" maxlength="32" runat="server" /></td>
     <td>Expedido por:</td>
@@ -91,7 +91,7 @@
     <td>Fecha del acta de asamblea:</td>
     <td>
       <input id='txtPropTitleIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgPropTitleIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtPropTitleIssueDate.ClientID%>'), getElement('imgPropTitleIssueDate'));" title="Despliega el calendario" alt="" />
+      <img id='imgPropTitleIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtPropTitleIssueDate.ClientID%>'), getElement('imgPropTitleIssueDate'));" title="Despliega el calendario" alt="" />
     </td>
     <td class="lastCell" colspan="2">
       Expedido en:
@@ -126,15 +126,15 @@
       </select>
     </td>
     <td>
-      Expediente:&#160;
+      Expediente: &nbsp;
       <input id="txtJudicialDocBook" type="text" class="textBox" style="width:120px" title="" maxlength="36"  runat="server" />
     </td>
     <td class="lastCell">
-      Oficio:&#160;
+      Oficio: &nbsp;
       <input id="txtJudicialDocNumber" type="text" class="textBox" style="width:100px" title="" maxlength="36"  runat="server" />
       Fecha:
       <input id='txtJudicialDocIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgJudicialDocIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtJudicialDocIssueDate.ClientID%>'), getElement('imgJudicialDocIssueDate'));" title="Despliega el calendario" alt="" />
+      <img id='imgJudicialDocIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtJudicialDocIssueDate.ClientID%>'), getElement('imgJudicialDocIssueDate'));" title="Despliega el calendario" alt="" />
     </td>
   </tr>
   <tr>
@@ -203,7 +203,7 @@
     <td class="lastCell">
       Fecha:
       <input id='txtPrivateDocIssueDate' type="text" class="textBox" style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-      <img id='imgPrivateDocIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtPrivateDocIssueDate.ClientID%>'), getElement('imgPrivateDocIssueDate'));" title="Despliega el calendario" alt="" />
+      <img id='imgPrivateDocIssueDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtPrivateDocIssueDate.ClientID%>'), getElement('imgPrivateDocIssueDate'));" title="Despliega el calendario" alt="" />
     </td>
   </tr>
 </table>

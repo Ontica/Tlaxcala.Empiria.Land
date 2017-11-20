@@ -162,7 +162,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectParty");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.ExtendedName);
-        row = row.Replace("{{IMAGING.LINKS}}", "&#160;");
+        row = row.Replace("{{IMAGING.LINKS}}", "&nbsp;");
 
         html += row;
       }
@@ -234,7 +234,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectResource");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.UID);
-        row = row.Replace("{{IMAGING.LINKS}}", "&#160;");
+        row = row.Replace("{{IMAGING.LINKS}}", "&nbsp;");
 
         html += row;
       }
@@ -252,7 +252,7 @@ namespace Empiria.Land.WebApp {
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectTransaction");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.UID);
-        row = row.Replace("{{IMAGING.LINKS}}", "&#160;");
+        row = row.Replace("{{IMAGING.LINKS}}", "&nbsp;");
 
         html += row;
       }
@@ -265,9 +265,10 @@ namespace Empiria.Land.WebApp {
 
     static private string ReadHeaderTemplate(Type type) {
       const string template =
-     "<tr class='detailsHeader'>" +
+          "<tr class='detailsHeader'>" +
             "<td colspan='2'>Resultado de la búsqueda</td>" +
-     "</tr>";
+          "</tr>";
+
       return template;
     }
 
@@ -288,8 +289,8 @@ namespace Empiria.Land.WebApp {
         "<td style='white-space:normal'>" +
           "<a href='javascript:doOperation(\"{{ON.SELECT.OPERATION}}\", {{ITEM.ID}});'>" +
           "{{ITEM.DISPLAY.TEXT}}</a>" +
-        "</td><td style='white-space:nowrap'>{{IMAGING.LINKS}}</td>" +
-        "</tr>";
+        "<td style='white-space:nowrap'>{{IMAGING.LINKS}}</td>" +
+        "</td></tr>";
 
       return template;
     }
@@ -300,10 +301,10 @@ namespace Empiria.Land.WebApp {
         "<td style='vertical-align:top;white-space:normal'>" +
           "<a href='javascript:doOperation(\"{{ON.SELECT.OPERATION}}\", {{ITEM.ID}});'>" +
           "{{ITEM.DISPLAY.TEXT}}</a>" +
-        "</td><td style='vertical-align:top;white-space:nowrap'>{{TRANSACTION.UID}}</td>" +
+        "<td style='vertical-align:top;white-space:nowrap'>{{TRANSACTION.UID}}</td>" +
         "<td style='valign:top;white-space:normal;width:95%'>{{TRANSACTION.REQUESTED.BY}}</td>" +
         "<td style='vertical-align:top;white-space:nowrap'>{{IMAGING.LINKS}}</td>" +
-        "</tr>";
+        "</td></tr>";
 
       return template.Replace("{{CLASS}}",
                               (rowIndex % 2 == 0) ? "detailsItem" : "detailsOddItem");
@@ -316,7 +317,7 @@ namespace Empiria.Land.WebApp {
     }
 
     static private string TableWrapper(string html) {
-      return "<table class='details' style='width:100%;height:10px;'>" + html + "</table>";
+      return "<table class='details' style='width:96%'>" + html + "</table>";
     }
 
     #endregion Auxiliar methods

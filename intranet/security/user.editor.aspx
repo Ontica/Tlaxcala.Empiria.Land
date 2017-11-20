@@ -39,7 +39,7 @@
             <input type="password" class="textBox" id='txtNewPassword' name='txtNewPassword' onkeypress='return alphaNumericKeyFilter(event, false);' style="width:140px" title="Nueva contraseña del usuario" maxlength="16" runat="server"  />
           </td>
           <td colspan="1" rowspan="2" align="left">
-            <div><b>MUY IMPORTANTE:</b>&#160;</div>
+            <div><b>MUY IMPORTANTE:</b>&nbsp;</div>
             Por seguridad, favor de emplear caracteres en mayúsculas<br />
             y minúsculas, números y caracteres especiales como<br />
             ( ) $ = : , ; & / | \ % # - ! _ ? + @ * .
@@ -65,7 +65,7 @@
       <tr><td colspan="1" rowspan="1">
         <table class="details">
           <tr class="detailsHeader">
-            <td style="width: 10px;">&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+            <td style="width: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             <td><b>Grupos de entidades</b></td>
             <td align="right">Buscar:
                 <input type="text" id='txtgrdMembersIds' name="txtgrdMembersIds" class="textBox" onkeypress='return alphaNumericKeyFilter(event, true);'
@@ -76,13 +76,13 @@
                 <img src="~/themes/default/buttons/edit.gif"
                      onclick="javascript:doCommand('createViewCmd', '../explorers/object.editor.aspx?id=0&amp;type=ObjectType.NestedObjectType.EntityGroup', 750, 1000, null, false)" alt="" title="" />
                 <% } %>
-               &#160;&#160;&#160;
+                &nbsp; &nbsp; &nbsp;
             </td></tr>
         </table>
         <div id='divgrdMembersIds' style="overflow:auto; height:100%; width:100%;">
           <table class="details">
             <tr class="detailsSubHeader">
-              <td style="width: 1px;">&#160;</td>
+              <td style="width: 1px;">&nbsp;</td>
               <td>Nombre</td>
             </tr>
             <%=grdEntitiesContents%>

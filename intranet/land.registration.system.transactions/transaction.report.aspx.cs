@@ -80,7 +80,7 @@ namespace Empiria.Land.WebApp {
                               "<td style='white-space:nowrap'>{RECIBO}</td>" +
                               "<td align='right' style='white-space:nowrap'>{IMPORTE}</td>" +
                               "<td align='right' style='white-space:nowrap'>{PRESENTACION}</td>" +
-                              "<td align='right' style='white-space:nowrap'>{ELABORACIÓN}</td><td width='40%'>&#160;</td>";
+                              "<td align='right' style='white-space:nowrap'>{ELABORACIÓN}</td><td width='40%'>&nbsp;</td>";
 
 
       string html = String.Empty;
@@ -105,7 +105,7 @@ namespace Empiria.Land.WebApp {
                               "<td style='white-space:nowrap'>{RECIBO}</td>" +
                               "<td align='right' style='white-space:nowrap'>{IMPORTE}</td>" +
                               "<td align='right' style='white-space:nowrap'>{PRESENTACION}</td>" +
-                              "<td align='right' style='white-space:nowrap'>{ELABORACIÓN}</td><td width='40%'>&#160;</td>";
+                              "<td align='right' style='white-space:nowrap'>{ELABORACIÓN}</td><td width='40%'>&nbsp;</td>";
 
 
       string html = String.Empty;
@@ -125,7 +125,7 @@ namespace Empiria.Land.WebApp {
 
     protected string GetRecordingActs() {
       //FixedList<RecordingAct> list = transaction.Recording.RecordingActs;
-      //const string template = "<tr width='24px'><td>{NUMBER}</td><td style='white-space:nowrap'>{RECORDING.ACT}&#160;&#160;&#160;</td><td style='white-space:nowrap'>{PROPERTY}</td>" +
+      //const string template = "<tr width='24px'><td>{NUMBER}</td><td style='white-space:nowrap'>{RECORDING.ACT}&nbsp; &nbsp; &nbsp;</td><td style='white-space:nowrap'>{PROPERTY}</td>" +
       //                        "<td align='center' style='white-space:nowrap'>{PROPERTY.AMOUNT}</td>" +
       //                        "<td align='center' style='white-space:nowrap'>{OPERATION.AMOUNT}</td>" +
       //                        "<td align='center' style='white-space:nowrap'>{ANNOTATIONS.COUNT}<td>{OBSERVATIONS}</td>";

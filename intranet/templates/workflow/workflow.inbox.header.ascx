@@ -1,6 +1,6 @@
 ﻿<tr class="detailsHeader">
-  <td>&#160;</td>
-  <td>&#160;</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
   <td width="60%">Asunto</td>
   <td>De</td>
   <td>Para</td>

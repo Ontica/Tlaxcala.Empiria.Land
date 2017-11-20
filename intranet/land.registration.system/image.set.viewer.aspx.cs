@@ -92,10 +92,7 @@ namespace Empiria.Land.WebApp {
 
     private void Initialize() {
       int id = 0;
-      if (!IsPostBack) {
-        cboZoomLevel.Value = "1.00";
-        currentImagePosition = 0;
-      }
+
       if (!String.IsNullOrWhiteSpace(Request.QueryString["recordingBookId"])) {
         var recordingBook = RecordingBook.Parse(int.Parse(Request.QueryString["recordingBookId"]));
         id = recordingBook.ImageSetId;
@@ -105,11 +102,14 @@ namespace Empiria.Land.WebApp {
       } else {
         id = int.Parse(Request.QueryString["id"]);
       }
-      if (!String.IsNullOrWhiteSpace(Request.QueryString["gotoImage"])) {
-        currentImagePosition = int.Parse(Request.QueryString["gotoImage"]);
-      }
+
       this.imageSet = ImageSet.Parse(id);
       SetPageTitle();
+
+      if (!IsPostBack) {
+        cboZoomLevel.Value = "1.00";
+        currentImagePosition = 0;
+      }
       SetImageZoom();
     }
 

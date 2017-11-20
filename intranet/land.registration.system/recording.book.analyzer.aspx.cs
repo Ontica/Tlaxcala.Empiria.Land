@@ -93,8 +93,8 @@ namespace Empiria.Land.WebApp {
           Response.Redirect("recording.book.analyzer.aspx?bookId=" + recordingBook.Id.ToString() +
                             "&id=0&image=" + hdnCurrentImagePosition.Value, true);
           return;
-        case "changeRecordingActType":
-          ChangeRecordingActType();
+        case "modifyRecordingActType":
+          ModifyRecordingActType();
           RefreshPage();
           return;
         case "deleteRecordingAct":
@@ -150,7 +150,7 @@ namespace Empiria.Land.WebApp {
       cboAuthorizedBy.Value = recording.AuthorizedBy.Id.ToString();
       cboStatus.Value = ((char) recording.Status).ToString();
       txtObservations.Value = recording.Notes;
-      txtResumen.Value = recording.MainDocument.Notes;
+
       cboRecordingActTypeCategory.Value = "0";
 
       gRecordingActs = LRSGridControls.GetPhysicalRecordingActsGrid(this.recording);
@@ -222,14 +222,16 @@ namespace Empiria.Land.WebApp {
       this.recordingBook.Refresh();
     }
 
-    private void ChangeRecordingActType() {
-      int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
-      int recordingActTypeId = int.Parse(Request.Form["cboRecordingActType"]);
+    private void ModifyRecordingActType() {
+      throw new NotImplementedException("OOJJOO");
 
-      RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
-      RecordingActType recordingActType = RecordingActType.Parse(recordingActTypeId);
+      //int recordingActId = int.Parse(GetCommandParameter("recordingActId"));
+      //int recordingActTypeId = int.Parse(Request.Form["cboRecordingActType"]);
 
-      recordingAct.ChangeRecordingActType(recordingActType);
+      //RecordingAct recordingAct = recording.GetRecordingAct(recordingActId);
+      //RecordingActType recordingActType = RecordingActType.Parse(recordingActTypeId);
+      //recordingAct.RecordingActType = recordingActType;
+      //recordingAct.Save();
     }
 
     private void RefreshImagesStatistics() {
@@ -256,7 +258,7 @@ namespace Empiria.Land.WebApp {
 
       dto.Notes = txtObservations.Value;
       dto.MainDocument = oRecordingDocumentEditor.FillRecordingDocument(RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value)));
-      dto.MainDocument.Notes = txtResumen.Value;
+
       dto.Status = (RecordableObjectStatus) Convert.ToChar(cboStatus.Value);
 
       if (recording.IsNew) {

@@ -36,5 +36,5 @@
 	<td style="white-space:nowrap;" align="right">
     <%#((int)DataBinder.Eval(Container, "DataItem.PropertiesCount")).ToString("N0")%>
 	</td>
-	<td width="30%">&#160;</td>
+	<td width="30%">&nbsp;</td>
 </tr>

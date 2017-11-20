@@ -8,7 +8,7 @@
     <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 2);" title="">Tareas efectuadas</td>
     <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 3);" title="">Tareas descartadas</td>
     <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Todas las tareas</td>
-    <td>&#160;&#160;</td>
+    <td>&nbsp; &nbsp;</td>
     <td><input id="currentTabStripItem" name="currentTabStripItem" type="hidden" /></td>
   </tr>
 </table>
@@ -51,16 +51,16 @@
       <td align="left">
 
       </td>
-     <td width="80%">&#160;</td>
+     <td width="80%">&nbsp;</td>
     </tr>
     <tr>
       <td nowrap="nowrap">Del día:</td>
       <td nowrap="nowrap">
         <input type="text" class="textBox" id='txtFromDate' name='txtFromDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-        <img id='imgFromDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtFromDate.ClientID%>'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />
-       &#160;&#160;al día
+        <img id='imgFromDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtFromDate.ClientID%>'), getElement('imgFromDate'));" title="Despliega el calendario" alt="" />
+        &nbsp;&nbsp;al día
         <input type="text" class="textBox" id='txtToDate' name='txtToDate' style="width:66px;" onblur="formatAsDate(this)" title="" runat="server" />
-        <img id='imgToDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtToDate.ClientID%>'), getElement('imgToDate'));" title="Despliega el calendario" alt="" />
+        <img id='imgToDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtToDate.ClientID%>'), getElement('imgToDate'));" title="Despliega el calendario" alt="" />
       </td>
       <td nowrap="nowrap">
         Prioridad:
@@ -75,7 +75,7 @@
       </td>
       <td nowrap="nowrap" colspan="3">
         <a href="javascript:doOperation('createObject')"><img src="../themes/default/buttons/go.button.png" alt=""
-                 title="Imprime el reporte con la programación de reparto para las unidades seleccionadas" />Crear una nueva tarea</a>&#160;&#160;
+                 title="Imprime el reporte con la programación de reparto para las unidades seleccionadas" />Crear una nueva tarea</a> &nbsp; &nbsp;
       </td>
     </tr>
   </table>

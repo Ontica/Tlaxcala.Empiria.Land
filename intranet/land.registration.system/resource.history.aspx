@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.ResourceHistory" CodeFile="resource.history.aspx.cs" %>
 <%@ Register tagprefix="empiriaControl" tagname="ModalWindow" src="../land.registration.system.controls/modal.window.ascx" %>
 <%@ OutputCache Location="None" NoStore="true" %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
   <title></title>
@@ -71,19 +71,19 @@
   }
 
   function onSelectImageSet(imageSetId) {
-      window.parent.eval("doOperation('onSelectImageSet', " + imageSetId + ")");
+    window.parent.execScript("doOperation('onSelectImageSet', " + imageSetId + ")");
   }
 
   function onSelectDocument(documentId, recordingActId) {
-      window.parent.eval("doOperation('onSelectDocument', " + documentId + ", " + recordingActId + ")");
+    window.parent.execScript("doOperation('onSelectDocument', " + documentId + ", " + recordingActId + ")");
   }
 
   function onSelectCertificate(certificateId) {
-      window.parent.eval("doOperation('onSelectCertificate', " + certificateId + ")");
+    window.parent.execScript("doOperation('onSelectCertificate', " + certificateId + ")");
   }
 
   function onSelectRecordingAct(documentId, recordingActId) {
-      window.parent.eval("doOperation('onSelectRecordingAct', " + documentId + ", " + recordingActId + ")");
+    window.parent.execScript("doOperation('onSelectRecordingAct', " + documentId + ", " + recordingActId + ")");
   }
 
   function displayResourcePopupWindow(resourceId) {
@@ -95,7 +95,7 @@
   function getResourceHistoryGridHtml(resourceId) {
     var url = "../ajax/land.ui.controls.aspx";
     url += "?commandName=getResourceHistoryGridCmd";
-    url += "&#38;selectedDocumentId=<%=base.selectedRecordingAct.Document.Id%>&#38;resourceId=" + resourceId;
+    url += "&selectedDocumentId=<%=base.selectedRecordingAct.Document.Id%>&resourceId=" + resourceId;
 
     return invokeAjaxMethod(false, url, null);
   }

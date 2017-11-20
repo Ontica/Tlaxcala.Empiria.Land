@@ -304,7 +304,7 @@ function ungrayImage(e) {
       } else {
         dataTableControlsHeight = 0;
       }
-      var newHeight = windowHeight - menuHeight - pageOptionsHeight - dataTableControlsHeight -50;
+      var newHeight = windowHeight - menuHeight - pageOptionsHeight - dataTableControlsHeight;
 
       getElement('divObjectExplorer').style.height = newHeight + "px";
       fixDataTableItems(getElement('divObjectExplorer'));
@@ -506,7 +506,7 @@ function setPageTitleWithTabStrip(oTabStrip) {
   }
   var oMainPage = window.parent;
   var script = "setPageTitle('" + pageTitle + "');";
-  oMainPage.eval(script);
+  oMainPage.execScript(script);
 }
 
 function onClickTabStripCommandHandler(tabStrip, processOnServer) {
@@ -557,11 +557,12 @@ function onMouseOutTabStripCommandHandler(tabStrip) {
 
 function openInWindow(oWindow, url, fullWindow) {
   var options = "";
-  if (fullWindow != null && fullWindow == true) {
-    options = "status=yes,scrollbars=yes,fullscreen=yes,location=no,menubar=no,resizable=yes,height=760px,width=1300px";
+
+  if (fullWindow != null && fullWindow === true) {
+    options = "status=yes,scrollbars=yes,fullscreen=yes,location=no,menubar=no,resizable=yes";
   } else {
-    options = "status=yes,scrollbars=yes,fullscreen=yes,location=no,menubar=no,resizable=yes," +
-              "height=760px,width=1300px";
+    options = "status=yes,scrollbars=yes,fullscreen=no,location=no,menubar=no,resizable=yes," +
+              "height=780px,width=900px";
   }
 
 

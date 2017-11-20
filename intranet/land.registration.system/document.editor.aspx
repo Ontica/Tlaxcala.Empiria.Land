@@ -2,7 +2,7 @@
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyEditorControl" src="../land.registration.system.controls/recording.party.editor.control.ascx" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingPartyViewerControl" src="../land.registration.system.controls/recording.party.viewer.control.ascx" %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
   <title></title>
@@ -70,29 +70,29 @@
       <span id="spanRecordingDocumentEditor" runat="server"></span>
       <table class="editionTable">
         <tr>
-          <td>Descripción:<br /><br /><br /><br /><br /><br /><br /><br /><br />&#160;</td>
+          <td>Descripción:<br /><br /><br /><br /><br /><br /><br /><br /><br />&nbsp;</td>
           <td colspan="2" class="lastCell">
             <textarea id="txtObservations" name="txtObservations" class="textArea" style="width:698px" cols="348" rows="10" runat="server"></textarea>
           </td>
         </tr>
         <% if (base.IsReadyForEdition()) { %>
         <tr id="rowEditButtons" style="display:inline">
-          <td>&#160;</td>
+          <td>&nbsp;</td>
           <td class="lastCell" colspan="2">
             <input id='btnSaveRecording' type="button" value="Guardar los cambios" class="button" style="width:112px;height:28px" onclick='doOperation("saveDocument")' title='Guardar el documento' />
-           &#160;&#160;&#160;
+            &nbsp; &nbsp; &nbsp;
             <!--
             <input id='btnCancelEdition' type="button" value="Cancelar edición" class="button" style="width:112px;height:28px" onclick='doOperation("cancelEdition")' title='Cancela los cambios realizados sobre el documento' />
-           &#160;&#160;&#160;
+            &nbsp; &nbsp; &nbsp;
             <input id='btnCloseForRecording' type="button" value="Registro completo" class="button" style="width:112px;height:28px" onclick='doOperation("closeRegistration")' title='Cierra el documento y evita cambios adicionales en el registro' />
-           &#160;&#160;&#160;
+            &nbsp; &nbsp; &nbsp;
             <input id='btnOpenForRecording' type="button" value="Abrir para registro" class="button" style="width:112px;height:28px" onclick='doOperation("closeRegistration")' title='Abre el documento nuevamente para registro' />
             !-->
-           &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-           &#160;&#160;&#160;&#160;&#160;
-           &#160;&#160;&#160;&#160;&#160;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
           </td>
-          <td>
+          <td >
           </td>
         </tr>
         <% } %>
@@ -118,7 +118,7 @@
                 </tr>
                 <%=GetRecordingActsGrid()%>
                 <tr class='totalsRow' style='display:<%=base.IsReadyForEdition() && base.RecordingActs.Count == 0 ? "inline" : "none"%>'>
-                  <td>&#160;</td>
+                  <td>&nbsp;</td>
                   <td colspan='2'>
                     Todavía no se han agregado actos jurídicos al documento.
                   </td>
@@ -138,11 +138,11 @@
           <td class="totalsRow lastCell" style='width:860px;display:<%=base.IsReadyToAppendRecordingActs() && base.RecordingActs.Count > 0 ? "inline" : "none"%>'>
             <div style="width:50%;float:left">
                 <a href="javascript:doOperation('showRecordingActEditor')">
-                <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />Registrar otro acto jurídico 1</a>
+                <img src="../themes/default/buttons/edit.gif" alt="" title="" style="margin-right:8px" />Registrar otro acto jurídico</a>
             </div>
             <div style="width:50%;text-align:right;">
               <a href="javascript:doOperation('showSearchRecordingsView')">
-              <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar la información registral 1</a>&#160;&#160;&#160;
+              <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar la información registral</a>&nbsp; &nbsp; &nbsp;
             </div>
           </td>
         </tr>
@@ -199,10 +199,10 @@
 
 
   function showRecordingActEditor() {
-    if (getElement('divRecordingActEditor').style.display == 'none') {
-      getElement('divRecordingActEditor').style.display = 'inline';
+    if (divRecordingActEditor.style.display == 'none') {
+      divRecordingActEditor.style.display = 'inline';
     } else {
-      getElement('divRecordingActEditor').style.display = 'none';
+      divRecordingActEditor.style.display = 'none';
     }
   }
 

@@ -10,7 +10,7 @@
 			<a href="javascript:sendPageCommand('sortData', 'CapturedRecordingsPercentage DESC')">% Avance</a>
 		</th>
     <th>Digitalizador / Cortador / Último analista asignado</th>
-    <th>&#160;</th>
+    <th>&nbsp;</th>
   </tr>
 </thead>
 <%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).HintContent%>

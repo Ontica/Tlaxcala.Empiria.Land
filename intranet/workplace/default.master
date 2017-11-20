@@ -1,59 +1,59 @@
 ﻿<%@ Master Language="C#" EnableViewState="false" CodeFile="default.master.cs" Inherits="Empiria.Web.UI.Workplace.DefaultMasterPage" %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">
   <title>Empiria</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="-1" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta name="MS.LOCALE" content="ES-MX" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
   <link href="../themes/default/css/master.page.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/dashboard.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/toolbar.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/explorer.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
-  <script type="text/javascript" src="../scripts/empiria.general.js"></script>
-  <script type="text/javascript" src="../scripts/empiria.clock.js"></script>
-  <script type="text/javascript" src="../scripts/empiria.master.page.js"></script>
-  <script type="text/javascript">
-  /* <![CDATA[ */
+	<script type="text/javascript" src="../scripts/empiria.general.js"></script>
+	<script type="text/javascript" src="../scripts/empiria.clock.js"></script>
+	<script type="text/javascript" src="../scripts/empiria.master.page.js"></script>
+	<script type="text/javascript">
+	/* <![CDATA[ */
+	
+	function doPageCommand(commandName, commandArguments) {
+		switch (commandName) {
+		  case 'onSelectedObjectChangeCmd':
+		    onSelectedObjectChangeCommandHandler(commandArguments[1]);
+			  gbSended = false;
+		    return true;
+			case 'searchCmd':
+				gbSended = doSearch();
+				gsWaitScreenMessage = "Buscando los elementos solicitados";
+				return true;
+		  default:
+				return false;
+		}
+	}
 
-  function doPageCommand(commandName, commandArguments) {
-    switch (commandName) {
-      case 'onSelectedObjectChangeCmd':
-        onSelectedObjectChangeCommandHandler(commandArguments[1]);
-        gbSended = false;
-        return true;
-      case 'searchCmd':
-        gbSended = doSearch();
-        gsWaitScreenMessage = "Buscando los elementos solicitados";
-        return true;
-      default:
-        return false;
-    }
-  }
-
-  function doSearch() {
-    return true;
-  }
-
+	function doSearch() {
+		return true;
+	}
+	
   function onSelectedObjectChangeCommandHandler(queryString) {
-    //alert("QS: " + queryString);
-  }
+	  //alert("QS: " + queryString);
+	}
 
   function setPageTitle(pageTitle) {
     gsPageTitle = pageTitle;
     displayPageTitle();
   }
-
-  function window_onload() {
+	
+	function window_onload() {
     gsServerName = '<%=MasterPageContent.ServerTitle + " » " + Empiria.ExecutionServer.CustomerName + " » " + Empiria.ProductInformation.Name%>';
-    setMenuOption('<%=selectedMenuOption%>');
+    setMenuOption('<%=selectedMenuOption%>');	
     <%=OnBeginLoadScript()%>
-    setClock('oClock', true, true, true);
+	  setClock('oClock', true, true, true);
     window_onresize();
     <%=OnEndLoadScript()%>
-  }
+	}
 
   function window_onresize() {
     if (existsElement("ifraWorkarea")) {
@@ -63,19 +63,18 @@
     }
   }
 
-  addEvent(window, 'load', window_onload);
+	addEvent(window, 'load', window_onload);
   addEvent(window, 'resize', window_onresize);
 
-  /* ]]> */
-  </script>
+	/* ]]> */
+	</script>
 </head>
-
-<body style="overflow:hidden">
-  <form id="frmEditor" runat="server">
-    <table id="tblMainMenu" style="cellspacing:0">
+<body scroll="no">
+	<form id="frmEditor" runat="server">
+    <table id="tblMainMenu" cellspacing="0">
       <tr>
-        <td class="mainLogo" rowspan="2"><img src="../themes/default/customer/customer.logo.png" style="height:40px; width:195px;" alt="" />&#160;</td>
-        <td align="right" class="mainMenuFirstRow">Hola <%=Empiria.ExecutionServer.CurrentIdentity.Name%>&#160;&#160;&#160;|&#160;&#160;&#160; <a id="oClock">Trabajando ...</a>&#160;&#160;</td>
+        <td class="mainLogo" rowspan="2"><img src="../themes/default/customer/customer.logo.png" height="48px" alt="" />&nbsp;</td>
+        <td align="right" class="mainMenuFirstRow">Hola <%=Empiria.ExecutionServer.CurrentIdentity.Name%> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a id="oClock">Trabajando ...</a>&nbsp;&nbsp;</td>
       </tr>
       <tr>
         <td class="mainMenu" style="width:100%">
@@ -85,22 +84,22 @@
       </tr>
       <tr>
         <td class="mainSubMenu" colspan="2">
-          <%=MasterPageContent.GetMasterSubMenusContent()%>
+					<%=MasterPageContent.GetMasterSubMenusContent()%>
         </td>
       </tr>
     </table>
     <div id="divCanvas">
-      <div id="divBody">
-        <asp:contentplaceholder id="contentPlaceHolder" runat="server" EnableViewState="false">
-        </asp:contentplaceholder>
-      </div>
-      <div id="divWait">
-        <%=MasterPageContent.GetWaitScreenContent()%>
-      </div>
-    </div> <!-- end divCanvas !-->
-    <div id="divAlertMessageBox">
-
-    </div>
-  </form>
+		  <div id="divBody">
+				<asp:contentplaceholder id="contentPlaceHolder" runat="server" EnableViewState="false">
+				</asp:contentplaceholder>
+			</div>
+			<div id="divWait">
+			  <%=MasterPageContent.GetWaitScreenContent()%>
+			</div>
+	  </div> <!-- end divCanvas !-->
+		<div id="divAlertMessageBox">
+		
+		</div>
+	</form>
 </body>
 </html>

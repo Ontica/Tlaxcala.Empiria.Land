@@ -7,7 +7,7 @@
           <td style="width:125px">Buscar:</td>
           <td class="lastCell">
             <input id='txtSearchParty' type="text" class="textBox" style="width:212px;margin-right:0;" maxlength="64" onkeypress="this_onSearchTextBoxKeyFilter(this)" runat="server" />
-           &#160;
+            &nbsp;
             <img src="../themes/default/buttons/search.gif" alt="" title="Ejecuta la búsqueda" style="margin-left:-4px" onclick="this_searchParties()" />
             <select id="cboPartyType" class="selectBox" style="width:118px" title="" onchange="return this_updateUserInterface(this);" runat="server">
               <option value="0">( Todas )</option>
@@ -61,7 +61,7 @@
     </td>
   </tr>
   <tr>
-    <td>Otra información:<br />&#160;</td>
+    <td>Otra información:<br />&nbsp;</td>
     <td class="lastCell">
       <textarea id="txtPersonNotes" cols="310" rows="2" style="width:490px" class="textArea" runat="server"></textarea>
     </td>
@@ -69,7 +69,7 @@
 </table>
 <table id="tblOrganizationPartyEditor" class="editionTable" style="display:none;margin-top:-12px" runat='server'>
   <tr>
-    <td>Nombre o razón social:<br />&#160;</td>
+    <td>Nombre o razón social:<br />&nbsp;</td>
     <td class="lastCell">
       <textarea id="txtOrgName" cols="320" rows="2" style="width:490px" class="textArea" runat="server"></textarea>
     </td>
@@ -81,7 +81,7 @@
     </td>
   </tr>
   <tr>
-    <td>Otra información:<br />&#160;</td>
+    <td>Otra información:<br />&nbsp;</td>
     <td class="lastCell">
       <textarea id="txtOrgNotes" cols="310" rows="2" style="width:490px" class="textArea" runat="server"></textarea>
     </td>
@@ -115,7 +115,7 @@
               <input id='txtOwnershipPartAmount' class="textBox" style="width:58px;" onkeypress="return positiveKeyFilter(this);" title="" runat='server' />
             </div>
             <div id="divUsufructuaryRole" style="display:none;">
-              De la nuda de:&#160;
+              De la nuda de:&nbsp;
               <select id="cboUsufructuaryOf" class="selectBox" style="width:296px" onchange="return this_updateUserInterface(this);" runat="server">
                 <option value="">( Seleccionar al nudo propietario )</option>
               </select>
@@ -147,13 +147,13 @@
               </select>
               <br />
               <div id="divUsufructCondition" style="display:none">
-                Finalización: &#160;&#160;&#160;&#160;
+                Finalización:  &nbsp;&nbsp;&nbsp;&nbsp;
                 <input id='txtUsufructEndCondition' class="textBox" onblur="this_formatUsufructEndCondition();" style="width:290px;" title="" runat="server" />
                 <select id="cboUsufructTimeUnit" class="selectBox" style="width:108px;display:none" title="" runat="server">
                   <option value="Años">Años</option>
                   <option value="Meses">Meses</option>
                 </select>
-                <img id='imgUsufructEndDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(event, getElement('<%=txtUsufructEndCondition.ClientID%>'), getElement('imgUsufructEndDate'));" style="margin-left:-6px;display:none;" title="Despliega el calendario" alt="" />
+                <img id='imgUsufructEndDate' src="../themes/default/buttons/ellipsis.gif" onclick="return showCalendar(getElement('<%=txtUsufructEndCondition.ClientID%>'), getElement('imgUsufructEndDate'));" style="margin-left:-6px;display:none;" title="Despliega el calendario" alt="" />
               </div>
             </div>
             <div id="divSecondaryRole" style="display:none;">
@@ -170,7 +170,7 @@
           </td>
         </tr>
         <tr>
-          <td>&#160;</td>
+          <td>&nbsp;</td>
           <td>
             <input id='txtNotes' class="textBox" style="width:315px;" title="" runat="server" />
             <input type="button" value="Agregar" class="button" tabindex="-1" style="width:54px; vertical-align:middle" onclick="doOperation('appendParty')" />
@@ -529,14 +529,14 @@
     if (arguments.length == 1) {
       showFlag = arguments[0];
     } else {
-    showFlag = getElement('<%=tblPartySeacher.ClientID%>').style.display == 'none';
+      showFlag = (<%=tblPartySeacher.ClientID%>.style.display == 'none');
     }
 
     if (showFlag) {
-      getElement('<%=tblPartySeacher.ClientID%>').style.display = "inline";
+      <%=tblPartySeacher.ClientID%>.style.display = "inline";
       getElement('<%=txtSearchParty.ClientID%>').focus();
     } else {
-      getElement('<%=tblPartySeacher.ClientID%>').style.display = "none";
+      <%=tblPartySeacher.ClientID%>.style.display = "none";
     }
   }
 
@@ -547,22 +547,22 @@
   function this_displayEditor() {
     if (getElement('<%=cboParty.ClientID%>').value.length == 0) {
       this_cleanEditor();
-      getElement('<%=tblPartySeacher.ClientID%>').style.display = "inline";
-      getElement('<%=tblHumanPartyEditor.ClientID%>').style.display = "none";
-      getElement('<%=tblOrganizationPartyEditor.ClientID%>').style.display = "none";
-      getElement('<%=tblPartyRoleEditor.ClientID%>').style.display = "none";
+      <%=tblPartySeacher.ClientID%>.style.display = "inline";
+      <%=tblHumanPartyEditor.ClientID%>.style.display = "none";
+      <%=tblOrganizationPartyEditor.ClientID%>.style.display = "none";
+      <%=tblPartyRoleEditor.ClientID%>.style.display = "none";
     }
     if (getElement('<%=cboParty.ClientID%>').value == "appendParty") {
       this_cleanEditor();
-      getElement('<%=tblPartySeacher.ClientID%>').style.display = "inline";
+      <%=tblPartySeacher.ClientID%>.style.display = "inline";
       if (this_isPersonPartySelected()) {
-        getElement('<%=tblHumanPartyEditor.ClientID%>').style.display = "inline";
-        getElement('<%=tblOrganizationPartyEditor.ClientID%>').style.display = "none";
+        <%=tblHumanPartyEditor.ClientID%>.style.display = "inline";
+        <%=tblOrganizationPartyEditor.ClientID%>.style.display = "none";
       } else {
-        getElement('<%=tblHumanPartyEditor.ClientID%>').style.display = "none";
-        getElement('<%=tblOrganizationPartyEditor.ClientID%>').style.display = "inline";
+        <%=tblHumanPartyEditor.ClientID%>.style.display = "none";
+        <%=tblOrganizationPartyEditor.ClientID%>.style.display = "inline";
       }
-      getElement('<%=tblPartyRoleEditor.ClientID%>').style.display = "inline";
+      <%=tblPartyRoleEditor.ClientID%>.style.display = "inline";
       disabledPartyControls(false);
     } else if (getElement('<%=cboParty.ClientID%>').value.length != 0) {
       doOperation('selectParty', getElement('<%=cboParty.ClientID%>').value);

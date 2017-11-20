@@ -2,13 +2,13 @@
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Import Namespace="Empiria.Land.Registration" %>
 <%@ Import Namespace="Empiria.Land.WebApp" %>
-<!DOCTYPE html [<!ENTITY nbsp "&#160;">]>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
 <title>Editor de documentos</title>
 <meta http-equiv="Expires" content="-1" />
 <meta http-equiv="Pragma" content="no-cache" />
- <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
 <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
@@ -22,27 +22,27 @@
     <input type="hidden" name="hdnPageCommand" id="hdnPageCommand" runat="server" />
   </div>
   <div id="divCanvas">
-    <div id="divHeader" style="height:60px">
+    <div id="divHeader" style="height:90px">
       <span id="spanPageTitle" class="appTitle">
-       &#160;
+        &nbsp;
       </span>
       <span id="spanPageRightTitle" class="rightItem appTitle" style="margin-right:8px">
-       &#160;
+        &nbsp;
       </span>
     </div> <!--divHeader!-->
-    <div id="divBody" >
+    <div id="divBody">
       <div id="divContent">
         <table cellpadding="0" cellspacing="0">
           <tr>
-            <td id="divImageViewer" valign='top' style="position:relative; overflow:hidden;">
-              <div id="divImageContainer" style="overflow:hidden;width:920px;height:720px;top:0;">
-                  <object id="documentViewer" type="text/html" style="width:100%; height:100%;overflow:hidden;">
+            <td id="divImageViewer" valign='top' style="position:relative;">
+              <div id="divImageContainer" style="overflow:auto;width:500px;height:540px;top:0;">
+                  <object id="documentViewer" type="text/html" style="width:100%; height:100%;">
                     <p>visor de documentos</p>
                   </object>
                 </div>
             </td>
             <td><img src="../themes/default/textures/pixel.gif" height="1px" width="12px" alt="" /></td>
-            <td id="divDocumentViewer" valign="top" style="width:680px;">
+            <td id="divDocumentViewer" valign="top" style="width:740px;">
               <table class="tabStrip">
                 <tr>
                   <td id="tabStripItem_0" class="<%=TabStripClass(TabStrip.DocumentEditor)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Editar documento</td>
@@ -50,7 +50,7 @@
                   <td id="tabStripItem_2" class="<%=TabStripClass(TabStrip.ResourceEditor)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Predio</td>
                   <td id="tabStripItem_3" class="<%=TabStripClass(TabStrip.ResourceHistory)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Historia del predio</td>
                   <td id="tabStripItem_4" class="<%=TabStripClass(TabStrip.GlobalSearch)%>" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Consultar el acervo</td>
-                  <td class="lastCell">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <a id="top" /></td>
+                  <td class="lastCell">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a id="top" /></td>
                 </tr>
               </table>
 
@@ -67,7 +67,7 @@
              <table id="tabStripItemView_1" class="editionTable" style="<%=TabStripDisplayView(TabStrip.RecordingActEditor)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraRecordingActEditor" style="z-index:99;left:0;top:0;" width="720px" height="650px"
+                  <iframe id="ifraRecordingActEditor" style="z-index:99;left:0;top:0;" width="720px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true" >
                   </iframe>
                 </td>
@@ -77,7 +77,7 @@
             <table id="tabStripItemView_2" class="editionTable" style="<%=TabStripDisplayView(TabStrip.ResourceEditor)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraPropertyEditor" style="z-index:99;left:0;top:0;" width="720px" height="650px"
+                  <iframe id="ifraPropertyEditor" style="z-index:99;left:0;top:0;" width="720px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true">
                   </iframe>
                 </td>
@@ -87,7 +87,7 @@
             <table id="tabStripItemView_3" class="editionTable" style="<%=TabStripDisplayView(TabStrip.ResourceHistory)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraPropertyHistory" style="z-index:99;left:0;top:0;" width="720px"  height="650px"
+                  <iframe id="ifraPropertyHistory" style="z-index:99;left:0;top:0;" width="720px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true">
                   </iframe>
                 </td>
@@ -97,7 +97,7 @@
             <table id="tabStripItemView_4" class="editionTable" style="<%=TabStripDisplayView(TabStrip.GlobalSearch)%>">
               <tr>
                 <td class="lastCell">
-                  <iframe id="ifraSearchInfo" style="z-index:99;left:0;top:0;" width="620px" height="800px"
+                  <iframe id="ifraSearchInfo" style="z-index:99;left:0;top:0;" width="720px"
                           marginheight="0" marginwidth="0" frameborder="0" scrolling="no" visible="true">
                   </iframe>
                 </td>
@@ -185,7 +185,7 @@
   }
 
   function onSelectRecordingAct(documentId, recordingActId) {
-    window.document.location.href = "by.resource.analyzer.aspx?resourceId=-1"+"&#38;recordingActId=" + recordingActId;
+    window.document.location.href = "by.resource.analyzer.aspx?resourceId=-1&recordingActId=" + recordingActId;
   }
 
   function onSelectCertificate(certificateId) {
@@ -204,7 +204,7 @@
     var newURL = "./recording.seal.aspx?transactionId=-1&id=" + documentId +
                   "&selectedRecordingActId=" + selectedRecordingActId;
     if (<%=recordingAct.Document.Id%> == documentId) {
-      newURL += "&#38;main=true";
+      newURL += "&main=true";
     }
     var clone = getElement("documentViewer").cloneNode(true);
     clone.setAttribute('data', newURL);
@@ -256,7 +256,7 @@
 
   function setPageTitle() {
     <% if (base.IsRecordingActSelected) { %>
-    getElement("spanPageTitle").innerHTML = "Documento: <%=recordingAct.Document.UID%><br></br>"+
+    getElement("spanPageTitle").innerHTML = "Documento: <%=recordingAct.Document.UID%><br/>"+
                                             "Acto jurídico: <%=recordingAct.DisplayName%> [<%=recordingAct.Index + 1%>]";
     getElement("spanPageRightTitle").innerText = "Predio: <%=resource.UID%>";
     <% } else { %>
@@ -338,7 +338,7 @@
       oFrame = window.event.srcElement;
     }
 
-    var oBody = oFrame.contentDocument.body;
+    var oBody = oFrame.document.body;
 
     var newHeight = oBody.scrollHeight + oBody.clientHeight;
 

@@ -44,10 +44,8 @@ namespace Empiria.Web.UI {
         }
         if (String.IsNullOrEmpty(txtPassword.Value)) {
           clientScriptCode = "alert('Para efectuar esta operación requiero la contraseña de acceso al sistema.');";
-
           return;
         }
-
         if (!TryLogon(txtUserId.Value, txtPassword.Value)) {
           SetDefaultValues();
           txtPassword.Value = String.Empty;

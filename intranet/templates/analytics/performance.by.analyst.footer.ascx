@@ -2,11 +2,11 @@
   <tr>
     <td>
       <b>Totales:</b>
-      <br /><br />&#160;
+      <br /><br />&nbsp;
     </td>
     <td>
       <b><%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).GetColumnTotal("TotalRecordingsCount").ToString("N0")%></b>
-      <br /><br />&#160;
+      <br /><br />&nbsp;
     </td>
     <td>
       <b><%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).GetColumnTotal("ObsoleteRecordingsCount").ToString("N0")%></b>
@@ -45,12 +45,12 @@
     </td>
     <td>
       <b><%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).GetColumnTotal("RecordingActsCount").ToString("N0")%></b>
-      <br /><br />&#160;
+      <br /><br />&nbsp;
     </td>
     <td>
       <b><%# ((Empiria.Presentation.Web.MultiViewDashboard) this.Page).GetColumnTotal("PropertiesCount").ToString("N0")%></b>
-      <br /><br />&#160;
+      <br /><br />&nbsp;
     </td>
-    <td>&#160;</td>
+    <td>&nbsp;</td>
   </tr>
 </tfoot>
