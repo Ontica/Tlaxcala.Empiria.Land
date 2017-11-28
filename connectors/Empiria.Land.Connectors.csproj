@@ -48,6 +48,9 @@
     <Reference Include="Empiria.Land.Registration, Version=3.0.308.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Empiria.Land.Registration.3.0.308\lib\net46\Empiria.Land.Registration.dll</HintPath>
     </Reference>
+    <Reference Include="Empiria.WebApi.Client, Version=1.2.328.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Empiria.WebApi.Client.1.2.328\lib\net46\Empiria.WebApi.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.10.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.10.4\lib\net452\MySql.Data.dll</HintPath>
@@ -79,6 +82,8 @@
   <ItemGroup>
     <Compile Include="RootTypes\CitysConnector.cs" />
     <Compile Include="Empiria.Land.Connectors.AssemblyInfo.cs" />
+    <Compile Include="Treasury\PaymentOrderData.cs" />
+    <Compile Include="Treasury\TreasuryConnector.cs" />
     <Compile Include="Service References\CitysWS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

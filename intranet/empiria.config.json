@@ -36,17 +36,7 @@
     {
       "type": "WebApi.Client",
       "key": "Default.WebApiServer",
-      "value": "Microservices"
-    },
-    {
-      "type": "WebApi.Client",
-      "key": "WebApiServer.Microservices",
-      "value": "http://empiria.land/microservices/"
-    },
-    {
-      "type": "WebApi.Client",
-      "key": "WebApiServer.Land",
-      "value": "http://empiria.land/web.api/"
+      "value": "http://empiria.land/microservices"
     },
     {
       "type": "WebApi.Client",
@@ -67,11 +57,6 @@
       "type": "Land.WebApp",
       "key": "CertificatesSystem.Url",
       "value": "http://localhost/certificates/"
-    },
-    {
-      "type": "Land.WebApp",
-      "key": "LegacyDataViewer.Url",
-      "value": "http://192.168.2.22/anotaciones/Home2015.aspx"
     },
     {
       "type": "Land.WebApp",
