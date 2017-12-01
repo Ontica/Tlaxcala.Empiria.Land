@@ -18,6 +18,7 @@ using Empiria.WebApi.Client;
 using Empiria.Land.Registration.Transactions;
 
 namespace Empiria.Land.Connectors.Treasury {
+
   public class TreasuryConnector {
 
     #region Public methods
@@ -25,7 +26,7 @@ namespace Empiria.Land.Connectors.Treasury {
     public async Task<PaymentOrderData> RequestPaymentOrderData(LRSTransaction transaction) {
       object body = this.BuildRequestBodyForGenerarFormatoPagoReferenciado(transaction);
 
-      JsonObject response = await this.CallRequestPaymentOrderDataService(body);
+      JsonObject response = await this.CallGenerarFormatoPagoReferenciado(body);
 
       Assertion.Assert(response.Contains("codigo") && response.Contains("mensaje"),
                        $"The server response has an unexpected content:\n {response.ToString()}");
@@ -47,8 +48,33 @@ namespace Empiria.Land.Connectors.Treasury {
       }
     }
 
-    public string GetPaymentStatus(LRSTransaction transaction) {
-      return "The.Payment.Status";
+    public async Task<PaymentStatusData> GetPaymentStatus(PaymentOrderData paymentOrderData) {
+      object body = this.BuildRequestBodyForConsultarPagoRealizado(paymentOrderData);
+
+      JsonObject response = await this.CallConsultarPagoRealizado(body);
+
+      Assertion.Assert(response.Contains("codigoEstatus"),
+                       $"The server response has an unexpected content:\n {response.ToString()}");
+
+      var responseCode = response.Get<string>("codigoEstatus");
+      Assertion.Assert(EmpiriaString.IsInList(responseCode, "201", "202"),
+                       $"The server response has an unexpected content:\n {response.ToString()}");
+
+      if (response.Contains("fechaPago") &&
+          response.Contains("importePagado") &&
+          response.Contains("lineaCaptura") &&
+          response.Contains("refereciaPago")) {
+
+        var paymentStatus = PaymentStatusData.ParseFromWebService(response);
+
+        paymentStatus.EnsureValid(paymentOrderData);
+
+        return paymentStatus;
+
+      } else {
+        throw new Exception($"The server response has an unexpected content:\n{response.ToString()}");
+      }
+
     }
 
     #endregion Public methods
@@ -66,6 +92,12 @@ namespace Empiria.Land.Connectors.Treasury {
         array.Add(o);
       }
       return array;
+    }
+
+    private object BuildRequestBodyForConsultarPagoRealizado(PaymentOrderData paymentOrderData) {
+      return new {
+        folioControlEstado = paymentOrderData.ControlTag
+      };
     }
 
     private object BuildRequestBodyForGenerarFormatoPagoReferenciado(LRSTransaction transaction) {
@@ -90,17 +122,36 @@ namespace Empiria.Land.Connectors.Treasury {
       };
     }
 
-    private async Task<JsonObject> CallRequestPaymentOrderDataService(object body) {
+    private async Task<JsonObject> CallGenerarFormatoPagoReferenciado(object body) {
       var http = new WebApiClient();
 
-      var response = await http.PostAsync<object, JsonObject>(body, "TreasuryConnectors.RequestPaymentOrderData");
+      var response = await http.PostAsync<object, JsonObject>(body, "TreasuryConnectors.GenerarFormatoPagoReferenciado");
 
       if (!response.HasItems) {  // Response content was empty.
                                  // Sometimes the service response is a 200 but without content,
                                  // so retry the call one more time after some time.
         await Task.Delay(1000);
 
-        response = await http.PostAsync<object, JsonObject>(body, "TreasuryConnectors.RequestPaymentOrderData");
+        response = await http.PostAsync<object, JsonObject>(body, "TreasuryConnectors.GenerarFormatoPagoReferenciado");
+      }
+
+      Assertion.Assert(response.HasItems,
+                       "The server response was successful (200 [OK]) but its content was an empty object.");
+
+      return response;
+    }
+
+    private async Task<JsonObject> CallConsultarPagoRealizado(object body) {
+      var http = new WebApiClient();
+
+      var response = await http.PostAsync<object, JsonObject>(body, "TreasuryConnectors.ConsultarPagoRealizado");
+
+      if (!response.HasItems) {  // Response content was empty.
+                                 // Sometimes the service response is a 200 but without content,
+                                 // so retry the call one more time after some time.
+        await Task.Delay(1000);
+
+        response = await http.PostAsync<object, JsonObject>(body, "TreasuryConnectors.ConsultarPagoRealizado");
       }
 
       Assertion.Assert(response.HasItems,

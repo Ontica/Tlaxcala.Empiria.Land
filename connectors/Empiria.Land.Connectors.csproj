@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="RootTypes\CitysConnector.cs" />
     <Compile Include="Empiria.Land.Connectors.AssemblyInfo.cs" />
+    <Compile Include="Treasury\PaymentStatusData.cs" />
     <Compile Include="Treasury\PaymentOrderData.cs" />
     <Compile Include="Treasury\TreasuryConnector.cs" />
     <Compile Include="Service References\CitysWS\Reference.cs">
