@@ -23,7 +23,7 @@ namespace Empiria.Land.Connectors.Treasury {
 
     #region Public methods
 
-    public async Task<PaymentOrderData> RequestPaymentOrderData(LRSTransaction transaction) {
+    public async Task<PaymentOrder> RequestPaymentOrderData(LRSTransaction transaction) {
       object body = this.BuildRequestBodyForGenerarFormatoPagoReferenciado(transaction);
 
       JsonObject response = await this.CallGenerarFormatoPagoReferenciado(body);
@@ -40,7 +40,7 @@ namespace Empiria.Land.Connectors.Treasury {
           response.Contains("folioControlEstado") &&
           response.Contains("lineaCaptura")) {
 
-        return PaymentOrderData.ParseFromWebService(response);
+        return this.ParseOrderDataFromWebService(response);
 
       } else {
         throw new Exception($"The server response has an unexpected content:\n{response.ToString()}");
@@ -48,8 +48,8 @@ namespace Empiria.Land.Connectors.Treasury {
       }
     }
 
-    public async Task<PaymentStatusData> GetPaymentStatus(PaymentOrderData paymentOrderData) {
-      object body = this.BuildRequestBodyForConsultarPagoRealizado(paymentOrderData);
+    public async Task<PaymentOrder> UpdatePaymentStatus(PaymentOrder paymentOrder) {
+      object body = this.BuildRequestBodyForConsultarPagoRealizado(paymentOrder);
 
       JsonObject response = await this.CallConsultarPagoRealizado(body);
 
@@ -65,17 +65,40 @@ namespace Empiria.Land.Connectors.Treasury {
           response.Contains("lineaCaptura") &&
           response.Contains("refereciaPago")) {
 
-        var paymentStatus = PaymentStatusData.ParseFromWebService(response);
-
-        paymentStatus.EnsureValid(paymentOrderData);
-
-        return paymentStatus;
+        return this.UpdatePaymentDataFromWebService(paymentOrder, response);
 
       } else {
         throw new Exception($"The server response has an unexpected content:\n{response.ToString()}");
       }
 
     }
+
+    private PaymentOrder UpdatePaymentDataFromWebService(PaymentOrder paymentOrder,
+                                                         JsonObject responseData) {
+      Assertion.AssertObject(responseData, "responseData");
+
+      bool isCompleted = (responseData.Get<string>("codigoEstatus") == "200" ||
+                          responseData.Get<string>("codigoEstatus") == "201");
+
+
+      if (!isCompleted) {
+        return paymentOrder;
+      }
+
+      var paymentDate = DateTime.Parse(responseData.Get<string>("fechaPago"));
+      var paymentTotal = responseData.Get<decimal>("importePagado");
+      var paymentReference = responseData.Get<string>("refereciaPago");
+      var lineaCaptura = responseData.Get<string>("lineaCaptura");
+
+      Assertion.Assert(paymentOrder.RouteNumber == lineaCaptura,
+                       $"Las líneas de captura del pago referenciado no coinciden: " +
+                       $"{lineaCaptura} (finanzas) vs {paymentOrder.RouteNumber} (rpp).");
+
+      paymentOrder.SetPayment(paymentDate, paymentTotal, paymentReference);
+
+      return paymentOrder;
+    }
+
 
     #endregion Public methods
 
@@ -94,9 +117,9 @@ namespace Empiria.Land.Connectors.Treasury {
       return array;
     }
 
-    private object BuildRequestBodyForConsultarPagoRealizado(PaymentOrderData paymentOrderData) {
+    private object BuildRequestBodyForConsultarPagoRealizado(PaymentOrder paymentOrder) {
       return new {
-        folioControlEstado = paymentOrderData.ControlTag
+        folioControlEstado = paymentOrder.ControlTag
       };
     }
 
@@ -159,6 +182,17 @@ namespace Empiria.Land.Connectors.Treasury {
 
       return response;
     }
+
+    private PaymentOrder ParseOrderDataFromWebService(JsonObject responseData) {
+      Assertion.AssertObject(responseData, "responseData");
+
+      var routeNumber = responseData.Get<string>("lineaCaptura");
+      var dueDate = DateTime.Parse(responseData.Get<string>("fechaVencimiento"));
+      var controlTag = responseData.Get<string>("folioControlEstado");
+
+      return new PaymentOrder(routeNumber, dueDate, controlTag);
+    }
+
 
     #endregion Private methods
 
