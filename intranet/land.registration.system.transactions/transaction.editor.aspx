@@ -760,7 +760,7 @@
   }
 
   function printOrderPayment() {
-    var url = "payment.receipt.aspx?id=<%=base.transaction.Id%>";
+    var url = "bank.payment.order.aspx?id=<%=base.transaction.Id%>";
 
     createNewWindow(url);
   }

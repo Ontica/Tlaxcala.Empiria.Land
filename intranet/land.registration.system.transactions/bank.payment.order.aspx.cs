@@ -12,13 +12,16 @@ using System;
 
 using Empiria.Land.Registration.Transactions;
 
+using Empiria.Land.Connectors.Treasury;
+
 namespace Empiria.Land.WebApp {
 
-  public partial class PaymentOrderPage : System.Web.UI.Page {
+  public partial class BankPaymentOrder : System.Web.UI.Page {
 
     #region Fields
 
     protected LRSTransaction transaction = null;
+    protected IPaymentOrder paymentOrderData = null;
 
     #endregion Fields
 
@@ -34,51 +37,33 @@ namespace Empiria.Land.WebApp {
 
     private void Initialize() {
       transaction = LRSTransaction.Parse(int.Parse(Request.QueryString["id"]));
+
+      if (!transaction.HasPaymentOrder) {
+        var treasuryConnector = new TreasuryConnector();
+
+        this.paymentOrderData = treasuryConnector.RequestPaymentOrderData(this.transaction).Result;
+        
+        transaction.SetPaymentOrder(paymentOrderData);
+      }
+      this.paymentOrderData = transaction.PaymentOrder;
     }
 
     protected string DistrictName {
       get {
-        if (ExecutionServer.LicenseName == "Zacatecas") {
-          return "Registro Público del Distrito de Zacatecas";
-        }
         return String.Empty;
       }
     }
 
     protected string CustomerOfficeName() {
-      if (ExecutionServer.LicenseName == "Tlaxcala") {
-        return "Dirección de Notarías y Registros Públicos";
-      } else {
-        return "Dirección de Catastro y Registro Público";
-      }
+      return "Dirección de Notarías y Registros Públicos";
     }
 
     protected string GetPaymentOrderFooter() {
-      if (ExecutionServer.LicenseName == "Tlaxcala") {
-        return @"* Esta ORDEN DE PAGO deberá <b>ENTREGARSE en la <u>Caja de la Secretaría de Finanzas</u></b> al momento de efectuar el pago.";
-      } else {
-        return @"* Esta ORDEN DE PAGO deberá <b>ENTREGARSE en la <u>Caja Recaudadora</u></b> más cercana a su domicilio al efectuar el pago correspondiente. ";
-      }
+      return @"* Este documento deberá <b>ENTREGARSE en la <u>Caja de la Secretaría de Finanzas</u></b> o en una sucursal Banamex al momento de efectuar el pago.";
     }
 
     protected string GetHeader() {
-      if (ExecutionServer.LicenseName == "Tlaxcala") {
-        return GetQuantitiesHeader();
-      } else {
-        return GetNoQuantitiesHeader();
-      }
-    }
-
-    private string GetNoQuantitiesHeader() {
-      const string aj = "<td class='hdr' style='white-space:nowrap'>#</td>" +
-                          "<td class='hdr' style='white-space:nowrap'>Clave</td>" +
-                          "<td class='hdr' style='width:30%'>Concepto</td>" +
-                          "<td class='hdr' style='white-space:nowrap'>Base gravable</td>" +
-                          "<td class='hdr' style='white-space:nowrap'>Cant</td>" +
-                          "<td class='hdr'style='white-space:nowrap'>Unidad</td>" +
-                          "<td class='hdr' style='width:30%;'>Fundamento</td>" +
-                          "<td class='hdr' style='width:30%;'>Observaciones</td>";
-      return aj;
+      return GetQuantitiesHeader();
     }
 
     private string GetQuantitiesHeader() {
@@ -108,25 +93,22 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetItems() {
-      if (ExecutionServer.LicenseName == "Tlaxcala") {
-        if (transaction.TransactionType.Id == 702) {
-          return GetCertificate();
-        } else {
-          return GetRecordingActsWithTotals();
-        }
+      if (transaction.TransactionType.Id == 702) {
+        return GetCertificate();
       } else {
-        return GetConcepts();
+        return GetRecordingActsWithTotals();
       }
     }
 
     protected string GetCertificate() {
       const string cert = "<tr width='24px'><td style='white-space:nowrap'>{NUMBER}</td>" +
-                      "<td style='white-space:nowrap'>{CODE}</td>" +
-                      "<td style='white-space:nowrap;width:30%'>{CONCEPT}</td>" +
-                      "<td style='white-space:nowrap'>{LAW.ARTICLE}</td>" +
-                      "<td align='right'>{SUBTOTAL}</td>" +
-                      "<td align='right'>{DISCOUNTS}</td>" +
-                      "<td align='right'><b>{TOTAL}</b></td></tr>";
+                            "<td style='white-space:nowrap'>{CODE}</td>" +
+                            "<td style='white-space:nowrap;width:30%'>{CONCEPT}</td>" +
+                            "<td style='white-space:nowrap'>{LAW.ARTICLE}</td>" +
+                            "<td align='right'>{SUBTOTAL}</td>" +
+                            "<td align='right'>{DISCOUNTS}</td>" +
+                            "<td align='right'><b>{TOTAL}</b></td>" +
+                           "</tr>";
       FixedList<LRSTransactionItem> list = transaction.Items;
       string html = String.Empty;
 
@@ -245,6 +227,6 @@ namespace Empiria.Land.WebApp {
 
     #endregion Private methods
 
-  } // class PaymentOrderPage
+  } // class TransactionReceipt
 
 } // namespace Empiria.Land.WebApp

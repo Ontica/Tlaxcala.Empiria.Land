@@ -308,7 +308,7 @@ namespace Empiria.Land.WebApp {
     }
 
     private void PrintOrderPayment() {
-      onloadScript = "createNewWindow('payment.order.aspx?id=" + transaction.Id.ToString() + "')";
+      onloadScript = "createNewWindow('bank.payment.order.aspx?id=" + transaction.Id.ToString() + "')";
     }
 
     private void PrintTransactionReceipt() {

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.PaymentOrderPage" CodeFile="payment.order.aspx.cs" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.BankPaymentOrder" CodeFile="bank.payment.order.aspx.cs" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">
@@ -39,7 +39,7 @@
                   <% } %>
                   <tr>
                     <td align="center" style="line-height:22pt">
-                      <h2 style="height:30px; white-space:normal; font-size:18pt">ORDEN DE PAGO</h2>
+                      <h2 style="height:30px; white-space:normal; font-size:18pt">LINEA DE CAPTURA</h2>
                     </td>
                   </tr>
                 </table>
@@ -98,10 +98,18 @@
         <td>
           <table style="width:100%" cellpadding="4px" cellspacing="0px">
             <tr>
-              <td style="border-top: 3px solid #3a3a3a;font-size:7pt">
-                <b>Cadena original:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 132, "&#8203;")%>
+              <td style="border-top: 3px solid #3a3a3a;padding-top:12pt;padding-right:40pt;text-align:center;white-space:nowrap;vertical-align:top">                
+                <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=base.paymentOrderData.RouteNumber%>" /><br />
+                <b style="font-size:10pt">Línea de captura</b><br />
+                <b style="font-size:14pt"><%=base.paymentOrderData.RouteNumber%></b><br />
+                Fecha de vencimiento: <%=base.paymentOrderData.DueDate.ToString("dd/MMM/yyyy")%><br /><br />
+                <b>Instituciones bancarias:</b><br />
+                Citibanamex: PA <b>4520 01</b><br /><br /><br />
+              </td>
+              <td style="border-top: 3px solid #3a3a3a;font-size:7pt;">
+                <b>Cadena original:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 100, "&#8203;")%>
                 <br /><br />
-                <b>Sello electrónico:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalSign(), 132, "&#8203;")%>
+                <b>Sello electrónico:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalSign(), 100, "&#8203;")%>
               </td>
             </tr>
           </table>
@@ -207,9 +215,9 @@
           <table style="width:100%" cellpadding="4px" cellspacing="0px">
             <tr>
               <td style="border-top: 3px solid #3a3a3a;font-size:7pt">
-                <b>Cadena original:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 132, "&#8203;")%>
+                <b>Cadena original:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 164, "&#8203;")%>
                 <br /><br />
-                <b>Sello electrónico:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalSign(), 132, "&#8203;")%>
+                <b>Sello electrónico:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalSign(), 164, "&#8203;")%>
               </td>
             </tr>
           </table>
