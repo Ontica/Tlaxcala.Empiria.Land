@@ -10,9 +10,10 @@
 ********************************** Copyright(c) 2009-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
+using Empiria.OnePoint;
 using Empiria.Land.Registration.Transactions;
 
-using Empiria.Land.Connectors.Treasury;
+using Empiria.Land.AppServices;
 
 namespace Empiria.Land.WebApp {
 
@@ -21,7 +22,7 @@ namespace Empiria.Land.WebApp {
     #region Fields
 
     protected LRSTransaction transaction = null;
-    protected IPaymentOrder paymentOrderData = null;
+    protected IPaymentOrderData paymentOrderData = null;
 
     #endregion Fields
 
@@ -38,14 +39,7 @@ namespace Empiria.Land.WebApp {
     private void Initialize() {
       transaction = LRSTransaction.Parse(int.Parse(Request.QueryString["id"]));
 
-      if (!transaction.HasPaymentOrder) {
-        var treasuryConnector = new TreasuryConnector();
-
-        this.paymentOrderData = treasuryConnector.RequestPaymentOrderData(this.transaction).Result;
-        
-        transaction.SetPaymentOrder(paymentOrderData);
-      }
-      this.paymentOrderData = transaction.PaymentOrder;
+      this.paymentOrderData = PaymentServices.RequestPaymentOrderData(this.transaction).Result;
     }
 
     protected string DistrictName {

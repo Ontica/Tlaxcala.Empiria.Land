@@ -15,16 +15,18 @@ using System.Threading.Tasks;
 using Empiria.Json;
 using Empiria.WebApi.Client;
 
+using Empiria.OnePoint;
+
 using Empiria.Land.Registration.Transactions;
 
-namespace Empiria.Land.Connectors.Treasury {
+namespace Empiria.Land.Connectors {
 
-  public class TreasuryConnector {
+  public class TreasuryConnector : ITreasuryConnector {
 
     #region Public methods
 
-    public async Task<PaymentOrder> RequestPaymentOrderData(LRSTransaction transaction) {
-      object body = this.BuildRequestBodyForGenerarFormatoPagoReferenciado(transaction);
+    public async Task<IPaymentOrderData> GeneratePaymentOrder(IFiling transaction) {
+      object body = this.BuildRequestBodyForGenerarFormatoPagoReferenciado((LRSTransaction) transaction);
 
       JsonObject response = await this.CallGenerarFormatoPagoReferenciado(body);
 
@@ -48,8 +50,9 @@ namespace Empiria.Land.Connectors.Treasury {
       }
     }
 
-    public async Task<PaymentOrder> UpdatePaymentStatus(PaymentOrder paymentOrder) {
-      object body = this.BuildRequestBodyForConsultarPagoRealizado(paymentOrder);
+
+    public async Task<IPaymentOrderData> RefreshPaymentOrder(IPaymentOrderData paymentOrderData) {
+      object body = this.BuildRequestBodyForConsultarPagoRealizado(paymentOrderData);
 
       JsonObject response = await this.CallConsultarPagoRealizado(body);
 
@@ -65,16 +68,16 @@ namespace Empiria.Land.Connectors.Treasury {
           response.Contains("lineaCaptura") &&
           response.Contains("refereciaPago")) {
 
-        return this.UpdatePaymentDataFromWebService(paymentOrder, response);
+        return this.UpdatePaymentDataFromWebService(paymentOrderData, response);
 
       } else {
         throw new Exception($"The server response has an unexpected content:\n{response.ToString()}");
       }
-
     }
 
-    private PaymentOrder UpdatePaymentDataFromWebService(PaymentOrder paymentOrder,
-                                                         JsonObject responseData) {
+
+    private IPaymentOrderData UpdatePaymentDataFromWebService(IPaymentOrderData paymentOrderData,
+                                                              JsonObject responseData) {
       Assertion.AssertObject(responseData, "responseData");
 
       bool isCompleted = (responseData.Get<string>("codigoEstatus") == "200" ||
@@ -82,7 +85,7 @@ namespace Empiria.Land.Connectors.Treasury {
 
 
       if (!isCompleted) {
-        return paymentOrder;
+        return paymentOrderData;
       }
 
       var paymentDate = DateTime.Parse(responseData.Get<string>("fechaPago"));
@@ -90,13 +93,13 @@ namespace Empiria.Land.Connectors.Treasury {
       var paymentReference = responseData.Get<string>("refereciaPago");
       var lineaCaptura = responseData.Get<string>("lineaCaptura");
 
-      Assertion.Assert(paymentOrder.RouteNumber == lineaCaptura,
+      Assertion.Assert(paymentOrderData.RouteNumber == lineaCaptura,
                        $"Las líneas de captura del pago referenciado no coinciden: " +
-                       $"{lineaCaptura} (finanzas) vs {paymentOrder.RouteNumber} (rpp).");
+                       $"{lineaCaptura} (finanzas) vs {paymentOrderData.RouteNumber} (rpp).");
 
-      paymentOrder.SetPayment(paymentDate, paymentTotal, paymentReference);
+      paymentOrderData.SetPaymentData(paymentDate, paymentTotal, paymentReference);
 
-      return paymentOrder;
+      return paymentOrderData;
     }
 
 
@@ -117,11 +120,13 @@ namespace Empiria.Land.Connectors.Treasury {
       return array;
     }
 
-    private object BuildRequestBodyForConsultarPagoRealizado(PaymentOrder paymentOrder) {
+
+    private object BuildRequestBodyForConsultarPagoRealizado(IPaymentOrderData paymentOrderData) {
       return new {
-        folioControlEstado = paymentOrder.ControlTag
+        folioControlEstado = paymentOrderData.ControlTag
       };
     }
+
 
     private object BuildRequestBodyForGenerarFormatoPagoReferenciado(LRSTransaction transaction) {
       return new {
@@ -145,6 +150,7 @@ namespace Empiria.Land.Connectors.Treasury {
       };
     }
 
+
     private async Task<JsonObject> CallGenerarFormatoPagoReferenciado(object body) {
       var http = new WebApiClient();
 
@@ -163,6 +169,7 @@ namespace Empiria.Land.Connectors.Treasury {
 
       return response;
     }
+
 
     private async Task<JsonObject> CallConsultarPagoRealizado(object body) {
       var http = new WebApiClient();
@@ -183,19 +190,19 @@ namespace Empiria.Land.Connectors.Treasury {
       return response;
     }
 
-    private PaymentOrder ParseOrderDataFromWebService(JsonObject responseData) {
+
+    private PaymentOrderData ParseOrderDataFromWebService(JsonObject responseData) {
       Assertion.AssertObject(responseData, "responseData");
 
       var routeNumber = responseData.Get<string>("lineaCaptura");
       var dueDate = DateTime.Parse(responseData.Get<string>("fechaVencimiento"));
       var controlTag = responseData.Get<string>("folioControlEstado");
 
-      return new PaymentOrder(routeNumber, dueDate, controlTag);
+      return new PaymentOrderData(routeNumber, dueDate, controlTag);
     }
-
 
     #endregion Private methods
 
   }  // class TreasuryConnector
 
-}  // namespace Empiria.Land.Connectors.Treasury
+}  // namespace Empiria.Land.Connectors
