@@ -13,7 +13,7 @@ using System;
 using Empiria.OnePoint;
 using Empiria.Land.Registration.Transactions;
 
-using Empiria.Land.AppServices;
+using Empiria.OnePoint.AppServices;
 
 namespace Empiria.Land.WebApp {
 
