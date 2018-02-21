@@ -1,28 +1,18 @@
 ﻿/* Empiria Land **********************************************************************************************
-*																																																						 *
-*  Solution  : Empiria Land                                     System   : Land Web Services                 *
-*  Assembly  : Empiria.Land.WebServices.dll                     Pattern  : Assembly Attributes File			     *
-*  Version   : 2.1                                              License  : Please read license.txt file      *
-*																																																						 *
-*  Summary   : Empiria Land Web API services (to be deprecated in future versions).                          *
-*																																																						 *
-********************************** Copyright(c) 1999-2016. La Vía Óntica SC, Ontica LLC and contributors.  **/
+*                                                                                                            *
+*  Solution : Empiria Land                                 System  : Tlaxcala Xml/Soap web services          *
+*  Assembly : Empiria.Land.WebServices.dll                 Pattern : Assembly Attributes File                *
+*                                                          License : Please read LICENSE.txt file            *
+*                                                                                                            *
+*  Summary  : Empiria Land Xml/Soap connector to Tlaxcala Government's treasury system.                      *
+*                                                                                                            *
+************************* Copyright(c) La Vía Óntica SC, Ontica LLC and contributors. All rights reserved. **/
 using System;
 using System.Reflection;
-using System.Runtime.InteropServices;
 
 /*************************************************************************************************************
-* Assembly configuration attributes.																																	       *
+* Assembly configuration attributes.                                                                         *
 *************************************************************************************************************/
-[assembly: AssemblyTitle("Tlaxcala.Land.WebServices.dll")]
-[assembly: AssemblyDescription("Empiria Land Web Services (to be deprecated in future versions)")]
-[assembly: AssemblyVersion("2.1.0308.0")]
-[assembly: AssemblyFileVersion("2.1.0308")]
-[assembly: AssemblyCompany("La Vía Óntica, S.C.")]
-[assembly: AssemblyProduct("Empiria Land 2016")]
-[assembly: AssemblyCopyright("(c) 2009-2016. La Vía Óntica SC, Ontica LLC and contributors.")]
 [assembly: AssemblyTrademark("Empiria and Ontica are either trademarks of La Vía Óntica SC or Ontica LLC.")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
-[assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]

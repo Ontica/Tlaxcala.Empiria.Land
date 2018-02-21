@@ -9,6 +9,7 @@
 *                                                                                                            *
 ********************************* Copyright (c) 2016-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
+using System.Threading.Tasks;
 
 using Empiria.Land.Certification;
 using Empiria.Land.Registration.Transactions;
@@ -31,39 +32,39 @@ namespace Empiria.Land.Connectors {
 
     #region Public methods
 
-    public int SendCertificate(Certificate certificate, byte[] outputFile) {
+    public async Task<int> SendCertificate(Certificate certificate, byte[] outputFile) {
       var wsClient = new RppCertificateEmissionWSClient();
 
       var authenticationBean = this.GetAuthenticationBean();
       var certificateBean = this.GetCertificateBean(certificate, outputFile);
 
-      return wsClient.receiveCertificate(authenticationBean, certificateBean);
+      return await wsClient.receiveCertificateAsync(authenticationBean, certificateBean);
     }
 
-    public int SendAvisoPreventivo(Certificate certificate, byte[] outputFile) {
+    public async Task<int> SendAvisoPreventivo(Certificate certificate, byte[] outputFile) {
       var wsClient = new RppCertificateEmissionWSClient();
 
       var authenticationBean = this.GetAuthenticationBean();
       var certificateBean = this.GetAvisoPreventivoBean(certificate, outputFile);
 
-      return wsClient.receiveCertificate(authenticationBean, certificateBean);
+      return await wsClient.receiveCertificateAsync(authenticationBean, certificateBean);
     }
 
-    public int SendOficioDevolucion(LRSTransaction transaction, byte[] outputFile) {
+    public async Task<int> SendOficioDevolucion(LRSTransaction transaction, byte[] outputFile) {
       var wsClient = new RppCertificateEmissionWSClient();
 
       var authenticationBean = this.GetAuthenticationBean();
       var returnDocumentBean = this.GetReturnDocumentBean(transaction, outputFile);
 
-      return wsClient.receiveCertificate(authenticationBean, returnDocumentBean);
+      return await wsClient.receiveCertificateAsync(authenticationBean, returnDocumentBean);
     }
 
-    public bool CanSendDocument(string tramiteCitys) {
+    public async Task<bool> CanSendDocument(string tramiteCitys) {
       var wsClient = new RppCertificateEmissionWSClient();
 
       var authenticationBean = this.GetAuthenticationBean();
 
-      return wsClient.canSendDocument(authenticationBean, tramiteCitys);
+      return await wsClient.canSendDocumentAsync(authenticationBean, tramiteCitys);
     }
 
     #endregion Public methods

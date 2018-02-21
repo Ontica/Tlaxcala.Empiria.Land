@@ -1,6 +1,6 @@
-﻿# Empiria Land Tlaxcala Xml/Soap web services
+﻿# Empiria Land Recording System
 
-Empiria Land Xml/Soap web services to integrate with Tlaxcala Government's treasury system.
+Empiria Land connectors to Tlaxcala Government's treasury and Citys systems.
 
 # License
 

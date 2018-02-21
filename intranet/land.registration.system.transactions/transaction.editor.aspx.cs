@@ -308,7 +308,7 @@ namespace Empiria.Land.WebApp {
     }
 
     private void PrintOrderPayment() {
-      onloadScript = "createNewWindow('bank.payment.order.aspx?id=" + transaction.Id.ToString() + "')";
+      onloadScript = "createNewWindow('payment.order.aspx?id=" + transaction.Id.ToString() + "')";
     }
 
     private void PrintTransactionReceipt() {
@@ -690,7 +690,8 @@ namespace Empiria.Land.WebApp {
         var certificate = transaction.GetIssuedCertificates()[0];
 
         var fileInfo = CreatePDFFile(certificate);
-        status = connector.SendAvisoPreventivo(certificate, System.IO.File.ReadAllBytes(fileInfo.FullName));
+        status = connector.SendAvisoPreventivo(certificate, System.IO.File.ReadAllBytes(fileInfo.FullName))
+                          .Result;
 
         onloadScript = String.Format("alert('El certificado fue enviado correctamente al sistema CITYS. Status {0}.');" +
                                      "doOperation('redirectThis')", status);

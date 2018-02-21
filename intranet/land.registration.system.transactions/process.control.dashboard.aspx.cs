@@ -105,6 +105,7 @@ namespace Empiria.Land.WebApp {
       Contact me = Contact.Parse(ExecutionServer.CurrentUserId);
       string filter = GetFilter();
       const string sort = "";
+
       if (IsTabStripSelected(TabStrip.MisTramitesPendientes)) {
         if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReceiveTransaction")) {
           if (filter.Length != 0) {
@@ -160,7 +161,7 @@ namespace Empiria.Land.WebApp {
     protected sealed override void LoadPageControls() {
       LoadCombos();
       if (txtFromDate.Value == String.Empty) {
-        txtFromDate.Value = DateTime.Parse("01/Jan/2016").ToString("dd/MMM/yyyy");
+        txtFromDate.Value = DateTime.Parse("01/Sep/2017").ToString("dd/MMM/yyyy");
       }
       if (txtToDate.Value == String.Empty) {
         txtToDate.Value = DateTime.Today.ToString("dd/MMM/yyyy");

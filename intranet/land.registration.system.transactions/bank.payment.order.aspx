@@ -98,7 +98,7 @@
         <td>
           <table style="width:100%" cellpadding="4px" cellspacing="0px">
             <tr>
-              <td style="border-top: 3px solid #3a3a3a;padding-top:12pt;padding-right:40pt;text-align:center;white-space:nowrap;vertical-align:top">                
+              <td style="border-top: 3px solid #3a3a3a;padding-top:12pt;padding-right:40pt;text-align:center;white-space:nowrap;vertical-align:top">
                 <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=base.paymentOrderData.RouteNumber%>" /><br />
                 <b style="font-size:10pt">Línea de captura</b><br />
                 <b style="font-size:14pt"><%=base.paymentOrderData.RouteNumber%></b><br />
