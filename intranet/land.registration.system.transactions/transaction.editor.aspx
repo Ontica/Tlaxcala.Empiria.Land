@@ -1,6 +1,10 @@
-<%@ Page language="c#" Inherits="Empiria.Land.WebApp.LRSTransactionEditor" EnableViewState="true" EnableSessionState="true" CodeFile="transaction.editor.aspx.cs" %>
+<%@ Page language="c#" Inherits="Empiria.Land.WebApp.LRSTransactionEditor" Codebehind="transaction.editor.aspx.cs"
+    ClassName="Empiria.Land.WebApp.LRSTransactionEditorASP" EnableViewState="true"
+    EnableSessionState="true" %>
 <%@ OutputCache Location="None" NoStore="true" %>
-<%@ Register tagprefix="empiriaControl" tagname="LRSRecordingActSelectorControl" src="../land.registration.system.controls/recording.act.selector.control.ascx" %>
+<%@ Register tagprefix="empiriaControl"
+             tagname="LRSRecordingActSelectorControl"
+             src="../land.registration.system.controls/recording.act.selector.control.ascx" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head id="Head1" runat="server">

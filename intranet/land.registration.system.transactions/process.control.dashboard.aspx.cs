@@ -23,7 +23,7 @@ using Empiria.Presentation.Web.Content;
 namespace Empiria.Land.WebApp {
 
   #region
-  internal enum TabStrip {
+  public enum TabStrip {
      MisTramitesPendientes = 0,
      DocumentosPorEntregar = 1,
      MiTrabajoRealizado = 2,
@@ -97,7 +97,7 @@ namespace Empiria.Land.WebApp {
 
     }
 
-    internal bool IsTabStripSelected(TabStrip tabStrip) {
+    public bool IsTabStripSelected(TabStrip tabStrip) {
       return (base.SelectedTabStrip == (int) tabStrip);
     }
 

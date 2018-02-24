@@ -1,4 +1,4 @@
-﻿<%@ Page language="c#" Inherits="Empiria.Land.WebApp.LRSSearchData" EnableViewState="true" EnableSessionState="true" CodeFile="search.data.aspx.cs" %>
+﻿<%@ Page language="c#" Inherits="Empiria.Land.WebApp.LRSSearchData" EnableViewState="true" EnableSessionState="true" Codebehind="search.data.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl" tagname="LRSRecordingActSelectorControl" src="../land.registration.system.controls/recording.act.selector.control.ascx" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

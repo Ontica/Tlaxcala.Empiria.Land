@@ -1,0 +1,812 @@
+﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B7FE388D-5ED8-4322-A688-EF8B9AD4757B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Empiria.Land.Intranet</RootNamespace>
+    <AssemblyName>Empiria.Land.Intranet.Tlaxcala</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>CS3005</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <NoWarn>CS3005</NoWarn>
+    <PublishDatabases>false</PublishDatabases>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="C1.Win.C1BarCode.2">
+      <HintPath>..\libs\C1.Win.C1BarCode.2.dll</HintPath>
+    </Reference>
+    <Reference Include="Gma.QrCodeNet.Encoding, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QrCode.Net.0.4.0.0\lib\net45\Gma.QrCodeNet.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PDFTechLib">
+      <HintPath>..\libs\PDFTechLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ajax\general.data.aspx" />
+    <Content Include="ajax\geographic.data.aspx" />
+    <Content Include="ajax\land.registration.system.data.aspx" />
+    <Content Include="ajax\land.ui.controls.aspx" />
+    <Content Include="ajax\workplace.data.aspx" />
+    <Content Include="analytics\daily.historic.recording.dashboard.aspx" />
+    <Content Include="default.aspx" />
+    <Content Include="empiria.config.json" />
+    <Content Include="land.registration.system.controls\append.recording.act.editor.control.ascx" />
+    <Content Include="land.registration.system.controls\modal.window.ascx" />
+    <Content Include="land.registration.system.controls\recording.act.selector.control.ascx" />
+    <Content Include="land.registration.system.controls\recording.document.editor.control.ascx" />
+    <Content Include="land.registration.system.controls\recording.party.editor.control.ascx" />
+    <Content Include="land.registration.system.controls\recording.party.viewer.control.ascx" />
+    <Content Include="land.registration.system.transactions\bank.payment.order.aspx" />
+    <Content Include="land.registration.system.transactions\payment.order.aspx" />
+    <Content Include="land.registration.system.transactions\process.control.dashboard.aspx" />
+    <Content Include="land.registration.system.transactions\transaction.editor.aspx" />
+    <Content Include="land.registration.system.transactions\transaction.receipt.aspx" />
+    <Content Include="land.registration.system.transactions\transaction.report.aspx" />
+    <Content Include="land.registration.system\by.resource.analyzer.aspx" />
+    <Content Include="land.registration.system\cadastral.card.html" />
+    <Content Include="land.registration.system\certificate.aspx" />
+    <Content Include="land.registration.system\document.editor.aspx" />
+    <Content Include="land.registration.system\document.imaging.control.slip.aspx" />
+    <Content Include="land.registration.system\document.search.aspx" />
+    <Content Include="land.registration.system\image.set.viewer.aspx" />
+    <Content Include="land.registration.system\real.estate.editor.aspx" />
+    <Content Include="land.registration.system\recording.act.editor.aspx" />
+    <Content Include="land.registration.system\recording.book.analyzer.aspx" />
+    <Content Include="land.registration.system\recording.editor.aspx" />
+    <Content Include="land.registration.system\recording.seal.aspx" />
+    <Content Include="land.registration.system\resource.history.aspx" />
+    <Content Include="land.registration.system\search.data.aspx" />
+    <Content Include="scripts\empiria.ajax.js" />
+    <Content Include="scripts\empiria.calendar.js" />
+    <Content Include="scripts\empiria.clock.js" />
+    <Content Include="scripts\empiria.general.js" />
+    <Content Include="scripts\empiria.master.page.js" />
+    <Content Include="scripts\empiria.pngfix.js" />
+    <Content Include="scripts\empiria.secondary.master.page.js" />
+    <Content Include="scripts\empiria.validation.js" />
+    <Content Include="scripts\google.maps.integration.js" />
+    <Content Include="security\user.editor.aspx" />
+    <Content Include="services\services.asmx" />
+    <Content Include="templates\analytics\performance.by.analyst.footer.ascx" />
+    <Content Include="templates\analytics\performance.by.analyst.header.ascx" />
+    <Content Include="templates\analytics\performance.by.analyst.items.ascx" />
+    <Content Include="templates\analytics\performance.by.recorder.office.header.ascx" />
+    <Content Include="templates\analytics\recorder.offices.progress.footer.ascx" />
+    <Content Include="templates\analytics\recorder.offices.progress.header.ascx" />
+    <Content Include="templates\analytics\recorder.offices.progress.items.ascx" />
+    <Content Include="templates\analytics\recording.act.type.analysis.footer.ascx" />
+    <Content Include="templates\analytics\recording.act.type.analysis.header.ascx" />
+    <Content Include="templates\analytics\recording.act.type.analysis.items.ascx" />
+    <Content Include="templates\empty.header.ascx" />
+    <Content Include="templates\land.registration.system.searching\inscription.searching.header.ascx" />
+    <Content Include="templates\land.registration.system.searching\party.search.header.ascx" />
+    <Content Include="templates\land.registration.system.searching\party.search.items.ascx" />
+    <Content Include="templates\land.registration.system.searching\property.search.header.ascx" />
+    <Content Include="templates\land.registration.system.searching\property.search.items.ascx" />
+    <Content Include="templates\land.registration.system.searching\recording.book.directories.bookLevel.items.ascx" />
+    <Content Include="templates\land.registration.system.searching\recording.book.directories.header.ascx" />
+    <Content Include="templates\land.registration.system.searching\recording.book.directories.nobookLevel.items.ascx" />
+    <Content Include="templates\land.registration.system\document.reception.header.ascx" />
+    <Content Include="templates\land.registration.system\document.reception.items.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.assigned.header.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.assigned.items.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.closed.header.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.closed.items.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.creation.bookLevel.items.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.creation.header.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.creation.nobookLevel.items.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.directories.header.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.onrevision.header.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.onrevision.items.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.pending.classification.header.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.pending.classification.items.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.unassigned.header.ascx" />
+    <Content Include="templates\land.registration.system\recording.book.unassigned.items.ascx" />
+    <Content Include="templates\security\empiria.security.user.item.ascx" />
+    <Content Include="templates\transactions\control.desk.header.ascx" />
+    <Content Include="templates\transactions\control.desk.item.ascx" />
+    <Content Include="templates\transactions\process.close.item.ascx" />
+    <Content Include="templates\transactions\process.control.header.ascx" />
+    <Content Include="templates\transactions\process.control.item.ascx" />
+    <Content Include="templates\transactions\process.delivery.item.ascx" />
+    <Content Include="templates\transactions\process.receive.item.ascx" />
+    <Content Include="templates\transactions\process.search.header.ascx" />
+    <Content Include="templates\transactions\process.search.item.ascx" />
+    <Content Include="templates\workflow\workflow.inbox.header.ascx" />
+    <Content Include="templates\workflow\workflow.inbox.item.ascx" />
+    <Content Include="themes\default\app.icons\analysis.gif" />
+    <Content Include="themes\default\app.icons\documents.gif" />
+    <Content Include="themes\default\app.icons\documents.png" />
+    <Content Include="themes\default\app.icons\info_room.gif" />
+    <Content Include="themes\default\app.icons\learning.gif" />
+    <Content Include="themes\default\app.icons\library.gif" />
+    <Content Include="themes\default\app.icons\research.gif" />
+    <Content Include="themes\default\bullets\1green_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\actions_bullet.gif" />
+    <Content Include="themes\default\bullets\action_bullet.gif" />
+    <Content Include="themes\default\bullets\agenda_sm.gif" />
+    <Content Include="themes\default\bullets\alert.gif" />
+    <Content Include="themes\default\bullets\bell.gif" />
+    <Content Include="themes\default\bullets\blue_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\book.gif" />
+    <Content Include="themes\default\bullets\brown.bullet.gif" />
+    <Content Include="themes\default\bullets\calendar8_sm.gif" />
+    <Content Include="themes\default\bullets\clip.gif" />
+    <Content Include="themes\default\bullets\collapse.gif" />
+    <Content Include="themes\default\bullets\collapse.left_toolbar.gif" />
+    <Content Include="themes\default\bullets\collapse_blue.gif" />
+    <Content Include="themes\default\bullets\collapse_item.gif" />
+    <Content Include="themes\default\bullets\collapse_menu.gif" />
+    <Content Include="themes\default\bullets\copy.gif" />
+    <Content Include="themes\default\bullets\edit.gif" />
+    <Content Include="themes\default\bullets\edit_sm.gif" />
+    <Content Include="themes\default\bullets\envelopesm.gif" />
+    <Content Include="themes\default\bullets\excel.gif" />
+    <Content Include="themes\default\bullets\expand.gif" />
+    <Content Include="themes\default\bullets\expand.left_toolbar.gif" />
+    <Content Include="themes\default\bullets\expand_blue.gif" />
+    <Content Include="themes\default\bullets\expand_item.gif" />
+    <Content Include="themes\default\bullets\expand_menu.gif" />
+    <Content Include="themes\default\bullets\expand_sitem.gif" />
+    <Content Include="themes\default\bullets\expand_white.gif" />
+    <Content Include="themes\default\bullets\expand_window.gif" />
+    <Content Include="themes\default\bullets\grayed.collapse.gif" />
+    <Content Include="themes\default\bullets\grayed.collapse.left_toolbar.gif" />
+    <Content Include="themes\default\bullets\grayed.expand.gif" />
+    <Content Include="themes\default\bullets\grayed.expand.left_toolbar.gif" />
+    <Content Include="themes\default\bullets\grayed.new_window.gif" />
+    <Content Include="themes\default\bullets\gray_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\green.circle.gif" />
+    <Content Include="themes\default\bullets\green.down.arrow.gif" />
+    <Content Include="themes\default\bullets\green_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\green_sq_bullet.png" />
+    <Content Include="themes\default\bullets\inboxsm.gif" />
+    <Content Include="themes\default\bullets\mail_sm.gif" />
+    <Content Include="themes\default\bullets\main_bullet - copia.gif" />
+    <Content Include="themes\default\bullets\menu_separator.gif" />
+    <Content Include="themes\default\bullets\ms_office.gif" />
+    <Content Include="themes\default\bullets\new_window.gif" />
+    <Content Include="themes\default\bullets\pending.gif" />
+    <Content Include="themes\default\bullets\pixel.gif" />
+    <Content Include="themes\default\bullets\red.up.arrow.gif" />
+    <Content Include="themes\default\bullets\redarrowsmall-index.gif" />
+    <Content Include="themes\default\bullets\red_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\right_arrow.gif" />
+    <Content Include="themes\default\bullets\scribble_doc_sm.gif" />
+    <Content Include="themes\default\bullets\search_sm.gif" />
+    <Content Include="themes\default\bullets\todo.ok.gif" />
+    <Content Include="themes\default\bullets\todosm.gif" />
+    <Content Include="themes\default\bullets\tree.leaf.gif" />
+    <Content Include="themes\default\bullets\tree.parent.gif" />
+    <Content Include="themes\default\bullets\white_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\yellow_sq_bullet.gif" />
+    <Content Include="themes\default\bullets\z.green.circle.gif" />
+    <Content Include="themes\default\buttons\close.png" />
+    <Content Include="themes\default\buttons\close.window.gif" />
+    <Content Include="themes\default\buttons\document.sm.gif" />
+    <Content Include="themes\default\buttons\edit.gif" />
+    <Content Include="themes\default\buttons\ellipsis.gif" />
+    <Content Include="themes\default\buttons\excel.gif" />
+    <Content Include="themes\default\buttons\first.gif" />
+    <Content Include="themes\default\buttons\g22o.button.png" />
+    <Content Include="themes\default\buttons\go.brown.gif" />
+    <Content Include="themes\default\buttons\go.button.png" />
+    <Content Include="themes\default\buttons\go.gif" />
+    <Content Include="themes\default\buttons\godd.button.png" />
+    <Content Include="themes\default\buttons\graph.gif" />
+    <Content Include="themes\default\buttons\grayed.close_window.gif" />
+    <Content Include="themes\default\buttons\last.gif" />
+    <Content Include="themes\default\buttons\leaf.gif" />
+    <Content Include="themes\default\buttons\meter.gif" />
+    <Content Include="themes\default\buttons\meter_begin.gif" />
+    <Content Include="themes\default\buttons\meter_end.gif" />
+    <Content Include="themes\default\buttons\meter_thumb.gif" />
+    <Content Include="themes\default\buttons\minus.gif" />
+    <Content Include="themes\default\buttons\next.gif" />
+    <Content Include="themes\default\buttons\plus.gif" />
+    <Content Include="themes\default\buttons\previous.gif" />
+    <Content Include="themes\default\buttons\return.gif" />
+    <Content Include="themes\default\buttons\search.button.gif" />
+    <Content Include="themes\default\buttons\search.gif" />
+    <Content Include="themes\default\buttons\select_page.gif" />
+    <Content Include="themes\default\buttons\trash.gif" />
+    <Content Include="themes\default\css\certificates.css" />
+    <Content Include="themes\default\css\dashboard.css" />
+    <Content Include="themes\default\css\dashboard.item.css" />
+    <Content Include="themes\default\css\editor.css" />
+    <Content Include="themes\default\css\exception.css" />
+    <Content Include="themes\default\css\explorer.css" />
+    <Content Include="themes\default\css\logon.css" />
+    <Content Include="themes\default\css\master.page.css" />
+    <Content Include="themes\default\css\official.document.css" />
+    <Content Include="themes\default\css\report.css" />
+    <Content Include="themes\default\css\secondary.master.page.css" />
+    <Content Include="themes\default\css\statusbar.css" />
+    <Content Include="themes\default\css\to.printer.css" />
+    <Content Include="themes\default\css\toolbar.css" />
+    <Content Include="themes\default\css\viewer.master.page.css" />
+    <Content Include="themes\default\customer\background.png" />
+    <Content Include="themes\default\customer\customer.full.logo.png" />
+    <Content Include="themes\default\customer\customer.logo.png" />
+    <Content Include="themes\default\customer\customer.reports.logo.png" />
+    <Content Include="themes\default\customer\dashboard.background.gif" />
+    <Content Include="themes\default\customer\government.seal.png" />
+    <Content Include="themes\default\customer\pleca-roja.png" />
+    <Content Include="themes\default\customer\seal.logo.left.png" />
+    <Content Include="themes\default\customer\seal.logo.right.png" />
+    <Content Include="themes\default\customer\section_division_bar.jpg" />
+    <Content Include="themes\default\customer\separator.jpg" />
+    <Content Include="themes\default\images\barcode.png" />
+    <Content Include="themes\default\images\men.nophoto.jpg" />
+    <Content Include="themes\default\images\woman.nophoto.jpg" />
+    <Content Include="themes\default\navbar.icons\back.gif" />
+    <Content Include="themes\default\navbar.icons\binder.gif" />
+    <Content Include="themes\default\navbar.icons\contacts.gif" />
+    <Content Include="themes\default\navbar.icons\documents.gif" />
+    <Content Include="themes\default\navbar.icons\ellipsis.gif" />
+    <Content Include="themes\default\navbar.icons\folder.gif" />
+    <Content Include="themes\default\navbar.icons\forward.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.back.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.contacts.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.documents.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.folder.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.forward.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.home.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.map.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.products.gif" />
+    <Content Include="themes\default\navbar.icons\grayed.search.gif" />
+    <Content Include="themes\default\navbar.icons\help.gif" />
+    <Content Include="themes\default\navbar.icons\history.gif" />
+    <Content Include="themes\default\navbar.icons\home.gif" />
+    <Content Include="themes\default\navbar.icons\map.gif" />
+    <Content Include="themes\default\navbar.icons\products.gif" />
+    <Content Include="themes\default\navbar.icons\progress_bar.gif" />
+    <Content Include="themes\default\navbar.icons\search.gif" />
+    <Content Include="themes\default\textures\alert.background.png" />
+    <Content Include="themes\default\textures\gauge.jpg" />
+    <Content Include="themes\default\textures\header.background.png" />
+    <Content Include="themes\default\textures\main_background.gif" />
+    <Content Include="themes\default\textures\main_background.old.gif" />
+    <Content Include="themes\default\textures\pixel.gif" />
+    <Content Include="themes\default\textures\textbox.gif" />
+    <Content Include="themes\default\view.icons.small\home.gif" />
+    <Content Include="themes\default\view.icons.small\search.gif" />
+    <Content Include="themes\default\view.icons\design.png" />
+    <Content Include="themes\default\view.icons\document.png" />
+    <Content Include="themes\default\view.icons\documents.png" />
+    <Content Include="themes\default\view.icons\folder.png" />
+    <Content Include="themes\default\view.icons\note.png" />
+    <Content Include="user.controls\barcode.aspx" />
+    <Content Include="user.controls\calendar.aspx" />
+    <Content Include="user.controls\printer.aspx" />
+    <Content Include="user.controls\qrcode.aspx" />
+    <Content Include="workflow\messages.dashboard.aspx" />
+    <Content Include="workflow\participants.management.dashboard.aspx" />
+    <Content Include="workflow\tasks.dashboard.aspx" />
+    <Content Include="workflow\workflow.management.dashboard.aspx" />
+    <Content Include="workplace\command.processor.aspx" />
+    <Content Include="workplace\dashboard.aspx" />
+    <Content Include="workplace\empty.page.aspx" />
+    <Content Include="workplace\out.of.service.aspx" />
+    <None Include="packages.config" />
+    <Content Include="favicon.ico" />
+    <Content Include="templates\reports\transaction.ticket.ert" />
+    <Content Include="workplace\dashboard.master" />
+    <Content Include="workplace\default.master" />
+    <Content Include="workplace\old.secondary.master" />
+    <Content Include="workplace\viewer.master" />
+    <Content Include="Web.config" />
+    <Content Include="README.md" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ajax\general.data.aspx.cs">
+      <DependentUpon>general.data.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ajax\geographic.data.aspx.cs">
+      <DependentUpon>geographic.data.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ajax\land.registration.system.data.aspx.cs">
+      <DependentUpon>land.registration.system.data.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ajax\land.ui.controls.aspx.cs">
+      <DependentUpon>land.ui.controls.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ajax\workplace.data.aspx.cs">
+      <DependentUpon>workplace.data.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="analytics\daily.historic.recording.dashboard.aspx.cs">
+      <DependentUpon>daily.historic.recording.dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="analytics\daily.historic.recording.dashboard.aspx.designer.cs">
+      <DependentUpon>daily.historic.recording.dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Empiria.Land.Intranet.Tlaxcala.AssemblyInfo.cs" />
+    <Compile Include="land.registration.system.controls\append.recording.act.editor.control.ascx.cs">
+      <DependentUpon>append.recording.act.editor.control.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.controls\append.recording.act.editor.control.ascx.designer.cs">
+      <DependentUpon>append.recording.act.editor.control.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system.controls\modal.window.ascx.cs">
+      <DependentUpon>modal.window.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.controls\modal.window.ascx.designer.cs">
+      <DependentUpon>modal.window.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system.controls\recording.act.selector.control.ascx.cs">
+      <DependentUpon>recording.act.selector.control.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.controls\recording.act.selector.control.ascx.designer.cs">
+      <DependentUpon>recording.act.selector.control.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system.controls\recording.document.editor.control.ascx.cs">
+      <DependentUpon>recording.document.editor.control.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.controls\recording.document.editor.control.ascx.designer.cs">
+      <DependentUpon>recording.document.editor.control.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system.controls\recording.party.editor.control.ascx.cs">
+      <DependentUpon>recording.party.editor.control.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.controls\recording.party.editor.control.ascx.designer.cs">
+      <DependentUpon>recording.party.editor.control.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system.controls\recording.party.viewer.control.ascx.cs">
+      <DependentUpon>recording.party.viewer.control.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.controls\recording.party.viewer.control.ascx.designer.cs">
+      <DependentUpon>recording.party.viewer.control.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\bank.payment.order.aspx.cs">
+      <DependentUpon>bank.payment.order.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\bank.payment.order.aspx.designer.cs">
+      <DependentUpon>bank.payment.order.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\payment.order.aspx.cs">
+      <DependentUpon>payment.order.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\payment.order.aspx.designer.cs">
+      <DependentUpon>payment.order.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\process.control.dashboard.aspx.cs">
+      <DependentUpon>process.control.dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\process.control.dashboard.aspx.designer.cs">
+      <DependentUpon>process.control.dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\transaction.editor.aspx.cs">
+      <DependentUpon>transaction.editor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\transaction.editor.aspx.designer.cs">
+      <DependentUpon>transaction.editor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\transaction.receipt.aspx.cs">
+      <DependentUpon>transaction.receipt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\transaction.receipt.aspx.designer.cs">
+      <DependentUpon>transaction.receipt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\transaction.report.aspx.cs">
+      <DependentUpon>transaction.report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\transaction.report.aspx.designer.cs">
+      <DependentUpon>transaction.report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system\by.resource.analyzer.aspx.cs">
+      <DependentUpon>by.resource.analyzer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system\by.resource.analyzer.aspx.designer.cs">
+      <DependentUpon>by.resource.analyzer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system\certificate.aspx.cs">
+      <DependentUpon>certificate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system\certificate.aspx.designer.cs">
+      <DependentUpon>certificate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system\document.editor.aspx.cs">
+      <DependentUpon>document.editor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system\document.editor.aspx.designer.cs">
+      <DependentUpon>document.editor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system\document.imaging.control.slip.aspx.cs">
+      <DependentUpon>document.imaging.control.slip.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system\document.imaging.control.slip.aspx.designer.cs">
+      <DependentUpon>document.imaging.control.slip.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system\document.search.aspx.cs">
+      <DependentUpon>document.search.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system\document.search.aspx.designer.cs">
+      <DependentUpon>document.search.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system\image.set.viewer.aspx.cs">
+      <DependentUpon>image.set.viewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system\image.set.viewer.aspx.designer.cs">
+      <DependentUpon>image.set.viewer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system\real.estate.editor.aspx.cs">
+      <DependentUpon>real.estate.editor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system\real.estate.editor.aspx.designer.cs">
+      <DependentUpon>real.estate.editor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system\recording.act.editor.aspx.cs">
+      <DependentUpon>recording.act.editor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system\recording.act.editor.aspx.designer.cs">
+      <DependentUpon>recording.act.editor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system\recording.book.analyzer.aspx.cs">
+      <DependentUpon>recording.book.analyzer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system\recording.book.analyzer.aspx.designer.cs">
+      <DependentUpon>recording.book.analyzer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system\recording.editor.aspx.cs">
+      <DependentUpon>recording.editor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system\recording.editor.aspx.designer.cs">
+      <DependentUpon>recording.editor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system\recording.seal.aspx.cs">
+      <DependentUpon>recording.seal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system\recording.seal.aspx.designer.cs">
+      <DependentUpon>recording.seal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system\resource.history.aspx.cs">
+      <DependentUpon>resource.history.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system\resource.history.aspx.designer.cs">
+      <DependentUpon>resource.history.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system\search.data.aspx.cs">
+      <DependentUpon>search.data.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system\search.data.aspx.designer.cs">
+      <DependentUpon>search.data.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="security\user.editor.aspx.cs">
+      <DependentUpon>user.editor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="security\user.editor.aspx.designer.cs">
+      <DependentUpon>user.editor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="user.controls\barcode.aspx.cs">
+      <DependentUpon>barcode.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="user.controls\barcode.aspx.designer.cs">
+      <DependentUpon>barcode.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="user.controls\calendar.aspx.cs">
+      <DependentUpon>calendar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="user.controls\calendar.aspx.designer.cs">
+      <DependentUpon>calendar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="user.controls\printer.aspx.cs">
+      <DependentUpon>printer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="user.controls\printer.aspx.designer.cs">
+      <DependentUpon>printer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="user.controls\qrcode.aspx.cs">
+      <DependentUpon>qrcode.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="user.controls\qrcode.aspx.designer.cs">
+      <DependentUpon>qrcode.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="workflow\messages.dashboard.aspx.cs">
+      <DependentUpon>messages.dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="workflow\messages.dashboard.aspx.designer.cs">
+      <DependentUpon>messages.dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="workflow\participants.management.dashboard.aspx.cs">
+      <DependentUpon>participants.management.dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="workflow\participants.management.dashboard.aspx.designer.cs">
+      <DependentUpon>participants.management.dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="workflow\tasks.dashboard.aspx.cs">
+      <DependentUpon>tasks.dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="workflow\tasks.dashboard.aspx.designer.cs">
+      <DependentUpon>tasks.dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="workflow\workflow.management.dashboard.aspx.cs">
+      <DependentUpon>workflow.management.dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="workflow\workflow.management.dashboard.aspx.designer.cs">
+      <DependentUpon>workflow.management.dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="workplace\command.processor.aspx.cs">
+      <DependentUpon>command.processor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="workplace\command.processor.aspx.designer.cs">
+      <DependentUpon>command.processor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="workplace\dashboard.aspx.cs">
+      <DependentUpon>dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="workplace\dashboard.aspx.designer.cs">
+      <DependentUpon>dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="workplace\dashboard.master.cs">
+      <DependentUpon>dashboard.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="workplace\dashboard.master.designer.cs">
+      <DependentUpon>dashboard.master</DependentUpon>
+    </Compile>
+    <Compile Include="workplace\default.master.cs">
+      <DependentUpon>default.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="workplace\default.master.designer.cs">
+      <DependentUpon>default.master</DependentUpon>
+    </Compile>
+    <Compile Include="workplace\empty.page.aspx.cs">
+      <DependentUpon>empty.page.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="workplace\empty.page.aspx.designer.cs">
+      <DependentUpon>empty.page.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="workplace\old.secondary.master.cs">
+      <DependentUpon>old.secondary.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="workplace\old.secondary.master.designer.cs">
+      <DependentUpon>old.secondary.master</DependentUpon>
+    </Compile>
+    <Compile Include="workplace\out.of.service.aspx.cs">
+      <DependentUpon>out.of.service.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="workplace\out.of.service.aspx.designer.cs">
+      <DependentUpon>out.of.service.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="workplace\viewer.master.cs">
+      <DependentUpon>viewer.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="workplace\viewer.master.designer.cs">
+      <DependentUpon>viewer.master</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\core\Foundation\Empiria.Foundation.csproj">
+      <Project>{73ea993b-576b-4a5b-acc5-117dad0254ee}</Project>
+      <Name>Empiria.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\extensions\Documents\Empiria.Documents.csproj">
+      <Project>{2bd53d27-bd61-49fe-afe1-d68e21f58e9a}</Project>
+      <Name>Empiria.Documents</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\extensions\Geography\Empiria.Geography.csproj">
+      <Project>{96267945-dbe1-4b2c-88e2-0ecdc5ca7669}</Project>
+      <Name>Empiria.Geography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\extensions\Presentation.Web\Empiria.Presentation.Web.csproj">
+      <Project>{0aeea12e-b4f7-4e12-a768-99bb82bd3fc9}</Project>
+      <Name>Empiria.Presentation.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\extensions\Presentation\Empiria.Presentation.csproj">
+      <Project>{2790ad3e-0ae4-4c94-83ba-96bc53185b19}</Project>
+      <Name>Empiria.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\extensions\WebApi.Client\Empiria.WebApi.Client.csproj">
+      <Project>{e372c9e6-68a9-4d85-83c1-254ac6b32d1b}</Project>
+      <Name>Empiria.WebApi.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\extensions\WebServices\Empiria.WebServices.csproj">
+      <Project>{29b783cb-dc89-4156-b61c-a889365bc93e}</Project>
+      <Name>Empiria.WebServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\land\Land.AppServices\Empiria.Land.AppServices.csproj">
+      <Project>{6123d3d5-409d-40c4-b9be-04e3a6b2b51e}</Project>
+      <Name>Empiria.Land.AppServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\land\Land.Documentation\Empiria.Land.Documentation.csproj">
+      <Project>{7d98c757-6ed4-48d0-b351-a99ce5ed8987}</Project>
+      <Name>Empiria.Land.Documentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\land\Land.Registration\Empiria.Land.Registration.csproj">
+      <Project>{ea85313c-bbbb-4f31-b6b9-05bb79addff1}</Project>
+      <Name>Empiria.Land.Registration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\land\Land.UI\Empiria.Land.UI.csproj">
+      <Project>{90d29b34-a9c5-47ee-8279-7473fa37d194}</Project>
+      <Name>Empiria.Land.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\onepoint\OnePoint.AppServices\Empiria.OnePoint.AppServices.csproj">
+      <Project>{a6e859fb-a156-48af-9f3a-07f3dc5dede2}</Project>
+      <Name>Empiria.OnePoint.AppServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\onepoint\OnePoint.Core\Empiria.OnePoint.csproj">
+      <Project>{4804dd40-6864-48d3-8b6e-f0f6f665e517}</Project>
+      <Name>Empiria.OnePoint</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\connectors\Empiria.Land.Connectors.csproj">
+      <Project>{3f336e9d-d9fa-492f-bb91-ee81bb49aeb6}</Project>
+      <Name>Empiria.Land.Connectors</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>59162</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:59162/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,7 +1,11 @@
-﻿Empiria Land Intranet Website Tlaxcala Edition
-==============================================
+﻿# Empiria Land Intranet Tlaxcala Edition
 
-Empiria Land Intranet Website Tlaxcala Edition provides the following services:
+Sitio intranet del Sistema del Registro Público de la Propiedad del Gobierno del Estado de Tlaxcala.
 
+# License
 
-Empiria Land Intranet Website Tlaxcala Edition is part of Empiria Land software product line.
+This system is distributed by the GNU AFFERO GENERAL PUBLIC LICENSE.
+
+# Copyright
+
+Copyright © 2009-2018. La Vía Óntica SC, Ontica LLC and colaborators.

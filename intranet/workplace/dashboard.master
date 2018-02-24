@@ -1,4 +1,4 @@
-<%@ Master Language="C#" EnableViewState="true" ViewStateMode="Disabled" AutoEventWireup="false" CodeFile="dashboard.master.cs" Inherits="Empiria.Web.UI.Workplace.DashboardMasterPage" %>
+<%@ Master Language="C#" EnableViewState="true" ViewStateMode="Disabled" AutoEventWireup="false" Inherits="Empiria.Web.UI.Workplace.DashboardMasterPage" Codebehind="dashboard.master.cs" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-mx">
 <head runat="server">

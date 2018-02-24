@@ -15,7 +15,7 @@ using Empiria.Presentation.Web;
 
 namespace Empiria.Land.WebApp {
 
-  public enum TabStrip {
+  public enum AnalyzerTabStrip {
     DocumentEditor = 0,
     RecordingActEditor = 1,
     ResourceEditor = 2,
@@ -105,22 +105,22 @@ namespace Empiria.Land.WebApp {
       }
     }
 
-    protected string TabStripClass(TabStrip tabStrip) {
+    protected string TabStripClass(AnalyzerTabStrip tabStrip) {
       switch (tabStrip) {
-        case TabStrip.DocumentEditor:
+        case AnalyzerTabStrip.DocumentEditor:
           return "tabDisabled";
         //return this.IsResourceSelected ? "tabOff" : "tabOn";
 
-        case TabStrip.GlobalSearch:
+        case AnalyzerTabStrip.GlobalSearch:
           return this.IsResourceSelected ? "tabOff" : "tabOn";
 
-        case TabStrip.RecordingActEditor:
+        case AnalyzerTabStrip.RecordingActEditor:
           return this.IsRecordingActSelected ? "tabOff" : "tabDisabled";
 
-        case TabStrip.ResourceEditor:
+        case AnalyzerTabStrip.ResourceEditor:
           return this.IsResourceSelected ? "tabOff" : "tabDisabled";
 
-        case TabStrip.ResourceHistory:
+        case AnalyzerTabStrip.ResourceHistory:
           return this.IsResourceSelected ? "tabOn" : "tabDisabled";
 
         default:
@@ -128,33 +128,33 @@ namespace Empiria.Land.WebApp {
       }
     }
 
-    protected string TabStripDisplayView(TabStrip tabStrip) {
-      if (tabStrip == TabStrip.GlobalSearch && !this.IsResourceSelected) {
+    protected string TabStripDisplayView(AnalyzerTabStrip tabStrip) {
+      if (tabStrip == AnalyzerTabStrip.GlobalSearch && !this.IsResourceSelected) {
         return "display:inline";
       }
-      if (tabStrip == TabStrip.ResourceHistory && this.IsResourceSelected) {
+      if (tabStrip == AnalyzerTabStrip.ResourceHistory && this.IsResourceSelected) {
         return "display:inline";
       }
       return "display:none";
     }
 
-    protected string TabStripSource(TabStrip tabStrip) {
+    protected string TabStripSource(AnalyzerTabStrip tabStrip) {
       string source = String.Empty;
 
       switch (tabStrip) {
-        case TabStrip.DocumentEditor:
+        case AnalyzerTabStrip.DocumentEditor:
           //source = "document.editor.aspx?documentId={{DOCUMENT.ID}}&selectedRecordingActId={{RECORDING.ACT.ID}}";
           break;
-        case TabStrip.GlobalSearch:
+        case AnalyzerTabStrip.GlobalSearch:
           source = "document.search.aspx?resourceId={{RESOURCE.ID}}&id={{RECORDING.ACT.ID}}";
           break;
-        case TabStrip.RecordingActEditor:
+        case AnalyzerTabStrip.RecordingActEditor:
           source = "recording.act.editor.aspx?propertyId={{RESOURCE.ID}}&id={{RECORDING.ACT.ID}}";
           break;
-        case TabStrip.ResourceEditor:
+        case AnalyzerTabStrip.ResourceEditor:
           source = "real.estate.editor.aspx?propertyId={{RESOURCE.ID}}&recordingActId={{RECORDING.ACT.ID}}";
           break;
-        case TabStrip.ResourceHistory:
+        case AnalyzerTabStrip.ResourceHistory:
           source = "resource.history.aspx?resourceId={{RESOURCE.ID}}&id={{RECORDING.ACT.ID}}";
           break;
         default:

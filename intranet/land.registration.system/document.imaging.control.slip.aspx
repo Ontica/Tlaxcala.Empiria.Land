@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.DocumentImagingControlSlip" CodeFile="document.imaging.control.slip.aspx.cs" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Empiria.Land.WebApp.DocumentImagingControlSlip" Codebehind="document.imaging.control.slip.aspx.cs" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">

@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Land.WebApp.LRSRecordingActSelectorControl" CodeFile="recording.act.selector.control.ascx.cs" %>
+﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Land.WebApp.LRSRecordingActSelectorControl" Codebehind="recording.act.selector.control.ascx.cs" %>
 <table id="<%=this.ClientID%>_tblRecordingActEditor" class="editionTable" style="display:none;">
   <tr>
     <td>Categoría:</td>

@@ -1,4 +1,4 @@
-﻿<%@ Page language="c#" Inherits="Empiria.Web.UI.LogonPage" EnableViewState="false" EnableSessionState="true" CodeFile="default.aspx.cs" %>
+﻿<%@ Page language="c#" Inherits="Empiria.Web.UI.LogonPage" EnableViewState="false" EnableSessionState="true" Codebehind="default.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
@@ -53,7 +53,7 @@
             <span class="formControl"><input id="txtPassword" type="password" maxlength="32" size="24" name="txtPassword" runat="server" /></span>
           </div>
           <div class="formRow">
-            <span class="formLabel">Tarjeta de acceso: (Posición D5K) </span>
+            <span class="formLabel">Tarjeta de acceso: (Posición NC4) </span>
             <span class="formControl"><input id="txtAccessCode" type="text" maxlength="6" size="24" name="txtAccessCode" runat="server" /></span>
           </div>
           <div class="formRow">

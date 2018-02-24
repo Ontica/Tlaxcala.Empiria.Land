@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/workplace/default.master" CodeFile="dashboard.aspx.cs" Inherits="Empiria.Web.UI.Workplace.Dashboard" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/workplace/default.master" Inherits="Empiria.Web.UI.Workplace.Dashboard" Codebehind="dashboard.aspx.cs" %>
 <asp:Content ID="workArea" ContentPlaceHolderID="contentPlaceHolder" Runat="Server">
   <div class="dashboardItem" style="width:100%;display:<%=dashboardWebViewModel.Source != "~/workplace/empty.page.aspx" ? "inline" : "none" %>">
   <iframe id="ifraWorkarea" src="<%=ResolveClientUrl(dashboardWebViewModel.Source)%>" frameborder="no" hidefocus="hidefocus"

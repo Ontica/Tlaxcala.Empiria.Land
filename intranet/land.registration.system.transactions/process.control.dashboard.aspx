@@ -1,4 +1,8 @@
-﻿<%@ Page Language="C#" EnableViewState="true" ViewStateMode="Disabled" EnableSessionState="true" MasterPageFile="~/workplace/dashboard.master" Inherits="Empiria.Land.WebApp.ProcessControlDashboard" CodeFile="process.control.dashboard.aspx.cs" %>
+﻿<%@ Page Language="C#" EnableViewState="true" ViewStateMode="Disabled"
+    Inherits="Empiria.Land.WebApp.ProcessControlDashboard" Codebehind="process.control.dashboard.aspx.cs"
+    ClassName="Empiria.Land.WebApp.ProcessControlDashboardASP"
+    EnableSessionState="true" MasterPageFile="~/workplace/dashboard.master"
+    %>
 <%@ Import Namespace="Empiria.Land.WebApp" %>
 <asp:Content ID="dashboardItem" ContentPlaceHolderID="dashboardItemPlaceHolder" runat="Server" EnableViewState="true">
 <table id="tblDashboardMenu" class="tabStrip" style='display:<%=base.ShowTabStripMenu ? "inline" : "none"%>'>

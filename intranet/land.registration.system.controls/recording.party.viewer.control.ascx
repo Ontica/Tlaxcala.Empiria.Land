@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Land.WebApp.RecordingPartyViewerControl" CodeFile="recording.party.viewer.control.ascx.cs" %>
+﻿<%@ Control Language="C#" AutoEventWireup="false" Inherits="Empiria.Land.WebApp.RecordingPartyViewerControl" Codebehind="recording.party.viewer.control.ascx.cs" %>
 <tr>
   <td>
     <table class="editionTable">
