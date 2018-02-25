@@ -713,9 +713,9 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\core\Foundation\Empiria.Foundation.csproj">
-      <Project>{73ea993b-576b-4a5b-acc5-117dad0254ee}</Project>
-      <Name>Empiria.Foundation</Name>
+    <ProjectReference Include="..\..\core\Core\Empiria.Core.csproj">
+      <Project>{dacbf2c5-1f67-48e3-837c-8ca45b105e44}</Project>
+      <Name>Empiria.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\extensions\Documents\Empiria.Documents.csproj">
       <Project>{2bd53d27-bd61-49fe-afe1-d68e21f58e9a}</Project>
@@ -741,10 +741,6 @@
       <Project>{29b783cb-dc89-4156-b61c-a889365bc93e}</Project>
       <Name>Empiria.WebServices</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\land\Land.AppServices\Empiria.Land.AppServices.csproj">
-      <Project>{6123d3d5-409d-40c4-b9be-04e3a6b2b51e}</Project>
-      <Name>Empiria.Land.AppServices</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\land\Land.Documentation\Empiria.Land.Documentation.csproj">
       <Project>{7d98c757-6ed4-48d0-b351-a99ce5ed8987}</Project>
       <Name>Empiria.Land.Documentation</Name>
@@ -756,10 +752,6 @@
     <ProjectReference Include="..\..\land\Land.UI\Empiria.Land.UI.csproj">
       <Project>{90d29b34-a9c5-47ee-8279-7473fa37d194}</Project>
       <Name>Empiria.Land.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\onepoint\OnePoint.AppServices\Empiria.OnePoint.AppServices.csproj">
-      <Project>{a6e859fb-a156-48af-9f3a-07f3dc5dede2}</Project>
-      <Name>Empiria.OnePoint.AppServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\onepoint\OnePoint.Core\Empiria.OnePoint.csproj">
       <Project>{4804dd40-6864-48d3-8b6e-f0f6f665e517}</Project>
