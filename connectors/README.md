@@ -1,4 +1,4 @@
-﻿# Empiria Land Recording System
+﻿# Empiria Land Connectors Tlaxcala Edition
 
 Empiria Land connectors to Tlaxcala Government's treasury and Citys systems.
 
