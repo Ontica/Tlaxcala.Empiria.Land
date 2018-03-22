@@ -34,16 +34,6 @@
       "value": "http://empiria.land/intranet/"
     },
     {
-      "type": "WebApi.Client",
-      "key": "Default.WebApiServer",
-      "value": "http://empiria.land/microservices"
-    },
-    {
-      "type": "WebApi.Client",
-      "key": "ServiceDirectory.Path",
-      "value": "v1/system/service-directory"
-    },
-    {
       "type": "Land",
       "key": "UIControls.AppendRecordingActEditorControl",
       "value": "~/land.registration.system.controls/append.recording.act.editor.control.ascx"
@@ -67,6 +57,11 @@
       "type": "Land.Connectors",
       "key": "CitysWS.Endpoint",
       "value": "http://tlaxcalaenlinea.gob.mx:8080/citysexternal/rppCertificateEmissionWS"
+    },
+    {
+      "type": "Data",
+      "key": "IsObjectIdGeneratorServer",
+      "value": true
     }
   ]
 }
