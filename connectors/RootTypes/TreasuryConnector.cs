@@ -28,7 +28,8 @@ namespace Empiria.Land.Connectors {
     public async Task<IPaymentOrderData> GeneratePaymentOrder(IFiling transaction) {
       object body = this.BuildRequestBodyForGenerarFormatoPagoReferenciado((LRSTransaction) transaction);
 
-      JsonObject response = await this.CallGenerarFormatoPagoReferenciado(body);
+      JsonObject response = await this.CallGenerarFormatoPagoReferenciado(body)
+                                      .ConfigureAwait(false);
 
       Assertion.Assert(response.Contains("codigo") && response.Contains("mensaje"),
                        $"The server response has an unexpected content:\n {response.ToString()}");
@@ -54,7 +55,8 @@ namespace Empiria.Land.Connectors {
     public async Task<IPaymentOrderData> RefreshPaymentOrder(IPaymentOrderData paymentOrderData) {
       object body = this.BuildRequestBodyForConsultarPagoRealizado(paymentOrderData);
 
-      JsonObject response = await this.CallConsultarPagoRealizado(body);
+      JsonObject response = await this.CallConsultarPagoRealizado(body)
+                                      .ConfigureAwait(false);
 
       Assertion.Assert(response.Contains("codigoEstatus"),
                        $"The server response has an unexpected content:\n {response.ToString()}");
@@ -130,6 +132,8 @@ namespace Empiria.Land.Connectors {
 
     private object BuildRequestBodyForGenerarFormatoPagoReferenciado(LRSTransaction transaction) {
       return new {
+        usuario = "adminR3gPubT1x",
+        password = "R3gPubT1xDrugs",
         folioSeguimiento = transaction.UID,
         idTramite = transaction.UID,
         importe = transaction.Items.TotalFee.Total.ToString("F0"),

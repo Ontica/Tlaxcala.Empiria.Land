@@ -38,7 +38,8 @@ namespace Empiria.Land.Connectors {
       var authenticationBean = this.GetAuthenticationBean();
       var certificateBean = this.GetCertificateBean(certificate, outputFile);
 
-      return await wsClient.receiveCertificateAsync(authenticationBean, certificateBean);
+      return await wsClient.receiveCertificateAsync(authenticationBean, certificateBean)
+                           .ConfigureAwait(false);
     }
 
     public async Task<int> SendAvisoPreventivo(Certificate certificate, byte[] outputFile) {
@@ -47,7 +48,8 @@ namespace Empiria.Land.Connectors {
       var authenticationBean = this.GetAuthenticationBean();
       var certificateBean = this.GetAvisoPreventivoBean(certificate, outputFile);
 
-      return await wsClient.receiveCertificateAsync(authenticationBean, certificateBean);
+      return await wsClient.receiveCertificateAsync(authenticationBean, certificateBean)
+                           .ConfigureAwait(false);
     }
 
     public async Task<int> SendOficioDevolucion(LRSTransaction transaction, byte[] outputFile) {
@@ -56,7 +58,9 @@ namespace Empiria.Land.Connectors {
       var authenticationBean = this.GetAuthenticationBean();
       var returnDocumentBean = this.GetReturnDocumentBean(transaction, outputFile);
 
-      return await wsClient.receiveCertificateAsync(authenticationBean, returnDocumentBean);
+      return await wsClient.receiveCertificateAsync(authenticationBean, returnDocumentBean)
+                           .ConfigureAwait(false);
+
     }
 
     public async Task<bool> CanSendDocument(string tramiteCitys) {
@@ -64,7 +68,8 @@ namespace Empiria.Land.Connectors {
 
       var authenticationBean = this.GetAuthenticationBean();
 
-      return await wsClient.canSendDocumentAsync(authenticationBean, tramiteCitys);
+      return await wsClient.canSendDocumentAsync(authenticationBean, tramiteCitys)
+                            .ConfigureAwait(false);
     }
 
     #endregion Public methods
