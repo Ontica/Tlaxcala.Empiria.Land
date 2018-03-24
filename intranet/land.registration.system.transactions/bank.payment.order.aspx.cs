@@ -36,10 +36,10 @@ namespace Empiria.Land.WebApp {
 
     #region Private methods
 
-    private void Initialize() {
+    private async void Initialize() {
       transaction = LRSTransaction.Parse(int.Parse(Request.QueryString["id"]));
 
-      this.paymentOrderData = PaymentServices.RequestPaymentOrderData(this.transaction).Result;
+      this.paymentOrderData = await PaymentServices.RequestPaymentOrderData(this.transaction);
     }
 
     protected string DistrictName {

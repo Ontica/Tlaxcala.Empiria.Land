@@ -1,6 +1,6 @@
 <%@ Page language="c#" Inherits="Empiria.Land.WebApp.LRSTransactionEditor" Codebehind="transaction.editor.aspx.cs"
     ClassName="Empiria.Land.WebApp.LRSTransactionEditorASP" EnableViewState="true"
-    EnableSessionState="true" %>
+    EnableSessionState="true" Async="true" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <%@ Register tagprefix="empiriaControl"
              tagname="LRSRecordingActSelectorControl"
@@ -764,7 +764,7 @@
   }
 
   function printOrderPayment() {
-    var url = "payment.order.aspx?id=<%=base.transaction.Id%>";
+    var url = "bank.payment.order.aspx?id=<%=base.transaction.Id%>";
 
     createNewWindow(url);
   }
