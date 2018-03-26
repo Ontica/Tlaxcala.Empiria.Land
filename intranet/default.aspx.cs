@@ -58,7 +58,7 @@ namespace Empiria.Web.UI {
     #region Private methods
 
     private bool TryLogon(string userName, string password) {
-      const string clientAppKey = "vQNLXJeCoRPOtINfussrnSabsNs5jaOCRpdEYg5aXIOehqiBIARTgPUwtbrA940Q";
+      string clientAppKey = ConfigurationData.Get<string>("ApplicationKey");
 
       userName = userName.Trim();
       password = password.Trim();
@@ -69,14 +69,17 @@ namespace Empiria.Web.UI {
         password = Cryptographer.Encrypt(EncryptionMode.EntropyHashCode, password, userName);
         password = Cryptographer.Decrypt(password, userName);
 
-        //password = Cryptographer.GetMD5HashCode(Cryptographer.GetMD5HashCode(password) + entropy);
+        // password = Cryptographer.GetMD5HashCode(Cryptographer.GetMD5HashCode(password) + entropy);
 
         return this.Controller.Logon(clientAppKey, userName, password, entropy, 1);
 
-      } catch (Exception e) {
-        Empiria.EmpiriaLog.Error(e);
+      } catch (System.Threading.ThreadAbortException) {
+        return true;
 
+      } catch (Exception e) {
+        EmpiriaLog.Error(e);
         throw;
+
       }
     }
 
