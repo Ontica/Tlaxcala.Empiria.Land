@@ -21,7 +21,7 @@
         <br />
 
 		<div class="decoratorImage">
-        <img src="./themes/default/customer/customer.full.logo.png" alt="" style='margin-left:16px;margin-top:8px' />
+        <img src="./themes/default/customer/customer.full.logo.png" alt="" style='margin-left:8px;margin-top:8px' />
 
 		</div>
         <br /><br /><br /><br /><br /><br /><br />
@@ -38,7 +38,7 @@
       <div id="divRightColumn">
         <div>
           <br />
-          <div class="title"><%=Empiria.ExecutionServer.ServerName%></div>
+          <div class="title">Registro Público de la Propiedad</div>
           <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
           <strong>ACCESO AL SISTEMA:</strong>
           <br /><br />

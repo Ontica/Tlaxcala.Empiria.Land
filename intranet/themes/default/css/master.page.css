@@ -168,11 +168,12 @@ td.mainLogo {
 }
 
 .mainTitle {
-	background-color: Transparent;
+  background-color: Transparent;
   color: #002D00;
-	font-size: 16pt;
-	font-family: Century, Serif;
-	top: 4px;  position: relative;
+  font-size: 16pt;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  top: 4px;
+  position: relative;
 }
 img.newWindowImage {
 	vertical-align: super;
