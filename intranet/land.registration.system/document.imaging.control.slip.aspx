@@ -11,7 +11,7 @@
     <table style="width:98%;">
       <tr>
         <td style="vertical-align:top">
-          <img src="../themes/default/customer/government.seal.png" alt="" title="" />
+          <img src="<%=GetDocumentLogo()%>" alt="" title="" />
         </td>
         <td style="text-align:right;vertical-align:top;width:40%">
           <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=transaction.UID%>" />

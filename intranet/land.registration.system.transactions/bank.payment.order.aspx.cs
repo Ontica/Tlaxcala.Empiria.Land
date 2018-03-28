@@ -21,6 +21,9 @@ namespace Empiria.Land.WebApp {
 
     #region Fields
 
+    private static readonly bool DISPLAY_VEDA_ELECTORAL_UI =
+                                        ConfigurationData.Get<bool>("DisplayVedaElectoralUI", false);
+
     protected LRSTransaction transaction = null;
     protected IPaymentOrderData paymentOrderData = null;
 
@@ -53,7 +56,8 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetPaymentOrderFooter() {
-      return @"* Este documento deberá <b>ENTREGARSE en la <u>Caja de la Secretaría de Finanzas</u></b> o en una sucursal Banamex al momento de efectuar el pago.";
+      return @"* Este documento deberá <b>ENTREGARSE en la <u>Caja de la Secretaría de Finanzas</u></b>," +
+              "o en una sucursal Banamex al momento de efectuar el pago.";
     }
 
     protected string GetHeader() {
@@ -85,6 +89,15 @@ namespace Empiria.Land.WebApp {
         return aj;
       }
     }
+
+
+    protected string GetDocumentLogo() {
+      if (DISPLAY_VEDA_ELECTORAL_UI) {
+        return "../themes/default/customer/government.seal.veda.png";
+      }
+      return "../themes/default/customer/government.seal.png";
+    }
+
 
     protected string GetItems() {
       if (transaction.TransactionType.Id == 702) {

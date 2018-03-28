@@ -308,7 +308,7 @@ namespace Empiria.Land.WebApp {
     }
 
     private void PrintOrderPayment() {
-      onloadScript = "createNewWindow('bank.payment.order.aspx?id=" + transaction.Id.ToString() + "')";
+      onloadScript = "createNewWindow('payment.order.aspx?id=" + transaction.Id.ToString() + "')";
     }
 
     private void PrintTransactionReceipt() {
@@ -342,6 +342,7 @@ namespace Empiria.Land.WebApp {
       transaction.RequestedBy = txtRequestedBy.Value.Replace("\'\'", "\"").Replace("\'", "¿");
       transaction.Agency = Contact.Parse(int.Parse(cboManagementAgency.Value));
       transaction.Save();
+
       onloadScript = "alert('Los cambios efectuados en la información del trámite se guardaron correctamente.');";
     }
 

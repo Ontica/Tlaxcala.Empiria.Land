@@ -12,7 +12,7 @@
       <tr>
         <td style="vertical-align:top">
           <br />
-          <img style="margin-left:-22pt" class="logo" src="../themes/default/customer/government.seal.png" alt="" title="" />
+          <img style="margin-left:-22pt" class="logo" src="<%=GetDocumentLogo()%>" alt="" title="" />
         </td>
         <td style="vertical-align:top;text-align:center;width:95%">
 	        <h3>DIRECCIÓN DE NOTARÍAS Y REGISTROS PÚBLICOS</h3>

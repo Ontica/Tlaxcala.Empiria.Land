@@ -62,6 +62,11 @@
       "type": "Data",
       "key": "IsObjectIdGeneratorServer",
       "value": true
+    },
+    {
+      "type": "",
+      "key": "DisplayVedaElectoralUI",
+      "value": false
     }
   ]
 }

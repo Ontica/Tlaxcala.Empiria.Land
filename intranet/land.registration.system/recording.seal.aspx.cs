@@ -21,6 +21,9 @@ namespace Empiria.Land.WebApp {
 
     #region Fields
 
+    private static readonly bool DISPLAY_VEDA_ELECTORAL_UI =
+                                          ConfigurationData.Get<bool>("DisplayVedaElectoralUI", false);
+
     protected RecordingDocument document = null;
     protected LRSTransaction transaction = null;
 
@@ -80,6 +83,13 @@ namespace Empiria.Land.WebApp {
       } else {
         return "* SIN DESCRIPCIÓN *";
       }
+    }
+
+    protected string GetDocumentLogo() {
+      if (DISPLAY_VEDA_ELECTORAL_UI) {
+        return "../themes/default/customer/government.seal.veda.png";
+      }
+      return "../themes/default/customer/government.seal.png";
     }
 
     protected string GetPaymentText() {

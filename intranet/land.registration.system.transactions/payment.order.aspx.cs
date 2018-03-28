@@ -18,6 +18,9 @@ namespace Empiria.Land.WebApp {
 
     #region Fields
 
+    private static readonly bool DISPLAY_VEDA_ELECTORAL_UI =
+                                      ConfigurationData.Get<bool>("DisplayVedaElectoralUI", false);
+
     protected LRSTransaction transaction = null;
 
     #endregion Fields
@@ -52,6 +55,15 @@ namespace Empiria.Land.WebApp {
         return "Dirección de Catastro y Registro Público";
       }
     }
+
+
+    protected string GetDocumentLogo() {
+      if (DISPLAY_VEDA_ELECTORAL_UI) {
+        return "../themes/default/customer/government.seal.veda.png";
+      }
+      return "../themes/default/customer/government.seal.png";
+    }
+
 
     protected string GetPaymentOrderFooter() {
       if (ExecutionServer.LicenseName == "Tlaxcala") {

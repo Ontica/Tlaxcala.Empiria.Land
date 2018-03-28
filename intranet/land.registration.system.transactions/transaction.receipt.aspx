@@ -18,7 +18,7 @@
 					      <table>
 						      <tr>
 							      <td>
-								      <img src="../themes/default/customer/government.seal.png" alt="" title="" />
+								      <img src="<%=GetDocumentLogo()%>" alt="" title="" />
 							      </td>
 						      </tr>
 					      </table>
