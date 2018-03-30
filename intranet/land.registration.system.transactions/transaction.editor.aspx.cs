@@ -26,6 +26,8 @@ namespace Empiria.Land.WebApp {
 
     #region Fields
 
+    static private readonly bool DISPLAY_BANK_PAYMENT_ORDER = ConfigurationData.Get<bool>("DisplayBankPaymentOrder", true);
+
     protected LRSTransaction transaction = null;
     private string onloadScript = String.Empty;
 
@@ -50,7 +52,7 @@ namespace Empiria.Land.WebApp {
       if (id != 0) {
         transaction = LRSTransaction.Parse(id);
       } else {
-        LRSTransactionType transactionType = LRSTransactionType.Parse(int.Parse(Request.QueryString["typeId"]));
+        var transactionType = LRSTransactionType.Parse(int.Parse(Request.QueryString["typeId"]));
         transaction = new LRSTransaction(transactionType);
       }
     }
@@ -308,7 +310,11 @@ namespace Empiria.Land.WebApp {
     }
 
     private void PrintOrderPayment() {
-      onloadScript = "createNewWindow('payment.order.aspx?id=" + transaction.Id.ToString() + "')";
+      if (DISPLAY_BANK_PAYMENT_ORDER) {
+        onloadScript = "createNewWindow('bank.payment.order.aspx?id=" + transaction.Id.ToString() + "')";
+      } else {
+        onloadScript = "createNewWindow('payment.order.aspx?id=" + transaction.Id.ToString() + "')";
+      }
     }
 
     private void PrintTransactionReceipt() {

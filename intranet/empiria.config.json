@@ -59,6 +59,11 @@
       "value": "http://tlaxcalaenlinea.gob.mx:8080/citysexternal/rppCertificateEmissionWS"
     },
     {
+      "type": "Land.WebApp",
+      "key": "DisplayBankPaymentOrder",
+      "value": true
+    },
+    {
       "type": "Data",
       "key": "IsObjectIdGeneratorServer",
       "value": true
@@ -66,7 +71,7 @@
     {
       "type": "",
       "key": "DisplayVedaElectoralUI",
-      "value": false
+      "value": true
     }
   ]
 }
