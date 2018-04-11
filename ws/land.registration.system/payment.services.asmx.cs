@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Web.Services;
 
-using Empiria.Land.Registration.Data;
+using Empiria.Land.Data;
 using Empiria.Services;
 
 namespace Empiria.Tlaxcala.WS {

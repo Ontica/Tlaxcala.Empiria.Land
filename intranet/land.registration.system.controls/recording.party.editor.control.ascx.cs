@@ -3,9 +3,10 @@ using System.Linq;
 using System.Web.UI.WebControls;
 
 using Empiria.DataTypes;
-using Empiria.Land.Registration;
-using Empiria.Land.Registration.Data;
 using Empiria.Presentation.Web.Content;
+
+using Empiria.Land.Data;
+using Empiria.Land.Registration;
 
 namespace Empiria.Land.WebApp {
 

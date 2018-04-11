@@ -12,11 +12,12 @@ using System;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Empiria.Land.Registration;
-using Empiria.Land.Registration.Data;
-using Empiria.Land.UI;
+
 using Empiria.Presentation;
 using Empiria.Presentation.Web;
+
+using Empiria.Land.Registration;
+using Empiria.Land.UI;
 
 namespace Empiria.Land.WebApp {
 
