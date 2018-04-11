@@ -82,7 +82,8 @@
         <% } %>
         <tr>
           <td style="vertical-align:top;width:100px">
-            <img style="margin-left:-12pt;margin-top:-12pt" alt="" title="" src="../user.controls/qrcode.aspx?size=120&#38;data=http://registropublico.tlaxcala.gob.mx/consultas/?type=document%26uid=<%=document.UID%>%26hash=<%=document.QRCodeSecurityHash()%>" />
+            <img style="margin-left:-12pt;margin-top:-12pt" alt="" title=""
+                 src="../user.controls/qrcode.aspx?size=120&#38;data=<%=SEARCH_SERVICES_SERVER_BASE_ADDRESS%>/?type=document%26uid=<%=document.UID%>%26hash=<%=document.QRCodeSecurityHash()%>" />
             <div style="margin-top:-12pt;font-size:7pt;white-space:nowrap">
               Valide este documento<br />
               <b><%=document.UID%></b>
@@ -109,12 +110,13 @@
             <br />
             <div style="font-size:7pt;margin-top:4pt;text-align:left;">
               Verifique la <u>autenticidad</u> de este documento y el estado de su predio. Para ello lea los códigos QR con su<br />
-              celular o dispositivo móvil, o visite nuestro sitio <b>http://registropublico.tlaxcala.gob.mx</b>.
+              celular o dispositivo móvil, o visite nuestro sitio <b>https://registropublico.tlaxcala.gob.mx</b>.
             </div>
           </td>
           <td style="vertical-align:top">
             <% if (!base.UniqueInvolvedResource.IsEmptyInstance && document.IsClosed) { %>
-            <img style="margin-right:-12pt;margin-left:-12pt;margin-top:-12pt" alt="" title="" src="../user.controls/qrcode.aspx?size=120&#38;data=http://registropublico.tlaxcala.gob.mx/consultas/?type=resource%26uid=<%=base.UniqueInvolvedResource.UID%>%26hash=<%=base.UniqueInvolvedResource.QRCodeSecurityHash()%>" />
+            <img style="margin-right:-12pt;margin-left:-12pt;margin-top:-12pt" alt="" title=""
+                 src="../user.controls/qrcode.aspx?size=120&#38;data=<%=SEARCH_SERVICES_SERVER_BASE_ADDRESS%>/?type=resource%26uid=<%=base.UniqueInvolvedResource.UID%>%26hash=<%=base.UniqueInvolvedResource.QRCodeSecurityHash()%>" />
             <div style="margin-top:-12pt;font-size:7pt;white-space:nowrap">
               Consultar folio real/predio<br />
               <b><%=base.UniqueInvolvedResource.UID%></b>

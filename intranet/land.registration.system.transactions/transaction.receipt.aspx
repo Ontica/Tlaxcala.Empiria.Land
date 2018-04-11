@@ -102,7 +102,7 @@
             <tr>
               <td valign="top" style="width:100px">
                 <img style="margin-left:-12pt;margin-top:-12pt" alt="" title=""
-                     src="../user.controls/qrcode.aspx?size=120&data=http://registropublico.tlaxcala.gob.mx/consultas/?type=transaction%26uid=<%=transaction.UID%>%26hash=<%=transaction.QRCodeSecurityHash()%>" />
+                     src="../user.controls/qrcode.aspx?size=120&data=<%=SEARCH_SERVICES_SERVER_BASE_ADDRESS%>/?type=transaction%26uid=<%=transaction.UID%>%26hash=<%=transaction.QRCodeSecurityHash()%>" />
                 <div style="margin-top:-12pt;font-size:7pt;white-space:nowrap">
                   Consulte este trámite<br />
                   <b><%=base.transaction.UID%></b>
@@ -118,8 +118,8 @@
                 <%=transaction.ReceivedBy.FullName%>
                 <div style="font-size:7pt;margin-top:8pt;">
                   Consulte el <b>estado</b> de su trámite leyendo el código QR con su celular o dispositivo móvil,
-                  o visite nuestro sitio <b>http://registropublico.tlaxcala.gob.mx</b>.
-                  También podrá consultar documentos, certificados y predios con folio real asignado.
+                  o visite nuestro sitio web <b>registropublico.tlaxcala.gob.mx</b>, donde también podrá consultar
+                  documentos, certificados y predios con folio real asignado.
                   <br /><br />
                   Este comprobante deberá <b>PRESENTARSE en la <u>Ventanilla de Entregas</u></b> al recoger su documento o certificado.
                 </div>

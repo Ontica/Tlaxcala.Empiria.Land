@@ -21,6 +21,9 @@ namespace Empiria.Land.WebApp {
 
     #region Fields
 
+    protected static readonly string SEARCH_SERVICES_SERVER_BASE_ADDRESS =
+                                          ConfigurationData.Get<string>("SearchServicesServerBaseAddress");
+
     private static readonly bool DISPLAY_VEDA_ELECTORAL_UI =
                                           ConfigurationData.Get<bool>("DisplayVedaElectoralUI", false);
 
