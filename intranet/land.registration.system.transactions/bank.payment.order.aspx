@@ -39,7 +39,7 @@
                   <% } %>
                   <tr>
                     <td align="center" style="line-height:22pt">
-                      <h2 style="height:30px; white-space:normal; font-size:18pt">LINEA DE CAPTURA</h2>
+                      <h2 style="height:30px; white-space:normal; font-size:18pt">LÍNEA DE CAPTURA</h2>
                     </td>
                   </tr>
                 </table>
@@ -85,7 +85,7 @@
         </td>
       </tr>
       <tr>
-        <td nowrap="nowrap" style="width:100%;height:10px;padding-bottom:10pt">
+        <td nowrap="nowrap" style="width:100%;height:10px;padding-bottom:6pt">
           <table style="width:100%;" cellpadding="4px" cellspacing="0px">
             <tr class="borderHeaderRow">
               <%=GetHeader()%>
@@ -95,30 +95,74 @@
          </td>
       </tr>
       <tr>
-        <td>
-          <table style="width:100%" cellpadding="4px" cellspacing="0px">
+        <td nowrap="nowrap" style="width:100%;vertical-align:top;border-top: 2px solid #3a3a3a;">
+          <table cellpadding="4px" cellspacing="0px">
             <tr>
-              <td style="border-top: 3px solid #3a3a3a;padding-top:12pt;padding-right:40pt;text-align:center;white-space:nowrap;vertical-align:top">
+              <td style="padding-top:8pt;padding-right:10pt;text-align:center;vertical-align:top">
                 <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=base.paymentOrderData.RouteNumber%>" /><br />
                 <b style="font-size:10pt">Línea de captura</b><br />
-                <b style="font-size:14pt"><%=base.paymentOrderData.RouteNumber%></b><br />
-                Fecha de vencimiento: <%=base.paymentOrderData.DueDate.ToString("dd/MMM/yyyy")%><br /><br />
-                <b>Instituciones bancarias:</b><br />
-                Citibanamex: PA <b>4520 01</b><br /><br /><br />
+                <b style="font-size:12pt"><%=base.paymentOrderData.RouteNumber%></b><br />
+                Fecha de vencimiento:<br />
+                <b style="font-size:8pt"><%=base.paymentOrderData.DueDate.ToString("dd/MMM/yyyy")%></b>
+                <br />
+                <b style="font-size:16pt"><%=transaction.Items.TotalFee.Total.ToString("C2")%></b>
               </td>
-              <td style="border-top: 3px solid #3a3a3a;font-size:7pt;">
-                <b>Cadena original:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 100, "&#8203;")%>
-                <br /><br />
-                <b>Sello electrónico:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalSign(), 100, "&#8203;")%>
+              <td style="font-size:7pt;margin-left:30pt;vertical-align:top;border-left:2pt solid #3a3a3a">
+                <table>
+                  <tr><td colspan="2" nowrap="nowrap"><b>PAGO EN SUCURSALES<br />BANCARIAS</b></td></tr>
+                  <tr><td>Bancomer:</td><td nowrap="nowrap"><b>CIE 829315</b></td></tr>
+                  <tr><td>Banorte:</td><td nowrap="nowrap"><b>CEP 2412</b></td></tr>
+                  <tr><td nowrap="nowrap">Citibanamex: &nbsp;</td><td nowrap="nowrap"><b>PA: 4520 01</b> &nbsp;</td></tr>
+                  <tr><td>HSBC <sup>*</sup>:</td><td nowrap="nowrap"><b>RAP 2900</b></td></tr>
+                  <tr><td>Santander:</td><td nowrap="nowrap"><b>4836</b></td></tr>
+                  <tr><td>Scotiabank:</td><td nowrap="nowrap"><b>3701</b></td></tr>
+                </table>
+              </td>
+              <td style="font-size:7pt;vertical-align:top;border-left:2pt solid #3a3a3a">
+                <table>
+                  <tr><td colspan="2"><b>BANCA ELECTRÓNICA<br />BANCOMER O HSBC</b></td></tr>
+                  <tr><td colspan="2">Bancomer:</td></tr>
+                  <tr><td>&nbsp;</td><td nowrap="nowrap">Convenio CIE: <b>1168584</b></td></tr>
+                  <tr><td colspan="2">HSBC:</td></tr>
+                  <tr><td>&nbsp;</td><td nowrap="nowrap">Pago de servicios: <b>RAP 2900</b></td></tr>
+                  <tr><td colspan="2" style="border-top: 1px solid #3a3a3a;">Referencia:<br /><b>40817084731514071248</b></td></tr>
+                </table>
+              </td>
+              <td style="font-size:7pt;vertical-align:top;border-left:2pt solid #3a3a3a">
+                <table>
+                  <tr><td colspan="2"><b>TRANSFERENCIA ELECTRÓNICA</b></td></tr>
+                  <tr><td colspan="2">A cuenta Bancomer:</td></tr>
+                  <tr><td>&nbsp; &nbsp;</td><td nowrap="nowrap">CLABE: <b>012914002011685842</b></td></tr>
+                  <tr><td colspan="2">A cuenta HSBC:</td></tr>
+                  <tr><td>&nbsp; &nbsp;</td><td nowrap="nowrap">CLABE: <b>012180550300029004</b></td></tr>
+                  <tr><td colspan="2" style="border-top: 1px solid #3a3a3a;">Concepto de pago:<br /><b>40817084731514071248</b></td></tr>
+                </table>
+              </td>
+              <td style="font-size:7pt;vertical-align:top;height:100%;border-left:2pt solid #3a3a3a">
+                <table>
+                  <tr><td><b>TIENDAS ANTAD</b></td></tr>
+                  <tr><td>Chedraui</td></tr>
+                  <tr><td>Extra</td></tr>
+                  <tr><td>Farmacias del Ahorro</td></tr>
+                  <tr><td>Soriana</td></tr>
+                  <tr><td><b>TELECOMM</b><sup>*</sup></td></tr>
+                </table>
               </td>
             </tr>
           </table>
+
+        </td>
+      </tr>
+      <tr>
+        <td style="font-size:7pt">
+          <b>Cadena original:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 100, "&#8203;")%>
+          <br />
+          <b>Sello electrónico:</b><br /><%=transaction.GetDigitalSign().Substring(0,100)%>
         </td>
       </tr>
       <tr>
         <td style="border-top: 1px dotted #3a3a3a">
         <br />
-        <%=GetPaymentOrderFooter()%>
         </td>
       </tr>
     </table>
@@ -217,7 +261,7 @@
               <td style="border-top: 3px solid #3a3a3a;font-size:7pt">
                 <b>Cadena original:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 164, "&#8203;")%>
                 <br /><br />
-                <b>Sello electrónico:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalSign(), 164, "&#8203;")%>
+                <b>Sello electrónico:</b><br /><%=transaction.GetDigitalSign().Substring(0,100)%>
               </td>
             </tr>
           </table>
