@@ -66,8 +66,8 @@ namespace Empiria.Web.UI {
       string entropy = String.Empty; // Session.SessionID;
 
       try {
-        password = Cryptographer.Encrypt(EncryptionMode.EntropyHashCode, password, userName);
-        password = Cryptographer.Decrypt(password, userName);
+        password = FormerCryptographer.Encrypt(EncryptionMode.EntropyHashCode, password, userName);
+        password = FormerCryptographer.Decrypt(password, userName);
 
         // password = Cryptographer.GetMD5HashCode(Cryptographer.GetMD5HashCode(password) + entropy);
 
