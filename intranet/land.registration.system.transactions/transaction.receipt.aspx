@@ -109,6 +109,12 @@
                 </div>
               </td>
               <td valign="top" style="font-size:8pt">
+                <% if (!base.transaction.PaymentOrderData.IsEmptyInstance) { %>
+                <b>Línea de captura:</b>
+                <br />
+                <span style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size:12pt"><%=base.transaction.PaymentOrderData.RouteNumber%></span>
+                <br />
+                <% } %>
                 <b>Sello electrónico:</b>
                 <br />
                 <%=transaction.GetDigitalSign().Substring(0, 64)%>
@@ -119,7 +125,7 @@
                 <div style="font-size:7pt;margin-top:8pt;">
                   Consulte el <b>estado</b> de su trámite leyendo el código QR con su celular o dispositivo móvil,
                   o visite nuestro sitio web <b>registropublico.tlaxcala.gob.mx</b>, donde también podrá consultar
-                  documentos, certificados y predios con folio real asignado.
+                  documentos, certificados, y el estado de su predio mediante el folio real asignado.
                   <br /><br />
                   Este comprobante deberá <b>PRESENTARSE en la <u>Ventanilla de Entregas</u></b> al recoger su documento o certificado.
                 </div>

@@ -125,7 +125,7 @@
                   <tr><td>&nbsp;</td><td nowrap="nowrap">Convenio CIE: <b>1168584</b></td></tr>
                   <tr><td colspan="2">HSBC:</td></tr>
                   <tr><td>&nbsp;</td><td nowrap="nowrap">Pago de servicios: <b>RAP 2900</b></td></tr>
-                  <tr><td colspan="2" style="border-top: 1px solid #3a3a3a;">Referencia:<br /><b>40817084731514071248</b></td></tr>
+                  <tr><td colspan="2" style="border-top: 1px solid #3a3a3a;">Referencia:<br /><b><%=base.paymentOrderData.RouteNumber%></b></td></tr>
                 </table>
               </td>
               <td style="font-size:7pt;vertical-align:top;border-left:2pt solid #3a3a3a">
@@ -135,7 +135,7 @@
                   <tr><td>&nbsp; &nbsp;</td><td nowrap="nowrap">CLABE: <b>012914002011685842</b></td></tr>
                   <tr><td colspan="2">A cuenta HSBC:</td></tr>
                   <tr><td>&nbsp; &nbsp;</td><td nowrap="nowrap">CLABE: <b>012180550300029004</b></td></tr>
-                  <tr><td colspan="2" style="border-top: 1px solid #3a3a3a;">Concepto de pago:<br /><b>40817084731514071248</b></td></tr>
+                  <tr><td colspan="2" style="border-top: 1px solid #3a3a3a;">Concepto de pago:<br /><b><%=base.paymentOrderData.RouteNumber%></b></td></tr>
                 </table>
               </td>
               <td style="font-size:7pt;vertical-align:top;height:100%;border-left:2pt solid #3a3a3a">
@@ -259,9 +259,16 @@
           <table style="width:100%" cellpadding="4px" cellspacing="0px">
             <tr>
               <td style="border-top: 3px solid #3a3a3a;font-size:7pt">
-                <b>Cadena original:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 164, "&#8203;")%>
+                <b>Cadena original:</b>
+                <br />
+                <%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 164, "&#8203;")%>
                 <br /><br />
-                <b>Sello electrónico:</b><br /><%=transaction.GetDigitalSign().Substring(0,100)%>
+                <b>Sello electrónico:</b>
+                <br /><%=transaction.GetDigitalSign().Substring(0,100)%>
+              </td>
+              <td valign="top" align="right" style="border-top: 3px solid #3a3a3a;">
+                <b>Línea de captura:</b><br />
+                <span style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size:12pt"><%=base.paymentOrderData.RouteNumber%></span>
               </td>
             </tr>
           </table>
@@ -270,7 +277,7 @@
       <tr>
         <td style="border-top: 1px dotted #3a3a3a">
         <br />
-        * Este documento deberá <b>ENTREGARSE en la <u>Ventanilla de Recepción de Documentos</u></b> junto con su recibo oficial de pago.
+        * Este documento deberá <b>ENTREGARSE en la <u>Ventanilla de Recepción de Documentos</u></b> junto con su comprobante de pago.
         </td>
       </tr>
     </table>

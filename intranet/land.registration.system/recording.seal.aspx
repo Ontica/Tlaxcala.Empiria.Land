@@ -59,7 +59,7 @@
       </tr>
     </table>
     <div class="footNotes">
-      <table >
+      <table>
         <% if (!document.IsClosed) { %>
         <tr>
           <td colspan="3" style="text-align:center;font-size:10pt" >

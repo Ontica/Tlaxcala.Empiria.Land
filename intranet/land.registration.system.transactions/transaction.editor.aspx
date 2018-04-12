@@ -264,9 +264,9 @@
         <td>
         Importe:
         </td>
-        <td colspan="3" valign="bottom">
+        <td valign="bottom">
           <b>$</b>&nbsp;<input id='txtReceiptTotal' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);"
-                         style="width:71px;" title="" maxlength="8" runat="server" />
+                         style="width:84px;" title="" maxlength="14" runat="server" />
         </td>
         <td class="lastCell">
           <input class="button" type="button" value="Validar pago" onclick="doOperation('validatePayment')"
@@ -275,6 +275,11 @@
                  style="top:15px;height:26px;width:84px" />
         </td>
       </tr>
+      <% if (!base.transaction.PaymentOrderData.IsEmptyInstance) { %>
+      <tr>
+        <td colspan="5">Línea de captura: <b><%=base.transaction.PaymentOrderData.RouteNumber%></b></td>
+      </tr>
+      <% } %>
     </table>
   </td>
 </tr>

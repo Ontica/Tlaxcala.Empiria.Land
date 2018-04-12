@@ -99,13 +99,23 @@ namespace Empiria.Land.WebApp {
       if (document.IsHistoricDocument) {
         return String.Empty;
       }
-      const string t = "Derechos por <b>{AMOUNT}</b> según recibo <b>{RECEIPT}</b> expedido por " +
-                       "la Secretaría de Finanzas del Estado, que se archiva.";
 
-      string x = t.Replace("{AMOUNT}", transaction.Items.TotalFee.Total.ToString("C2"));
-      x = x.Replace("{RECEIPT}", transaction.Payments.ReceiptNumbers);
+      string template = String.Empty;
 
-      return x;
+      if (!this.transaction.PaymentOrderData.IsEmptyInstance) {
+        template = "Derechos por <b>{AMOUNT}</b> según la línea de captura <b>{RECEIPT}</b> expedida por " +
+                   "la Secretaría de Finanzas del Estado, y cuyo comprobante se archiva.";
+        template = template.Replace("{RECEIPT}", transaction.PaymentOrderData.RouteNumber);
+
+      } else {
+        template = "Derechos por <b>{AMOUNT}</b> según recibo <b>{RECEIPT}</b> expedido por " +
+                   "la Secretaría de Finanzas del Estado, que se archiva.";
+        template = template.Replace("{RECEIPT}", transaction.Payments.ReceiptNumbers);
+      }
+
+      template = template.Replace("{AMOUNT}", transaction.Items.TotalFee.Total.ToString("C2"));
+
+      return template;
     }
 
     protected string GetPrelationText() {
