@@ -128,11 +128,15 @@ namespace Empiria.Web.UI.Ajax {
 
       var resource = Resource.TryParseWithUID(resourceUID);
 
+      var json = new JsonObject();
+
       if (resource != null) {
-        return new JsonObject() { new JsonItem("Id", resource.Id) }.ToString();
+        json.Add("Id", resource.Id);
       } else {
-        return new JsonObject() { new JsonItem("Id", -1) }.ToString();
+        json.Add("Id", -1);
       }
+
+      return json.ToString();
     }
 
     private string GetIssueEntitiesForDocumentTypeCommandHandler() {
