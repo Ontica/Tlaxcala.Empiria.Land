@@ -39,7 +39,7 @@
                   <% } %>
 						      <tr>
 							      <td align="center" style="line-height:22pt">
-								      <h2 style="height:30px; white-space:normal; font-size:18pt">BOLETA DE RECEPCIÓN</h2>
+								      <h2 style="height:30px; white-space:normal; font-size:18pt">COMPROBANTE DE RECEPCIÓN</h2>
 							      </td>
 						      </tr>
                 </table>

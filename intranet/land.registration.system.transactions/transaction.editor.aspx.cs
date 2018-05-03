@@ -98,6 +98,11 @@ namespace Empiria.Land.WebApp {
           ApplyReceipt();
           RedirectEditor();
           return;
+        case "appendPaymentAndReceive":
+          ApplyReceipt();
+          SaveAndReceiveTransaction();
+          RedirectEditor();
+          return;
         case "printTransactionReceipt":
           PrintTransactionReceipt();
           LoadEditor();
@@ -211,7 +216,8 @@ namespace Empiria.Land.WebApp {
       txtReceiptNumber.Value = transaction.Payments.ReceiptNumbers;
 
       if (!transaction.IsNew) {
-        txtReceiptTotal.Value = transaction.Payments.Total.ToString("N2");
+        txtReceiptTotal.Value = transaction.Items.TotalFee.Total.ToString("N2");
+        // txtReceiptTotal.Value = transaction.Payments.Total.ToString("N2");
       }
 
       FixedList<LRSDocumentType> list = transaction.TransactionType.GetDocumentTypes();

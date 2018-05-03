@@ -199,7 +199,7 @@
                   <% } %>
                   <tr>
                     <td align="center" style="line-height:22pt">
-                      <h2 style="height:30px; white-space:normal; font-size:18pt">BOLETA DE CONTROL</h2>
+                      <h2 style="height:30px; white-space:normal; font-size:18pt">BOLETA DE INGRESO</h2>
                     </td>
                   </tr>
                 </table>

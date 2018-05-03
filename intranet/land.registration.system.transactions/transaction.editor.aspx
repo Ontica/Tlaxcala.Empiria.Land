@@ -57,7 +57,8 @@
           </td>
           <td class="lastCell" valign="top">
             <% if (base.IsEditable() || base.IsStorable()) { %>
-              <input id="cmdSaveTransaction" class="button" type="button" value="Crear la solicitud" onclick="doOperation('saveTransaction')" style="height:28px;width:110px" runat="server" />
+              <input id="cmdSaveTransaction" class="button" type="button" value="Crear la solicitud"
+                     onclick="doOperation('saveTransaction')" style="height:28px;width:110px" runat="server" />
               <br />
             <% } %>
           </td>
@@ -273,6 +274,8 @@
                  style="top:15px;height:26px;width:84px" disabled="disabled" />
           <input class="button" type="button" value="Guardar pago" onclick="doOperation('appendPayment')"
                  style="top:15px;height:26px;width:84px" />
+          <input class="button" type="button" value="Guardar pago y recibir" onclick="doOperation('appendPaymentAndReceive')"
+                 style="top:15px;height:26px;width:124px" />
         </td>
       </tr>
       <% if (!base.transaction.PaymentOrderData.IsEmptyInstance) { %>
@@ -528,7 +531,9 @@
       case "appendPayment":
         appendPayment();
         return;
-
+      case "appendPaymentAndReceive":
+        appendPaymentAndReceive();
+        return;
       case "autoCreateCertificate":
         autoCreateCertificate();
         return;
@@ -702,17 +707,8 @@
 
 
   function appendPayment() {
-    if (isEmpty(getElement('txtReceiptNumber'))) {
-      alert("Requiero se proporcione el número del recibo de pago para este trámite.");
-      return false;
-    }
-    if (isEmpty(getElement('txtReceiptTotal'))) {
-      alert("Requiero se ingrese el importe del recibo de pago.");
-      return false;
-    }
-    if (convertToNumber(getElement('txtReceiptTotal').value) != <%=transaction.Items.TotalFee.Total%>) {
-      alert("El total del recibo no coincide con el importe correcto del pago de derechos.");
-      return false;
+    if (!validatePayment()) {
+      return;
     }
     var sMsg = "Agregar recibo de pago al trámite.\n\n";
 
@@ -728,6 +724,42 @@
       sendPageCommand("appendPayment");
       gbSended = true;
     }
+  }
+
+  function appendPaymentAndReceive() {
+    if (!validatePayment()) {
+      return;
+    }
+    var sMsg = "Agregar recibo de pago y recibir el trámite.\n\n";
+
+    sMsg += "Número de trámite:\t" + getElement('txtTransactionKey').value + "\n";
+    sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n\n";
+
+    sMsg += "Recibo de pago:\t" + getElement('txtReceiptNumber').value + "\n";
+    sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
+
+    sMsg += "¿Agrego el pago y recibo este trámite ?";
+
+    if (confirm(sMsg)) {
+      sendPageCommand("appendPaymentAndReceive");
+      gbSended = true;
+    }
+  }
+
+  function validatePayment() {
+    if (isEmpty(getElement('txtReceiptNumber'))) {
+      alert("Requiero se proporcione el número del recibo de pago para este trámite.");
+      return false;
+    }
+    if (isEmpty(getElement('txtReceiptTotal'))) {
+      alert("Requiero se ingrese el importe del recibo de pago.");
+      return false;
+    }
+    if (convertToNumber(getElement('txtReceiptTotal').value) != <%=transaction.Items.TotalFee.Total%>) {
+      alert("El total del recibo no coincide con el importe correcto del pago de derechos.");
+      return false;
+    }
+    return true;
   }
 
   function showConceptsEditor() {
