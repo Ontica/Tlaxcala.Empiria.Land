@@ -155,6 +155,13 @@
       </tr>
       <tr>
         <td style="font-size:7pt">
+          <b>Control Secretaría de Finanzas:</b><br />
+          Número de folio de control:  <b><%=transaction.PaymentOrderData.ControlTag%></b>
+          <% if (transaction.ExtensionData.RFC.Length != 0) { %>
+          &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;
+          RFC para facturación: <b><%=transaction.ExtensionData.RFC%></b>
+          <% } %>
+          <br />
           <b>Cadena original:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 100, "&#8203;")%>
           <br />
           <b>Sello electrónico:</b><br /><%=transaction.GetDigitalSign().Substring(0,100)%>

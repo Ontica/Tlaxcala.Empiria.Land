@@ -134,6 +134,9 @@ function phoneKeyFilter(oEvent) {
 
 function taxKeyFilter(oEvent) {
   var keyCode = getKeyCode(oEvent);
+
+  upperCaseKeyFilter(oEvent, keyCode);
+
   if (arguments.length == 2 && arguments[1] == true) {
     convertToUpperCaseKeyCode(oEvent, keyCode);
   }

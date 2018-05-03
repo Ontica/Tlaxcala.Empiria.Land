@@ -238,7 +238,9 @@ namespace Empiria.Land.WebApp {
       LRSHtmlSelectControls.LoadTransactionActTypesCategoriesCombo(this.cboRecordingActTypeCategory);
       cboDocumentType.Value = transaction.DocumentType.Id.ToString();
       txtDocumentNumber.Value = transaction.DocumentDescriptor;
+
       txtRequestedBy.Value = transaction.RequestedBy;
+      txtRFC.Value = transaction.ExtensionData.RFC;
 
       cboManagementAgency.Value = transaction.Agency.Id.ToString();
 
@@ -351,7 +353,10 @@ namespace Empiria.Land.WebApp {
       transaction.RecorderOffice = RecorderOffice.Parse(int.Parse(cboRecorderOffice.Value));
       transaction.DocumentDescriptor = txtDocumentNumber.Value;
       transaction.DocumentType = LRSDocumentType.Parse(int.Parse(cboDocumentType.Value));
+
       transaction.RequestedBy = txtRequestedBy.Value.Replace("\'\'", "\"").Replace("\'", "¿");
+      transaction.ExtensionData.RFC = txtRFC.Value;
+
       transaction.Agency = Contact.Parse(int.Parse(cboManagementAgency.Value));
       transaction.Save();
 

@@ -140,7 +140,7 @@ namespace Empiria.Land.Connectors {
         nombre = transaction.RequestedBy,
         apaterno = "",
         amaterno = "",
-        rfc = "XAXX010101000",
+        rfc = GetBillingRFC(transaction),
         curp = "XEXX010101HNEXXXA4",
         estado = "",
         municipio = "",
@@ -154,11 +154,10 @@ namespace Empiria.Land.Connectors {
       };
     }
 
-
     private async Task<JsonObject> CallGenerarFormatoPagoReferenciado(object body) {
       var http = new WebApiClient();
 
-      var response = await http.PostAsync<object, JsonObject>(body, "TreasuryConnectors.GenerarFormatoPagoReferenciado");
+      JsonObject response = await http.PostAsync<object, JsonObject>(body, "TreasuryConnectors.GenerarFormatoPagoReferenciado");
 
       if (!response.HasItems) {  // Response content was empty.
                                  // Sometimes the service response is a 200 but without content,
@@ -203,6 +202,14 @@ namespace Empiria.Land.Connectors {
       var controlTag = responseData.Get<string>("folioControlEstado");
 
       return new PaymentOrderData(routeNumber, dueDate, controlTag);
+    }
+
+    private string GetBillingRFC(LRSTransaction transaction) {
+      if (transaction.ExtensionData.RFC.Length != 0) {
+        return transaction.ExtensionData.RFC.Replace("-", String.Empty);
+      } else {
+        return "XAXX010101000";
+      }
     }
 
     #endregion Private methods

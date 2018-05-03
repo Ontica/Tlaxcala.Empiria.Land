@@ -64,6 +64,17 @@
           </td>
         </tr>
         <tr>
+          <td>RFC para facturación:</td>
+          <td colspan="4" class="lastCell">
+            <input id='txtRFC' type="text" class="textBox" style="width:186px;" title="" maxlength="15" runat="server" />
+
+            <% if (transaction.IsNew || base.IsEditable() || base.IsStorable()) { %>
+            <input class="button" type="button" value="Usar RFC genérico"
+                   onclick="doOperation('setDefaultRFC')" style="vertical-align:middle;height:26px;width:130px" />
+            <% } %>
+          </td>
+        </tr>
+        <tr>
           <td>Tipo de documento:</td>
           <td colspan="4" class="lastCell">
             <select id="cboDocumentType" class="selectBox" style="width:186px" onchange="return updateUserInterface(this);" runat="server">
@@ -479,6 +490,8 @@
         break;
       case 'saveTransaction':
         return saveTransaction();
+      case 'setDefaultRFC':
+        return setDefaultRFC();
       case 'saveAndReceive':
         return saveAndReceiveTransaction();
       case 'reentryTransaction':
@@ -713,7 +726,8 @@
     var sMsg = "Agregar recibo de pago al trámite.\n\n";
 
     sMsg += "Número de trámite:\t" + getElement('txtTransactionKey').value + "\n";
-    sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n\n";
+    sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n";
+    sMsg += "RFC:\t" + getElement('txtRFC').value + "\n\n";
 
     sMsg += "Recibo de pago:\t" + getElement('txtReceiptNumber').value + "\n";
     sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
@@ -733,7 +747,8 @@
     var sMsg = "Agregar recibo de pago y recibir el trámite.\n\n";
 
     sMsg += "Número de trámite:\t" + getElement('txtTransactionKey').value + "\n";
-    sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n\n";
+    sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n";
+    sMsg += "RFC:\t" + getElement('txtRFC').value + "\n\n";
 
     sMsg += "Recibo de pago:\t" + getElement('txtReceiptNumber').value + "\n";
     sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
@@ -950,7 +965,9 @@
     } else if (command == "saveAndReceiveTransacion") {
       <% if (base.transaction.IsNew) { %>
       sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
-      sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n\n";
+      sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n";
+      sMsg += "RFC:\t" + getElement('txtRFC').value + "\n\n";
+
 
       sMsg = "Crear y recibir una nueva solicitud de trámite.\n\n" + sMsg;
       sMsg += "¿Creo este nuevo trámite y lo marco como recibido?";
@@ -1001,12 +1018,24 @@
     invokeAjaxComboItemsLoader(url, getElement("cboLawArticle"));
   }
 
+  function setDefaultRFC() {
+    getElement('txtRFC').value = 'XAXX010101000';
+  }
+
   function doValidation(command) {
     var sMsg = "";
     var oPayment = getElement('txtReceiptTotal');
 
     if (isEmpty(getElement('txtRequestedBy'))) {
       alert("Requiero se proporcione el nombre del interesado.");
+      return false;
+    }
+    if (isEmpty(getElement('txtRFC'))) {
+      alert("Requiero se proporcione el RFC de facturación.");
+      return false;
+    }
+    if (!isTaxKey(getElement('txtRFC'))) {
+      alert("El RFC para facturación tiene un formato que no reconozco.");
       return false;
     }
     if (isEmpty(getElement('cboDocumentType'))) {
@@ -1072,6 +1101,7 @@
   addEvent(window, 'resize', window_onresize);
   addEvent(getElement("ifraRecordingEditor"), 'resize', ifraRecordingEditor_onresize);
   addEvent(getElement("txtRequestedBy"), 'keypress', upperCaseKeyFilter);
+  addEvent(getElement("txtRFC"), 'keypress', taxKeyFilter);
   addEvent(getElement("txtDocumentNumber"), 'keypress', upperCaseKeyFilter);
   addEvent(getElement("txtDiscountAuthorization"), 'keypress', upperCaseKeyFilter);
   addEvent(getElement("txtBaseResourceUID"), 'keypress', upperCaseKeyFilter);
