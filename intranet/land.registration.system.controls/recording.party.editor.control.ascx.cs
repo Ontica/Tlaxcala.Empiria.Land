@@ -165,8 +165,8 @@ namespace Empiria.Land.WebApp {
       cboPartyType.Value = person.GetEmpiriaType().Id.ToString();
 
       txtPersonFullName.Value = person.FullName;
-      txtIDNumber.Value = person.UID;
-      cboIDNumberType.Value = person.UIDType;
+      txtIDNumber.Value = person.OfficialID;
+      cboIDNumberType.Value = person.OfficialIDType;
       txtPersonNotes.Value = person.Notes;
       isLoaded = true;
     }
@@ -176,7 +176,7 @@ namespace Empiria.Land.WebApp {
 
       cboPartyType.Value = org.GetEmpiriaType().Id.ToString();
       txtOrgName.Value = org.FullName;
-      txtOrgTaxIDNumber.Value = org.UID;
+      txtOrgTaxIDNumber.Value = org.OfficialID;
       txtOrgNotes.Value = org.Notes;
       isLoaded = true;
     }
