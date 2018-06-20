@@ -25,9 +25,18 @@ namespace Empiria.Land.WebApp {
     #region Constructors and parsers
 
     protected void Page_Load(object sender, EventArgs e) {
-      int certificateId = int.Parse(Request.QueryString["certificateId"]);
+      if (!String.IsNullOrWhiteSpace(Request.QueryString["uid"])) {
+        string uid = Request.QueryString["uid"];
 
-      certificate = Certificate.Parse(certificateId);
+        this.certificate = Certificate.TryParse(uid);
+
+        Assertion.AssertObject(this.certificate, $"Invalid certificate number '{uid}'.");
+
+      } else if (!String.IsNullOrWhiteSpace(Request.QueryString["certificateId"])) {
+        int certificateId = int.Parse(Request.QueryString["certificateId"]);
+
+        this.certificate = Certificate.Parse(certificateId);
+      }
     }
 
     #endregion Constructors and parsers
@@ -38,6 +47,9 @@ namespace Empiria.Land.WebApp {
       string text = certificate.AsText;
 
       text = ReplaceImagePaths(text);
+      text = ReplaceQRUrls(text);
+      text = FixHtmlErrors(text);
+
       return text;
     }
 
@@ -56,6 +68,26 @@ namespace Empiria.Land.WebApp {
         return text.Replace("assets/seal.logo.left.png", "../themes/default/customer/seal.logo.left.png");
 
       }
+    }
+
+    private string ReplaceQRUrls(string text) {
+      if (!this.Request.Url.AbsoluteUri.Contains("tlaxcala.gob.mx")) {
+        return text;
+      } else {
+        return text.Replace("192.168.2.22", "registropublico.tlaxcala.gob.mx");
+      }
+    }
+
+    private string FixHtmlErrors(string text) {
+      text = text.Replace("alt=\"\" title=\"\"></td>", "alt=\"\" title=\"\" /></td>");
+
+      text = text.Replace("INSCRITO<strong>", "INSCRITO</strong>");
+      text = text.Replace("<BR>", "<br/>");
+      text = text.Replace("&", "&amp;");
+      text = text.Replace("&amp;nbsp;", "&nbsp;");
+      text = text.Replace("&amp;amp;", "&amp;");
+
+      return text;
     }
 
     #endregion Methods

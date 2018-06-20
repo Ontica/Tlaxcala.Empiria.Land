@@ -39,17 +39,25 @@ namespace Empiria.Land.WebApp {
     #region Constructors and parsers
 
     protected void Page_Load(object sender, EventArgs e) {
-      int documentId = int.Parse(Request.QueryString["id"]);
-      int transactionId = int.Parse(Request.QueryString["transactionId"]);
+      string documentUID = Request.QueryString["uid"];
+      int documentId = int.Parse(Request.QueryString["id"] ?? "-1");
+
       int selectedRecordingActId = int.Parse(Request.QueryString["selectedRecordingActId"] ?? "-1");
       isMainDocument = bool.Parse(Request.QueryString["main"] ?? "false");
 
-      if (documentId != -1) {
+      if (!String.IsNullOrWhiteSpace(documentUID)) {
+        document = RecordingDocument.TryParse(documentUID);
+        transaction = document.GetTransaction();
+
+      } else if (documentId != -1) {
         document = RecordingDocument.Parse(documentId);
         transaction = document.GetTransaction();
+
       } else {
+        int transactionId = int.Parse(Request.QueryString["transactionId"]);
         transaction = LRSTransaction.Parse(transactionId);
         document = transaction.Document;
+
       }
       selectedRecordingAct = RecordingAct.Parse(selectedRecordingActId);
       recordingActs = document.RecordingActs;
