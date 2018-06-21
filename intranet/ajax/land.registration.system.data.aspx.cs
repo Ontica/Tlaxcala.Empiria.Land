@@ -195,7 +195,6 @@ namespace Empiria.Web.UI.Ajax {
                                 "Id", (x) => x.RecordingActType.DisplayName + " " + x.Document.UID + " " +
                                        x.Document.AuthorizationTime + " " + x.AmendedBy.Id + " " + x.StatusName,
                                 "( Seleccionar el acto jurídico )");
-      //return "<tr id='tblTargetPrecedentActsTable' class='totalsRow' style='display:inline'><td>&nbsp;</td><td colspan='5'>Hello world</td></tr>";
     }
 
     private string GetTargetRecordingSectionsCommandHandler() {
@@ -909,7 +908,7 @@ namespace Empiria.Web.UI.Ajax {
         int documentId = GetCommandParameter<int>("documentId");
         var document = RecordingDocument.Parse(documentId);
 
-        document.AssertCanBeClosed();
+        document.Security.AssertCanBeClosed();
       } catch (Exception e) {
         return e.Message;
       }
@@ -921,7 +920,7 @@ namespace Empiria.Web.UI.Ajax {
         int documentId = GetCommandParameter<int>("documentId");
         var document = RecordingDocument.Parse(documentId);
 
-        document.AssertCanBeOpened();
+        document.Security.AssertCanBeOpened();
       } catch (Exception e) {
         return e.Message;
       }

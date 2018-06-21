@@ -309,14 +309,17 @@
             <% if (!transaction.IsNew) { %>
               <input class="button" type="button" value="Crear nuevo" onclick="doOperation('createNew')" style="height:28px;width:92px" runat="server" />
               &nbsp; &nbsp;
-              <input id="copyFromLastTransaction" class="button" type="button" value="Crear una copia" onclick="doOperation('copyFromMyLastTransaction')" style="height:28px;width:92px" runat="server" />
+              <input id="copyFromLastTransaction" class="button" type="button" value="Crear una copia"
+                onclick="doOperation('copyFromMyLastTransaction')" style="height:28px;width:92px" runat="server" />
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               <% if (base.ShowPrintPaymentOrderButton) { %>
-                <input class="button" type="button" value="Orden de pago" onclick="doOperation('printOrderPayment')" style="height:28px;width:90px" runat="server" />
+                <input class="button" type="button" value="Orden de pago"
+                       onclick="doOperation('printOrderPayment')" style="height:28px;width:90px" runat="server" />
               <% } %>
               <% if (base.ShowTransactionVoucher) { %>
                 <img src="../themes/default/bullets/pixel.gif" width="40px" height="1px" alt='' />
-                <input id="button" class="button" type="button" value="Boleta de Recepción" onclick="doOperation('printTransactionReceipt')" style="height:28px;width:110px" runat="server" />
+                <input id="button" class="button" type="button" value="Boleta de Recepción"
+                       onclick="doOperation('printTransactionReceipt')" style="height:28px;width:110px" runat="server" />
               <% } %>
             <% } else { %>
               <img src="../themes/default/bullets/pixel.gif" width="200px" height="1px" alt='' />
@@ -324,10 +327,12 @@
           </td>
           <td nowrap="nowrap" width="280px">
             <% if (base.IsReadyForReception()) { %>
-            <input id="cmdSaveAndReceive" class="button" type="button" value="Recibir trámite" onclick="doOperation('saveAndReceive')" style="height:30px;width:100px" runat="server" />
+            <input id="cmdSaveAndReceive" class="button" type="button" value="Recibir trámite"
+              onclick="doOperation('saveAndReceive')" style="height:30px;width:100px" runat="server" />
             <% } %>
             <% if (transaction.Workflow.IsReadyForReentry) { %>
-            <input class="button" type="button" value="Reingresar trámite" onclick="doOperation('reentryTransaction')" style="height:28px;width:120px" runat="server" />
+            <input class="button" type="button" value="Reingresar trámite"
+                   onclick="doOperation('reentryTransaction')" style="height:28px;width:120px" runat="server" />
             <% } %>
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
           </td>
@@ -516,11 +521,9 @@
         return showRecordingActSelectorControl();
       case 'printOrderPayment':
         sendPageCommand('printOrderPayment');
-        gbSended = true;
         return;
       case 'printTransactionReceipt':
         sendPageCommand('printTransactionReceipt');
-        gbSended = true;
         return;
       case 'searchCadastralNumber':
         alert("La búsqueda de claves catastrales no está disponible en este momento.");
@@ -653,7 +656,6 @@
 
     if (confirm(sMsg)) {
       sendPageCommand("autoCreateCertificate");
-      gbSended = true;
     }
   }
 
@@ -714,7 +716,6 @@
 
     if (confirm(sMsg)) {
       sendPageCommand("sendCertificateToCITYS");
-      gbSended = true;
     }
   }
 
@@ -736,7 +737,6 @@
 
     if (confirm(sMsg)) {
       sendPageCommand("appendPayment");
-      gbSended = true;
     }
   }
 
@@ -757,7 +757,6 @@
 
     if (confirm(sMsg)) {
       sendPageCommand("appendPaymentAndReceive");
-      gbSended = true;
     }
   }
 
@@ -806,7 +805,6 @@
 
     if (confirm(sMsg)) {
       sendPageCommand("deleteRecordingAct", "id=" + transactionActId);
-      gbSended = true;
     }
   }
 
@@ -835,7 +833,6 @@
       return;
     }
     sendPageCommand("saveTransaction");
-    gbSended = true;
   }
 
   function saveAndReceiveTransaction() {
@@ -846,7 +843,6 @@
       return;
     }
     sendPageCommand("saveAndReceiveTransaction");
-    gbSended = true;
   }
 
   function appendRecordingAct() {
@@ -877,7 +873,6 @@
     sMsg += "¿Agrego el acto jurídico y la información del pago de derechos?";
     if (confirm(sMsg)) {
       sendPageCommand("appendRecordingAct");
-      gbSended = true;
     }
   }
 

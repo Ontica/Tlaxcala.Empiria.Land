@@ -107,7 +107,7 @@ namespace Empiria.Land.Connectors {
     private rppCertificateEmissionCertificateBean GetReturnDocumentBean(LRSTransaction transaction, byte[] outputFile) {
       var returnData = new rppCertificateEmissionCertificateBean();
 
-      returnData.reference = transaction.ExtensionData.ExternalTransaction.ExternalTransactionNo;
+      returnData.reference = transaction.ExternalTransaction.ExternalTransactionNo;
       returnData.certificateType = (int) CitysCertificateType.OficioDevolucion;
       returnData.folioReal = transaction.BaseResource.UID;
       returnData.certificate = outputFile;

@@ -118,13 +118,13 @@ namespace Empiria.Land.WebApp {
 
     private void CloseDocument() {
       if (this.CanCloseDocument()) {
-        transaction.Document.Close();
+        transaction.Document.Security.Close();
       }
     }
 
     private void OpenDocument() {
       if (this.CanOpenDocument()) {
-        transaction.Document.Open();
+        transaction.Document.Security.Open();
       }
     }
 
@@ -135,7 +135,7 @@ namespace Empiria.Land.WebApp {
     }
 
     private void GenerateImagingControlID() {
-      transaction.Document.GenerateImagingControlID();
+      transaction.Document.Imaging.GenerateImagingControlID();
 
       SetMessageBox("Se generó el número de control para este documento.");
     }
@@ -166,7 +166,7 @@ namespace Empiria.Land.WebApp {
       if (this.transaction.Document.RecordingActs.Count == 0) {
         return false;
       }
-      return this.transaction.Document.IsReadyToClose();
+      return this.transaction.Document.Security.IsReadyToClose();
     }
 
     protected bool CanOpenDocument() {
@@ -176,7 +176,7 @@ namespace Empiria.Land.WebApp {
       if (this.transaction.Document.IsEmptyInstance) {
         return false;
       }
-      return this.transaction.Document.IsReadyToOpen();
+      return this.transaction.Document.Security.IsReadyToOpen();
     }
 
     protected bool CanDeleteDocument() {
@@ -189,7 +189,7 @@ namespace Empiria.Land.WebApp {
       if (this.transaction.Document.RecordingActs.Count > 0) {
         return false;
       }
-      return this.transaction.Document.IsReadyForEdition();
+      return this.transaction.Document.Security.IsReadyForEdition();
     }
 
     protected bool IsReadyForEdition() {
@@ -199,7 +199,7 @@ namespace Empiria.Land.WebApp {
       if (this.transaction.Document.IsEmptyInstance) {
         return IsReadyForCreation();
       }
-      return this.transaction.Document.IsReadyForEdition();
+      return this.transaction.Document.Security.IsReadyForEdition();
     }
 
     private bool IsReadyForCreation() {

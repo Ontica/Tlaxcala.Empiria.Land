@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-  <title>Carátula de control del acervo: <%=document.ImagingControlID%></title>
+  <title>Carátula de control del acervo: <%=document.Imaging.ImagingControlID%></title>
   <meta http-equiv="Expires" content="-1" />
   <meta http-equiv="Pragma" content="no-cache" />
   <link href="../themes/default/css/official.document.css" type="text/css" rel="stylesheet" />
@@ -81,9 +81,9 @@
             Fecha de registro <%=transaction.IsReentry ? "del <b>REINGRESO</b>" : "" %>
           </td>
           <td style="text-align:right;white-space:nowrap;padding-right:40pt;">
-            <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=document.ImagingControlID%>" />
+            <img alt="" title="" src="../user.controls/barcode.aspx?data=<%=document.Imaging.ImagingControlID%>" />
             <br />
-            <b style="font-size:18pt"><%=document.ImagingControlID%></b>
+            <b style="font-size:18pt"><%=document.Imaging.ImagingControlID%></b>
             <br />
             Control documental
           </td>

@@ -58,12 +58,16 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetCurrentImagePath() {
-      if (!this.imageSet.IsEmptyInstance) {
-        return ".." + this.imageSet.UrlRelativePath +
-                      this.imageSet.ImagesNamesArray[currentImagePosition];
-      } else {
-        return "";
+      if (this.imageSet.IsEmptyInstance) {
+        return String.Empty;
       }
+
+      Assertion.Assert(0 <= currentImagePosition &&
+                   currentImagePosition < imageSet.ImagesNamesArray.Length,
+                  $"CurrentImagePosition ({currentImagePosition}) out of bounds: MAX = {imageSet.ImagesNamesArray.Length}. " +
+                  $"Please check folder {this.imageSet.UrlRelativePath}.");
+
+      return ".." + this.imageSet.UrlRelativePath + this.imageSet.ImagesNamesArray[currentImagePosition];
     }
 
     #endregion Constructors and parsers
@@ -91,25 +95,26 @@ namespace Empiria.Land.WebApp {
     }
 
     private void Initialize() {
-      int id = 0;
-
       if (!String.IsNullOrWhiteSpace(Request.QueryString["recordingBookId"])) {
         var recordingBook = RecordingBook.Parse(int.Parse(Request.QueryString["recordingBookId"]));
-        id = recordingBook.ImageSetId;
+        this.imageSet = ImageSet.Parse(recordingBook.ImageSetId);
+
       } else if (!String.IsNullOrWhiteSpace(Request.QueryString["recordingDocumentId"])) {
         var document = RecordingDocument.Parse(int.Parse(Request.QueryString["recordingDocumentId"]));
-        id = document.ImageSetId;
+        this.imageSet = ImageSet.Parse(document.Imaging.ImageSetId);
+
       } else {
-        id = int.Parse(Request.QueryString["id"]);
+        this.imageSet = ImageSet.Parse(int.Parse(Request.QueryString["id"]));
+
       }
 
-      this.imageSet = ImageSet.Parse(id);
       SetPageTitle();
 
       if (!IsPostBack) {
         cboZoomLevel.Value = "1.00";
         currentImagePosition = 0;
       }
+
       SetImageZoom();
     }
 

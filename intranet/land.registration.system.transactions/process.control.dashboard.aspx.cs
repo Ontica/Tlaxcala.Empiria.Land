@@ -271,7 +271,7 @@ namespace Empiria.Land.WebApp {
       int documentId = int.Parse(GetCommandParameter("id"));
 
       var document = Registration.RecordingDocument.Parse(documentId);
-      document.GenerateImagingControlID();
+      document.Imaging.GenerateImagingControlID();
 
       var onEndLoadScript = String.Format("doOperation('viewDocumentImaging', {0});", documentId);
       base.Master.AppendEndLoadScript(onEndLoadScript);

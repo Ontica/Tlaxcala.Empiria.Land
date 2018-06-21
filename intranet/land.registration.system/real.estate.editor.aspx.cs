@@ -43,7 +43,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool IsInEditionMode() {
-      return recordingAct.Document.IsReadyForEdition();
+      return recordingAct.Document.Security.IsReadyForEdition();
     }
 
     protected bool AllowsPartitionEdition() {

@@ -12,13 +12,14 @@ using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+using Empiria.Presentation;
+using Empiria.Presentation.Web;
+using Empiria.Presentation.Web.Content;
+
 using Empiria.Contacts;
 using Empiria.Land.Documentation;
 using Empiria.Land.Registration;
 using Empiria.Land.UI;
-using Empiria.Presentation;
-using Empiria.Presentation.Web;
-using Empiria.Presentation.Web.Content;
 
 namespace Empiria.Land.WebApp {
 
@@ -360,17 +361,6 @@ namespace Empiria.Land.WebApp {
 
     protected bool DisplayImages() {
       return recordingBook.HasImageSet;
-    }
-
-    protected string GetCurrentImagePath() {
-      var imageSet = Land.Documentation.RecordingBookImageSet.Parse(recordingBook.ImageSetId);
-
-      if (!imageSet.IsEmptyInstance) {
-        return ".." + imageSet.UrlRelativePath +
-                      imageSet.ImagesNamesArray[currentImagePosition];
-      } else {
-        return String.Empty;
-      }
     }
 
     private void Initialize() {

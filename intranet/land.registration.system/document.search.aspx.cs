@@ -138,7 +138,7 @@ namespace Empiria.Land.WebApp {
         string row = ReadImagingControlIDRowTemplate(i);
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectDocumentFromSearchGrid");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
-        row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.ImagingControlID);
+        row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.Imaging.ImagingControlID);
         var transaction = item.GetTransaction();
         row = row.Replace("{{TRANSACTION.UID}}", transaction.UID);
         row = row.Replace("{{TRANSACTION.REQUESTED.BY}}", transaction.RequestedBy);
