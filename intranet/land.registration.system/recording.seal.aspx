@@ -19,6 +19,8 @@
           <h4>GOBIERNO DEL ESTADO DE TLAXCALA</h4>
           <% if (!document.IsClosed) { %>
           <h2 class="warning" style="padding-top:0">ESTE DOCUMENTO NO HA SIDO CERRADO</h2>
+          <% } else if (this.UseESign && document.Security.Unsigned()) { %>
+          <h2 class="warning" style="padding-top:0">ESTE DOCUMENTO NO HA SIDO FIRMADO DIGITALMENTE</h2>
           <% } else if (!document.IsHistoricDocument) { %>
           <h2 style="padding-top:0">SELLO REGISTRAL</h2>
           <% } else { %>
@@ -35,7 +37,11 @@
     <table>
       <tr>
         <td style="vertical-align:top">
+          <% if (this.CanBePrinted()) { %>
           <img style="margin-left:8pt" alt="" title="" src="../user.controls/barcode.aspx?data=<%=document.UID%>&#38;vertical=true&#38;show-text=true&#38;height=32" />
+          <% } else { %>
+          <img style="margin-left:8pt" alt="" title="" src="../user.controls/barcode.aspx?data=**SIN-VALOR**&#38;vertical=true&#38;show-text=true&#38;height=32" />
+          <% } %>
         </td>
         <td>
           <div class="document-text">
@@ -68,6 +74,35 @@
             <br />&#160;
           </td>
         </tr>
+        <% } else if (this.CanBePrinted() && this.UseESign && document.Security.Signed()) { %>
+         <tr>
+          <td colspan="3" style="text-align:center;font-size:11pt" >
+            <span style="font-size:8.5pt">
+            Firmado y sellado electrónicamente de conformidad<br />
+            con las leyes y regulaciones vigentes.</span><br />
+            <br />
+            <%=base.GetDigitalSignature()%><br />
+            <b><%=GetRecordingSignerName()%></b>
+            <br />
+            <%=GetRecordingSignerPosition()%>
+            <br />
+            &#160;
+          </td>
+          <td style="text-wrap:none">&#160;&#160;&#160;&#160;&#160;</td>
+        </tr>
+        <% } else if (this.CanBePrinted() && this.UseESign && document.Security.Unsigned()) { %>
+         <tr>
+          <td colspan="3" style="text-align:center;font-size:11pt" >
+            <br />
+            <b class="warning">Este documento NO HA SIDO FIRMADO digitalmente. No tiene validez oficial.</b>
+            <b><%=GetRecordingSignerName()%></b>
+            <br />
+            <%=GetRecordingSignerPosition()%>
+            <br />
+            &#160;
+          </td>
+          <td style="text-wrap:none">&#160;&#160;&#160;&#160;&#160;</td>
+        </tr>
         <% } else if (!document.IsHistoricDocument) { %>
         <tr>
           <td colspan="3" style="text-align:center;font-size:11pt" >
@@ -82,8 +117,10 @@
         <% } %>
         <tr>
           <td style="vertical-align:top;width:100px">
+            <% if (this.CanBePrinted()) { %>
             <img style="margin-left:-12pt;margin-top:-12pt" alt="" title=""
-                 src="../user.controls/qrcode.aspx?size=120&#38;data=<%=SEARCH_SERVICES_SERVER_BASE_ADDRESS%>/?type=document%26uid=<%=document.UID%>%26hash=<%=document.QRCodeSecurityHash()%>" />
+                 src="../user.controls/qrcode.aspx?size=120&#38;data=<%=SEARCH_SERVICES_SERVER_BASE_ADDRESS%>/?type=document%26uid=<%=document.UID%>%26hash=<%=document.Security.QRCodeSecurityHash()%>" />
+            <% } %>
             <div style="margin-top:-12pt;font-size:7pt;white-space:nowrap">
               Valide este documento<br />
               <b><%=document.UID%></b>
@@ -92,19 +129,23 @@
           <td style="vertical-align:top;width:90%;white-space:nowrap">
             <b>Código de verificación:</b>
             <br />
-           &#160;&#160;<%=base.document.QRCodeSecurityHash()%>
+              <% if (this.CanBePrinted()) { %>
+              &#160;&#160;<%=base.document.Security.QRCodeSecurityHash()%>
+              <% } else { %>
+              <span class="warning">** SIN VALIDEZ **</span>
+              <% } %>
             <br />
             <b>Sello digital:</b>
             <br />
-            <% if (!document.IsClosed) { %>
-            <span class="warning">** ESTE DOCUMENTO NO ES OFICIAL **</span>
-            <% } else { %>
-           &#160;&#160;<%=base.GetDigitalSeal().Substring(0, 64)%>
-            <% } %>
+             <% if (this.CanBePrinted()) { %>
+              &#160;&#160; <%=base.GetDigitalSeal()%>
+             <% } else { %>
+             <span class="warning">** ESTE DOCUMENTO NO ES OFICIAL **</span>
+             <% } %>
             <br />
             <b>Firma digital:</b>
             <br />
-           &#160;&#160;Documento firmado de forma autógrafa.
+               &#160;&#160;<%=GetDigitalSignature()%>
             <br />
             <b>Registró:</b> <%=GetRecordingOfficialsInitials()%>
             <br />

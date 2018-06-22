@@ -20,7 +20,6 @@ namespace Empiria.Land.WebApp {
   public partial class RecordingSeal : System.Web.UI.Page {
 
     #region Fields
-
     protected static readonly string SEARCH_SERVICES_SERVER_BASE_ADDRESS =
                                           ConfigurationData.Get<string>("SearchServicesServerBaseAddress");
 
@@ -33,6 +32,7 @@ namespace Empiria.Land.WebApp {
     private FixedList<RecordingAct> recordingActs = null;
     private RecordingAct selectedRecordingAct = null;
     private bool isMainDocument = false;
+    protected bool UseESign = false;
 
     #endregion Fields
 
@@ -48,6 +48,7 @@ namespace Empiria.Land.WebApp {
       if (!String.IsNullOrWhiteSpace(documentUID)) {
         document = RecordingDocument.TryParse(documentUID);
         transaction = document.GetTransaction();
+        UseESign = true;
 
       } else if (documentId != -1) {
         document = RecordingDocument.Parse(documentId);
@@ -72,7 +73,7 @@ namespace Empiria.Land.WebApp {
         return AsWarning("El documento está incompleto por lo que no tiene sello digital.");
       };
 
-      return document.GetDigitalSeal();
+      return document.Security.GetDigitalSeal().Substring(0, 64);
     }
 
     protected string GetDigitalSignature() {
@@ -80,11 +81,26 @@ namespace Empiria.Land.WebApp {
         return AsWarning("Los documentos históricos no tienen firma digital.");
       }
       if (document.Status != RecordableObjectStatus.Closed) {
-        return AsWarning("El documento está incompleto por lo que aún no ha sido firmado.");
+        return AsWarning("El documento está incompleto. No tiene validez.");
       }
+      if (!this.UseESign) {
+        return "Documento firmado de forma autógrafa. Requiere también sello oficial.";
 
-      return document.GetDigitalSignature();
+      } else if (this.UseESign && document.Security.Unsigned()) {
+        return AsWarning("Este documento NO HA SIDO FIRMADO digitalmente. No tiene valor oficial.");
+
+      } else if (this.UseESign && document.Security.Signed()) {
+        return document.Security.GetDigitalSignature().Substring(0, 64);
+
+      } else {
+        throw Assertion.AssertNoReachThisCode();
+      }
     }
+
+    protected bool CanBePrinted() {
+      return (document.Status == RecordableObjectStatus.Closed && (!this.UseESign || document.Security.Signed()));
+    }
+
 
     protected string GetDocumentDescriptionText() {
       if (document.Notes.Length > 30) {
@@ -192,42 +208,6 @@ namespace Empiria.Land.WebApp {
         } else {
           throw Assertion.AssertNoReachThisCode();
         }
-
-        //switch (recordingAct.RecordingActType.RecordingRule.AppliesTo) {
-        //  case RecordingRuleApplication.RealEstate:
-        //  case RecordingRuleApplication.RecordingAct:
-        //  case RecordingRuleApplication.Structure:
-        //    temp = this.GetRealEstateActText(recordingAct, index);
-        //    break;
-        //  case RecordingRuleApplication.Association:
-        //    var resource = recordingAct.Resource;
-        //    Assertion.Assert(resource is Association,
-        //                     "Type mismatch parsing association with id {0}", resource.Id);
-        //    temp = this.GetAssociationActText(recordingAct, (Association) resource, index);
-        //    break;
-
-        //  case RecordingRuleApplication.NoProperty:
-        //    // For now, we don't display seals with the NoProperty resource identificator
-        //    temp = this.GetNoPropertyActText(recordingAct, index);
-        //    break;
-
-        //  case RecordingRuleApplication.Undefined:
-        //    if (recordingAct.Resource is RealEstate) {
-        //      temp = this.GetRealEstateActText(recordingAct, index);
-        //      break;
-        //    } else if (recordingAct.Resource is Association) {
-        //      temp = this.GetAssociationActText(recordingAct, (Association) recordingAct.Resource, index);
-        //      break;
-        //    } else if (recordingAct.Resource is NoPropertyResource) {
-        //      temp = this.GetNoPropertyActText(recordingAct, index);
-        //      break;
-        //    } else {
-        //      throw Assertion.AssertNoReachThisCode();
-        //    }
-        // default:
-        //    throw new NotImplementedException("Undefined rule for recording acts text " +
-        //                                      recordingAct.RecordingActType.RecordingRule.AppliesTo);
-        //}  // select
         html += this.Decorate(recordingAct, temp);
       }
       return html;
@@ -290,11 +270,8 @@ namespace Empiria.Land.WebApp {
 
       string x = t.Replace("{DATE}", GetDateAsText(document.AuthorizationTime));
       x = x.Replace("{TIME}", document.AuthorizationTime.ToString(@"HH:mm"));
-      if (ExecutionServer.LicenseName == "Tlaxcala") {
-        x = x.Replace("{CITY}", "Tlaxcala de Xicohténcatl, Tlaxcala");
-      } else {
-        x = x.Replace("{CITY}", "Zacatecas, Zacatecas");
-      }
+      x = x.Replace("{CITY}", "Tlaxcala de Xicohténcatl, Tlaxcala");
+
       return x;
     }
 
