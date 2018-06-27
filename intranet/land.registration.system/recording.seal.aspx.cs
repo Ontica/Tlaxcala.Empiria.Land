@@ -312,11 +312,7 @@ namespace Empiria.Land.WebApp {
       if (document.IsHistoricDocument) {
         return String.Empty;
       }
-      if (ExecutionServer.LicenseName == "Tlaxcala") {
-        return "Director de Notarías y Registros Públicos";
-      } else {
-        return "C. Oficial Registrador del Distrito Judicial de Zacatecas";
-      }
+      return "Director de Notarías y Registros Públicos";
     }
 
     private Resource _uniqueInvolvedResource = null;

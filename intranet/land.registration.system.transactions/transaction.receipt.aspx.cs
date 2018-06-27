@@ -43,18 +43,11 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string CustomerOfficeName() {
-      if (ExecutionServer.LicenseName == "Tlaxcala") {
-        return "Dirección de Notarías y Registros Públicos";
-      } else {
-        return "Dirección de Catastro y Registro Público";
-      }
+      return "Dirección de Notarías y Registros Públicos";
     }
 
     protected string DistrictName {
       get {
-        if (ExecutionServer.LicenseName == "Zacatecas") {
-          return "Registro Público del Distrito de Zacatecas";
-        }
         return String.Empty;
       }
     }

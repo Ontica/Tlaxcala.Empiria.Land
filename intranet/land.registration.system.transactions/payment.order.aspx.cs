@@ -41,9 +41,6 @@ namespace Empiria.Land.WebApp {
 
     protected string DistrictName {
       get {
-        if (ExecutionServer.LicenseName == "Zacatecas") {
-          return "Registro Público del Distrito de Zacatecas";
-        }
         return String.Empty;
       }
     }

@@ -141,7 +141,6 @@
     <Content Include="templates\analytics\performance.by.analyst.footer.ascx" />
     <Content Include="templates\analytics\performance.by.analyst.header.ascx" />
     <Content Include="templates\analytics\performance.by.analyst.items.ascx" />
-    <Content Include="templates\analytics\performance.by.recorder.office.header.ascx" />
     <Content Include="templates\analytics\recorder.offices.progress.footer.ascx" />
     <Content Include="templates\analytics\recorder.offices.progress.header.ascx" />
     <Content Include="templates\analytics\recorder.offices.progress.items.ascx" />
@@ -351,10 +350,6 @@
     <Content Include="user.controls\calendar.aspx" />
     <Content Include="user.controls\printer.aspx" />
     <Content Include="user.controls\qrcode.aspx" />
-    <Content Include="workflow\messages.dashboard.aspx" />
-    <Content Include="workflow\participants.management.dashboard.aspx" />
-    <Content Include="workflow\tasks.dashboard.aspx" />
-    <Content Include="workflow\workflow.management.dashboard.aspx" />
     <Content Include="workplace\command.processor.aspx" />
     <Content Include="workplace\dashboard.aspx" />
     <Content Include="workplace\empty.page.aspx" />
@@ -624,34 +619,6 @@
     </Compile>
     <Compile Include="user.controls\qrcode.aspx.designer.cs">
       <DependentUpon>qrcode.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="workflow\messages.dashboard.aspx.cs">
-      <DependentUpon>messages.dashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="workflow\messages.dashboard.aspx.designer.cs">
-      <DependentUpon>messages.dashboard.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="workflow\participants.management.dashboard.aspx.cs">
-      <DependentUpon>participants.management.dashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="workflow\participants.management.dashboard.aspx.designer.cs">
-      <DependentUpon>participants.management.dashboard.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="workflow\tasks.dashboard.aspx.cs">
-      <DependentUpon>tasks.dashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="workflow\tasks.dashboard.aspx.designer.cs">
-      <DependentUpon>tasks.dashboard.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="workflow\workflow.management.dashboard.aspx.cs">
-      <DependentUpon>workflow.management.dashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="workflow\workflow.management.dashboard.aspx.designer.cs">
-      <DependentUpon>workflow.management.dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="workplace\command.processor.aspx.cs">
       <DependentUpon>command.processor.aspx</DependentUpon>
