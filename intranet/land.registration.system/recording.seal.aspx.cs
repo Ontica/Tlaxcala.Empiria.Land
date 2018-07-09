@@ -32,7 +32,6 @@ namespace Empiria.Land.WebApp {
     private FixedList<RecordingAct> recordingActs = null;
     private RecordingAct selectedRecordingAct = null;
     private bool isMainDocument = false;
-    protected bool UseESign = false;
 
     #endregion Fields
 
@@ -48,7 +47,6 @@ namespace Empiria.Land.WebApp {
       if (!String.IsNullOrWhiteSpace(documentUID)) {
         document = RecordingDocument.TryParse(documentUID);
         transaction = document.GetTransaction();
-        UseESign = true;
 
       } else if (documentId != -1) {
         document = RecordingDocument.Parse(documentId);
@@ -60,6 +58,7 @@ namespace Empiria.Land.WebApp {
         document = transaction.Document;
 
       }
+
       selectedRecordingAct = RecordingAct.Parse(selectedRecordingActId);
       recordingActs = document.RecordingActs;
     }
@@ -83,13 +82,13 @@ namespace Empiria.Land.WebApp {
       if (document.Status != RecordableObjectStatus.Closed) {
         return AsWarning("El documento está incompleto. No tiene validez.");
       }
-      if (!this.UseESign) {
+      if (!document.Security.UseESign) {
         return "Documento firmado de forma autógrafa. Requiere también sello oficial.";
 
-      } else if (this.UseESign && document.Security.Unsigned()) {
+      } else if (document.Security.UseESign && document.Security.Unsigned()) {
         return AsWarning("Este documento NO HA SIDO FIRMADO digitalmente. No tiene valor oficial.");
 
-      } else if (this.UseESign && document.Security.Signed()) {
+      } else if (document.Security.UseESign && document.Security.Signed()) {
         return document.Security.GetDigitalSignature().Substring(0, 64);
 
       } else {
@@ -98,7 +97,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool CanBePrinted() {
-      return (document.Status == RecordableObjectStatus.Closed && (!this.UseESign || document.Security.Signed()));
+      return (document.Status == RecordableObjectStatus.Closed && (!document.Security.UseESign || document.Security.Signed()));
     }
 
 

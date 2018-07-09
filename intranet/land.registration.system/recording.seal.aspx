@@ -19,8 +19,9 @@
           <h4>GOBIERNO DEL ESTADO DE TLAXCALA</h4>
           <% if (!document.IsClosed) { %>
           <h2 class="warning" style="padding-top:0">ESTE DOCUMENTO NO HA SIDO CERRADO</h2>
-          <% } else if (this.UseESign && document.Security.Unsigned()) { %>
+          <% } else if (document.Security.UseESign && document.Security.Unsigned()) { %>
           <h2 class="warning" style="padding-top:0">ESTE DOCUMENTO NO HA SIDO FIRMADO DIGITALMENTE</h2>
+          <h2 style="padding-top:0">SELLO REGISTRAL</h2>
           <% } else if (!document.IsHistoricDocument) { %>
           <h2 style="padding-top:0">SELLO REGISTRAL</h2>
           <% } else { %>
@@ -74,14 +75,15 @@
             <br />&#160;
           </td>
         </tr>
-        <% } else if (this.CanBePrinted() && this.UseESign && document.Security.Signed()) { %>
+        <% } else if (document.Security.UseESign && document.Security.Signed()) { %>
          <tr>
           <td colspan="3" style="text-align:center;font-size:11pt" >
             <span style="font-size:8.5pt">
             Firmado y sellado electrónicamente de conformidad<br />
             con las leyes y regulaciones vigentes.</span><br />
             <br />
-            <%=base.GetDigitalSignature()%><br />
+            <%=base.GetDigitalSignature()%>
+            <br />
             <b><%=GetRecordingSignerName()%></b>
             <br />
             <%=GetRecordingSignerPosition()%>
@@ -90,11 +92,14 @@
           </td>
           <td style="text-wrap:none">&#160;&#160;&#160;&#160;&#160;</td>
         </tr>
-        <% } else if (this.CanBePrinted() && this.UseESign && document.Security.Unsigned()) { %>
+        <% } else if (document.Security.UseESign && document.Security.Unsigned()) { %>
          <tr>
           <td colspan="3" style="text-align:center;font-size:11pt" >
+            <span style="font-size:8.5pt">
+            Pendiente de firmar y sellar electrónicamente.</span><br />
             <br />
-            <b class="warning">Este documento NO HA SIDO FIRMADO digitalmente. No tiene validez oficial.</b>
+            <b class="warning">SIN FIRMA NI SELLO ELECTRÓNICO</b>
+            <br />
             <b><%=GetRecordingSignerName()%></b>
             <br />
             <%=GetRecordingSignerPosition()%>
