@@ -18,7 +18,15 @@ namespace Empiria.Land.WebApp {
 
     #region Fields
 
-    private Certificate certificate = null;
+    private static readonly string QR_CODE_SERVICE_URL = ConfigurationData.GetString("QRCodeServiceURL");
+
+    private static readonly string SEARCH_SERVICES_SERVER_ADDRESS = ConfigurationData.Get<string>("SearchServicesServerBaseAddress");
+
+    private static readonly bool DISPLAY_VEDA_ELECTORAL_UI =
+                                      ConfigurationData.Get<bool>("DisplayVedaElectoralUI", false);
+
+    protected Certificate Certificate = null;
+    protected bool ParseComplete = true;
 
     #endregion Fields
 
@@ -28,29 +36,120 @@ namespace Empiria.Land.WebApp {
       if (!String.IsNullOrWhiteSpace(Request.QueryString["uid"])) {
         string uid = Request.QueryString["uid"];
 
-        this.certificate = Certificate.TryParse(uid);
+        this.Certificate = Certificate.TryParse(uid);
 
-        Assertion.AssertObject(this.certificate, $"Invalid certificate number '{uid}'.");
+        Assertion.AssertObject(this.Certificate, $"Invalid certificate number '{uid}'.");
 
       } else if (!String.IsNullOrWhiteSpace(Request.QueryString["certificateId"])) {
         int certificateId = int.Parse(Request.QueryString["certificateId"]);
 
-        this.certificate = Certificate.Parse(certificateId);
+        this.Certificate = Certificate.Parse(certificateId);
       }
+
     }
 
     #endregion Constructors and parsers
 
     #region Methods
 
+    protected string GetLogoSource() {
+      if (DISPLAY_VEDA_ELECTORAL_UI) {
+        return "../themes/default/customer/government.seal.veda.png";
+      }
+      return "../themes/default/customer/government.seal.png";
+    }
+
+    protected string GetIssueDate() {
+      if (this.Certificate.Status != CertificateStatus.Pending) {
+        return EmpiriaString.SpeechDate(this.Certificate.IssueTime).ToUpperInvariant();
+      } else {
+        return AsWarning("SIN FECHA DE EXPEDICIÓN");
+      }
+    }
+
+    protected string GetDigitalString() {
+      if (this.Certificate.Signed()) {
+        return this.Certificate.GetDigitalString();
+      } else {
+        return AsWarning("SIN VALOR LEGAL * * * * * SIN VALOR LEGAL");
+      }
+    }
+
+    protected string GetDigitalSeal() {
+      if (this.Certificate.Signed()) {
+        return this.Certificate.GetDigitalSeal();
+      } else {
+        return AsWarning("SIN VALOR LEGAL * * * * * SIN VALOR LEGAL");
+      }
+    }
+
+    protected string GetDigitalSignature() {
+      if (this.Certificate.Signed()) {
+        return this.Certificate.GetDigitalSignature().Substring(0, 64);
+      } else {
+        return AsWarning("SIN FIRMA ELECTRÓNICA");
+      }
+    }
+
+    protected string GetDigitalSignatureMessage() {
+      if (this.Certificate.Signed()) {
+        return "Firmado y sellado electrónicamente de conformidad " +
+                "con las leyes y regulaciones vigentes.";
+      } else {
+        return AsWarning("*** NO ES VALIDO SIN FIRMA ELECTRÓNICA. **** ");
+      }
+    }
+
+    protected string GetQRCodeSecurityHash() {
+      if (this.Certificate.Signed()) {
+        return this.Certificate.QRCodeSecurityHash();
+      } else {
+        return AsWarning("NO DISPONIBLE SIN FIRMA");
+      }
+    }
+
     protected string GetCertificateText() {
-      string text = certificate.AsText;
+      string text = Certificate.AsText;
 
       text = ReplaceImagePaths(text);
       text = ReplaceQRUrls(text);
       text = FixHtmlErrors(text);
 
       return text;
+    }
+
+    protected string GetPaymentReceipt() {
+      if (this.Certificate.Transaction.PaymentOrderData.RouteNumber.Length != 0) {
+        return this.Certificate.Transaction.PaymentOrderData.RouteNumber;
+      } else {
+        return this.Certificate.Transaction.Payments.ReceiptNumbers;
+      }
+    }
+
+    protected string QRCodeSource() {
+      if (this.Certificate.Signed()) {
+        return $"{QR_CODE_SERVICE_URL}?size=120&amp;data={SEARCH_SERVICES_SERVER_ADDRESS}/?" +
+               $"type=certificate%26uid={this.Certificate.UID}%26hash={this.Certificate.QRCodeSecurityHash()}";
+      } else {
+        return String.Empty;
+      }
+    }
+
+    protected string ResourceQRCodeSource() {
+      if (this.Certificate.Property.IsEmptyInstance || this.Certificate.Unsigned()) {
+        return String.Empty;
+      }
+
+      return $"{QR_CODE_SERVICE_URL}?size=120&amp;data={SEARCH_SERVICES_SERVER_ADDRESS}/?" +
+             $"type=resource%26uid={this.Certificate.Property.UID}%26hash={this.Certificate.Property.QRCodeSecurityHash()}";
+    }
+
+    protected string DisplayQRCodeStyle() {
+      if (this.Certificate.Property.IsEmptyInstance || this.Certificate.Unsigned()) {
+        return "none";
+      } else {
+        return "inline";
+      }
     }
 
     private string ReplaceImagePaths(string text) {
@@ -88,6 +187,10 @@ namespace Empiria.Land.WebApp {
       text = text.Replace("&amp;amp;", "&amp;");
 
       return text;
+    }
+
+    private string AsWarning(string text) {
+      return "<span style='color:red;'><strong>*****" + text + "*****</strong></span>";
     }
 
     #endregion Methods
