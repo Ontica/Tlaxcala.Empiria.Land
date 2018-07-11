@@ -60,7 +60,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetIssueDate() {
-      if (this.Certificate.Status != CertificateStatus.Pending) {
+      if (this.Certificate.IsClosed) {
         return EmpiriaString.SpeechDate(this.Certificate.IssueTime).ToUpperInvariant();
       } else {
         return AsWarning("SIN FECHA DE EXPEDICIÓN");
@@ -84,15 +84,21 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetDigitalSignature() {
-      if (this.Certificate.Signed()) {
-        return this.Certificate.GetDigitalSignature().Substring(0, 64);
+      if (!this.Certificate.IsClosed) {
+        return AsWarning("*** EL CERTIFICADO NO HA SIDO CERRADO **** ");
+
+      } else if (this.Certificate.Signed()) {
+        return this.Certificate.GetDigitalSignature();
       } else {
         return AsWarning("SIN FIRMA ELECTRÓNICA");
       }
     }
 
     protected string GetDigitalSignatureMessage() {
-      if (this.Certificate.Signed()) {
+      if (!this.Certificate.IsClosed) {
+        return AsWarning("*** EL CERTIFICADO NO HA SIDO CERRADO **** ");
+
+      } else if (this.Certificate.Signed()) {
         return "Firmado y sellado electrónicamente de conformidad " +
                 "con las leyes y regulaciones vigentes.";
       } else {

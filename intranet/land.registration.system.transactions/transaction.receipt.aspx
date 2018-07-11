@@ -117,7 +117,7 @@
                 <% } %>
                 <b>Sello electrónico:</b>
                 <br />
-                <%=transaction.GetDigitalSign().Substring(0, 64)%>
+                <%=transaction.GetDigitalSign()%>
                 <br />
                 <b>Recibió: </b>
                 <br />

@@ -89,7 +89,7 @@ namespace Empiria.Land.WebApp {
         return AsWarning("Este documento NO HA SIDO FIRMADO digitalmente. No tiene valor oficial.");
 
       } else if (document.Security.UseESign && document.Security.Signed()) {
-        return document.Security.GetDigitalSignature().Substring(0, 64);
+        return document.Security.GetDigitalSignature();
 
       } else {
         throw Assertion.AssertNoReachThisCode();
