@@ -13,7 +13,7 @@
     <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 3);" title="">Recibir documentos</td>
     <td id="tabStripItem_4"  style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk") ? "inline" : "none"%>' class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Ventanilla de entregas</td>
     <td id="tabStripItem_5" style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ControlDesk") ? "inline" : "none"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 5);" title="">Mesa de control</td>
-    <td id="tabStripItem_6" style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DigitalizationDesk") ? "inline" : "none"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 6);" title="">Mesa de digitalización</td>
+    <td id="tabStripItem_6" style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DigitalizationDesk") ? "inline" : "none"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 6);" title="">Mesa de firmado y digitalización</td>
     <td id="tabStripItem_7" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 7);" title="">Buscar trámites</td>
     <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
     <td><input id="currentTabStripItem" name="currentTabStripItem" type="hidden" /></td>
@@ -60,6 +60,8 @@
         &nbsp; &nbsp; &nbsp; &nbsp;
         <%  if (base.IsTabStripSelected(TabStrip.MesaDeDigitalizacion) &&
                 Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DigitalizationDesk")) { %>
+        <a href="javascript:doOperation('updateESignWorkflow')">
+        <img src="../themes/default/bullets/scribble_doc_sm.gif" alt="" title="" style="margin-right:8px" />Actualizar flujo de trabajo</a>&nbsp; &nbsp; &nbsp;
         <a href="javascript:doOperation('processDocumentImages')">
         <img src="../themes/default/bullets/scribble_doc_sm.gif" alt="" title="" style="margin-right:8px" />Procesar imágenes</a>&nbsp; &nbsp; &nbsp;
         <% } %>
@@ -244,6 +246,10 @@
       case 'processDocumentImages':
         processsDocumentImages();
         return;
+      case 'updateESignWorkflow':
+        updateESignWorkflow();
+        return;
+
       default:
         alert('La operación solicitada todavía no ha sido definida en el programa.');
         return;
@@ -555,6 +561,22 @@
 
     if (confirm(sMsg)) {
       sendPageCommand("processsDocumentImages");
+    }
+  }
+
+  function updateESignWorkflow() {
+    var sMsg = "Esta operación actualizará el flujo de trabajo.\n\n";
+
+    sMsg += " Este proceso:\n";
+    sMsg += "1) Envía a la aplicación de firma los documentos sin firma.\n";
+    sMsg += "2) Envía a ventanilla los documentos firmados que ya cuenten con número de control.\n";
+    sMsg += "3) Envía al archivo los documentos firmados que correspondan.\n\n";
+
+    sMsg += "Dependiendo del número de documentos, el proceso puede tardar varios minutos.\n";
+    sMsg += " ¿Actualizo el flujo de trabajo?";
+
+    if (confirm(sMsg)) {
+      sendPageCommand("updateESignWorkflow");
     }
   }
 

@@ -24,6 +24,7 @@ using Empiria.Land.Documentation;
 namespace Empiria.Land.WebApp {
 
   #region
+
   public enum TabStrip {
      MisTramitesPendientes = 0,
      DocumentosPorEntregar = 1,
@@ -89,6 +90,10 @@ namespace Empiria.Land.WebApp {
           ProcessDocumentImages();
           base.LoadRepeater();
           return true;
+        case "updateESignWorkflow":
+          UpdateESignWorkflow();
+          base.LoadRepeater();
+          return true;
         default:
           return false;
       }
@@ -145,11 +150,16 @@ namespace Empiria.Land.WebApp {
         filter += "(TransactionStatus IN ('D','L'))";
         return TransactionData.GetLRSTransactionsForUI(filter, sort);
 
-      } else if (IsTabStripSelected(TabStrip.MesaDeControl)) {      // Mesa de control
-        //if (filter.Length != 0) {
-        //  filter += " AND ";
-        //}
-        //filter += "(TransactionStatus IN ('H'))";
+      } else if (IsTabStripSelected(TabStrip.MesaDeControl)) {
+
+        return TransactionData.GetLRSTransactionsForUI(filter, sort);
+
+      } else if (IsTabStripSelected(TabStrip.MesaDeDigitalizacion)) {
+        if (filter.Length != 0) {
+          filter += " AND ";
+        }
+        filter += "(TransactionStatus IN ('S','A') OR NextTransactionStatus IN ('S', 'A'))";
+
         return TransactionData.GetLRSTransactionsForUI(filter, sort);
 
       } else if (IsTabStripSelected(TabStrip.BuscarTramites)) {
@@ -178,10 +188,6 @@ namespace Empiria.Land.WebApp {
         FixedList<Contact> list = WorkflowData.GetContactsWithWorkflowOutboxTasks();
         HtmlSelectContent.LoadCombo(this.cboFrom, list, "Id", "Alias",
                                     "( ¿Quién le está entregando? )", String.Empty, String.Empty);
-        cboFrom.Items.Insert(1, new ListItem("Mesa de control", "(TransactionStatus = 'K')"));
-        cboFrom.Items.Insert(2, new ListItem("Mesa de digitalización", "(TransactionStatus = 'A')"));
-        cboFrom.Items.Insert(3, new ListItem("Ventanilla de entregas", "(TransactionStatus IN ('L', 'D')"));
-        cboFrom.Items.Insert(4, String.Empty);
       }
       if (IsTabStripSelected(TabStrip.MesaDeControl) && this.cboResponsible.Items.Count <= 1) {
         DataView view = WorkflowData.GetWorkflowActiveTasksTotals();
@@ -197,7 +203,6 @@ namespace Empiria.Land.WebApp {
 
     protected sealed override void SetRepeaterTemplates() {
       if (IsTabStripSelected(TabStrip.MisTramitesPendientes)) {
-        Func<DataRowView, string> Id = (x => Convert.ToString(x["ResponsibleId"]));
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.control.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.control.item.ascx");
         base.ViewColumnsCount = 4;
@@ -230,6 +235,12 @@ namespace Empiria.Land.WebApp {
       } else if (IsTabStripSelected(TabStrip.MesaDeControl)) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/control.desk.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/control.desk.item.ascx");
+        base.ViewColumnsCount = 4;
+        base.LoadInboxesInQuickMode = false;
+
+      } else if (IsTabStripSelected(TabStrip.MesaDeDigitalizacion)) {
+        itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/digitalization.desk.header.ascx");
+        itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/digitalization.desk.item.ascx");
         base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = false;
 
@@ -290,6 +301,14 @@ namespace Empiria.Land.WebApp {
       imageProcessingEngine.Start();
       base.SetOKScriptMsg("El procesamiento de imágenes se ha iniciado.\\n\\n" +
                           "Más tarde estarán listos los resultados.");
+      txtSearchExpression.Value = "";
+      txtSearchExpression.Focus();
+    }
+
+    private void UpdateESignWorkflow() {
+      LRSWorkflowRules.UpdateESignWorkflow();
+
+      base.SetOKScriptMsg("La actualización de documentos y del flujo de trabajo se ejecutó satisfactoriamente.");
       txtSearchExpression.Value = "";
       txtSearchExpression.Focus();
     }
@@ -416,6 +435,19 @@ namespace Empiria.Land.WebApp {
     }
 
     #endregion Protected methods
+
+    #region Static auxiliary methods
+
+    static public bool ShowDigitalizationTakeTransactionButton(object arg) {
+      var row = (DataRowView) arg;
+
+      if (Convert.ToChar(Convert.ToChar(row["NextTransactionStatus"])) == 'S') {
+        return true;
+      }
+      return false;
+    }
+
+    #endregion Static auxiliary methods
 
   } // class ProcessControlDashboard
 

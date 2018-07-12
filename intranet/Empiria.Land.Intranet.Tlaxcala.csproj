@@ -173,7 +173,9 @@
     <Content Include="templates\land.registration.system\recording.book.unassigned.header.ascx" />
     <Content Include="templates\land.registration.system\recording.book.unassigned.items.ascx" />
     <Content Include="templates\security\empiria.security.user.item.ascx" />
+    <Content Include="templates\transactions\digitalization.desk.header.ascx" />
     <Content Include="templates\transactions\control.desk.header.ascx" />
+    <Content Include="templates\transactions\digitalization.desk.item.ascx" />
     <Content Include="templates\transactions\control.desk.item.ascx" />
     <Content Include="templates\transactions\process.close.item.ascx" />
     <Content Include="templates\transactions\process.control.header.ascx" />
