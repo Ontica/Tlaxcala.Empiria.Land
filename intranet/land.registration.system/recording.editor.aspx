@@ -94,6 +94,8 @@
             <input id='cmdCloseDocument' type="button" value="Cerrar documento" class="button" style="width:122px;height:28px;top:8px;display:none" onclick='doOperation("closeDocument")' title='Cierra el documento protegiéndolo ante cambios no autorizados.' />
             <input id='cmdOpenDocument' type="button" value="Abrir documento" class="button" style="width:122px;height:28px;top:8px;display:none" onclick='doOperation("openDocument")' title='Abre este documento para editarlo.' />
             <input id='cmdSaveDocument' type="button" value="Guardar los cambios" class="button green-button" style="width:112px;height:28px;display:none" onclick='doOperation("saveDocument")' title='Guarda el documento' />
+            &nbsp; &nbsp; &nbsp; &nbsp;
+            <input id='cmdRefreshDocument' type="button" value="Refrescar" class="button" style="width:88px;height:28px;display:none" onclick='doOperation("refreshDocument")' title='Actualiza los datos del documento' />
           </td>
           <td >
           </td>
@@ -193,6 +195,9 @@
       case 'deleteDocument':
         return deleteDocument();
 
+      case 'refreshDocument':
+        return refreshDocument();
+
       case 'editResource':
         return editResource(arguments[1], arguments[2]);
 
@@ -242,6 +247,12 @@
   }
 
   function openDocument() {
+    <% if (base.transaction.Document.Security.Signed()) { %>
+    alert("Documento firmado electrónicamente.\n\n" +
+          "Para abrir este documento primero se requiere revocar la firma electrónica.\n\n" +
+          "Favor de solicitar la revocación de la firma en la Dirección.");
+    return false;
+    <% } %>
     <% if (!base.CanOpenDocument()) { %>
       alert("No es posible abrir el documento ya que no cuenta con los permisos necesarios para efectuar esta operación.");
       return false;
@@ -282,6 +293,10 @@
       sendPageCommand('deleteDocument');
       return true;
     }
+  }
+
+  function refreshDocument() {
+    window.location.reload();
   }
 
   function displayRecordingBookImageSet(selectBoxControlName) {
@@ -348,6 +363,7 @@
       getElement('cmdCloseDocument').style.display = 'none';
       getElement('cmdOpenDocument').style.display = 'none';
       getElement("cmdShowRecordingSeal").style.display = 'none';
+      getElement("cmdRefreshDocument").style.display = 'none';
     }
 
   }
@@ -473,8 +489,9 @@
     <% } %>
     <% if (base.CanCloseDocument()) { %>
       getElement('cmdCloseDocument').style.display = 'inline';
-    <% } else if (base.CanOpenDocument()) { %>
+    <% } else if (base.transaction.Document.Security.Signed() || base.CanOpenDocument()) { %>
       getElement('cmdOpenDocument').style.display = 'inline';
+      getElement("cmdRefreshDocument").style.display = 'inline';
     <% } %>
     <% if (base.CanDeleteDocument()) { %>
       getElement('cmdDeleteDocument').style.display = 'inline';

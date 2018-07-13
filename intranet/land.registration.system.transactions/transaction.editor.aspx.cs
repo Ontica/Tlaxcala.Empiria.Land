@@ -425,7 +425,7 @@ namespace Empiria.Land.WebApp {
                               "<td>{{ISSUED-BY}}</td>" +
                               "<td>{{ISSUE-TIME}}</td>" +
                               "<td>{{STATUS}}</td>" +
-                              "<td style='width:25%'>{{OPTIONS-COMBO}}</td>" +
+                              "<td style='width:25%;white-space:normal;'>{{OPTIONS-COMBO}}</td>" +
                               "</tr>";
 
       FixedList<Certificate> certificates = this.transaction.GetIssuedCertificates();
@@ -433,6 +433,18 @@ namespace Empiria.Land.WebApp {
       string html = String.Empty;
       for (int i = 0; i < certificates.Count; i++) {
         Certificate certificate = certificates[i];
+
+        string status = "Cerrado";
+
+        if (certificate.Status == CertificateStatus.Deleted) {
+          status = "Eliminado";
+        } else if (!certificate.UseESign) {
+          status = "Cerrado";
+        } else if (certificate.UseESign && certificate.Signed()) {
+          status = "Cerrado<br /> y firmado";
+        } else if (certificate.UseESign && certificate.Unsigned()) {
+          status = "Cerrado<br />sin firma";
+        }
 
         string temp = template;
         temp = temp.Replace("{CLASS}", ((i % 2) == 0) ? "detailsItem" : "detailsOddItem");
@@ -443,12 +455,21 @@ namespace Empiria.Land.WebApp {
         if (certificate.IssueTime != ExecutionServer.DateMaxValue) {
           temp = temp.Replace("{{ISSUED-BY}}", certificate.IssuedBy.Nickname);
           temp = temp.Replace("{{ISSUE-TIME}}", certificate.IssueTime.ToString("dd/MMM/yyyy HH:mm"));
-          temp = temp.Replace("{{STATUS}}", certificate.Status == CertificateStatus.Closed ? "Cerrado" : "Eliminado");
+          temp = temp.Replace("{{STATUS}}", status);
           temp = temp.Replace("{{OPTIONS-COMBO}}", "{{VIEW-LINK}}");
 
           if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration ||
               transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording) {
-            temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('editCertificate', '{{CERTIFICATE-UID}}')\">Ver o imprimir</a>");
+
+            if (certificate.Unsigned()) {
+              temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('editCertificate', '{{CERTIFICATE-UID}}')\">Editar</a> | " +
+                                                   "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE_ID}}')\">Imprimir</a>");
+
+            } else {
+              temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE_ID}}')\">Imprimir</a>" +
+                                                   "<br/>Si desea editarlo, primero se debe revocar la firma.");
+            }
+
           } else {
             temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE_ID}}')\">Imprimir</a>");
           }
@@ -456,8 +477,9 @@ namespace Empiria.Land.WebApp {
           temp = temp.Replace("{{ISSUED-BY}}", "&nbsp;");
           temp = temp.Replace("{{ISSUE-TIME}}", "No emitido");
           temp = temp.Replace("{{STATUS}}", "Pendiente");
-          if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration ||
-              transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording) {
+          if ((transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration ||
+              transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording) &&
+              certificate.Unsigned()) {
             temp = temp.Replace("{{OPTIONS-COMBO}}", "{{EDIT-LINK}} &nbsp; &nbsp; | &nbsp; &nbsp; {{DELETE-LINK}} ");
             temp = temp.Replace("{{EDIT-LINK}}", "<a href=\"javascript:doOperation('editCertificate', '{{CERTIFICATE-UID}}')\">Editar</a>");
             temp = temp.Replace("{{DELETE-LINK}}", "<a href=\"javascript:doOperation('deleteCertificate', '{{CERTIFICATE-UID}}')\">Eliminar</a>");

@@ -16,6 +16,7 @@ using Empiria.Geography;
 using Empiria.Json;
 
 using Empiria.Documents;
+using Empiria.Land.Certification;
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
 using Empiria.Land.UI;
@@ -100,6 +101,10 @@ namespace Empiria.Web.UI.Ajax {
           return GetWitnessInPositionStringArrayCommandHandler();
         case "searchRecordingActPartiesCmd":
           return SearchRecordingActPartiesCommandHandler();
+
+
+        case "validateIfCertificateCanBeEditedCmd":
+          return ValidateIfCertificateCanBeEditedCommandHandler();
 
         case "validateIfDocumentCanBeCloseCmd":
           // Very rare: If use 'validateIfDocumentCanBeClosedCmd' then ajax never dispatches the call
@@ -901,6 +906,22 @@ namespace Empiria.Web.UI.Ajax {
         return e.Message;
       }
       return String.Empty;
+    }
+
+    private string ValidateIfCertificateCanBeEditedCommandHandler() {
+      try {
+        string certificateUID = GetCommandParameter<string>("certificateUID");
+        var certificate = Certificate.TryParse(certificateUID);
+
+        if (certificate.Signed()) {
+          return "El certificado no puede ser editado debido a que ya tiene firma electrónica.\n\n" +
+                 "Para editarlo, por favor solicite la revocación de la firma en la Dirección.";
+        }
+        return String.Empty;
+
+      } catch (Exception e) {
+        return e.Message;
+      }
     }
 
     private string ValidateIfDocumentCanBeClosedCommandHandler() {

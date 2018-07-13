@@ -123,6 +123,11 @@ namespace Empiria.Land.WebApp {
     }
 
     private void OpenDocument() {
+      if (this.transaction.Document.Security.Signed()) {
+        SetMessageBox("Este documento no puede ser abierto porque ya está firmado.\n\n" +
+                      "Necesita solicitar una revocación de firma en la Dirección.");
+        return;
+      }
       if (this.CanOpenDocument()) {
         transaction.Document.Security.Open();
       }
@@ -184,6 +189,9 @@ namespace Empiria.Land.WebApp {
         return false;
       }
       if (this.transaction.Document.IsEmptyInstance) {
+        return false;
+      }
+      if (this.transaction.Document.Security.Signed()) {
         return false;
       }
       if (this.transaction.Document.RecordingActs.Count > 0) {

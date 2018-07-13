@@ -692,11 +692,22 @@
   }
 
   function editCertificate(certificateUID) {
+    if (!validateIfCertificateCanBeEdited(certificateUID)) {
+      return false;
+    }
     var url = gCertificatesServerURL + "editar.html?" +
               "transactionUID=<%=transaction.UID%>&certificateUID=" + certificateUID +
               "&sessionToken=<%=Empiria.ExecutionServer.CurrentSessionToken%>";
 
     createNewWindow(url);
+  }
+
+  function validateIfCertificateCanBeEdited(certificateUID) {
+    var ajaxURL = "../ajax/land.registration.system.data.aspx";
+    ajaxURL += "?commandName=validateIfCertificateCanBeEditedCmd";
+    ajaxURL += "&certificateUID=" + certificateUID;
+
+    return invokeAjaxValidator(ajaxURL);
   }
 
   function deleteCertificate(certificateUID) {

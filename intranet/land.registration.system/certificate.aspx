@@ -19,7 +19,9 @@
 	      <h3>DIRECCIÓN DE NOTARÍAS Y REGISTROS PÚBLICOS</h3>
         <h4>GOBIERNO DEL ESTADO DE TLAXCALA</h4>
         <h2>
-          <% if (base.Certificate.Unsigned()) { %>
+          <% if (!base.Certificate.IsClosed) { %>
+            <span style='color:red;'>* ESTE CERTIFICADO NO HA SIDO CERRADO *</span><br />
+          <% } else if (base.Certificate.Unsigned()) { %>
             <span style='color:red;'>* INVÁLIDO SIN FIRMA ELECTRÓNICA *</span><br />
           <% } %>
           CERTIFICADO DE <%=base.Certificate.CertificateType.DisplayName.ToUpperInvariant()%>
