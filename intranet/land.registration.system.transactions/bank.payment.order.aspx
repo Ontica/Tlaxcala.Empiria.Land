@@ -164,7 +164,7 @@
           <br />
           <b>Cadena original:</b><br /><%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 100, "&#8203;")%>
           <br />
-          <b>Sello electrónico:</b><br /><%=transaction.GetDigitalSign().Substring(0,100)%>
+          <b>Sello electrónico:</b><br /><%=transaction.GetDigitalSign()%>
         </td>
       </tr>
       <tr>
@@ -271,7 +271,7 @@
                 <%=Empiria.EmpiriaString.DivideLongString(transaction.GetDigitalString(), 164, "&#8203;")%>
                 <br /><br />
                 <b>Sello electrónico:</b>
-                <br /><%=transaction.GetDigitalSign().Substring(0,100)%>
+                <br /><%=transaction.GetDigitalSign()%>
               </td>
               <td valign="top" align="right" style="border-top: 3px solid #3a3a3a;">
                 <b>Línea de captura:</b><br />
