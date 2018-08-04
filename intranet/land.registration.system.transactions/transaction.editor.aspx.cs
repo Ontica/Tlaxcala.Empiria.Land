@@ -121,6 +121,11 @@ namespace Empiria.Land.WebApp {
           LoadEditor();
           return;
 
+        case "deleteCertificate":
+          DeleteCertificate();
+          LoadEditor();
+          return;
+
         case "sendCertificateToCITYS":
           SendCertificateToCITYS();
           return;
@@ -417,6 +422,20 @@ namespace Empiria.Land.WebApp {
       return (this.transaction.Workflow.GetCurrentTask().Responsible.Id == ExecutionServer.CurrentUserId);
     }
 
+    private void DeleteCertificate() {
+      string uid = GetCommandParameter("uid");
+
+      Certificate certificate = transaction.GetIssuedCertificates().Find( x => x.UID == uid);
+
+      Assertion.AssertObject(certificate, "El certificado no fue encontrado en este trámite.");
+
+      if (certificate.CanDelete()) {
+        certificate.Delete();
+      } else {
+        SetOKScriptMsg("El certificado no puede ser eliminado.");
+      }
+    }
+
     protected string GetCertificates() {
       const string template = "<tr class='{CLASS}'><td>{{CERTIFICATE-UID}}</td>" +
                               "<td style='white-space:normal'>{{TYPE}}</td>" +
@@ -480,7 +499,7 @@ namespace Empiria.Land.WebApp {
           if ((transaction.Workflow.CurrentStatus == LRSTransactionStatus.Elaboration ||
               transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording) &&
               certificate.Unsigned()) {
-            temp = temp.Replace("{{OPTIONS-COMBO}}", "{{EDIT-LINK}} &nbsp; &nbsp; | &nbsp; &nbsp; {{DELETE-LINK}} ");
+            temp = temp.Replace("{{OPTIONS-COMBO}}", "{{EDIT-LINK}} &nbsp; | &nbsp; {{DELETE-LINK}} ");
             temp = temp.Replace("{{EDIT-LINK}}", "<a href=\"javascript:doOperation('editCertificate', '{{CERTIFICATE-UID}}')\">Editar</a>");
             temp = temp.Replace("{{DELETE-LINK}}", "<a href=\"javascript:doOperation('deleteCertificate', '{{CERTIFICATE-UID}}')\">Eliminar</a>");
           } else {

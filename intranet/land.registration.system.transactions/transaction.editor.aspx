@@ -711,8 +711,14 @@
   }
 
   function deleteCertificate(certificateUID) {
-    alert("Eliminar certificados todavía no está disponible.");
-    return;
+    var sMsg = "Eliminar certificado.\n\n";
+
+    sMsg += "Esta operación va a eliminar el certificado " + certificateUID + " de este trámite.\n\n";
+    sMsg += "¿Elimino el certificado " + certificateUID + "?";
+
+    if (confirm(sMsg)) {
+      sendPageCommand("deleteCertificate", "uid=" + certificateUID);
+    }
   }
 
   function openCertificate(certificateUID) {
