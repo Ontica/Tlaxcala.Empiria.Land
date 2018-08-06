@@ -45,9 +45,11 @@
                 <select id="cboOperationCurrency" class="selectBox" style="width:52px;margin-left:-6px" runat="server">
                   <option value="">(?)</option>
                   <option value="600" title="Pesos mexicanos">MXN</option>
+                  <option value="601" title="Dólares americanos">USD</option>
+                  <option value="605" title="Euros">Euros</option>
+                  <option value="604" title="Unidades de salario mínimo">USM</option>
                   <option value="602" title="Unidades de inversión">UDIS</option>
                   <option value="603" title="Salarios mínimos">SM</option>
-                  <option value="601" title="Dólares americanos">USD</option>
                   <option value="-2" title="No consta">N/C</option>
                 </select>
                 <% if (base.EditAppraisalAmount) { %>
@@ -58,6 +60,9 @@
                 <select id="cboAppraisalCurrency" class="selectBox" style="width:52px;margin-left:-6px" runat="server">
                   <option value="">(?)</option>
                   <option value="600" title="Pesos mexicanos">MXN</option>
+                  <option value="601" title="Dólares americanos">USD</option>
+                  <option value="605" title="Euros">Euros</option>
+                  <option value="604" title="Unidades de salario mínimo">USM</option>
                   <option value="602" title="Unidades de inversión">UDIS</option>
                   <option value="-2" title="No consta">N/C</option>
                 </select>
