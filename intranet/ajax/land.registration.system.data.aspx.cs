@@ -122,6 +122,9 @@ namespace Empiria.Web.UI.Ajax {
         case "validateRecordingActAsCompleteCmd":
           return ValidateRecordingActAsCompleteCommandHandler();
 
+        case "validateTakeTransactionCmd":
+          return ValidateTakeTransactionCommandHandler();
+
         default:
           throw new WebPresentationException(WebPresentationException.Msg.UnrecognizedCommandName,
                                              commandName);
@@ -833,6 +836,15 @@ namespace Empiria.Web.UI.Ajax {
 
       return LRSWorkflowRules.ValidateStatusChange(transaction, nextStatus);
     }
+
+
+    private string ValidateTakeTransactionCommandHandler() {
+      int transactionId = int.Parse(GetCommandParameter("transactionId", true));
+      LRSTransaction transaction = LRSTransaction.Parse(transactionId);
+
+      return LRSWorkflowRules.ValidateTakeTransaction(transaction);
+    }
+
 
     private string ValidateRecordingActAsCompleteCommandHandler() {
       int recordingActId = int.Parse(GetCommandParameter("recordingActId", true));

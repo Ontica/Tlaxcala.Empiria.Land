@@ -333,6 +333,10 @@
   function takeLRSTransaction(transactionId) {
     var nextStatus = getInnerText('ancNextStatusID' + transactionId);
 
+    if (!validateTakeTransaction(transactionId)) {
+      return;
+    }
+
     if (nextStatus == 'S') {
     <% if (!Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSigner")) { %>
       alert("No tengo registrados los permisos necesarios para entregarle este documento.\n\nEl documento está marcado como 'Recibir para firma'.");
@@ -389,6 +393,14 @@
       qs += "|notes=" + getElement("txtNotes" + transactionId).value;
       sendPageCommand("takeLRSTransaction", qs);
     }
+  }
+
+  function validateTakeTransaction(transactionId) {
+    var ajaxURL = "../ajax/land.registration.system.data.aspx";
+    ajaxURL += "?commandName=validateTakeTransactionCmd";
+    ajaxURL += "&transactionId=" + transactionId;
+
+    return invokeAjaxValidator(ajaxURL);
   }
 
 	function validateNextTransactionState(transactionId, newState) {
