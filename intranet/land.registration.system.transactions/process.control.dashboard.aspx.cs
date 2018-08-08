@@ -266,6 +266,7 @@ namespace Empiria.Land.WebApp {
         base.SetOKScriptMsg(s);
         return;
       }
+
       transaction.Workflow.SetNextStatus(status, Person.Empty, note);
 
       // Don't show status for users in Vetanilla de entregas and
@@ -306,7 +307,7 @@ namespace Empiria.Land.WebApp {
     }
 
     private void UpdateESignWorkflow() {
-      LRSWorkflowRules.UpdateESignWorkflow();
+      TransactionCleaner.Clean();
 
       base.SetOKScriptMsg("La actualización de documentos y del flujo de trabajo se ejecutó satisfactoriamente.");
       txtSearchExpression.Value = "";
