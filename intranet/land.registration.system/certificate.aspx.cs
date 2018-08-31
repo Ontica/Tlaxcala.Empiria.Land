@@ -76,10 +76,10 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetDigitalSeal() {
-      if (this.Certificate.Signed()) {
-        return this.Certificate.GetDigitalSeal();
+      if (!this.Certificate.Signed()) {
+        return AsWarning("NO DISPONIBLE SIN FIRMA");
       } else {
-        return AsWarning("SIN VALOR LEGAL * * * * * SIN VALOR LEGAL");
+        return this.Certificate.GetDigitalSeal();
       }
     }
 
@@ -107,10 +107,12 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetQRCodeSecurityHash() {
-      if (this.Certificate.Signed()) {
-        return this.Certificate.QRCodeSecurityHash();
-      } else {
+      if (!this.Certificate.Signed()) {
         return AsWarning("NO DISPONIBLE SIN FIRMA");
+      } else if (!this.Certificate.Transaction.Workflow.Delivered) {
+        return AsWarning("ESTE CERTIFICADO NO ES VÁLIDO SI NO SE MARCA COMO ENTREGADO.");
+      } else {
+        return this.Certificate.QRCodeSecurityHash();
       }
     }
 
@@ -130,6 +132,10 @@ namespace Empiria.Land.WebApp {
       } else {
         return this.Certificate.Transaction.Payments.ReceiptNumbers;
       }
+    }
+
+    protected string GetSignedByName() {
+      return "MTRO. SERGIO CUAUHTÉMOC LIMA LÓPEZ";
     }
 
     protected string QRCodeSource() {

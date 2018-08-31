@@ -23,6 +23,8 @@
             <span style='color:red;'>* ESTE CERTIFICADO NO HA SIDO CERRADO *</span><br />
           <% } else if (base.Certificate.Unsigned()) { %>
             <span style='color:red;'>* INVÁLIDO SIN FIRMA ELECTRÓNICA *</span><br />
+          <% } else if (!base.Certificate.Transaction.Workflow.Delivered) { %>
+            <span style='color:red;'>* ESTE CERTIFICADO NO HA SIDO ENTREGADO*</span><br />
           <% } %>
           CERTIFICADO DE <%=base.Certificate.CertificateType.DisplayName.ToUpperInvariant()%>
         </h2>
@@ -48,7 +50,7 @@
 	      <br/>
         <%=base.GetDigitalSignature()%>
         <br/>
-        <span>MTRO. SERGIO CUAUHTÉMOC LIMA LÓPEZ</span>
+        <span><%=base.GetSignedByName()%></span>
       </p>
     </div>
 
