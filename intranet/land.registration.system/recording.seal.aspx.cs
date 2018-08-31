@@ -67,13 +67,17 @@ namespace Empiria.Land.WebApp {
 
     #region Protected methods
 
-    protected string GetDigitalSeal() {
-      if (document.Status != RecordableObjectStatus.Closed) {
-        return AsWarning("El documento está incompleto por lo que no tiene sello digital.");
-      };
 
-      return document.Security.GetDigitalSeal().Substring(0, 64);
+    protected string GetDigitalSeal() {
+      if (document.IsHistoricDocument) {
+        return AsWarning("Los documentos históricos no tienen sello digital.");
+      } else if (document.Status != RecordableObjectStatus.Closed) {
+        return AsWarning("El documento está ABIERTO por lo que no tiene sello digital.");
+      } else {
+        return document.Security.GetDigitalSeal().Substring(0, 64);
+      }
     }
+
 
     protected string GetDigitalSignature() {
       if (document.IsHistoricDocument) {
@@ -97,7 +101,21 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool CanBePrinted() {
-      return (document.Status == RecordableObjectStatus.Closed && (!document.Security.UseESign || document.Security.Signed()));
+      if (document.Status != RecordableObjectStatus.Closed) {
+        return false;
+      }
+      if (document.Security.UseESign && document.Security.Unsigned()) {
+        return false;
+      }
+      if (transaction.Workflow.Delivered) {
+        return true;
+      }
+
+      if (ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DigitalizationDesk") &&
+          (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Digitalization || transaction.Workflow.CurrentStatus == LRSTransactionStatus.OnSign)) {
+        return true;
+      }
+      return false;
     }
 
 
@@ -300,10 +318,10 @@ namespace Empiria.Land.WebApp {
       if (document.IsHistoricDocument) {
         return String.Empty;
       }
-      if (ExecutionServer.LicenseName == "Tlaxcala") {
-        return "Mtro. Sergio Cuauhtémoc Lima López";
+      if (!CanBePrinted()) {
+        return AsWarning("ESTE DOCUMENTO NO ES VÁLIDO EN EL ESTADO ACTUAL.");
       } else {
-        return "Lic. Teresa de Jesús Alvarado Ortiz";
+        return "Mtro. Sergio Cuauhtémoc Lima López";
       }
     }
 

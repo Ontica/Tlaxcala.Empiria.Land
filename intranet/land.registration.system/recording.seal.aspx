@@ -17,15 +17,16 @@
         <td style="vertical-align:top;text-align:center;width:95%">
 	        <h3>DIRECCIÓN DE NOTARÍAS Y REGISTROS PÚBLICOS</h3>
           <h4>GOBIERNO DEL ESTADO DE TLAXCALA</h4>
-          <% if (!document.IsClosed) { %>
-          <h2 class="warning" style="padding-top:0">ESTE DOCUMENTO NO HA SIDO CERRADO</h2>
-          <% } else if (document.Security.UseESign && document.Security.Unsigned()) { %>
-          <h2 class="warning" style="padding-top:0">ESTE DOCUMENTO NO HA SIDO FIRMADO DIGITALMENTE</h2>
-          <h2 style="padding-top:0">SELLO REGISTRAL</h2>
-          <% } else if (!document.IsHistoricDocument) { %>
-          <h2 style="padding-top:0">SELLO REGISTRAL</h2>
-          <% } else { %>
+          <% if (document.IsHistoricDocument) { %>
           <h2 style="padding-top:0">SELLO REGISTRAL DE PARTIDA HISTÓRICA</h2>
+          <% } else if (!document.IsClosed) { %>
+          <h2 class="warning" style="padding-top:0">EL SELLO REGISTRAL NO HA SIDO CERRADO</h2>
+          <% } else if (document.Security.UseESign && document.Security.Unsigned()) { %>
+          <h2 class="warning" style="padding-top:0">EL SELLO REGISTRAL NO HA SIDO FIRMADO DIGITALMENTE</h2>
+          <% } else if (!base.CanBePrinted()) { %>
+          <h2 class="warning" style="padding-top:0">ESTE SELLO REGISTRAL NO DEBE IMPRIMIRSE. NO TIENE VALOR OFICIAL</h2>
+          <% } else { %>
+          <h2 style="padding-top:0">SELLO REGISTRAL</h2>
           <% } %>
           <h5><%=document.UID%></h5>
           <% if (transaction.IsReentry) { %>
