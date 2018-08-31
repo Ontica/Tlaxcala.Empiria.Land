@@ -66,9 +66,7 @@ namespace Empiria.Land.WebApp {
           SaveTransaction();
           RedirectEditor();
           return;
-        case "reentryTransaction":
-          ReentryTransaction();
-          return;
+
         case "copyTransaction":
           CopyTransaction();
           return;
@@ -129,10 +127,28 @@ namespace Empiria.Land.WebApp {
         case "sendCertificateToCITYS":
           SendCertificateToCITYS();
           return;
+
+        case "takeTransactionInDeliveryDesk":
+          TakeTransactionInDeliveryDesk();
+          return;
+
+        case "deliverTransaction":
+          DeliverTransaction();
+          return;
+
+        case "returnTransaction":
+          ReturnTransaction();
+          return;
+
+        case "reentryTransaction":
+          ReentryTransaction();
+          return;
+
         default:
           throw new NotImplementedException(base.CommandName);
       }
     }
+
 
     protected string OnloadScript() {
       return onloadScript;
@@ -222,7 +238,6 @@ namespace Empiria.Land.WebApp {
 
       if (!transaction.IsNew) {
         txtReceiptTotal.Value = transaction.Items.TotalFee.Total.ToString("N2");
-        // txtReceiptTotal.Value = transaction.Payments.Total.ToString("N2");
       }
 
       FixedList<LRSDocumentType> list = transaction.TransactionType.GetDocumentTypes();
@@ -389,16 +404,7 @@ namespace Empiria.Land.WebApp {
 
       transaction.Workflow.Receive(String.Empty);
 
-      onloadScript = "alert('Este trámite fue recibido satistactoriamente.');doOperation('redirectThis')";
-    }
-
-    private void ReentryTransaction() {
-      try {
-        transaction.Workflow.Reentry();
-        onloadScript = "alert('Este trámite fue reingresado correctamente.');doOperation('redirectThis')";
-      } catch (Exception e) {
-        onloadScript = "alert('" + EmpiriaString.FormatForScripting(e.Message) + "');doOperation('redirectThis')";
-      }
+      ShowAlertBox("Este trámite fue recibido satistactoriamente.");
     }
 
     private void CopyTransaction() {
@@ -492,6 +498,7 @@ namespace Empiria.Land.WebApp {
           } else {
             temp = temp.Replace("{{VIEW-LINK}}", "<a href=\"javascript:doOperation('viewCertificate', '{{CERTIFICATE_ID}}')\">Imprimir</a>");
           }
+
         } else {
           temp = temp.Replace("{{ISSUED-BY}}", "&nbsp;");
           temp = temp.Replace("{{ISSUE-TIME}}", "No emitido");
@@ -736,8 +743,6 @@ namespace Empiria.Land.WebApp {
       var isNew = (int.Parse(Request.QueryString["id"]) == 0);
       if (isNew) {
         Response.Redirect("transaction.editor.aspx?id=" + transaction.Id.ToString() + "&isNew=true");
-        //} else {
-        //  Response.Redirect("transaction.editor.aspx?id=" + transaction.Id.ToString());
       }
     }
 
@@ -786,6 +791,103 @@ namespace Empiria.Land.WebApp {
       pdf.Save();
 
       return new System.IO.FileInfo(pdf.FileName);
+    }
+
+
+    protected bool IsTransactionReadyForTakeInDeliveryDesk() {
+      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) {
+        return false;
+      }
+      if (transaction.Workflow.NextStatus != LRSTransactionStatus.ToDeliver &&
+          transaction.Workflow.NextStatus != LRSTransactionStatus.ToReturn) {
+        return false;
+      }
+
+      return true;
+    }
+
+
+    private void TakeTransactionInDeliveryDesk() {
+      Assertion.Assert(IsTransactionReadyForTakeInDeliveryDesk(), "La operación no puede ser ejecutada: 'TakeTransactionInDeliveryDesk'.");
+
+      string notes = GetCommandParameter("notes", false);
+
+      transaction.Workflow.Take(notes);
+    }
+
+
+    protected bool IsTransactionReadyForDelivery() {
+      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) {
+        return false;
+      }
+      if (!transaction.Workflow.IsReadyForDelivery || transaction.Workflow.CurrentStatus != LRSTransactionStatus.ToDeliver) {
+        return false;
+      }
+      return true;
+    }
+
+
+    private void DeliverTransaction() {
+      Assertion.Assert(IsTransactionReadyForDelivery(), "La operación no puede ser ejecutada: 'DeliverTransaction'.");
+
+      LRSTransactionStatus status = LRSTransactionStatus.Delivered;
+      string notes = GetCommandParameter("notes", false);
+
+      string s = LRSWorkflowRules.ValidateStatusChange(transaction, status);
+      if (!String.IsNullOrWhiteSpace(s)) {
+        this.ShowAlertBox(s);
+        return;
+      }
+      transaction.Workflow.SetNextStatus(status, Person.Empty, notes);
+    }
+
+
+    protected bool IsTransactionReadyForReturn() {
+      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) {
+        return false;
+      }
+      if (!transaction.Workflow.IsReadyForDelivery || transaction.Workflow.CurrentStatus != LRSTransactionStatus.ToReturn) {
+        return false;
+      }
+      return true;
+    }
+
+
+    private void ReturnTransaction() {
+      Assertion.Assert(IsTransactionReadyForReturn(), "La operación no puede ser ejecutada: 'ReturnTransaction'.");
+
+      LRSTransactionStatus status = LRSTransactionStatus.Returned;
+      string notes = GetCommandParameter("notes", false);
+
+      string s = LRSWorkflowRules.ValidateStatusChange(transaction, status);
+      if (!String.IsNullOrWhiteSpace(s)) {
+        this.ShowAlertBox(s);
+        return;
+      }
+
+      transaction.Workflow.SetNextStatus(status, Person.Empty, notes);
+    }
+
+    protected bool IsTransactionReadyForReentry() {
+      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReentryByFails")) {
+        return false;
+      }
+      return transaction.Workflow.IsReadyForReentry;
+    }
+
+
+    private void ReentryTransaction() {
+      Assertion.Assert(IsTransactionReadyForReentry(), "La operación no puede ser ejecutada: 'ReentryTransaction'.");
+      try {
+        transaction.Workflow.Reentry();
+        this.ShowAlertBox("Este trámite fue reingresado correctamente.");
+      } catch (Exception e) {
+        this.ShowAlertBox(e.Message);
+      }
+    }
+
+    private void ShowAlertBox(string message) {
+      onloadScript = "alert('" + EmpiriaString.FormatForScripting(message) + "');doOperation('redirectThis')";
     }
 
   } // class TransactionEditor

@@ -38,10 +38,12 @@
       <td id="tabStripItem_0" class="tabOn" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Información del trámite y conceptos</td>
       <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Inscripción de documentos</td>
       <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Emisión de certificados</td>
-      <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Historia del trámite</td>
-      <td class="lastCell" colspan="1" rowspan="1"><a id="top" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
+      <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Devoluciones</td>
+      <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Estado del trámite</td>
+      <td class="lastCell" colspan="1" rowspan="1"><a id="top" />&nbsp; &nbsp; &nbsp; &nbsp;</td>
     </tr>
   </table>
+
   <table id="tabStripItemView_0" class="editionTable" style="display:inline">
     <tr>
       <td class="subTitle">Información del interesado, número de trámite y tipo de documento</td>
@@ -330,10 +332,6 @@
             <input id="cmdSaveAndReceive" class="button" type="button" value="Recibir trámite"
               onclick="doOperation('saveAndReceive')" style="height:30px;width:100px" runat="server" />
             <% } %>
-            <% if (transaction.Workflow.IsReadyForReentry) { %>
-            <input class="button" type="button" value="Reingresar trámite"
-                   onclick="doOperation('reentryTransaction')" style="height:28px;width:120px" runat="server" />
-            <% } %>
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
           </td>
           <td class="lastCell"></td>
@@ -437,6 +435,12 @@
 
     <table id="tabStripItemView_3" class="editionTable" style="display:none">
       <tr>
+        <td class="subTitle">Devolución del trámite</td>
+      </tr>
+    </table>
+
+    <table id="tabStripItemView_4" class="editionTable" style="display:none">
+      <tr>
         <td class="subTitle">Historia del trámite</td>
       </tr>
       <tr>
@@ -461,9 +465,34 @@
           <% if (transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Deleted) { %>
           <input id="cmdUndelete" class="button" type="button" value="Reactivar" onclick="doOperation('undelete')" style="height:28px;width:110px" runat="server" />
           <% } %>
+
+          <% if (base.IsTransactionReadyForTakeInDeliveryDesk()) { %>
+
+            <input id="cmdTakeTransaction" class="button" type="button" value="Recibir documentos del trámite para su entrega o devolución"
+                   onclick="doOperation('takeTransactionInDeliveryDesk')" style="height:28px;width:380px" runat="server" />
+
+
+          <% }  else if (base.IsTransactionReadyForDelivery()) { %>
+
+             <input id="cmdDeliverTransaction" class="button" type="button" value="Entregar este trámite al interesado"
+                    onclick="doOperation('deliverTransaction')" style="height:28px;width:180px" runat="server" />
+
+          <%  } else if (base.IsTransactionReadyForReturn()) { %>
+
+             <input id="cmdReturnTransaction" class="button" type="button" value="Devolver este trámite al interesado"
+                    onclick="doOperation('returnTransaction')" style="height:28px;width:180px" runat="server" />
+
+          <%  } else if (base.IsTransactionReadyForReentry()) { %>
+
+             <input class="button" type="button" value="Reingresar este trámite"
+                    onclick="doOperation('reentryTransaction')" style="height:28px;width:180px" runat="server" />
+
+          <%  } %>
+
         </td>
       </tr>
     </table>
+
   </div>
  </div> <!-- end divBody !-->
 <div id="divBottomToolbar" style="display:none">
@@ -571,6 +600,17 @@
       case "sendCertificateToCITYS":
         sendCertificateToCITYS();
         return;
+
+      case "takeTransactionInDeliveryDesk":
+        takeTransactionInDeliveryDesk();
+        return;
+
+      case "deliverTransaction":
+        deliverTransaction();
+        return;
+      case "returnTransaction":
+        returnTransaction();
+        return;
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
@@ -580,6 +620,41 @@
       gbSended = true;
     }
   }
+
+  function takeTransactionInDeliveryDesk() {
+    var sMsg = "Recibir documentación en ventanilla de entregas.\n\n";
+
+    sMsg += "¿Está recibiendo la documentación de este trámite para su entrega o devolución al interesado?";
+
+    if (confirm(sMsg)) {
+      sendPageCommand("takeTransactionInDeliveryDesk", "notes=");
+    }
+
+  }
+
+  function deliverTransaction() {
+    var sMsg = "Entregar el trámite al interesado.\n\n";
+
+    sMsg += "Por favor, recuerde informarle al interesado revise con cuidado sus sellos registrales y documentos.\n\n";
+
+    sMsg += "¿Se va a entregar este trámite al interesado?";
+
+    if (confirm(sMsg)) {
+      sendPageCommand("deliverTransaction", "notes=");
+    }
+  }
+
+
+  function returnTransaction() {
+    var sMsg = "Devolver el trámite al interesado.\n\n";
+
+    sMsg += "¿Se va a devolver este trámite al interesado?";
+
+    if (confirm(sMsg)) {
+      sendPageCommand("returnTransaction", "notes=");
+    }
+  }
+
 
   function noBaseResourceCheckBoxSelected() {
     if (getElement('chkNoBaseResource').checked) {
@@ -673,10 +748,10 @@
     }
   }
 
-<% if (!transaction.IsNew && base.CanCreateCertificate() && base.AutoCreateCertificateEnabled) { %>
-  addEvent(getElement("txtCertificatePropertyUID"), 'keypress', upperCaseKeyFilter);
-  addEvent(getElement("txtCertificateOwnerName"), 'keypress', upperCaseKeyFilter);
-<% } %>
+  <% if (!transaction.IsNew && base.CanCreateCertificate() && base.AutoCreateCertificateEnabled) { %>
+    addEvent(getElement("txtCertificatePropertyUID"), 'keypress', upperCaseKeyFilter);
+    addEvent(getElement("txtCertificateOwnerName"), 'keypress', upperCaseKeyFilter);
+  <% } %>
 
   function createNewCertificate() {
     var url = gCertificatesServerURL + "certificados.html?" +
@@ -826,7 +901,6 @@
   }
 
   function createNew() {
-    //window_onunload();
     window.location.replace("transaction.editor.aspx?id=0&typeId=<%=base.transaction.TransactionType.Id%>");
   }
 
@@ -1101,7 +1175,6 @@
 
     oFrame.style.height = oBody.scrollHeight + (oBody.offsetHeight - oBody.clientHeight) + 400;
     oFrame.style.width = oBody.scrollWidth + (oBody.offsetWidth - oBody.clientWidth);
-    //alert(oFrame.style.height);
   }
 
   function window_onresize() {
