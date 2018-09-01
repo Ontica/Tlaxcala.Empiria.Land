@@ -1,30 +1,28 @@
 ﻿<%@ Page language="c#" Inherits="Empiria.Web.UI.LogonPage" EnableViewState="false" EnableSessionState="true" Codebehind="default.aspx.cs" %>
 <%@ OutputCache Location="None" NoStore="true" %>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="es" xml:lang="es-mx">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta charset="UTF-8" />
   <meta http-equiv="Expires" content="-1" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <meta name="MS.LOCALE" content="ES-MX" />
-  <meta name="CATEGORY" content="home page" />
   <base target="_blank" />
   <title><%="Inicio » " + Empiria.ExecutionServer.ServerName + " » " + Empiria.ExecutionServer.CustomerName %></title>
   <link href="./themes/default/css/logon.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="./scripts/empiria.general.js"></script>
 </head>
 <body>
-  <form id="frmEditor" method="post" target="_self" runat="server">
+  <form id="frmEditor" method="post" target="_self" autocomplete="off" runat="server">
     <div id="divMainBanner"><img src="./themes/default/customer/pleca-roja.png" style="cursor: auto;"  width="636" alt="" title="" /></div>
     <div id="divMain">
       <div id="divLeftColumn">
         <br />
 
-		<div class="decoratorImage">
-        <img src="./themes/default/customer/customer.full.logo.png" alt="" style='margin-left:8px;margin-top:8px' />
+		    <div class="decoratorImage">
+            <img src="./themes/default/customer/customer.full.logo.png" alt="" style='margin-left:8px;margin-top:8px' />
+		    </div>
 
-		</div>
-        <br /><br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br />
         <ul style="margin-left:12px;">
           <li><a href="<%=Empiria.ExecutionServer.CustomerUrl%>">Gobierno del Estado de Tlaxcala</a></li>
           <li><a href="http://www.inegi.org.mx/">Instituto Nacional de Estadística y Geografía (INEGI)</a></li>
@@ -39,23 +37,33 @@
         <div>
           <br />
           <div class="title">Registro Público de la Propiedad</div>
-          <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+          <br /><br /><br /><br /><br /><br /><br /><br />
           <strong>ACCESO AL SISTEMA:</strong>
           <br /><br />
-             Para acceder a este sitio se requiere ingresar la cuenta de<br />
-             usuario y la contraseña de acceso:<br /><br />
+          IMPORTANTE: Cada usuario es responsable del uso o mal uso que pudiera darle<br />
+          a su propias credenciales de acceso. NO comparta su contraseña con otras personas y cámbiela con frecuencia.<br /><br />
+          Recuerde que su trabajo es MUY IMPORTANTE para la sociedad.<br /><br />
+          Gracias por trabajar con lealtad y esmero para Tlaxcala y para México.
+          <br /><br />
           <div class="formRow">
             <span class="formLabel">Usuario:</span>
-            <span class="formControl"><input id="txtUserId" type="text" maxlength="32" size="24" name="txtUserId" runat="server" /></span>
+            <span class="formControl">
+              <input id="txtUserId" type="text" maxlength="32" size="24" name="txtUserId" runat="server" />
+              <% if (!base.AllowPasswordAutofill()) { %>
+              <input type="password" style="display:none;" />
+              <% } %>
+            </span>
           </div>
           <div class="formRow">
             <span class="formLabel">Contraseña:</span>
-            <span class="formControl"><input id="txtPassword" type="password" maxlength="32" size="24" name="txtPassword" runat="server" /></span>
+            <span class="formControl"><input id="txtPassword" type="password" maxlength="32" autocomplete="off" size="24"
+                  name="txtPassword" runat="server" /></span>
           </div>
-          <div class="formRow">
+<%--          <div class="formRow">
             <span class="formLabel">Tarjeta de acceso: (Posición NC4) </span>
             <span class="formControl"><input id="txtAccessCode" type="text" maxlength="6" size="24" name="txtAccessCode" runat="server" /></span>
-          </div>
+          </div>--%>
+          <input id="txtAccessCode" type="text" maxlength="6" size="24" name="txtAccessCode" style="display:none" runat="server" />
           <div class="formRow">
             <span class="formButton">
               <a href="javascript:doLogin();" target="_self">
@@ -155,7 +163,7 @@
         getElement("txtPassword").focus();
       }
       <%=clientScriptCode%>
-      <%=GetDevelopmentCode()%>
+
       addEvent(getElement("txtUserId"), 'keypress', txtUserId_onkeypress);
       addEvent(getElement("txtPassword"), 'keypress', txtPassword_onkeypress);
     }

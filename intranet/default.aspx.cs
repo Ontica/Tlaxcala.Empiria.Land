@@ -92,12 +92,8 @@ namespace Empiria.Web.UI {
       txtAccessCode.Value = "ABCDEFG";
     }
 
-    protected string GetDevelopmentCode() {
-      if (Request.Url.ToString().StartsWith("http://jmcota/empiria.land/tlaxcala/intranet/")) {
-        return "getElement('txtPassword').value = 's3cur1ty'";
-      } else {
-        return String.Empty;
-      }
+    protected bool AllowPasswordAutofill() {
+      return Request.Url.ToString().StartsWith("http://empiria.land/intranet/");
     }
 
     #endregion Private methods
