@@ -435,7 +435,12 @@
 
     <table id="tabStripItemView_3" class="editionTable" style="display:none">
       <tr>
-        <td class="subTitle">Devolución del trámite</td>
+        <td class="lastCell">
+          <iframe id="ifraTransactionReturnEditor" style="z-index:99;left:0;top:0;"
+                  marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
+                  src="../workplace/empty.page.aspx" width="90%" height="4000px" visible="true" >
+          </iframe>
+        </td>
       </tr>
     </table>
 
@@ -1143,13 +1148,19 @@
     return true;
   }
 
+  function showEditors() {
+    <% if (base.ShowDocumentsEditor()) { %>
+    getElement('ifraRecordingEditor').src = "../land.registration.system/recording.editor.aspx?transactionId=<%=transaction.Id%>";
+    getElement('ifraTransactionReturnEditor').src = "./transaction.return.editor.aspx?transactionId=<%=transaction.Id%>";
+    <% } else { %>
+    getElement('ifraRecordingEditor').src = "../workplace/empty.page.aspx";
+    getElement('ifraTransactionReturnEditor').src = "../workplace/empty.page.aspx";
+    <% } %>
+  }
+
   function window_onload() {
     setWorkplace();
-    <% if (base.ShowDocumentsEditor()) { %>
-     getElement('ifraRecordingEditor').src = "../land.registration.system/recording.editor.aspx?transactionId=<%=transaction.Id%>";
-    <% } else { %>
-     getElement('ifraRecordingEditor').src = "../workplace/empty.page.aspx";
-    <% } %>
+    showEditors();
     <%=base.OnloadScript()%>
   }
 

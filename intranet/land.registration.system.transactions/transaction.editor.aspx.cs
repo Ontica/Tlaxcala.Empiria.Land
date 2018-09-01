@@ -46,9 +46,7 @@ namespace Empiria.Land.WebApp {
 
     private void Initialize() {
       int id = int.Parse(Request.QueryString["id"]);
-      //if (!String.IsNullOrWhiteSpace(Request["isNew"])) {
-      //  onloadScript = "alert('El trámite fue creado correctamente.');";
-      //}
+
       if (id != 0) {
         transaction = LRSTransaction.Parse(id);
       } else {
