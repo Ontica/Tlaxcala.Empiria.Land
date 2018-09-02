@@ -126,22 +126,6 @@ namespace Empiria.Land.WebApp {
           SendCertificateToCITYS();
           return;
 
-        case "takeTransactionInDeliveryDesk":
-          TakeTransactionInDeliveryDesk();
-          return;
-
-        case "deliverTransaction":
-          DeliverTransaction();
-          return;
-
-        case "returnTransaction":
-          ReturnTransaction();
-          return;
-
-        case "reentryTransaction":
-          ReentryTransaction();
-          return;
-
         default:
           throw new NotImplementedException(base.CommandName);
       }
@@ -574,79 +558,6 @@ namespace Empiria.Land.WebApp {
                           .Replace("{MESSAGE}", message);
     }
 
-    protected string GetTransactionTrack() {
-      const string template = "<tr class='{CLASS}' valign='top'><td>{CURRENT.STATUS}</td>" +
-                              "<td style='white-space:nowrap;'>{RESPONSIBLE}</td><td align='right'>{CHECK.IN}</td><td align='right'>{END.PROCESS}</td><td align='right'>{CHECK.OUT}</td>" +
-                              "<td align='right'>{ELAPSED.TIME}</td><td>{STATUS}</td><td style='white-space:normal;width:30%;'>{NOTES}</td></tr>";
-
-      const string subTotalTemplate = "<tr class='detailsGreenItem'><td colspan='5'>&nbsp;</td><td  align='right'><b>{WORK.TOTAL.TIME}</b></td><td>&nbsp;</td><td>Duración total: <b>{TOTAL.TIME}</b></td></tr>";
-
-      const string footer = "<tr class='detailsSuperHeader' valign='middle'><td colspan='5' style='height:28px'>&nbsp;&nbsp;{NEXT.STATUS}</td><td  align='right'><b>{WORK.TOTAL.TIME}</b></td><td>&nbsp;</td><td>&nbsp;&nbsp;&nbsp;Duración total: <b>{TOTAL.TIME}</b></td></tr>";
-
-      LRSWorkflowTaskList taskList = this.transaction.Workflow.Tasks;
-
-      string html = String.Empty;
-      double subTotalWorkTimeSeconds = 0.0d;
-      double subTotalElapsedTimeSeconds = 0.0d;
-      double workTimeSeconds = 0.0d;
-      double elapsedTimeSeconds = 0.0d;
-
-      LRSWorkflowTask task = null;
-      bool hasReentries = false;
-      for (int i = 0; i < taskList.Count; i++) {
-        string temp = String.Empty;
-        task = taskList[i];
-        if (task.CurrentStatus == LRSTransactionStatus.Reentry) {
-          temp = subTotalTemplate.Replace("{WORK.TOTAL.TIME}", EmpiriaString.TimeSpanString(subTotalWorkTimeSeconds));
-          temp = temp.Replace("{TOTAL.TIME}", EmpiriaString.TimeSpanString(subTotalElapsedTimeSeconds));
-          subTotalWorkTimeSeconds = 0.0d;
-          subTotalElapsedTimeSeconds = 0.0d;
-          hasReentries = true;
-          html += temp;
-        }
-
-        temp = template.Replace("{CURRENT.STATUS}", task.CurrentStatus == LRSTransactionStatus.Reentry ?
-                                                    "<b>" + task.CurrentStatusName + "</b>" : task.CurrentStatusName);
-
-        temp = temp.Replace("{CLASS}", ((i % 2) == 0) ? "detailsItem" : "detailsOddItem");
-        temp = temp.Replace("{RESPONSIBLE}", task.Responsible.Alias);
-
-        string dateFormat = "dd/MMM/yyyy HH:mm";
-        if (task.CheckInTime.Year == DateTime.Today.Year) {
-          dateFormat = "dd/MMM HH:mm";
-        }
-        temp = temp.Replace("{CHECK.IN}", task.CheckInTime.ToString(dateFormat));
-        temp = temp.Replace("{END.PROCESS}", task.EndProcessTime != ExecutionServer.DateMaxValue ?
-                                                      task.EndProcessTime.ToString(dateFormat) : "&nbsp;");
-        temp = temp.Replace("{CHECK.OUT}", task.CheckOutTime != ExecutionServer.DateMaxValue ?
-                                                      task.CheckOutTime.ToString(dateFormat) : "&nbsp;");
-
-        TimeSpan elapsedTime = task.OfficeWorkElapsedTime;
-        temp = temp.Replace("{ELAPSED.TIME}", elapsedTime == TimeSpan.Zero ?
-                                                  "&nbsp;" : EmpiriaString.TimeSpanString(elapsedTime));
-        temp = temp.Replace("{STATUS}", task.StatusName);
-
-        temp = temp.Replace("{NOTES}", task.Notes);
-        html += temp;
-
-        subTotalWorkTimeSeconds += elapsedTime.TotalSeconds;
-        subTotalElapsedTimeSeconds += task.ElapsedTime.TotalSeconds;
-        workTimeSeconds += elapsedTime.TotalSeconds;
-        elapsedTimeSeconds += task.ElapsedTime.TotalSeconds;
-      }
-      if (hasReentries) {
-        string temp = subTotalTemplate.Replace("{WORK.TOTAL.TIME}",
-                                               EmpiriaString.TimeSpanString(subTotalWorkTimeSeconds));
-        temp = temp.Replace("{TOTAL.TIME}", EmpiriaString.TimeSpanString(subTotalElapsedTimeSeconds));
-        html += temp;
-      }
-      html += footer.Replace("{WORK.TOTAL.TIME}", EmpiriaString.TimeSpanString(workTimeSeconds));
-      html = html.Replace("{TOTAL.TIME}", EmpiriaString.TimeSpanString(elapsedTimeSeconds));
-      html = html.Replace("{NEXT.STATUS}", (task != null && task.Status == WorkflowTaskStatus.OnDelivery) ?
-                                                      "Próximo estado: &nbsp;<b>" + task.NextStatusName + "</b>" : String.Empty);
-
-      return html;
-    }
 
     private void AutoCreateCertificate() {
       string certificateType = Request.Form[cboCertificateType.ClientID];
@@ -791,98 +702,6 @@ namespace Empiria.Land.WebApp {
       return new System.IO.FileInfo(pdf.FileName);
     }
 
-
-    protected bool IsTransactionReadyForTakeInDeliveryDesk() {
-      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) {
-        return false;
-      }
-      if (transaction.Workflow.NextStatus != LRSTransactionStatus.ToDeliver &&
-          transaction.Workflow.NextStatus != LRSTransactionStatus.ToReturn) {
-        return false;
-      }
-
-      return true;
-    }
-
-
-    private void TakeTransactionInDeliveryDesk() {
-      Assertion.Assert(IsTransactionReadyForTakeInDeliveryDesk(), "La operación no puede ser ejecutada: 'TakeTransactionInDeliveryDesk'.");
-
-      string notes = GetCommandParameter("notes", false);
-
-      transaction.Workflow.Take(notes);
-    }
-
-
-    protected bool IsTransactionReadyForDelivery() {
-      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) {
-        return false;
-      }
-      if (!transaction.Workflow.IsReadyForDelivery || transaction.Workflow.CurrentStatus != LRSTransactionStatus.ToDeliver) {
-        return false;
-      }
-      return true;
-    }
-
-
-    private void DeliverTransaction() {
-      Assertion.Assert(IsTransactionReadyForDelivery(), "La operación no puede ser ejecutada: 'DeliverTransaction'.");
-
-      LRSTransactionStatus status = LRSTransactionStatus.Delivered;
-      string notes = GetCommandParameter("notes", false);
-
-      string s = LRSWorkflowRules.ValidateStatusChange(transaction, status);
-      if (!String.IsNullOrWhiteSpace(s)) {
-        this.ShowAlertBox(s);
-        return;
-      }
-      transaction.Workflow.SetNextStatus(status, Person.Empty, notes);
-    }
-
-
-    protected bool IsTransactionReadyForReturn() {
-      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) {
-        return false;
-      }
-      if (!transaction.Workflow.IsReadyForDelivery || transaction.Workflow.CurrentStatus != LRSTransactionStatus.ToReturn) {
-        return false;
-      }
-      return true;
-    }
-
-
-    private void ReturnTransaction() {
-      Assertion.Assert(IsTransactionReadyForReturn(), "La operación no puede ser ejecutada: 'ReturnTransaction'.");
-
-      LRSTransactionStatus status = LRSTransactionStatus.Returned;
-      string notes = GetCommandParameter("notes", false);
-
-      string s = LRSWorkflowRules.ValidateStatusChange(transaction, status);
-      if (!String.IsNullOrWhiteSpace(s)) {
-        this.ShowAlertBox(s);
-        return;
-      }
-
-      transaction.Workflow.SetNextStatus(status, Person.Empty, notes);
-    }
-
-    protected bool IsTransactionReadyForReentry() {
-      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReentryByFails")) {
-        return false;
-      }
-      return transaction.Workflow.IsReadyForReentry;
-    }
-
-
-    private void ReentryTransaction() {
-      Assertion.Assert(IsTransactionReadyForReentry(), "La operación no puede ser ejecutada: 'ReentryTransaction'.");
-      try {
-        transaction.Workflow.Reentry();
-        this.ShowAlertBox("Este trámite fue reingresado correctamente.");
-      } catch (Exception e) {
-        this.ShowAlertBox(e.Message);
-      }
-    }
 
     private void ShowAlertBox(string message) {
       onloadScript = "alert('" + EmpiriaString.FormatForScripting(message) + "');doOperation('redirectThis')";

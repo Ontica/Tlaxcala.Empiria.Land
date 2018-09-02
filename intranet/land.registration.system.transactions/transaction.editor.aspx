@@ -446,56 +446,14 @@
 
     <table id="tabStripItemView_4" class="editionTable" style="display:none">
       <tr>
-        <td class="subTitle">Historia del trámite</td>
-      </tr>
-      <tr>
-        <td>
-          <div style="overflow:auto;width:100%;">
-            <table class="details" style="width:97%">
-              <tr class="detailsHeader">
-                <td>Tipo de movimiento</td>
-                <td>Responsable</td>
-                <td>Recibido</td>
-                <td>Terminado</td>
-                <td>Entregado</td>
-                <td>Trabajo</td>
-                <td>Estado</td>
-                <td width="40%">Observaciones</td>
-              </tr>
-              <%=GetTransactionTrack()%>
-            </table>
-          </div>
-          <br />
-          <br />
-          <% if (transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Deleted) { %>
-          <input id="cmdUndelete" class="button" type="button" value="Reactivar" onclick="doOperation('undelete')" style="height:28px;width:110px" runat="server" />
-          <% } %>
-
-          <% if (base.IsTransactionReadyForTakeInDeliveryDesk()) { %>
-
-            <input id="cmdTakeTransaction" class="button" type="button" value="Recibir documentos del trámite para su entrega o devolución"
-                   onclick="doOperation('takeTransactionInDeliveryDesk')" style="height:28px;width:380px" runat="server" />
-
-
-          <% }  else if (base.IsTransactionReadyForDelivery()) { %>
-
-             <input id="cmdDeliverTransaction" class="button" type="button" value="Entregar este trámite al interesado"
-                    onclick="doOperation('deliverTransaction')" style="height:28px;width:180px" runat="server" />
-
-          <%  } else if (base.IsTransactionReadyForReturn()) { %>
-
-             <input id="cmdReturnTransaction" class="button" type="button" value="Devolver este trámite al interesado"
-                    onclick="doOperation('returnTransaction')" style="height:28px;width:180px" runat="server" />
-
-          <%  } else if (base.IsTransactionReadyForReentry()) { %>
-
-             <input class="button" type="button" value="Reingresar este trámite"
-                    onclick="doOperation('reentryTransaction')" style="height:28px;width:180px" runat="server" />
-
-          <%  } %>
-
+        <td class="lastCell">
+          <iframe id="ifraTransactionStatusEditor" style="z-index:99;left:0;top:0;"
+                  marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
+                  src="../workplace/empty.page.aspx" width="90%" height="4000px" visible="true" >
+          </iframe>
         </td>
       </tr>
+
     </table>
 
   </div>
@@ -533,8 +491,7 @@
         return setDefaultRFC();
       case 'saveAndReceive':
         return saveAndReceiveTransaction();
-      case 'reentryTransaction':
-        return reentryTransaction();
+
       case 'createCopy':
         return createCopy();
       case 'lookupBaseResource':
@@ -606,16 +563,6 @@
         sendCertificateToCITYS();
         return;
 
-      case "takeTransactionInDeliveryDesk":
-        takeTransactionInDeliveryDesk();
-        return;
-
-      case "deliverTransaction":
-        deliverTransaction();
-        return;
-      case "returnTransaction":
-        returnTransaction();
-        return;
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
@@ -623,40 +570,6 @@
     if (success) {
       sendPageCommand(command);
       gbSended = true;
-    }
-  }
-
-  function takeTransactionInDeliveryDesk() {
-    var sMsg = "Recibir documentación en ventanilla de entregas.\n\n";
-
-    sMsg += "¿Está recibiendo la documentación de este trámite para su entrega o devolución al interesado?";
-
-    if (confirm(sMsg)) {
-      sendPageCommand("takeTransactionInDeliveryDesk", "notes=");
-    }
-
-  }
-
-  function deliverTransaction() {
-    var sMsg = "Entregar el trámite al interesado.\n\n";
-
-    sMsg += "Por favor, recuerde informarle al interesado revise con cuidado sus sellos registrales y documentos.\n\n";
-
-    sMsg += "¿Se va a entregar este trámite al interesado?";
-
-    if (confirm(sMsg)) {
-      sendPageCommand("deliverTransaction", "notes=");
-    }
-  }
-
-
-  function returnTransaction() {
-    var sMsg = "Devolver el trámite al interesado.\n\n";
-
-    sMsg += "¿Se va a devolver este trámite al interesado?";
-
-    if (confirm(sMsg)) {
-      sendPageCommand("returnTransaction", "notes=");
     }
   }
 
@@ -881,16 +794,6 @@
     }
   }
 
-
-  function reentryTransaction() {
-    var sMsg = "Reingreso de trámites.\n\n";
-
-    sMsg += "Esta operación reinigresará este trámite y lo enviará al distrito o mesa de trabajo correspondiente.\n\n";
-    sMsg += "¿Reingreso este trámite";
-    if (confirm(sMsg)) {
-      sendPageCommand("reentryTransaction");
-    }
-  }
 
   function deleteRecordingAct(transactionActId) {
     var sMsg = "Eliminación de actos jurídicos y conceptos de pago.\n\n";
@@ -1152,9 +1055,11 @@
     <% if (base.ShowDocumentsEditor()) { %>
     getElement('ifraRecordingEditor').src = "../land.registration.system/recording.editor.aspx?transactionId=<%=transaction.Id%>";
     getElement('ifraTransactionReturnEditor').src = "./transaction.return.editor.aspx?transactionId=<%=transaction.Id%>";
+    getElement('ifraTransactionStatusEditor').src = "./transaction.status.editor.aspx?transactionId=<%=transaction.Id%>";
     <% } else { %>
     getElement('ifraRecordingEditor').src = "../workplace/empty.page.aspx";
     getElement('ifraTransactionReturnEditor').src = "../workplace/empty.page.aspx";
+    getElement('ifraTransactionStatusEditor').src = "../workplace/empty.page.aspx";
     <% } %>
   }
 

@@ -113,8 +113,10 @@
     <Content Include="land.registration.system.transactions\transaction.editor.aspx" />
     <Content Include="land.registration.system.transactions\transaction.receipt.aspx" />
     <Content Include="land.registration.system.transactions\transaction.report.aspx" />
+    <Content Include="land.registration.system.transactions\transaction.status.editor.aspx" />
     <Content Include="land.registration.system\by.resource.analyzer.aspx" />
     <Content Include="land.registration.system\cadastral.card.html" />
+    <Content Include="land.registration.system.transactions\transaction.return.editor.aspx" />
     <Content Include="land.registration.system\certificate.aspx" />
     <Content Include="land.registration.system\document.editor.aspx" />
     <Content Include="land.registration.system\document.imaging.control.slip.aspx" />
@@ -173,10 +175,10 @@
     <Content Include="templates\land.registration.system\recording.book.unassigned.header.ascx" />
     <Content Include="templates\land.registration.system\recording.book.unassigned.items.ascx" />
     <Content Include="templates\security\empiria.security.user.item.ascx" />
-    <Content Include="templates\transactions\digitalization.desk.header.ascx" />
     <Content Include="templates\transactions\control.desk.header.ascx" />
-    <Content Include="templates\transactions\digitalization.desk.item.ascx" />
     <Content Include="templates\transactions\control.desk.item.ascx" />
+    <Content Include="templates\transactions\digitalization.desk.header.ascx" />
+    <Content Include="templates\transactions\digitalization.desk.item.ascx" />
     <Content Include="templates\transactions\process.close.item.ascx" />
     <Content Include="templates\transactions\process.control.header.ascx" />
     <Content Include="templates\transactions\process.control.item.ascx" />
@@ -358,13 +360,13 @@
     <Content Include="workplace\out.of.service.aspx" />
     <None Include="packages.config" />
     <Content Include="favicon.ico" />
-    <Content Include="templates\reports\transaction.ticket.ert" />
     <Content Include="workplace\dashboard.master" />
     <Content Include="workplace\default.master" />
     <Content Include="workplace\old.secondary.master" />
     <Content Include="workplace\viewer.master" />
     <Content Include="Web.config" />
     <Content Include="README.md" />
+    <Content Include="templates\reports\transaction.ticket.ert" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -496,12 +498,26 @@
     <Compile Include="land.registration.system.transactions\transaction.report.aspx.designer.cs">
       <DependentUpon>transaction.report.aspx</DependentUpon>
     </Compile>
+    <Compile Include="land.registration.system.transactions\transaction.status.editor.aspx.cs">
+      <DependentUpon>transaction.status.editor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\transaction.status.editor.aspx.designer.cs">
+      <DependentUpon>transaction.status.editor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="land.registration.system\by.resource.analyzer.aspx.cs">
       <DependentUpon>by.resource.analyzer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="land.registration.system\by.resource.analyzer.aspx.designer.cs">
       <DependentUpon>by.resource.analyzer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\transaction.return.editor.aspx.cs">
+      <DependentUpon>transaction.return.editor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\transaction.return.editor.aspx.designer.cs">
+      <DependentUpon>transaction.return.editor.aspx</DependentUpon>
     </Compile>
     <Compile Include="land.registration.system\certificate.aspx.cs">
       <DependentUpon>certificate.aspx</DependentUpon>

@@ -588,7 +588,7 @@ function createNewWindow(url) {
   var openExclusive = false;
   //var options = getWindowFeatures(viewName);
 
-  var options = "status=yes,scrollbars=yes,fullscreen=no,location=no,menubar=no,resizable=yes,height=780px,width=900px";
+  var options = "status=yes,scrollbars=yes,fullscreen=no,location=no,menubar=no,resizable=yes,height=800px,width=1020px";
 
 //  if ((viewParameters != null) && (viewParameters != "")) {
 //    commandPage += "&" + viewParameters;
