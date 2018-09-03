@@ -179,7 +179,6 @@
     <Content Include="templates\transactions\control.desk.item.ascx" />
     <Content Include="templates\transactions\digitalization.desk.header.ascx" />
     <Content Include="templates\transactions\digitalization.desk.item.ascx" />
-    <Content Include="templates\transactions\process.close.item.ascx" />
     <Content Include="templates\transactions\process.control.header.ascx" />
     <Content Include="templates\transactions\process.control.item.ascx" />
     <Content Include="templates\transactions\process.delivery.item.ascx" />

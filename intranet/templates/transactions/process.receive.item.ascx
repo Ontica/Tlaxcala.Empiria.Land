@@ -32,8 +32,11 @@
         &nbsp; <%#((DateTime)DataBinder.Eval(Container, "DataItem.AuthorizationTime")) == Empiria.ExecutionServer.DateMinValue ? "" : "Reg: <span class='boldItem'>" + ((DateTime)DataBinder.Eval(Container, "DataItem.AuthorizationTime")).ToString("dd/MMM/yyyy") + "</span>" %>
         </td>
 			</tr>
-      <tr><td style="white-space:nowrap">Siguiente estado:&nbsp;</td><td><span id="ancNextStatus<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>" class='boldItem'><%#DataBinder.Eval(Container, "DataItem.NextTransactionStatusName")%></span>
-      <span style=" display:none" id="ancNextStatusID<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>"><%#DataBinder.Eval(Container, "DataItem.NextTransactionStatus")%></span>
+      <tr>
+        <td style="white-space:nowrap">Siguiente estado:&nbsp;</td>
+        <td>
+          <span id="ancNextStatus<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>" class='boldItem'><%#DataBinder.Eval(Container, "DataItem.NextTransactionStatusName")%></span>
+          <span style=" display:none" id="ancNextStatusID<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>"><%#DataBinder.Eval(Container, "DataItem.NextTransactionStatus")%></span>
       </td></tr>
     </table>
   </td>

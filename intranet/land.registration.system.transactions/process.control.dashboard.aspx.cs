@@ -28,11 +28,10 @@ namespace Empiria.Land.WebApp {
   public enum TabStrip {
      MisTramitesPendientes = 0,
      DocumentosPorEntregar = 1,
-     MiTrabajoRealizado = 2,
-     RecibirDocumentos = 3,
-     MesaDeControl = 4,
-     MesaDeDigitalizacion = 5,
-     BuscarTramites = 6,
+     RecibirDocumentos = 2,
+     MesaDeControl = 3,
+     MesaDeDigitalizacion = 4,
+     BuscarTramites = 5,
   }
 
   #endregion
@@ -117,26 +116,25 @@ namespace Empiria.Land.WebApp {
             filter += " AND ";
           }
           filter += "(TransactionStatus NOT IN ('D','L'))";
+
           return WorkflowData.GetResponsibleWorkflowInbox(me, WorkflowTaskStatus.Pending, filter, sort);
         } else {
           if (filter.Length != 0) {
             filter += " AND ";
           }
           filter += "((ResponsibleId = " + User.Id.ToString() + ") OR (TransactionStatus = 'Y')) AND (TrackStatus = 'P') AND (TransactionStatus NOT IN ('D','L'))";
+
           return TransactionData.GetLRSTransactionsForUI(filter, sort);
         }
 
       } else if (IsTabStripSelected(TabStrip.DocumentosPorEntregar)) {
         return WorkflowData.GetResponsibleWorkflowInbox(me, WorkflowTaskStatus.OnDelivery, filter, sort);
 
-      } else if (IsTabStripSelected(TabStrip.MiTrabajoRealizado)) {
-        return WorkflowData.GetResponsibleWorkflowInbox(me, WorkflowTaskStatus.Closed, filter, sort);
-
       } else if (IsTabStripSelected(TabStrip.RecibirDocumentos)) {
         if (filter.Length != 0) {
           filter += " AND ";
         }
-        filter += "NextTransactionStatus NOT IN ('R','C','Q')";  // ,'H'
+        filter += "NextTransactionStatus NOT IN ('R','C','Q')";
         if (!String.IsNullOrWhiteSpace(selectedComboFromValue)) {
           return WorkflowData.GetResponsibleWorkflowInbox(Contact.Parse(int.Parse(selectedComboFromValue)),
                                                           WorkflowTaskStatus.OnDelivery, filter, sort);
@@ -203,12 +201,6 @@ namespace Empiria.Land.WebApp {
       } else if (IsTabStripSelected(TabStrip.DocumentosPorEntregar)) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.control.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.delivery.item.ascx");
-        base.ViewColumnsCount = 4;
-        base.LoadInboxesInQuickMode = true;
-
-      } else if (IsTabStripSelected(TabStrip.MiTrabajoRealizado)) {
-        itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.control.header.ascx");
-        itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.close.item.ascx");
         base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = true;
 
