@@ -30,10 +30,9 @@ namespace Empiria.Land.WebApp {
      DocumentosPorEntregar = 1,
      MiTrabajoRealizado = 2,
      RecibirDocumentos = 3,
-     VentanillaDeEntregas = 4,
-     MesaDeControl = 5,
-     MesaDeDigitalizacion = 6,
-     BuscarTramites = 7,
+     MesaDeControl = 4,
+     MesaDeDigitalizacion = 5,
+     BuscarTramites = 6,
   }
 
   #endregion
@@ -143,13 +142,6 @@ namespace Empiria.Land.WebApp {
                                                           WorkflowTaskStatus.OnDelivery, filter, sort);
         }
 
-      } else if (IsTabStripSelected(TabStrip.VentanillaDeEntregas)) {
-        if (filter.Length != 0) {
-          filter += " AND ";
-        }
-        filter += "(TransactionStatus IN ('D','L'))";
-        return TransactionData.GetLRSTransactionsForUI(filter, sort);
-
       } else if (IsTabStripSelected(TabStrip.MesaDeControl)) {
 
         return TransactionData.GetLRSTransactionsForUI(filter, sort);
@@ -226,12 +218,6 @@ namespace Empiria.Land.WebApp {
         base.ViewColumnsCount = 4;
         base.LoadInboxesInQuickMode = true;
 
-      } else if (IsTabStripSelected(TabStrip.VentanillaDeEntregas)) {
-        itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/process.control.header.ascx");
-        itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/process.control.item.ascx");
-        base.ViewColumnsCount = 4;
-        base.LoadInboxesInQuickMode = false;
-
       } else if (IsTabStripSelected(TabStrip.MesaDeControl)) {
         itemsRepeater.HeaderTemplate = Page.LoadTemplate("~/templates/transactions/control.desk.header.ascx");
         itemsRepeater.ItemTemplate = Page.LoadTemplate("~/templates/transactions/control.desk.item.ascx");
@@ -269,12 +255,8 @@ namespace Empiria.Land.WebApp {
 
       transaction.Workflow.SetNextStatus(status, Person.Empty, note);
 
-      // Don't show status for users in Vetanilla de entregas and
-      // next status was delivered or returned.
-      if (status != LRSTransactionStatus.Delivered &&
-          status != LRSTransactionStatus.Returned && !IsTabStripSelected(TabStrip.VentanillaDeEntregas)) {
-        base.SetOKScriptMsg();
-      }
+      base.SetOKScriptMsg();
+
       txtSearchExpression.Value = "";
       txtSearchExpression.Focus();
     }
@@ -386,8 +368,7 @@ namespace Empiria.Land.WebApp {
         filter = "(TransactionTypeId = " + cboProcessType.Value + ")";
       }
       if (cboStatus.Value.Length != 0 &&
-          !IsTabStripSelected(TabStrip.RecibirDocumentos) &&
-          !IsTabStripSelected(TabStrip.VentanillaDeEntregas)) {
+          !IsTabStripSelected(TabStrip.RecibirDocumentos)) {
         if (filter.Length != 0) {
           filter += " AND ";
         }

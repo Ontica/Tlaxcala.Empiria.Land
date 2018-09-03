@@ -11,10 +11,9 @@
     <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 1);" title="">Documentos por entregar</td>
     <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 2);" title="">Mi trabajo realizado</td>
     <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 3);" title="">Recibir documentos</td>
-    <td id="tabStripItem_4"  style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk") ? "inline" : "none"%>' class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Ventanilla de entregas</td>
-    <td id="tabStripItem_5" style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ControlDesk") ? "inline" : "none"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 5);" title="">Mesa de control</td>
-    <td id="tabStripItem_6" style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DigitalizationDesk") ? "inline" : "none"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 6);" title="">Mesa de firmado y digitalización</td>
-    <td id="tabStripItem_7" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 7);" title="">Buscar trámites</td>
+    <td id="tabStripItem_4" style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ControlDesk") ? "inline" : "none"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 4);" title="">Mesa de control</td>
+    <td id="tabStripItem_5" style='display:<%=Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DigitalizationDesk") ? "inline" : "none"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 5);" title="">Mesa de firmado y digitalización</td>
+    <td id="tabStripItem_6" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="sendPageCommand('setInbox', 6);" title="">Buscar trámites</td>
     <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
     <td><input id="currentTabStripItem" name="currentTabStripItem" type="hidden" /></td>
   </tr>
@@ -517,17 +516,11 @@
       temp = "Enviar trámite a mesa de entrega\n\n";
       temp += "¿El trámite está listo para entregarlo al interesado?";
     } else if (newState == "C") {
-      temp = "Entregar el trámite al interesado\n\n";
-      temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-      temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-      temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
-      temp += "¿Se está entregando el trámite al interesado?";
+      alert("Esta opción ya no está disponible");
+      return false;
     } else if (newState == "L") {
-      temp = "Devolver el trámite al interesado, ya que no procede\n\n";
-      temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-      temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-      temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
-      temp += "¿Se va a devolver el trámite al interesado?";
+      alert("Esta opción ya no está disponible");
+      return false;
     } else if (newState == "H") {
       temp = "Archivar este trámite\n\n";
       temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
