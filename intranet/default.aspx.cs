@@ -12,6 +12,7 @@ using System;
 
 using Empiria.Presentation.Web.Controllers;
 using Empiria.Security;
+using Empiria.Json;
 
 namespace Empiria.Web.UI {
 
@@ -19,7 +20,6 @@ namespace Empiria.Web.UI {
 
     #region Fields
 
-    private FormsLogonController controller = new FormsLogonController();
     protected string clientScriptCode = String.Empty;
 
     #endregion Fields
@@ -27,12 +27,17 @@ namespace Empiria.Web.UI {
     #region Public properties
 
     public FormsLogonController Controller {
-      get { return controller; }
-    }
+      get;
+    } = new FormsLogonController();
 
     #endregion Public properties
 
-    #region Event handlers
+    #region Protected methods
+
+    protected bool AllowPasswordAutofill() {
+      return Request.Url.ToString().StartsWith("http://empiria.land/intranet/");
+    }
+
 
     protected void Page_Load(object sender, System.EventArgs e) {
       if (!IsPostBack) {
@@ -53,9 +58,18 @@ namespace Empiria.Web.UI {
       }
     }
 
-    #endregion Event handlers
+    #endregion Protected methods
 
     #region Private methods
+
+    private JsonObject GetContextData() {
+      var json = new JsonObject();
+
+      json.Add("UserAddress", Request.UserHostAddress);
+
+      return json;
+    }
+
 
     private bool TryLogon(string userName, string password) {
       string clientAppKey = ConfigurationData.Get<string>("ApplicationKey");
@@ -71,7 +85,8 @@ namespace Empiria.Web.UI {
 
         // password = Cryptographer.GetMD5HashCode(Cryptographer.GetMD5HashCode(password) + entropy);
 
-        return this.Controller.Logon(clientAppKey, userName, password, entropy, 1);
+        JsonObject contextData = GetContextData();
+        return this.Controller.Logon(clientAppKey, userName, password, entropy, contextData);
 
       } catch (System.Threading.ThreadAbortException) {
         return true;
@@ -83,6 +98,7 @@ namespace Empiria.Web.UI {
       }
     }
 
+
     private void SetDefaultValues() {
       string lastUserName = this.Controller.GetLastAuthenticatedUserName();
 
@@ -92,9 +108,6 @@ namespace Empiria.Web.UI {
       txtAccessCode.Value = "ABCDEFG";
     }
 
-    protected bool AllowPasswordAutofill() {
-      return Request.Url.ToString().StartsWith("http://empiria.land/intranet/");
-    }
 
     #endregion Private methods
 
