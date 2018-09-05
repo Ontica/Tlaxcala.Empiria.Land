@@ -128,6 +128,11 @@ namespace Empiria.Land.WebApp {
         }
 
       } else if (IsTabStripSelected(TabStrip.DocumentosPorEntregar)) {
+        if (filter.Length != 0) {
+          filter += " AND ";
+        }
+        filter += "(TransactionStatus NOT IN ('D','L'))";
+
         return WorkflowData.GetResponsibleWorkflowInbox(me, WorkflowTaskStatus.OnDelivery, filter, sort);
 
       } else if (IsTabStripSelected(TabStrip.RecibirDocumentos)) {
@@ -162,7 +167,7 @@ namespace Empiria.Land.WebApp {
     protected sealed override void LoadPageControls() {
       LoadCombos();
       if (txtFromDate.Value == String.Empty) {
-        txtFromDate.Value = DateTime.Parse("01/Sep/2017").ToString("dd/MMM/yyyy");
+        txtFromDate.Value = DateTime.Parse("01/Jul/2018").ToString("dd/MMM/yyyy");
       }
       if (txtToDate.Value == String.Empty) {
         txtToDate.Value = DateTime.Today.ToString("dd/MMM/yyyy");
@@ -315,6 +320,12 @@ namespace Empiria.Land.WebApp {
 
       LRSTransaction transaction = LRSTransaction.Parse(transactionId);
 
+      string s = LRSWorkflowRules.ValidateStatusChange(transaction, transaction.Workflow.NextStatus);
+      if (!String.IsNullOrWhiteSpace(s)) {
+        base.SetOKScriptMsg(EmpiriaString.FormatForScripting(s));
+        return;
+      }
+
       switch (operation) {
         case "ReturnToControlDesk":
           transaction.Workflow.ReturnToMe();
@@ -336,6 +347,13 @@ namespace Empiria.Land.WebApp {
       string notes = GetCommandParameter("notes", false);
 
       LRSTransaction transaction = LRSTransaction.Parse(transactionId);
+
+      string s = LRSWorkflowRules.ValidateStatusChange(transaction, transaction.Workflow.NextStatus);
+      if (!String.IsNullOrWhiteSpace(s)) {
+        base.SetOKScriptMsg(EmpiriaString.FormatForScripting(s));
+        return;
+      }
+
       transaction.Workflow.Take(notes);
 
       base.SetOKScriptMsg();

@@ -176,8 +176,9 @@ namespace Empiria.Land.WebApp {
       if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) {
         return false;
       }
-      if (transaction.Workflow.NextStatus == LRSTransactionStatus.ToDeliver ||
-          transaction.Workflow.NextStatus == LRSTransactionStatus.ToReturn) {
+
+      if ((transaction.Workflow.NextStatus == LRSTransactionStatus.ToDeliver ||
+          transaction.Workflow.NextStatus == LRSTransactionStatus.ToReturn)) {
         return true;
       }
 
@@ -223,7 +224,14 @@ namespace Empiria.Land.WebApp {
     #region Private methods
 
     private void TakeTransactionInDeliveryDesk() {
-      Assertion.Assert(IsTransactionReadyForTakeInDeliveryDesk(), "La operación no puede ser ejecutada: 'TakeTransactionInDeliveryDesk'.");
+      Assertion.Assert(IsTransactionReadyForTakeInDeliveryDesk(),
+                       "La operación no puede ser ejecutada: 'TakeTransactionInDeliveryDesk'.");
+
+      string s = LRSWorkflowRules.ValidateStatusChange(transaction, transaction.Workflow.NextStatus);
+      if (!String.IsNullOrWhiteSpace(s)) {
+        this.ShowAlertBox(s);
+        return;
+      }
 
       string notes = GetCommandParameter("notes", false);
 
@@ -232,7 +240,8 @@ namespace Empiria.Land.WebApp {
 
 
     private void DeliverTransaction() {
-      Assertion.Assert(IsTransactionReadyForDelivery(), "La operación no puede ser ejecutada: 'DeliverTransaction'.");
+      Assertion.Assert(IsTransactionReadyForDelivery(),
+                       "La operación no puede ser ejecutada: 'DeliverTransaction'.");
 
       LRSTransactionStatus status = LRSTransactionStatus.Delivered;
       string notes = GetCommandParameter("notes", false);
@@ -248,7 +257,8 @@ namespace Empiria.Land.WebApp {
 
 
     private void ReturnTransaction() {
-      Assertion.Assert(IsTransactionReadyForReturn(), "La operación no puede ser ejecutada: 'ReturnTransaction'.");
+      Assertion.Assert(IsTransactionReadyForReturn(),
+                       "La operación no puede ser ejecutada: 'ReturnTransaction'.");
 
       LRSTransactionStatus status = LRSTransactionStatus.Returned;
       string notes = GetCommandParameter("notes", false);
@@ -264,7 +274,8 @@ namespace Empiria.Land.WebApp {
 
 
     private void ReentryTransaction() {
-      Assertion.Assert(IsTransactionReadyForReentry(), "La operación no puede ser ejecutada: 'ReentryTransaction'.");
+      Assertion.Assert(IsTransactionReadyForReentry(),
+                       "La operación no puede ser ejecutada: 'ReentryTransaction'.");
       try {
         transaction.Workflow.Reentry();
         this.ShowAlertBox("Este trámite fue reingresado correctamente.");
@@ -275,7 +286,8 @@ namespace Empiria.Land.WebApp {
 
 
     private void ShowAlertBox(string message) {
-      this.OnLoadScript = "alert('" + EmpiriaString.FormatForScripting(message) + "');doOperation('redirectThis');";
+      this.OnLoadScript = "alert('" + EmpiriaString.FormatForScripting(message) + "');" +
+                          "doOperation('refresh');";
     }
 
 

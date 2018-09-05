@@ -100,6 +100,9 @@
       case 'reentryTransaction':
         return reentryTransaction();
 
+      case 'refresh':
+        return;
+
       default:
         alert("La operación '" + command + "' no ha sido definida en el programa.");
         return;
