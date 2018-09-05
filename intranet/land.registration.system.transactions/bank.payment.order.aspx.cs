@@ -90,6 +90,12 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+    protected string GetCurrentUserInitials() {
+      var user = Empiria.Security.EmpiriaUser.Current.AsContact();
+
+      return user.Nickname;
+    }
+
 
     protected string GetDocumentLogo() {
       if (DISPLAY_VEDA_ELECTORAL_UI) {

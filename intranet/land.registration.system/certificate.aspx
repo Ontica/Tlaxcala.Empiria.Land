@@ -77,16 +77,16 @@
         <br />
         <%=base.GetDigitalSignature()%>
         <br/>
-        <table class='table-transaction-data'>
+        <table class='table-transaction-data;' style="width:100%;">
         <tr>
           <td>
-             <strong>Elaboró y cotejó: &nbsp; &nbsp;</strong>
+             <strong>Elaboró/cotejó:</strong>
           </td>
           <td>
-             <strong>Trámite:</strong>
+             <strong>Imprimió</strong>
           </td>
           <td>
-             <strong>Recibido el:</strong>
+             <strong>Trámite/Recibido el:</strong>
           </td>
           <td>
              <strong>Línea de captura:</strong>
@@ -97,14 +97,16 @@
               <strong>*<%=base.Certificate.IssuedBy.Nickname%></strong>
            </td>
            <td>
-              <%=base.Certificate.Transaction.UID%>
+              <%=GetCurrentUserInitials()%><br/>
+              <%=DateTime.Now.ToString("dd/MMM/yy HH:mm") %>
            </td>
            <td>
+              <%=base.Certificate.Transaction.UID%><br />
               <%=base.Certificate.Transaction.PresentationTime.ToString("dd/MMM/yyyy HH:mm")%>
-            </td>
-            <td>
-              <%=base.GetPaymentReceipt()%>
-            </td>
+           </td>
+          <td>
+            <%=base.GetPaymentReceipt()%>
+          </td>
           </tr>
         </table>
         <div style="font-size:7pt;margin-top:4pt;text-align:left;white-space:nowrap">

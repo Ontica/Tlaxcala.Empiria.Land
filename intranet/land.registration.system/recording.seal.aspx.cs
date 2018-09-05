@@ -259,6 +259,12 @@ namespace Empiria.Land.WebApp {
       return temp;
     }
 
+    protected string GetCurrentUserInitials() {
+      var user = Empiria.Security.EmpiriaUser.Current.AsContact();
+
+      return user.Nickname;
+    }
+
     // For future use
     protected string GetRecordingOfficialsNames() {
       string temp = String.Empty;

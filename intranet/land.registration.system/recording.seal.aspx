@@ -24,7 +24,10 @@
           <% } else if (document.Security.UseESign && document.Security.Unsigned()) { %>
           <h2 class="warning" style="padding-top:0">EL SELLO REGISTRAL NO HA SIDO FIRMADO DIGITALMENTE</h2>
           <% } else if (!base.CanBePrinted()) { %>
-          <h2 class="warning" style="padding-top:0">ESTE SELLO REGISTRAL NO DEBE IMPRIMIRSE. NO TIENE VALOR OFICIAL</h2>
+          <h2 class="warning" style="padding-top:0">
+            NO DEBE IMPRIMIRSE. NO TIENE VALOR OFICIAL.
+          </h2>
+          <h2 style="padding-top:0">SELLO REGISTRAL</h2>
           <% } else { %>
           <h2 style="padding-top:0">SELLO REGISTRAL</h2>
           <% } %>
@@ -153,7 +156,7 @@
             <br />
                &#160;&#160;<%=GetDigitalSignature()%>
             <br />
-            <b>Registró:</b> <%=GetRecordingOfficialsInitials()%>
+            <b>Registró:</b> <%=GetRecordingOfficialsInitials()%> &nbsp; &nbsp; <b>Imprimió:</b> <%=GetCurrentUserInitials()%>, <%=DateTime.Now.ToString("dd/MMM/yyyy HH:mm") %>
             <br />
             <div style="font-size:7pt;margin-top:4pt;text-align:left;">
               Verifique la <u>autenticidad</u> de este documento y el estado de su predio. Para ello lea los códigos QR con su<br />

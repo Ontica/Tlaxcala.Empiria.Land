@@ -119,9 +119,9 @@
                 <br />
                 <%=transaction.GetDigitalSign()%>
                 <br />
-                <b>Recibió: </b>
+                <b>Recepción e impresión:</b>
                 <br />
-                <%=transaction.ReceivedBy.FullName%>
+                Recibió: <%=transaction.ReceivedBy.FullName%>  &nbsp; &nbsp; | &nbsp; &nbsp; Imprimió: <%=GetCurrentUserInitials()%>, <%=DateTime.Now.ToString("dd/MMM/yyyy HH:mm") %>
                 <div style="font-size:7pt;margin-top:8pt;">
                   Consulte el <b>estado</b> de su trámite leyendo el código QR con su celular o dispositivo móvil,
                   o visite nuestro sitio web <b>registropublico.tlaxcala.gob.mx</b>, donde también podrá consultar

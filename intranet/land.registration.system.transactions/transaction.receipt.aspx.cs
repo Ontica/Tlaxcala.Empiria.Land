@@ -240,6 +240,12 @@ namespace Empiria.Land.WebApp {
       return html + temp1;
     }
 
+    protected string GetCurrentUserInitials() {
+      var user = Empiria.Security.EmpiriaUser.Current.AsContact();
+
+      return user.Nickname;
+    }
+
     #endregion Private methods
 
   } // class TransactionReceipt

@@ -218,7 +218,8 @@
       <tr>
         <td style="border-top: 1px dotted #3a3a3a">
         <br />
-        * Este documento deberá <b>ENTREGARSE en la <u>Ventanilla de Recepción de Documentos</u></b> junto con su recibo oficial de pago.
+        * Este documento deberá <b>ENTREGARSE en la <u>Ventanilla de Recepción de Documentos</u></b> junto con su recibo de pago.
+        (Imprimió: <%=GetCurrentUserInitials()%>, <%=DateTime.Now.ToString("dd/MMM/yyyy HH:mm") %>)
         </td>
       </tr>
     </table>
