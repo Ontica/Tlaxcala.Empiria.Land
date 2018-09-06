@@ -518,8 +518,11 @@
       alert("Esta opción ya no está disponible");
       return false;
     } else if (newState == "L") {
-      alert("Esta opción ya no está disponible");
-      return false;
+      temp = "Devolver el trámite al interesado, ya que no procede\n\n";
+      temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
+      temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
+      temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+      temp += "¿Se va a devolver el trámite al interesado?";
     } else if (newState == "H") {
       temp = "Archivar este trámite\n\n";
       temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
