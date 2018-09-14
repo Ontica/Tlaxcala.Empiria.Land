@@ -23,7 +23,7 @@
             <span style='color:red;'>* ESTE CERTIFICADO NO HA SIDO CERRADO *</span><br />
           <% } else if (base.Certificate.Unsigned()) { %>
             <span style='color:red;'>* INVÁLIDO SIN FIRMA ELECTRÓNICA *</span><br />
-          <% } else if (!base.Certificate.Transaction.Workflow.Delivered) { %>
+          <% } else if (!base.Certificate.Transaction.Workflow.Delivered && this.Certificate.Transaction.Workflow.CurrentStatus != Empiria.Land.Registration.Transactions.LRSTransactionStatus.Archived) { %>
             <span style='color:red;'>* ESTE CERTIFICADO NO HA SIDO ENTREGADO*</span><br />
           <% } %>
           CERTIFICADO DE <%=base.Certificate.CertificateType.DisplayName.ToUpperInvariant()%>

@@ -107,7 +107,7 @@ namespace Empiria.Land.WebApp {
       if (document.Security.UseESign && document.Security.Unsigned()) {
         return false;
       }
-      if (transaction.Workflow.Delivered) {
+      if (transaction.Workflow.Delivered || transaction.Workflow.CurrentStatus == LRSTransactionStatus.Archived) {
         return true;
       }
 

@@ -11,6 +11,7 @@
 using System;
 
 using Empiria.Land.Certification;
+using Empiria.Land.Registration.Transactions;
 
 namespace Empiria.Land.WebApp {
 
@@ -109,7 +110,7 @@ namespace Empiria.Land.WebApp {
     protected string GetQRCodeSecurityHash() {
       if (!this.Certificate.Signed()) {
         return AsWarning("NO DISPONIBLE SIN FIRMA");
-      } else if (!this.Certificate.Transaction.Workflow.Delivered) {
+      } else if (!this.Certificate.Transaction.Workflow.Delivered && this.Certificate.Transaction.Workflow.CurrentStatus != LRSTransactionStatus.Archived) {
         return AsWarning("ESTE CERTIFICADO NO ES VÁLIDO SI NO SE MARCA COMO ENTREGADO.");
       } else {
         return this.Certificate.QRCodeSecurityHash();
