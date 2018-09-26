@@ -318,9 +318,9 @@ namespace Empiria.Land.WebApp {
       string operation = GetCommandParameter("operation");
       string notes = GetCommandParameter("notes", false);
 
-      LRSTransaction transaction = LRSTransaction.Parse(transactionId);
+      var transaction = LRSTransaction.Parse(transactionId);
 
-      string s = LRSWorkflowRules.ValidateStatusChange(transaction, transaction.Workflow.NextStatus);
+      string s = LRSWorkflowRules.ValidateStatusChange(transaction, LRSTransactionStatus.Control);
       if (!String.IsNullOrWhiteSpace(s)) {
         base.SetOKScriptMsg(EmpiriaString.FormatForScripting(s));
         return;
