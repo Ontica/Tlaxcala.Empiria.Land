@@ -34,8 +34,8 @@
     </table>
     <br />
     <div class="certificate-text">
-      &nbsp; &nbsp; &nbsp; &nbsp;El ciudadano <strong>MTRO. SERGIO CUAUHTÉMOC LIMA LÓPEZ</strong>,
-      Director de Notarías y Registros Públicos del Estado de Tlaxcala,
+      &nbsp; &nbsp; &nbsp; &nbsp;El ciudadano <strong><%=base.GetSignedByName()%></strong>,
+      <%=base.GetSignedByJobTitle()%> del Estado de Tlaxcala,
       <strong>C E R T I F I C A:</strong>
       <%=GetCertificateText()%>
       <p>
@@ -50,7 +50,9 @@
 	      <br/>
         <%=base.GetDigitalSignature()%>
         <br/>
-        <span><%=base.GetSignedByName()%></span>
+        <span><b><%=base.GetSignedByName()%></b></span>
+        <br/>
+        <span><%=base.GetSignedByJobTitle()%></span>
       </p>
     </div>
 
@@ -73,7 +75,7 @@
         <strong>Sello digital:</strong><br />
         <%=base.GetDigitalSeal()%>
         <br />
-        <strong>Firma electrónica:</strong>
+        <strong>Firma electrónica avanzada:</strong>
         <br />
         <%=base.GetDigitalSignature()%>
         <br/>

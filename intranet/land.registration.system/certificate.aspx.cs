@@ -144,8 +144,14 @@ namespace Empiria.Land.WebApp {
 
 
     protected string GetSignedByName() {
-      return "MTRO. SERGIO CUAUHTÉMOC LIMA LÓPEZ";
+      return this.Certificate.SignedBy.FullName.ToUpper();
     }
+
+
+    protected string GetSignedByJobTitle() {
+      return this.Certificate.SignedBy.JobTitle;
+    }
+
 
     protected string QRCodeSource() {
       if (this.Certificate.Signed()) {

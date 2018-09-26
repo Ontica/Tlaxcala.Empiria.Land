@@ -90,7 +90,7 @@
             <br />
             <b><%=GetRecordingSignerName()%></b>
             <br />
-            <%=GetRecordingSignerPosition()%>
+            <%=GetRecordingSignerJobTitle()%>
             <br />
             &#160;
           </td>
@@ -106,7 +106,7 @@
             <br />
             <b><%=GetRecordingSignerName()%></b>
             <br />
-            <%=GetRecordingSignerPosition()%>
+            <%=GetRecordingSignerJobTitle()%>
             <br />
             &#160;
           </td>
@@ -118,7 +118,7 @@
             <br /><br /><br />
             <b><%=GetRecordingSignerName()%></b>
             <br />
-            <%=GetRecordingSignerPosition()%>
+            <%=GetRecordingSignerJobTitle()%>
             <br />&#160;
           </td>
           <td style="text-wrap:none">&#160;&#160;&#160;&#160;&#160;</td>
@@ -152,7 +152,7 @@
              <span class="warning">** ESTE DOCUMENTO NO ES OFICIAL **</span>
              <% } %>
             <br />
-            <b>Firma digital:</b>
+            <b>Firma electrónica avanzada:</b>
             <br />
                &#160;&#160;<%=GetDigitalSignature()%>
             <br />

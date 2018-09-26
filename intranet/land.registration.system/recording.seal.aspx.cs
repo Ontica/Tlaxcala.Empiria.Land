@@ -100,6 +100,7 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
     protected bool CanBePrinted() {
       if (document.Status != RecordableObjectStatus.Closed) {
         return false;
@@ -129,12 +130,14 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
     protected string GetDocumentLogo() {
       if (DISPLAY_VEDA_ELECTORAL_UI) {
         return "../themes/default/customer/government.seal.veda.png";
       }
       return "../themes/default/customer/government.seal.png";
     }
+
 
     protected string GetPaymentText() {
       if (document.IsHistoricDocument) {
@@ -159,6 +162,7 @@ namespace Empiria.Land.WebApp {
       return template;
     }
 
+
     protected string GetPrelationText() {
       if (document.IsHistoricDocument) {
         return PrelationTextForHistoricDocuments();
@@ -166,6 +170,7 @@ namespace Empiria.Land.WebApp {
         return PrelationTextForDocumentsWithTransaction();
       }
     }
+
 
     private string PrelationTextForDocumentsWithTransaction() {
       const string template =
@@ -194,9 +199,11 @@ namespace Empiria.Land.WebApp {
       return x;
     }
 
+
     private string PrelationTextForHistoricDocuments() {
       return "<h3>" + this.recordingActs[0].PhysicalRecording.AsText + "</h3>";
     }
+
 
     protected string GetRecordingActsText() {
       string html = String.Empty;
@@ -230,6 +237,7 @@ namespace Empiria.Land.WebApp {
       return html;
     }
 
+
     private string Decorate(RecordingAct recordingAct, string text) {
       if (this.selectedRecordingAct.IsEmptyInstance) {
         return text;
@@ -245,6 +253,7 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
     protected string GetRecordingOfficialsInitials() {
       string temp = String.Empty;
 
@@ -259,11 +268,13 @@ namespace Empiria.Land.WebApp {
       return temp;
     }
 
+
     protected string GetCurrentUserInitials() {
       var user = Empiria.Security.EmpiriaUser.Current.AsContact();
 
       return user.Nickname;
     }
+
 
     // For future use
     protected string GetRecordingOfficialsNames() {
@@ -280,6 +291,7 @@ namespace Empiria.Land.WebApp {
       return temp;
     }
 
+
     protected string GetRecordingPlaceAndDate() {
       if (document.IsHistoricDocument) {
         return PlaceAndDateTextForHistoricDocuments();
@@ -287,6 +299,7 @@ namespace Empiria.Land.WebApp {
         return PlaceAndDateTextForDocumentsWithTransaction();
       }
     }
+
 
     private string PlaceAndDateTextForDocumentsWithTransaction() {
       const string t = "Registrado en {CITY}, a las {TIME} horas del {DATE}. Doy Fe.";
@@ -297,6 +310,7 @@ namespace Empiria.Land.WebApp {
 
       return x;
     }
+
 
     private string PlaceAndDateTextForHistoricDocuments() {
       const string template =
@@ -312,6 +326,7 @@ namespace Empiria.Land.WebApp {
       return x;
     }
 
+
     private string GetDateAsText(DateTime date) {
       if (date == ExecutionServer.DateMinValue || date == ExecutionServer.DateMaxValue) {
         return "No consta";
@@ -320,6 +335,7 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
     protected string GetRecordingSignerName() {
       if (document.IsHistoricDocument) {
         return String.Empty;
@@ -327,16 +343,18 @@ namespace Empiria.Land.WebApp {
       if (!CanBePrinted()) {
         return AsWarning("ESTE DOCUMENTO NO ES VÁLIDO EN EL ESTADO ACTUAL.");
       } else {
-        return "Mtro. Sergio Cuauhtémoc Lima López";
+        return document.Security.GetSignedBy().FullName;
       }
     }
 
-    protected string GetRecordingSignerPosition() {
+
+    protected string GetRecordingSignerJobTitle() {
       if (document.IsHistoricDocument) {
         return String.Empty;
       }
-      return "Director de Notarías y Registros Públicos";
+      return document.Security.GetSignedBy().JobTitle;
     }
+
 
     private Resource _uniqueInvolvedResource = null;
     protected Resource UniqueInvolvedResource {
