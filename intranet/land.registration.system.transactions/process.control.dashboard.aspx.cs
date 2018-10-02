@@ -286,11 +286,17 @@ namespace Empiria.Land.WebApp {
     }
 
     private void UpdateESignWorkflow() {
-      TransactionCleaner.Clean();
+      var cleaner = TransactionCleaner.GetInstance();
 
-      base.SetOKScriptMsg("La actualización de documentos y del flujo de trabajo se ejecutó satisfactoriamente.");
-      txtSearchExpression.Value = "";
-      txtSearchExpression.Focus();
+      if (!cleaner.IsRunning) {
+        cleaner.Clean();
+        base.SetOKScriptMsg("La actualización de documentos y del flujo de trabajo se ejecutó satisfactoriamente." + cleaner.UID);
+        txtSearchExpression.Value = "";
+        txtSearchExpression.Focus();
+
+      } else {
+        base.SetOKScriptMsg("La actualización del workflow ya se está ejecutando." + cleaner.UID);
+      }
     }
 
     private void ReceiveLRSTransaction() {
