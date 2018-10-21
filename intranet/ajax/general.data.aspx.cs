@@ -2,13 +2,15 @@
 *                                                                                                            *
 *  Solution  : Empiria Land                                     System   : Land Intranet Application         *
 *  Namespace : Empiria.Web.UI.Ajax                              Assembly : Empiria.Land.Intranet.dll         *
-*  Type      : LandRegistrationSystemData                       Pattern  : Ajax Services Web Page            *
+*  Type      : GeneralSystemData                                Pattern  : Ajax Services Web Page            *
 *  Version   : 3.0                                              License  : Please read license.txt file      *
 *                                                                                                            *
 *  Summary   : Gets Empiria control contents through Ajax invocation.                                        *
 *                                                                                                            *
 ********************************** Copyright(c) 1994-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
+
+using Empiria.DataTypes;
 
 using Empiria.Presentation.Web;
 
@@ -18,8 +20,8 @@ namespace Empiria.Web.UI.Ajax {
 
     protected override string ImplementsCommandRequest(string commandName) {
       switch (commandName) {
-        case "isNoLabourDateCmd":
-          return IsNoLabourDateCommandHandler();
+        case "isNonWorkingDateCmd":
+          return IsNonWorkingDateCommandHandler();
         case "daysBetweenCmd":
           return DaysBetweenCommandHandler();
         default:
@@ -34,19 +36,20 @@ namespace Empiria.Web.UI.Ajax {
       DateTime fromDate = EmpiriaString.ToDate(GetCommandParameter("fromDate", false));
       DateTime toDate = EmpiriaString.ToDate(GetCommandParameter("toDate", false));
 
-      return Empiria.DataTypes.Calendar.DaysBetween(fromDate, toDate).ToString();
+      return fromDate.DaysTo(toDate)
+                     .ToString();
     }
 
-    private string IsNoLabourDateCommandHandler() {
+
+    private string IsNonWorkingDateCommandHandler() {
       DateTime date = EmpiriaString.ToDate(GetCommandParameter("date", false));
 
-      bool result = (Empiria.DataTypes.Calendar.IsWeekendDate(date) || Empiria.DataTypes.Calendar.IsNoLabourDate(date));
-
-      return result.ToString();
+      return date.IsNonWorkingDate()
+                 .ToString();
     }
 
     #endregion Private command handlers
 
-  } // class WorkplaceData
+  } // class GeneralSystemData
 
 } // namespace Empiria.Web.UI.Ajax

@@ -2,9 +2,9 @@
 /*  Ajax General Validation methods                                                                        */
 /***********************************************************************************************************/
 
-function isNoLabourDate(date) {
+function isNonWorkingDate(date) {
   var ajaxUrl = "../ajax/general.data.aspx";
-  ajaxUrl += "?commandName=isNoLabourDateCmd";
+  ajaxUrl += "?commandName=isNonWorkingDateCmd";
   ajaxUrl += "&date=" + date;
   if (arguments.length == 2) {
     ajaxUrl += "&calendar=" + arguments[1];
