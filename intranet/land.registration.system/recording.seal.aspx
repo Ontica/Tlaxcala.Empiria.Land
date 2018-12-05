@@ -156,7 +156,7 @@
             <br />
                &#160;&#160;<%=GetDigitalSignature()%>
             <br />
-            <b>Registró:</b> <%=GetRecordingOfficialsInitials()%> &nbsp; &nbsp; <b>Imprimió:</b> <%=GetCurrentUserInitials()%>, <%=DateTime.Now.ToString("dd/MMM/yyyy HH:mm") %>
+            <b>Registró:</b> <%=GetRecordingOfficialsInitials()%> &#160; &#160; <b>Imprimió:</b> <%=GetCurrentUserInitials()%>, <%=DateTime.Now.ToString("dd/MMM/yyyy HH:mm") %>
             <br />
             <div style="font-size:7pt;margin-top:4pt;text-align:left;">
               Verifique la <u>autenticidad</u> de este documento y el estado de su predio. Para ello lea los códigos QR con su<br />

@@ -112,8 +112,10 @@ namespace Empiria.Land.WebApp {
         return true;
       }
 
-      if (ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DigitalizationDesk") &&
+      if (ExecutionServer.IsAuthenticated && ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DigitalizationDesk") &&
           (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Digitalization || transaction.Workflow.CurrentStatus == LRSTransactionStatus.OnSign)) {
+        return true;
+      } else if (!ExecutionServer.IsAuthenticated && !String.IsNullOrWhiteSpace(Request.QueryString["msg"])) {
         return true;
       }
       return false;
@@ -270,9 +272,12 @@ namespace Empiria.Land.WebApp {
 
 
     protected string GetCurrentUserInitials() {
-      var user = Empiria.Security.EmpiriaUser.Current.AsContact();
+      if (ExecutionServer.IsAuthenticated) {
+        var user = Security.EmpiriaUser.Current.AsContact();
 
-      return user.Nickname;
+        return user.Nickname;
+      }
+      return String.Empty;
     }
 
 
