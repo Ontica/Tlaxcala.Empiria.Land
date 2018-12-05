@@ -177,6 +177,7 @@
                 <option value="">( Seleccionar )</option>
                 <option value="Bodega">Bodega</option>
                 <option value="Casa">Casa</option>
+                <option value="Cuarto">Cuarto</option>
                 <option value="Departamento">Departamento</option>
                 <option value="Estacionamiento">Estacionamiento</option>
                 <option value="Fracción">Fracción</option>

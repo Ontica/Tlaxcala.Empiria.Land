@@ -974,7 +974,7 @@
         alert("No reconozco la fecha de presentación de la inscripción.");
         return false;
       }
-      if (isNoLabourDate(getElement('txtPresentationDate').value)) {
+      if (isNonWorkingDate(getElement('txtPresentationDate').value)) {
         if (!confirm("La fecha de presentación de la inscripción está marcada como un día no laborable.\n\n¿La fecha de presentación está correcta?")) {
           return false;
         }
@@ -993,7 +993,7 @@
         alert("No reconozco la fecha de autorización de la inscripción.");
         return false;
       }
-      if (isNoLabourDate(getElement('txtAuthorizationDate').value)) {
+      if (isNonWorkingDate(getElement('txtAuthorizationDate').value)) {
         if (!confirm("La fecha de autorización de la inscripción está marcada como un día no laborable.\n\n¿La fecha de autorización está correcta?")) {
           return false;
         }

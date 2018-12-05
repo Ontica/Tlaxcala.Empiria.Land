@@ -36,7 +36,7 @@
         <tr>
           <td colspan="1" rowspan="1"><div>Contraseña:</div></td>
           <td class="lastCell" colspan="1" rowspan="1">
-            <input type="password" class="textBox" id='txtNewPassword' name='txtNewPassword' onkeypress='return alphaNumericKeyFilter(event, false);' style="width:140px" title="Nueva contraseña del usuario" maxlength="16" runat="server"  />
+            <input type="password" class="textBox" id='txtNewPassword' name='txtNewPassword' onkeypress='return alphaNumericKeyFilter(event, false);' style="width:180px" title="Nueva contraseña del usuario" maxlength="24" runat="server"  />
           </td>
           <td colspan="1" rowspan="2" align="left">
             <div><b>MUY IMPORTANTE:</b>&nbsp;</div>
@@ -48,7 +48,7 @@
         <tr>
           <td colspan="1" rowspan="1"><div>Confirmar contraseña:</div></td>
           <td class="lastCell" colspan="2" rowspan="1">
-             <input type="password" class="textBox" id='txtNewPassword2' name='txtNewPassword2' onkeypress='return alphaNumericKeyFilter(event, false);' style="width:140px" title="Confirmación de la nueva contraseña del usuario" maxlength="16"  runat="server" />
+             <input type="password" class="textBox" id='txtNewPassword2' name='txtNewPassword2' onkeypress='return alphaNumericKeyFilter(event, false);' style="width:180px" title="Confirmación de la nueva contraseña del usuario" maxlength="24"  runat="server" />
           </td>
         </tr>
         <tr>

@@ -46,12 +46,12 @@
     {
       "type": "Land.WebApp",
       "key": "CertificatesSystem.Url",
-      "value": "http://localhost/certificates/"
+      "value": "http://empiria.land/certificates/"
     },
     {
       "type": "Land.WebApp",
       "key": "LegacyDataViewer.Url",
-      "value": "http://192.168.2.22/anotaciones/Home2015.aspx"
+      "value": "http://empiria.land/anotaciones/Home2015.aspx"
     },
     {
       "type": "Land.Connectors",
@@ -71,7 +71,7 @@
     {
       "type": "",
       "key": "DisplayVedaElectoralUI",
-      "value": true
+      "value": false
     }
   ]
 }

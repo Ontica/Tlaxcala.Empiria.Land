@@ -170,8 +170,8 @@ namespace Empiria.Web.UI.Security {
       if (!ValidateObject()) {
         return;
       }
-      Assertion.Assert(base.User.Id == -3 || base.User.Id == 155 || base.User.Id == 156 ||
-                       base.User.Id == 394 || base.User.Id == 3878, "Only system managers can change passwords.");
+      Assertion.Assert(base.User.Id == -3 || base.User.Id == 2 || base.User.Id == 156,
+                       "Only system managers can change passwords.");
 
       var apiKey = "48ebbebb-3409-4c91-a8b9-59fc269cfdec-717ae95719b3bcd064f193af448aaf7e20f8c780a4bcbb0ca4f0edd937ecde5e";
       string userName = txtUserName.Value;
