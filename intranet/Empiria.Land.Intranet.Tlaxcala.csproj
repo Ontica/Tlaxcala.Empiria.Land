@@ -113,6 +113,7 @@
     <Content Include="land.registration.system.transactions\transaction.editor.aspx" />
     <Content Include="land.registration.system.transactions\transaction.receipt.aspx" />
     <Content Include="land.registration.system.transactions\transaction.report.aspx" />
+    <Content Include="land.registration.system.transactions\digitalization.editor.aspx" />
     <Content Include="land.registration.system.transactions\transaction.status.editor.aspx" />
     <Content Include="land.registration.system\by.resource.analyzer.aspx" />
     <Content Include="land.registration.system\cadastral.card.html" />
@@ -497,6 +498,13 @@
     <Compile Include="land.registration.system.transactions\transaction.report.aspx.designer.cs">
       <DependentUpon>transaction.report.aspx</DependentUpon>
     </Compile>
+    <Compile Include="land.registration.system.transactions\digitalization.editor.aspx.cs">
+      <DependentUpon>digitalization.editor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\digitalization.editor.aspx.designer.cs">
+      <DependentUpon>digitalization.editor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="land.registration.system.transactions\transaction.status.editor.aspx.cs">
       <DependentUpon>transaction.status.editor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -710,6 +718,10 @@
     <ProjectReference Include="..\..\extensions\Geography\Empiria.Geography.csproj">
       <Project>{96267945-dbe1-4b2c-88e2-0ecdc5ca7669}</Project>
       <Name>Empiria.Geography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\extensions\Messaging\Empiria.Messaging.csproj">
+      <Project>{f645ad11-f071-46c4-99e0-8419e6a291d1}</Project>
+      <Name>Empiria.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\extensions\Presentation.Web\Empiria.Presentation.Web.csproj">
       <Project>{0aeea12e-b4f7-4e12-a768-99bb82bd3fc9}</Project>

@@ -36,10 +36,11 @@
   <table class="tabStrip">
     <tr>
       <td id="tabStripItem_0" class="tabOn" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Información del trámite y conceptos</td>
-      <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Inscripción de documentos</td>
-      <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Emisión de certificados</td>
-      <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Devoluciones</td>
-      <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Estado del trámite</td>
+      <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Digitalización</td>
+      <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Inscripción de documentos</td>
+      <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Emisión de certificados</td>
+      <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Devoluciones</td>
+      <td id="tabStripItem_5" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Estado del trámite</td>
       <td class="lastCell" colspan="1" rowspan="1"><a id="top" />&nbsp; &nbsp; &nbsp; &nbsp;</td>
     </tr>
   </table>
@@ -54,7 +55,7 @@
         <tr>
           <td><b>Interesado:</b></td>
           <td colspan="3">
-            <input id='txtRequestedBy' type="text" class="textBox" style="width:504px;" title="" runat="server" />
+            <input id='txtRequestedBy' type="text" class="textBox" style="width:574px" title="" runat="server" />
             <input type="hidden" id="txtTransactionKey" runat="server" />
           </td>
           <td class="lastCell" valign="top">
@@ -68,18 +69,21 @@
         <tr>
           <td>RFC para facturación:</td>
           <td colspan="4" class="lastCell">
-            <input id='txtRFC' type="text" class="textBox" style="width:186px;" title="" maxlength="15" runat="server" />
+            <input id='txtRFC' type="text" class="textBox" style="width:116px" title="" maxlength="15" runat="server" />
 
             <% if (transaction.IsNew || base.IsEditable() || base.IsStorable()) { %>
-            <input class="button" type="button" value="Usar RFC genérico"
-                   onclick="doOperation('setDefaultRFC')" style="vertical-align:middle;height:26px;width:130px" />
+            <input class="button" type="button" value="Genérico"
+                   onclick="doOperation('setDefaultRFC')" style="vertical-align:middle;height:26px;width:58px" />
             <% } %>
+            &nbsp; &nbsp;
+            Correo electrónico:
+            <input id='txtEMail' type="text" class="textBox" style="width:208px" title="" maxlength="64" runat="server" />
           </td>
         </tr>
         <tr>
           <td>Tipo de documento:</td>
           <td colspan="4" class="lastCell">
-            <select id="cboDocumentType" class="selectBox" style="width:186px" onchange="return updateUserInterface(this);" runat="server">
+            <select id="cboDocumentType" class="selectBox" style="width:192px" onchange="return updateUserInterface(this);" runat="server">
               <option value="">( Seleccionar )</option>
             </select>
             No. Instrumento:
@@ -344,7 +348,7 @@
     <table id="tabStripItemView_1" class="editionTable" style="display:none">
       <tr>
         <td class="lastCell">
-          <iframe id="ifraRecordingEditor" style="z-index:99;left:0;top:0;"
+          <iframe id="ifraDigitalizationEditor" style="z-index:99;left:0;top:0;"
                   marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
                   src="../workplace/empty.page.aspx" width="90%" height="4000px" visible="true" >
           </iframe>
@@ -353,6 +357,17 @@
     </table>
 
     <table id="tabStripItemView_2" class="editionTable" style="display:none">
+      <tr>
+        <td class="lastCell">
+          <iframe id="ifraRecordingEditor" style="z-index:99;left:0;top:0;"
+                  marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
+                  src="../workplace/empty.page.aspx" width="90%" height="4000px" visible="true" >
+          </iframe>
+        </td>
+      </tr>
+    </table>
+
+    <table id="tabStripItemView_3" class="editionTable" style="display:none">
       <tr>
         <td class="subTitle">Certificados emitidos</td>
       </tr>
@@ -433,7 +448,7 @@
       <% } %>
     </table>
 
-    <table id="tabStripItemView_3" class="editionTable" style="display:none">
+    <table id="tabStripItemView_4" class="editionTable" style="display:none">
       <tr>
         <td class="lastCell">
           <iframe id="ifraTransactionReturnEditor" style="z-index:99;left:0;top:0;"
@@ -444,7 +459,7 @@
       </tr>
     </table>
 
-    <table id="tabStripItemView_4" class="editionTable" style="display:none">
+    <table id="tabStripItemView_5" class="editionTable" style="display:none">
       <tr>
         <td class="lastCell">
           <iframe id="ifraTransactionStatusEditor" style="z-index:99;left:0;top:0;"
@@ -1032,6 +1047,10 @@
       alert("El RFC para facturación tiene un formato que no reconozco.");
       return false;
     }
+    if (!isEmpty(getElement('txtEMail')) && !isEmailAddress(getElement('txtEMail'))) {
+      alert("El correo electrónico tiene un formato que no reconozco.");
+      return false;
+    }
     if (isEmpty(getElement('cboDocumentType'))) {
       alert("Requiero se proporcione el tipo de documento que se desea inscribir.");
       return false;
@@ -1053,6 +1072,7 @@
 
   function showEditors() {
     <% if (base.ShowDocumentsEditor()) { %>
+    getElement('ifraDigitalizationEditor').src = "./digitalization.editor.aspx?transactionId=<%=transaction.Id%>";
     getElement('ifraRecordingEditor').src = "../land.registration.system/recording.editor.aspx?transactionId=<%=transaction.Id%>";
     getElement('ifraTransactionReturnEditor').src = "./transaction.return.editor.aspx?transactionId=<%=transaction.Id%>";
     getElement('ifraTransactionStatusEditor').src = "./transaction.status.editor.aspx?transactionId=<%=transaction.Id%>";
@@ -1103,6 +1123,7 @@
   addEvent(getElement("ifraRecordingEditor"), 'resize', ifraRecordingEditor_onresize);
   addEvent(getElement("txtRequestedBy"), 'keypress', upperCaseKeyFilter);
   addEvent(getElement("txtRFC"), 'keypress', taxKeyFilter);
+  addEvent(getElement("txtEMail"), 'keypress', eMailAddressKeyFilter);
   addEvent(getElement("txtDocumentNumber"), 'keypress', upperCaseKeyFilter);
   addEvent(getElement("txtDiscountAuthorization"), 'keypress', upperCaseKeyFilter);
   addEvent(getElement("txtBaseResourceUID"), 'keypress', upperCaseKeyFilter);

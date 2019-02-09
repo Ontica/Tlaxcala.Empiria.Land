@@ -12,6 +12,7 @@ using System;
 
 using Empiria.Contacts;
 using Empiria.DataTypes;
+using Empiria.Messaging;
 using Empiria.Presentation.Web;
 using Empiria.Presentation.Web.Content;
 
@@ -243,10 +244,9 @@ namespace Empiria.Land.WebApp {
 
       txtRequestedBy.Value = transaction.RequestedBy;
       txtRFC.Value = transaction.ExtensionData.RFC;
+      txtEMail.Value = transaction.ExtensionData.SendTo.Address;
 
       cboManagementAgency.Value = transaction.Agency.Id.ToString();
-
-      //txtOfficeNotes.Value = transaction.ExtensionData.OfficeNotes;
 
       cboRecordingActType.SelectedIndex = 0;
       cboLawArticle.SelectedIndex = 0;
@@ -358,6 +358,10 @@ namespace Empiria.Land.WebApp {
 
       transaction.RequestedBy = txtRequestedBy.Value.Replace("\'\'", "\"").Replace("\'", "¿");
       transaction.ExtensionData.RFC = txtRFC.Value;
+
+      if (txtEMail.Value.Length != 0) {
+        transaction.ExtensionData.SendTo = new SendTo(txtEMail.Value);
+      }
 
       transaction.Agency = Contact.Parse(int.Parse(cboManagementAgency.Value));
       transaction.Save();
