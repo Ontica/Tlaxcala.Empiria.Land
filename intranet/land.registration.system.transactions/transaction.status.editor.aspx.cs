@@ -190,7 +190,7 @@ namespace Empiria.Land.WebApp {
       if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) {
         return false;
       }
-      if (transaction.Workflow.IsReadyForDelivery &&
+      if (transaction.Workflow.IsReadyForDeliveryOrReturn &&
           transaction.Workflow.NextStatus == LRSTransactionStatus.Delivered) {
         return true;
       }
@@ -202,7 +202,7 @@ namespace Empiria.Land.WebApp {
       if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) {
         return false;
       }
-      if (transaction.Workflow.IsReadyForDelivery &&
+      if (transaction.Workflow.IsReadyForDeliveryOrReturn &&
           transaction.Workflow.NextStatus == LRSTransactionStatus.Returned) {
         return true;
       }

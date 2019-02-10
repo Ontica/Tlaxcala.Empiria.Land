@@ -134,7 +134,7 @@ namespace Empiria.Web.UI.Ajax {
     private string GetResourceCommandHandler() {
       string resourceUID = GetCommandParameter<string>("resourceUID");
 
-      var resource = Resource.TryParseWithUID(resourceUID);
+      var resource = Resource.TryParseWithUID(resourceUID, false);
 
       var json = new JsonObject();
 
