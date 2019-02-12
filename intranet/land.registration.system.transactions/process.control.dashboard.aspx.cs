@@ -98,7 +98,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected sealed override void Initialize() {
-
+      Land.Messaging.LandMessenger.Start();
     }
 
     public bool IsTabStripSelected(TabStrip tabStrip) {
