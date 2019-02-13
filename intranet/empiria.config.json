@@ -72,6 +72,36 @@
       "type": "",
       "key": "DisplayVedaElectoralUI",
       "value": false
+    },
+    {
+      "type": "Land.WebApi",
+      "key": "PendingNoteRequest.NotariesArray",
+      "value": "54~71~72~73~74~75~77~79~80~409"
+    },
+    {
+      "type": "Land.WebApi",
+      "key": "PendingNoteRequest.ProjectedActsArray",
+      "value": "2203~2206~2207~2208~2209~2214~2335~2371~2787"
+    },
+    {
+      "type": "Land.WebApi",
+      "key": "Citys.NewTransactionsEnabled",
+      "value": false
+    },
+    {
+      "type": "Land.WebApi",
+      "key": "PrintServicesServerBaseAddress",
+      "value": "http://empiria.land/intranet/land.registration.system"
+    },
+    {
+      "type": "WebApi",
+      "key": "IsPassThroughServer",
+      "value": false
+    },
+    {
+      "type": "Land.WebApi",
+      "key": "Target.WebApi.Server",
+      "value": "NONE"
     }
   ]
 }

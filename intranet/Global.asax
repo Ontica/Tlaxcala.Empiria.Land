@@ -1,2 +1,2 @@
-﻿<%@ Application Inherits="Empiria.Presentation.Web.Global" Language="C#" %>
+﻿<%@ Application Inherits="Empiria.Land.Intranet.Global" Language="C#" %>
 
