@@ -36,6 +36,10 @@
             <h5><b>(Reingreso)</b></h5>
           <% } %>
         </td>
+        <td style="vertical-align:top;padding-left:20px">
+          <br />
+          <img style="margin-left:-22pt" class="logo" src="../themes/default/customer/government.seal.right.jpg" alt="" title="" />
+        </td>
       </tr>
     </table>
 

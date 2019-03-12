@@ -44,6 +44,15 @@
                   </tr>
                 </table>
               </td>
+              <td valign="top">
+                <table>
+                  <tr>
+                    <td style="padding-right:20px;">
+                      <img class="logo" src="../themes/default/customer/government.seal.right.jpg" alt="" title="" />
+                    </td>
+                  </tr>
+                </table>
+              </td>
               <td valign="top" style="white-space:nowrap">
                 <table width="100%">
                   <tr>
@@ -207,6 +216,15 @@
                   <tr>
                     <td align="center" style="line-height:22pt">
                       <h2 style="height:30px; white-space:normal; font-size:18pt">BOLETA DE INGRESO</h2>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td valign="top">
+                <table>
+                  <tr>
+                    <td style="padding-right:20px;">
+                      <img class="logo" src="../themes/default/customer/government.seal.right.jpg" alt="" title="" />
                     </td>
                   </tr>
                 </table>

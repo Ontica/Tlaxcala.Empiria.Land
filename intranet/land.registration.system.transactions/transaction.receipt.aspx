@@ -44,6 +44,15 @@
 						      </tr>
                 </table>
               </td>
+              <td valign="top">
+                <table>
+                  <tr>
+                    <td style="padding-right:20px;">
+                      <img class="logo" src="../themes/default/customer/government.seal.right.jpg" alt="" title="" />
+                    </td>
+                  </tr>
+                </table>
+              </td>
 				      <td valign="top" style="white-space:nowrap">
 					      <table width="100%">
 						      <tr>

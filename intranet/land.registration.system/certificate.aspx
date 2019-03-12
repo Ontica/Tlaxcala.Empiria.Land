@@ -23,12 +23,16 @@
             <span style='color:red;'>* ESTE CERTIFICADO NO HA SIDO CERRADO *</span><br />
           <% } else if (base.Certificate.Unsigned()) { %>
             <span style='color:red;'>* INVÁLIDO SIN FIRMA ELECTRÓNICA *</span><br />
-          <% } else if (!base.Certificate.Transaction.Workflow.Delivered && this.Certificate.Transaction.Workflow.CurrentStatus != Empiria.Land.Registration.Transactions.LRSTransactionStatus.Archived) { %>
+          <% } else if (!base.Certificate.Transaction.Workflow.DeliveredOrReturned &&
+                        this.Certificate.Transaction.Workflow.CurrentStatus != Empiria.Land.Registration.Transactions.LRSTransactionStatus.Archived) { %>
             <span style='color:red;'>* ESTE CERTIFICADO NO HA SIDO ENTREGADO*</span><br />
           <% } %>
           CERTIFICADO DE <%=base.Certificate.CertificateType.DisplayName.ToUpperInvariant()%>
         </h2>
         <h5><%=base.Certificate.UID%></h5>
+        </td>
+        <td style="vertical-align:top;padding-left:20px">
+          <img style="margin-left:-22pt" class="logo" src="../themes/default/customer/government.seal.right.jpg" alt="" title="" />
         </td>
        </tr>
     </table>
