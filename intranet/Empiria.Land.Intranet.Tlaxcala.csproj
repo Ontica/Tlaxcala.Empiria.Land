@@ -129,6 +129,7 @@
     <Content Include="land.registration.system\document.imaging.control.slip.aspx" />
     <Content Include="land.registration.system\document.search.aspx" />
     <Content Include="land.registration.system\image.set.viewer.aspx" />
+    <Content Include="land.registration.system\cadastral.card.aspx" />
     <Content Include="land.registration.system\real.estate.editor.aspx" />
     <Content Include="land.registration.system\recording.act.editor.aspx" />
     <Content Include="land.registration.system\recording.book.analyzer.aspx" />
@@ -570,6 +571,10 @@
     <Compile Include="land.registration.system\image.set.viewer.aspx.designer.cs">
       <DependentUpon>image.set.viewer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="land.registration.system\cadastral.card.aspx.cs">
+      <DependentUpon>cadastral.card.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="land.registration.system\real.estate.editor.aspx.cs">
       <DependentUpon>real.estate.editor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -773,7 +778,7 @@
       <Name>Empiria.OnePoint</Name>
     </ProjectReference>
     <ProjectReference Include="..\connectors\Empiria.Land.Connectors.csproj">
-      <Project>{3f336e9d-d9fa-492f-bb91-ee81bb49aeb6}</Project>
+      <Project>{83142b30-19c6-4a01-874d-b4d95829b84c}</Project>
       <Name>Empiria.Land.Connectors</Name>
     </ProjectReference>
   </ItemGroup>

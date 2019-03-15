@@ -390,9 +390,9 @@
 
     if (cadastralKey == '') {
       alert("Requiero se proporcione la clave catastral del predio.");
-      return;
     } else {
-      alert("Desafortunadamente no tenemos conexión con el sistema de catastro.");
+      createNewWindow("cadastral.card.aspx?cadastralUID=" + cadastralKey);
+      //alert("Desafortunadamente no tenemos conexión con el sistema de catastro.");
     }
   }
 
