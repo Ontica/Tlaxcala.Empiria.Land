@@ -42,6 +42,7 @@ namespace Empiria.Land.Connectors {
                            .ConfigureAwait(false);
     }
 
+
     public async Task<int> SendAvisoPreventivo(Certificate certificate, byte[] outputFile) {
       var wsClient = new RppCertificateEmissionWSClient();
 
@@ -51,6 +52,7 @@ namespace Empiria.Land.Connectors {
       return await wsClient.receiveCertificateAsync(authenticationBean, certificateBean)
                            .ConfigureAwait(false);
     }
+
 
     public async Task<int> SendOficioDevolucion(LRSTransaction transaction, byte[] outputFile) {
       var wsClient = new RppCertificateEmissionWSClient();
@@ -63,6 +65,7 @@ namespace Empiria.Land.Connectors {
 
     }
 
+
     public async Task<bool> CanSendDocument(string tramiteCitys) {
       var wsClient = new RppCertificateEmissionWSClient();
 
@@ -71,6 +74,7 @@ namespace Empiria.Land.Connectors {
       return await wsClient.canSendDocumentAsync(authenticationBean, tramiteCitys)
                             .ConfigureAwait(false);
     }
+
 
     #endregion Public methods
 
@@ -89,6 +93,7 @@ namespace Empiria.Land.Connectors {
 
       return returnData;
     }
+
 
     private rppCertificateEmissionCertificateBean GetCertificateBean(Certificate certificate,
                                                                      byte[] outputFile) {
