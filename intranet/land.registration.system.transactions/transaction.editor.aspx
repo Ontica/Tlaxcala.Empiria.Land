@@ -77,7 +77,7 @@
             <% } %>
             &nbsp; &nbsp;
             Correo electrónico:
-            <input id='txtEMail' type="text" class="textBox" style="width:208px" title="" maxlength="64" runat="server" />
+            <input id='txtEMail' type="text" class="textBox" style="width:220px" title="" maxlength="64" runat="server" />
           </td>
         </tr>
         <tr>
@@ -86,14 +86,14 @@
             <select id="cboDocumentType" class="selectBox" style="width:192px" onchange="return updateUserInterface(this);" runat="server">
               <option value="">( Seleccionar )</option>
             </select>
-            No. Instrumento:
+            &nbsp; No. Instrumento:&nbsp;&nbsp;
             <input id='txtDocumentNumber' type="text" class="textBox" style="width:220px;" title="" maxlength="128" runat="server" />
           </td>
         </tr>
         <tr>
           <td>Tramitado por:</td>
           <td colspan="4" class="lastCell">
-            <select id="cboManagementAgency" class="selectBox" style="width:286px" runat='server'>
+            <select id="cboManagementAgency" class="selectBox" style="width:490px" runat='server'>
               <option value="-1" title="oPrivateContract">No determinado</option>
             </select>
             Mesa origen:

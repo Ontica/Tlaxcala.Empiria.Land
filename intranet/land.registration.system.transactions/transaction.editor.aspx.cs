@@ -21,6 +21,8 @@ using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
 using Empiria.Land.UI;
 
+using System.Web.UI.WebControls;
+
 namespace Empiria.Land.WebApp {
 
   public partial class LRSTransactionEditor : WebPage {
@@ -230,13 +232,7 @@ namespace Empiria.Land.WebApp {
                                   "( Seleccionar )", String.Empty, "No consta");
 
 
-      var agenciesList = LRSTransaction.GetAgenciesList();
-
-      agenciesList.Sort((x, y) => x.Alias.CompareTo(y.Alias));
-
-      HtmlSelectContent.LoadCombo(this.cboManagementAgency, agenciesList,
-                                  "Id", "Alias", "( Seleccionar notaría/agencia que tramita )");
-
+      LoadAgenciesCombo();
 
       LRSHtmlSelectControls.LoadTransactionActTypesCategoriesCombo(this.cboRecordingActTypeCategory);
       cboDocumentType.Value = transaction.DocumentType.Id.ToString();
@@ -264,6 +260,24 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+    private void LoadAgenciesCombo() {
+      var agenciesList = LRSTransaction.GetAgenciesList();
+
+      agenciesList.Sort((x, y) => x.Alias.CompareTo(y.Alias));
+
+      this.cboManagementAgency.Items.Clear();
+
+      this.cboManagementAgency.Items.Add(new ListItem("( Seleccionar la notaría que ingresa el trámite, o 'Interesado' en cualquier otro caso )", String.Empty));
+
+      foreach (var agency in agenciesList) {
+        SendTo sendTo = agency.ExtendedData.Get<SendTo>("land.sendCompletedFilingsTo", SendTo.Empty);
+
+        var text = sendTo.Name.Length != 0 ? $"{agency.Alias} ---> Enviar correo a {sendTo.Name}" : $"{agency.Alias}";
+
+        this.cboManagementAgency.Items.Add(new ListItem(text, agency.Id.ToString()));
+      }
+    }
+
     private void LoadRecordingActCombos() {
       if (!String.IsNullOrEmpty(cboRecordingActTypeCategory.Value)) {
         var recordingActTypeCategory = RecordingActTypeCategory.Parse(int.Parse(cboRecordingActTypeCategory.Value));
@@ -278,9 +292,11 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
     private void UndeleteTransaction() {
       transaction.Workflow.Undelete();
     }
+
 
     protected bool ShowDocumentsEditor() {
       if (transaction.IsNew || transaction.IsEmptyInstance) {
@@ -291,6 +307,7 @@ namespace Empiria.Land.WebApp {
       }
       return true;
     }
+
 
     protected bool ShowPrintPaymentOrderButton {
       get {
@@ -307,6 +324,7 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
     protected bool ShowTransactionVoucher {
       get {
         if (transaction.Workflow.CurrentStatus != LRSTransactionStatus.Payment) {
@@ -319,6 +337,7 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
     private void PrintOrderPayment() {
       if (DISPLAY_BANK_PAYMENT_ORDER) {
         onloadScript = "createNewWindow('bank.payment.order.aspx?id=" + transaction.Id.ToString() + "')";
@@ -327,9 +346,11 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
     private void PrintTransactionReceipt() {
       onloadScript = "createNewWindow('transaction.receipt.aspx?id=" + transaction.Id.ToString() + "')";
     }
+
 
     private decimal CalculatePayment() {
       //FixedList<RecordingAct> list = transaction.Recording.RecordingActs;
@@ -342,6 +363,7 @@ namespace Empiria.Land.WebApp {
       //}
       return total;
     }
+
 
     private void SaveTransaction() {
       bool isNew = transaction.IsNew;
@@ -369,11 +391,13 @@ namespace Empiria.Land.WebApp {
       onloadScript = "alert('Los cambios efectuados en la información del trámite se guardaron correctamente.');";
     }
 
+
     private void ApplyVoidReceipt() {
       if (transaction.IsFeeWaiverApplicable) {
         transaction.ApplyFeeWaiver();
       }
     }
+
 
     private void ApplyReceipt() {
       Assertion.AssertObject(txtReceiptNumber.Value, "txtReceiptNumber value can't be null.");
@@ -382,6 +406,7 @@ namespace Empiria.Land.WebApp {
 
       transaction.AddPayment(txtReceiptNumber.Value, decimal.Parse(txtReceiptTotal.Value));
     }
+
 
     private void SaveAndReceiveTransaction() {
       SaveTransaction();
@@ -393,6 +418,7 @@ namespace Empiria.Land.WebApp {
       ShowAlertBox("Este trámite fue recibido satistactoriamente.");
     }
 
+
     private void CopyTransaction() {
       SaveTransaction();
       LRSTransaction copy = this.transaction.MakeCopy();
@@ -401,6 +427,7 @@ namespace Empiria.Land.WebApp {
                      @".\n\nAl cerrar esta ventana se mostrará el nuevo trámite.');";
       onloadScript += "doOperation('goToTransaction', " + copy.Id.ToString() + ");";
     }
+
 
     protected bool CanCreateCertificate() {
       if (this.transaction.Workflow.CurrentStatus != LRSTransactionStatus.Elaboration &&
@@ -413,6 +440,7 @@ namespace Empiria.Land.WebApp {
       }
       return (this.transaction.Workflow.GetCurrentTask().Responsible.Id == ExecutionServer.CurrentUserId);
     }
+
 
     private void DeleteCertificate() {
       string uid = GetCommandParameter("uid");
@@ -427,6 +455,7 @@ namespace Empiria.Land.WebApp {
         SetOKScriptMsg("El certificado no puede ser eliminado.");
       }
     }
+
 
     protected string GetCertificates() {
       const string template = "<tr class='{CLASS}'><td>{{CERTIFICATE-UID}}</td>" +
@@ -506,6 +535,7 @@ namespace Empiria.Land.WebApp {
       }
       return html;
     }
+
 
     protected string GetRecordingActs() {
       const string template = "<tr class='{CLASS}'><td>{COUNT}</td><td style='white-space:normal'>{ACT}</td>" +
