@@ -11,6 +11,7 @@
 using System;
 
 using Empiria.Land.Connectors;
+using Empiria.Land.Registration;
 
 namespace Empiria.Land.WebApp {
 
@@ -22,6 +23,8 @@ namespace Empiria.Land.WebApp {
                                       ConfigurationData.Get<bool>("DisplayVedaElectoralUI", false);
 
     protected CadastralData data = CadastralData.Empty;
+    protected RealEstate realEstate = RealEstate.Empty;
+
     protected string cadastralUID = String.Empty;
 
     #endregion Fields
@@ -42,6 +45,10 @@ namespace Empiria.Land.WebApp {
       var connector = new CadastralConnector();
 
       data = await connector.VerifyRealEstateRegistered(cadastralUID);
+
+      if (!String.IsNullOrWhiteSpace(Request.QueryString["realEstateUID"])) {
+        realEstate = RealEstate.TryParseWithUID(Request.QueryString["realEstateUID"]);
+      }
     }
 
 
@@ -77,7 +84,7 @@ namespace Empiria.Land.WebApp {
       }
     }
 
-  
+
     #endregion Private methods
 
   } // class CadastralCard

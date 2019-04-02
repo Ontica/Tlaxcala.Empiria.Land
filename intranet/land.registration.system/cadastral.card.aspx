@@ -48,6 +48,7 @@
                 <table width="100%">
                   <tr>
                     <td valign="bottom" align="right">
+                       <img style="margin-left:-22pt" class="logo" src="../themes/default/customer/government.seal.right.jpg" alt="" title="" />
                     </td>
                   </tr>
                 </table>
@@ -57,85 +58,105 @@
         </td>
       </tr>
       <tr>
-        <td valign="top" style="width:50%;border-top: 3px solid #3a3a3a;padding-top:8pt;padding-bottom:4pt">
-          <table style="width:100%;white-space:nowrap;font-size:10pt" cellpadding="3px" cellspacing="0px">
+        <td valign="top" style="width:48%;border-top: 3px solid #3a3a3a;padding-top:8pt;padding-bottom:4pt">
+          <table style="width:100%;white-space:nowrap;font-size:8pt" cellpadding="4pt" cellspacing="4pt">
             <tr>
-              <td valign="top" colspan="2" style="white-space:nowrap"><b>INFORMACIÓN CATASTRAL</b></td>
+              <td valign="top" colspan="2" style="text-align:center;white-space:nowrap;font-size:10pt"><u>INFORMACIÓN CATASTRAL</u></td>
             </tr>
             <tr>
               <td valign="top" style="white-space:nowrap">Clave catastral:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=data.ClaveCatastral%></b></td>
-            </tr>
-            <tr>
-              <td valign="top" style="white-space:nowrap">Clave catastral histórica:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=data.ClaveCatastralHistorica%></b></td>
-            </tr>
-            <tr>
-              <td valign="top" style="white-space:nowrap">Clave predial:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=data.ClavePredial%></b></td>
-            </tr>
-            <tr>
-              <td valign="top" style="white-space:nowrap">Clave predial histórica:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=data.ClavePredialHistorica%></b></td>
-            </tr>
-            <tr>
-              <td valign="top" style="white-space:nowrap">Localidad:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=data.ClaveLocalidad%></b></td>
-            </tr>
-            <tr>
-              <td valign="top" style="white-space:nowrap">Manzana:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=data.ClaveManzana%></b></td>
-            </tr>
-            <tr>
-              <td valign="top" style="white-space:nowrap">Municipio:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=data.ClaveMunicipio%></b></td>
+              <td style='white-space:normal;width:90%;font-size:10pt'><b><%=data.ClaveCatastral%></b></td>
             </tr>
             <tr>
               <td valign="top" style="white-space:nowrap">Región:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=data.ClaveRegion%></b></td>
+              <td style='white-space:normal;'><b><%=data.ClaveRegion%></b></td>
             </tr>
             <tr>
-              <td valign="top" style="white-space:nowrap">Sector:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=data.ClaveSector%></b></td>
+              <td valign="top" style="white-space:nowrap">Municipio:</td>
+              <td style='white-space:normal;'><b><%=data.ClaveMunicipio%></b></td>
             </tr>
             <tr>
               <td valign="top" style="white-space:nowrap">Zona:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=data.ClaveZona%></b></td>
+              <td style='white-space:normal;'><b><%=data.ClaveZona%></b></td>
             </tr>
-          </table>
-        </td>
-        <td valign="top" style="width:50%;border-top: 3px solid #3a3a3a;padding-top:8pt;padding-bottom:4pt">
-          <table style="width:100%;white-space:nowrap;font-size:10pt" cellpadding="3px" cellspacing="0px">
             <tr>
-              <td colspan="2"><b>INFORMACIÓN DE PROPIETARIOS:</b></td>
+              <td valign="top" style="white-space:nowrap">Sector:</td>
+              <td style='white-space:normal;'><b><%=data.ClaveSector%></b></td>
+            </tr>
+            <tr>
+              <td valign="top" style="white-space:nowrap">Localidad:</td>
+              <td style='white-space:normal;'><b><%=data.ClaveLocalidad%></b></td>
+            </tr>
+            <tr>
+              <td valign="top" style="white-space:nowrap">Manzana:</td>
+              <td style='white-space:normal;'><b><%=data.ClaveManzana%></b></td>
+            </tr>
+            <tr>
+              <td valign="top" style="white-space:nowrap">Clave catastral histórica:</td>
+              <td style='white-space:normal;'><b><%=data.ClaveCatastralHistorica%></b></td>
+            </tr>
+            <tr>
+              <td valign="top" style="white-space:nowrap">Clave predial:</td>
+              <td style='white-space:normal;'><b><%=data.ClavePredial%></b></td>
+            </tr>
+            <tr>
+              <td valign="top" style="white-space:nowrap">Clave predial histórica:</td>
+              <td style='white-space:normal;'><b><%=data.ClavePredialHistorica%></b></td>
+            </tr>
+            <tr>
+              <td valign="top" colspan="2" style="text-align:center;white-space:nowrap;font-size:10pt"><u>Propietarios registrados en Catastro</u></td>
             </tr>
             <% foreach (var propietario in data.Propietario) { %>
             <tr>
-              <td valign="top" style="white-space:nowrap">Ap.Paterno:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=propietario.ApellidoPaterno%></b></td>
-            </tr>
-            <tr>
-              <td valign="top" style="white-space:nowrap">Ap. Materno:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=propietario.ApellidoMaterno%></b></td>
-            </tr>
-            <tr>
-              <td valign="top" style="white-space:nowrap">Nombre:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=propietario.Nombre%></b></td>
-            </tr>
-            <tr>
-              <td valign="top" style="white-space:nowrap">RFC:</td>
-              <td style='white-space:normal;border-bottom: 1px solid'><b><%=propietario.Rfc%></b></td>
+              <td valign="top" style="white-space:nowrap">Propietario: &nbsp; </td>
+              <td style='white-space:normal;width:90%;'><b><%=$"{propietario.Nombre} {propietario.ApellidoPaterno} {propietario.ApellidoMaterno}"%></b></td>
             </tr>
             <% } %>
           </table>
         </td>
+        <td valign="top" style="width:48%;border-top: 3px solid #3a3a3a;padding-top:8pt;padding-bottom:4pt">
+          <table style="width:100%;white-space:nowrap;font-size:8pt" cellpadding="4pt" cellspacing="4pt">
+            <tr>
+              <td valign="top" colspan="2" style="text-align:center;white-space:nowrap;font-size:10pt"><u>INFORMACIÓN REGISTRAL</u></td>
+            </tr>
+            <tr>
+              <td valign="top" style="white-space:nowrap">Folio Real:</td>
+              <td style='white-space:normal;width:90%;font-size:10pt'><b><%=realEstate.UID%></b></td>
+            </tr>
+            <tr>
+              <td valign="top" style="white-space:nowrap">Distrito:</td>
+              <td style='white-space:normal;'><b><%=realEstate.District.FullName%></b></td>
+            </tr>
+            <tr>
+              <td valign="top" style="white-space:nowrap">Municipio:</td>
+              <td style='white-space:normal;'><b><%=$"{realEstate.Municipality.Name} ({realEstate.Municipality.Code})"%></b></td>
+            </tr>
+            <tr>
+              <td valign="top" style="white-space:nowrap">Tipo de predio:</td>
+              <td style='white-space:normal;'><b><%=realEstate.RealEstateType.Name%></b></td>
+            </tr>
+            <tr>
+              <td valign="top" style="white-space:nowrap">Denominado:</td>
+              <td style='white-space:normal;'><b><%=realEstate.Name%></b></td>
+            </tr>
+            <tr>
+              <td valign="top" style="white-space:nowrap">Ubicado en:</td>
+              <td style='white-space:normal;'><b><%=realEstate.LocationReference%></b></td>
+            </tr>
+            <tr>
+              <td valign="top" style="white-space:nowrap">Superficie:</td>
+              <td style='white-space:normal;'><b><%=realEstate.LotSize.ToString()%></b></td>
+            </tr>
+            <tr>
+              <td valign="top" style="white-space:nowrap" colspan="2">Medidas y colindancias:</td>
+            </tr>
+            <tr>
+              <td style='white-space:normal;' colspan="2"><b><%=realEstate.MetesAndBounds%></b></td>
+            </tr>
+          </table>
+        </td>
       </tr>
     </table>
-    <br /><br />
-    <B style="font-size:10pt">UBICACIÓN GEOGRÁFICA</B>
-    <br />
-      &nbsp;El mapa no está disponible en catastro.
-
     <div id="cadastral-data" style="width:50%;height:500px;"></div>
     <div id="map" style="width:50%;height:500px"></div>
    </form>

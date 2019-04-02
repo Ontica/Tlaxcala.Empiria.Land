@@ -122,7 +122,6 @@
     <Content Include="land.registration.system.transactions\digitalization.editor.aspx" />
     <Content Include="land.registration.system.transactions\transaction.status.editor.aspx" />
     <Content Include="land.registration.system\by.resource.analyzer.aspx" />
-    <Content Include="land.registration.system\cadastral.card.html" />
     <Content Include="land.registration.system.transactions\transaction.return.editor.aspx" />
     <Content Include="land.registration.system\certificate.aspx" />
     <Content Include="land.registration.system\document.editor.aspx" />

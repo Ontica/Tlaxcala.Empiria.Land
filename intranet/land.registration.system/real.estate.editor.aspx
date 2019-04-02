@@ -174,8 +174,9 @@
       case 'saveRealEstate':
         return saveRealEstate();
       case 'searchCadastralNumber':
-        alert("La búsqueda de claves catastrales no está disponible en este momento.");
-        return;
+        return getCadastralInfo();
+      case 'showCadastralCertificate':
+        return getCadastralInfo();
       case 'cancelEdition':
         return cancelEdition();
       default:
@@ -185,6 +186,16 @@
     if (success) {
       sendPageCommand(command);
       gbSended = true;
+    }
+  }
+
+  function getCadastralInfo() {
+    var cadastralKey = getElement('txtCadastralKey').value;
+
+    if (cadastralKey == '') {
+      alert("Requiero se proporcione la clave catastral del predio.");
+    } else {
+      createNewWindow("cadastral.card.aspx?cadastralUID=" + cadastralKey + "&realEstateUID=<%=property.UID%>");
     }
   }
 

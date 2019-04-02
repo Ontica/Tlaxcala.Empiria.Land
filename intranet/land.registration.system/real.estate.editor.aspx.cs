@@ -26,7 +26,7 @@ namespace Empiria.Land.WebApp {
 
     #region Fields
 
-    private RealEstate property = null;
+    protected RealEstate property = null;
     private RecordingAct recordingAct = null;
 
     #endregion Fields

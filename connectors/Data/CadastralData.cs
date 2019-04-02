@@ -15,7 +15,6 @@ namespace Empiria.Land.Connectors {
   /// <summary>Contains cadastral data about a registered real estate.</summary>
   public class CadastralData {
 
-
     #region Constructors and parsers
 
 

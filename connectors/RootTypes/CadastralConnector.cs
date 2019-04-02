@@ -25,14 +25,19 @@ namespace Empiria.Land.Connectors {
 
     public async Task<CadastralData> VerifyRealEstateRegistered(string cadastralKey) {
       Assertion.AssertObject(cadastralKey, "cadastralKey");
-      Assertion.Assert(cadastralKey.Length == 31, "La clave catastral tiene un tamaño diferente a 31 dígitos.");
+      Assertion.Assert(cadastralKey.Length == 31, $"La clave catastral tiene un tamaño de {cadastralKey.Length} " +
+                                                  $"y debería ser de 31 dígitos.");
       Assertion.Assert(EmpiriaString.IsInteger(cadastralKey), "La clave catastral tiene caracteres que no reconozco.");
 
       JsonObject response = await this.CallVerifyRealEstateRegisteredWebService(cadastralKey)
                                       .ConfigureAwait(false);
 
-      Assertion.Assert(response.Contains("claveCatastral") && response.Contains("propietario"),
+      Assertion.Assert(response.Contains("claveCatastral"),
                        $"El servidor de Catastro regresó una respuesta inesperada:\n {response.ToString()}");
+
+      if (response.Get<string>("claveCatastral") == "No existe") {
+        throw new Exception($"La clave catastral {cadastralKey} NO es válida. No está registrada en el Sistema de Catastro.");
+      }
 
       return this.ParseCadastralDataFromWebService(response);
     }
