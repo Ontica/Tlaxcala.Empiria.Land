@@ -10,6 +10,7 @@
 using System;
 using System.Web;
 
+using Empiria.Security;
 using Empiria.Presentation.Web;
 
 using Empiria.Land.Documentation;
@@ -46,7 +47,7 @@ namespace Empiria.Land.WebApp {
 
 
     protected bool CanEditDocuments() {
-      return true;
+      return EmpiriaPrincipal.Current.IsInRole("LRSTransaction.Digitalizer");
     }
 
 
@@ -90,7 +91,16 @@ namespace Empiria.Land.WebApp {
     }
 
 
-    static private string GetDeleteLink(TransactionDocument document) {
+    #endregion Public methods
+
+    #region Private methods
+
+
+    private string GetDeleteLink(TransactionDocument document) {
+      if (!CanEditDocuments()) {
+        return "&nbsp;";
+      }
+
       const string template =
         "<a href='javascript:doOperation(\"deleteFile\", {{ID}});' title='Elimina este documento digitalizado'>" +
                 "<img src='../themes/default/buttons/trash.gif'></a>";
@@ -98,10 +108,6 @@ namespace Empiria.Land.WebApp {
       return template.Replace("{{ID}}", document.Id.ToString());
     }
 
-
-    #endregion Public methods
-
-    #region Private methods
 
     private void DeleteFile() {
       int id = int.Parse(GetCommandParameter("documentId"));
