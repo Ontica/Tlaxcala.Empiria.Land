@@ -24,8 +24,27 @@
 <div id="divContentAlwaysVisible">
 <table id="tabStripItemView_0" style="display:inline;">
   <tr>
-    <td class="subTitle">Documento a inscribir</td>
+    <td class="subTitle">
+      Documento a inscribir
+    </td>
   </tr>
+  <% if (documentSet.HasMainDocument || documentSet.HasAuxiliaryDocument) { %>
+  <tr>
+    <td>
+      Documentos digitales:
+      &nbsp; &nbsp; &nbsp;&nbsp;
+
+      <% if (documentSet.HasMainDocument) { %>
+      <a href="javascript:doOperation('viewFile', '..<%=documentSet.MainDocument.UrlRelativePath %>')"><img src='../themes/default/buttons/pdf.png'>Documento principal</a>
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      <% } %>
+
+      <% if (documentSet.HasAuxiliaryDocument) { %>
+      <a href="javascript:doOperation('viewFile', '..<%=documentSet.AuxiliaryDocument.UrlRelativePath %>')"><img src='../themes/default/buttons/pdf.png'>Anexos</a>
+      <% } %>
+    </td>
+  </tr>
+  <% } %>
   <tr id="divDocumentData">
     <td>
       Categoría del documento:
@@ -180,6 +199,9 @@
         alert(arguments[1]);
         return deleteBookRecording(arguments[1]);
 
+      case 'viewFile':
+        return viewFile(arguments[1]);
+
       case 'editDocument':
         return editDocument();
 
@@ -229,6 +251,12 @@
       gbSended = true;
     }
   }
+
+
+  function viewFile(fileUrl) {
+    createNewWindow(fileUrl);
+  }
+
 
   function closeDocument() {
     <% if (!base.CanCloseDocument()) { %>

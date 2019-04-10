@@ -11,8 +11,10 @@
 using System;
 using System.Web.UI;
 
+using Empiria.Land.Documentation;
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
+
 using Empiria.Land.UI;
 using Empiria.Presentation.Web;
 
@@ -25,6 +27,8 @@ namespace Empiria.Land.WebApp {
     protected LRSDocumentEditorControl oRecordingDocumentEditor = null;
     protected AppendRecordingActEditorControlBase oRecordingActEditor = null;
     protected LRSTransaction transaction = null;
+    protected TransactionDocumentSet documentSet = null;
+
     protected string OnLoadScript = String.Empty;
 
     #endregion Fields
@@ -299,6 +303,7 @@ namespace Empiria.Land.WebApp {
       } else {
         transaction = LRSTransaction.Empty;
       }
+      documentSet = TransactionDocumentSet.ParseFor(transaction);
     }
 
     protected string GetRecordingActsGrid() {
