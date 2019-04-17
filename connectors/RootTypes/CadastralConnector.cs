@@ -52,14 +52,16 @@ namespace Empiria.Land.Connectors {
       try {
         var http = new WebApiClient();
 
-        JsonObject response = await http.GetAsync<JsonObject>("CadastralConnectors.ObtenerPredio", cadastralKey);
+        var body = CreateBodyObject(cadastralKey);
+
+        JsonObject response = await http.PostAsync<object, JsonObject>(body, "CadastralConnectors.ObtenerPredio");
 
         if (!response.HasItems) {  // Response content was empty.
                                    // Sometimes the service response is a 200 but without content,
                                    // so retry the call one more time after some time.
           await Task.Delay(1000);
 
-          response = await http.GetAsync<JsonObject>("CadastralConnectors.ObtenerPredio", cadastralKey);
+          response = await http.PostAsync<object, JsonObject>(body, "CadastralConnectors.ObtenerPredio");
         }
 
         Assertion.Assert(response.HasItems,
@@ -68,18 +70,39 @@ namespace Empiria.Land.Connectors {
         return response;
 
       } catch (WebApiClientException err) {
+        err.Publish();
+
         if (err.Response == null) {
           throw err;
-        } else if (!err.Response.IsSuccessStatusCode) {
-          throw new Exception("El servidor de Catastro tuvo un problema al proveer el servicio de verificación de claves catastrales.");
-        } else {
+
+        } else if (!err.Response.IsSuccessStatusCode && err.Response.StatusCode == System.Net.HttpStatusCode.NotFound) {
           throw new Exception($"La clave catastral {cadastralKey} NO es válida. No está registrada en el Sistema de Catastro.");
+
+        } else if (!err.Response.IsSuccessStatusCode && err.Response.StatusCode == System.Net.HttpStatusCode.BadRequest) {
+          throw new Exception($"La clave catastral {cadastralKey} NO es válida. Favor de revisarla e intentarlo nuevamente.");
+
+        } else if (!err.Response.IsSuccessStatusCode) {
+          throw new Exception("El servidor de Catastro tuvo un problema al proveer el servicio de verificación de claves catastrales.", err);
+
+        } else {
+          throw new Exception($"Ocurrió un problema al intentar vincular la clave catastral {cadastralKey}.", err);
+
         }
       } catch (Exception err) {
+        EmpiriaLog.Error(err);
+
         throw err;
       }
     }
 
+
+    private object CreateBodyObject(string cadastralKey) {
+      return new {
+        usuario = "administrador@correo.com",
+        pass = "12345",
+        claveCatastral = cadastralKey,
+      };
+    }
 
 
     private CadastralData ParseCadastralDataFromWebService(JsonObject responseData) {
