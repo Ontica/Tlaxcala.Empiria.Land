@@ -54,14 +54,14 @@ namespace Empiria.Land.Connectors {
 
         var body = CreateBodyObject(cadastralKey);
 
-        JsonObject response = await http.PostAsync<object, JsonObject>(body, "CadastralConnectors.ObtenerPredio");
+        JsonObject response = await http.PostAsync<JsonObject>(body, "CadastralConnectors.ObtenerPredio");
 
         if (!response.HasItems) {  // Response content was empty.
                                    // Sometimes the service response is a 200 but without content,
                                    // so retry the call one more time after some time.
           await Task.Delay(1000);
 
-          response = await http.PostAsync<object, JsonObject>(body, "CadastralConnectors.ObtenerPredio");
+          response = await http.PostAsync<JsonObject>(body, "CadastralConnectors.ObtenerPredio");
         }
 
         Assertion.Assert(response.HasItems,

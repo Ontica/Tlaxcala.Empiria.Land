@@ -109,7 +109,7 @@ namespace Empiria.Land.Connectors {
     public async Task<SignRequest> RequestRevocation(ISignableDocument document) {
       var http = new WebApiClient();
 
-      SignRequest signRequest = await http.PostAsync<ISignableDocument, SignRequest>(document, "ESignConnector.RequestRevocation");
+      SignRequest signRequest = await http.PostAsync<SignRequest>(document, "ESignConnector.RequestRevocation");
 
       return signRequest;
     }
@@ -117,7 +117,7 @@ namespace Empiria.Land.Connectors {
     public async Task<SignRequest> RequestSign(ISignableDocument document) {
       var http = new WebApiClient();
 
-      SignRequest signRequest = await http.PostAsync<ISignableDocument, SignRequest>(document, "ESignConnector.RequestSign");
+      SignRequest signRequest = await http.PostAsync<SignRequest>(document, "ESignConnector.RequestSign");
 
       return signRequest;
     }

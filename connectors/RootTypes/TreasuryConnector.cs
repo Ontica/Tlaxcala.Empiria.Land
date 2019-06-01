@@ -157,14 +157,14 @@ namespace Empiria.Land.Connectors {
     private async Task<JsonObject> CallGenerarFormatoPagoReferenciado(object body) {
       var http = new WebApiClient();
 
-      JsonObject response = await http.PostAsync<object, JsonObject>(body, "TreasuryConnectors.GenerarFormatoPagoReferenciado");
+      JsonObject response = await http.PostAsync<JsonObject>(body, "TreasuryConnectors.GenerarFormatoPagoReferenciado");
 
       if (!response.HasItems) {  // Response content was empty.
                                  // Sometimes the service response is a 200 but without content,
                                  // so retry the call one more time after some time.
         await Task.Delay(1000);
 
-        response = await http.PostAsync<object, JsonObject>(body, "TreasuryConnectors.GenerarFormatoPagoReferenciado");
+        response = await http.PostAsync<JsonObject>(body, "TreasuryConnectors.GenerarFormatoPagoReferenciado");
       }
 
       Assertion.Assert(response.HasItems,
@@ -177,14 +177,14 @@ namespace Empiria.Land.Connectors {
     private async Task<JsonObject> CallConsultarPagoRealizado(object body) {
       var http = new WebApiClient();
 
-      var response = await http.PostAsync<object, JsonObject>(body, "TreasuryConnectors.ConsultarPagoRealizado");
+      var response = await http.PostAsync<JsonObject>(body, "TreasuryConnectors.ConsultarPagoRealizado");
 
       if (!response.HasItems) {  // Response content was empty.
                                  // Sometimes the service response is a 200 but without content,
                                  // so retry the call one more time after some time.
         await Task.Delay(1000);
 
-        response = await http.PostAsync<object, JsonObject>(body, "TreasuryConnectors.ConsultarPagoRealizado");
+        response = await http.PostAsync<JsonObject>(body, "TreasuryConnectors.ConsultarPagoRealizado");
       }
 
       Assertion.Assert(response.HasItems,
