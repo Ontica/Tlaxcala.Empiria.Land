@@ -153,6 +153,15 @@
             <tr>
               <td style='white-space:normal;' colspan="2"><b><%=realEstate.MetesAndBounds%></b></td>
             </tr>
+<%--            <tr>
+              <td valign="top" colspan="2" style="text-align:center;white-space:nowrap;font-size:10pt"><u>Propietarios registrados en el Registro Público</u></td>
+            </tr>--%>
+<%--            <% foreach (var owner in realEstate.CurrentOwnersList) { %>
+            <tr>
+              <td valign="top" style="white-space:nowrap"><%=$"{owner.PartyRole.Name}"%></td>
+              <td style='white-space:normal;width:90%;'><b><%=$"{owner.Party.FullName}"%></b></td>
+            </tr>
+            <% } %>--%>
           </table>
         </td>
       </tr>
