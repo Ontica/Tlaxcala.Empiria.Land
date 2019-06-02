@@ -37,13 +37,11 @@
         <div>
           <br />
           <div class="title">Registro Público de la Propiedad</div>
-          <br /><br /><br /><br /><br /><br /><br /><br />
+          <br /><br /><br /><br /><br /><br /><br /><br /><br />
           <strong>ACCESO AL SISTEMA:</strong>
-          <br /><br />
-          IMPORTANTE: Cada usuario es responsable del uso o mal uso que pudiera darle<br />
-          a su propias credenciales de acceso. NO comparta su contraseña con otras personas y cámbiela con frecuencia.<br /><br />
-          Recuerde que su trabajo es MUY IMPORTANTE para la sociedad.<br /><br />
-          Gracias por trabajar con lealtad y esmero para Tlaxcala y para México.
+          <br /><br /><br />
+          El trabajo de todos es MUY IMPORTANTE para la sociedad y el desarrollo de Tlaxcala.<br /><br />
+          Gracias por trabajar con lealtad y esmero por el bien de nuestro Estado y de nuestro país.
           <br /><br />
           <div class="formRow">
             <span class="formLabel">Usuario:</span>
