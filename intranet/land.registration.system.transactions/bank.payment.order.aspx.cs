@@ -91,9 +91,13 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetCurrentUserInitials() {
-      var user = Empiria.Security.EmpiriaUser.Current.AsContact();
+      if (ExecutionServer.IsAuthenticated) {
+        var user = Empiria.Security.EmpiriaUser.Current.AsContact();
 
-      return user.Nickname;
+        return user.Nickname;
+      } else {
+        return "Interesado";
+      }
     }
 
 
