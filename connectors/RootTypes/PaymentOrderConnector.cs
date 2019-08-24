@@ -1,4 +1,4 @@
-﻿/* Empiria Governance ****************************************************************************************
+﻿/* Tlaxcala Government Integration****************************************************************************
 *                                                                                                            *
 *  Solution : Empiria Treasury                                 System  : Treasury Web API                    *
 *  Assembly : Empiria.Payments.WebApi.dll                      Pattern : Web Api Client Proxy                *
@@ -15,18 +15,24 @@ using System.Threading.Tasks;
 using Empiria.Json;
 using Empiria.WebApi.Client;
 
-using Empiria.OnePoint;
+using Empiria.OnePoint.EPayments;
 
 using Empiria.Land.Registration.Transactions;
 
-namespace Empiria.Land.Connectors {
+namespace Empiria.Land.Integration.TlaxcalaGov {
 
-  public class TreasuryConnector : ITreasuryConnector {
+  public class PaymentOrderConnector : IPaymentOrderProvider {
 
     #region Public methods
 
-    public async Task<IPaymentOrderData> GeneratePaymentOrder(IFiling transaction) {
-      object body = this.BuildRequestBodyForGenerarFormatoPagoReferenciado((LRSTransaction) transaction);
+
+    public async Task<PaymentOrderDTO> GeneratePaymentOrder(IPayable payableEntity) {
+      return await this.GeneratePaymentOrder((LRSTransaction) payableEntity);
+    }
+
+
+    public async Task<PaymentOrderDTO> GeneratePaymentOrder(LRSTransaction transaction) {
+      object body = this.BuildRequestBodyForGenerarFormatoPagoReferenciado(transaction);
 
       JsonObject response = await this.CallGenerarFormatoPagoReferenciado(body)
                                       .ConfigureAwait(false);
@@ -52,7 +58,7 @@ namespace Empiria.Land.Connectors {
     }
 
 
-    public async Task<IPaymentOrderData> RefreshPaymentOrder(IPaymentOrderData paymentOrderData) {
+    public async Task<PaymentOrderDTO> RefreshPaymentOrder(PaymentOrderDTO paymentOrderData) {
       object body = this.BuildRequestBodyForConsultarPagoRealizado(paymentOrderData);
 
       JsonObject response = await this.CallConsultarPagoRealizado(body)
@@ -78,8 +84,8 @@ namespace Empiria.Land.Connectors {
     }
 
 
-    private IPaymentOrderData UpdatePaymentDataFromWebService(IPaymentOrderData paymentOrderData,
-                                                              JsonObject responseData) {
+    private PaymentOrderDTO UpdatePaymentDataFromWebService(PaymentOrderDTO paymentOrderData,
+                                                             JsonObject responseData) {
       Assertion.AssertObject(responseData, "responseData");
 
       bool isCompleted = (responseData.Get<string>("codigoEstatus") == "200" ||
@@ -123,7 +129,7 @@ namespace Empiria.Land.Connectors {
     }
 
 
-    private object BuildRequestBodyForConsultarPagoRealizado(IPaymentOrderData paymentOrderData) {
+    private object BuildRequestBodyForConsultarPagoRealizado(PaymentOrderDTO paymentOrderData) {
       return new {
         folioControlEstado = paymentOrderData.ControlTag
       };
@@ -194,14 +200,14 @@ namespace Empiria.Land.Connectors {
     }
 
 
-    private PaymentOrderData ParseOrderDataFromWebService(JsonObject responseData) {
+    private PaymentOrderDTO ParseOrderDataFromWebService(JsonObject responseData) {
       Assertion.AssertObject(responseData, "responseData");
 
       var routeNumber = responseData.Get<string>("lineaCaptura");
       var dueDate = DateTime.Parse(responseData.Get<string>("fechaVencimiento"));
       var controlTag = responseData.Get<string>("folioControlEstado");
 
-      return new PaymentOrderData(routeNumber, dueDate, controlTag);
+      return new PaymentOrderDTO(routeNumber, dueDate, controlTag);
     }
 
     private string GetBillingRFC(LRSTransaction transaction) {
@@ -212,8 +218,9 @@ namespace Empiria.Land.Connectors {
       }
     }
 
+
     #endregion Private methods
 
-  }  // class TreasuryConnector
+  }  // class PaymentOrderService
 
-}  // namespace Empiria.Land.Connectors
+}  // namespace Empiria.Land.Integration.TlaxcalaGov

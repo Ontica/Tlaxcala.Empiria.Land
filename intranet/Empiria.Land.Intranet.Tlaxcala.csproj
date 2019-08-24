@@ -772,9 +772,13 @@
       <Project>{e396a9fa-8e3a-4064-baf4-ef0bc3c10926}</Project>
       <Name>Empiria.Land.WebAPI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\onepoint\OnePoint.Core\Empiria.OnePoint.csproj">
-      <Project>{4804dd40-6864-48d3-8b6e-f0f6f665e517}</Project>
-      <Name>Empiria.OnePoint</Name>
+    <ProjectReference Include="..\..\onepoint\EPayments.Core\Empiria.OnePoint.EPayments.csproj">
+      <Project>{b6801aed-52c9-4fb7-90b7-2bc2ab3b8ba0}</Project>
+      <Name>Empiria.OnePoint.EPayments</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\onepoint\Integration\Empiria.OnePoint.Integration.csproj">
+      <Project>{1ac5ddb7-2629-4590-97ef-93dae5791733}</Project>
+      <Name>Empiria.OnePoint.Integration</Name>
     </ProjectReference>
     <ProjectReference Include="..\connectors\Empiria.Land.Connectors.csproj">
       <Project>{83142b30-19c6-4a01-874d-b4d95829b84c}</Project>
