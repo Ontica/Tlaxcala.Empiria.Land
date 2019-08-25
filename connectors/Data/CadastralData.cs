@@ -10,7 +10,7 @@
 ********************************* Copyright (c) 2009-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
-namespace Empiria.Land.Connectors {
+namespace Empiria.Land.Integration.TlaxcalaGov {
 
   /// <summary>Contains cadastral data about a registered real estate.</summary>
   public class CadastralData {
@@ -75,4 +75,4 @@ namespace Empiria.Land.Connectors {
 
   }  // class CadastralData
 
-} // namespace Empiria.Land.Connectors
+} // namespace EEmpiria.Land.Integration.TlaxcalaGov

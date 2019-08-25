@@ -10,10 +10,10 @@
 ********************************** Copyright(c) 2009-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
-using Empiria.OnePoint;
+using Empiria.OnePoint.EPayments;
+
 using Empiria.Land.Registration.Transactions;
 
-using Empiria.OnePoint.AppServices;
 
 namespace Empiria.Land.WebApp {
 
@@ -25,7 +25,7 @@ namespace Empiria.Land.WebApp {
                                         ConfigurationData.Get<bool>("DisplayVedaElectoralUI", false);
 
     protected LRSTransaction transaction = null;
-    protected IPaymentOrderData paymentOrderData = null;
+    protected PaymentOrderDTO paymentOrderData = null;
 
     #endregion Fields
 
@@ -42,7 +42,7 @@ namespace Empiria.Land.WebApp {
     private async void Initialize() {
       transaction = LRSTransaction.Parse(int.Parse(Request.QueryString["id"]));
 
-      this.paymentOrderData = await PaymentServices.RequestPaymentOrderData(this.transaction);
+      this.paymentOrderData = await EPaymentsUseCases.RequestPaymentOrderData(this.transaction);
     }
 
     protected string DistrictName {

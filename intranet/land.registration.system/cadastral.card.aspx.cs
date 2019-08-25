@@ -10,8 +10,9 @@
 ********************************** Copyright(c) 2009-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
-using Empiria.Land.Connectors;
 using Empiria.Land.Registration;
+
+using Empiria.Land.Integration.TlaxcalaGov;
 
 namespace Empiria.Land.WebApp {
 

@@ -7,23 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Empiria.Land.Connectors.CitysWS
+namespace Empiria.Land.Integration.TlaxcalaGov.CitysWS
 {
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("dotnet-svcutil", "1.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://ws.ispac.tdw.ieci/", ConfigurationName="Empiria.Land.Connectors.CitysWS.RppCertificateEmissionWS")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://ws.ispac.tdw.ieci/", ConfigurationName= "Empiria.Land.Integration.TlaxcalaGov.CitysWS.RppCertificateEmissionWS")]
     internal interface RppCertificateEmissionWS
     {
 
         [System.ServiceModel.OperationContractAttribute(Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/receiveCertificateRequest", ReplyAction="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/receiveCertificateResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        System.Threading.Tasks.Task<int> receiveCertificateAsync(Empiria.Land.Connectors.CitysWS.authBean arg0, Empiria.Land.Connectors.CitysWS.rppCertificateEmissionCertificateBean arg1);
+        System.Threading.Tasks.Task<int> receiveCertificateAsync(authBean arg0, rppCertificateEmissionCertificateBean arg1);
 
         [System.ServiceModel.OperationContractAttribute(Action="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/canSendDocumentRequest", ReplyAction="http://ws.ispac.tdw.ieci/RppCertificateEmissionWS/canSendDocumentResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        System.Threading.Tasks.Task<bool> canSendDocumentAsync(Empiria.Land.Connectors.CitysWS.authBean arg0, string arg1);
+        System.Threading.Tasks.Task<bool> canSendDocumentAsync(authBean arg0, string arg1);
     }
 
     /// <remarks/>
@@ -299,13 +299,13 @@ namespace Empiria.Land.Connectors.CitysWS
     }
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("dotnet-svcutil", "1.0.0.0")]
-    internal interface RppCertificateEmissionWSChannel : Empiria.Land.Connectors.CitysWS.RppCertificateEmissionWS, System.ServiceModel.IClientChannel
+    internal interface RppCertificateEmissionWSChannel : RppCertificateEmissionWS, System.ServiceModel.IClientChannel
     {
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("dotnet-svcutil", "1.0.0.0")]
-    internal partial class RppCertificateEmissionWSClient : System.ServiceModel.ClientBase<Empiria.Land.Connectors.CitysWS.RppCertificateEmissionWS>, Empiria.Land.Connectors.CitysWS.RppCertificateEmissionWS
+    internal partial class RppCertificateEmissionWSClient : System.ServiceModel.ClientBase<RppCertificateEmissionWS>, RppCertificateEmissionWS
     {
 
     /// <summary>
@@ -348,12 +348,12 @@ namespace Empiria.Land.Connectors.CitysWS
         {
         }
 
-        public System.Threading.Tasks.Task<int> receiveCertificateAsync(Empiria.Land.Connectors.CitysWS.authBean arg0, Empiria.Land.Connectors.CitysWS.rppCertificateEmissionCertificateBean arg1)
+        public System.Threading.Tasks.Task<int> receiveCertificateAsync(authBean arg0, rppCertificateEmissionCertificateBean arg1)
         {
             return base.Channel.receiveCertificateAsync(arg0, arg1);
         }
 
-        public System.Threading.Tasks.Task<bool> canSendDocumentAsync(Empiria.Land.Connectors.CitysWS.authBean arg0, string arg1)
+        public System.Threading.Tasks.Task<bool> canSendDocumentAsync(authBean arg0, string arg1)
         {
             return base.Channel.canSendDocumentAsync(arg0, arg1);
         }

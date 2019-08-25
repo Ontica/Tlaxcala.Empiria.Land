@@ -14,9 +14,9 @@ using System.Threading.Tasks;
 using Empiria.Land.Certification;
 using Empiria.Land.Registration.Transactions;
 
-using Empiria.Land.Connectors.CitysWS;
+using Empiria.Land.Integration.TlaxcalaGov.CitysWS;
 
-namespace Empiria.Land.Connectors {
+namespace Empiria.Land.Integration.TlaxcalaGov {
 
   public class CitysConnector {
 
@@ -155,4 +155,4 @@ namespace Empiria.Land.Connectors {
 
   }  // CitysConnector
 
-}  // namespace Empiria.Land.Connectors
+}  // namespace Empiria.Land.Integration.TlaxcalaGov

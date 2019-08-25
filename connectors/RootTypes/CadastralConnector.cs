@@ -16,7 +16,7 @@ using Empiria.Json;
 using Empiria.WebApi;
 using Empiria.WebApi.Client;
 
-namespace Empiria.Land.Connectors {
+namespace Empiria.Land.Integration.TlaxcalaGov {
 
   /// <summary>Cadastral System web service interface used to verify real estate in Empiria Land.</summary>
   public class CadastralConnector {
@@ -114,4 +114,4 @@ namespace Empiria.Land.Connectors {
 
   }  // class CadastralConnector
 
-}  // namespace Empiria.Land.Connectors
+}  // namespace Empiria.Land.Integration.TlaxcalaGov

@@ -19,6 +19,8 @@ using Empiria.Presentation.Web.Content;
 using Empiria.Land.Certification;
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
+using Empiria.Land.Integration.TlaxcalaGov;
+
 using Empiria.Land.UI;
 
 using System.Web.UI.WebControls;
@@ -692,7 +694,7 @@ namespace Empiria.Land.WebApp {
     private async void SendCertificateToCITYS() {
       int status = 0;
       try {
-        var connector = new Empiria.Land.Connectors.CitysConnector();
+        var connector = new CitysConnector();
 
         var certificate = transaction.GetIssuedCertificates()[0];
 
