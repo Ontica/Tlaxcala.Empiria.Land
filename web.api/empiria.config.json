@@ -1,0 +1,78 @@
+﻿{
+  "appName": "Empiria Land Web API Tlaxcala Edition",
+  "version": "5.0",
+  "date": "2019-09-05",
+  "settings": [
+    {
+      "type": "",
+      "key": "ApplicationKey",
+      "value": "{{APPLICATION-KEY}}"
+    },
+    {
+      "type": "",
+      "key": "GlobalConfigurationFile",
+      "value": "{{GLOBAL-CONFIGURATION-FILE}}"
+    },
+    {
+      "type": "",
+      "key": "System.Description",
+      "value": "Empiria Land Web API Tlaxcala Edition"
+    },
+    {
+      "type": "Data",
+      "key": "IsObjectIdGeneratorServer",
+      "value": true
+    },
+    {
+      "type": "",
+      "key": "QRCodeServiceURL",
+      "value": "http://empiria.land/intranet/user.controls/qrcode.aspx"
+    },
+    {
+      "type": "Land",
+      "key": "Templates.Path",
+      "value": "E:\\empiria.files\\tlaxcala\\"
+    },
+    {
+      "type": "Land.WebApi",
+      "key": "PendingNoteRequest.NotariesArray",
+      "value": "54~71~72~73~74~75~77~79~80~409"
+    },
+    {
+      "type": "Land.WebApi",
+      "key": "PendingNoteRequest.ProjectedActsArray",
+      "value": "2203~2206~2207~2208~2209~2214~2335~2371~2787"
+    },
+    {
+      "type": "Land.WebApi",
+      "key": "Citys.NewTransactionsEnabled",
+      "value": false
+    },
+    {
+      "type": "Land.WebApi",
+      "key": "PrintServicesServerBaseAddress",
+      "value": "http://empiria.land/intranet/land.registration.system"
+    },
+    {
+      "type": "WebApi",
+      "key": "IsPassThroughServer",
+      "value": true
+    },
+    {
+      "type": "Land.WebApi",
+      "key": "PassThrough.TargetServer",
+      "value": {
+        "baseAddress": "http://empiria.land/intranet",
+        "pathRule": {
+          "replace": "/web.api/",
+          "with": ""
+        }
+      }
+    },
+    {
+      "type": "OnePoint.ESign",
+      "key": "SignableDocumentsURL",
+      "value": "http://empiria.land/intranet/land.registration.system"
+    }
+  ]
+}
