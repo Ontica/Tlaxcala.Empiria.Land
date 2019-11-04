@@ -34,6 +34,7 @@
               <option value="document">Documentos</option>
               <option value="certificate">Certificados</option>
               <option value="party">Indice de personas</option>
+              <option value="partyLegacy">Indice personas (anterior)</option>
               <option value=""></option>
               <option value="recordingBook">Libros registrales</option>
               <option value="physicalRecording">Partidas</option>

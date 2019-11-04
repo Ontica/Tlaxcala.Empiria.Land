@@ -62,8 +62,6 @@ namespace Empiria.Land.WebApp {
     private void LoadEditor() {
       HtmlSelectContent.LoadCombo(this.cboManagementAgency, LRSTransaction.GetAgenciesList(),
                                   "Id", "Alias", "( Seleccionar notaría/agencia que tramita )");
-
-      //txtOfficeNotes.Value = transaction.ExtensionData.OfficeNotes;
     }
 
     protected string GetTitle() {

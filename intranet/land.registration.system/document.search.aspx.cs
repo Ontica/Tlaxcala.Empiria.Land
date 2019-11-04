@@ -111,6 +111,10 @@ namespace Empiria.Land.WebApp {
           LoadPartiesGrid(SearchService.Parties(keywords));
           return;
 
+        case "partyLegacy":
+          LoadLegacyPartiesGrid(SearchService.LegacyParties(keywords));
+          return;
+
         case "transaction":
           LoadTransactionsGrid(SearchService.Transactions(keywords));
           return;
@@ -167,6 +171,30 @@ namespace Empiria.Land.WebApp {
         html += row;
       }
       _searchResultsGrid = TableWrapper(html);
+    }
+
+
+
+    private void LoadLegacyPartiesGrid(FixedList<LegacyParty> legacyParties) {
+      string html = ReadLegacyPartiesHeaderTemplate();
+
+
+      for (int i = 0; i < Math.Min(legacyParties.Count, 250); i++) {
+        var item = legacyParties[i];
+
+        string row = ReadLegacyPartiesRow(i);
+
+        row = row.Replace("{{FULL.NAME}}", item.FullName);
+        row = row.Replace("{{DISTRITO}}", item.Distrito);
+        row = row.Replace("{{SECCION}}", item.Seccion);
+        row = row.Replace("{{VOLUMEN}}", item.Volumen);
+        row = row.Replace("{{PARTIDA}}", item.Partida);
+        row = row.Replace("{{FECHA}}", item.Fecha);
+
+        html += row;
+      }
+      _searchResultsGrid = "<table class='details' style='width:675px'>" + html + "</table>";
+      _searchResultsGridMaxHeight = "700px";
     }
 
 
@@ -271,6 +299,32 @@ namespace Empiria.Land.WebApp {
 
       return template;
     }
+
+    private string ReadLegacyPartiesHeaderTemplate() {
+      return "<tr class='detailsHeader'>" +
+                "<td>Nombre</td>" +
+                "<td>Distrito</td>" +
+                "<td>Sección</td>" +
+                "<td>Volumen</td>" +
+                "<td>Partida</td>" +
+                "<td>Fecha</td>" +
+             "</tr>";
+    }
+
+
+    private string ReadLegacyPartiesRow(int rowIndex) {
+      const string row = "<tr class='{{CLASS}}'>" +
+                            "<td style='white-space:normal;width:70%'>{{FULL.NAME}}</td>" +
+                            "<td>{{DISTRITO}}</td>" +
+                            "<td style='white-space:normal'>{{SECCION}}</td>" +
+                            "<td>{{VOLUMEN}}</td>" +
+                            "<td>{{PARTIDA}}</td>" +
+                            "<td>{{FECHA}}</td>" +
+                         "</tr>";
+
+      return row.Replace("{{CLASS}}", (rowIndex % 2 == 0) ? "detailsItem" : "detailsOddItem");
+    }
+
 
     static private string ReadImagingControlIDHeaderTemplate() {
       const string template =

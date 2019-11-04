@@ -171,7 +171,7 @@
         <a href="javascript:doOperation('showUniversalSearcher')">
                 <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Consultar el acervo</a>&nbsp; &nbsp; &nbsp;
         <a href="javascript:doOperation('showSearchRecordingsView')">
-                <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Información registral (anterior)</a>&nbsp; &nbsp; &nbsp;
+                <img src="../themes/default/bullets/agenda_sm.gif" alt="" title="" style="margin-right:8px" />Anotaciones (anterior)</a>
       </td>
     </tr>
   </table>
