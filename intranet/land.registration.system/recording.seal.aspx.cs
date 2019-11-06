@@ -112,10 +112,7 @@ namespace Empiria.Land.WebApp {
         return true;
       }
 
-      if (ExecutionServer.IsAuthenticated && ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DigitalizationDesk") &&
-          (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Digitalization || transaction.Workflow.CurrentStatus == LRSTransactionStatus.OnSign)) {
-        return true;
-      } else if (!ExecutionServer.IsAuthenticated && !String.IsNullOrWhiteSpace(Request.QueryString["msg"])) {
+      if (!ExecutionServer.IsAuthenticated && !String.IsNullOrWhiteSpace(Request.QueryString["msg"])) {
         return true;
       }
       return false;
@@ -372,6 +369,7 @@ namespace Empiria.Land.WebApp {
     }
 
     #endregion Protected methods
+
 
     #region Private methods
 
