@@ -30,6 +30,8 @@ namespace Empiria.Web.UI.Ajax {
 
     protected override string ImplementsCommandRequest(string commandName) {
       switch (commandName) {
+        case "getAssigneeComboStringArrayCmd":
+          return GetAssigneeComboStringArrayCommandHandler();
         case "getImageSetImageURL":
           return GetImageSetImageURLCommandHandler();
         case "getRecordingBookImageSetId":
@@ -130,6 +132,28 @@ namespace Empiria.Web.UI.Ajax {
                                              commandName);
       }
     }
+
+
+    private string GetAssigneeComboStringArrayCommandHandler() {
+      int transactionId = GetCommandParameter<int>("transactionId");
+      var transaction = LRSTransaction.Parse(transactionId);
+
+
+      string operationString = GetCommandParameter<string>("operation");
+
+      FixedList<Contact> list;
+
+      if (operationString == "AssignTo") {
+        list = LRSHtmlSelectControls.GetAsigneeComboItems(transaction, transaction.Workflow.NextStatus);
+      } else {
+        char operation = Convert.ToChar(operationString);
+        list = LRSHtmlSelectControls.GetAsigneeComboItems(transaction, (LRSTransactionStatus) operation);
+      }
+
+      return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "Alias",
+                                                "( Seleccionar )", String.Empty, String.Empty);
+    }
+
 
     private string GetResourceCommandHandler() {
       string resourceUID = GetCommandParameter<string>("resourceUID");

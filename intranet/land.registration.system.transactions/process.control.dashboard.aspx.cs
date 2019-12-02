@@ -42,6 +42,7 @@ namespace Empiria.Land.WebApp {
 
     private string selectedComboFromValue = String.Empty;
 
+
     protected void Page_Init(object sender, EventArgs e) {
       cboFrom.ViewStateMode = ViewStateMode.Enabled;
       cboFrom.EnableViewState = true;
@@ -51,9 +52,11 @@ namespace Empiria.Land.WebApp {
       selectedComboFromValue = String.IsNullOrEmpty(Request.Form[cboFrom.UniqueID]) ? String.Empty : Request.Form[cboFrom.UniqueID];
     }
 
+
     public sealed override Repeater ItemsRepeater {
       get { return this.itemsRepeater; }
     }
+
 
     protected sealed override bool ExecutePageCommand() {
       switch (base.CommandName) {
@@ -97,13 +100,16 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
     protected sealed override void Initialize() {
       Land.Messaging.LandMessenger.Start();
     }
 
+
     public bool IsTabStripSelected(TabStrip tabStrip) {
       return (base.SelectedTabStrip == (int) tabStrip);
     }
+
 
     protected sealed override DataView LoadDataSource() {
       Contact me = Contact.Parse(ExecutionServer.CurrentUserId);
@@ -164,6 +170,7 @@ namespace Empiria.Land.WebApp {
       return new DataView();
     }
 
+
     protected sealed override void LoadPageControls() {
       LoadCombos();
       if (txtFromDate.Value == String.Empty) {
@@ -177,6 +184,7 @@ namespace Empiria.Land.WebApp {
         cboStatus.SelectedIndex = 1;
       }
     }
+
 
     private void LoadCombos() {
       if (IsTabStripSelected(TabStrip.RecibirDocumentos) && this.cboFrom.Items.Count <= 1) {
@@ -192,9 +200,11 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
     protected string GetLegacyDataViewerUrl() {
       return ConfigurationData.GetString("LegacyDataViewer.Url");
     }
+
 
     protected sealed override void SetRepeaterTemplates() {
       if (IsTabStripSelected(TabStrip.MisTramitesPendientes)) {
@@ -239,9 +249,12 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
     private void ChangeTransactionStatus() {
       LRSTransaction transaction = LRSTransaction.Parse(int.Parse(GetCommandParameter("id")));
       LRSTransactionStatus status = (LRSTransactionStatus) Convert.ToChar(GetCommandParameter("state"));
+      Contact assignTo = Contact.Parse(GetCommandParameter<int>("assignToId", -1));
+
       string note = GetCommandParameter("notes", false);
 
       string s = LRSWorkflowRules.ValidateStatusChange(transaction, status);
@@ -250,13 +263,16 @@ namespace Empiria.Land.WebApp {
         return;
       }
 
-      transaction.Workflow.SetNextStatus(status, Person.Empty, note);
-
+      transaction.Workflow.SetNextStatus(status, assignTo, note);
+      if (!assignTo.IsEmptyInstance) {
+        transaction.Workflow.Take(note, assignTo, DateTime.Now);
+      }
       base.SetOKScriptMsg();
 
       txtSearchExpression.Value = "";
       txtSearchExpression.Focus();
     }
+
 
     private void GenerateImagingControlID() {
       int documentId = int.Parse(GetCommandParameter("id"));
@@ -267,6 +283,7 @@ namespace Empiria.Land.WebApp {
       var onEndLoadScript = String.Format("doOperation('viewDocumentImaging', {0});", documentId);
       base.Master.AppendEndLoadScript(onEndLoadScript);
     }
+
 
     private void ProcessDocumentImages() {
       var imageProcessingEngine = ImageProcessingEngine.GetInstance();
@@ -285,6 +302,7 @@ namespace Empiria.Land.WebApp {
       txtSearchExpression.Focus();
     }
 
+
     private void UpdateESignWorkflow() {
       var cleaner = TransactionCleaner.GetInstance();
 
@@ -298,6 +316,7 @@ namespace Empiria.Land.WebApp {
         base.SetOKScriptMsg("La actualización del workflow ya se está ejecutando." + cleaner.UID);
       }
     }
+
 
     private void ReceiveLRSTransaction() {
       int transactionId = int.Parse(GetCommandParameter("id"));
@@ -333,20 +352,30 @@ namespace Empiria.Land.WebApp {
       }
 
       switch (operation) {
+        case "AssignTo":
+          Contact assignTo = Contact.Parse(GetCommandParameter<int>("assignToId"));
+
+          transaction.Workflow.Take(notes, assignTo, DateTime.Now);
+          break;
+
         case "ReturnToControlDesk":
           transaction.Workflow.ReturnToMe();
           break;
+
         case "ReceiveInControlDesk":
           transaction.Workflow.Take(notes);
           break;
+
         case "PullToControlDesk":
           transaction.Workflow.PullToControlDesk(notes);
           break;
+
       }
       base.SetOKScriptMsg();
       txtSearchExpression.Value = "";
       txtSearchExpression.Focus();
     }
+
 
     private void TakeLRSTransaction() {
       int transactionId = int.Parse(GetCommandParameter("id"));
@@ -367,6 +396,7 @@ namespace Empiria.Land.WebApp {
       txtSearchExpression.Focus();
     }
 
+
     private void ReturnDocumentToMe() {
       int transactionId = int.Parse(GetCommandParameter("id"));
 
@@ -377,6 +407,7 @@ namespace Empiria.Land.WebApp {
       txtSearchExpression.Value = "";
       txtSearchExpression.Focus();
     }
+
 
     private string GetFilter() {
       string filter = String.Empty;
@@ -431,6 +462,7 @@ namespace Empiria.Land.WebApp {
       }
       return filter;
     }
+
 
     #endregion Protected methods
 

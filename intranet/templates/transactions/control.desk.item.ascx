@@ -48,11 +48,19 @@
 	<td style="white-space:nowrap;width:40%">
 		<br />
 		Nuevo estado:
-		<select id="cboOperation<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>" class="selectBox" style="width:220px" title="">
+		<select id="cboOperation<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>" onchange="changeControlDeskUI(<%# DataBinder.Eval(Container, "DataItem.TransactionId")%>)" class="selectBox" style="width:220px" title="">
 			<option value=''>( Seleccionar )</option>
       <%#LRSHtmlSelectControls.GetControlDeskTransactionNewStatusComboItems((int) DataBinder.Eval(Container, "DataItem.TransactionTypeId"), (int) DataBinder.Eval(Container, "DataItem.DocumentTypeId"), (LRSTransactionStatus) Convert.ToChar(DataBinder.Eval(Container, "DataItem.CurrentTransactionStatus")), (LRSTransactionStatus) Convert.ToChar(DataBinder.Eval(Container, "DataItem.NextTransactionStatus")))%>
     </select><img class='comboExecuteImage' src="../themes/default/buttons/next.gif" alt=""  title="Ejecuta la operación seleccionada" onclick="doOperation('doControlDeskOperation', <%# DataBinder.Eval(Container, "DataItem.TransactionId")%>)"/>
-   <br />
+      <br />
+      <span id="divAssignTransactionTo<%# DataBinder.Eval(Container, "DataItem.TransactionId")%>" style="display:none">
+      Asignar a:
+      <select id="cboAssignTo<%#DataBinder.Eval(Container, "DataItem.TransactionId")%>" class="selectBox" style="width:240px" title="">
+			  <option value=''>( Seleccionar )</option>
+        <option value='Manual'>Asignar manualmente</option>
+      </select>
+     <br />
+    </span>
 	 <textarea id="txtNotes<%# DataBinder.Eval(Container, "DataItem.TransactionId")%>" class="textArea" rows="2" cols="72" style="width:288px"></textarea>
 	</td>
 </tr>

@@ -254,6 +254,29 @@
     }
   }
 
+
+  function changeControlDeskUI(transactionId) {
+    var operation = getElement('cboOperation' + transactionId).value;
+
+    if (operation === 'AssignTo' || operation === 'G' || operation === 'E' || operation === 'J') {
+      loadAssignToCombo(transactionId);
+      getElement('divAssignTransactionTo' + transactionId).style.display = 'inline';
+    } else {
+      getElement('divAssignTransactionTo' + transactionId).style.display = 'none';
+    }
+  }
+
+
+  function loadAssignToCombo(transactionId) {
+    var url = "../ajax/land.registration.system.data.aspx";
+    url += "?commandName=getAssigneeComboStringArrayCmd";
+    url += "&transactionId=" + transactionId;
+    url += "&operation=" + getElement("cboOperation" + transactionId).value;
+
+    invokeAjaxComboItemsLoader(url, getElement("cboAssignTo" + transactionId));
+  }
+
+
   function generateImagingControlID(transactionId, documentId) {
     var sMsg = "Generar número de control documental\n\n";
 
@@ -265,6 +288,7 @@
 
     if (confirm(sMsg)) {
       var qs = "id=" + documentId;
+
       sendPageCommand("generateImagingControlID", qs);
     }
   }
@@ -290,6 +314,7 @@
   	alert(workflowTaskName + " " + objectId);
   }
 
+
   function createLRSTransaction() {
     if (getElement('<%=cboProcessType.ClientID%>').value.length == 0) {
       alert("Requiero se seleccione de la lista el tipo de trámite que se desea registrar.");
@@ -301,11 +326,13 @@
 		createNewWindow(source);
   }
 
+
   function printOnSignReport() {
 		var source = "transaction.report.aspx";
 
 		createNewWindow(source);
   }
+
 
   function receiveLRSTransaction(transactionId) {
     var sMsg = "Recepción del trámite por parte del interesado\n\n";
@@ -323,10 +350,12 @@
     }
   }
 
+
   function setTodayDate() {
     getElement('<%=txtFromDate.ClientID%>').value = '<%=DateTime.Today.ToString("dd/MMM/yyyy")%>';
     getElement('<%=txtToDate.ClientID%>').value = '<%=DateTime.Today.ToString("dd/MMM/yyyy")%>';
   }
+
 
   function takeLRSTransaction(transactionId) {
     var nextStatus = getInnerText('ancNextStatusID' + transactionId);
@@ -412,8 +441,32 @@
 	function doControlDeskOperation(transactionId) {
 	  var operation = getElement("cboOperation" + transactionId).value;
 	  var temp = "";
+    var assignToId = null;
 
-	  switch (operation) {
+    switch (operation) {
+      case "AssignTo":
+        assignToId = getElement("cboAssignTo" + transactionId).value;
+        var assignToName = getComboOptionText(getElement("cboAssignTo" + transactionId));
+
+        if (isNumericValue(assignToId)) {
+          assignFlag = true;
+        } else {
+          alert("Requiero se seleccione la persona a quien se le asignará este trámite");
+          return;
+        }
+	      temp =  "Asignar este trámite.\n\n";
+        temp += "Este trámite ya tiene asignado el siguiente estado, por lo que \n" +
+                "esta operación lo asignará directamente a una persona.\n\n";
+        temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
+        temp += "Asignar a:      " + assignToName + "\n";
+        temp += "Sig. estado:  " + getInnerText('ancNextStatus' + transactionId) + "\n\n";
+
+	      temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
+	      temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+	
+	      temp += "¿Asigno este trámite a " + assignToName + "?";
+        break;
+
 	    case "ReturnToControlDesk":
 	      temp = "Dejar pendiente el 'siguiente estado' de este trámite.\n\n";
 	      temp += "Este trámite ya tiene asignado el siguiente estado.\n\n" +
@@ -424,7 +477,8 @@
 	      temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n";
 	      temp += "Sig. estado:  " + getInnerText('ancNextStatus' + transactionId) + "\n\n";
 	      temp += "¿Dejo pendiente el siguiente estado de este trámite?";
-	      break;
+        break;
+
 	    case "ReceiveInControlDesk":
 	      var responsible = getInnerText('ancResponsible' + transactionId);
 	      temp = "Recibir el trámite en la mesa de control.\n\n";
@@ -435,7 +489,8 @@
 	      temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
 	      temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
 	      temp += "¿Recibir el trámite en mesa de control?";
-	      break;
+        break;
+
 	    case "PullToControlDesk":
 	      var responsible = getInnerText('ancResponsible' + transactionId);
 	      temp = "Traer el trámite a la mesa de control.\n\n";
@@ -449,31 +504,38 @@
 	      temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n";
 	      temp += "Fuera de la oficina:  " + responsible + "\n\n";
 	      temp += "¿Recibir el trámite de la persona que NO está laborando?";
-	      break;
+        break;
+
 	    case "Unarchive":
 	      temp = "Desarchivar este trámite.\n\n" +
 	             "Este trámite se encuentra archivado.\n\n" +
 	             "Si tiene permisos, en el editor de trámites debe existir una opción para desarchivarlo.\n\n";
 	      alert(temp);
-	      return;
+        return;
+
 	    case "Nothing":
 	      temp = "Por ahora no hay nada qué hacer con este trámite.\n\n" +
                "El trámite se encuentra en un estado que no permite enviarlo " +
                "o recibirlo en la mesa de control.";
 	      alert(temp);
-	      return;
+        return;
+
 	    case "Undefined":
 	      temp = "Operación del tipo 'Undefined' en la mesa de control.\n\n" +
                "Esto representa un problema de programación en las reglas del sistema.\n\n" +
                "Favor de avisar esta situación a soporte lo antes posible.";
 	      alert(temp);
-	      return;
+        return;
+
 	    default:
 	      return doTransactionOperation(transactionId);
 	  }
 	  if (confirm(temp)) {
 	    var qs = "id=" + transactionId;
-	    qs += "|operation=" + operation;
+      qs += "|operation=" + operation;
+      if (assignToId !== null) {
+        qs += "|assignToId=" + assignToId;
+      }
 	    qs += "|notes=" + getElement("txtNotes" + transactionId).value;
 	    sendPageCommand("executeControlDeskOperation", qs);
 	  }
@@ -481,16 +543,36 @@
 
   function doTransactionOperation(transactionId) {
     var newState = getElement("cboOperation" + transactionId).value;
+    var assignToId = null;
+    var assignToName = null;
+    var assignFlag = false;
+
     if (newState == "") {
       alert("Requiero se seleccione el nuevo estado del trámite");
       return;
     }
+
+    if (existsElement("cboAssignTo" + transactionId)) {
+      assignToId = getElement("cboAssignTo" + transactionId).value;
+      assignToName = getComboOptionText(getElement("cboAssignTo" + transactionId));
+
+      if ((newState == "G" || newState == "E" || newState == "J")) {
+        if (isNumericValue(assignToId)) {
+          assignFlag = true;
+        } else {
+          alert("Requiero se seleccione la persona a quien se le asignará este trámite");
+          return;
+        }
+      }
+    }
+
     if (!validateNextTransactionState(transactionId, newState)) {
     	return;
 		}
     var temp = "";
     if (newState == "R") {
       return receiveLRSTransaction(transactionId);
+
     } else if (newState == "P") {
       temp = "Enviar este trámite a otra mesa de trabajo.\n\n";
 
@@ -498,6 +580,7 @@
       temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
       temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
       temp += "¿Preparo este trámite para enviarlo a otra mesa de trabajo?";
+
     } else if (newState == "S") {
       temp = "Enviar trámite a firma\n\n";
 
@@ -505,36 +588,51 @@
       temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
       temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
       temp += "¿El trámite está listo para firma?";
+
     } else if (newState == "A") {
-    	temp = "Enviar trámite a la mesa de digitalización y resguardo de documentos.\n\n";
-    	temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
-    	temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
-    	temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
-    	temp += "¿El trámite está revisado, firmado y listo para enviarse a la mesa de digitalización y resguardo de documentos?";
+      temp = "Enviar trámite a la mesa de digitalización y resguardo de documentos.\n\n";
+      temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
+      temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
+      temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+      temp += "¿El trámite está revisado, firmado y listo para enviarse a la mesa de digitalización y resguardo de documentos?";
+
     } else if (newState == "D") {
       temp = "Enviar trámite a mesa de entrega\n\n";
       temp += "¿El trámite está listo para entregarlo al interesado?";
+
     } else if (newState == "C") {
       alert("Esta opción ya no está disponible");
       return false;
+
     } else if (newState == "L") {
       temp = "Devolver el trámite al interesado, ya que no procede\n\n";
       temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
       temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
       temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
       temp += "¿Se va a devolver el trámite al interesado?";
+
     } else if (newState == "H") {
       temp = "Archivar este trámite\n\n";
       temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
       temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
       temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
       temp += "¿Marco este trámite como archivado? (Ya no será posible hacerle cambios)";
+
     } else if (newState == "X") {
       temp = "Eliminar este trámite\n\n";
       temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
       temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
       temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
       temp += "¿Elimino este trámite en forma definitiva?";
+
+    } else if (assignFlag) {
+      temp = "Asignar este trámite a otra persona\n\n";
+      temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
+      temp += "Asignar a:      " + assignToName + "\n\n";
+      temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
+      temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
+      temp += "¿Asigno este trámite a " + assignToName + "?";
+
     } else {
       temp = "Enviar este trámite a otra parte del proceso:\n\n";
       temp += "Trámite: \t     " + getInnerText('ancTransactionKey' + transactionId) + "\n";
@@ -543,9 +641,13 @@
 
       temp += "¿Muevo este trámite al estado seleccionado?";
     }
+
     if (confirm(temp)) {
       var qs = "id=" + transactionId;
       qs += "|state=" + newState;
+      if (assignFlag) {
+        qs += "|assignToId=" + assignToId;
+      }
       qs += "|notes=" + getElement("txtNotes" + transactionId).value;
       sendPageCommand("changeTransactionStatus", qs);
     }
