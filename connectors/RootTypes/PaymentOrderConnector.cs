@@ -85,7 +85,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
 
 
     private PaymentOrderDTO UpdatePaymentDataFromWebService(PaymentOrderDTO paymentOrderData,
-                                                             JsonObject responseData) {
+                                                            JsonObject responseData) {
       Assertion.AssertObject(responseData, "responseData");
 
       bool isCompleted = (responseData.Get<string>("codigoEstatus") == "200" ||
@@ -209,6 +209,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
 
       return new PaymentOrderDTO(routeNumber, dueDate, controlTag);
     }
+
 
     private string GetBillingRFC(LRSTransaction transaction) {
       if (transaction.ExtensionData.RFC.Length != 0) {

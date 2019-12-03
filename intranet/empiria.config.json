@@ -6,7 +6,7 @@
     {
       "type": "",
       "key": "ApplicationKey",
-      "value": "vQNLXJeCoRPOtINfussrnSabsNs5jaOCRpdEYg5aXIOehqiBIARTgPUwtbrA940Q"
+      "value": "tlxSyshOLNv8GYCWdyR2GA47NqRdeiztrCDZBLCcmXaSJBDLXiBuJvpkJ5mNdL7t"
     },
     {
       "type": "",
@@ -86,7 +86,12 @@
     {
       "type": "Land.WebApi",
       "key": "Citys.NewTransactionsEnabled",
-      "value": false
+      "value": true
+    },
+    {
+      "type": "Land.Integration",
+      "key": "UsePaymentOrderMockService",
+      "value": true
     },
     {
       "type": "Land.WebApi",

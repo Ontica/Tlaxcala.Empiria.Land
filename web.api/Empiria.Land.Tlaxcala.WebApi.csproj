@@ -20,8 +20,8 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <NeutralLanguage></NeutralLanguage>
     <Configurations>Debug;Release;Multisolutions</Configurations>
-    <AssemblyName>Talanza.WebApi</AssemblyName>
-    <RootNamespace>Talanza.WebApi</RootNamespace>
+    <AssemblyName>Empiria.Land.Tlaxcala.WebApi</AssemblyName>
+    <RootNamespace>Empiria.Land.Tlaxcala.WebApi</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Multisolutions|AnyCPU' ">
     <OutputPath>bin\</OutputPath>
@@ -57,6 +57,7 @@
     <ProjectReference Include="..\..\land\Land.WebAPI\Empiria.Land.WebAPI.csproj" />
     <ProjectReference Include="..\..\onepoint\EFiling.WebApi\Empiria.OnePoint.EFiling.WebApi.csproj" />
     <ProjectReference Include="..\..\onepoint\ESign.WebApi\Empiria.OnePoint.ESign.WebApi.csproj" />
+    <ProjectReference Include="..\connectors\Empiria.Land.Connectors.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http" />

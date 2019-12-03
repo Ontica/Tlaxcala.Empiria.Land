@@ -19,7 +19,7 @@ using Empiria.OnePoint;
 
 using Empiria.Land.Registration.Transactions;
 
-namespace Empiria.Land.Connectors {
+namespace Empiria.Land.Integration {
 
   public class SignRequest {
 
