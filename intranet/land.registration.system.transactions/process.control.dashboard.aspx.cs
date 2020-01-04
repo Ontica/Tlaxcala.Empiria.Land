@@ -7,7 +7,7 @@
 *                                                                                                            *
 *  Summary   : Multiview dashboard used for workflow task management.                                        *
 *                                                                                                            *
-********************************** Copyright(c) 2009-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
+************************* Copyright(c) La Vía Óntica SC, Ontica LLC and contributors. All rights reserved. **/
 using System;
 using System.Data;
 using System.Web.UI;

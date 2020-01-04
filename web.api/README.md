@@ -8,4 +8,4 @@ This software solution is distributed by the GNU AFFERO GENERAL PUBLIC LICENSE.
 
 # Copyright
 
-Copyright © 2009-2019. La Vía Óntica, Ontica LLC and contributors.
+Copyright © 2009-2020. La Vía Óntica, Ontica LLC and contributors.
