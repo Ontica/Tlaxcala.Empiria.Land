@@ -89,11 +89,6 @@
       "value": true
     },
     {
-      "type": "Land.Integration",
-      "key": "UsePaymentOrderMockService",
-      "value": true
-    },
-    {
       "type": "Land.WebApi",
       "key": "PrintServicesServerBaseAddress",
       "value": "http://empiria.land/intranet/land.registration.system"
@@ -107,6 +102,11 @@
       "type": "Land.WebApi",
       "key": "Target.WebApi.Server",
       "value": "NONE"
+    },
+    {
+      "type": "OnePoint.EFiling",
+      "key": "UsePaymentOrderMockService",
+      "value": true
     }
   ]
 }
