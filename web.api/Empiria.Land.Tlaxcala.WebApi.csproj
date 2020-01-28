@@ -55,8 +55,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\land\Land.WebAPI\Empiria.Land.WebAPI.csproj" />
-    <ProjectReference Include="..\..\onepoint\EFiling.WebApi\Empiria.OnePoint.EFiling.WebApi.csproj" />
-    <ProjectReference Include="..\..\onepoint\ESign.WebApi\Empiria.OnePoint.ESign.WebApi.csproj" />
     <ProjectReference Include="..\connectors\Empiria.Land.Connectors.csproj" />
   </ItemGroup>
   <ItemGroup>

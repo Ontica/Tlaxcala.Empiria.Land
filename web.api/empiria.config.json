@@ -1,7 +1,7 @@
 ﻿{
   "appName": "Empiria Land Web API Tlaxcala Edition",
   "version": "5.0",
-  "date": "2019-09-05",
+  "date": "2020-01-28",
   "settings": [
     {
       "type": "",
@@ -32,11 +32,6 @@
       "type": "Land",
       "key": "Templates.Path",
       "value": "E:\\empiria.files\\tlaxcala\\"
-    },
-    {
-      "type": "Land.Integration",
-      "key": "UsePaymentOrderMockService",
-      "value": false
     },
     {
       "type": "Land.WebApi",
@@ -73,11 +68,6 @@
           "with": ""
         }
       }
-    },
-    {
-      "type": "OnePoint.ESign",
-      "key": "SignableDocumentsURL",
-      "value": "http://empiria.land/intranet/land.registration.system"
     }
   ]
 }
