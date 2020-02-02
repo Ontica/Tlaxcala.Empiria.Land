@@ -395,9 +395,9 @@
               &nbsp; &nbsp;
               <input class="button" type="button" value="Refrescar" onclick="doOperation('refreshCertificates')" style="height:28px;width:92px" />
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            <% } else if (transaction.IsExternalTransaction && transaction.GetIssuedCertificates().Count == 1 && transaction.Workflow.CurrentStatus == Empiria.Land.Registration.Transactions.LRSTransactionStatus.Revision) { %>
+            <% } else if (base.IsTransactionReadyToSendToCitys()) { %>
               <br />
-              <input class="button" type="button" value="Enviar certificado a CITYS" onclick="doOperation('sendCertificateToCITYS')" style="height:28px;width:144px" />
+              <input class="button" type="button" value="Enviar certificado a SITYS" onclick="doOperation('sendCertificateToCITYS')" style="height:28px;width:144px" />
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             <% } %>
           </div>

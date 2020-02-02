@@ -198,9 +198,18 @@ namespace Empiria.Land.WebApp {
       return false;
     }
 
+
+    protected bool IsTransactionReadyToSendToCitys() {
+      return transaction.ComesFromCitysFilingSystem && !transaction.ExternalTransaction.IsEmptyInstance &&
+             transaction.GetIssuedCertificates().Count == 1 &&
+             transaction.Workflow.CurrentStatus == LRSTransactionStatus.Revision;
+    }
+
+
     protected string GetCertificatesSystemUrl() {
       return ConfigurationData.GetString("CertificatesSystem.Url");
     }
+
 
     protected bool IsReadyForReception() {
       if (!CanReceiveTransaction()) {
