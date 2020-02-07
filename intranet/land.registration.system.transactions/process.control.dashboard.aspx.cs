@@ -421,6 +421,12 @@ namespace Empiria.Land.WebApp {
         }
         filter += cboStatus.Value;
       }
+      if (chkShowOnlyExternalTransactions.Checked) {
+        if (filter.Length != 0) {
+          filter += " AND ";
+        }
+        filter += "(ExternalTransactionNo <> '')";
+      }
       if (cboRecorderOffice.Value.Length != 0) {
         if (filter.Length != 0) {
           filter += " AND ";

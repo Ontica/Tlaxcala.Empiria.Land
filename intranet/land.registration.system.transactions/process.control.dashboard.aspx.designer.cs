@@ -48,6 +48,15 @@ namespace Empiria.Land.WebApp {
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtSearchExpression;
 
         /// <summary>
+        /// chkShowOnlyExternalTransactions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox chkShowOnlyExternalTransactions;
+
+        /// <summary>
         /// cboDate control.
         /// </summary>
         /// <remarks>

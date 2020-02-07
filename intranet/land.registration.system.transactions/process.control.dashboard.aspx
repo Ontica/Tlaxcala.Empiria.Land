@@ -54,10 +54,14 @@
       <td align="left" nowrap="nowrap">
         <img src="../themes/default/buttons/search.gif" alt="" onclick="doOperation('loadData')" title="Ejecuta la búsqueda" />
         &nbsp; &nbsp; &nbsp; &nbsp;
-        <a href="javascript:doOperation('removeFilters')">Quitar los filtros</a>
+        <input id="chkShowOnlyExternalTransactions" name="chkShowOnlyExternalTransactions" type="checkbox" runat="server" />
+        Filtrar trámites en línea
         &nbsp; &nbsp; &nbsp; &nbsp;
+        <a href="javascript:doOperation('removeFilters')">Quitar los filtros</a>
+
         <%  if (base.IsTabStripSelected(TabStrip.MesaDeDigitalizacion) &&
                 Empiria.ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DigitalizationDesk")) { %>
+        &nbsp; &nbsp; &nbsp; &nbsp;
         <a href="javascript:doOperation('updateESignWorkflow')">
         <img src="../themes/default/bullets/scribble_doc_sm.gif" alt="" title="" style="margin-right:8px" />Actualizar flujo de trabajo</a>&nbsp; &nbsp; &nbsp;
         <a href="javascript:doOperation('processDocumentImages')">
@@ -719,6 +723,8 @@
     getElement('<%=cboStatus.ClientID%>').value = '';
     getElement('<%=cboElapsedTime.ClientID%>').value = '';
     getElement('<%=cboResponsible.ClientID%>').value = '';
+    getElement('<%=chkShowOnlyExternalTransactions.ClientID%>').checked = false;
+
   }
 
   //var timeout = setTimeout("location.reload(true);", 300000);
