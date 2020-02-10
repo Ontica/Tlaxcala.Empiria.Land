@@ -28,20 +28,26 @@
       Documento a inscribir
     </td>
   </tr>
-  <% if (documentSet.HasMainDocument || documentSet.HasAuxiliaryDocument) { %>
+  <% if (documentSet.HasMainDocument || documentSet.HasAuxiliaryDocument || transaction.ComesFromAgencyExternalFilingSystem) { %>
   <tr>
     <td>
       Documentos digitales:
       &nbsp; &nbsp; &nbsp;&nbsp;
 
       <% if (documentSet.HasMainDocument) { %>
-      <a href="javascript:doOperation('viewFile', '..<%=documentSet.MainDocument.UrlRelativePath %>')"><img src='../themes/default/buttons/pdf.png'>Documento principal</a>
+      <a href="javascript:doOperation('viewFile', '..<%=documentSet.MainDocument.UrlRelativePath %>')"><img src='../themes/default/buttons/pdf.png' alt="" />Documento principal</a>
       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
       <% } %>
 
       <% if (documentSet.HasAuxiliaryDocument) { %>
-      <a href="javascript:doOperation('viewFile', '..<%=documentSet.AuxiliaryDocument.UrlRelativePath %>')"><img src='../themes/default/buttons/pdf.png'>Anexos</a>
+      <a href="javascript:doOperation('viewFile', '..<%=documentSet.AuxiliaryDocument.UrlRelativePath %>')"><img src='../themes/default/buttons/pdf.png' alt="" />Anexos</a>
       <% } %>
+
+      <% if (transaction.ComesFromAgencyExternalFilingSystem) { %>
+        <a href="javascript:doOperation('showExternalTransactionHandler')"><img src='../themes/default/buttons/pdf.png' alt="" />Oficio/formato de notaría</a>
+      <% } %>
+
+
     </td>
   </tr>
   <% } %>
@@ -183,6 +189,7 @@
 
   var gResourceEditorWindow = null;
   var gRecordingSealsAndSlipsWindow = null;
+  var gExternalTransactionHandlerWindow = null;
 
   function doOperation(command) {
     var success = false;
@@ -190,11 +197,14 @@
     if (gbSended) {
       return;
     }
+
     switch (command) {
       case 'showRecordingActEditor':
         return showRecordingActEditor();
+
       case 'deleteRecordingAct':
         return deleteRecordingAct(arguments[1]);
+
       case 'deleteBookRecording':
         alert(arguments[1]);
         return deleteBookRecording(arguments[1]);
@@ -226,20 +236,29 @@
       case 'viewRecordingSeal':
         viewRecordingSeal(arguments[1]);
         return;
+
       case 'viewGlobalRecordingSeal':
         viewGlobalRecordingSeal();
         return;
+
       case 'showSearchRecordingsView':
         showSearchRecordingsView();
         return;
+
       case 'generateImagingControlID':
         generateImagingControlID();
         return;
+
       case 'showImagingControlSlip':
         showImagingControlSlip();
         return;
+
       case 'displayRecordingBookImageSet':
         displayRecordingBookImageSet(arguments[1]);
+        return;
+
+      case 'showExternalTransactionHandler':
+        showExternalTransactionHandler();
         return;
 
       default:
@@ -250,6 +269,13 @@
       sendPageCommand(command);
       gbSended = true;
     }
+  }
+
+
+  function showExternalTransactionHandler() {
+    var url = "../land.registration.system.transactions/external.transaction.handler.aspx?transactionId=<%=transaction.Id%>";
+
+    gExternalTransactionHandlerWindow = openInWindow(gExternalTransactionHandlerWindow, url, false);
   }
 
 
@@ -274,6 +300,7 @@
     }
   }
 
+
   function openDocument() {
     <% if (base.transaction.Document.Security.Signed()) { %>
     alert("Documento firmado electrónicamente.\n\n" +
@@ -296,6 +323,7 @@
     }
   }
 
+
   function validateIfCanBeClosed() {
     // Very rare: If use 'Closed' in validateIfDocumentCanBeCloseCmd then ajax never dispatches the call
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
@@ -305,6 +333,7 @@
     return invokeAjaxValidator(ajaxURL);
   }
 
+
   function validateIfCanBeOpened() {
     var ajaxURL = "../ajax/land.registration.system.data.aspx";
     ajaxURL += "?commandName=validateIfDocumentCanBeOpenedCmd";
@@ -312,6 +341,7 @@
 
     return invokeAjaxValidator(ajaxURL);
   }
+
 
   function deleteDocument() {
     var sMsg = "Eliminar documento.\n\n";
@@ -323,9 +353,11 @@
     }
   }
 
+
   function refreshDocument() {
     window.location.reload();
   }
+
 
   function displayRecordingBookImageSet(selectBoxControlName) {
     var recordingBookId = getElement(selectBoxControlName).value;
@@ -348,15 +380,18 @@
     }
   }
 
+
   function generateImagingControlID() {
     sendPageCommand('generateImagingControlID');
   }
+
 
   function showImagingControlSlip() {
     var url = "./document.imaging.control.slip.aspx?id=<%=transaction.Document.Id%>";
 
     gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url, false);
   }
+
 
   function showRecordingActEditor() {
     if (divRecordingActEditor.style.display == 'none') {
@@ -365,6 +400,7 @@
       divRecordingActEditor.style.display = 'none';
     }
   }
+
 
   function editDocument() {
     <% if (!IsReadyForEdition()) { %>
@@ -396,6 +432,7 @@
 
   }
 
+
   function deleteRecordingAct(recordingActId) {
     <% if (!IsReadyForEdition()) { %>
       alert("No es posible eliminar la partida debido a que el documento no está abierto para registro en libros, " +
@@ -407,6 +444,7 @@
       return true;
     }
   }
+
 
   function deleteBookRecording(recordingId) {
     <% if (!IsReadyForEdition()) { %>
@@ -420,11 +458,13 @@
     }
   }
 
+
   function protectRecordingEditor(disabledFlag) {
     <%=oRecordingDocumentEditor.ClientID%>_disabledControl(disabledFlag);
     disableControls(getElement("divDocumentData"), disabledFlag);
     disableControls(getElement("rowEditButtons"), false);
   }
+
 
   function editResource(resourceId, recordingActId) {
     if (resourceId == null || resourceId.length == 0) {
@@ -439,6 +479,7 @@
 
     gResourceEditorWindow = openInWindow(gResourceEditorWindow, url, true);
   }
+
 
   function saveDocument() {
     <% if (transaction.IsEmptyInstance) { %>
@@ -466,9 +507,11 @@
     return true;
   }
 
+
   function showSearchRecordingsView() {
     createNewWindow("<%=base.GetLegacyDataViewerUrl()%>");
   }
+
 
   function viewGlobalRecordingSeal() {
     <% if (transaction.IsEmptyInstance || transaction.Document.IsEmptyInstance) { %>
@@ -480,11 +523,13 @@
     gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url, false);
   }
 
+
   function viewRecordingSeal(recordingId) {
     var url = "../land.registration.system/recording.seal.aspx?transactionId=<%=transaction.Id%>&id=" + recordingId;
 
     gRecordingSealsAndSlipsWindow = openInWindow(gRecordingSealsAndSlipsWindow, url, false);
   }
+
 
   function updateUserInterface(oControl) {
     if (oControl == null) {
@@ -495,6 +540,7 @@
       return;
     }
   }
+
 
   function window_onload() {
     <%=base.OnLoadScript%>
@@ -525,6 +571,7 @@
       getElement('cmdDeleteDocument').style.display = 'inline';
     <% } %>
   }
+
 
   function window_onunload() {
     closeWindow(gResourceEditorWindow);

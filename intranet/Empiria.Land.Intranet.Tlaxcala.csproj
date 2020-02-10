@@ -120,6 +120,7 @@
     <Content Include="land.registration.system.transactions\transaction.receipt.aspx" />
     <Content Include="land.registration.system.transactions\transaction.report.aspx" />
     <Content Include="land.registration.system.transactions\digitalization.editor.aspx" />
+    <Content Include="land.registration.system.transactions\external.transaction.handler.aspx" />
     <Content Include="land.registration.system.transactions\transaction.status.editor.aspx" />
     <Content Include="land.registration.system\by.resource.analyzer.aspx" />
     <Content Include="land.registration.system.transactions\transaction.return.editor.aspx" />
@@ -514,6 +515,13 @@
     <Compile Include="land.registration.system.transactions\digitalization.editor.aspx.designer.cs">
       <DependentUpon>digitalization.editor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="land.registration.system.transactions\external.transaction.handler.aspx.cs">
+      <DependentUpon>external.transaction.handler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="land.registration.system.transactions\external.transaction.handler.aspx.designer.cs">
+      <DependentUpon>external.transaction.handler.aspx</DependentUpon>
+    </Compile>
     <Compile Include="land.registration.system.transactions\transaction.status.editor.aspx.cs">
       <DependentUpon>transaction.status.editor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -771,6 +779,10 @@
     <ProjectReference Include="..\..\land\Land.WebAPI\Empiria.Land.WebAPI.csproj">
       <Project>{e396a9fa-8e3a-4064-baf4-ef0bc3c10926}</Project>
       <Name>Empiria.Land.WebAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\onepoint\EFiling.Core\Empiria.OnePoint.EFiling.csproj">
+      <Project>{267b2712-ef14-44be-a792-fd480e7d2938}</Project>
+      <Name>Empiria.OnePoint.EFiling</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\onepoint\EFiling.WebApi\Empiria.OnePoint.EFiling.WebApi.csproj">
       <Project>{23e114e8-9a45-443f-9f1a-1b87b63a9a25}</Project>

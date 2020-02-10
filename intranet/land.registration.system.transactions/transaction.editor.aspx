@@ -1,4 +1,4 @@
-<%@ Page language="c#" Inherits="Empiria.Land.WebApp.LRSTransactionEditor" Codebehind="transaction.editor.aspx.cs"
+Ôªø<%@ Page language="c#" Inherits="Empiria.Land.WebApp.LRSTransactionEditor" Codebehind="transaction.editor.aspx.cs"
     ClassName="Empiria.Land.WebApp.LRSTransactionEditorASP" EnableViewState="true"
     EnableSessionState="true" Async="true" %>
 <%@ OutputCache Location="None" NoStore="true" %>
@@ -35,19 +35,20 @@
     <div id="divContent">
   <table class="tabStrip">
     <tr>
-      <td id="tabStripItem_0" class="tabOn" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">InformaciÛn del tr·mite y conceptos</td>
-      <td id="tabStripItem_1" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">DigitalizaciÛn</td>
-      <td id="tabStripItem_2" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">InscripciÛn de documentos</td>
-      <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">EmisiÛn de certificados</td>
-      <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Devoluciones</td>
-      <td id="tabStripItem_5" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Estado del tr·mite</td>
+      <td id="tabStripItem_0" class="tabOn" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);"  onclick="doCommand('onClickTabStripCmd', this);" title="">Informaci√≥n del tr√°mite y conceptos</td>
+      <td id="tabStripItem_1" class="tabOff" style='display:<%=transaction.ComesFromAgencyExternalFilingSystem ? "none" : "inline"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Digitalizaci√≥n</td>
+      <td id="tabStripItem_2" class="tabOff" style='display:<%=transaction.ComesFromAgencyExternalFilingSystem ? "inline" : "none"%>' onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Tr√°mite en l√≠nea</td>
+      <td id="tabStripItem_3" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Inscripci√≥n de documentos</td>
+      <td id="tabStripItem_4" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Emisi√≥n de certificados</td>
+      <td id="tabStripItem_5" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Devoluciones</td>
+      <td id="tabStripItem_6" class="tabOff" onmouseover="doCommand('onMouseOverTabStripCmd', this);" onmouseout="doCommand('onMouseOutTabStripCmd', this);" onclick="doCommand('onClickTabStripCmd', this);" title="">Estado del tr√°mite</td>
       <td class="lastCell" colspan="1" rowspan="1"><a id="top" />&nbsp; &nbsp; &nbsp; &nbsp;</td>
     </tr>
   </table>
 
   <table id="tabStripItemView_0" class="editionTable" style="display:inline">
     <tr>
-      <td class="subTitle">InformaciÛn del interesado, n˙mero de tr·mite y tipo de documento</td>
+      <td class="subTitle">Informaci√≥n del interesado, n√∫mero de tr√°mite y tipo de documento</td>
     </tr>
     <tr>
     <td>
@@ -67,16 +68,16 @@
           </td>
         </tr>
         <tr>
-          <td>RFC para facturaciÛn:</td>
+          <td>RFC para facturaci√≥n:</td>
           <td colspan="4" class="lastCell">
             <input id='txtRFC' type="text" class="textBox" style="width:116px" title="" maxlength="15" runat="server" />
 
             <% if (transaction.IsNew || base.IsEditable() || base.IsStorable()) { %>
-            <input class="button" type="button" value="GenÈrico"
+            <input class="button" type="button" value="Gen√©rico"
                    onclick="doOperation('setDefaultRFC')" style="vertical-align:middle;height:26px;width:58px" />
             <% } %>
             &nbsp; &nbsp;
-            Correo electrÛnico:
+            Correo electr√≥nico:
             <input id='txtEMail' type="text" class="textBox" style="width:220px" title="" maxlength="64" runat="server" />
           </td>
         </tr>
@@ -100,32 +101,32 @@
             <select id="cboRecorderOffice" class="selectBox" style="width:150px" onchange="return updateUserInterface(this);" runat="server">				
               <option value="-1">No determinado</option>
      	        <option value="101">Hidalgo</option>
-	            <option value="102">CuauhtÈmoc</option>
-	            <option value="103">Ju·rez</option>
-	            <option value="104">Lardiz·bal y Uribe</option>
+	            <option value="102">Cuauht√©moc</option>
+	            <option value="103">Ju√°rez</option>
+	            <option value="104">Lardiz√°bal y Uribe</option>
 	            <option value="105">Morelos</option>
 	            <option value="106">Ocampo</option>
-	            <option value="107">XicohtÈncatl</option>
+	            <option value="107">Xicoht√©ncatl</option>
 	            <option value="108">Zaragoza</option>
 	            <option value=""> </option>
-	            <option value="146">Archivo General de NotarÌas</option>
-	            <option value="145">OficialÌa de partes</option>
+	            <option value="146">Archivo General de Notar√≠as</option>
+	            <option value="145">Oficial√≠a de partes</option>
 	            <option value="147">Oficina del C. Director</option>
-	            <option value="154">JurÌdico</option>
-              <option value="99">Mesa tr·mites CITyS</option>
+	            <option value="154">Jur√≠dico</option>
+              <option value="99">Mesa tr√°mites CITyS</option>
 	            <option value=""> </option>
-	            <option value="139">Asoc civiles y crÈditos particulares (Rosario)</option>
+	            <option value="139">Asoc civiles y cr√©ditos particulares (Rosario)</option>
               <option value="142">Avisos preventivos (Gregoria)</option>
 	            <option value="138">Cert. de hipotecas (Lupita)</option>
 	            <option value="135">Certificados (Lety Palacios)</option>
               <option value="137">Comercio (Laura)</option>
               <option value="134">Copias certificadas</option>
-              <option value="141">CrÈditos (Javier Ceballos)</option>
+              <option value="141">Cr√©ditos (Javier Ceballos)</option>
               <option value="140">Embargos (Alejandra)</option>
-              <option value="144">Infonavit (RubÈn)</option>
-              <option value="143">Procede (Tere Rold·n)</option>
-	            <option value="133">SecciÛn 4ta</option>
-	            <option value="136">SecciÛn 5ta</option>
+              <option value="144">Infonavit (Rub√©n)</option>
+              <option value="143">Procede (Tere Rold√°n)</option>
+	            <option value="133">Secci√≥n 4ta</option>
+	            <option value="136">Secci√≥n 5ta</option>
             </select>
          </td>
         </tr>
@@ -134,7 +135,7 @@
   </tr>
 
 <tr>
-  <td class="subTitle">Folio real involucrado en el tr·mite</td>
+  <td class="subTitle">Folio real involucrado en el tr√°mite</td>
 </tr>
 <tr>
   <td>
@@ -143,7 +144,7 @@
         <td>Folio real base:</td>
           <td>
             <input id='txtBaseResourceUID' type="text" class="textBox" style="width:170px;" title="" maxlength="20" runat="server" />
-            <img src="../themes/default/buttons/search.gif" alt="" title="Busca un n˙mero de instrumento"
+            <img src="../themes/default/buttons/search.gif" alt="" title="Busca un n√∫mero de instrumento"
                  style="margin-left:-8px" onclick="doOperation('lookupBaseResource')" />
               <span id='divSelectedResource' style="display:none">
                 <a href="javascript:doOperation('viewBaseResource', oBaseResource.Id)">Consultar historia</a>
@@ -155,7 +156,7 @@
           <td class="lastCell">
             <label>
                 <input type="checkbox" id="chkNoBaseResource" onclick="return noBaseResourceCheckBoxSelected()"; />
-                  Es un tr·mite sobre una propiedad SIN folio real asignado<br />&nbsp; &nbsp; &nbsp; &nbsp;o involucra a m·s de un predio base.
+                  Es un tr√°mite sobre una propiedad SIN folio real asignado<br />&nbsp; &nbsp; &nbsp; &nbsp;o involucra a m√°s de un predio base.
             </label>
           </td>
       </tr>
@@ -163,7 +164,7 @@
   </td>
 </tr>
 <tr>
-  <td class="subTitle">Actos jurÌdicos y conceptos involucrados en el tr·mite</td>
+  <td class="subTitle">Actos jur√≠dicos y conceptos involucrados en el tr√°mite</td>
 </tr>
 <!--Inicio editor de pago de derechos!-->
 <tr>
@@ -176,11 +177,11 @@
               <tr class="detailsHeader">
                 <td>#</td>
                 <td style="width:240px;white-space:nowrap">Concepto</td>
-                <td align='right'>V.OperaciÛn</td>
+                <td align='right'>V.Operaci√≥n</td>
                 <td>Fundamento</td>
                 <td align='right'>Derechos</td>
                 <td align='right'>Cotejo</td>
-                <td align='right'>For·neo</td>
+                <td align='right'>For√°neo</td>
                 <td align='right'>Subtotal</td>
                 <td align='right'>Dcto</td>
                 <td align='right'>Total</td>
@@ -204,13 +205,13 @@
                   <option value="1073">Anotaciones</option>
                   <option value="1074">Informativos</option>
                   <option value="1075">Cancelaciones</option>
-                  <option value="1076">NotarÌas</option>
+                  <option value="1076">Notar√≠as</option>
                 </select>
               </td>
-              <td colspan="4">Acto jurÌdico:
+              <td colspan="4">Acto jur√≠dico:
                 &nbsp;
                 <select id="cboRecordingActType" class="selectBox" style="width:335px" onchange="return updateUserInterface(this);" runat="server">
-                  <option value="">( Seleccionar acto jurÌdico )</option>
+                  <option value="">( Seleccionar acto jur√≠dico )</option>
                 </select>
               </td>
               <td class="lastCell">
@@ -224,7 +225,7 @@
                   <option value="">( Fundamento )</option>
                 </select>
               </td>
-              <td>Valor de la operaciÛn:</td>
+              <td>Valor de la operaci√≥n:</td>
               <td>
               $<input id='txtOperationValue' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
               <td>Derechos de registro:</td>
@@ -238,7 +239,7 @@
                 &nbsp;
                 Fojas: <input id='txtSheetsCount' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:28px;" title="" maxlength="3" runat="server" />
               </td>
-              <td>T·mite for·neo:</td>
+              <td>T√°mite for√°neo:</td>
               <td>$<input id='txtForeignRecordFee' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
               <td><b>Subtotal:</b></td>
               <td>$<input id='txtSubtotal' disabled="disabled" type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
@@ -250,7 +251,7 @@
                   <option value="">( Seleccionar )</option>
                 </select>
               </td>
-              <td>Clave de autorizaciÛn:</td>
+              <td>Clave de autorizaci√≥n:</td>
               <td><input id='txtDiscountAuthorization' type="text" class="textBox" style="width:76px;" title="" maxlength="8" runat="server" /></td>
               <td>Descuento:</td>
               <td>$<input id='txtDiscount' type="text" class="textBox" onkeypress="return positiveKeyFilter(this);" style="width:71px;" title="" maxlength="8" runat="server" /></td>
@@ -268,7 +269,7 @@
 </tr>
 <!--Fin editor de pago de derechos!-->
 <tr style='display:<%=base.CanReceivePayment() ? "inline" : "none" %>'>
-  <td class="subTitle">Recibo de pago y validaciÛn del pago de derechos</td>
+  <td class="subTitle">Recibo de pago y validaci√≥n del pago de derechos</td>
 </tr>
 <tr style='display:<%=base.CanReceivePayment() ? "inline" : "none" %>'>
   <td>
@@ -297,7 +298,7 @@
       </tr>
       <% if (!base.transaction.PaymentOrderData.IsEmptyInstance) { %>
       <tr>
-        <td colspan="5">LÌnea de captura: <b><%=base.transaction.PaymentOrderData.RouteNumber%></b></td>
+        <td colspan="5">L√≠nea de captura: <b><%=base.transaction.PaymentOrderData.RouteNumber%></b></td>
       </tr>
       <% } %>
     </table>
@@ -324,7 +325,7 @@
               <% } %>
               <% if (base.ShowTransactionVoucher) { %>
                 <img src="../themes/default/bullets/pixel.gif" width="40px" height="1px" alt='' />
-                <input id="button" class="button" type="button" value="Boleta de RecepciÛn"
+                <input id="button" class="button" type="button" value="Boleta de Recepci√≥n"
                        onclick="doOperation('printTransactionReceipt')" style="height:28px;width:110px" runat="server" />
               <% } %>
             <% } else { %>
@@ -333,7 +334,7 @@
           </td>
           <td nowrap="nowrap" width="280px">
             <% if (base.IsReadyForReception()) { %>
-            <input id="cmdSaveAndReceive" class="button" type="button" value="Recibir tr·mite"
+            <input id="cmdSaveAndReceive" class="button" type="button" value="Recibir tr√°mite"
               onclick="doOperation('saveAndReceive')" style="height:30px;width:100px" runat="server" />
             <% } %>
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -359,7 +360,7 @@
     <table id="tabStripItemView_2" class="editionTable" style="display:none">
       <tr>
         <td class="lastCell">
-          <iframe id="ifraRecordingEditor" style="z-index:99;left:0;top:0;"
+          <iframe id="ifraExternalTransactionHandler" style="z-index:99;left:0;top:0;"
                   marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
                   src="../workplace/empty.page.aspx" width="90%" height="4000px" visible="true" >
           </iframe>
@@ -368,6 +369,17 @@
     </table>
 
     <table id="tabStripItemView_3" class="editionTable" style="display:none">
+      <tr>
+        <td class="lastCell">
+          <iframe id="ifraRecordingEditor" style="z-index:99;left:0;top:0;"
+                  marginheight="0" marginwidth="0" frameborder="0" scrolling="no"
+                  src="../workplace/empty.page.aspx" width="90%" height="4000px" visible="true" >
+          </iframe>
+        </td>
+      </tr>
+    </table>
+
+    <table id="tabStripItemView_4" class="editionTable" style="display:none">
       <tr>
         <td class="subTitle">Certificados emitidos</td>
       </tr>
@@ -383,7 +395,7 @@
                 <td>Elaborado por</td>
                 <td>Fecha</td>
                 <td>Estado</td>
-                <td width="40%">øQuÈ debo hacer?</td>
+                <td width="40%">¬øQu√© debo hacer?</td>
               </tr>
               <%=GetCertificates()%>
             </table>
@@ -406,7 +418,7 @@
 
       <% if (!transaction.IsNew && base.CanCreateCertificate() && base.AutoCreateCertificateEnabled) { %>
       <tr>
-        <td class="subtitle"><b>GeneraciÛn de certificados</b></td>
+        <td class="subtitle"><b>Generaci√≥n de certificados</b></td>
       </tr>
       <tr>
         <td>
@@ -417,7 +429,7 @@
                   <select id="cboCertificateType" class="selectBox" style="width:210px" onchange="return updateUserInterface(this);" runat="server">
                     <option value=""> (Seleccionar el tipo de certificado )</option>
                     <option value="gravamen">Libertad de gravamen / Gravamen</option>
-                    <option value="inscripciÛn">Certificado de inscripciÛn</option>
+                    <option value="inscripci√≥n">Certificado de inscripci√≥n</option>
                     <option value="no-propiedad">Certificado de NO propiedad</option>
                   </select>
                   &nbsp; &nbsp; &nbsp; &nbsp;
@@ -448,7 +460,7 @@
       <% } %>
     </table>
 
-    <table id="tabStripItemView_4" class="editionTable" style="display:none">
+    <table id="tabStripItemView_5" class="editionTable" style="display:none">
       <tr>
         <td class="lastCell">
           <iframe id="ifraTransactionReturnEditor" style="z-index:99;left:0;top:0;"
@@ -459,7 +471,7 @@
       </tr>
     </table>
 
-    <table id="tabStripItemView_5" class="editionTable" style="display:none">
+    <table id="tabStripItemView_6" class="editionTable" style="display:none">
       <tr>
         <td class="lastCell">
           <iframe id="ifraTransactionStatusEditor" style="z-index:99;left:0;top:0;"
@@ -532,7 +544,7 @@
         sendPageCommand('printTransactionReceipt');
         return;
       case 'searchCadastralNumber':
-        alert("La b˙squeda de claves catastrales no est· disponible en este momento.");
+        alert("La b√∫squeda de claves catastrales no est√° disponible en este momento.");
         return;
       case 'searchGeographicalItems':
         return searchGeographicalItems();
@@ -579,7 +591,7 @@
         return;
 
       default:
-        alert("La operaciÛn '" + command + "' no ha sido definida en el programa.");
+        alert("La operaci√≥n '" + command + "' no ha sido definida en el programa.");
         return;
     }
     if (success) {
@@ -602,7 +614,7 @@
   var oBaseResource = null;
   function lookupBaseResource() {
     if (getElement("txtBaseResourceUID").value.length == 0) {
-      alert("Requiero se proporcione el folio real para poder hacer la b˙squeda.");
+      alert("Requiero se proporcione el folio real para poder hacer la b√∫squeda.");
       return;
     }
 
@@ -614,7 +626,7 @@
 
     if (olookupResource.Id == -1) {
       _selectedResource = null;
-      alert("No existe ning˙n predio o asociaciÛn con el folio real proporcionado.");
+      alert("No existe ning√∫n predio o asociaci√≥n con el folio real proporcionado.");
       getElement('divSelectedResource').style.display = 'none';
       getElement("txtBaseResourceUID").readOnly = false;
       getElement("chkNoBaseResource").disabled = false;
@@ -635,9 +647,9 @@
       alert("Requiero se seleccione el tipo de certificado que se desea generar.");
       return;
     }
-    if (certificateType == "gravamen" || certificateType == "inscripciÛn") {
+    if (certificateType == "gravamen" || certificateType == "inscripci√≥n") {
       if (getElement('txtCertificatePropertyUID').value == '') {
-        alert("Requiero se proporcione el folio real del predio sobre el que se generar· el certificado.");
+        alert("Requiero se proporcione el folio real del predio sobre el que se generar√° el certificado.");
         return;
       }
       if (getElement('txtCertificatePropertyUID').value.length != 19) {
@@ -647,7 +659,7 @@
     }
     if (certificateType == "no-propiedad") {
       if (getElement('txtCertificateOwnerName').value == '') {
-        alert("Requiero se proporcione el nombre de la persona fÌsica o moral sobre la que se generar· el certificado.");
+        alert("Requiero se proporcione el nombre de la persona f√≠sica o moral sobre la que se generar√° el certificado.");
         return;
       }
       if (getElement('txtCertificateOwnerName').value.length <= 10) {
@@ -660,7 +672,7 @@
     sMsg += "Tipo de certificado: " + getComboOptionText(getElement('cboCertificateType')) + "\n";
     sMsg += "Folio real: " + getElement('txtCertificatePropertyUID').value + "\n\n";
     sMsg += "Nombre: " + getElement('txtCertificateOwnerName').value + "\n\n";
-    sMsg += "øGenero el certificado con la informaciÛn proporcionada?";
+    sMsg += "¬øGenero el certificado con la informaci√≥n proporcionada?";
 
     if (confirm(sMsg)) {
       sendPageCommand("autoCreateCertificate");
@@ -669,7 +681,7 @@
 
   function setAutocreateCertificateControls() {
     var certificateType = getElement('cboCertificateType').value;
-    if (certificateType == "gravamen" || certificateType == "inscripciÛn") {
+    if (certificateType == "gravamen" || certificateType == "inscripci√≥n") {
       getElement('divCertificatePropertyUID').style.display = 'inline';
       getElement('divCertificateOwnerName').style.display = 'none';
     } else if (certificateType == "no-propiedad") {
@@ -721,8 +733,8 @@
   function deleteCertificate(certificateUID) {
     var sMsg = "Eliminar certificado.\n\n";
 
-    sMsg += "Esta operaciÛn va a eliminar el certificado " + certificateUID + " de este tr·mite.\n\n";
-    sMsg += "øElimino el certificado " + certificateUID + "?";
+    sMsg += "Esta operaci√≥n va a eliminar el certificado " + certificateUID + " de este tr√°mite.\n\n";
+    sMsg += "¬øElimino el certificado " + certificateUID + "?";
 
     if (confirm(sMsg)) {
       sendPageCommand("deleteCertificate", "uid=" + certificateUID);
@@ -730,14 +742,14 @@
   }
 
   function openCertificate(certificateUID) {
-    alert("Reabrir certificados todavÌa no est· disponible.");
+    alert("Reabrir certificados todav√≠a no est√° disponible.");
     return;
   }
 
   function sendCertificateToCITYS() {
     var sMsg = "Enviar certificado al sistema CITYS.\n\n";
 
-    sMsg += "øEnvÌo el certificado al sistema CITYS?";
+    sMsg += "¬øEnv√≠o el certificado al sistema CITYS?";
 
     if (confirm(sMsg)) {
       sendPageCommand("sendCertificateToCITYS");
@@ -749,16 +761,16 @@
     if (!validatePayment()) {
       return;
     }
-    var sMsg = "Agregar recibo de pago al tr·mite.\n\n";
+    var sMsg = "Agregar recibo de pago al tr√°mite.\n\n";
 
-    sMsg += "N˙mero de tr·mite:\t" + getElement('txtTransactionKey').value + "\n";
+    sMsg += "N√∫mero de tr√°mite:\t" + getElement('txtTransactionKey').value + "\n";
     sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n";
     sMsg += "RFC:\t" + getElement('txtRFC').value + "\n\n";
 
     sMsg += "Recibo de pago:\t" + getElement('txtReceiptNumber').value + "\n";
     sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
 
-    sMsg += "øAgrego el pago a este tr·mite?";
+    sMsg += "¬øAgrego el pago a este tr√°mite?";
 
     if (confirm(sMsg)) {
       sendPageCommand("appendPayment");
@@ -769,16 +781,16 @@
     if (!validatePayment()) {
       return;
     }
-    var sMsg = "Agregar recibo de pago y recibir el tr·mite.\n\n";
+    var sMsg = "Agregar recibo de pago y recibir el tr√°mite.\n\n";
 
-    sMsg += "N˙mero de tr·mite:\t" + getElement('txtTransactionKey').value + "\n";
+    sMsg += "N√∫mero de tr√°mite:\t" + getElement('txtTransactionKey').value + "\n";
     sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n";
     sMsg += "RFC:\t" + getElement('txtRFC').value + "\n\n";
 
     sMsg += "Recibo de pago:\t" + getElement('txtReceiptNumber').value + "\n";
     sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
 
-    sMsg += "øAgrego el pago y recibo este tr·mite ?";
+    sMsg += "¬øAgrego el pago y recibo este tr√°mite ?";
 
     if (confirm(sMsg)) {
       sendPageCommand("appendPaymentAndReceive");
@@ -787,7 +799,7 @@
 
   function validatePayment() {
     if (isEmpty(getElement('txtReceiptNumber'))) {
-      alert("Requiero se proporcione el n˙mero del recibo de pago para este tr·mite.");
+      alert("Requiero se proporcione el n√∫mero del recibo de pago para este tr√°mite.");
       return false;
     }
     if (isEmpty(getElement('txtReceiptTotal'))) {
@@ -811,12 +823,12 @@
 
 
   function deleteRecordingAct(transactionActId) {
-    var sMsg = "EliminaciÛn de actos jurÌdicos y conceptos de pago.\n\n";
+    var sMsg = "Eliminaci√≥n de actos jur√≠dicos y conceptos de pago.\n\n";
 
-    sMsg += "Esta operaciÛn eliminar· el siguiente elemento de la lista de actos jurÌdicos:\n\n";
+    sMsg += "Esta operaci√≥n eliminar√° el siguiente elemento de la lista de actos jur√≠dicos:\n\n";
     sMsg += "Acto:\n";
     sMsg += "Total\n\n";
-    sMsg += "øElimino el acto jurÌdico de la lista?";
+    sMsg += "¬øElimino el acto jur√≠dico de la lista?";
 
     if (confirm(sMsg)) {
       sendPageCommand("deleteRecordingAct", "id=" + transactionActId);
@@ -866,14 +878,14 @@
     var sMsg = getComboOptionText(getElement('cboRecordingActType')) + "\n\n";
 
     sMsg += "Fundamento:\t\t" + getComboOptionText(getElement('cboLawArticle')) + "\n\n";
-    sMsg += "Valor de la operaciÛn:\t" + formatAsCurrency(getElement('txtOperationValue').value) + "\n\n";
+    sMsg += "Valor de la operaci√≥n:\t" + formatAsCurrency(getElement('txtOperationValue').value) + "\n\n";
     sMsg += "Derechos registrales:\t\t" + formatAsCurrency(getElement('txtRecordingRightsFee').value) + "\n";
 
     if (convertToNumber(getElement('txtSheetsRevisionFee').value) != 0) {
       sMsg += "Cotejo:\t\t\t" + formatAsCurrency(getElement('txtSheetsRevisionFee').value) + "\n";
     }
     if (convertToNumber(getElement('txtForeignRecordFee').value) != 0) {
-      sMsg += "For·neo:\t\t\t" + formatAsCurrency(getElement('txtForeignRecordFee').value) + "\n";
+      sMsg += "For√°neo:\t\t\t" + formatAsCurrency(getElement('txtForeignRecordFee').value) + "\n";
     }
     sMsg += "\n";
     if (convertToNumber(getElement('txtDiscount').value) == 0) {
@@ -884,7 +896,7 @@
       sMsg += "Total:\t\t\t" + formatAsCurrency(getTotal()) + "\n";
     }
     sMsg += "\n";
-    sMsg += "øAgrego el acto jurÌdico y la informaciÛn del pago de derechos?";
+    sMsg += "¬øAgrego el acto jur√≠dico y la informaci√≥n del pago de derechos?";
     if (confirm(sMsg)) {
       sendPageCommand("appendRecordingAct");
     }
@@ -892,14 +904,14 @@
 
   function doValidateRecordingAct() {
     if (getElement('cboRecordingActType').value.length == 0) {
-      alert("Requiero se proporcione el acto jurÌdico.");
+      alert("Requiero se proporcione el acto jur√≠dico.");
       return false;
     }
     if (getElement('cboLawArticle').value.length == 0) {
       alert("Requiero se proporcione el fundamento del cobro.");
       return false;
     }
-    if (!validateQuantity(getElement('txtOperationValue'), "Valor de la operaciÛn")) {
+    if (!validateQuantity(getElement('txtOperationValue'), "Valor de la operaci√≥n")) {
       return false;
     }
     if (!validateQuantity(getElement('txtRecordingRightsFee'), "Derechos de registro")) {
@@ -908,7 +920,7 @@
     if (!validateQuantity(getElement('txtSheetsRevisionFee'), "Cotejo")) {
       return false;
     }
-    if (!validateQuantity(getElement('txtForeignRecordFee'), "Tr·mite for·neo")) {
+    if (!validateQuantity(getElement('txtForeignRecordFee'), "Tr√°mite for√°neo")) {
       return false;
     }
     if (!validateQuantity(getElement('txtDiscount'), "Descuento")) {
@@ -959,17 +971,17 @@
   function doSendMsg(command) {
     var sMsg = "";
 
-    sMsg  = "N˙mero de tr·mite:\t" + getElement('txtTransactionKey').value + "\n";
+    sMsg  = "N√∫mero de tr√°mite:\t" + getElement('txtTransactionKey').value + "\n";
     sMsg += "Tipo de documento:\t" + getComboOptionText(getElement('cboDocumentType')) + "\n";
-    sMsg += "N˙m instrumento:\t" + getElement('txtDocumentNumber').value + "\n\n";
+    sMsg += "N√∫m instrumento:\t" + getElement('txtDocumentNumber').value + "\n\n";
 
     if (command == "saveTransaction") {
     <% if (base.transaction.IsNew) { %>
-    sMsg = "Crear una nueva solicitud de tr·mite.\n\n" + sMsg;
-    sMsg += "øCreo este nuevo tr·mite con la informaciÛn proporcionada?";
+    sMsg = "Crear una nueva solicitud de tr√°mite.\n\n" + sMsg;
+    sMsg += "¬øCreo este nuevo tr√°mite con la informaci√≥n proporcionada?";
     <% } else { %>
-    sMsg = "Modificar la solicitud de tr·mite " + getElement('txtTransactionKey').value + ".\n\n" + sMsg;
-    sMsg += "øModifico la informaciÛn de este tr·mite?";
+    sMsg = "Modificar la solicitud de tr√°mite " + getElement('txtTransactionKey').value + ".\n\n" + sMsg;
+    sMsg += "¬øModifico la informaci√≥n de este tr√°mite?";
     <% } %>
     } else if (command == "saveAndReceiveTransacion") {
       <% if (base.transaction.IsNew) { %>
@@ -978,13 +990,13 @@
       sMsg += "RFC:\t" + getElement('txtRFC').value + "\n\n";
 
 
-      sMsg = "Crear y recibir una nueva solicitud de tr·mite.\n\n" + sMsg;
-      sMsg += "øCreo este nuevo tr·mite y lo marco como recibido?";
+      sMsg = "Crear y recibir una nueva solicitud de tr√°mite.\n\n" + sMsg;
+      sMsg += "¬øCreo este nuevo tr√°mite y lo marco como recibido?";
     <% } else { %>
     sMsg += "Pago de derechos:\t" + formatAsCurrency(getElement('txtReceiptTotal').value) + "\n\n";
     sMsg += "Interesado: " + getElement('txtRequestedBy').value + "\n\n";
-    sMsg = "Recibir la solicitud de tr·mite " + getElement('txtTransactionKey').value + ".\n\n" + sMsg;
-    sMsg += "øRecibo este tr·mite?";
+    sMsg = "Recibir la solicitud de tr√°mite " + getElement('txtTransactionKey').value + ".\n\n" + sMsg;
+    sMsg += "¬øRecibo este tr√°mite?";
     <% } %>
     }
 
@@ -1040,15 +1052,15 @@
       return false;
     }
     if (isEmpty(getElement('txtRFC'))) {
-      alert("Requiero se proporcione el RFC de facturaciÛn.");
+      alert("Requiero se proporcione el RFC de facturaci√≥n.");
       return false;
     }
     if (!isTaxKey(getElement('txtRFC'))) {
-      alert("El RFC para facturaciÛn tiene un formato que no reconozco.");
+      alert("El RFC para facturaci√≥n tiene un formato que no reconozco.");
       return false;
     }
     if (!isEmpty(getElement('txtEMail')) && !isEmailAddress(getElement('txtEMail'))) {
-      alert("El correo electrÛnico tiene un formato que no reconozco.");
+      alert("El correo electr√≥nico tiene un formato que no reconozco.");
       return false;
     }
     if (isEmpty(getElement('cboDocumentType'))) {
@@ -1056,13 +1068,13 @@
       return false;
     }
     if (isEmpty(getElement('cboManagementAgency'))) {
-      alert("Requiero conocer la notarÌa o agencia que tramita.");
+      alert("Requiero conocer la notar√≠a o agencia que tramita.");
       return false;
     }
     if (command == 'saveAndReceiveTransaction') {
       <% if (!base.transaction.Workflow.IsEmptyItemsTransaction) { %>
       if (isEmpty(getElement('txtReceiptNumber'))) {
-        alert("Requiero se proporcione el n˙mero del recibo emitido para este tr·mite.");
+        alert("Requiero se proporcione el n√∫mero del recibo emitido para este tr√°mite.");
         return false;
       }
       <% } %>
@@ -1073,10 +1085,12 @@
   function showEditors() {
     <% if (base.ShowDocumentsEditor()) { %>
     getElement('ifraDigitalizationEditor').src = "./digitalization.editor.aspx?transactionId=<%=transaction.Id%>";
+    getElement('ifraExternalTransactionHandler').src = "./external.transaction.handler.aspx?transactionId=<%=transaction.Id%>";
     getElement('ifraRecordingEditor').src = "../land.registration.system/recording.editor.aspx?transactionId=<%=transaction.Id%>";
     getElement('ifraTransactionReturnEditor').src = "./transaction.return.editor.aspx?transactionId=<%=transaction.Id%>";
     getElement('ifraTransactionStatusEditor').src = "./transaction.status.editor.aspx?transactionId=<%=transaction.Id%>";
     <% } else { %>
+    getElement('ifraDigitalizationEditor').src = "../workplace/empty.page.aspx";
     getElement('ifraRecordingEditor').src = "../workplace/empty.page.aspx";
     getElement('ifraTransactionReturnEditor').src = "../workplace/empty.page.aspx";
     getElement('ifraTransactionStatusEditor').src = "../workplace/empty.page.aspx";

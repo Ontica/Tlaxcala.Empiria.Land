@@ -24,7 +24,7 @@ table.internalTable {
 }
 .title {
 	font-weight: bold;
-	font-size: 12pt;
+	font-size: 10pt;
 	vertical-align: middle;
 	color: #7a7a7a;
 	border-bottom: #d2b48c 1px solid;
@@ -58,6 +58,7 @@ table.internalTable {
 	vertical-align: middle;
 	white-space: nowrap;
 }
+
 .commandText {
   color: #424242;
   text-decoration: underline;
@@ -69,11 +70,45 @@ table.internalTable {
 	font-family: Arial, Helvetica;	
 }
 .propertyValue a:hover {
-	font-size: 8pt;
-	vertical-align: top;
-	color: #26567b;
-	font-family: Arial, Helvetica;
+  font-size: 8pt;
+  vertical-align: top;
+  color: #26567b;
+  font-family: Arial, Helvetica;
 }
+
+table.formTable {
+  border: none;
+  margin: 2px 0px 4px 0px;
+  width: 100%;
+}
+table.formTable td {
+  font-family: Arial, Tahoma, Verdana;
+  font-size: 8pt;
+  vertical-align: middle;
+}
+table.formTable td.no-wrap {
+  white-space: nowrap;
+}
+
+table.formTable td.lastCell {
+  width: 100%;
+}
+.formField {
+  background-color: #f0f0f0;
+  border: 1px solid #e0e0e0;
+  margin: 6px;
+  padding: 4px;
+  height: 24px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, Tahoma, Verdana;
+  vertical-align: middle;
+  color: #424242;
+}
+
+.right-space {
+  padding-right: 42px;
+}
+
 .bottomSeparator td {
 	padding-bottom: 8px;
 	border-bottom: #e8e8e8 1px solid;
