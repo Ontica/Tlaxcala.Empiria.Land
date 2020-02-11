@@ -89,7 +89,7 @@
       "value": true
     },
     {
-      "type": "Land.WebApi",
+      "type": "Land",
       "key": "PrintServicesServerBaseAddress",
       "value": "http://empiria.land/intranet/land.registration.system"
     },
