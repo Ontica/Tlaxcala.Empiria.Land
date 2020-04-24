@@ -110,7 +110,7 @@ namespace Empiria.Land.WebApp {
     protected string GetQRCodeSecurityHash() {
       if (!this.Certificate.Signed()) {
         return AsWarning("NO DISPONIBLE SIN FIRMA");
-      } else if (!this.Certificate.Transaction.Workflow.DeliveredOrReturned && this.Certificate.Transaction.Workflow.CurrentStatus != LRSTransactionStatus.Archived) {
+      } else if (!this.Certificate.Transaction.Workflow.IsFinished) {
         return AsWarning("ESTE CERTIFICADO NO ES VÁLIDO SI NO SE MARCA COMO ENTREGADO.");
       } else {
         return this.Certificate.QRCodeSecurityHash();

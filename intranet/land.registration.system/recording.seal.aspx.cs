@@ -108,13 +108,13 @@ namespace Empiria.Land.WebApp {
       if (document.Security.UseESign && document.Security.Unsigned()) {
         return false;
       }
-      if (transaction.Workflow.DeliveredOrReturned || transaction.Workflow.CurrentStatus == LRSTransactionStatus.Archived) {
+      if (transaction.Workflow.IsFinished) {
         return true;
       }
-
       if (!ExecutionServer.IsAuthenticated && !String.IsNullOrWhiteSpace(Request.QueryString["msg"])) {
         return true;
       }
+
       return false;
     }
 
