@@ -8,10 +8,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link href="../themes/default/css/secondary.master.page.css" type="text/css" rel="stylesheet" />
   <link href="../themes/default/css/editor.css" type="text/css" rel="stylesheet" />
-  <script type="text/javascript" src="../scripts/empiria.ajax.js"></script>
   <script type="text/javascript" src="../scripts/empiria.general.js"></script>
   <script type="text/javascript" src="../scripts/empiria.secondary.master.page.js"></script>
-  <script type="text/javascript" src="../scripts/empiria.validation.js"></script>
 </head>
 <body style="background-color:#fafafa; top:0; margin:0; margin-top:-14px; margin-left:-6px;">
   <form name="aspnetForm" method="post" id="aspnetForm" runat="server">

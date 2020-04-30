@@ -1,4 +1,4 @@
-﻿table.editionTable {
+table.editionTable {
 	border: none;
 	margin: 2px 0px 4px 0px;
   font-family: Tahoma, Verdana;
@@ -67,7 +67,7 @@ table.internalTable {
 	font-size: 8pt;
 	vertical-align: top;
 	color: #424242;
-	font-family: Arial, Helvetica;	
+	font-family: Arial, Helvetica;
 }
 .propertyValue a:hover {
   font-size: 8pt;
@@ -93,7 +93,44 @@ table.formTable td.no-wrap {
 table.formTable td.lastCell {
   width: 100%;
 }
+
+table.formTable td.formField {
+  background-color: #f0f0f0;
+  border: 1px solid #e0e0e0;
+  margin: 6px;
+  padding: 4px;
+  height: 24px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, Tahoma, Verdana;
+  vertical-align: middle;
+  color: #424242;
+}
+
 .formField {
+  background-color: #f0f0f0;
+  border: 1px solid #e0e0e0;
+  margin: 6px;
+  padding: 4px;
+  height: 24px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, Tahoma, Verdana;
+  vertical-align: middle;
+  color: #424242;
+}
+
+table.formTable td.fieldValue {
+  background-color: #f0f0f0;
+  border: 1px solid #e0e0e0;
+  margin: 6px;
+  padding: 4px;
+  height: 24px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, Tahoma, Verdana;
+  vertical-align: middle;
+  color: #424242;
+}
+
+.fieldValue {
   background-color: #f0f0f0;
   border: 1px solid #e0e0e0;
   margin: 6px;
@@ -278,7 +315,7 @@ table.details .detailsSubHeader td {
   font-family: Tahoma, Verdana;
   height: 22px;
   border-top: #cacaca 1px solid;
-  border-left: #cacaca 1px solid;	
+  border-left: #cacaca 1px solid;
   border-bottom: #cacaca 1px solid;
 }
 table.details td.selectionCell {
@@ -286,7 +323,7 @@ table.details td.selectionCell {
 	cursor: pointer;
 }
 table.details .detailsItem td {
-  background-color: #fafbfa;	
+  background-color: #fafbfa;
   border-bottom: #dfdfdf 1px solid;
   margin: 2px 2px 2px 2px;
   padding: 4px 4px 4px 8px;
@@ -376,7 +413,7 @@ table.details .alertItem td {
 	margin: 2px 2px 2px 2px;
 	padding: 4px 4px 4px 8px;
 	vertical-align: top;
-	font: 8pt Arial, Helvetica;	
+	font: 8pt Arial, Helvetica;
 }
 .detailsHeaderTitle {
 	font-weight: bold;
@@ -385,7 +422,7 @@ table.details .alertItem td {
 a.detailsLink, a.detailsLink:link, a.detailsLink:active, a.detailsLink: visited {
 	background-color: Transparent;
 	color: #3a3f3a;
-  text-decoration: underline;	
+  text-decoration: underline;
 }
 a.detailsLink:hover {
 	color: #3a3f3a;
