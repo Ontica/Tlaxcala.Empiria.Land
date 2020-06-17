@@ -143,7 +143,7 @@
                   <tr><td colspan="2">A cuenta Bancomer:</td></tr>
                   <tr><td>&nbsp; &nbsp;</td><td nowrap="nowrap">CLABE: <b>012914002011685842</b></td></tr>
                   <tr><td colspan="2">A cuenta HSBC:</td></tr>
-                  <tr><td>&nbsp; &nbsp;</td><td nowrap="nowrap">CLABE: <b>012180550300029004</b></td></tr>
+                  <tr><td>&nbsp; &nbsp;</td><td nowrap="nowrap">CLABE: <b>021180550300029004</b></td></tr>
                   <tr><td colspan="2" style="border-top: 1px solid #3a3a3a;">Concepto de pago:<br /><b><%=base.paymentOrderData.RouteNumber%></b></td></tr>
                 </table>
               </td>
