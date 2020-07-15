@@ -151,6 +151,11 @@ namespace Empiria.Land.WebApp {
     }
 
 
+    protected string GetSignedByCitizen() {
+      return this.Certificate.SignedBy.IsFemale ? "La ciudadana" : "El ciudadano";
+    }
+
+
     protected string GetSignedByJobTitle() {
       return this.Certificate.SignedBy.JobTitle;
     }

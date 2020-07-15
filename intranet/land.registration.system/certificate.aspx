@@ -38,7 +38,7 @@
     </table>
     <br />
     <div class="certificate-text">
-      &nbsp; &nbsp; &nbsp; &nbsp;El ciudadano <strong><%=base.GetSignedByName()%></strong>,
+      &nbsp; &nbsp; &nbsp; &nbsp;<%=base.GetSignedByCitizen()%> <strong><%=base.GetSignedByName()%></strong>,
       <%=base.GetSignedByJobTitle()%> del Estado de Tlaxcala,
       <strong>C E R T I F I C A:</strong>
       <%=GetCertificateText()%>
