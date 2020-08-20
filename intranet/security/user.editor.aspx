@@ -30,9 +30,17 @@
         <tr>
           <td colspan="1" rowspan="1"><div>Identificador del usuario:</div></td>
           <td class="lastCell" colspan="2" rowspan="1">
-            <input type="text" class="textBox" id='txtUserName' name='txtUserName' style="width:180px" onkeypress='return alphaNumericKeyFilter(event);' title="Identificador del usuario" maxlength="32" runat="server" />
+            <input type="text" class="textBox" id='txtUserName' name='txtUserName' style="width:180px"
+                   onkeypress='return alphaNumericKeyFilter(event);' title="Identificador del usuario" maxlength="32" runat="server" />
           </td>
         </tr>
+<%--        <tr>
+          <td colspan="1" rowspan="1"><div>Contraseña actual:</div></td>
+          <td class="lastCell" colspan="1" rowspan="1">
+            <input type="password" class="textBox" id='txtCurrentPassword' name='txtCurrentPassword'
+                   onkeypress='return alphaNumericKeyFilter(event, false);' style="width:180px" title="Contraseña actual del usuario" maxlength="24" runat="server"  />
+          </td>
+        </tr>--%>
         <tr>
           <td colspan="1" rowspan="1"><div>Contraseña:</div></td>
           <td class="lastCell" colspan="1" rowspan="1">
