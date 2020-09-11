@@ -164,8 +164,9 @@ namespace Empiria.Land.WebApp {
         return TransactionData.GetLRSTransactionsForUI(filter, sort);
 
       } else if (IsTabStripSelected(TabStrip.BuscarTramites)) {
-        return TransactionData.GetLRSTransactionsForUI(filter, "PresentationTime DESC");
-
+        if (txtSearchExpression.Value.Length >= 5) {
+          return TransactionData.GetLRSTransactionsForUI(filter, "PresentationTime DESC");
+        }
       }
       return new DataView();
     }
@@ -174,7 +175,7 @@ namespace Empiria.Land.WebApp {
     protected sealed override void LoadPageControls() {
       LoadCombos();
       if (txtFromDate.Value == String.Empty) {
-        txtFromDate.Value = DateTime.Parse("01/Jul/2018").ToString("dd/MMM/yyyy");
+        txtFromDate.Value = DateTime.Parse("01/Jul/2020").ToString("dd/MMM/yyyy");
       }
       if (txtToDate.Value == String.Empty) {
         txtToDate.Value = DateTime.Today.ToString("dd/MMM/yyyy");
@@ -407,6 +408,7 @@ namespace Empiria.Land.WebApp {
       txtSearchExpression.Value = "";
       txtSearchExpression.Focus();
     }
+
 
 
     private string GetFilter() {
