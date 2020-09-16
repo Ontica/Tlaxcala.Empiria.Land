@@ -12,11 +12,14 @@ using System;
 
 using Empiria.Contacts;
 using Empiria.DataTypes;
-using Empiria.Messaging;
+
+using Empiria.Messaging.EMailDelivery;
+
 using Empiria.Presentation.Web;
 using Empiria.Presentation.Web.Content;
 
 using Empiria.Land.Certification;
+
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
 using Empiria.Land.Integration.TlaxcalaGov;
