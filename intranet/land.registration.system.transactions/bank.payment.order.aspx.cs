@@ -40,10 +40,17 @@ namespace Empiria.Land.WebApp {
     #region Private methods
 
     private async void Initialize() {
-      transaction = LRSTransaction.Parse(int.Parse(Request.QueryString["id"]));
+      if (Request.QueryString["uid"] != null) {
+        transaction = LRSTransaction.TryParse(Request.QueryString["uid"]);
+        Assertion.AssertObject(transaction, "transaction");
+
+      } else if (Request.QueryString["id"] != null) {
+        transaction = LRSTransaction.Parse(int.Parse(Request.QueryString["id"]));
+      }
 
       this.paymentOrderData = await EPaymentsUseCases.RequestPaymentOrderData(this.transaction);
     }
+
 
     protected string DistrictName {
       get {
@@ -51,9 +58,11 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
     protected string CustomerOfficeName() {
       return "Dirección de Notarías y Registros Públicos";
     }
+
 
     protected string GetPaymentOrderFooter() {
       return @"* Este documento deberá <b>ENTREGARSE en la <u>Caja de la Secretaría de Finanzas</u></b>," +
