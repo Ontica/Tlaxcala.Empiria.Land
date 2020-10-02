@@ -386,7 +386,7 @@ namespace Empiria.Land.WebApp {
           txtReceiptTotal.Value.Length != 0 &&
           txtReceiptNumber.Value.Length != 0) {
         decimal total = decimal.Parse(txtReceiptTotal.Value);
-        transaction.AddPayment(txtReceiptNumber.Value, total);
+        transaction.SetPayment(txtReceiptNumber.Value, total);
       }
       transaction.RecorderOffice = RecorderOffice.Parse(int.Parse(cboRecorderOffice.Value));
       transaction.DocumentDescriptor = txtDocumentNumber.Value;
@@ -418,7 +418,7 @@ namespace Empiria.Land.WebApp {
       Assertion.Assert(decimal.Parse(txtReceiptTotal.Value) == transaction.Items.TotalFee.Total,
                        "Receipt total should be equal to the transaction total.");
 
-      transaction.AddPayment(txtReceiptNumber.Value, decimal.Parse(txtReceiptTotal.Value));
+      transaction.SetPayment(txtReceiptNumber.Value, decimal.Parse(txtReceiptTotal.Value));
     }
 
 
