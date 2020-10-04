@@ -166,6 +166,8 @@
       <select id="cboPrivateDocSubtype" class="selectBox" style="width:192px" title="" runat="server">
         <option value=''>( Seleccionar )</option>
         <option value='785'>Aclaración (corrección)</option>
+        <option value='791'>Adjudicación</option>
+        <option value='792'>Cancelación</option>
         <option value='789'>Crédito</option>
         <option value='761'>Contrato de arrendamiento</option>
         <option value='762'>Contrato de comodato</option>
