@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" EnableViewState="true" ViewStateMode="Disabled"
     Inherits="Empiria.Land.WebApp.ProcessControlDashboard" Codebehind="process.control.dashboard.aspx.cs"
     ClassName="Empiria.Land.WebApp.ProcessControlDashboardASP"
-    EnableSessionState="true" MasterPageFile="~/workplace/dashboard.master"
+    EnableSessionState="true" MasterPageFile="~/workplace/dashboard.master" Async="true"
     %>
 <%@ Import Namespace="Empiria.Land.WebApp" %>
 <asp:Content ID="dashboardItem" ContentPlaceHolderID="dashboardItemPlaceHolder" runat="Server" EnableViewState="true">
@@ -467,7 +467,7 @@
 
 	      temp += "Interesado:     " + getInnerText('ancRequestedBy' + transactionId) + "\n";
 	      temp += "Instrumento:  " + getInnerText('ancInstrument' + transactionId) + "\n\n";
-	
+
 	      temp += "¿Asigno este trámite a " + assignToName + "?";
         break;
 
