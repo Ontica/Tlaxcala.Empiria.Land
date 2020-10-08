@@ -63,23 +63,19 @@ namespace Empiria.Land.WebApp {
       if (transactionId != 0) {
         transaction = LRSTransaction.Parse(transactionId);
 
-        IForm preventiveNoteForm = transaction.DocumentType.Id == 757 ?
-                                        transaction.GetForm(LandSystemFormType.DefinitiveNoteRegistrationForm) :
-                                        transaction.GetForm(LandSystemFormType.PreventiveNoteRegistrationForm);
+        IForm form = transaction.GetForm();
 
-        var htmlFormTransformer = new LandHtmlFormTransformer(preventiveNoteForm);
+        var htmlFormTransformer = new LandHtmlFormTransformer(form);
 
         this.htmlForm = htmlFormTransformer.GetHtml();
 
       } else {
         transaction = LRSTransaction.Empty;
-       // preventiveNoteForm = PreventiveNoteForm.Empty;
       }
-
     }
 
     private void LoadEditor() {
-
+      // no-op
     }
 
     #endregion Private methods
