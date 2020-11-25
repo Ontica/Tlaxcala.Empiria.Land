@@ -806,6 +806,10 @@
       <Project>{83142b30-19c6-4a01-874d-b4d95829b84c}</Project>
       <Name>Empiria.Land.Connectors</Name>
     </ProjectReference>
+    <ProjectReference Include="..\web.api\Empiria.Land.Tlaxcala.WebApi.csproj">
+      <Project>{c1d6bf67-df53-4a44-9c2d-bd362285ee4d}</Project>
+      <Name>Empiria.Land.Tlaxcala.WebApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
