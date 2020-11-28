@@ -354,7 +354,7 @@ namespace Empiria.Web.UI.Ajax {
       if (recordingId == 0) {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Seleccionar partida )");
       }
-      var recording = Recording.Parse(recordingId);
+      var recording = PhysicalRecording.Parse(recordingId);
       string html = String.Empty;
 
       var recordingResources = recording.GetResources();
@@ -396,7 +396,7 @@ namespace Empiria.Web.UI.Ajax {
     private string GetRecordingRawDataCommandHandler() {
       int recordingId = int.Parse(GetCommandParameter("recordingId", true));
 
-      Recording recording = Recording.Parse(recordingId);
+      PhysicalRecording recording = PhysicalRecording.Parse(recordingId);
       RecordingDocument mainDocument = recording.MainDocument;
 
       string rawData = String.Empty;
@@ -767,7 +767,7 @@ namespace Empiria.Web.UI.Ajax {
 
     private string GetRecordingStartImageIndexCommandHandler() {
       int recordingId = int.Parse(GetCommandParameter("recordingId", true));
-      Recording recording = Recording.Parse(recordingId);
+      PhysicalRecording recording = PhysicalRecording.Parse(recordingId);
 
       return recording.StartImageIndex.ToString();
     }
@@ -839,7 +839,7 @@ namespace Empiria.Web.UI.Ajax {
 
       LandRegistrationException exception = null;
       if (presentationTime != ExecutionServer.DateMinValue) {
-        exception = LRSValidator.ValidateRecordingDates(recordingBook, Recording.Empty,
+        exception = LRSValidator.ValidateRecordingDates(recordingBook, PhysicalRecording.Empty,
                                                         presentationTime, authorizationDate);
         if (exception != null) {
           return exception.Message;
@@ -897,13 +897,13 @@ namespace Empiria.Web.UI.Ajax {
       int authorizedById = int.Parse(GetCommandParameter("authorizedById", false, "-1"));
 
       RecordingBook recordingBook = RecordingBook.Parse(recordingBookId);
-      Recording recording = null;
+      PhysicalRecording recording = null;
       Person authorizedBy = Person.Parse(authorizedById);
 
       if (recordingId != 0) {
-        recording = Recording.Parse(recordingId);
+        recording = PhysicalRecording.Parse(recordingId);
       } else {
-        recording = Recording.Empty;
+        recording = PhysicalRecording.Empty;
       }
       LandRegistrationException exception = null;
 

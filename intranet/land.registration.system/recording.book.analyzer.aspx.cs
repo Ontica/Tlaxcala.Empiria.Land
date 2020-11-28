@@ -29,7 +29,7 @@ namespace Empiria.Land.WebApp {
 
     protected LRSDocumentEditorControl oRecordingDocumentEditor = null;
     protected RecordingBook recordingBook = null;
-    protected Recording recording = null;
+    protected PhysicalRecording recording = null;
     protected RecordingBookImageSet imageSet = null;
 
     protected int currentImagePosition = 0;
@@ -334,7 +334,7 @@ namespace Empiria.Land.WebApp {
 
     private void MoveToRecording() {
       string position = GetCommandParameter("goto");
-      Recording newRecording = null;
+      PhysicalRecording newRecording = null;
       switch (position) {
         case "First":
           newRecording = recordingBook.GetFirstRecording();
@@ -379,7 +379,7 @@ namespace Empiria.Land.WebApp {
       } else if (int.Parse(Request.QueryString["id"]) == -1 || int.Parse(Request.QueryString["id"]) == 0) {
         recording = this.recordingBook.GetNewRecording();
       } else {
-        recording = Recording.Parse(int.Parse(Request.QueryString["id"]));
+        recording = PhysicalRecording.Parse(int.Parse(Request.QueryString["id"]));
       }
       if (!String.IsNullOrEmpty(Request.QueryString["image"])) {
         currentImagePosition = int.Parse(Request.QueryString["image"]);

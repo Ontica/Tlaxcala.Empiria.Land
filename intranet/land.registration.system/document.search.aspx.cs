@@ -198,13 +198,13 @@ namespace Empiria.Land.WebApp {
     }
 
 
-    private void LoadPhysicalRecordingsGrid(FixedList<Recording> physicalRecordings) {
-      string html = ReadHeaderTemplate(typeof(Recording));
+    private void LoadPhysicalRecordingsGrid(FixedList<PhysicalRecording> physicalRecordings) {
+      string html = ReadHeaderTemplate(typeof(PhysicalRecording));
 
       for (int i = 0; i < physicalRecordings.Count; i++) {
         var item = physicalRecordings[i];
 
-        string row = ReadRowTemplate(typeof(Recording), i);
+        string row = ReadRowTemplate(typeof(PhysicalRecording), i);
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectDocumentFromSearchGrid");
         row = row.Replace("{{ITEM.ID}}", item.MainDocument.Id.ToString());
         row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.AsText);

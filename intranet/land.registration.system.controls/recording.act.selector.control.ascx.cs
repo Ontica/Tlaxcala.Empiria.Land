@@ -13,7 +13,7 @@ namespace Empiria.Land.WebApp {
 
     #region Fields
 
-    private Recording recording = Recording.Empty;
+    private PhysicalRecording recording = PhysicalRecording.Empty;
 
     #endregion Fields
 
@@ -21,7 +21,7 @@ namespace Empiria.Land.WebApp {
 
     }
 
-    public Recording Recording {
+    public PhysicalRecording Recording {
       get { return recording; }
       set { recording = value; }
     }
