@@ -81,18 +81,12 @@ namespace Empiria.Web.UI.Ajax {
           return GetNotaryOfficesInPlaceStringArrayCommandHandler();
         case "getNotariesInNotaryOfficeStringArrayCmd":
           return GetNotariesInNotaryOfficeStringArrayCommandHandler();
-        //case "getOverlappingRecordingsCountCmd":
-        //  return GetOverlappingRecordingsCountCommandHandler();
         case "getRecordingIdCmd":
           return GetRecordingIdCommandHandler();
-        //case "getRecordingBookImageCountCmd":
-        //  return GetRecordingBookImageCountCommandHandler();
         case "getLawArticlesStringArrayCmd":
           return GetLawArticlesStringArrayCommandHandler();
         case "getRecordingRawData":
           return GetRecordingRawDataCommandHandler();
-        //case "getRecordingDocumentRawData":
-        //  return GetRecordingDocumentRawDataCommandHandler();
         case "getRecordingStartImageIndexCmd":
           return GetRecordingStartImageIndexCommandHandler();
         case "getRecordingTypesStringArrayCmd":
@@ -405,14 +399,8 @@ namespace Empiria.Web.UI.Ajax {
       rawData += mainDocument.PresentationTime.ToString("HH:mm") + "|";
       rawData += mainDocument.AuthorizationTime.ToString("dd/MMM/yyyy") + "|";
 
-      if (recording.Payments.Total > 0) {
-        rawData += recording.Payments.Total.ToString("N2") + "|";
-        rawData += "600" + "|";
-        rawData += recording.Payments.ReceiptNumbers + "|";
-        rawData += "" + "|";
-      } else {
-        rawData += "||||";
-      }
+      rawData += "||||";
+
       rawData += recording.AuthorizedBy.Id.ToString() + "|";
 
       if (!mainDocument.IsEmptyInstance) {
@@ -422,83 +410,6 @@ namespace Empiria.Web.UI.Ajax {
       }
       return rawData;
     }
-
-    //private string GetRecordingDocumentRawDataCommandHandler() {
-    //  int recordingId = int.Parse(GetCommandParameter("recordingId", true));
-    //  Recording recording = Recording.Parse(recordingId);
-
-    //  if (recording.Document.IsEmptyInstance) {
-    //    return String.Empty;
-    //  }
-
-    //  string rawData = String.Empty;
-
-    //  switch (recording.Document.DocumentType.Name) {
-    //    case "ObjectType.RecordingDocument.Empty":
-    //      return String.Empty;
-    //    case "ObjectType.RecordingDocument.NotaryDeed":
-    //      return GetNotaryDeedRecordingDocumentRawData(recording.Document);
-    //    case "ObjectType.RecordingDocument.PropertyTitle":
-    //      return GetPropertyTitleRecordingDocumentRawData(recording.Document);
-    //    case "ObjectType.RecordingDocument.JudicialOrder":
-    //      return GetJudicialOrderRecordingDocumentRawData(recording.Document);
-    //    case "ObjectType.RecordingDocument.PrivateContract":
-    //      return GetPrivateContractRecordingDocumentRawData(recording.Document);
-    //  }
-
-    //  return rawData;
-    //}
-
-    //private string GetNotaryDeedRecordingDocumentRawData(RecordingDocument document) {
-    //  string rawData = "oNotaryPublicDeed|";
-
-    //  rawData += document.IssuePlace.Id.ToString() + "|";
-    //  rawData += document.IssueOffice.Id.ToString() + "|";
-    //  rawData += document.IssuedBy.Id.ToString() + "|";
-    //  rawData += document.ExtensionData.BookNo + "|";
-    //  rawData += document.AsText + "|";
-    //  rawData += document.ExtensionData.StartSheet + "|";
-    //  rawData += document.ExtensionData.EndSheet + "|";
-    //  rawData += document.IssueDate.ToString("dd/MMM/yyyy");
-
-    //  return rawData;
-    //}
-
-    //private string GetPropertyTitleRecordingDocumentRawData(RecordingDocument document) {
-    //  string rawData = "oEjidalSystemTitle|";
-
-    //  rawData += document.Number + "|";
-    //  rawData += document.IssuedBy.Id.ToString() + "|";
-    //  rawData += document.IssueDate.ToString("dd/MMM/yyyy") + "|";
-    //  rawData += document.IssueOffice.Id + "|";
-    //  rawData += document.ExtensionData.StartSheet;
-
-    //  return rawData;
-    //}
-
-    //private string GetJudicialOrderRecordingDocumentRawData(RecordingDocument document) {
-    //  string rawData = "oJudgeOfficialLetter|";
-
-    //  rawData += document.IssuePlace.Id.ToString() + "|";
-    //  rawData += document.IssueOffice.Id.ToString() + "|";
-    //  rawData += document.IssuedBy.Id.ToString() + "|";
-    //  rawData += document.ExtensionData.BookNo + "|";
-    //  rawData += document.Number + "|";
-    //  rawData += document.IssueDate.ToString("dd/MMM/yyyy");
-
-    //  return rawData;
-    //}
-
-    //private string GetPrivateContractRecordingDocumentRawData(RecordingDocument document) {
-    //  string rawData = "oPrivateContract|";
-
-    //  rawData += document.IssuePlace.Id.ToString() + "|";
-    //  rawData += document.IssueDate.ToString("dd/MMM/yyyy") + "|";
-    //  rawData += document.Number + "|";
-    //  rawData += document.ExtensionData.MainWitness.Id.ToString();
-
-    //  return rawData;
-    //}
 
     private string SearchRecordingActPartiesCommandHandler() {
       int recordingActId = int.Parse(GetCommandParameter("recordingActId", true));
@@ -706,22 +617,6 @@ namespace Empiria.Web.UI.Ajax {
                                                 String.Empty, "No consta o no se puede determinar");
     }
 
-    //private string GetOverlappingRecordingsCountCommandHandler() {
-    //  int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
-    //  int recordingId = int.Parse(GetCommandParameter("recordingId", true));
-    //  int imageStartIndex = int.Parse(GetCommandParameter("imageStartIndex", true));
-    //  int imageEndIndex = int.Parse(GetCommandParameter("imageEndIndex", true));
-
-    //  RecordingBook recordingBook = RecordingBook.Parse(recordingBookId);
-    //  Recording recording = null;
-    //  if (recordingId != 0) {
-    //    recording = Recording.Parse(recordingId);
-    //  } else {
-    //    recording = Recording.Empty;
-    //  }
-    //  return LRSValidator.GetOverlappingRecordingsCount(recordingBook, recording,
-    //                                                    imageStartIndex, imageEndIndex).ToString();
-    //}
 
     private string GetRecordingIdCommandHandler() {
       int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
@@ -735,35 +630,6 @@ namespace Empiria.Web.UI.Ajax {
         return "0";
       }
     }
-
-    //private string GetRecordingBookImageCountCommandHandler() {
-    //  bool attachment = bool.Parse(GetCommandParameter("attachment", false, "false"));
-
-    //  if (attachment) {
-    //    return GetAttachmentImageCountCommandHandler();
-    //  }
-    //  int recordingId = int.Parse(GetCommandParameter("recordingId", false, "0"));
-    //  RecordingBook recordingBook = null;
-    //  if (recordingId == 0) {
-    //    int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
-    //    recordingBook = RecordingBook.Parse(recordingBookId);
-    //  } else {
-    //    Recording recording = Recording.Parse(recordingId);
-    //    recordingBook = recording.RecordingBook;
-    //  }
-    //  return recordingBook.ImagingFilesFolder.FilesCount.ToString();
-    //}
-
-    //private string GetAttachmentImageCountCommandHandler() {
-    //  int recordingId = int.Parse(GetCommandParameter("recordingId", false, "0"));
-    //  string folderName = GetCommandParameter("name", false, String.Empty);
-
-    //  Recording recording = Recording.Parse(recordingId);
-
-    //  RecordingAttachmentFolder folder = recording.GetAttachementFolder(folderName);
-
-    //  return folder.FilesCount.ToString();
-    //}
 
     private string GetRecordingStartImageIndexCommandHandler() {
       int recordingId = int.Parse(GetCommandParameter("recordingId", true));
