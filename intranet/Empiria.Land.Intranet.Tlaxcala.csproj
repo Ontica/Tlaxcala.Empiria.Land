@@ -774,6 +774,10 @@
       <Project>{7d98c757-6ed4-48d0-b351-a99ce5ed8987}</Project>
       <Name>Empiria.Land.Documentation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\land\Land.Providers\Empiria.Land.Providers.csproj">
+      <Project>{2fcec5c4-d5d7-4987-9fb1-0e41dfc368a0}</Project>
+      <Name>Empiria.Land.Providers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\land\Land.Registration\Empiria.Land.Registration.csproj">
       <Project>{ea85313c-bbbb-4f31-b6b9-05bb79addff1}</Project>
       <Name>Empiria.Land.Registration</Name>
@@ -782,9 +786,9 @@
       <Project>{90d29b34-a9c5-47ee-8279-7473fa37d194}</Project>
       <Name>Empiria.Land.UI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\land\Land.WebAPI\Empiria.Land.WebAPI.csproj">
+    <ProjectReference Include="..\..\land\Land.WebAPI\Empiria.Land.WebApi.csproj">
       <Project>{e396a9fa-8e3a-4064-baf4-ef0bc3c10926}</Project>
-      <Name>Empiria.Land.WebAPI</Name>
+      <Name>Empiria.Land.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\onepoint\EFiling.Core\Empiria.OnePoint.EFiling.csproj">
       <Project>{267b2712-ef14-44be-a792-fd480e7d2938}</Project>
