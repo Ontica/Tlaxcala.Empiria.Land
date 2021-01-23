@@ -26,12 +26,12 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
     #region Public methods
 
 
-    public async Task<PaymentOrderDTO> GeneratePaymentOrder(IPayable payableEntity) {
+    public async Task<FormerPaymentOrderDTO> GeneratePaymentOrder(IPayable payableEntity) {
       return await this.GeneratePaymentOrder((LRSTransaction) payableEntity);
     }
 
 
-    public async Task<PaymentOrderDTO> GeneratePaymentOrder(LRSTransaction transaction) {
+    public async Task<FormerPaymentOrderDTO> GeneratePaymentOrder(LRSTransaction transaction) {
       object body = this.BuildRequestBodyForGenerarFormatoPagoReferenciado(transaction);
 
       JsonObject response = await this.CallGenerarFormatoPagoReferenciado(body)
@@ -58,7 +58,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
     }
 
 
-    public async Task<PaymentOrderDTO> RefreshPaymentOrder(PaymentOrderDTO paymentOrderData) {
+    public async Task<FormerPaymentOrderDTO> RefreshPaymentOrder(FormerPaymentOrderDTO paymentOrderData) {
       object body = this.BuildRequestBodyForConsultarPagoRealizado(paymentOrderData);
 
       JsonObject response = await this.CallConsultarPagoRealizado(body)
@@ -84,7 +84,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
     }
 
 
-    private PaymentOrderDTO UpdatePaymentDataFromWebService(PaymentOrderDTO paymentOrderData,
+    private FormerPaymentOrderDTO UpdatePaymentDataFromWebService(FormerPaymentOrderDTO paymentOrderData,
                                                             JsonObject responseData) {
       Assertion.AssertObject(responseData, "responseData");
 
@@ -129,7 +129,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
     }
 
 
-    private object BuildRequestBodyForConsultarPagoRealizado(PaymentOrderDTO paymentOrderData) {
+    private object BuildRequestBodyForConsultarPagoRealizado(FormerPaymentOrderDTO paymentOrderData) {
       return new {
         folioControlEstado = paymentOrderData.ControlTag
       };
@@ -200,14 +200,14 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
     }
 
 
-    private PaymentOrderDTO ParseOrderDataFromWebService(JsonObject responseData) {
+    private FormerPaymentOrderDTO ParseOrderDataFromWebService(JsonObject responseData) {
       Assertion.AssertObject(responseData, "responseData");
 
       var routeNumber = responseData.Get<string>("lineaCaptura");
       var dueDate = DateTime.Parse(responseData.Get<string>("fechaVencimiento"));
       var controlTag = responseData.Get<string>("folioControlEstado");
 
-      return new PaymentOrderDTO(routeNumber, dueDate, controlTag);
+      return new FormerPaymentOrderDTO(routeNumber, dueDate, controlTag);
     }
 
 

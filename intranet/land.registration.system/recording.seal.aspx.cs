@@ -145,10 +145,10 @@ namespace Empiria.Land.WebApp {
 
       string template = String.Empty;
 
-      if (!this.transaction.PaymentOrderData.IsEmptyInstance) {
+      if (!this.transaction.FormerPaymentOrderData.IsEmptyInstance) {
         template = "Derechos por <b>{AMOUNT}</b> según la línea de captura <b>{RECEIPT}</b> expedida por " +
                    "la Secretaría de Finanzas del Estado, y cuyo comprobante se archiva.";
-        template = template.Replace("{RECEIPT}", transaction.PaymentOrderData.RouteNumber);
+        template = template.Replace("{RECEIPT}", transaction.FormerPaymentOrderData.RouteNumber);
 
       } else {
         template = "Derechos por <b>{AMOUNT}</b> según recibo <b>{RECEIPT}</b> expedido por " +

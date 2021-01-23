@@ -128,8 +128,8 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetPaymentReceipt() {
-      if (this.Certificate.Transaction.PaymentOrderData.RouteNumber.Length != 0) {
-        return this.Certificate.Transaction.PaymentOrderData.RouteNumber;
+      if (this.Certificate.Transaction.FormerPaymentOrderData.RouteNumber.Length != 0) {
+        return this.Certificate.Transaction.FormerPaymentOrderData.RouteNumber;
       } else {
         return this.Certificate.Transaction.Payments.ReceiptNumbers;
       }

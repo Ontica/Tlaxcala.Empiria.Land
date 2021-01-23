@@ -25,7 +25,7 @@ namespace Empiria.Land.WebApp {
                                         ConfigurationData.Get<bool>("DisplayVedaElectoralUI", false);
 
     protected LRSTransaction transaction = null;
-    protected PaymentOrderDTO paymentOrderData = null;
+    protected FormerPaymentOrderDTO paymentOrderData = null;
 
     #endregion Fields
 
