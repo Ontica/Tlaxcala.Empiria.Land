@@ -151,43 +151,19 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool CanAppendItems() {
-      if (transaction.IsNew) {
-        return false;
-      }
-      if (!IsEditable()) {
-        return false;
-      }
-      if (LRSWorkflowRules.IsEmptyItemsTransaction(transaction)) {
-        return false;
-      }
-      return true;
+      return transaction.ControlData.CanEditServices;
     }
 
     protected bool CanReceivePayment() {
-      if (transaction.Workflow.CurrentStatus != LRSTransactionStatus.Payment) {
-        return false;
-      }
-      if (transaction.Items.Count == 0) {
-        return false;
-      }
-      return ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReceiveTransaction");
+      return transaction.ControlData.CanEditPayment;
     }
 
     protected bool CanReceiveTransaction() {
-      if (transaction.Workflow.CurrentStatus != LRSTransactionStatus.Payment) {
-        return false;
-      }
-      return ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReceiveTransaction");
+      return transaction.ControlData.CanSubmit;
     }
 
     protected bool IsEditable() {
-      if (transaction.Workflow.CurrentStatus != LRSTransactionStatus.Payment) {
-        return false;
-      }
-      if (transaction.Payments.Count > 0) {
-        return false;
-      }
-      return true;
+      return transaction.ControlData.CanEdit;
     }
 
     protected bool IsStorable() {
@@ -444,15 +420,7 @@ namespace Empiria.Land.WebApp {
 
 
     protected bool CanCreateCertificate() {
-      if (this.transaction.Workflow.CurrentStatus != LRSTransactionStatus.Elaboration &&
-          this.transaction.Workflow.CurrentStatus != LRSTransactionStatus.Recording) {
-        return false;
-      }
-      if (!(ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
-            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Certificates"))) {
-        return false;
-      }
-      return (this.transaction.Workflow.GetCurrentTask().Responsible.Id == ExecutionServer.CurrentUserId);
+      return this.transaction.ControlData.CanEditCertificates;
     }
 
 

@@ -47,7 +47,7 @@ namespace Empiria.Land.WebApp {
 
 
     protected bool CanEditDocuments() {
-      return EmpiriaPrincipal.Current.IsInRole("LRSTransaction.Digitalizer");
+      return this.transaction.ControlData.CanUploadDocuments;
     }
 
 
