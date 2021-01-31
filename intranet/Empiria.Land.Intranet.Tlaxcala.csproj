@@ -734,6 +734,10 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\core\Core.Services\Empiria.Core.Services.csproj">
+      <Project>{66471d61-9159-46ed-9f4c-b6fded374005}</Project>
+      <Name>Empiria.Core.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\core\Core\Empiria.Core.csproj">
       <Project>{dacbf2c5-1f67-48e3-837c-8ca45b105e44}</Project>
       <Name>Empiria.Core</Name>
@@ -757,6 +761,10 @@
     <ProjectReference Include="..\..\extensions\Presentation\Empiria.Presentation.csproj">
       <Project>{2790ad3e-0ae4-4c94-83ba-96bc53185b19}</Project>
       <Name>Empiria.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\extensions\Services\Empiria.Services.csproj">
+      <Project>{8e1d08a7-d609-43bb-9e16-fb033693df24}</Project>
+      <Name>Empiria.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\extensions\WebApi.Client\Empiria.WebApi.Client.csproj">
       <Project>{e372c9e6-68a9-4d85-83c1-254ac6b32d1b}</Project>

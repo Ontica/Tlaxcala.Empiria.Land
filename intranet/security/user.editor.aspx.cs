@@ -11,7 +11,9 @@
 using System;
 
 using Empiria.Presentation.Web;
+
 using Empiria.Security;
+using Empiria.Services.UserManagement;
 
 namespace Empiria.Web.UI.Security {
 
@@ -178,7 +180,9 @@ namespace Empiria.Web.UI.Security {
       string password = txtNewPassword.Value;
       string email = txtEmail.Value;
 
-      UserManagementService.ChangePassword(apiKey, userName, email, password);
+      using (var usecases = UserCredentialsUseCases.UseCaseInteractor()) {
+        usecases.CreateUserPassword(apiKey, userName, email, password);
+      }
     }
 
     private void DeleteObject() {
