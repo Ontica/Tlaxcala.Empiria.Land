@@ -173,7 +173,7 @@ namespace Empiria.Land.WebApp {
 
 
     protected bool IsTransactionReadyForTakeInDeliveryDesk() {
-      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) {
+      if (!ExecutionServer.CurrentPrincipal.IsInRole("Land.DeliveryClerk")) {
         return false;
       }
 
@@ -187,7 +187,7 @@ namespace Empiria.Land.WebApp {
 
 
     protected bool IsTransactionReadyForDelivery() {
-      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) {
+      if (!ExecutionServer.CurrentPrincipal.IsInRole("Land.DeliveryClerk")) {
         return false;
       }
       if (transaction.Workflow.IsReadyForDeliveryOrReturn &&
@@ -199,7 +199,7 @@ namespace Empiria.Land.WebApp {
 
 
     protected bool IsTransactionReadyForReturn() {
-      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DeliveryDesk")) {
+      if (!ExecutionServer.CurrentPrincipal.IsInRole("Land.DeliveryClerk")) {
         return false;
       }
       if (transaction.Workflow.IsReadyForDeliveryOrReturn &&
@@ -211,7 +211,7 @@ namespace Empiria.Land.WebApp {
 
 
     protected bool IsTransactionReadyForReentry() {
-      if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReentryByFails")) {
+      if (!ExecutionServer.CurrentPrincipal.IsInRole("Land.Supervisor")) {
         return false;
       }
       return transaction.Workflow.IsReadyForReentry;

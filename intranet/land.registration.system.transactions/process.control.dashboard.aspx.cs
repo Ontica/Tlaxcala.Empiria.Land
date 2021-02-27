@@ -117,7 +117,7 @@ namespace Empiria.Land.WebApp {
       const string sort = "";
 
       if (IsTabStripSelected(TabStrip.MisTramitesPendientes)) {
-        if (!ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ReceiveTransaction")) {
+        if (!ExecutionServer.CurrentPrincipal.IsInRole("Land.ReceptionClerk")) {
           if (filter.Length != 0) {
             filter += " AND ";
           }

@@ -171,7 +171,7 @@ namespace Empiria.Land.WebApp {
         return IsEditable();
       }
       if (transaction.Workflow.CurrentStatus == LRSTransactionStatus.Control &&
-          ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.ControlDesk")) {
+          ExecutionServer.CurrentPrincipal.IsInRole("Land.ControlClerk")) {
         return true;
       }
       return false;

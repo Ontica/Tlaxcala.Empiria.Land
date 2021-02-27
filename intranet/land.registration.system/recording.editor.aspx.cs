@@ -215,9 +215,9 @@ namespace Empiria.Land.WebApp {
     }
 
     private bool IsReadyForCreation() {
-      if (!(ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
-            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Certificates") ||
-            ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Juridic"))) {
+      if (!(ExecutionServer.CurrentPrincipal.IsInRole("Land.Registrar") ||
+            ExecutionServer.CurrentPrincipal.IsInRole("Land.Certificator") ||
+            ExecutionServer.CurrentPrincipal.IsInRole("Land.LegalAdvisor"))) {
         return false;
       }
       if (!this.transaction.Document.IsEmptyInstance) {
@@ -257,10 +257,10 @@ namespace Empiria.Land.WebApp {
       if (this.transaction.Document.RecordingActs.Count == 0) {
         return false;
       }
-      if (ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Register") ||
-          ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.DocumentSigner") ||
-          ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.QualityControl") ||
-          ExecutionServer.CurrentPrincipal.IsInRole("LRSTransaction.Juridic")) {
+      if (ExecutionServer.CurrentPrincipal.IsInRole("Land.Registrar") ||
+          ExecutionServer.CurrentPrincipal.IsInRole("Land.Signer") ||
+          ExecutionServer.CurrentPrincipal.IsInRole("Land.QualitySupervisor") ||
+          ExecutionServer.CurrentPrincipal.IsInRole("Land.LegalAdvisor")) {
         return true;
       }
       return false;
