@@ -427,7 +427,7 @@ namespace Empiria.Land.WebApp {
 
       var amendedAct = amendmentAct.AmendmentOf;
 
-      if (amendmentAct.RecordingActType.AppliesTo != RecordingRuleApplication.RecordingAct) {
+      if (!amendmentAct.RecordingActType.AppliesToARecordingAct) {
         return x.Replace(" {AMENDED.ACT}", String.Empty);
       }
 

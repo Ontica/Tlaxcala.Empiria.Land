@@ -321,7 +321,9 @@ namespace Empiria.Web.UI.Ajax {
             counter++;
           }
           break;
-        case RecordingRuleApplication.RecordingAct:
+        case RecordingRuleApplication.AssociationAct:
+        case RecordingRuleApplication.NoPropertyAct:
+        case RecordingRuleApplication.RealEstateAct:
           html += HtmlSelectContent.GetComboAjaxHtmlItem("actAppliesToOtherRecordingAct", "Ya registrado");
           counter++;
           break;
@@ -529,6 +531,7 @@ namespace Empiria.Web.UI.Ajax {
       }
     }
 
+
     private string GetDomainBooksStringArrayCommandHandler() {
       string sectionFilter = GetCommandParameter("sectionFilter", false, String.Empty);
 
@@ -543,6 +546,7 @@ namespace Empiria.Web.UI.Ajax {
       }
     }
 
+
     private string GetAnnotationsOfficialsStringArrayCommandHandler() {
       int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", false, "-1"));
 
@@ -553,6 +557,7 @@ namespace Empiria.Web.UI.Ajax {
       return HtmlSelectContent.GetComboAjaxHtml(officers, 0, "Id", "FamilyFullName", "( Seleccionar al C. Oficial Registrador )",
                                                 "No se puede determinar o sólo aparece la firma", String.Empty);
     }
+
 
     private string GetAnnotationTypesStringArrayCommandHandler() {
       int annotationTypeCategoryId = int.Parse(GetCommandParameter("annotationTypeCategoryId", false, "0"));
@@ -566,6 +571,7 @@ namespace Empiria.Web.UI.Ajax {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar la categoría del movimiento )");
       }
     }
+
 
     private string GetCadastralOfficeMunicipalitiesComboCommandHandler() {
       int cadastralOfficeId = int.Parse(GetCommandParameter("cadastralOfficeId", false, "0"));
@@ -583,6 +589,7 @@ namespace Empiria.Web.UI.Ajax {
       }
     }
 
+
     private string GetImageSetImageURLCommandHandler() {
       int imageSetId = int.Parse(GetCommandParameter("imageSetId", true));
       int index = int.Parse(GetCommandParameter("index", true));
@@ -591,6 +598,7 @@ namespace Empiria.Web.UI.Ajax {
 
       return imageSet.UrlRelativePath + imageSet.ImagesNamesArray[index];
     }
+
 
     private string GetNotaryOfficesInPlaceStringArrayCommandHandler() {
       int placeId = int.Parse(GetCommandParameter("placeId", false, "0"));
@@ -603,6 +611,7 @@ namespace Empiria.Web.UI.Ajax {
 
       return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "Number", "( ? )", String.Empty, "N/C");
     }
+
 
     private string GetNotariesInNotaryOfficeStringArrayCommandHandler() {
       int notaryOfficeId = int.Parse(GetCommandParameter("notaryOfficeId", false, "0"));
@@ -631,12 +640,14 @@ namespace Empiria.Web.UI.Ajax {
       }
     }
 
+
     private string GetRecordingStartImageIndexCommandHandler() {
       int recordingId = int.Parse(GetCommandParameter("recordingId", true));
       PhysicalRecording recording = PhysicalRecording.Parse(recordingId);
 
       return recording.StartImageIndex.ToString();
     }
+
 
     private string GetRecordingsViewerPageCommandHandler() {
       int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
@@ -647,6 +658,7 @@ namespace Empiria.Web.UI.Ajax {
 
       return LRSGridControls.GetRecordingsSummaryTable(recordingBook, pageSize, page);
     }
+
 
     private string GetRecordingTypesStringArrayCommandHandler() {
       int recordingActTypeCategoryId = int.Parse(GetCommandParameter("recordingActTypeCategoryId", false, "0"));
@@ -663,6 +675,7 @@ namespace Empiria.Web.UI.Ajax {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar el tipo de acto )");
       }
     }
+
 
     private string GetLawArticlesStringArrayCommandHandler() {
       int recordingActTypeId = int.Parse(GetCommandParameter("recordingActTypeId", false, "0"));
@@ -683,6 +696,7 @@ namespace Empiria.Web.UI.Ajax {
         return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Fundamento )");
       }
     }
+
 
     private string ValidateAnnotationSemanticsCommandHandler() {
       int annotationBookId = base.GetCommandParameter<int>("annotationBookId");
@@ -718,6 +732,7 @@ namespace Empiria.Web.UI.Ajax {
       return String.Empty;
     }
 
+
     private string ValidateNextTransactionStateCommandHandler() {
       int transactionId = int.Parse(GetCommandParameter("transactionId", true));
       LRSTransactionStatus nextStatus = (LRSTransactionStatus) char.Parse(GetCommandParameter("newState", true));
@@ -749,6 +764,7 @@ namespace Empiria.Web.UI.Ajax {
       }
       return String.Empty;
     }
+
 
     private string ValidateRecordingSemanticsCommandHandler() {
       int recordingBookId = int.Parse(GetCommandParameter("recordingBookId", true));
@@ -803,12 +819,14 @@ namespace Empiria.Web.UI.Ajax {
     private string ValidateDocumentRecordingActCommandHandler() {
       try {
         RecordingTask task = ParseRecordingTaskParameters();
+
         task.AssertValid();
       } catch (Exception e) {
         return e.Message;
       }
       return String.Empty;
     }
+
 
     private string ValidateIfCertificateCanBeEditedCommandHandler() {
       try {
@@ -826,6 +844,7 @@ namespace Empiria.Web.UI.Ajax {
       }
     }
 
+
     private string ValidateIfDocumentCanBeClosedCommandHandler() {
       try {
         int documentId = GetCommandParameter<int>("documentId");
@@ -837,6 +856,7 @@ namespace Empiria.Web.UI.Ajax {
       }
       return String.Empty;
     }
+
 
     private string ValidateIfDocumentCanBeOpenedCommandHandler() {
       try {
@@ -850,6 +870,7 @@ namespace Empiria.Web.UI.Ajax {
       return String.Empty;
     }
 
+
     private LandRegistrationException ValidateRecordingImageRange(RecordingBook recordingBook,
                                                                   int imageStartIndex, int imageEndIndex) {
       var imageSet = Land.Documentation.RecordingBookImageSet.Parse(recordingBook.ImageSetId);
@@ -861,6 +882,7 @@ namespace Empiria.Web.UI.Ajax {
       }
       return null;
     }
+
 
     private RecordingTask ParseRecordingTaskParameters() {
       var task = new RecordingTask(
