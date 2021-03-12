@@ -52,7 +52,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected bool RecordingActAllowsEdition() {
-      return property.RealEstateType.IsEmptyInstance ||
+      return property.Kind.Length == 0 ||
              recordingAct.ResourceUpdated ||
              recordingAct.RecordingActType.RecordingRule.EditRealEstate ||
              property.IsInTheRankOfTheFirstDomainAct(recordingAct);
@@ -92,12 +92,12 @@ namespace Empiria.Land.WebApp {
     private void LoadControls() {
       var realEstateTypes = RealEstateType.GetList();
 
-      HtmlSelectContent.LoadCombo(this.cboRealEstateKind, realEstateTypes, "Id", "Name",
+      HtmlSelectContent.LoadCombo(this.cboRealEstateKind, realEstateTypes, "Name", "Name",
                                   "( Tipo de predio )");
 
-      LRSHtmlSelectControls.LoadRecorderOfficeCombo(this.cboRecordingOffice, ComboControlUseMode.ObjectCreation, property.District);
+      LRSHtmlSelectControls.LoadRecorderOfficeCombo(this.cboRecordingOffice, ComboControlUseMode.ObjectCreation, property.RecorderOffice);
       LRSHtmlSelectControls.LoadRecorderOfficeMunicipalitiesCombo(this.cboMunicipality, ComboControlUseMode.ObjectCreation,
-                                                                  property.District, property.Municipality);
+                                                                  property.RecorderOffice, property.Municipality);
 
       LoadPropertyControls();
     }
@@ -106,10 +106,10 @@ namespace Empiria.Land.WebApp {
     private void LoadPropertyControls() {
       txtCadastralKey.Value = property.CadastralKey;
       txtPropertyUID.Value = property.UID;
-      cboRealEstateKind.Value = property.RealEstateType.Id.ToString();
       txtCommonName.Value = property.Name;
+      cboRealEstateKind.Value = property.Kind;
       txtNotes.Value = property.Notes;
-      txtLocationReference.Value = property.LocationReference;
+      txtLocationReference.Value = property.Description;
 
       if (property.LotSize.Amount != 0m) {
         txtLotSize.Value = property.LotSize.Amount.ToString("0.#######");
@@ -125,36 +125,25 @@ namespace Empiria.Land.WebApp {
       }
     }
 
+
     private void FillPropertyData() {
       var data = new RealEstateExtData();
 
       data.CadastralKey = txtCadastralKey.Value;
 
-      if (cboRealEstateKind.Value.Length != 0) {
-        data.RealEstateType = RealEstateType.Parse(int.Parse(cboRealEstateKind.Value));
-      } else {
-        data.RealEstateType = RealEstateType.Empty;
-      }
-      if (Request.Form[cboRecordingOffice.ClientID].Length != 0) {
-        data.District = RecorderOffice.Parse(int.Parse(Request.Form[cboRecordingOffice.ClientID]));
-      } else {
-        data.District = RecorderOffice.Empty;
-      }
-      if (Request.Form[cboMunicipality.ClientID].Length != 0) {
-        data.Municipality = Municipality.Parse(int.Parse(Request.Form[cboMunicipality.ClientID]));
-      } else {
-        data.Municipality = Municipality.Empty;
-      }
-      data.Name = txtCommonName.Value;
+      property.Name = txtCommonName.Value;
+      property.Description = txtLocationReference.Value;
+      property.RecorderOffice = RecorderOffice.Parse(int.Parse(cboRecordingOffice.Value));
+      property.Municipality = Municipality.Parse(int.Parse(cboMunicipality.Value));
+      property.Kind = cboRealEstateKind.Value;
       data.Notes = txtNotes.Value;
-      data.LocationReference = txtLocationReference.Value;
       data.MetesAndBounds = txtMetesAndBounds.Value;
 
       if (cboLotSizeUnit.Value.Length != 0 && txtLotSize.Value.Length != 0) {
-        data.LotSize = Quantity.Parse(Unit.Parse(int.Parse(cboLotSizeUnit.Value)),
+        property.LotSize = Quantity.Parse(Unit.Parse(int.Parse(cboLotSizeUnit.Value)),
                                       decimal.Parse(txtLotSize.Value));
       } else {
-        data.LotSize = Quantity.Zero;
+        property.LotSize = Quantity.Zero;
       }
 
       property.SetExtData(data);

@@ -14,11 +14,11 @@ namespace Empiria.Land.WebApp {
       return RecorderExpert.Execute(task);
     }
 
+
     private RecordingTask ParseRecordingTask() {
       Command command = base.GetCurrentCommand();
 
       RecordingActInfoDTO targetActInfo = null;
-
 
       RecordingTaskType taskType =
                 (RecordingTaskType) Enum.Parse(typeof(RecordingTaskType),
@@ -39,8 +39,8 @@ namespace Empiria.Land.WebApp {
       if (taskType == RecordingTaskType.createPartition) {
         partitionInfo =
               new RealEstatePartitionDTO(command.GetParameter<string>("partitionType"),
-                                      command.GetParameter<string>("partitionNo"),
-                                      command.GetParameter<string>("partitionRepeatUntilNo", String.Empty));
+                                         command.GetParameter<string>("partitionNo"),
+                                         command.GetParameter<string>("partitionRepeatUntilNo", String.Empty));
       }
 
       return new RecordingTask(

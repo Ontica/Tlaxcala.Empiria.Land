@@ -111,14 +111,14 @@ namespace Empiria.Land.WebApi.SedatuServices {
 
     public string CVE_OFNAREG {
       get {
-        return this.realEstate.District.Number;
+        return this.realEstate.RecorderOffice.Number;
       }
     }
 
 
     public string OFNAREG {
       get {
-        return this.realEstate.District.Alias;
+        return this.realEstate.RecorderOffice.Alias;
       }
     }
 
@@ -167,7 +167,7 @@ namespace Empiria.Land.WebApi.SedatuServices {
 
     public string DIRECCION {
       get {
-        return this.realEstate.LocationReference;
+        return this.realEstate.Description;
       }
     }
 
@@ -210,7 +210,7 @@ namespace Empiria.Land.WebApi.SedatuServices {
 
     public string NOM_EDIFPREDIO {
       get {
-        return this.realEstate.Name;
+        return this.realEstate.Description;
       }
     }
 

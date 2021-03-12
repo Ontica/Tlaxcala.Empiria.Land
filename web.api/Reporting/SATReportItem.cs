@@ -144,7 +144,7 @@ namespace Empiria.Land.WebApi.Reporting {
       text.Append('|');
 
       if (realEstate != null) {
-        text.Append(realEstate.LocationReference);    // Calle del inmueble
+        text.Append(realEstate.Description);    // Calle del inmueble
         text.Append("|");
         text.Append("  ");                            // Num exterior del inmueble
         text.Append("|");

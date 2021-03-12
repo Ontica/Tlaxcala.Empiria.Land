@@ -653,7 +653,7 @@ namespace Empiria.Land.WebApp {
 
       x = x.Replace("{ASSOCIATION.UID}", association.UID);
       x = x.Replace("{ASSOCIATION.NAME}", association.Name);
-      x = x.Replace("{ASSOCIATION.KIND}", association.GetAssociationTypeName().ToLowerInvariant());
+      x = x.Replace("{ASSOCIATION.KIND}", association.Kind);
 
       return x;
     }
