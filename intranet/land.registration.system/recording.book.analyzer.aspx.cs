@@ -196,7 +196,7 @@ namespace Empiria.Land.WebApp {
         cboStatus.Items.Add(new ListItem("Registrada", ((char) RecordableObjectStatus.Registered).ToString()));
       } else {
         cboStatus.Items.Add(new ListItem("No vigente", ((char) RecordableObjectStatus.Obsolete).ToString()));
-        cboStatus.Items.Add(new ListItem("No legible", ((char) RecordableObjectStatus.NoLegible).ToString()));
+        cboStatus.Items.Add(new ListItem("No legible", ((char) RecordableObjectStatus.NotLegible).ToString()));
         cboStatus.Items.Add(new ListItem("Vigente", ((char) RecordableObjectStatus.Incomplete).ToString()));
       }
     }

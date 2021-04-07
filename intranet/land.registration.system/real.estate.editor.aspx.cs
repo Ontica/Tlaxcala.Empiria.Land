@@ -54,7 +54,7 @@ namespace Empiria.Land.WebApp {
     protected bool RecordingActAllowsEdition() {
       return property.Kind.Length == 0 ||
              recordingAct.ResourceUpdated ||
-             recordingAct.RecordingActType.RecordingRule.EditRealEstate ||
+             recordingAct.RecordingActType.RecordingRule.EditResource ||
              property.IsInTheRankOfTheFirstDomainAct(recordingAct);
     }
 
@@ -141,7 +141,7 @@ namespace Empiria.Land.WebApp {
 
       if (cboLotSizeUnit.Value.Length != 0 && txtLotSize.Value.Length != 0) {
         property.LotSize = Quantity.Parse(Unit.Parse(int.Parse(cboLotSizeUnit.Value)),
-                                      decimal.Parse(txtLotSize.Value));
+                                          decimal.Parse(txtLotSize.Value));
       } else {
         property.LotSize = Quantity.Zero;
       }
