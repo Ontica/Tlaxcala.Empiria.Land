@@ -50,10 +50,8 @@ namespace Empiria.Land.WebApp {
                                                       command.GetParameter<string>("recordingTaskType")),
          cadastralKey: command.GetParameter<string>("cadastralKey", String.Empty),
          resourceName: command.GetParameter<string>("resourceName", String.Empty),
-         precedentRecordingBookId: command.GetParameter<int>("precedentRecordingBookId", -1),
          precedentRecordingId: command.GetParameter<int>("precedentRecordingId", -1),
          precedentResourceId: command.GetParameter<int>("precedentPropertyId", -1),
-         quickAddRecordingNumber: command.GetParameter<string>("quickAddRecordingNumber", String.Empty),
          targetActInfo: targetActInfo,
          partition: partitionInfo
       );

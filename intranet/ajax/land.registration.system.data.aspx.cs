@@ -890,10 +890,8 @@ namespace Empiria.Web.UI.Ajax {
          recordingActTypeId: GetCommandParameter<int>("recordingActTypeId"),
          recordingTaskType: (RecordingTaskType) Enum.Parse(typeof(RecordingTaskType),
                                                           GetCommandParameter<string>("recordingTaskType")),
-         precedentRecordingBookId: GetCommandParameter<int>("precedentRecordingBookId", -1),
          precedentRecordingId: GetCommandParameter<int>("precedentRecordingId", -1),
-         precedentResourceId: GetCommandParameter<int>("precedentPropertyId", -1),
-         quickAddRecordingNumber: GetCommandParameter<string>("quickAddRecordingNumber", String.Empty)
+         precedentResourceId: GetCommandParameter<int>("precedentPropertyId", -1)
       );
       return task;
     }
