@@ -7,6 +7,7 @@ using Empiria.Presentation.Web.Content;
 
 using Empiria.Land.Data;
 using Empiria.Land.Registration;
+using Empiria.Land.Registration.Adapters;
 
 namespace Empiria.Land.WebApp {
 
@@ -102,7 +103,7 @@ namespace Empiria.Land.WebApp {
     private void LoadRolesCombo(FixedList<RecordingActParty> domainParties) {
       this.cboRole.Items.Clear();
 
-      HtmlSelectContent.LoadCombo(this.cboRole, this.recordingAct.RecordingActType.GetRoles(), "Id", "Name", "( Seleccionar rol )");
+      HtmlSelectContent.LoadCombo(this.cboRole, this.recordingAct.RecordingActType.GetPrimaryRoles(), "Id", "Name", "( Seleccionar rol )");
 
       if (domainParties.Count != 0) {
         HtmlSelectContent.LoadCombo<Party>(cboUsufructuaryOf, domainParties.Select((x) => x.Party), (x) => x.Id.ToString(),
@@ -123,26 +124,21 @@ namespace Empiria.Land.WebApp {
       HtmlSelectContent.AppendToCombo(this.cboRole, SecondaryPartyRole.GetList(), "Id", "Name");
     }
 
-    private Party FillOrganizationParty() {
-      if (this.Party == null) {
-        this.Party = new OrganizationParty(int.Parse(cboPartyType.Value), txtOrgName.Value,
-                                           txtOrgTaxIDNumber.Value,
-                                           txtOrgTaxIDNumber.Value != "" ? "RFC" : "None");
-        this.Party.Notes = txtOrgNotes.Value;
-      }
-      this.Party.Save();
-
-      return this.Party;
+    private PartyFields FillOrganizationParty() {
+      return new PartyFields {
+        FullName = txtOrgName.Value,
+        RFC = txtOrgTaxIDNumber.Value,
+        Notes = txtOrgNotes.Value
+      };
     }
 
-    private Party FillHumanParty() {
-      if (this.Party == null) {
-        this.Party = new HumanParty(txtPersonFullName.Value, txtIDNumber.Value, cboIDNumberType.Value);
-        this.Party.Notes = txtPersonNotes.Value;
-      }
-      this.Party.Save();
-
-      return this.Party;
+    private PartyFields FillHumanParty() {
+      return new PartyFields {
+        FullName = txtPersonFullName.Value,
+        RFC = txtIDNumber.Value,
+        CURP = cboIDNumberType.Value,
+        Notes = txtPersonNotes.Value
+      };
     }
 
     private void UpdateRecordingActParty(RecordingActParty rap) {
@@ -165,8 +161,8 @@ namespace Empiria.Land.WebApp {
       cboPartyType.Value = person.GetEmpiriaType().Id.ToString();
 
       txtPersonFullName.Value = person.FullName;
-      txtIDNumber.Value = person.OfficialID;
-      cboIDNumberType.Value = person.OfficialIDType;
+      txtIDNumber.Value = person.CURP;
+      cboIDNumberType.Value = "CURP";
       txtPersonNotes.Value = person.Notes;
       isLoaded = true;
     }
@@ -176,7 +172,7 @@ namespace Empiria.Land.WebApp {
 
       cboPartyType.Value = org.GetEmpiriaType().Id.ToString();
       txtOrgName.Value = org.FullName;
-      txtOrgTaxIDNumber.Value = org.OfficialID;
+      txtOrgTaxIDNumber.Value = org.RFC;
       txtOrgNotes.Value = org.Notes;
       isLoaded = true;
     }
@@ -189,7 +185,7 @@ namespace Empiria.Land.WebApp {
         LoadOrganizationParty();
       }
       cboParty.Items.Clear();
-      cboParty.Items.Add(new ListItem(this.Party.ExtendedName, this.Party.Id.ToString()));
+      cboParty.Items.Add(new ListItem(this.Party.FullName, this.Party.Id.ToString()));
 
       FixedList<RecordingActParty> parties = PartyData.GetInvolvedDomainParties(this.recordingAct);
 
@@ -205,29 +201,29 @@ namespace Empiria.Land.WebApp {
 
     public void SaveParty(int partyId) {
       this.Party = Party.Parse(partyId);
-      if (this.Party.GetEmpiriaType().Id == 2435) {
-        this.Party = FillHumanParty();
-        if (IsPartyInRecordingAct) {
-          FillHumanPartyOnRecording();
-        }
-      } else {
-        this.Party = FillOrganizationParty();
-      }
+      //if (this.Party.GetEmpiriaType().Id == 2435) {
+      //  this.Party = FillHumanParty();
+      //  if (IsPartyInRecordingAct) {
+      //    FillHumanPartyOnRecording();
+      //  }
+      //} else {
+      //  this.Party = FillOrganizationParty();
+      //}
     }
 
     public void SaveRecordingParty() {
       string selectedParty = Request.Form[cboParty.Name];
-      if (String.IsNullOrWhiteSpace(selectedParty)) {
-        //this.party = FillNewParty();
-      } else if (selectedParty == "appendParty") {
-        if (cboPartyType.Value == "2435") {
-          this.party = FillHumanParty();
-        } else {
-          this.party = FillOrganizationParty();
-        }
-      } else {
-        this.party = Party.Parse(int.Parse(selectedParty));
-      }
+      //if (String.IsNullOrWhiteSpace(selectedParty)) {
+      //  //this.party = FillNewParty();
+      //} else if (selectedParty == "appendParty") {
+      //  if (cboPartyType.Value == "2435") {
+      //    this.party = FillHumanParty();
+      //  } else {
+      //    this.party = FillOrganizationParty();
+      //  }
+      //} else {
+      //  this.party = Party.Parse(int.Parse(selectedParty));
+      //}
       SaveRecordingActParty();
     }
 

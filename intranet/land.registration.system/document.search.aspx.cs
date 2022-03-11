@@ -165,7 +165,7 @@ namespace Empiria.Land.WebApp {
         string row = ReadRowTemplate(typeof(Party), i);
         row = row.Replace("{{ON.SELECT.OPERATION}}", "onSelectParty");
         row = row.Replace("{{ITEM.ID}}", item.Id.ToString());
-        row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.ExtendedName);
+        row = row.Replace("{{ITEM.DISPLAY.TEXT}}", item.FullName);
         row = row.Replace("{{IMAGING.LINKS}}", "&nbsp;");
 
         html += row;

@@ -598,7 +598,7 @@ namespace Empiria.Land.WebApp {
 
       } else if (!domainAntecedent.PhysicalRecording.IsEmptyInstance) {
         if (!recordingAct.AmendmentOf.PhysicalRecording.Equals(domainAntecedent.PhysicalRecording)) {
-          x += ", con antecedente de inscripción en " + domainAntecedent.PhysicalRecording.AsText;
+          x += ", con antecedente en " + domainAntecedent.PhysicalRecording.AsText;
         }
       } else if (domainAntecedent.Document.Equals(recordingAct.Document)) {
         x += ", registrado en este documento";

@@ -89,7 +89,7 @@
     </tr>
     <tr>
       <td>
-        <table class="editionTable">	
+        <table class="editionTable">
           <tr>
             <td>Tipo de predio:</td>
             <td>

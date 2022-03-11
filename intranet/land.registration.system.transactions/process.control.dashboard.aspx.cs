@@ -49,7 +49,8 @@ namespace Empiria.Land.WebApp {
       cboResponsible.ViewStateMode = ViewStateMode.Enabled;
       cboResponsible.EnableViewState = true;
 
-      selectedComboFromValue = String.IsNullOrEmpty(Request.Form[cboFrom.UniqueID]) ? String.Empty : Request.Form[cboFrom.UniqueID];
+      selectedComboFromValue = String.IsNullOrEmpty(Request.Form[cboFrom.UniqueID]) ?
+                                                  String.Empty : Request.Form[cboFrom.UniqueID];
     }
 
 
@@ -128,7 +129,8 @@ namespace Empiria.Land.WebApp {
           if (filter.Length != 0) {
             filter += " AND ";
           }
-          filter += "((ResponsibleId = " + User.Id.ToString() + ") OR (TransactionStatus = 'Y')) AND (TrackStatus = 'P') AND (TransactionStatus NOT IN ('D','L'))";
+          filter += "((ResponsibleId = " + User.Id.ToString() + ") OR (TransactionStatus = 'Y')) AND " +
+                     "(TrackStatus = 'P') AND (TransactionStatus NOT IN ('D','L'))";
 
           return TransactionData.GetLRSTransactionsForUI(filter, sort);
         }
