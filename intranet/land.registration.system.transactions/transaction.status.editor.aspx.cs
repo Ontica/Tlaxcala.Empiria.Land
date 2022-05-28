@@ -224,7 +224,7 @@ namespace Empiria.Land.WebApp {
     #region Private methods
 
     private void TakeTransactionInDeliveryDesk() {
-      Assertion.Assert(IsTransactionReadyForTakeInDeliveryDesk(),
+      Assertion.Require(IsTransactionReadyForTakeInDeliveryDesk(),
                        "La operación no puede ser ejecutada: 'TakeTransactionInDeliveryDesk'.");
 
       string s = LRSWorkflowRules.ValidateStatusChange(transaction, transaction.Workflow.NextStatus);
@@ -240,7 +240,7 @@ namespace Empiria.Land.WebApp {
 
 
     private void DeliverTransaction() {
-      Assertion.Assert(IsTransactionReadyForDelivery(),
+      Assertion.Require(IsTransactionReadyForDelivery(),
                        "La operación no puede ser ejecutada: 'DeliverTransaction'.");
 
       LRSTransactionStatus status = LRSTransactionStatus.Delivered;
@@ -257,7 +257,7 @@ namespace Empiria.Land.WebApp {
 
 
     private void ReturnTransaction() {
-      Assertion.Assert(IsTransactionReadyForReturn(),
+      Assertion.Require(IsTransactionReadyForReturn(),
                        "La operación no puede ser ejecutada: 'ReturnTransaction'.");
 
       LRSTransactionStatus status = LRSTransactionStatus.Returned;
@@ -274,7 +274,7 @@ namespace Empiria.Land.WebApp {
 
 
     private void ReentryTransaction() {
-      Assertion.Assert(IsTransactionReadyForReentry(),
+      Assertion.Require(IsTransactionReadyForReentry(),
                        "La operación no puede ser ejecutada: 'ReentryTransaction'.");
       try {
         transaction.Workflow.Reentry();

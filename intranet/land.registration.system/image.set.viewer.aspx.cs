@@ -62,7 +62,7 @@ namespace Empiria.Land.WebApp {
         return String.Empty;
       }
 
-      Assertion.Assert(0 <= currentImagePosition &&
+      Assertion.Require(0 <= currentImagePosition &&
                    currentImagePosition < imageSet.ImagesNamesArray.Length,
                   $"CurrentImagePosition ({currentImagePosition}) out of bounds: MAX = {imageSet.ImagesNamesArray.Length}. " +
                   $"Please check folder {this.imageSet.UrlRelativePath}.");

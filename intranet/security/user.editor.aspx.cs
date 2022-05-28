@@ -43,7 +43,7 @@ namespace Empiria.Web.UI.Security {
 
     private void Initialize() {
       int userId = int.Parse(Request.QueryString["id"]);
-      Assertion.Assert(userId != 0, "userId should be greater than zero.");
+      Assertion.Require(userId != 0, "userId should be greater than zero.");
 
       user = EmpiriaUser.Parse(userId);
       base.Title = "Editor de Usuarios";
@@ -172,7 +172,7 @@ namespace Empiria.Web.UI.Security {
       if (!ValidateObject()) {
         return;
       }
-      Assertion.Assert(EmpiriaMath.IsMemberOf(base.User.Id, new int[] { 2, 19, 155, 3878 }),
+      Assertion.Require(EmpiriaMath.IsMemberOf(base.User.Id, new int[] { 2, 19, 155, 3878 }),
                        "Only system managers can change passwords.");
 
       var apiKey = "48ebbebb-3409-4c91-a8b9-59fc269cfdec-717ae95719b3bcd064f193af448aaf7e20f8c780a4bcbb0ca4f0edd937ecde5e";

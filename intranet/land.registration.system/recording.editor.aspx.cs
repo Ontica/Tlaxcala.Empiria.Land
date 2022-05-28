@@ -220,11 +220,12 @@ namespace Empiria.Land.WebApp {
             ExecutionServer.CurrentPrincipal.IsInRole("Land.LegalAdvisor"))) {
         return false;
       }
+
       if (!this.transaction.Document.IsEmptyInstance) {
         return false;
       }
 
-      Assertion.Assert(!transaction.IsEmptyInstance,
+      Assertion.Require(!transaction.IsEmptyInstance,
                        "Transaction can't be the empty instance.");
 
       if (!(transaction.Workflow.CurrentStatus == LRSTransactionStatus.Recording ||
@@ -274,9 +275,9 @@ namespace Empiria.Land.WebApp {
       RecordingDocumentType documentType = RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value));
       RecordingDocument document = oRecordingDocumentEditor.FillRecordingDocument(documentType);
 
-      Assertion.Assert(transaction != null && !transaction.IsEmptyInstance,
+      Assertion.Ensure(transaction != null && !transaction.IsEmptyInstance,
                        "Transaction can't be null or an empty instance.");
-      Assertion.Assert(document != null && !document.IsEmptyInstance,
+      Assertion.Ensure(document != null && !document.IsEmptyInstance,
                        "Recording document can't be null or an empty instance.");
 
       document.Notes = txtObservations.Value;
@@ -291,8 +292,10 @@ namespace Empiria.Land.WebApp {
       transaction.AttachDocument(document);
 
       oRecordingDocumentEditor.LoadRecordingDocument(document);
-      Assertion.Assert(!transaction.Document.IsEmptyInstance && !transaction.Document.IsNew,
+
+      Assertion.Ensure(!transaction.Document.IsEmptyInstance && !transaction.Document.IsNew,
                        "Recording document after transaction attachment can't be null or an empty instance.");
+
       SetMessageBox("El documento " + transaction.Document.UID + " se guardó correctamente.");
     }
 

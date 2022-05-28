@@ -39,7 +39,7 @@ namespace Empiria.Land.WebApp {
 
         this.Certificate = Certificate.TryParse(uid);
 
-        Assertion.AssertObject(this.Certificate, $"Invalid certificate number '{uid}'.");
+        Assertion.Require(this.Certificate, $"Invalid certificate number '{uid}'.");
 
       } else if (!String.IsNullOrWhiteSpace(Request.QueryString["certificateId"])) {
         int certificateId = int.Parse(Request.QueryString["certificateId"]);

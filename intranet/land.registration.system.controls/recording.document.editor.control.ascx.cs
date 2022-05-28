@@ -47,8 +47,11 @@ namespace Empiria.Land.WebApp {
     }
 
     protected override void ImplementsLoadRecordingDocument() {
-      Assertion.Assert(base.Document != null, "Document can't be null");
+
+      Assertion.Ensure(base.Document != null, "Document can't be null");
+
       RecordingDocumentType documentType = base.Document.DocumentType;
+
       oNotaryOfficialLetter.Style["display"] = "none";
       oNotaryPublicDeed.Style["display"] = "none";
       oEjidalSystemTitle.Style["display"] = "none";

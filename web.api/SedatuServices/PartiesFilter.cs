@@ -41,7 +41,7 @@ namespace Empiria.Land.WebApi.SedatuServices {
       this.paterno = EmpiriaString.TrimSpacesAndControl(this.paterno);
       this.materno = EmpiriaString.TrimSpacesAndControl(this.materno);
 
-      Assertion.Assert(!String.IsNullOrWhiteSpace(this.nombres + this.paterno + this.materno),
+      Assertion.Require(!String.IsNullOrWhiteSpace(this.nombres + this.paterno + this.materno),
             "Null search parameters. At least one name parameter (nombres, paterno, materno) must be supplied.");
 
     }

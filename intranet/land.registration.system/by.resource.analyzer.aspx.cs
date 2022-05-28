@@ -124,7 +124,7 @@ namespace Empiria.Land.WebApp {
           return this.IsResourceSelected ? "tabOn" : "tabDisabled";
 
         default:
-          throw Assertion.AssertNoReachThisCode();
+          throw Assertion.EnsureNoReachThisCode();
       }
     }
 
@@ -158,7 +158,7 @@ namespace Empiria.Land.WebApp {
           source = "resource.history.aspx?resourceId={{RESOURCE.ID}}&id={{RECORDING.ACT.ID}}";
           break;
         default:
-            throw Assertion.AssertNoReachThisCode();
+            throw Assertion.EnsureNoReachThisCode();
       }
       source = source.Replace("{{RECORDING.ACT.ID}}", this.recordingAct.Id.ToString());
       source = source.Replace("{{DOCUMENT.ID}}", this.recordingAct.Document.Id.ToString());

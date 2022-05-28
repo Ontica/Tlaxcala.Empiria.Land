@@ -37,13 +37,13 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
       JsonObject response = await this.CallGenerarFormatoPagoReferenciado(body)
                                       .ConfigureAwait(false);
 
-      Assertion.Assert(response.Contains("codigo") && response.Contains("mensaje"),
-                       $"The server response has an unexpected content:\n {response.ToString()}");
+      Assertion.Ensure(response.Contains("codigo") && response.Contains("mensaje"),
+                       $"The server response has an unexpected content:\n {response}");
 
       var responseCode = response.Get<string>("codigo");
       var message = response.Get<string>("mensaje");
 
-      Assertion.Assert(responseCode == "200", $"The server response code was {responseCode}: {message}.");
+      Assertion.Require(responseCode == "200", $"The server response code was {responseCode}: {message}.");
 
       if (response.Contains("fechaVencimiento") &&
           response.Contains("folioControlEstado") &&
@@ -52,7 +52,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
         return this.ParseOrderDataFromWebService(response);
 
       } else {
-        throw new Exception($"The server response has an unexpected content:\n{response.ToString()}");
+        throw new Exception($"The server response has an unexpected content:\n{response}");
 
       }
     }
@@ -64,11 +64,12 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
       JsonObject response = await this.CallConsultarPagoRealizado(body)
                                       .ConfigureAwait(false);
 
-      Assertion.Assert(response.Contains("codigoEstatus"),
+      Assertion.Ensure(response.Contains("codigoEstatus"),
                        $"The server response has an unexpected content:\n {response.ToString()}");
 
       var responseCode = response.Get<string>("codigoEstatus");
-      Assertion.Assert(EmpiriaString.IsInList(responseCode, "201", "202"),
+
+      Assertion.Ensure(EmpiriaString.IsInList(responseCode, "201", "202"),
                        $"The server response has an unexpected content:\n {response.ToString()}");
 
       if (response.Contains("fechaPago") &&
@@ -79,14 +80,14 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
         return this.UpdatePaymentDataFromWebService(paymentOrderData, response);
 
       } else {
-        throw new Exception($"The server response has an unexpected content:\n{response.ToString()}");
+        throw new Exception($"The server response has an unexpected content:\n{response}");
       }
     }
 
 
     private FormerPaymentOrderDTO UpdatePaymentDataFromWebService(FormerPaymentOrderDTO paymentOrderData,
-                                                            JsonObject responseData) {
-      Assertion.AssertObject(responseData, "responseData");
+                                                                  JsonObject responseData) {
+      Assertion.Require(responseData, "responseData");
 
       bool isCompleted = (responseData.Get<string>("codigoEstatus") == "200" ||
                           responseData.Get<string>("codigoEstatus") == "201");
@@ -101,7 +102,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
       var paymentReference = responseData.Get<string>("refereciaPago");
       var lineaCaptura = responseData.Get<string>("lineaCaptura");
 
-      Assertion.Assert(paymentOrderData.RouteNumber == lineaCaptura,
+      Assertion.Require(paymentOrderData.RouteNumber == lineaCaptura,
                        $"Las líneas de captura del pago referenciado no coinciden: " +
                        $"{lineaCaptura} (finanzas) vs {paymentOrderData.RouteNumber} (rpp).");
 
@@ -173,7 +174,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
         response = await http.PostAsync<JsonObject>(body, "TreasuryConnectors.GenerarFormatoPagoReferenciado");
       }
 
-      Assertion.Assert(response.HasItems,
+      Assertion.Ensure(response.HasItems,
                        "The server response was successful (200 [OK]) but its content was an empty object.");
 
       return response;
@@ -193,7 +194,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
         response = await http.PostAsync<JsonObject>(body, "TreasuryConnectors.ConsultarPagoRealizado");
       }
 
-      Assertion.Assert(response.HasItems,
+      Assertion.Ensure(response.HasItems,
                        "The server response was successful (200 [OK]) but its content was an empty object.");
 
       return response;
@@ -201,7 +202,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
 
 
     private FormerPaymentOrderDTO ParseOrderDataFromWebService(JsonObject responseData) {
-      Assertion.AssertObject(responseData, "responseData");
+      Assertion.Require(responseData, "responseData");
 
       var routeNumber = responseData.Get<string>("lineaCaptura");
       var dueDate = DateTime.Parse(responseData.Get<string>("fechaVencimiento"));

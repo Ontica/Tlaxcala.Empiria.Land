@@ -50,7 +50,7 @@ namespace Empiria.Land.WebApi.Citys {
           case ExternalCertificateType.Registration:
             return LRSDocumentType.Parse(711);
           default:
-            throw Assertion.AssertNoReachThisCode("Tipo de certificado desconocido.");
+            throw Assertion.EnsureNoReachThisCode("Tipo de certificado desconocido.");
         }
       }
     }
@@ -64,12 +64,12 @@ namespace Empiria.Land.WebApi.Citys {
 
       this.RealPropertyUID = EmpiriaString.TrimAll(this.RealPropertyUID).ToUpperInvariant();
 
-      Assertion.Assert(this.CertificateType != ExternalCertificateType.Undefined,
-        "No reconozco el tipo de certificado: '{0}'", this.CertificateType.ToString());
-      Assertion.AssertObject(this.RealPropertyUID,
+      Assertion.Require(this.CertificateType != ExternalCertificateType.Undefined,
+        $"No reconozco el tipo de certificado: '{this.CertificateType}'");
+      Assertion.Require(this.RealPropertyUID,
         "No se ha proporcionado el folio electrónico del predio.");
-      Assertion.AssertObject(RealEstate.TryParseWithUID(this.RealPropertyUID),
-        "No tengo registrado ningún predio con folio real '{0}'.", this.RealPropertyUID);
+      Assertion.Require(RealEstate.TryParseWithUID(this.RealPropertyUID),
+        $"No tengo registrado ningún predio con folio real '{this.RealPropertyUID}'.");
     }
 
     /// <summary>Creates a Land Transaction using the data of this certificate request.</summary>

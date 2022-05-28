@@ -390,8 +390,8 @@ namespace Empiria.Land.WebApp {
 
 
     private void ApplyReceipt() {
-      Assertion.AssertObject(txtReceiptNumber.Value, "txtReceiptNumber value can't be null.");
-      Assertion.Assert(decimal.Parse(txtReceiptTotal.Value) == transaction.Items.TotalFee.Total,
+      Assertion.Require(txtReceiptNumber.Value, "txtReceiptNumber value can't be null.");
+      Assertion.Require(decimal.Parse(txtReceiptTotal.Value) == transaction.Items.TotalFee.Total,
                        "Receipt total should be equal to the transaction total.");
 
       transaction.SetPayment(txtReceiptNumber.Value, decimal.Parse(txtReceiptTotal.Value));
@@ -429,7 +429,7 @@ namespace Empiria.Land.WebApp {
 
       Certificate certificate = transaction.GetIssuedCertificates().Find( x => x.UID == uid);
 
-      Assertion.AssertObject(certificate, "El certificado no fue encontrado en este trámite.");
+      Assertion.Ensure(certificate, "El certificado no fue encontrado en este trámite.");
 
       if (certificate.CanDelete()) {
         certificate.Delete();

@@ -12,7 +12,6 @@ using System;
 using System.Web.UI;
 
 using Empiria.Land.Registration;
-using Empiria.Land.Registration.Transactions;
 using Empiria.Land.UI;
 using Empiria.Presentation.Web;
 
@@ -130,7 +129,7 @@ namespace Empiria.Land.WebApp {
       RecordingDocumentType documentType = RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value));
       RecordingDocument document = oRecordingDocumentEditor.FillRecordingDocument(documentType);
 
-      Assertion.Assert(document != null && !document.IsEmptyInstance,
+      Assertion.Ensure(document != null && !document.IsEmptyInstance,
                        "Recording document can't be null or an empty instance.");
 
       document.Notes = txtObservations.Value;
@@ -139,8 +138,10 @@ namespace Empiria.Land.WebApp {
       document.Save();
 
       oRecordingDocumentEditor.LoadRecordingDocument(document);
-      Assertion.Assert(!document.IsEmptyInstance && !document.IsNew,
+
+      Assertion.Ensure(!document.IsEmptyInstance && !document.IsNew,
                        "Recording document after transaction attachment can't be null or an empty instance.");
+
       SetMessageBox("El documento " + document.UID + " se guardó correctamente.");
     }
 

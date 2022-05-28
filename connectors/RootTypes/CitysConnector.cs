@@ -138,7 +138,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
           return CitysCertificateType.Propiedad;
 
         default:
-          throw Assertion.AssertNoReachThisCode("Invalid CITYS CertificateType.");
+          throw Assertion.EnsureNoReachThisCode("Invalid CITYS CertificateType.");
       }
     }
 

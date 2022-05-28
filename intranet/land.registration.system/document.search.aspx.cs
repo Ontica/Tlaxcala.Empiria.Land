@@ -124,7 +124,7 @@ namespace Empiria.Land.WebApp {
           return;
 
         default:
-          throw Assertion.AssertNoReachThisCode("Unrecognized search combo option.");
+          throw Assertion.EnsureNoReachThisCode("Unrecognized search combo option.");
       }
     }
 

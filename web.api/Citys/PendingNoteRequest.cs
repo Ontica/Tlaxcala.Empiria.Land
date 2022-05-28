@@ -118,35 +118,35 @@ namespace Empiria.Land.WebApi.Citys {
 
       this.CleanData();
 
-      Assertion.Assert(this.IsNotaryValid(),
-        "No tengo registrado al notario que envía el aviso: '{0}'.", this.NotaryId);
-      Assertion.Assert(this.IsProjectedActValid(),
-        "No reconozco la operación proyectada: '{0}'", this.ProjectedActId);
+      Assertion.Require(this.IsNotaryValid(),
+        $"No tengo registrado al notario que envía el aviso: '{this.NotaryId}'.");
+      Assertion.Require(this.IsProjectedActValid(),
+        $"No reconozco la operación proyectada: '{this.ProjectedActId}'");
 
-      Assertion.AssertObject(this.ProjectedOwner,
+      Assertion.Require(this.ProjectedOwner,
         "Necesito que el campo 'A favor de:' no sea vacío.");
-      Assertion.AssertObject(this.RealPropertyUID,
+      Assertion.Require(this.RealPropertyUID,
         "Requiero se proporcione el folio electrónico del predio.");
 
-      Assertion.AssertObject(RealEstate.TryParseWithUID(this.RealPropertyUID),
-        "No tengo registrado ningún predio con folio real '{0}'.", this.RealPropertyUID);
+      Assertion.Require(RealEstate.TryParseWithUID(this.RealPropertyUID),
+        $"No tengo registrado ningún predio con folio real '{this.RealPropertyUID}'.");
 
       if (!this.IsPartition) {
         return;
       }
 
-      Assertion.AssertObject(this.PartitionName,
+      Assertion.Require(this.PartitionName,
         "Necesito la denominación o nombre de la fracción (si no consta debe teclearse 'Sin número')");
-      Assertion.AssertObject(this.PartitionLocation,
+      Assertion.Require(this.PartitionLocation,
         "Requiero conocer la ubicación de la fracción.");
-      Assertion.Assert(this.PartitionLocation.Length >= 20,
+      Assertion.Require(this.PartitionLocation.Length >= 20,
         "Favor de especificar la ubicación de la fracción en 20 o más caracteres: " +
         "calle, número, colonia, etc.");
-      Assertion.Assert(this.PartitionSize >= 10m,
+      Assertion.Require(this.PartitionSize >= 10m,
         "Las fracciones no pueden ser menores a 10 metros cuadrados.");
-      Assertion.AssertObject(this.PartitionMetesAndBounds,
+      Assertion.Require(this.PartitionMetesAndBounds,
         "Necesito se proporcionen las medidas y colindancias de la fracción.");
-      Assertion.Assert(this.PartitionMetesAndBounds.Length >= 50,
+      Assertion.Require(this.PartitionMetesAndBounds.Length >= 50,
         "Las medidas y colindancias deberían ser más específicas (50 o más caracteres).");
     }
 

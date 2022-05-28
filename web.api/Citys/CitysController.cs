@@ -63,7 +63,7 @@ namespace Empiria.Land.WebApi.Citys {
           return new SingleObjectModel(this.Request, data,  "Empiria.Land.CertificateIssuingTransaction");
         }
 
-        Assertion.Assert(IsCitysNewTransactionsEnabled, "Citys endpoints are not enabled.");
+        Assertion.Require(IsCitysNewTransactionsEnabled, "Citys endpoints are not enabled.");
 
         var dryRun = base.Request.RequestUri.Query.Contains("dry-run");
 
@@ -96,7 +96,7 @@ namespace Empiria.Land.WebApi.Citys {
           return new SingleObjectModel(this.Request, data, "Empiria.Land.PendingNoteTransaction");
         }
 
-        Assertion.Assert(IsCitysNewTransactionsEnabled, "Citys endpoints are not enabled.");
+        Assertion.Require(IsCitysNewTransactionsEnabled, "Citys endpoints are not enabled.");
 
         var dryRun = base.Request.RequestUri.Query.Contains("dry-run");
 

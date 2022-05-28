@@ -42,7 +42,8 @@ namespace Empiria.Land.WebApp {
     private async void Initialize() {
       if (Request.QueryString["uid"] != null) {
         transaction = LRSTransaction.TryParse(Request.QueryString["uid"]);
-        Assertion.AssertObject(transaction, "transaction");
+
+        Assertion.Ensure(transaction, "transaction");
 
       } else if (Request.QueryString["id"] != null) {
         transaction = LRSTransaction.Parse(int.Parse(Request.QueryString["id"]));

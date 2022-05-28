@@ -24,15 +24,15 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
     #region Public methods
 
     public async Task<CadastralData> VerifyRealEstateRegistered(string cadastralKey) {
-      Assertion.AssertObject(cadastralKey, "cadastralKey");
-      Assertion.Assert(cadastralKey.Length == 31, $"La clave catastral tiene un tamaño de {cadastralKey.Length} " +
+      Assertion.Require(cadastralKey, "cadastralKey");
+      Assertion.Require(cadastralKey.Length == 31, $"La clave catastral tiene un tamaño de {cadastralKey.Length} " +
                                                   $"y debería ser de 31 dígitos.");
-      Assertion.Assert(EmpiriaString.IsInteger(cadastralKey), "La clave catastral tiene caracteres que no reconozco.");
+      Assertion.Require(EmpiriaString.IsInteger(cadastralKey), "La clave catastral tiene caracteres que no reconozco.");
 
       JsonObject response = await this.CallVerifyRealEstateRegisteredWebService(cadastralKey)
                                       .ConfigureAwait(false);
 
-      Assertion.Assert(response.Contains("claveCatastral"),
+      Assertion.Require(response.Contains("claveCatastral"),
                        $"El servidor de Catastro regresó una respuesta inesperada:\n {response.ToString()}");
 
       if (response.Get<string>("claveCatastral") == "No existe") {
@@ -64,7 +64,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
           response = await http.PostAsync<JsonObject>(body, "CadastralConnectors.ObtenerPredio");
         }
 
-        Assertion.Assert(response.HasItems,
+        Assertion.Ensure(response.HasItems,
                          "The server response was successful (200 [OK]) but its content was an empty object.");
 
         return response;

@@ -53,7 +53,7 @@ namespace Empiria.Land.WebApi.SedatuServices {
     [Route("v1/sedatu/propietarios")]
     public CollectionModel GetOwners([FromUri] PartiesFilterModel partiesFilter) {
       try {
-        Assertion.AssertObject(partiesFilter, "partiesFilter");
+        Assertion.Require(partiesFilter, "partiesFilter");
 
         partiesFilter.AssertValid();
 
