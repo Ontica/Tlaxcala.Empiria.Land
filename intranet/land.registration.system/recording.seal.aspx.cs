@@ -379,7 +379,7 @@ namespace Empiria.Land.WebApp {
 
       string x = template.Replace("{INDEX}", index.ToString());
 
-      Assertion.Ensure(recordingAct.RecordingActType.IsAmendmentActType,
+      Assertion.Require(recordingAct.RecordingActType.IsAmendmentActType,
                        "Recording act is not an amendment act.");
 
       x = x.Replace("{AMENDMENT.ACT}", this.GetAmendmentActTypeDisplayName(recordingAct));
@@ -515,7 +515,7 @@ namespace Empiria.Land.WebApp {
           "<b>{PARTITION.NUMBER}</b> del fraccionamiento con folio real {PARTITION.OF}, misma a la que " +
           "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
 
-      Assertion.Ensure(!newPartition.IsPartitionOf.IsEmptyInstance, "Property is not a partition.");
+      Assertion.Require(!newPartition.IsPartitionOf.IsEmptyInstance, "Property is not a partition.");
 
       string x;
 

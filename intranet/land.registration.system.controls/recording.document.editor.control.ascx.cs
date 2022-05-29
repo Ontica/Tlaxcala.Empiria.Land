@@ -48,7 +48,7 @@ namespace Empiria.Land.WebApp {
 
     protected override void ImplementsLoadRecordingDocument() {
 
-      Assertion.Ensure(base.Document != null, "Document can't be null");
+      Assertion.Require(base.Document != null, "Document can't be null");
 
       RecordingDocumentType documentType = base.Document.DocumentType;
 

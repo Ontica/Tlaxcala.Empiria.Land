@@ -126,8 +126,8 @@ namespace Empiria.Land.WebApp {
 
 
     private void UploadFiles() {
-      Assertion.Ensure(this.transaction, "Transaction is null.");
-      Assertion.Ensure(!this.transaction.IsEmptyInstance, "Transaction can't be the empty instance.");
+      Assertion.Require(this.transaction, "Transaction is null.");
+      Assertion.Require(!this.transaction.IsEmptyInstance, "Transaction can't be the empty instance.");
 
       UploadMainFile();
       UploadAuxiliaryFile();

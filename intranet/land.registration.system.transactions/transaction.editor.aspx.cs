@@ -429,7 +429,7 @@ namespace Empiria.Land.WebApp {
 
       Certificate certificate = transaction.GetIssuedCertificates().Find( x => x.UID == uid);
 
-      Assertion.Ensure(certificate, "El certificado no fue encontrado en este trámite.");
+      Assertion.Require(certificate, "El certificado no fue encontrado en este trámite.");
 
       if (certificate.CanDelete()) {
         certificate.Delete();

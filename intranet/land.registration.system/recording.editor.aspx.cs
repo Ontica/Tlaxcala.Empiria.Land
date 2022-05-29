@@ -275,9 +275,9 @@ namespace Empiria.Land.WebApp {
       RecordingDocumentType documentType = RecordingDocumentType.Parse(int.Parse(cboRecordingType.Value));
       RecordingDocument document = oRecordingDocumentEditor.FillRecordingDocument(documentType);
 
-      Assertion.Ensure(transaction != null && !transaction.IsEmptyInstance,
+      Assertion.Require(transaction != null && !transaction.IsEmptyInstance,
                        "Transaction can't be null or an empty instance.");
-      Assertion.Ensure(document != null && !document.IsEmptyInstance,
+      Assertion.Require(document != null && !document.IsEmptyInstance,
                        "Recording document can't be null or an empty instance.");
 
       document.Notes = txtObservations.Value;
