@@ -93,12 +93,12 @@ namespace Empiria.Land.WebApi.SedatuServices {
 
     private Exception RealEstateNotFound(string propertyUID) {
       return new ResourceNotFoundException("RealEstate.UniqueID",
-              $"No tengo registrado ningún predio con folio real '{propertyUID}'.");
+              $"No tengo registrado ningún predio con folio electrónico '{propertyUID}'.");
     }
 
     private Exception RealEstateDomainActsNotFound(string propertyUID) {
       return new ResourceNotFoundException("RealEstate.NoRecordingActs",
-              $"Tengo registrado un predio con folio real '{propertyUID}' " +
+              $"Tengo registrado un predio con folio electrónico '{propertyUID}' " +
               $"pero éste aún no tiene registrados actos de dominio.");
     }
 

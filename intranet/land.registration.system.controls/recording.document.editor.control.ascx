@@ -175,7 +175,7 @@
         <option value='788'>Expediente administrativo</option>
         <option value='765'>Fianza</option>
         <option value='780'>Inmovilización de predio</option>
-        <option value='786'>Solicitud de folio real</option>
+        <option value='786'>Solicitud de folio electrónico</option>
       </select>
     </td>
     <td>

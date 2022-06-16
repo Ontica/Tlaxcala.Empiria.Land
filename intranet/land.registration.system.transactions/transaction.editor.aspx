@@ -156,7 +156,7 @@
           <td class="lastCell">
             <label>
                 <input type="checkbox" id="chkNoBaseResource" onclick="return noBaseResourceCheckBoxSelected()"; />
-                  Es un trámite sobre una propiedad SIN folio real asignado<br />&nbsp; &nbsp; &nbsp; &nbsp;o involucra a más de un predio base.
+                  Es un trámite sobre una propiedad SIN folio electrónico asignado<br />&nbsp; &nbsp; &nbsp; &nbsp;o involucra a más de un predio base.
             </label>
           </td>
       </tr>
@@ -614,7 +614,7 @@
   var oBaseResource = null;
   function lookupBaseResource() {
     if (getElement("txtBaseResourceUID").value.length == 0) {
-      alert("Requiero se proporcione el folio real para poder hacer la búsqueda.");
+        alert("Requiero se proporcione el folio electrónico para poder hacer la búsqueda.");
       return;
     }
 
@@ -626,7 +626,7 @@
 
     if (olookupResource.Id == -1) {
       _selectedResource = null;
-      alert("No existe ningún predio o asociación con el folio real proporcionado.");
+        alert("No existe ningún predio o asociación con el folio electrónico proporcionado.");
       getElement('divSelectedResource').style.display = 'none';
       getElement("txtBaseResourceUID").readOnly = false;
       getElement("chkNoBaseResource").disabled = false;
@@ -649,11 +649,11 @@
     }
     if (certificateType == "gravamen" || certificateType == "inscripción") {
       if (getElement('txtCertificatePropertyUID').value == '') {
-        alert("Requiero se proporcione el folio real del predio sobre el que se generará el certificado.");
+          alert("Requiero se proporcione el folio electrónico del predio sobre el que se generará el certificado.");
         return;
       }
       if (getElement('txtCertificatePropertyUID').value.length != 19) {
-        alert("El folio real tiene un formato que no reconozco.");
+          alert("El folio electrónico tiene un formato que no reconozco.");
         return;
       }
     }

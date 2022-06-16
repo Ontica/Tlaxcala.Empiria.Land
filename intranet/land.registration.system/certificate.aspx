@@ -123,7 +123,7 @@
       <td style="vertical-align:top;display:<%=base.DisplayQRCodeStyle()%>">
         <img style="margin-left:-12pt;margin-top:-12pt" alt="" title="" src="<%=base.ResourceQRCodeSource()%>" />
         <div style="margin-top:-12pt;font-size:7pt;white-space:nowrap">
-          Consultar folio real/predio<br />
+          Consultar folio electrónico/predio<br />
           <b><%=base.Certificate.Property.UID%></b>
         </div>
       </td>

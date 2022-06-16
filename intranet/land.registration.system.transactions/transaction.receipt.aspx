@@ -133,7 +133,7 @@
                 <div style="font-size:7pt;margin-top:8pt;">
                   Consulte el <b>estado</b> de su trámite leyendo el código QR con su celular o dispositivo móvil,
                   o visite nuestro sitio web <b>registropublico.tlaxcala.gob.mx</b>, donde también podrá consultar
-                  documentos, certificados y el estado de los predios mediante el folio real; y podrá suscribirse a
+                  documentos, certificados y el estado de los predios mediante su folio electrónico; y podrá suscribirse a
                   nuestro servicio gratuito de ALERTA REGISTRAL.
                   <br /><br />
                   <% if (transaction.ExtensionData.SendTo.Address != "") { %>

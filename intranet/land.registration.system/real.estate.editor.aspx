@@ -36,7 +36,7 @@
             <td>Clave catastral:</td>
             <td class="lastCell">
               <input type="text" class="textBox" id='txtCadastralKey' name='txtCadastralKey' style="width:320px;height:18px;font-size:9pt" maxlength="40" runat='server' title="" />
-              <img src="../themes/default/buttons/search.gif" alt="" title="Busca la clave en el sistema de catastro para después hacer la vinculación entre folio real y clave catastral"
+              <img src="../themes/default/buttons/search.gif" alt="" title="Busca la clave en el sistema de catastro para después hacer la vinculación entre folio electrónico y clave catastral"
                    style="margin-left:-4px" onclick="doOperation('searchCadastralNumber')" />Vincular con catastro
               &nbsp; &nbsp;
               <img src="../themes/default/buttons/document.sm.gif" alt="" title="Visualiza la cédula catastral del predio"

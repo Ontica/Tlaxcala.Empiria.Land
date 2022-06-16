@@ -133,7 +133,7 @@ namespace Empiria.Land.WebApi {
 
     private Exception PropertyNotFound(string propertyUID) {
       return new ResourceNotFoundException("Property.UniqueID",
-          "No tengo registrado ningún predio con el folio real '{0}'.", propertyUID);
+          "No tengo registrado ningún predio con el folio electrónico '{0}'.", propertyUID);
     }
 
     #endregion Private methods

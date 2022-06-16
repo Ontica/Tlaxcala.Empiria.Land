@@ -583,7 +583,7 @@ namespace Empiria.Land.WebApp {
       RealEstate property = propertyUID.Length > 0 ? RealEstate.TryParseWithUID(propertyUID) : RealEstate.Empty;
 
       if (property == null) {
-        onloadScript = "alert('El folio real proporcionado no existe.');doOperation('redirectThis')";
+        onloadScript = "alert('El folio electrónico proporcionado no existe.');doOperation('redirectThis')";
         return;
       }
 

@@ -83,7 +83,7 @@
                              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             <input type="checkbox" id="chkAddResourceToExistingRecording" disabled="disabled" onclick="return showPrecedentRecordingSection()"; />
-                            Agregar otro folio real a esta partida histórica
+                            Agregar otro folio electrónico a esta partida histórica
                           </label>
                         </span>
                         <span id="divRecordingQuickAddSection" style="display:none">
@@ -329,7 +329,7 @@
   var olookupResource = null;
   function lookupResource() {
     if (getElement("txtLookupResource").value.length == 0) {
-      alert("Requiero se proporcione el folio real o número de documento para hacer la búsqueda");
+        alert("Requiero se proporcione el folio electrónico o número de documento para hacer la búsqueda");
       return;
     }
 
@@ -341,7 +341,7 @@
 
     if (olookupResource.Id == -1) {
       _selectedResource = null;
-      alert("No existe ningún predio o asociación con el folio real proporcionado.");
+        alert("No existe ningún predio o asociación con el folio electrónico proporcionado.");
       getElement('divSelectedLookupResource').style.display = 'none';
       getElement("chkSelectPredecentInPhysicalBooks").disabled = false;
       getElement("txtLookupResource").readOnly = false;
@@ -808,7 +808,7 @@
       sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
     } else {
       sMsg += getPartitionText();
-      sMsg += "Antecedente:\t" + "Crear folio real en partida " + getPhysicalRecordingNumber() + "\n";
+        sMsg += "Antecedente:\t" + "Crear folio electrónico en partida " + getPhysicalRecordingNumber() + "\n";
       sMsg += "\t\t" + getComboOptionText(getElement('cboPrecedentRecordingBook')) + "\n\n";
     }
     if (getElement('cboRecordingTaskType').value == 'actAppliesToOtherRecordingAct') {
@@ -900,7 +900,7 @@
     <% } %>
     if (getElement('cboRecordingActType').value == "2201") {
       if (getElement('cboPrecedentRecording').value != "-1" || getSelectedResource() != null) {
-        alert("No es posible asignar un folio real sobre un pedio que ya tiene folio.");
+          alert("No es posible asignar un folio electrónico sobre un pedio que ya tiene folio.");
         getElement('cboPrecedentRecording').focus();
         return false;
       }

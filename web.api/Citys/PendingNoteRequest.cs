@@ -129,7 +129,7 @@ namespace Empiria.Land.WebApi.Citys {
         "Requiero se proporcione el folio electrónico del predio.");
 
       Assertion.Require(RealEstate.TryParseWithUID(this.RealPropertyUID),
-        $"No tengo registrado ningún predio con folio real '{this.RealPropertyUID}'.");
+        $"No tengo registrado ningún predio con folio electrónico '{this.RealPropertyUID}'.");
 
       if (!this.IsPartition) {
         return;

@@ -69,7 +69,7 @@ namespace Empiria.Land.WebApi.Citys {
       Assertion.Require(this.RealPropertyUID,
         "No se ha proporcionado el folio electrónico del predio.");
       Assertion.Require(RealEstate.TryParseWithUID(this.RealPropertyUID),
-        $"No tengo registrado ningún predio con folio real '{this.RealPropertyUID}'.");
+        $"No tengo registrado ningún predio con folio electrónico '{this.RealPropertyUID}'.");
     }
 
     /// <summary>Creates a Land Transaction using the data of this certificate request.</summary>

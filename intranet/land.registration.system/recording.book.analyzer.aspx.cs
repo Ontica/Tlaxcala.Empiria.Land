@@ -176,7 +176,7 @@ namespace Empiria.Land.WebApp {
     private void LoadRecordingActsPropertiesCombo() {
       cboProperty.Items.Clear();
 
-      cboProperty.Items.Add(new ListItem("Crear un nuevo folio real", "0"));
+      cboProperty.Items.Add(new ListItem("Crear un nuevo folio electrónico", "0"));
       foreach (var recordingAct in recording.MainDocument.RecordingActs) {
         var item = new ListItem(recordingAct.Resource.UID, recordingAct.Resource.Id.ToString());
         if (!cboProperty.Items.Contains(item)) {
