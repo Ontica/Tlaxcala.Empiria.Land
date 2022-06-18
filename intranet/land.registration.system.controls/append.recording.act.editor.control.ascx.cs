@@ -36,7 +36,7 @@ namespace Empiria.Land.WebApp {
       }
 
       RealEstatePartitionDTO partitionInfo = null;
-      if (taskType == RecordingTaskType.createPartition) {
+      if (taskType == RecordingTaskType.createPartition || taskType == RecordingTaskType.createPartitionAndPropertyOnAntecedent) {
         partitionInfo =
               new RealEstatePartitionDTO(command.GetParameter<string>("partitionType"),
                                          command.GetParameter<string>("partitionNo"),
