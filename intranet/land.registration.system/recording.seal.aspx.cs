@@ -400,7 +400,7 @@ namespace Empiria.Land.WebApp {
 
       Resource resource = recordingAct.Resource;
       if (resource is RealEstate) {
-        x = x.Replace("{RESOURCE.DATA}", "sobre el bien inmueble con folio real electrónico " +
+        x = x.Replace("{RESOURCE.DATA}", "sobre el bien inmueble con folio electrónico " +
                       this.GetRealEstateTextWithAntecedentAndCadastralKey(recordingAct));
       } else if (resource is Association) {
         x = x.Replace("{RESOURCE.DATA}", "sobre la sociedad o asociación denominada '" +
@@ -464,7 +464,7 @@ namespace Empiria.Land.WebApp {
     private string GetRealEstateActOverTheWhole(RecordingAct recordingAct, int index) {
       const string overTheWhole =
           "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
-          "bien inmueble con folio real electrónico {PROPERTY.UID}.<br/>";
+          "bien inmueble con folio electrónico {PROPERTY.UID}.<br/>";
 
       string x = String.Empty;
 
@@ -491,74 +491,89 @@ namespace Empiria.Land.WebApp {
     private string GetRealEstateActTextOverNewPartition(RecordingAct recordingAct,
                                                         RealEstate newPartition, int index) {
       const string overPartition =
-          "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
-          "<b>{PARTITION.NUMBER}</b> del bien inmueble con folio real {PARTITION.OF}, misma a la que " +
-          "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
+      "{INDEX}.- {RECORDING.ACT} sobre la " +
+      "<b>{PARTITION.TEXT}</b> del bien inmueble con folio {PARTITION.OF}, misma a la que " +
+      "se le asignó el folio electrónico {PROPERTY.UID}.<br/>";
 
       const string overPartitionMale =
-          "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
-          "<b>{PARTITION.NUMBER}</b> del bien inmueble con folio real {PARTITION.OF}, mismo al que " +
-          "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
+          "{INDEX}.- {RECORDING.ACT} sobre el " +
+          "<b>{PARTITION.TEXT}</b> del bien inmueble con folio {PARTITION.OF}, mismo al que " +
+          "se le asignó el folio electrónico {PROPERTY.UID}.<br/>";
 
       const string overLot =
-          "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
-          "<b>{PARTITION.NUMBER}</b> de la lotificación con folio real {PARTITION.OF}, mismo al que " +
-          "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
+          "{INDEX}.- {RECORDING.ACT} sobre el " +
+          "<b>{PARTITION.TEXT}</b> de la lotificación con folio {PARTITION.OF}, mismo al que " +
+          "se le asignó el folio electrónico {PROPERTY.UID}.<br/>";
 
       const string overApartment =
-          "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre el " +
-          "<b>{PARTITION.NUMBER}</b> del condominio con folio real {PARTITION.OF}, mismo a la que " +
-          "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
+          "{INDEX}.- {RECORDING.ACT} sobre el " +
+          "<b>{PARTITION.TEXT}</b> del condominio con folio {PARTITION.OF}, mismo a la que " +
+          "se le asignó el folio electrónico {PROPERTY.UID}.<br/>";
 
       const string overHouse =
-          "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> sobre la " +
-          "<b>{PARTITION.NUMBER}</b> del fraccionamiento con folio real {PARTITION.OF}, misma a la que " +
-          "se le asignó el folio real electrónico {PROPERTY.UID}.<br/>";
+          "{INDEX}.- {RECORDING.ACT} sobre la " +
+          "<b>{PARTITION.TEXT}</b> del fraccionamiento con folio {PARTITION.OF}, misma a la que " +
+          "se le asignó el folio electrónico {PROPERTY.UID}.<br/>";
 
       Assertion.Require(!newPartition.IsPartitionOf.IsEmptyInstance, "Property is not a partition.");
 
-      string x;
+      string x = String.Empty;
 
-      if (newPartition.PartitionNo.StartsWith("Fracción") ||
-          newPartition.PartitionNo.StartsWith("Bodega")) {
+      string partitionText;
+
+      if (newPartition.Kind.Length == 0 && newPartition.PartitionNo.Length == 0) {
+        partitionText = $"FRACCIÓN O PARTE SIN IDENTIFICAR";
+
+      } else if (newPartition.Kind.Length != 0 && newPartition.PartitionNo.Length == 0) {
+        partitionText = $"{newPartition.Kind} SIN IDENTIFICAR";
+
+      } else if (newPartition.Kind.Length == 0 && newPartition.PartitionNo.Length != 0) {
+        partitionText = $"FRACCIÓN O PARTE {newPartition.PartitionNo}";
+
+      } else {
+        partitionText = $"{newPartition.Kind} {newPartition.PartitionNo}";
+      }
+
+      if (newPartition.Kind.StartsWith("Fracción") ||
+          newPartition.Kind.StartsWith("Bodega")) {
         x = overPartition.Replace("{INDEX}", index.ToString());
-        x = x.Replace("{PARTITION.NUMBER}", newPartition.PartitionNo);
+        x = x.Replace("{PARTITION.TEXT}", partitionText);
         if (recordingAct.RecordingActType.IsDomainActType) {
           x = x.Replace("sobre la", "de la");
         }
 
-      } else if (newPartition.PartitionNo.StartsWith("Estacionamiento") ||
-                 newPartition.PartitionNo.StartsWith("Local")) {
+      } else if (newPartition.Kind.StartsWith("Estacionamiento") ||
+                 newPartition.Kind.StartsWith("Local")) {
         x = overPartitionMale.Replace("{INDEX}", index.ToString());
-        x = x.Replace("{PARTITION.NUMBER}", newPartition.PartitionNo);
+        x = x.Replace("{PARTITION.TEXT}", partitionText);
         if (recordingAct.RecordingActType.IsDomainActType) {
           x = x.Replace("sobre el", "del");
         }
 
-      } else if (newPartition.PartitionNo.StartsWith("Lote")) {
+      } else if (newPartition.Kind.StartsWith("Lote")) {
         x = overLot.Replace("{INDEX}", index.ToString());
-        x = x.Replace("{PARTITION.NUMBER}", newPartition.PartitionNo);
+        x = x.Replace("{PARTITION.TEXT}", partitionText);
         if (recordingAct.RecordingActType.IsDomainActType) {
           x = x.Replace("sobre el", "del");
         }
 
-      } else if (newPartition.PartitionNo.StartsWith("Casa")) {
+      } else if (newPartition.Kind.StartsWith("Casa")) {
         x = overHouse.Replace("{INDEX}", index.ToString());
-        x = x.Replace("{PARTITION.NUMBER}", newPartition.PartitionNo);
+        x = x.Replace("{PARTITION.TEXT}", partitionText);
         if (recordingAct.RecordingActType.IsDomainActType) {
           x = x.Replace("sobre la", "de la");
         }
 
-      } else if (newPartition.PartitionNo.StartsWith("Departamento")) {
+      } else if (newPartition.Kind.StartsWith("Departamento")) {
         x = overApartment.Replace("{INDEX}", index.ToString());
-        x = x.Replace("{PARTITION.NUMBER}", newPartition.PartitionNo);
+        x = x.Replace("{PARTITION.TEXT}", partitionText);
         if (recordingAct.RecordingActType.IsDomainActType) {
           x = x.Replace("sobre el", "del");
         }
 
       } else {
         x = overPartition.Replace("{INDEX}", index.ToString());
-        x = x.Replace("{PARTITION.NUMBER}", newPartition.PartitionNo);
+        x = x.Replace("{PARTITION.TEXT}", partitionText);
 
       }
 
@@ -567,7 +582,7 @@ namespace Empiria.Land.WebApp {
 
       if (!parentAntecedent.PhysicalRecording.IsEmptyInstance) {
         x = x.Replace("{PARTITION.OF}", "<u>" + newPartition.IsPartitionOf.UID + "</u> " +
-                      "y antecedente de inscripción en " + parentAntecedent.PhysicalRecording.AsText);
+                      "y antecedente registral en " + parentAntecedent.PhysicalRecording.AsText);
       } else {
         x = x.Replace("{PARTITION.OF}", "<u>" + newPartition.IsPartitionOf.UID + "</u>");
       }
@@ -598,7 +613,7 @@ namespace Empiria.Land.WebApp {
 
       } else if (!domainAntecedent.PhysicalRecording.IsEmptyInstance) {
         if (!recordingAct.AmendmentOf.PhysicalRecording.Equals(domainAntecedent.PhysicalRecording)) {
-          x += ", con antecedente en " + domainAntecedent.PhysicalRecording.AsText;
+          x += ", con antecedente registral en " + domainAntecedent.PhysicalRecording.AsText;
         }
       } else if (domainAntecedent.Document.Equals(recordingAct.Document)) {
         x += ", registrado en este documento";
@@ -629,7 +644,7 @@ namespace Empiria.Land.WebApp {
           "{INDEX}.- <b style='text-transform:uppercase'>{RECORDING.ACT}</b> de " +
           "la {ASSOCIATION.KIND} denominada <b>{ASSOCIATION.NAME}</b>, " +
           "con folio único <b class='bigger'>{ASSOCIATION.UID}</b> y " +
-          "antecedente de inscripción en {ANTECEDENT}.<br/>";
+          "antecedente registral en {ANTECEDENT}.<br/>";
 
       RecordingAct incorporationAct = association.GetIncorporationAct();
 
