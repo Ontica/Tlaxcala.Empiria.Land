@@ -632,7 +632,7 @@ namespace Empiria.Web.UI.Ajax {
       string recordingNumber = GetCommandParameter("recordingNumber", true);
 
       var recordingBook = RecordingBook.Parse(recordingBookId);
-      var recording = recordingBook.FindRecording(recordingNumber);
+      var recording = recordingBook.TryGetRecording(recordingNumber);
       if (recording != null) {
         return recording.Id.ToString();
       } else {
