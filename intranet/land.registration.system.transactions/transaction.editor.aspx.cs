@@ -427,7 +427,7 @@ namespace Empiria.Land.WebApp {
     private void DeleteCertificate() {
       string uid = GetCommandParameter("uid");
 
-      Certificate certificate = transaction.GetIssuedCertificates().Find( x => x.UID == uid);
+      FormerCertificate certificate = transaction.GetIssuedCertificates().Find( x => x.UID == uid);
 
       Assertion.Require(certificate, "El certificado no fue encontrado en este trámite.");
 
@@ -450,15 +450,15 @@ namespace Empiria.Land.WebApp {
                               "<td style='width:25%;white-space:normal;'>{{OPTIONS-COMBO}}</td>" +
                               "</tr>";
 
-      FixedList<Certificate> certificates = this.transaction.GetIssuedCertificates();
+      FixedList<FormerCertificate> certificates = this.transaction.GetIssuedCertificates();
 
       string html = String.Empty;
       for (int i = 0; i < certificates.Count; i++) {
-        Certificate certificate = certificates[i];
+        FormerCertificate certificate = certificates[i];
 
         string status = "Cerrado";
 
-        if (certificate.Status == CertificateStatus.Deleted) {
+        if (certificate.Status == FormerCertificateStatus.Deleted) {
           status = "Eliminado";
         } else if (!certificate.UseESign) {
           status = "Cerrado";
@@ -588,7 +588,7 @@ namespace Empiria.Land.WebApp {
       }
 
       if (AutoCreateCertificateEnabled) {
-        var certificate = Certificate.AutoCreate(this.transaction, certificateType, property, ownerName);
+        var certificate = FormerCertificate.AutoCreate(this.transaction, certificateType, property, ownerName);
 
         onloadScript = "alert('El certificado fue generado correctamente.');doOperation('redirectThis')";
       } else {
@@ -693,7 +693,7 @@ namespace Empiria.Land.WebApp {
       }
     }
 
-    private System.IO.FileInfo CreatePDFFile(Certificate certificate) {
+    private System.IO.FileInfo CreatePDFFile(FormerCertificate certificate) {
       const string filePath = @"E:\empiria.files\tlaxcala.citys\";
       const string url = "http://192.168.2.22/intranet/";   // http://192.168.2.22/testing.intranet/
 

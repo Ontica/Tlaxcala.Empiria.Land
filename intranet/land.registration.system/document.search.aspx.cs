@@ -128,7 +128,7 @@ namespace Empiria.Land.WebApp {
       }
     }
 
-    private void LoadCertificatesGrid(FixedList<Certificate> certificates) {
+    private void LoadCertificatesGrid(FixedList<FormerCertificate> certificates) {
       _searchResultsGrid = CertificatesGrid.Parse(certificates);
       _searchResultsGridMaxHeight = "600px";
     }

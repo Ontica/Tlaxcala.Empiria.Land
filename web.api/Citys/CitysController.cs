@@ -149,12 +149,12 @@ namespace Empiria.Land.WebApi.Citys {
       };
     }
 
-    private SingleObjectModel BuildCertificateAsTextResponse(Certificate certificate) {
+    private SingleObjectModel BuildCertificateAsTextResponse(FormerCertificate certificate) {
       return new SingleObjectModel(this.Request, this.GetCertificateAsTextModel(certificate),
                                    "Empiria.Land.CertificateAsText");
     }
 
-    private object GetCertificateModel(Certificate o) {
+    private object GetCertificateModel(FormerCertificate o) {
       return new {
         uid = o.UID,
         type = new {
@@ -195,7 +195,7 @@ namespace Empiria.Land.WebApi.Citys {
       };
     }
 
-    private object GetCertificateAsTextModel(Certificate o) {
+    private object GetCertificateAsTextModel(FormerCertificate o) {
       return new {
         uid = o.UID,
         type = new {

@@ -26,7 +26,7 @@ namespace Empiria.Land.WebApp {
     private static readonly bool DISPLAY_VEDA_ELECTORAL_UI =
                                       ConfigurationData.Get<bool>("DisplayVedaElectoralUI", false);
 
-    protected Certificate Certificate = null;
+    protected FormerCertificate Certificate = null;
     protected bool ParseComplete = true;
 
     #endregion Fields
@@ -37,14 +37,14 @@ namespace Empiria.Land.WebApp {
       if (!String.IsNullOrWhiteSpace(Request.QueryString["uid"])) {
         string uid = Request.QueryString["uid"];
 
-        this.Certificate = Certificate.TryParse(uid);
+        this.Certificate = FormerCertificate.TryParse(uid);
 
         Assertion.Require(this.Certificate, $"Invalid certificate number '{uid}'.");
 
       } else if (!String.IsNullOrWhiteSpace(Request.QueryString["certificateId"])) {
         int certificateId = int.Parse(Request.QueryString["certificateId"]);
 
-        this.Certificate = Certificate.Parse(certificateId);
+        this.Certificate = FormerCertificate.Parse(certificateId);
       }
 
     }

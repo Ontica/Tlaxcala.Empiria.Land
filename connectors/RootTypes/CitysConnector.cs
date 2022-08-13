@@ -32,7 +32,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
 
     #region Public methods
 
-    public async Task<int> SendCertificate(Certificate certificate, byte[] outputFile) {
+    public async Task<int> SendCertificate(FormerCertificate certificate, byte[] outputFile) {
       var wsClient = new RppCertificateEmissionWSClient();
 
       var authenticationBean = this.GetAuthenticationBean();
@@ -43,7 +43,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
     }
 
 
-    public async Task<int> SendAvisoPreventivo(Certificate certificate, byte[] outputFile) {
+    public async Task<int> SendAvisoPreventivo(FormerCertificate certificate, byte[] outputFile) {
       var wsClient = new RppCertificateEmissionWSClient();
 
       var authenticationBean = this.GetAuthenticationBean();
@@ -80,7 +80,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
 
     #region Private methods
 
-    private rppCertificateEmissionCertificateBean GetAvisoPreventivoBean(Certificate certificate,
+    private rppCertificateEmissionCertificateBean GetAvisoPreventivoBean(FormerCertificate certificate,
                                                                          byte[] outputFile) {
       var returnData = new rppCertificateEmissionCertificateBean();
 
@@ -95,7 +95,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
     }
 
 
-    private rppCertificateEmissionCertificateBean GetCertificateBean(Certificate certificate,
+    private rppCertificateEmissionCertificateBean GetCertificateBean(FormerCertificate certificate,
                                                                      byte[] outputFile) {
       var returnData = new rppCertificateEmissionCertificateBean();
 
@@ -122,7 +122,7 @@ namespace Empiria.Land.Integration.TlaxcalaGov {
       return returnData;
     }
 
-    private CitysCertificateType ConvertToCitysCertificateType(CertificateType certificateType) {
+    private CitysCertificateType ConvertToCitysCertificateType(FormerCertificateType certificateType) {
       switch (certificateType.Name) {
         case "ObjectType.LandCertificate.LibertadGravamen":
           return CitysCertificateType.AvisoPreventivo;

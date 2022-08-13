@@ -831,7 +831,7 @@ namespace Empiria.Web.UI.Ajax {
     private string ValidateIfCertificateCanBeEditedCommandHandler() {
       try {
         string certificateUID = GetCommandParameter<string>("certificateUID");
-        var certificate = Certificate.TryParse(certificateUID);
+        var certificate = FormerCertificate.TryParse(certificateUID);
 
         if (certificate.Signed()) {
           return "El certificado no puede ser editado debido a que ya tiene firma electrónica.\n\n" +
