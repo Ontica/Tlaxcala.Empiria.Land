@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 
 using Empiria.Contacts;
+using Empiria.Land.Instruments;
 using Empiria.Land.Registration;
 using Empiria.Land.Registration.Transactions;
 
@@ -173,13 +174,20 @@ namespace Empiria.Land.WebApp {
 
     private string PrelationTextForDocumentsWithTransaction() {
       const string template =
-           "Documento presentado para su examen y registro {REENTRY_TEXT} el <b>{DATE} a las {TIME} horas</b>, " +
+           "<b style='text-transform:uppercase'>{INSTRUMENT_AS_TEXT}</b>, instrumento presentado " +
+           "para su examen y registro {REENTRY_TEXT} el <b>{DATE} a las {TIME} horas</b>, " +
            "bajo el número de trámite <b>{NUMBER}</b>, y para el cual {COUNT}";
 
       DateTime presentationTime = transaction.IsReentry ? transaction.LastReentryTime : transaction.PresentationTime;
 
       string x = template.Replace("{DATE}", GetDateAsText(presentationTime));
 
+      if (transaction.HasInstrument) {
+        var instrument = Instrument.Parse(document.InstrumentId);
+        x = x.Replace("{INSTRUMENT_AS_TEXT}", instrument.AsText);
+      } else {
+        x = x.Replace("{INSTRUMENT_AS_TEXT}", "**INSTRUMENTO NO DETERMINADO**");
+      }
       x = x.Replace("{TIME}", presentationTime.ToString("HH:mm:ss"));
       x = x.Replace("{NUMBER}", transaction.UID);
       x = x.Replace("{REENTRY_TEXT}", transaction.IsReentry ? "(como reingreso)" : String.Empty);
@@ -404,7 +412,7 @@ namespace Empiria.Land.WebApp {
                       this.GetRealEstateTextWithAntecedentAndCadastralKey(recordingAct));
       } else if (resource is Association) {
         x = x.Replace("{RESOURCE.DATA}", "sobre la sociedad o asociación denominada '" +
-                      ((Association) resource).Name) + "' con folio único <b class='bigger'>" + resource.UID + "</b>";
+                      resource.Name) + "' con folio único <b class='bigger'>" + resource.UID + "</b>";
       } else if (resource is NoPropertyResource) {
         x = x.Replace("{RESOURCE.DATA}", "con identificador de inscripción <b class='bigger'>" + resource.UID + "</b>");
       } else {

@@ -778,6 +778,10 @@
       <Project>{29b783cb-dc89-4156-b61c-a889365bc93e}</Project>
       <Name>Empiria.WebServices</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\land\Land.Core\Empiria.Land.Core.csproj">
+      <Project>{0D12AA4B-83BF-4AC8-9D22-1D85CE8975D2}</Project>
+      <Name>Empiria.Land.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\land\Land.Documentation\Empiria.Land.Documentation.csproj">
       <Project>{7d98c757-6ed4-48d0-b351-a99ce5ed8987}</Project>
       <Name>Empiria.Land.Documentation</Name>

@@ -313,7 +313,7 @@ namespace Empiria.Web.UI.Ajax {
             html += HtmlSelectContent.GetComboAjaxHtmlItem("selectProperty", "Predio ya registrado");
             counter++;
           }
-          if (rule.AllowsPartitions) {
+          if (rule.AllowPartitions) {
             if (html.Length != 0) {
               html += "|";
             }
