@@ -6,7 +6,7 @@
 *																																																						 *
 *  Summary   : Contains methods for workplace master page interaction.																			 *
 *																																																						 *
-********************************** Copyright(c) 1994-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 1994-2023. La Vía Óntica SC, Ontica LLC and contributors.  **/
 
 // region Global variables
 

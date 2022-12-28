@@ -6,7 +6,7 @@
 *																																																						 *
 *  Summary   : Correctly handle PNG transparency in Windows Internet Explorer 5.5 & 6.0											 *
 *																																																						 *
-********************************** Copyright(c) 1994-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 1994-2023. La Vía Óntica SC, Ontica LLC and contributors.  **/
 
 // region Public methods
 

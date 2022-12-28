@@ -142,7 +142,7 @@
     resizeWorkplace2();
     addEvent(window, 'resize', resizeWorkplace2);
     setObjectEvents();
-    window.defaultStatus = ""; //"Sistema Empiria 2017. Copyright(c) 1999-2017. La Vía Óntica SC, Ontica LLC and contributors.";
+    window.defaultStatus = ""; //"Sistema Empiria 2023. Copyright(c) 1999-2023. La Vía Óntica SC, Ontica LLC and contributors.";
   }
 
   function resizeWorkplace2() {

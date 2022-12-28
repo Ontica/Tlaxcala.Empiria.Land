@@ -7,7 +7,7 @@
 *                                                                                                            *
 *  Summary   : Gets Empiria control contents through Ajax invocation.                                        *
 *                                                                                                            *
-********************************** Copyright(c) 1994-2017. La Vía Óntica SC, Ontica LLC and contributors.  **/
+********************************** Copyright(c) 1994-2023. La Vía Óntica SC, Ontica LLC and contributors.  **/
 using System;
 
 using Empiria.Presentation.Web;
