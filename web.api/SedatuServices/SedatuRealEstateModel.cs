@@ -118,7 +118,7 @@ namespace Empiria.Land.WebApi.SedatuServices {
 
     public string OFNAREG {
       get {
-        return this.realEstate.RecorderOffice.Alias;
+        return this.realEstate.RecorderOffice.ShortName;
       }
     }
 

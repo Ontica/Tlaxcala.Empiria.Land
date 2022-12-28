@@ -810,6 +810,10 @@
       <Project>{b6801aed-52c9-4fb7-90b7-2bc2ab3b8ba0}</Project>
       <Name>Empiria.OnePoint.EPayments</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\onepoint\Security\Empiria.OnePoint.Security.csproj">
+      <Project>{e1e801c8-8dd2-4c73-b012-618d96e62745}</Project>
+      <Name>Empiria.OnePoint.Security</Name>
+    </ProjectReference>
     <ProjectReference Include="..\connectors\Empiria.Land.Connectors.csproj">
       <Project>{83142b30-19c6-4a01-874d-b4d95829b84c}</Project>
       <Name>Empiria.Land.Connectors</Name>

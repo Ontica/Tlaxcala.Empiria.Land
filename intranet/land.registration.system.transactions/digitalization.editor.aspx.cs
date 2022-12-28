@@ -67,7 +67,7 @@ namespace Empiria.Land.WebApp {
         temp = template.Replace("{{CLASS}}", "detailsItem");
         temp = temp.Replace("{{DOCUMENT-TYPE}}", "Documento principal");
         temp = temp.Replace("{{FILE-URL}}", documentSet.MainDocument.UrlRelativePath);
-        temp = temp.Replace("{{DIGITALIZED-BY}}", documentSet.MainDocument.DigitalizedBy.Alias);
+        temp = temp.Replace("{{DIGITALIZED-BY}}", documentSet.MainDocument.DigitalizedBy.ShortName);
         temp = temp.Replace("{{DATE}}", documentSet.MainDocument.DigitalizationDate.ToString("dd/MMM/yyyy HH:mm"));
         temp = temp.Replace("{{OPTIONS}}", GetDeleteLink(documentSet.MainDocument));
         result = temp;
@@ -77,7 +77,7 @@ namespace Empiria.Land.WebApp {
         temp = template.Replace("{{CLASS}}", "detailsOddItem");
         temp = temp.Replace("{{DOCUMENT-TYPE}}", "Anexos");
         temp = temp.Replace("{{FILE-URL}}", documentSet.AuxiliaryDocument.UrlRelativePath);
-        temp = temp.Replace("{{DIGITALIZED-BY}}", documentSet.AuxiliaryDocument.DigitalizedBy.Alias);
+        temp = temp.Replace("{{DIGITALIZED-BY}}", documentSet.AuxiliaryDocument.DigitalizedBy.ShortName);
         temp = temp.Replace("{{DATE}}", documentSet.AuxiliaryDocument.DigitalizationDate.ToString("dd/MMM/yyyy HH:mm"));
         temp = temp.Replace("{{OPTIONS}}", GetDeleteLink(documentSet.AuxiliaryDocument));
         result += temp;

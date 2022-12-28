@@ -253,7 +253,7 @@ namespace Empiria.Land.WebApp {
     private void LoadAgenciesCombo() {
       var agenciesList = LRSTransaction.GetAgenciesList();
 
-      agenciesList.Sort((x, y) => x.Alias.CompareTo(y.Alias));
+      agenciesList.Sort((x, y) => x.ShortName.CompareTo(y.ShortName));
 
       this.cboManagementAgency.Items.Clear();
 
@@ -262,7 +262,7 @@ namespace Empiria.Land.WebApp {
       foreach (var agency in agenciesList) {
         SendTo sendTo = agency.ExtendedData.Get<SendTo>("land.sendCompletedFilingsTo", SendTo.Empty);
 
-        var text = sendTo.Name.Length != 0 ? $"{agency.Alias} ---> Enviar correo a {sendTo.Name}" : $"{agency.Alias}";
+        var text = sendTo.Name.Length != 0 ? $"{agency.ShortName} ---> Enviar correo a {sendTo.Name}" : $"{agency.ShortName}";
 
         this.cboManagementAgency.Items.Add(new ListItem(text, agency.Id.ToString()));
       }

@@ -132,7 +132,7 @@ namespace Empiria.Land.WebApp {
                                                     "<b>" + task.CurrentStatusName + "</b>" : task.CurrentStatusName);
 
         temp = temp.Replace("{CLASS}", ((i % 2) == 0) ? "detailsItem" : "detailsOddItem");
-        temp = temp.Replace("{RESPONSIBLE}", task.Responsible.Alias);
+        temp = temp.Replace("{RESPONSIBLE}", task.Responsible.ShortName);
 
         string dateFormat = "dd/MMM/yyyy HH:mm";
         if (task.CheckInTime.Year == DateTime.Today.Year) {

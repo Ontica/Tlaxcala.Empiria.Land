@@ -477,27 +477,7 @@ namespace Empiria.Web.UI.Ajax {
     }
 
     private string GetWitnessInPositionStringArrayCommandHandler() {
-      int placeId = int.Parse(GetCommandParameter("placeId", false, "-1"));
-      int positionId = int.Parse(GetCommandParameter("positionId", false, "0"));
-
-      if (positionId == 0) {
-        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty,
-                                                      "( Primero seleccionar el rol del certificador )");
-      } else if (positionId == -2) {
-        return HtmlSelectContent.GetComboAjaxHtmlItem("-2", "No consta o no se puede determinar");
-      }
-      if (placeId == -1) {
-        return HtmlSelectContent.GetComboAjaxHtmlItem(String.Empty, "( Primero seleccionar una ciudad )");
-      } else if (placeId == -2) {
-        return HtmlSelectContent.GetComboAjaxHtmlItem("-2", "No consta o no se puede determinar");
-      }
-
-      var roleType = RoleType.Parse(positionId);
-      var place = GeographicRegion.Parse(placeId);
-      FixedList<Person> list = roleType.GetActors<Person>(place);
-
-      return HtmlSelectContent.GetComboAjaxHtml(list, 0, "Id", "FamilyFullName", "( Seleccionar al certificador del contrato )",
-                                                String.Empty, "No consta o no se puede determinar");
+      throw new NotImplementedException("GetWitnessInPositionStringArrayCommandHandler()");
     }
 
     private string GetRecordingBookImageSetIdCommandHandler() {

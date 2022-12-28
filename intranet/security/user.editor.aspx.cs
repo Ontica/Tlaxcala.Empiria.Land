@@ -13,7 +13,8 @@ using System;
 using Empiria.Presentation.Web;
 
 using Empiria.Security;
-using Empiria.Services.UserManagement;
+
+using Empiria.OnePoint.Security.UserManagement.UseCases;
 
 namespace Empiria.Web.UI.Security {
 
