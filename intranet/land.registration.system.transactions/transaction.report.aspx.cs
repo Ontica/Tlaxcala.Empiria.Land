@@ -39,7 +39,7 @@ namespace Empiria.Land.WebApp {
     #region Private methods
 
     private void Initialize() {
-      Contact me = Contact.Parse(ExecutionServer.CurrentUserId);
+      Contact me = ExecutionServer.CurrentContact;
 
       string filter = "TransactionStatus = 'L'";
       string sort = "PresentationTime, TransactionKey";
@@ -69,7 +69,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetOKTransactions() {
-      Contact me = Contact.Parse(ExecutionServer.CurrentUserId);
+      Contact me = ExecutionServer.CurrentContact;
 
       string filter = "TransactionStatus = 'D'";
       string sort = "PresentationTime, TransactionKey";

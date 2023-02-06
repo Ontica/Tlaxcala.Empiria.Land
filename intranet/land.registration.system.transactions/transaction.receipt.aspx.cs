@@ -241,7 +241,7 @@ namespace Empiria.Land.WebApp {
     }
 
     protected string GetCurrentUserInitials() {
-      var user = Empiria.Security.EmpiriaUser.Current.AsContact();
+      var user = ExecutionServer.CurrentContact;
 
       return user.Nickname;
     }

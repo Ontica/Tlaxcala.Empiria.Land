@@ -791,7 +791,7 @@
       <Name>Empiria.Land.Registration</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\land\Land.UI\Empiria.Land.UI.csproj">
-      <Project>{90d29b34-a9c5-47ee-8279-7473fa37d194}</Project>
+      <Project>{db52026a-e8c1-404b-a6fe-76cfe845a6c9}</Project>
       <Name>Empiria.Land.UI</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\onepoint\Core\Empiria.OnePoint.Core.csproj">

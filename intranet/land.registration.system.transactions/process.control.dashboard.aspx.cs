@@ -113,7 +113,7 @@ namespace Empiria.Land.WebApp {
 
 
     protected sealed override DataView LoadDataSource() {
-      Contact me = Contact.Parse(ExecutionServer.CurrentUserId);
+      Contact me = ExecutionServer.CurrentContact;
       string filter = GetFilter();
       const string sort = "";
 
