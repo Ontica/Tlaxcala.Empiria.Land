@@ -62,8 +62,8 @@
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Multisolutions' ">
     <ProjectReference Include="..\..\extensions\Presentation.Web\Empiria.Presentation.Web.csproj" />
-    <ProjectReference Include="..\Land.Registration\Empiria.Land.Registration.csproj" />
-    <ProjectReference Include="..\Land.Core\Empiria.Land.Core.csproj" />
-    <ProjectReference Include="..\Land.Transactions\Empiria.Land.Transactions.csproj" />
+    <ProjectReference Include="..\..\land\Land.Core\Empiria.Land.Core.csproj" />
+    <ProjectReference Include="..\..\land\Land.Registration\Empiria.Land.Registration.csproj" />
+    <ProjectReference Include="..\..\land\Land.Transactions\Empiria.Land.Transactions.csproj" />
   </ItemGroup>
 </Project>

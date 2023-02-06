@@ -55,7 +55,7 @@
     <PackageReference Include="Empiria.Land.Registration" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Multisolutions' ">
-    <ProjectReference Include="..\Land.Registration\Empiria.Land.Registration.csproj" />
+    <ProjectReference Include="..\..\land\Land.Registration\Empiria.Land.Registration.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web" />
